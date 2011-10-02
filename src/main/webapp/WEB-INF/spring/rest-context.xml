@@ -10,4 +10,7 @@
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
+	<import resource="classpath*:/rest_scan.xml" />
+	<import resource="classpath*:/rest_config.xml" />
+
 </beans>

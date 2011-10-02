@@ -1,6 +1,11 @@
 package org.rest.service;
 
+import org.rest.common.dao.ICommonOperations;
+import org.rest.model.Foo;
 
-public interface IFooService{
+/**
+ * @author eugenp
+ */
+public interface IFooService extends ICommonOperations< Foo >{
 	//
 }

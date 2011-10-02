@@ -18,8 +18,8 @@
     <!-- persistence -->
 
     <bean id="restDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/rest" />
+        <property name="driverClassName" value="${driverClassName}" />
+        <property name="url" value="${url}" />
         <property name="username" value="restUser" />
         <property name="password" value="restmy5ql" />
     </bean>
@@ -29,13 +29,12 @@
 
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-                <prop key="hibernate.show_sql">false</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
 
                 <!-- in progress still -->
-                <prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory
-                </prop>
+                <prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</prop>
                 <prop key="hibernate.current_session_context_class">thread</prop>
             </props>
         </property>
