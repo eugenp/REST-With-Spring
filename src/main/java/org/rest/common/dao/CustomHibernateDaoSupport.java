@@ -35,10 +35,17 @@ public class CustomHibernateDaoSupport< T extends Serializable > extends Hiberna
 		this.setSessionFactory( factory );
 	}
 	
-	// API
+	// API - get
 	
 	@Transactional( readOnly = true )
 	public T getById( final Long id ){
+		Preconditions.checkNotNull( id );
+		
+		return this.getHibernateTemplate().get( this.clazz, id );
+	}
+	
+	@Transactional( readOnly = true )
+	public T getByIdExperimental( final Long id ){
 		Preconditions.checkNotNull( id );
 		
 		final DetachedCriteria criteria = DetachedCriteria.forClass( this.clazz );
@@ -55,10 +62,31 @@ public class CustomHibernateDaoSupport< T extends Serializable > extends Hiberna
 	}
 	
 	@Transactional( readOnly = true )
-	public T getByIdExperimental( final Long id ){
-		Preconditions.checkNotNull( id );
+	public List< T > getAll(){
+		return this.getHibernateTemplate().loadAll( this.clazz );
+	}
+	
+	// API - create
+	
+	public Long create( final T entity ){
+		Preconditions.checkNotNull( entity );
 		
-		return this.getHibernateTemplate().get( this.clazz, id );
+		return (Long) this.getHibernateTemplate().save( entity );
+	}
+	
+	// API - update
+	
+	public void update( final T entity ){
+		Preconditions.checkNotNull( entity );
+		
+		this.getHibernateTemplate().saveOrUpdate( entity );
+	}
+	
+	// API - delete
+	
+	public void delete( final T entity ){
+		Preconditions.checkNotNull( entity );
+		this.getHibernateTemplate().delete( entity );
 	}
 	
 }

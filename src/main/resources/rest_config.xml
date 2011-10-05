@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
     xsi:schemaLocation="
 			http://www.springframework.org/schema/beans
 			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 			
-			http://www.springframework.org/schema/context
-			http://www.springframework.org/schema/context/spring-context-3.1.xsd
+			http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
 			
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.1.xsd
+            
+            http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-3.1.xsd
+            
 			http://www.springframework.org/schema/tx
 		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+    <!-- mvc -->
+    <mvc:annotation-driven />
 
     <!-- context -->
     <context:annotation-config />
@@ -26,6 +35,7 @@
 
     <bean id="alertsSessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="restDataSource" />
+        <property name="packagesToScan" value="org.rest" />
 
         <property name="hibernateProperties">
             <props>
@@ -34,7 +44,7 @@
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
 
                 <!-- in progress still -->
-                <prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</prop>
+                <prop key="hibernate.transaction.factory_class">org.springframework.orm.hibernate3.SpringTransactionFactory</prop>
                 <prop key="hibernate.current_session_context_class">thread</prop>
             </props>
         </property>
@@ -45,5 +55,22 @@
         <property name="sessionFactory" ref="alertsSessionFactory" />
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!-- marshaling support -->
+
+    <bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller" />
+
+    <bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+        <property name="prefixJson" value="false" />
+        <property name="supportedMediaTypes" value="application/json" />
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <util:list id="beanList">
+                <ref bean="jsonHttpMessageConverter" />
+            </util:list>
+        </property>
+    </bean>
 
 </beans>

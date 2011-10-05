@@ -4,16 +4,15 @@ REST WEB API
 A clean RESTfull web API implementation using
 * Spring 3.1
 * Jackson
-* Hibernate
+* Hibernate 3.6
 
 
 TODO
 --------
 
-* configuring the transaction strategy 
-* adding Jackson dependency
-* configuring the web context in web.xml
-* 
+* Write Design Doc
+* Write Test plan and test procedure for QA to test
+* Write programming guide to document API usage
 
 BUILD
 -------
