@@ -89,7 +89,7 @@ JSON payloads
 ===================
 
 * [How to avoid brittle tests when testing the Service Layer](http://www.baeldung.com/2011/10/02/testing-the-service-layer/)
-* [How to write integration tests for a RESTfull API](http://www.baeldung.com/2011/10/13/integration-testing-a-rest-api/)
+* [Introduction to Java integration testing for a REST API](http://www.baeldung.com/2011/10/13/integration-testing-a-rest-api/)
 
 
 
