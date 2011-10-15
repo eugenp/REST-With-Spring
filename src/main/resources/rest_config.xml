@@ -19,9 +19,5 @@
 
     <!-- mvc -->
     <mvc:annotation-driven />
-
-    <!-- context -->
-    <context:annotation-config />
-    <context:property-placeholder location="classpath*:*.properties" />
-
+    
 </beans>
