@@ -8,7 +8,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration( locations = {//@formatter:off
 	"classpath:/rest_scan.xml",
-	"classpath:/rest_config.xml"
+	"classpath:/rest_config.xml", 
+	"classpath:/rest_persistence.xml"
 } )// @formatter:on
 public final class SpringTest{
 	

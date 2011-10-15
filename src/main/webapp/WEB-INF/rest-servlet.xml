@@ -9,5 +9,6 @@
 
     <import resource="classpath*:/rest_scan.xml" />
     <import resource="classpath*:/rest_config.xml" />
-
+    <import resource="classpath*:/rest_persistence.xml" />
+    
 </beans>

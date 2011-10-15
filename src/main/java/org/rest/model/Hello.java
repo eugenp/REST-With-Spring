@@ -84,4 +84,9 @@ public final class Hello implements Serializable{
 		return true;
 	}
 	
+	@Override
+	public String toString(){
+		return "Hello [name=" + this.name + "]";
+	}
+	
 }

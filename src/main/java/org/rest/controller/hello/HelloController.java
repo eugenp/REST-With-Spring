@@ -54,6 +54,7 @@ final class HelloController{
 	@ResponseStatus( HttpStatus.OK )
 	public final void update( @RequestBody final Hello entity ){
 		RestPreconditions.checkNotNullFromRequest( entity );
+		RestPreconditions.checkNotNull( this.helloService.getById( entity.getId() ) );
 		this.helloService.update( entity );
 	}
 	
