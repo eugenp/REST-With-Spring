@@ -1,4 +1,4 @@
-package org.rest.service.hello.impl;
+package org.rest.service.foo.impl;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -6,20 +6,21 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.rest.dao.hello.impl.HelloDAO;
-import org.rest.model.Hello;
+import org.rest.dao.foo.impl.FooDAO;
+import org.rest.model.Foo;
+import org.rest.service.foo.impl.FooService;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-public class HelloServiceUnitTest{
+public class FooServiceUnitTest{
 	
-	HelloService instance;
+	FooService instance;
 	
 	private HibernateTemplate hibernateTemplateMock;
 	
 	@Before
 	public final void before(){
-		this.instance = new HelloService();
-		this.instance.dao = new HelloDAO();
+		this.instance = new FooService();
+		this.instance.dao = new FooDAO();
 		this.hibernateTemplateMock = mock( HibernateTemplate.class );
 		this.instance.dao.setHibernateTemplate( this.hibernateTemplateMock );
 	}
@@ -37,7 +38,7 @@ public class HelloServiceUnitTest{
 	@Test
 	public final void whenCreateIsTriggered_thenNoException(){
 		// When
-		this.instance.create( new Hello( "testName" ) );
+		this.instance.create( new Foo( "testName" ) );
 		
 		// Then
 	}
@@ -53,10 +54,10 @@ public class HelloServiceUnitTest{
 	@Test
 	public final void whenCreateIsTriggered_thenEntityIsCreated(){
 		// When
-		this.instance.create( new Hello( "testName" ) );
+		this.instance.create( new Foo( "testName" ) );
 		
 		// Then
-		verify( this.hibernateTemplateMock ).save( any( Hello.class ) );
+		verify( this.hibernateTemplateMock ).save( any( Foo.class ) );
 	}
 	
 	// get
@@ -83,7 +84,7 @@ public class HelloServiceUnitTest{
 		this.instance.getById( 1l );
 		
 		// Then
-		verify( this.hibernateTemplateMock ).get( Hello.class, 1l );
+		verify( this.hibernateTemplateMock ).get( Foo.class, 1l );
 	}
 	
 	// update
@@ -91,7 +92,7 @@ public class HelloServiceUnitTest{
 	@Test
 	public final void whenUpdateIsTriggered_thenNoException(){
 		// When
-		this.instance.update( new Hello( "testName" ) );
+		this.instance.update( new Foo( "testName" ) );
 		
 		// Then
 	}
@@ -107,7 +108,7 @@ public class HelloServiceUnitTest{
 	@Test
 	public final void whenUpdateIsTriggered_thenEntityIsUpdated(){
 		// When
-		final Hello entity = new Hello( "testName" );
+		final Foo entity = new Foo( "testName" );
 		this.instance.update( entity );
 		
 		// Then
@@ -119,7 +120,7 @@ public class HelloServiceUnitTest{
 	@Test
 	public final void whenDeleteIsTriggered_thenNoException(){
 		// When
-		this.instance.delete( new Hello( "testName" ) );
+		this.instance.delete( new Foo( "testName" ) );
 		
 		// Then
 	}
@@ -135,7 +136,7 @@ public class HelloServiceUnitTest{
 	@Test
 	public final void whenDeleteIsTriggered_thenEntityIsDeleted(){
 		// When
-		final Hello entity = new Hello( "testName" );
+		final Foo entity = new Foo( "testName" );
 		this.instance.delete( entity );
 		
 		// Then
@@ -158,7 +159,7 @@ public class HelloServiceUnitTest{
 		this.instance.getAll();
 		
 		// Then
-		verify( this.hibernateTemplateMock ).loadAll( Hello.class );
+		verify( this.hibernateTemplateMock ).loadAll( Foo.class );
 	}
 	
 }

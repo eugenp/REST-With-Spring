@@ -14,7 +14,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @author eugenp
  */
 @Entity
-public final class Hello implements Serializable{
+public final class Foo implements Serializable{
 	private static final long serialVersionUID = -2817129135033673162L;
 	
 	private Long id;
@@ -23,10 +23,10 @@ public final class Hello implements Serializable{
 	@Column( unique = true )
 	private String name;
 	
-	public Hello(){
+	public Foo(){
 		super();
 	}
-	public Hello( final String nameToSet ){
+	public Foo( final String nameToSet ){
 		super();
 		
 		this.name = nameToSet;
@@ -72,7 +72,7 @@ public final class Hello implements Serializable{
 		if( this.getClass() != obj.getClass() ){
 			return false;
 		}
-		final Hello other = (Hello) obj;
+		final Foo other = (Foo) obj;
 		if( this.name == null ){
 			if( other.name != null ){
 				return false;

@@ -1,11 +1,11 @@
-package org.rest.service.hello.impl;
+package org.rest.service.foo.impl;
 
 import java.util.List;
 
-import org.rest.dao.hello.IHelloDAO;
+import org.rest.dao.foo.IFooDAO;
 import org.rest.exceptions.ResourceNotFoundException;
-import org.rest.model.Hello;
-import org.rest.service.hello.IHelloService;
+import org.rest.model.Foo;
+import org.rest.service.foo.IHelloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,44 +18,44 @@ import com.google.common.base.Preconditions;
  */
 @Service
 @Transactional( propagation = Propagation.REQUIRED )
-class HelloService implements IHelloService{
+class FooService implements IHelloService{
 	
 	@Autowired
-	IHelloDAO dao;
+	IFooDAO dao;
 	
-	public HelloService(){
+	public FooService(){
 		super();
 	}
 	
 	// API
 	
 	@Override
-	public Hello getById( final Long id ){
+	public Foo getById( final Long id ){
 		return this.dao.getById( id );
 	}
 	
 	@Override
-	public Hello getByIdExperimental( final Long id ){
+	public Foo getByIdExperimental( final Long id ){
 		return this.dao.getByIdExperimental( id );
 	}
 	
 	@Override
-	public Long create( final Hello entity ){
+	public Long create( final Foo entity ){
 		return this.dao.create( entity );
 	}
 	
 	@Override
-	public void update( final Hello entity ){
+	public void update( final Foo entity ){
 		this.dao.update( entity );
 	}
 	
 	@Override
-	public void delete( final Hello entity ){
+	public void delete( final Foo entity ){
 		this.dao.delete( entity );
 	}
 	
 	@Override
-	public List< Hello > getAll(){
+	public List< Foo > getAll(){
 		return this.dao.getAll();
 	}
 	
@@ -65,7 +65,7 @@ class HelloService implements IHelloService{
 	public void deleteById( final Long id ){
 		Preconditions.checkNotNull( id );
 		
-		final Hello entity = this.getById( id );
+		final Foo entity = this.getById( id );
 		if( entity == null ){
 			throw new ResourceNotFoundException();
 		}

@@ -13,7 +13,7 @@
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -91,7 +91,7 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-		
+
 		<!-- hibernate-commons-annotations seems to be a weird dependency of hibernate-core 
 			<br> - issue: it is old and has a dependency on slf4j-api 1.5.8, which I 
 			cannot shake - issue: there is another 3.3.0.ga version out there - "Version 
@@ -114,7 +114,7 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${org.slf4j.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -135,7 +135,7 @@
 		</dependency>
 
 		<!-- test scoped -->
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -160,6 +160,27 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${http.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>rest-testing</groupId>
+			<artifactId>rest-testing</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -200,6 +221,12 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.10</version>
+				<configuration>
+					<skip>false</skip>
+					<excludes>
+						<exclude>**/*IntegrationTest.java</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -217,9 +244,86 @@
 				</configuration>
 			</plugin>
 
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.1.3</version>
+				<configuration>
+					<wait>true</wait>
+					<container>
+						<containerId>jetty7x</containerId>
+						<type>embedded</type>
+					</container>
+					<configuration>
+						<properties>
+							<cargo.servlet.port>8080</cargo.servlet.port>
+						</properties>
+					</configuration>
+				</configuration>
+			</plugin>
+
 		</plugins>
 
 	</build>
+
+	<profiles>
+		<profile>
+			<id>integration</id>
+			<build>
+				<plugins>
+
+					<plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<configuration>
+							<wait>false</wait>
+						</configuration>
+						<executions>
+							<execution>
+								<id>start-server</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>start</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>stop-server</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>integration-tests</id>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+								<configuration>
+									<skip>false</skip>
+									<excludes>
+										<exclude>none</exclude>
+									</excludes>
+									<includes>
+										<include>**/*IntegrationTest.java</include>
+									</includes>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
 
 	<repositories>
 
@@ -249,29 +353,30 @@
 	<properties>
 		<target>dev</target>
 
-		<!-- versions -->
+		<!-- VERSIONS -->
+		<spring.version>3.1.0.M2</spring.version>
 		<javassist.version>3.15.0-GA</javassist.version>
 
 		<commons-lang3.version>3.0.1</commons-lang3.version>
-		<spring.version>3.1.0.M2</spring.version>
-
 		<guava.version>10.0-rc2</guava.version>
 
-		<!-- persistence -->
+		<!-- VERSIONS - persistence -->
 		<mysql-connector-java.version>5.1.17</mysql-connector-java.version> <!-- latest version on: 02.10.2011 - http://dev.mysql.com/downloads/connector/j/ -->
 		<hibernate.version>3.6.7.Final</hibernate.version>
 		<hibernate-commons-annotations.version>3.2.0.Final</hibernate-commons-annotations.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 
-		<!-- logging -->
+		<!-- VERSIONS - logging -->
 		<log4j.version>1.2.16</log4j.version>
 		<org.slf4j.version>1.6.2</org.slf4j.version>
 
-		<!-- test scoped -->
+		<!-- VERSIONS - testing -->
 		<org.hamcrest.version>1.3.RC2</org.hamcrest.version>
 		<junit.version>4.10</junit.version>
 		<mockito.version>1.9.0-rc1</mockito.version>
-		<httpclient.version>4.1.2</httpclient.version>
+
+		<http.version>4.1.2</http.version>
+
 	</properties>
 
 </project>

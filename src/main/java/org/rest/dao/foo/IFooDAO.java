@@ -1,13 +1,13 @@
-package org.rest.dao.hello;
+package org.rest.dao.foo;
 
 import org.rest.common.dao.ICommonOperations;
-import org.rest.model.Hello;
+import org.rest.model.Foo;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 /**
  * @author eugenp
  */
-public interface IHelloDAO extends ICommonOperations< Hello >{
+public interface IFooDAO extends ICommonOperations< Foo >{
 	
 	void setHibernateTemplate( final HibernateTemplate hibernateTemplate );
 	
