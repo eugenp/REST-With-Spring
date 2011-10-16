@@ -11,7 +11,8 @@
 
 	<context:annotation-config />
 
-	<context:component-scan base-package="org.rest" />
+	<context:component-scan base-package="org.rest.test" />
+	<context:component-scan base-package="org.rest.integration" />
 
 	<context:property-placeholder location="classpath*:*.properties" />
 

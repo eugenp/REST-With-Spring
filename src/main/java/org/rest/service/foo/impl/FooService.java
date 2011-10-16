@@ -5,7 +5,7 @@ import java.util.List;
 import org.rest.dao.foo.IFooDAO;
 import org.rest.exceptions.ResourceNotFoundException;
 import org.rest.model.Foo;
-import org.rest.service.foo.IHelloService;
+import org.rest.service.foo.IFooService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,7 +18,7 @@ import com.google.common.base.Preconditions;
  */
 @Service
 @Transactional( propagation = Propagation.REQUIRED )
-class FooService implements IHelloService{
+class FooService implements IFooService{
 	
 	@Autowired
 	IFooDAO dao;

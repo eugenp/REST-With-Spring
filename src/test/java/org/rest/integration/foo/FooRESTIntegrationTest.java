@@ -38,7 +38,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration( locations = {// @formatter:off
-	"classpath:/rest_scan.xml"
+	"classpath:/test_rest_scan.xml"
 }) 
 // @formatter:on
 public class FooRESTIntegrationTest{

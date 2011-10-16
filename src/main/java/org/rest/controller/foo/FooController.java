@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.rest.common.util.RestPreconditions;
 import org.rest.model.Foo;
-import org.rest.service.foo.IHelloService;
+import org.rest.service.foo.IFooService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 final class FooController{
 	
 	@Autowired
-	IHelloService helloService;
+	IFooService service;
 	
 	public FooController(){
 		super();
@@ -30,38 +30,38 @@ final class FooController{
 	
 	// API
 	
-	@RequestMapping( value = "helloWorld",method = RequestMethod.GET )
+	@RequestMapping( value = "foo",method = RequestMethod.GET )
 	@ResponseBody
 	public final List< Foo > getAll(){
-		return this.helloService.getAll();
+		return this.service.getAll();
 	}
 	
-	@RequestMapping( value = "helloWorld/{id}",method = RequestMethod.GET )
+	@RequestMapping( value = "foo/{id}",method = RequestMethod.GET )
 	@ResponseBody
 	public final Foo getById( @PathVariable( "id" ) final Long id ){
-		return RestPreconditions.checkNotNull( this.helloService.getById( id ) );
+		return RestPreconditions.checkNotNull( this.service.getById( id ) );
 	}
 	
-	@RequestMapping( value = "helloWorld",method = RequestMethod.POST )
+	@RequestMapping( value = "foo",method = RequestMethod.POST )
 	@ResponseStatus( HttpStatus.CREATED )
 	@ResponseBody
 	public final Long create( @RequestBody final Foo entity ){
 		RestPreconditions.checkNotNullFromRequest( entity );
-		return this.helloService.create( entity );
+		return this.service.create( entity );
 	}
 	
-	@RequestMapping( value = "helloWorld",method = RequestMethod.PUT )
+	@RequestMapping( value = "foo",method = RequestMethod.PUT )
 	@ResponseStatus( HttpStatus.OK )
 	public final void update( @RequestBody final Foo entity ){
 		RestPreconditions.checkNotNullFromRequest( entity );
-		RestPreconditions.checkNotNull( this.helloService.getById( entity.getId() ) );
-		this.helloService.update( entity );
+		RestPreconditions.checkNotNull( this.service.getById( entity.getId() ) );
+		this.service.update( entity );
 	}
 	
-	@RequestMapping( value = "helloWorld/{id}",method = RequestMethod.DELETE )
+	@RequestMapping( value = "foo/{id}",method = RequestMethod.DELETE )
 	@ResponseStatus( HttpStatus.OK )
 	public final void deleteById( @PathVariable( "id" ) final Long id ){
-		this.helloService.deleteById( id );
+		this.service.deleteById( id );
 	}
 	
 }

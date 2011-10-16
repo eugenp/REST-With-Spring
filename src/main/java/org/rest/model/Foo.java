@@ -86,7 +86,7 @@ public final class Foo implements Serializable{
 	
 	@Override
 	public String toString(){
-		return "Hello [name=" + this.name + "]";
+		return "Foo [name=" + this.name + "]";
 	}
 	
 }

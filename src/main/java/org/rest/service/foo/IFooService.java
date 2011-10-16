@@ -6,7 +6,7 @@ import org.rest.model.Foo;
 /**
  * @author eugenp
  */
-public interface IHelloService extends IService< Foo >{
+public interface IFooService extends IService< Foo >{
 	
 	//
 }
