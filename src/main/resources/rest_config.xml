@@ -18,23 +18,12 @@
 		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
     <!-- mvc -->
+    <!-- since Jackson is on the classpath, this will automatically create and register a default JSON converter -->
     <mvc:annotation-driven />
     
-    <!-- marshaling support -->
-
-    <bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller" />
-
-    <bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-        <property name="prefixJson" value="false" />
-        <property name="supportedMediaTypes" value="application/json" />
-    </bean>
-
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-        <property name="messageConverters">
-            <util:list id="beanList">
-                <ref bean="jsonHttpMessageConverter" />
-            </util:list>
-        </property>
-    </bean>
+    <!-- context -->
+    <context:annotation-config />
+    
+    <context:property-placeholder location="classpath*:*.properties" />
     
 </beans>

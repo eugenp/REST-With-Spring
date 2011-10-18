@@ -16,9 +16,10 @@ import com.google.common.base.Preconditions;
 /**
  * @author eugenp
  */
+// TODO: later on this should not be public
 @Service
 @Transactional( propagation = Propagation.REQUIRED )
-class FooService implements IFooService{
+public class FooService implements IFooService{
 	
 	@Autowired
 	IFooDAO dao;
