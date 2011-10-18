@@ -90,6 +90,7 @@ JSON payloads
 
 * [How to avoid brittle tests when testing the Service Layer](http://www.baeldung.com/2011/10/02/testing-the-service-layer/)
 * [Introduction to Java integration testing for a REST API](http://www.baeldung.com/2011/10/13/integration-testing-a-rest-api/)
+* [How to set up Integration Testing with the Maven Cargo plugin](http://www.baeldung.com/2011/10/16/how-to-set-up-integration-testing-with-the-maven-cargo-plugin/)
 
 
 

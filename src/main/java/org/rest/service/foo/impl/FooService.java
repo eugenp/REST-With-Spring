@@ -35,11 +35,6 @@ class FooService implements IFooService{
 	}
 	
 	@Override
-	public Foo getByIdExperimental( final Long id ){
-		return this.dao.getByIdExperimental( id );
-	}
-	
-	@Override
 	public Long create( final Foo entity ){
 		return this.dao.create( entity );
 	}

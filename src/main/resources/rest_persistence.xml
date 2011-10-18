@@ -49,21 +49,4 @@
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager" />
 
-    <!-- marshaling support -->
-
-    <bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller" />
-
-    <bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-        <property name="prefixJson" value="false" />
-        <property name="supportedMediaTypes" value="application/json" />
-    </bean>
-
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-        <property name="messageConverters">
-            <util:list id="beanList">
-                <ref bean="jsonHttpMessageConverter" />
-            </util:list>
-        </property>
-    </bean>
-
 </beans>

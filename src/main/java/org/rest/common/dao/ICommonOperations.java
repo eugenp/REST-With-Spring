@@ -11,7 +11,6 @@ public interface ICommonOperations< T extends Serializable >{
 	// get
 	
 	T getById( final Long id );
-	T getByIdExperimental( final Long id );
 	
 	List< T > getAll();
 	
