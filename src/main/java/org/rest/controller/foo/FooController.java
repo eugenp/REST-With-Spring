@@ -38,13 +38,13 @@ final class FooController{
 	
 	@RequestMapping( value = "foo/{id}",method = RequestMethod.GET )
 	@ResponseBody
-	public final Foo getById( @PathVariable( "id" ) final Long id ){
+	public final Foo get( @PathVariable( "id" ) final Long id ){
 		return RestPreconditions.checkNotNull( this.service.getById( id ) );
 	}
 	
 	@RequestMapping( value = "foo",method = RequestMethod.POST )
-	@ResponseStatus( HttpStatus.CREATED )
 	@ResponseBody
+	@ResponseStatus( HttpStatus.CREATED )
 	public final Long create( @RequestBody final Foo entity ){
 		RestPreconditions.checkNotNullFromRequest( entity );
 		return this.service.create( entity );
@@ -60,7 +60,7 @@ final class FooController{
 	
 	@RequestMapping( value = "foo/{id}",method = RequestMethod.DELETE )
 	@ResponseStatus( HttpStatus.OK )
-	public final void deleteById( @PathVariable( "id" ) final Long id ){
+	public final void delete( @PathVariable( "id" ) final Long id ){
 		this.service.deleteById( id );
 	}
 	

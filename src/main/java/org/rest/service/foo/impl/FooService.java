@@ -2,8 +2,8 @@ package org.rest.service.foo.impl;
 
 import java.util.List;
 
+import org.rest.common.util.RestPreconditions;
 import org.rest.dao.foo.IFooDAO;
-import org.rest.exceptions.ResourceNotFoundException;
 import org.rest.model.Foo;
 import org.rest.service.foo.IFooService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +62,8 @@ public class FooService implements IFooService{
 		Preconditions.checkNotNull( id );
 		
 		final Foo entity = this.getById( id );
-		if( entity == null ){
-			throw new ResourceNotFoundException();
-		}
+		RestPreconditions.checkNotNull( entity );
+
 		this.delete( entity );
 	}
 	

@@ -48,12 +48,8 @@
          <version>${jackson-mapper-asl.version}</version>
          <scope>runtime</scope>
       </dependency>
-      <dependency>
-         <groupId>xstream</groupId>
-         <artifactId>xstream</artifactId>
-         <version>${xstream.version}</version>
-         <scope>runtime</scope>
-      </dependency>
+      <!-- <dependency> <groupId>xstream</groupId> <artifactId>xstream</artifactId> <version>${xstream.version}</version> <scope>runtime</scope> 
+         </dependency> -->
 
       <!-- persistence -->
       <dependency>
@@ -78,7 +74,6 @@
          <groupId>commons-dbcp</groupId>
          <artifactId>commons-dbcp</artifactId>
          <version>${commons-dbcp.version}</version>
-         <scope>runtime</scope>
       </dependency>
 
       <dependency>
@@ -328,17 +323,18 @@
             <enabled>true</enabled>
          </snapshots>
       </repository>
-
+      
    </repositories>
 
    <properties>
       <target>dev</target>
 
       <!-- VERSIONS -->
+      <!-- 3.1.0.M2 -->
       <spring.version>3.1.0.BUILD-SNAPSHOT</spring.version>
       <javassist.version>3.15.0-GA</javassist.version>
       <cglib.version>2.2.2</cglib.version>
-      
+
       <commons-lang3.version>3.0.1</commons-lang3.version>
       <guava.version>10.0-rc2</guava.version>
 

@@ -1,4 +1,4 @@
-#Wed Oct 19 00:25:56 EEST 2011
+#Sun Oct 23 00:05:59 EEST 2011
 eclipse.preferences.version=1
 org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.6
@@ -35,7 +35,7 @@ org.eclipse.jdt.core.compiler.problem.missingDeprecatedAnnotation=error
 org.eclipse.jdt.core.compiler.problem.missingHashCodeMethod=error
 org.eclipse.jdt.core.compiler.problem.missingOverrideAnnotation=error
 org.eclipse.jdt.core.compiler.problem.missingOverrideAnnotationForInterfaceMethodImplementation=enabled
-org.eclipse.jdt.core.compiler.problem.missingSerialVersion=warning
+org.eclipse.jdt.core.compiler.problem.missingSerialVersion=ignore
 org.eclipse.jdt.core.compiler.problem.missingSynchronizedOnInheritedMethod=error
 org.eclipse.jdt.core.compiler.problem.noEffectAssignment=error
 org.eclipse.jdt.core.compiler.problem.noImplicitStringConversion=error
@@ -49,13 +49,13 @@ org.eclipse.jdt.core.compiler.problem.rawTypeReference=warning
 org.eclipse.jdt.core.compiler.problem.redundantNullCheck=error
 org.eclipse.jdt.core.compiler.problem.redundantSpecificationOfTypeArguments=error
 org.eclipse.jdt.core.compiler.problem.redundantSuperinterface=error
-org.eclipse.jdt.core.compiler.problem.reportMethodCanBePotentiallyStatic=warning
-org.eclipse.jdt.core.compiler.problem.reportMethodCanBeStatic=error
+org.eclipse.jdt.core.compiler.problem.reportMethodCanBePotentiallyStatic=ignore
+org.eclipse.jdt.core.compiler.problem.reportMethodCanBeStatic=warning
 org.eclipse.jdt.core.compiler.problem.specialParameterHidingField=enabled
 org.eclipse.jdt.core.compiler.problem.staticAccessReceiver=error
 org.eclipse.jdt.core.compiler.problem.suppressOptionalErrors=disabled
 org.eclipse.jdt.core.compiler.problem.suppressWarnings=enabled
-org.eclipse.jdt.core.compiler.problem.syntheticAccessEmulation=error
+org.eclipse.jdt.core.compiler.problem.syntheticAccessEmulation=warning
 org.eclipse.jdt.core.compiler.problem.typeParameterHiding=error
 org.eclipse.jdt.core.compiler.problem.unavoidableGenericTypeProblems=enabled
 org.eclipse.jdt.core.compiler.problem.uncheckedTypeOperation=warning

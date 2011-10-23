@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="REST">
+    <wb-module deploy-name="rest">
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <property name="context-root" value="REST"/>
-        <property name="java-output-path" value="/REST/target/classes"/>
+        <property name="java-output-path" value="/rest/target/classes"/>
+        <property name="context-root" value="rest"/>
     </wb-module>
 </project-modules>

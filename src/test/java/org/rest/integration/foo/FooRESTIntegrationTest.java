@@ -67,7 +67,6 @@ public class FooRESTIntegrationTest{
 
 		// Then
 	}
-
 	@Test
 	public final void givenResourceForIdDoesNotExist_whenResourceOfThatIdIsRetrieved_then404IsReceived() throws ClientProtocolException, IOException{
 		// Given
@@ -79,7 +78,6 @@ public class FooRESTIntegrationTest{
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 404 ) );
 	}
-
 	@Test
 	public final void givenResourceForIdExists_whenResourceOfThatIdIsRetrieved_then200IsReceived() throws ClientProtocolException, IOException{
 		// Given
@@ -92,7 +90,6 @@ public class FooRESTIntegrationTest{
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 200 ) );
 	}
-
 	@Test
 	public final void givenResourceForIdExists_whenResourceOfThatIdIsRetrieved_thenNameWasCorrectlyRetrieved() throws ClientProtocolException, IOException{
 		// Given
@@ -108,7 +105,6 @@ public class FooRESTIntegrationTest{
 		final Foo resourceFromServer = RetrieveUtil.retrieveResourceFromResponse( response, Foo.class );
 		Assert.assertEquals( nameOfNewResource, resourceFromServer.getName() );
 	}
-
 	@Test
 	public final void givenResourceForIdExists_whenResourceIsRetrievedById_thenRetrievedResourceIsCorrect() throws ClientProtocolException, IOException{
 		// Given
@@ -124,7 +120,6 @@ public class FooRESTIntegrationTest{
 		final Foo resourceFromServer = RetrieveUtil.retrieveResourceFromResponse( response, Foo.class );
 		Assert.assertEquals( unpersistedResource, resourceFromServer );
 	}
-
 	@Test
 	public final void givenRequestAcceptsJson_whenResourceIsRetrievedById_thenResponseContentTypeIsJson() throws ClientProtocolException, IOException{
 		// Given
@@ -153,7 +148,6 @@ public class FooRESTIntegrationTest{
 
 		// Then
 	}
-
 	@Test
 	public final void whenResourcesAreRetrieved_then200IsReceived() throws ClientProtocolException, IOException{
 		// Given
@@ -165,7 +159,6 @@ public class FooRESTIntegrationTest{
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 200 ) );
 	}
-	
 	@SuppressWarnings( "rawtypes" )
 	@Test
 	public final void whenResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() throws ClientProtocolException, IOException{
@@ -194,7 +187,6 @@ public class FooRESTIntegrationTest{
 
 		// Then
 	}
-
 	@Test
 	public final void whenResourceIsCreated_then201IsReceived() throws ClientProtocolException, IOException{
 		// Given
@@ -207,7 +199,6 @@ public class FooRESTIntegrationTest{
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 201 ) );
 	}
-
 	@Test
 	public final void whenResourceIsCreated_thenIdOfNewResourceIsReturnedToTheClient() throws ClientProtocolException, IOException{
 		// Given
@@ -221,7 +212,6 @@ public class FooRESTIntegrationTest{
 		final long idOfNewResource = ExtractUtil.extractIdFromCreateResponse( response );
 		assertTrue( idOfNewResource > 0 );
 	}
-
 	@Test
 	public final void whenNullResourceIsCreated_then415IsReceived() throws ClientProtocolException, IOException{
 		// Given
@@ -282,7 +272,6 @@ public class FooRESTIntegrationTest{
 		final Foo updatedEntity = this.restTemplate.getResource( idOfNewResource, Foo.class );
 		assertEquals( createdEntity.getName(), updatedEntity.getName() );
 	}
-
 	@Test
 	public final void whenNullResourceIsUpdated_then415IsReceived() throws ClientProtocolException, IOException{
 		// Given
@@ -294,7 +283,6 @@ public class FooRESTIntegrationTest{
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 415 ) );
 	}
-
 	@Test
 	public final void givenResourceDoesNotExist_whenResourceIsUpdated_then404IsReceived() throws ClientProtocolException, IOException{
 		// Given
@@ -324,7 +312,6 @@ public class FooRESTIntegrationTest{
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 404 ) );
 	}
-
 	@Test
 	public final void givenResourceExist_whenResourceIsDeleted_then200IsReceived() throws ClientProtocolException, IOException{
 		// Given
@@ -337,7 +324,6 @@ public class FooRESTIntegrationTest{
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 200 ) );
 	}
-
 	@Test
 	public final void givenResourceExist_whenResourceIsDeleted_thenResourceIsNoLongerAvailable() throws ClientProtocolException, IOException{
 		// Given
