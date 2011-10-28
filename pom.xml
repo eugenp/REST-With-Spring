@@ -22,7 +22,6 @@
       </dependency>
 
       <!-- spring -->
-
       <dependency>
          <groupId>org.springframework</groupId>
          <artifactId>spring-webmvc</artifactId>
@@ -41,15 +40,19 @@
          <scope>runtime</scope>
       </dependency>
 
-      <!-- json -->
+      <!-- json and xml -->
       <dependency>
          <groupId>org.codehaus.jackson</groupId>
          <artifactId>jackson-mapper-asl</artifactId>
          <version>${jackson-mapper-asl.version}</version>
          <scope>runtime</scope>
       </dependency>
-      <!-- <dependency> <groupId>xstream</groupId> <artifactId>xstream</artifactId> <version>${xstream.version}</version> <scope>runtime</scope> 
-         </dependency> -->
+      <dependency>
+         <groupId>javax.xml.bind</groupId>
+         <artifactId>jaxb-api</artifactId>
+         <version>${jaxb-api.version}</version>
+         <scope>runtime</scope>
+      </dependency>
 
       <!-- persistence -->
       <dependency>
@@ -180,6 +183,13 @@
          <groupId>rest-testing</groupId>
          <artifactId>rest-testing</artifactId>
          <version>0.0.1-SNAPSHOT</version>
+         <scope>test</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>com.jayway.restassured</groupId>
+         <artifactId>rest-assured</artifactId>
+         <version>1.4</version>
          <scope>test</scope>
       </dependency>
 
@@ -323,7 +333,7 @@
             <enabled>true</enabled>
          </snapshots>
       </repository>
-      
+
    </repositories>
 
    <properties>
@@ -340,6 +350,7 @@
 
       <jackson-mapper-asl.version>1.8.5</jackson-mapper-asl.version>
       <xstream.version>1.2.2</xstream.version>
+      <jaxb-api.version>2.2.4</jaxb-api.version>
 
       <!-- VERSIONS - persistence -->
       <mysql-connector-java.version>5.1.17</mysql-connector-java.version> <!-- latest version on: 02.10.2011 - http://dev.mysql.com/downloads/connector/j/ -->

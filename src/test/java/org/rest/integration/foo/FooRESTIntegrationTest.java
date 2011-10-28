@@ -12,6 +12,7 @@ import static org.junit.internal.matchers.StringContains.containsString;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpDelete;
@@ -38,43 +39,46 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration( locations = {// @formatter:off
-	"classpath:/test_rest_scan.xml"
-}) 
+		"classpath:/test_rest_scan.xml"
+})
 // @formatter:on
 public class FooRESTIntegrationTest{
+	private static final String MIME_JSON = "application/json";
+	private static final String MIME_XML = "application/xml";
+	
 	private DefaultHttpClient httpClient;
-
+	
 	@Autowired
 	ExamplePaths paths;
-
+	
 	@Autowired
 	FooRESTTemplate restTemplate;
-
+	
 	@Before
 	public final void before(){
 		this.httpClient = new DefaultHttpClient();
 	}
-
+	
 	// GET
-
+	
 	@Test
 	public final void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenNoExceptions() throws ClientProtocolException, IOException{
 		// Given
 		final HttpUriRequest request = new HttpGet( this.paths.getFooURL() + "/" + randomNumeric( 4 ) );
-
+		
 		// When
 		this.httpClient.execute( request );
-
+		
 		// Then
 	}
 	@Test
 	public final void givenResourceForIdDoesNotExist_whenResourceOfThatIdIsRetrieved_then404IsReceived() throws ClientProtocolException, IOException{
 		// Given
 		final HttpUriRequest request = new HttpGet( this.paths.getFooURL() + "/" + randomNumeric( 4 ) );
-
+		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
-
+		
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 404 ) );
 	}
@@ -83,10 +87,10 @@ public class FooRESTIntegrationTest{
 		// Given
 		final long idOfNewResource = this.restTemplate.createResource();
 		final HttpUriRequest request = new HttpGet( this.paths.getFooURL() + "/" + idOfNewResource );
-
+		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
-
+		
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 200 ) );
 	}
@@ -97,12 +101,12 @@ public class FooRESTIntegrationTest{
 		final long idOfNewResource = this.restTemplate.createResource( new Foo( nameOfNewResource ) );
 		
 		final HttpUriRequest request = new HttpGet( this.paths.getFooURL() + "/" + idOfNewResource );
-
+		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
-
+		
 		// Then
-		final Foo resourceFromServer = RetrieveUtil.retrieveResourceFromResponse( response, Foo.class );
+		final Foo resourceFromServer = RetrieveUtil.retrieveResourceFromResponseUsingJSON( response, Foo.class );
 		Assert.assertEquals( nameOfNewResource, resourceFromServer.getName() );
 	}
 	@Test
@@ -112,50 +116,95 @@ public class FooRESTIntegrationTest{
 		final long idOfNewResource = this.restTemplate.createResource( unpersistedResource );
 		
 		final HttpUriRequest request = new HttpGet( this.paths.getFooURL() + "/" + idOfNewResource );
-
+		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
-
+		
 		// Then
-		final Foo resourceFromServer = RetrieveUtil.retrieveResourceFromResponse( response, Foo.class );
+		final Foo resourceFromServer = RetrieveUtil.retrieveResourceFromResponseUsingJSON( response, Foo.class );
 		Assert.assertEquals( unpersistedResource, resourceFromServer );
 	}
 	@Test
 	public final void givenRequestAcceptsJson_whenResourceIsRetrievedById_thenResponseContentTypeIsJson() throws ClientProtocolException, IOException{
 		// Given
-		final Foo unpersistedResource = new Foo( randomAlphabetic( 6 ) );
-		final long idOfNewResource = this.restTemplate.createResource( unpersistedResource );
+		final long idOfNewResource = this.restTemplate.createResource( new Foo( randomAlphabetic( 6 ) ) );
 		
 		final HttpUriRequest request = new HttpGet( this.paths.getFooURL() + "/" + idOfNewResource );
+		request.setHeader( HttpHeaders.ACCEPT, MIME_JSON );
 		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
 		
 		// Then
-		final String valueOfContentTypeHeader = HttpUtil.getHeader( response, "Content-Type" );
-		assertThat( valueOfContentTypeHeader, containsString( "application/json" ) );
+		final String valueOfContentTypeHeader = HttpUtil.getHeader( response, HttpHeaders.CONTENT_TYPE );
+		assertThat( valueOfContentTypeHeader, containsString( MIME_JSON ) );
 	}
-
+	
+	@Test
+	public final void givenResourceForIdExists_whenResourceOfThatIdIsRetrievedAsXML_then200IsReceived() throws ClientProtocolException, IOException{
+		// Given
+		final long idOfNewResource = this.restTemplate.createResource();
+		final HttpUriRequest request = new HttpGet( this.paths.getFooURL() + "/" + idOfNewResource );
+		request.setHeader( HttpHeaders.ACCEPT, MIME_XML );
+		
+		// When
+		final HttpResponse response = this.httpClient.execute( request );
+		
+		// Then
+		assertThat( response.getStatusLine().getStatusCode(), is( 200 ) );
+	}
+	@Test
+	public final void givenRequestAcceptsXML_whenResourceIsRetrievedById_thenResponseContentTypeIsXML() throws ClientProtocolException, IOException{
+		// Given
+		final long idOfNewResource = this.restTemplate.createResource( new Foo( randomAlphabetic( 6 ) ) );
+		
+		final HttpUriRequest request = new HttpGet( this.paths.getFooURL() + "/" + idOfNewResource );
+		request.setHeader( HttpHeaders.ACCEPT, MIME_XML );
+		
+		// When
+		final HttpResponse response = this.httpClient.execute( request );
+		
+		// Then
+		final String valueOfContentTypeHeader = HttpUtil.getHeader( response, HttpHeaders.CONTENT_TYPE );
+		assertThat( valueOfContentTypeHeader, containsString( MIME_XML ) );
+	}
+	@Test
+	public final void givenResourceForIdExists_whenResourceIsRetrievedByIdAsXML_thenRetrievedResourceIsCorrect() throws ClientProtocolException, IOException{
+		// Given
+		final Foo unpersistedResource = new Foo( randomAlphabetic( 6 ) );
+		final long idOfNewResource = this.restTemplate.createResource( unpersistedResource );
+		
+		final HttpUriRequest request = new HttpGet( this.paths.getFooURL() + "/" + idOfNewResource );
+		request.setHeader( HttpHeaders.ACCEPT, MIME_XML );
+		
+		// When
+		final HttpResponse response = this.httpClient.execute( request );
+		
+		// Then
+		final String resourceFromResponse = RetrieveUtil.retrieveResourceFromResponse( response );
+		System.out.println( resourceFromResponse );
+	}
+	
 	// GET (all)
-
+	
 	@Test
 	public final void whenResourcesAreRetrieved_thenNoExceptions() throws ClientProtocolException, IOException{
 		// Given
 		final HttpUriRequest request = new HttpGet( this.paths.getFooURL() );
-
+		
 		// When
 		this.httpClient.execute( request );
-
+		
 		// Then
 	}
 	@Test
 	public final void whenResourcesAreRetrieved_then200IsReceived() throws ClientProtocolException, IOException{
 		// Given
 		final HttpUriRequest request = new HttpGet( this.paths.getFooURL() );
-
+		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
-
+		
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 200 ) );
 	}
@@ -165,26 +214,26 @@ public class FooRESTIntegrationTest{
 		// Given
 		this.restTemplate.createResource();
 		final HttpUriRequest request = new HttpGet( this.paths.getFooURL() );
-
+		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
-		final List resources = RetrieveUtil.retrieveResourceFromResponse( response, List.class );
-
+		final List resources = RetrieveUtil.retrieveResourceFromResponseUsingJSON( response, List.class );
+		
 		// Then
 		assertFalse( resources.isEmpty() );
 	}
-
+	
 	// POST
-
+	
 	@Test
 	public final void whenResourceIsCreated_thenNoExceptions() throws ClientProtocolException, IOException{
 		// Given
 		final HttpPost request = new HttpPost( this.paths.getFooURL() );
 		DecorateUtil.setResourceOnRequestAsJson( request, new Foo( randomAlphabetic( 6 ) ) );
-
+		
 		// When
 		this.httpClient.execute( request );
-
+		
 		// Then
 	}
 	@Test
@@ -192,10 +241,10 @@ public class FooRESTIntegrationTest{
 		// Given
 		final HttpPost request = new HttpPost( this.paths.getFooURL() );
 		DecorateUtil.setResourceOnRequestAsJson( request, new Foo( randomAlphabetic( 6 ) ) );
-
+		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
-
+		
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 201 ) );
 	}
@@ -204,10 +253,10 @@ public class FooRESTIntegrationTest{
 		// Given
 		final HttpPost request = new HttpPost( this.paths.getFooURL() );
 		DecorateUtil.setResourceOnRequestAsJson( request, new Foo( randomAlphabetic( 6 ) ) );
-
+		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
-
+		
 		// Then
 		final long idOfNewResource = ExtractUtil.extractIdFromCreateResponse( response );
 		assertTrue( idOfNewResource > 0 );
@@ -216,16 +265,16 @@ public class FooRESTIntegrationTest{
 	public final void whenNullResourceIsCreated_then415IsReceived() throws ClientProtocolException, IOException{
 		// Given
 		final HttpPost request = new HttpPost( this.paths.getFooURL() );
-
+		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
-
+		
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 415 ) );
 	}
-
+	
 	// PUT
-
+	
 	@Test
 	public final void givenResourceExists_whenResourceIsUpdated_thenNoExceptions() throws ClientProtocolException, IOException{
 		// Given
@@ -234,10 +283,10 @@ public class FooRESTIntegrationTest{
 		
 		final HttpPut request = new HttpPut( this.paths.getFooURL() );
 		DecorateUtil.setJsonOnRequest( request, resourceAsJson );
-
+		
 		// When
 		this.httpClient.execute( request );
-
+		
 		// Then
 	}
 	@Test
@@ -248,10 +297,10 @@ public class FooRESTIntegrationTest{
 		
 		final HttpEntityEnclosingRequestBase request = new HttpPut( this.paths.getFooURL() );
 		DecorateUtil.setJsonOnRequest( request, resourceAsJson );
-
+		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
-
+		
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 200 ) );
 	}
@@ -259,27 +308,27 @@ public class FooRESTIntegrationTest{
 	public final void givenResourceExists_whenResourceIsUpdated_thenUpdatesArePersisted() throws ClientProtocolException, IOException{
 		// Given
 		final long idOfNewResource = this.restTemplate.createResource();
-		final Foo createdEntity = this.restTemplate.getResource( idOfNewResource, Foo.class );
+		final Foo createdEntity = this.restTemplate.getResourceViaJson( idOfNewResource, Foo.class );
 		createdEntity.setName( "new name" );
 		
 		final HttpPut request = new HttpPut( this.paths.getFooURL() );
 		DecorateUtil.setResourceOnRequestAsJson( request, createdEntity );
-
+		
 		// When
 		this.httpClient.execute( request );
-
+		
 		// Then
-		final Foo updatedEntity = this.restTemplate.getResource( idOfNewResource, Foo.class );
+		final Foo updatedEntity = this.restTemplate.getResourceViaJson( idOfNewResource, Foo.class );
 		assertEquals( createdEntity.getName(), updatedEntity.getName() );
 	}
 	@Test
 	public final void whenNullResourceIsUpdated_then415IsReceived() throws ClientProtocolException, IOException{
 		// Given
 		final HttpPut request = new HttpPut( this.paths.getFooURL() );
-
+		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
-
+		
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 415 ) );
 	}
@@ -291,24 +340,24 @@ public class FooRESTIntegrationTest{
 		
 		final HttpPut request = new HttpPut( this.paths.getFooURL() );
 		DecorateUtil.setResourceOnRequestAsJson( request, unpersistedEntity );
-
+		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
-
+		
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 404 ) );
 	}
-
+	
 	// DELETE
-
+	
 	@Test
 	public final void givenResourceDoesNotExist_whenResourceIsDeleted_then404IsReceived() throws ClientProtocolException, IOException{
 		// Given
 		final HttpUriRequest request = new HttpDelete( this.paths.getFooURL() + "/" + randomNumeric( 4 ) );
-
+		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
-
+		
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 404 ) );
 	}
@@ -317,10 +366,10 @@ public class FooRESTIntegrationTest{
 		// Given
 		final long idOfNewResource = this.restTemplate.createResource();
 		final HttpUriRequest request = new HttpDelete( this.paths.getFooURL() + "/" + idOfNewResource );
-
+		
 		// When
 		final HttpResponse response = this.httpClient.execute( request );
-
+		
 		// Then
 		assertThat( response.getStatusLine().getStatusCode(), is( 200 ) );
 	}
@@ -330,11 +379,11 @@ public class FooRESTIntegrationTest{
 		final long idOfNewResource = this.restTemplate.createResource();
 		final HttpUriRequest request = new HttpDelete( this.paths.getFooURL() + "/" + idOfNewResource );
 		this.httpClient.execute( request );
-
+		
 		// When
 		final HttpUriRequest getRequest = new HttpGet( this.paths.getFooURL() + "/" + idOfNewResource );
 		final HttpResponse getResponse = new DefaultHttpClient().execute( getRequest );
-
+		
 		// Then
 		assertThat( getResponse.getStatusLine().getStatusCode(), is( 404 ) );
 	}

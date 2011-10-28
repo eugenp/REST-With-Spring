@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -14,6 +15,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @author eugenp
  */
 @Entity
+@XmlRootElement
 public final class Foo implements Serializable{
 	private static final long serialVersionUID = -2817129135033673162L;
 	
