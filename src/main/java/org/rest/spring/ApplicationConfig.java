@@ -22,5 +22,5 @@ public class ApplicationConfig{
 		ppc.setIgnoreUnresolvablePlaceholders( true );
 		return ppc;
 	}
-
+	
 }

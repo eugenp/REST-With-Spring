@@ -30,19 +30,19 @@ final class FooController{
 	
 	// API
 	
-	@RequestMapping( value = "foo",method = RequestMethod.GET )
+	@RequestMapping( value = "admin/foo",method = RequestMethod.GET )
 	@ResponseBody
 	public final List< Foo > getAll(){
 		return this.service.getAll();
 	}
 	
-	@RequestMapping( value = "foo/{id}",method = RequestMethod.GET )
+	@RequestMapping( value = "admin/foo/{id}",method = RequestMethod.GET )
 	@ResponseBody
 	public final Foo get( @PathVariable( "id" ) final Long id ){
 		return RestPreconditions.checkNotNull( this.service.getById( id ) );
 	}
 	
-	@RequestMapping( value = "foo",method = RequestMethod.POST )
+	@RequestMapping( value = "admin/foo",method = RequestMethod.POST )
 	@ResponseBody
 	@ResponseStatus( HttpStatus.CREATED )
 	public final Long create( @RequestBody final Foo entity ){
@@ -50,7 +50,7 @@ final class FooController{
 		return this.service.create( entity );
 	}
 	
-	@RequestMapping( value = "foo",method = RequestMethod.PUT )
+	@RequestMapping( value = "admin/foo",method = RequestMethod.PUT )
 	@ResponseStatus( HttpStatus.OK )
 	public final void update( @RequestBody final Foo entity ){
 		RestPreconditions.checkNotNullFromRequest( entity );
@@ -58,7 +58,7 @@ final class FooController{
 		this.service.update( entity );
 	}
 	
-	@RequestMapping( value = "foo/{id}",method = RequestMethod.DELETE )
+	@RequestMapping( value = "admin/foo/{id}",method = RequestMethod.DELETE )
 	@ResponseStatus( HttpStatus.OK )
 	public final void delete( @PathVariable( "id" ) final Long id ){
 		this.service.deleteById( id );

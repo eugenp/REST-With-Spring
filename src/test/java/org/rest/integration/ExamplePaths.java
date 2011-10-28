@@ -13,7 +13,7 @@ public final class ExamplePaths{
 	// API
 	
 	public final String getFooURL(){
-		return this.paths.getContext() + "/foo";
+		return this.paths.getContext() + "/admin/foo";
 	}
 	
 }
