@@ -2,10 +2,15 @@ package org.rest.controller.foo;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.rest.common.event.EntityCreated;
 import org.rest.common.util.RestPreconditions;
 import org.rest.model.Foo;
 import org.rest.service.foo.IFooService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +28,9 @@ final class FooController{
 	
 	@Autowired
 	IFooService service;
+	
+	@Autowired
+	ApplicationContext applicationContext;
 	
 	public FooController(){
 		super();
@@ -45,9 +53,13 @@ final class FooController{
 	@RequestMapping( value = "admin/foo",method = RequestMethod.POST )
 	@ResponseBody
 	@ResponseStatus( HttpStatus.CREATED )
-	public final Long create( @RequestBody final Foo entity ){
+	public final Long create( @RequestBody final Foo entity, final HttpServletRequest request, final HttpServletResponse response ){
 		RestPreconditions.checkNotNullFromRequest( entity );
-		return this.service.create( entity );
+		final Long idOfCreatedResource = this.service.create( entity );
+		
+		this.applicationContext.publishEvent( new EntityCreated( this, request, response, idOfCreatedResource ) );
+		
+		return idOfCreatedResource;
 	}
 	
 	@RequestMapping( value = "admin/foo",method = RequestMethod.PUT )

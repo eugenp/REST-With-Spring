@@ -1,4 +1,4 @@
-package org.rest.spring;
+package org.rest.spring.root;
 
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;

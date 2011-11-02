@@ -4,17 +4,18 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import java.io.IOException;
 
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.rest.constants.HttpConstants;
+import org.rest.integration.security.SecurityComponent;
 import org.rest.model.Foo;
 import org.rest.util.common.ExtractUtil;
+import org.rest.util.common.SecurityUtil;
 import org.rest.util.json.ConvertUtil;
 import org.rest.util.json.DecorateUtil;
-import org.rest.util.json.RetrieveUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +30,9 @@ public final class FooRESTTemplate{
 	@Autowired
 	ExamplePaths paths;
 	
+	@Autowired
+	SecurityComponent securityComponent;
+	
 	public FooRESTTemplate(){
 		super();
 	}
@@ -40,7 +44,10 @@ public final class FooRESTTemplate{
 	public final long createResource( final Foo resource ) throws ClientProtocolException, IOException{
 		Preconditions.checkNotNull( resource );
 		
+		final String cookie = this.securityComponent.authenticateAsAdmin();
+		
 		final HttpPost request = new HttpPost( this.paths.getFooURL() );
+		SecurityUtil.decorateRequestWithAuthHeaders( request, cookie );
 		DecorateUtil.setResourceOnRequestAsJson( request, resource );
 		
 		final HttpResponse response = new DefaultHttpClient().execute( request );
@@ -49,18 +56,12 @@ public final class FooRESTTemplate{
 		return idOfNewResource;
 	}
 	
-	/**
-	 * - note: usually, the
-	 */
-	public final String getResourceAsJson( final long id ) throws ClientProtocolException, IOException{
-		final HttpUriRequest request = new HttpGet( this.paths.getFooURL() + "/" + id );
-		final HttpResponse response = new DefaultHttpClient().execute( request );
-		final String jsonFromResponse = RetrieveUtil.retrieveResourceFromResponse( response );
-		return jsonFromResponse;
-	}
-	public final < T >T getResourceViaJson( final long id, final Class< T > clazz ) throws ClientProtocolException, IOException{
-		final String resourceAsJson = this.getResourceAsJson( id );
+	public final < T >T getResourceViaJson( final long id, final Class< T > clazz, final String cookie ) throws ClientProtocolException, IOException{
+		final String resourceAsJson = this.getResourceAsJson( id, cookie );
 		return ConvertUtil.convertJsonToResource( resourceAsJson, clazz );
+	}
+	public final String getResourceAsJson( final long id, final String cookie ){
+		return this.securityComponent.givenAuthenticated( cookie ).header( HttpHeaders.ACCEPT, HttpConstants.MIME_JSON ).get( this.paths.getFooURL() + "/" + id ).asString();
 	}
 	
 }

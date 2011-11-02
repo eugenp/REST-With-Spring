@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xmlns:beans="http://www.springframework.org/schema/beans" xmlns:sec="http://www.springframework.org/schema/security"
-   xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
-	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
-
+<beans:beans 
+   xmlns="http://www.springframework.org/schema/security" 
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:beans="http://www.springframework.org/schema/beans" 
+   xmlns:sec="http://www.springframework.org/schema/security" 
+   xsi:schemaLocation="
+   http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+   
    <http entry-point-ref="restAuthenticationEntryPoint">
-      <intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-      <intercept-url pattern="/contact*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-
-      <intercept-url pattern="/rest/user/**" access="ROLE_USER, ROLE_ADMIN" />
-      <intercept-url pattern="/rest/admin/**" access="ROLE_ADMIN" />
-      <intercept-url pattern="/rest/public/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-
-      <intercept-url pattern="/**" access="ROLE_USER" />
-
+      <intercept-url pattern="/api/admin/**" access="ROLE_ADMIN" />
+      
       <custom-filter ref="myFilter" position="FORM_LOGIN_FILTER" />
 
       <logout />
-
    </http>
 
    <beans:bean id="myFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">

@@ -1,4 +1,4 @@
-package org.rest.spring;
+package org.rest.spring.root;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;

@@ -1,4 +1,4 @@
-package org.rest.spring;
+package org.rest.spring.root;
 
 import java.util.Properties;
 

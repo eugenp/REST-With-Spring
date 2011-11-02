@@ -13,7 +13,11 @@ public final class ExamplePaths{
 	// API
 	
 	public final String getFooURL(){
-		return this.paths.getContext() + "/admin/foo";
+		return this.paths.getContext() + "/api/admin/foo";
+	}
+	
+	public final String getLoginURL(){
+		return this.paths.getContext() + "/j_spring_security_check";
 	}
 	
 }
