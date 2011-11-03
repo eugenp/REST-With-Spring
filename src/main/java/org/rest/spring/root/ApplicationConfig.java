@@ -15,7 +15,7 @@ public class ApplicationConfig{
 	// API
 	
 	@Bean
-	public PropertyPlaceholderConfigurer properties(){
+	public static PropertyPlaceholderConfigurer properties(){
 		final PropertyPlaceholderConfigurer ppc = new PropertyPlaceholderConfigurer();
 		final Resource[] resources = new ClassPathResource[ ] { new ClassPathResource( "persistence.properties" ), new ClassPathResource( "restfull.properties" ) };
 		ppc.setLocations( resources );
