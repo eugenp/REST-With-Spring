@@ -94,6 +94,7 @@ JSON payloads
 * [Bootstrapping a web application with Spring 3.1 and Java based Configuration, part 1](http://www.baeldung.com/2011/10/20/bootstraping-a-web-application-with-spring-3-1-and-java-based-configuration-part-1/)
 * [Building a RESTful Web Service with Spring 3.1 and Java based Configuration, part 2](http://www.baeldung.com/2011/10/25/building-a-restful-web-service-with-spring-3-1-and-java-based-configuration-part-2/)
 * [Securing a RESTful Web Service with Spring Security 3.1, part 3](http://www.baeldung.com/2011/10/31/securing-a-restful-web-service-with-spring-security-3-1-part-3/)
+* [RESTful Web Service Discoverability, part 4](http://www.baeldung.com/2011/11/06/restful-web-service-discoverability-part-4/)
 
 
 

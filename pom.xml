@@ -62,7 +62,7 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-		<!-- json and xml -->
+		<!-- json, xml, atom -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
@@ -73,6 +73,12 @@
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 			<version>${jaxb-api.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>rome</groupId>
+			<artifactId>rome</artifactId>
+			<version>1.0</version>
 			<scope>runtime</scope>
 		</dependency>
 
@@ -200,13 +206,6 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>${commons-lang3.version}</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>rest-testing</groupId>
-			<artifactId>rest-testing</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 

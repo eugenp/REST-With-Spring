@@ -1,6 +1,6 @@
 package org.rest.integration;
 
-import org.rest.test.spring.RESTPaths;
+import org.rest.test.RESTPaths;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +12,12 @@ public final class ExamplePaths{
 	
 	// API
 	
+	public final String getRootURL(){
+		return this.paths.getContext() + "/api/admin";
+	}
+	
 	public final String getFooURL(){
-		return this.paths.getContext() + "/api/admin/foo";
+		return this.getRootURL() + "/foo";
 	}
 	
 	public final String getLoginURL(){
