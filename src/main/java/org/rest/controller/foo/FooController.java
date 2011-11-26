@@ -57,7 +57,7 @@ final class FooController{
 	@RequestMapping( value = "admin/foo",method = RequestMethod.POST )
 	@ResponseStatus( HttpStatus.CREATED )
 	public final void create( @RequestBody final Foo resource, final HttpServletRequest request, final HttpServletResponse response ){
-		RestPreconditions.checkNotNullFromRequest( resource );
+		RestPreconditions.checkRequestElementNotNull( resource );
 		final Long idOfCreatedResource = this.service.create( resource );
 		
 		this.eventPublisher.publishEvent( new ResourceCreated( this, request, response, idOfCreatedResource ) );
@@ -66,7 +66,7 @@ final class FooController{
 	@RequestMapping( value = "admin/foo",method = RequestMethod.PUT )
 	@ResponseStatus( HttpStatus.OK )
 	public final void update( @RequestBody final Foo resource ){
-		RestPreconditions.checkNotNullFromRequest( resource );
+		RestPreconditions.checkRequestElementNotNull( resource );
 		RestPreconditions.checkNotNull( this.service.getById( resource.getId() ) );
 		this.service.update( resource );
 	}

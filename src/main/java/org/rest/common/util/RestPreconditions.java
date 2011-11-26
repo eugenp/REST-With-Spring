@@ -30,11 +30,17 @@ public final class RestPreconditions{
 	 * @return the non-null reference that was validated
 	 * @throws BadRequestException if {@code reference} is null
 	 */
-	public static < T >T checkNotNullFromRequest( final T reference ){
+	public static < T >T checkRequestElementNotNull( final T reference ){
 		if( reference == null ){
 			throw new BadRequestException();
 		}
 		return reference;
 	}
 	
+	public static void checkRequestState( final boolean expression ){
+		if( !expression ){
+			throw new BadRequestException();
+		}
+	}
+
 }

@@ -1,4 +1,4 @@
-package org.rest.integration.util;
+package org.rest.common.util;
 
 public final class HttpConstants{
 	public static final String SET_COOKIE_HEADER = "Set-Cookie";

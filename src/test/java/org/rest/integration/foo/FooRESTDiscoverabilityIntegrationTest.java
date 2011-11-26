@@ -13,15 +13,14 @@ import java.util.List;
 import org.apache.http.HttpHeaders;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.AnyOf;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.rest.common.util.HttpConstants;
 import org.rest.common.util.RESTURIUtil;
 import org.rest.integration.ExamplePaths;
 import org.rest.integration.FooRESTTemplate;
 import org.rest.integration.http.HTTPLinkHeaderUtils;
 import org.rest.integration.security.SecurityComponent;
-import org.rest.integration.util.HttpConstants;
 import org.rest.model.Foo;
 import org.rest.spring.root.ApplicationConfig;
 import org.rest.spring.root.PersistenceConfig;
@@ -46,15 +45,6 @@ public class FooRESTDiscoverabilityIntegrationTest{
 	
 	@Autowired
 	SecurityComponent securityComponent;
-	
-	private String cookie;
-	
-	// fixtures
-	
-	@Before
-	public final void before(){
-		this.cookie = this.securityComponent.authenticateAsAdmin();
-	}
 	
 	// tests
 	
@@ -150,7 +140,7 @@ public class FooRESTDiscoverabilityIntegrationTest{
 	// util
 	
 	private final RequestSpecification givenAuthenticated(){
-		return this.securityComponent.givenAuthenticated( this.cookie );
+		return this.securityComponent.givenAuthenticatedByBasicAuth();
 	}
 	
 }

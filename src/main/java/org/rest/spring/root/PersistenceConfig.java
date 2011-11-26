@@ -64,8 +64,8 @@ public class PersistenceConfig{
 		return new Properties(){
 			{
 				this.put( "hibernate.dialect", PersistenceConfig.this.hibernateDialect );
-				this.put( "hibernate.show_sql", PersistenceConfig.this.hibernateShowSql );
 				this.put( "hibernate.hbm2ddl.auto", PersistenceConfig.this.hibernateHbm2ddlAuto );
+				this.put( "hibernate.show_sql", PersistenceConfig.this.hibernateShowSql );
 				
 				// in progresses still
 				this.put( "hibernate.transaction.factory_class", "org.springframework.orm.hibernate3.SpringTransactionFactory" ); // SpringTransactionFactory.class.getSimpleName()

@@ -1,7 +1,7 @@
 package org.rest.integration.security;
 
+import org.rest.common.util.HttpConstants;
 import org.rest.integration.ExamplePaths;
-import org.rest.integration.util.HttpConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
@@ -23,11 +23,11 @@ public final class SecurityComponent{
 	
 	// API - DO authentication
 	
-	public final String authenticateAsAdmin(){
-		return this.authenticate( ADMIN_USERNAME, ADMIN_PASSWORD );
+	final String authenticateByFormAsAdmin(){
+		return this.authenticateByForm( ADMIN_USERNAME, ADMIN_PASSWORD );
 	}
 	
-	public final String authenticate( final String username, final String password ){
+	private final String authenticateByForm( final String username, final String password ){
 		final Response response = RestAssured.given().param( UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY, username ).param( UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY, password ).post( this.examplePaths.getLoginURL() );
 		
 		Preconditions.checkState( response.getStatusCode() == 302 );
@@ -35,8 +35,11 @@ public final class SecurityComponent{
 		return JSESSIONID + "=" + response.getCookie( JSESSIONID );
 	}
 	
-	public final RequestSpecification givenAuthenticated( final String cookie ){
+	final RequestSpecification givenAuthenticatedByFrom( final String cookie ){
 		return RestAssured.given().header( HttpConstants.COOKIE_HEADER, cookie );
+	}
+	public final RequestSpecification givenAuthenticatedByBasicAuth(){
+		return RestAssured.given().auth().preemptive().basic( SecurityComponent.ADMIN_USERNAME, SecurityComponent.ADMIN_PASSWORD );
 	}
 	
 }

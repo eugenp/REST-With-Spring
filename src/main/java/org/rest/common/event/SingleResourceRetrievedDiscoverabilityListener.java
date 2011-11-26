@@ -3,8 +3,8 @@ package org.rest.common.event;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.rest.common.util.HttpConstants;
 import org.rest.common.util.RESTURIUtil;
-import org.rest.integration.util.HttpConstants;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 

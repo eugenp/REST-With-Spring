@@ -13,14 +13,13 @@ import java.util.List;
 
 import org.apache.http.HttpHeaders;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.rest.common.util.HttpConstants;
 import org.rest.integration.ExamplePaths;
 import org.rest.integration.FooRESTTemplate;
 import org.rest.integration.security.SecurityComponent;
-import org.rest.integration.util.HttpConstants;
 import org.rest.model.Foo;
 import org.rest.spring.root.ApplicationConfig;
 import org.rest.spring.root.PersistenceConfig;
@@ -45,15 +44,6 @@ public class FooRESTIntegrationTest{
 	
 	@Autowired
 	SecurityComponent securityComponent;
-	
-	private String cookie;
-	
-	// fixtures
-	
-	@Before
-	public final void before(){
-		this.cookie = this.securityComponent.authenticateAsAdmin();
-	}
 	
 	// tests
 	
@@ -163,7 +153,7 @@ public class FooRESTIntegrationTest{
 	public final void whenPutIsDoneOnInvalidResource_then400IsReceived(){
 		// Given
 		final String uriForResourceCreation = this.restTemplate.createResource();
-		final String resourceAsJson = this.restTemplate.getResourceAsJson( uriForResourceCreation + "123", this.cookie );
+		final String resourceAsJson = this.restTemplate.getResourceAsJson( uriForResourceCreation + "123" );
 		
 		// When
 		final Response response = this.givenAuthenticated().contentType( HttpConstants.MIME_JSON ).body( resourceAsJson ).put( this.paths.getFooURL() );
@@ -176,7 +166,7 @@ public class FooRESTIntegrationTest{
 	public final void givenResourceExists_whenResourceIsUpdated_thenNoExceptions(){
 		// Given
 		final String uriForResourceCreation = this.restTemplate.createResource();
-		final String resourceAsJson = this.restTemplate.getResourceAsJson( uriForResourceCreation, this.cookie );
+		final String resourceAsJson = this.restTemplate.getResourceAsJson( uriForResourceCreation );
 		
 		// When
 		this.givenAuthenticated().contentType( HttpConstants.MIME_JSON ).body( resourceAsJson ).put( this.paths.getFooURL() );
@@ -185,7 +175,7 @@ public class FooRESTIntegrationTest{
 	public final void givenResourceExists_whenResourceIsUpdated_then200IsReceived(){
 		// Given
 		final String uriForResourceCreation = this.restTemplate.createResource();
-		final String resourceAsJson = this.restTemplate.getResourceAsJson( uriForResourceCreation, this.cookie );
+		final String resourceAsJson = this.restTemplate.getResourceAsJson( uriForResourceCreation );
 		
 		// When
 		final Response response = this.givenAuthenticated().contentType( HttpConstants.MIME_JSON ).body( resourceAsJson ).put( this.paths.getFooURL() );
@@ -259,7 +249,7 @@ public class FooRESTIntegrationTest{
 	// util
 	
 	private final RequestSpecification givenAuthenticated(){
-		return this.securityComponent.givenAuthenticated( this.cookie );
+		return this.securityComponent.givenAuthenticatedByBasicAuth();
 	}
 	
 }

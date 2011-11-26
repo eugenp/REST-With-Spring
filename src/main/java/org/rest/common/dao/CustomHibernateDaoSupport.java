@@ -16,7 +16,6 @@ import com.google.common.base.Preconditions;
  */
 @Transactional( propagation = Propagation.SUPPORTS )
 public class CustomHibernateDaoSupport< T extends Serializable > extends HibernateDaoSupport{
-	
 	protected Class< T > clazz;
 	
 	public CustomHibernateDaoSupport( final Class< T > theClassToSet ){
