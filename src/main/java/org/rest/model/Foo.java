@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -21,8 +20,7 @@ public final class Foo implements Serializable{
 	
 	private Long id;
 	
-	@NotNull
-	@Column( unique = true )
+	@Column( unique = true,nullable = false )
 	private String name;
 	
 	public Foo(){

@@ -1,4 +1,4 @@
-package org.rest.spring.root;
+package org.rest.spring.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;

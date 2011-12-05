@@ -113,33 +113,18 @@
 			<version>${mysql-connector-java.version}</version>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 			<version>${commons-dbcp.version}</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-		<!-- hibernate-commons-annotations seems to be a weird dependency of hibernate-core 
-			<br> - issue: it is old and has a dependency on slf4j-api 1.5.8, which I 
-			cannot shake - issue: there is another 3.3.0.ga version out there - "Version 
-			'3.3.0.ga' was a mistake during the release process, please disregard. There 
-			is not such version 3.3.0.ga." -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>${hibernate-commons-annotations.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>4.2.0.Final</version>
-		</dependency>
-
+		
 		<!-- logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -217,7 +202,7 @@
 		<dependency>
 			<groupId>com.jayway.restassured</groupId>
 			<artifactId>rest-assured</artifactId>
-			<version>1.4</version>
+			<version>1.4.5</version>
 			<scope>test</scope>
 			<exclusions>
 				<exclusion>
@@ -432,16 +417,16 @@
 		<javassist.version>3.15.0-GA</javassist.version>
 		<cglib.version>2.2.2</cglib.version>
 
-		<commons-lang3.version>3.0.1</commons-lang3.version>
+		<commons-lang3.version>3.1</commons-lang3.version>
 		<guava.version>10.0.1</guava.version>
 
-		<jackson-mapper-asl.version>1.8.5</jackson-mapper-asl.version>
+		<jackson-mapper-asl.version>1.9.2</jackson-mapper-asl.version>
 		<xstream.version>1.2.2</xstream.version>
 		<jaxb-api.version>2.2.4</jaxb-api.version>
 
 		<!-- VERSIONS - persistence -->
 		<mysql-connector-java.version>5.1.18</mysql-connector-java.version> <!-- latest version on: 02.10.2011 - http://dev.mysql.com/downloads/connector/j/ -->
-		<hibernate.version>3.6.7.Final</hibernate.version>
+		<hibernate.version>3.6.8.Final</hibernate.version>
 		<hibernate-commons-annotations.version>3.2.0.Final</hibernate-commons-annotations.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 

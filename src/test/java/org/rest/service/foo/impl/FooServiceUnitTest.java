@@ -1,28 +1,37 @@
 package org.rest.service.foo.impl;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.internal.stubbing.defaultanswers.ReturnsMocks;
+import org.rest.common.dao.AbstractDAO;
+import org.rest.common.dao.DAOTestHelper;
 import org.rest.dao.foo.impl.FooDAO;
 import org.rest.model.Foo;
-import org.rest.service.foo.impl.FooService;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class FooServiceUnitTest{
 	
 	FooService instance;
 	
-	private HibernateTemplate hibernateTemplateMock;
+	private Session sessionMock;
 	
 	@Before
 	public final void before(){
 		this.instance = new FooService();
+		
+		final SessionFactory sessionFactoryMock = mock( SessionFactory.class );
 		this.instance.dao = new FooDAO();
-		this.hibernateTemplateMock = mock( HibernateTemplate.class );
-		this.instance.dao.setHibernateTemplate( this.hibernateTemplateMock );
+		DAOTestHelper.initialize( (AbstractDAO< Foo >) this.instance.dao, sessionFactoryMock );
+		this.sessionMock = mock( Session.class, new ReturnsMocks() );
+		doReturn( this.sessionMock ).when( sessionFactoryMock ).getCurrentSession();
 	}
 	
 	//
@@ -57,13 +66,15 @@ public class FooServiceUnitTest{
 		this.instance.create( new Foo( "testName" ) );
 		
 		// Then
-		verify( this.hibernateTemplateMock ).save( any( Foo.class ) );
+		verify( this.sessionMock ).persist( any( Foo.class ) );
 	}
 	
 	// get
 	
 	@Test
 	public final void whenGetIsTriggered_thenNoException(){
+		this.configureGet( 1l );
+		
 		// When
 		this.instance.getById( 1l );
 		
@@ -80,11 +91,12 @@ public class FooServiceUnitTest{
 	
 	@Test
 	public final void whenGetIsTriggered_thenEntityIsRetrieved(){
+		this.configureGet( 1l );
 		// When
 		this.instance.getById( 1l );
 		
 		// Then
-		verify( this.hibernateTemplateMock ).get( Foo.class, 1l );
+		verify( this.sessionMock ).get( Foo.class, 1l );
 	}
 	
 	// update
@@ -112,7 +124,7 @@ public class FooServiceUnitTest{
 		this.instance.update( entity );
 		
 		// Then
-		verify( this.hibernateTemplateMock ).saveOrUpdate( entity );
+		verify( this.sessionMock ).merge( entity );
 	}
 	
 	// delete
@@ -140,7 +152,7 @@ public class FooServiceUnitTest{
 		this.instance.delete( entity );
 		
 		// Then
-		verify( this.hibernateTemplateMock ).delete( entity );
+		verify( this.sessionMock ).delete( entity );
 	}
 	
 	// getAll
@@ -159,7 +171,16 @@ public class FooServiceUnitTest{
 		this.instance.getAll();
 		
 		// Then
-		verify( this.hibernateTemplateMock ).loadAll( Foo.class );
+		verify( this.sessionMock ).createQuery( anyString() );
+	}
+	
+	// mocking behavior
+	
+	final Foo configureGet( final long id ){
+		final Foo entity = new Foo();
+		entity.setId( id );
+		when( this.sessionMock.get( Foo.class, id ) ).thenReturn( entity );
+		return entity;
 	}
 	
 }

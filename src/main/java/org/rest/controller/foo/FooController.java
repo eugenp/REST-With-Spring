@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-/**
- * @author eugenp
- */
 @Controller
 final class FooController{
 	
@@ -58,9 +55,9 @@ final class FooController{
 	@ResponseStatus( HttpStatus.CREATED )
 	public final void create( @RequestBody final Foo resource, final HttpServletRequest request, final HttpServletResponse response ){
 		RestPreconditions.checkRequestElementNotNull( resource );
-		final Long idOfCreatedResource = this.service.create( resource );
+		this.service.create( resource );
 		
-		this.eventPublisher.publishEvent( new ResourceCreated( this, request, response, idOfCreatedResource ) );
+		this.eventPublisher.publishEvent( new ResourceCreated( this, request, response, resource.getId() ) );
 	}
 	
 	@RequestMapping( value = "admin/foo",method = RequestMethod.PUT )

@@ -15,7 +15,9 @@
 		</encoder>
 	</appender>
 
-	<root level="debug">
+	<logger name="org.hibernate" level="WARN" />
+
+	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
 	</root>

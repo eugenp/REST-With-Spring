@@ -16,10 +16,9 @@ import com.google.common.base.Preconditions;
 /**
  * @author eugenp
  */
-// TODO: later on this should not be public
 @Service
 @Transactional( propagation = Propagation.REQUIRED )
-public class FooService implements IFooService{
+class FooService implements IFooService{
 	
 	@Autowired
 	IFooDAO dao;
@@ -36,8 +35,8 @@ public class FooService implements IFooService{
 	}
 	
 	@Override
-	public Long create( final Foo entity ){
-		return this.dao.create( entity );
+	public void create( final Foo entity ){
+		this.dao.create( entity );
 	}
 	
 	@Override
@@ -63,7 +62,7 @@ public class FooService implements IFooService{
 		
 		final Foo entity = this.getById( id );
 		RestPreconditions.checkNotNull( entity );
-
+		
 		this.delete( entity );
 	}
 	

@@ -14,9 +14,9 @@ public interface ICommonOperations< T extends Serializable >{
 	
 	List< T > getAll();
 	
-	// create
+	// create/persist
 	
-	Long create( final T entity );
+	void create( final T entity );
 	
 	// update
 	
