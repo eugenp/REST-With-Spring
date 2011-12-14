@@ -1,11 +1,12 @@
-package org.rest.common.dao;
+package org.rest.common.dao.jpa;
 
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.classic.Session;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.rest.common.dao.ICommonOperations;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,13 +14,23 @@ import com.google.common.base.Preconditions;
 
 @SuppressWarnings( "unchecked" )
 @Transactional( propagation = Propagation.SUPPORTS )
-public abstract class AbstractDAO< T extends Serializable > implements ICommonOperations< T >{
-	private final Class< T > clazz;
+public abstract class AbstractJpaDAO< T extends Serializable > implements ICommonOperations< T >{
+	private Class< T > clazz;
 	
-	@Autowired
-	SessionFactory sessionFactory;
+	protected EntityManager entityManager;
 	
-	public AbstractDAO( final Class< T > clazzToSet ){
+	public AbstractJpaDAO(){
+		super();
+	}
+	
+	//
+	@PersistenceContext
+	public void setEm( final EntityManager emToSet ){
+		Preconditions.checkNotNull( emToSet );
+		this.entityManager = emToSet;
+	}
+	
+	public void setClazz( final Class< T > clazzToSet ){
 		Preconditions.checkNotNull( clazzToSet );
 		this.clazz = clazzToSet;
 	}
@@ -31,13 +42,13 @@ public abstract class AbstractDAO< T extends Serializable > implements ICommonOp
 	public T getById( final Long id ){
 		Preconditions.checkArgument( id != null );
 		
-		return (T) this.getCurrentSession().get( this.clazz, id );
+		return this.entityManager.find( this.clazz, id );
 	}
 	
 	@Override
 	@Transactional( readOnly = true )
 	public List< T > getAll(){
-		return this.getCurrentSession().createQuery( "from " + this.clazz.getName() ).list();
+		return this.entityManager.createQuery( "from " + this.clazz.getName() ).getResultList();
 	}
 	
 	// create/persist
@@ -46,7 +57,7 @@ public abstract class AbstractDAO< T extends Serializable > implements ICommonOp
 	public void create( final T entity ){
 		Preconditions.checkNotNull( entity );
 		
-		this.getCurrentSession().persist( entity );
+		this.entityManager.persist( entity );
 	}
 	
 	// update
@@ -55,7 +66,7 @@ public abstract class AbstractDAO< T extends Serializable > implements ICommonOp
 	public void update( final T entity ){
 		Preconditions.checkNotNull( entity );
 		
-		this.getCurrentSession().merge( entity );
+		this.entityManager.merge( entity );
 	}
 	
 	// delete
@@ -64,7 +75,7 @@ public abstract class AbstractDAO< T extends Serializable > implements ICommonOp
 	public void delete( final T entity ){
 		Preconditions.checkNotNull( entity );
 		
-		this.getCurrentSession().delete( entity );
+		this.entityManager.remove( entity );
 	}
 	
 	public void deleteById( final Long entityId ){
@@ -72,12 +83,6 @@ public abstract class AbstractDAO< T extends Serializable > implements ICommonOp
 		Preconditions.checkState( entity != null );
 		
 		this.delete( entity );
-	}
-	
-	// util
-	
-	protected Session getCurrentSession(){
-		return this.sessionFactory.getCurrentSession();
 	}
 	
 }

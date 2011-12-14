@@ -2,8 +2,8 @@ package org.rest.service.foo.impl;
 
 import java.util.List;
 
+import org.rest.common.dao.IGenericDAO;
 import org.rest.common.util.RestPreconditions;
-import org.rest.dao.foo.IFooDAO;
 import org.rest.model.Foo;
 import org.rest.service.foo.IFooService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +20,18 @@ import com.google.common.base.Preconditions;
 @Transactional( propagation = Propagation.REQUIRED )
 class FooService implements IFooService{
 	
-	@Autowired
-	IFooDAO dao;
+	IGenericDAO< Foo > dao;
 	
 	public FooService(){
 		super();
+	}
+	
+	// Spring
+	
+	@Autowired
+	public final void setDao( final IGenericDAO< Foo > daoToSet ){
+		this.dao = daoToSet;
+		this.dao.setClazz( Foo.class );
 	}
 	
 	// API

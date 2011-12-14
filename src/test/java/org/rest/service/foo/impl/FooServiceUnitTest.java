@@ -12,9 +12,9 @@ import org.hibernate.classic.Session;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.internal.stubbing.defaultanswers.ReturnsMocks;
-import org.rest.common.dao.AbstractDAO;
-import org.rest.common.dao.DAOTestHelper;
-import org.rest.dao.foo.impl.FooDAO;
+import org.rest.common.dao.hibernate.AbstractHibernateDAO;
+import org.rest.common.dao.hibernate.DAOTestHelper;
+import org.rest.common.dao.hibernate.GenericHibernateDAO;
 import org.rest.model.Foo;
 
 public class FooServiceUnitTest{
@@ -23,13 +23,15 @@ public class FooServiceUnitTest{
 	
 	private Session sessionMock;
 	
+	@SuppressWarnings( "unchecked" )
 	@Before
 	public final void before(){
 		this.instance = new FooService();
 		
 		final SessionFactory sessionFactoryMock = mock( SessionFactory.class );
-		this.instance.dao = new FooDAO();
-		DAOTestHelper.initialize( (AbstractDAO< Foo >) this.instance.dao, sessionFactoryMock );
+		this.instance.setDao( new GenericHibernateDAO< Foo >() );
+		this.instance.dao.setClazz( Foo.class );
+		DAOTestHelper.initialize( (AbstractHibernateDAO< Foo >) this.instance.dao, sessionFactoryMock );
 		this.sessionMock = mock( Session.class, new ReturnsMocks() );
 		doReturn( this.sessionMock ).when( sessionFactoryMock ).getCurrentSession();
 	}

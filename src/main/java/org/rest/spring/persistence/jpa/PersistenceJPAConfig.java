@@ -1,4 +1,4 @@
-package org.rest.spring.persistence.hibernate;
+package org.rest.spring.persistence.jpa;
 
 import java.util.Properties;
 
@@ -10,14 +10,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate3.HibernateTransactionManager;
-import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@Profile( "hibernate" )
+@Profile( "jpa" )
 @Configuration
 @EnableTransactionManagement
-public class PersistenceHibernateConfig{
+public class PersistenceJPAConfig{
 	
 	@Value( "${driverClassName}" )
 	private String driverClassName;
@@ -37,12 +40,23 @@ public class PersistenceHibernateConfig{
 	// beans
 	
 	@Bean
-	public AnnotationSessionFactoryBean alertsSessionFactoryBean(){
-		final AnnotationSessionFactoryBean sessionFactory = new AnnotationSessionFactoryBean();
-		sessionFactory.setDataSource( this.restDataSource() );
-		sessionFactory.setPackagesToScan( new String[ ] { "org.rest" } );
-		sessionFactory.setHibernateProperties( this.hibernateProperties() );
-		return sessionFactory;
+	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(){
+		final LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+		factoryBean.setDataSource( this.restDataSource() );
+		factoryBean.setPackagesToScan( new String[ ] { "org.rest" } );
+		
+		final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter(){
+			{
+				this.setDatabasePlatform( PersistenceJPAConfig.this.persistenceDialect );
+				this.setShowSql( PersistenceJPAConfig.this.hibernateShowSql );
+				this.setGenerateDdl( true );
+			}
+		};
+		factoryBean.setJpaVendorAdapter( vendorAdapter );
+		
+		factoryBean.setJpaProperties( this.additionlProperties() );
+		
+		return factoryBean;
 	}
 	
 	@Bean
@@ -56,9 +70,9 @@ public class PersistenceHibernateConfig{
 	}
 	
 	@Bean
-	public HibernateTransactionManager transactionManager(){
-		final HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-		transactionManager.setSessionFactory( this.alertsSessionFactoryBean().getObject() );
+	public PlatformTransactionManager transactionManager(){
+		final JpaTransactionManager transactionManager = new JpaTransactionManager();
+		transactionManager.setEntityManagerFactory( this.entityManagerFactoryBean().getObject() );
 		
 		return transactionManager;
 	}
@@ -68,18 +82,11 @@ public class PersistenceHibernateConfig{
 		return new PersistenceExceptionTranslationPostProcessor();
 	}
 	
-	// util
-	
-	final Properties hibernateProperties(){
+	//
+	final Properties additionlProperties(){
 		return new Properties(){
 			{
-				this.put( "persistence.dialect", PersistenceHibernateConfig.this.persistenceDialect );
-				this.put( "hibernate.hbm2ddl.auto", PersistenceHibernateConfig.this.hibernateHbm2ddlAuto );
-				this.put( "hibernate.show_sql", PersistenceHibernateConfig.this.hibernateShowSql );
-				
-				// NO NEED FOR THESE
-				// this.put( "hibernate.transaction.factory_class", "org.springframework.orm.hibernate3.SpringTransactionFactory" ); // SpringTransactionFactory.class.getSimpleName()
-				// this.put( "hibernate.current_session_context_class", "org.springframework.orm.hibernate3.SpringSessionContext" );
+				// use this to inject additional properties in the EntityManager
 			}
 		};
 	}

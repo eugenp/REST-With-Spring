@@ -1,8 +1,9 @@
-package org.rest.common.dao;
+package org.rest.common.dao.hibernate;
 
 import java.io.Serializable;
 
 import org.hibernate.SessionFactory;
+import org.rest.common.dao.hibernate.AbstractHibernateDAO;
 
 import com.google.common.base.Preconditions;
 
@@ -14,7 +15,7 @@ public final class DAOTestHelper{
 	
 	// API
 	
-	public static < T extends Serializable >void initialize( final AbstractDAO< T > dao, final SessionFactory sessionFactory ){
+	public static < T extends Serializable >void initialize( final AbstractHibernateDAO< T > dao, final SessionFactory sessionFactory ){
 		Preconditions.checkNotNull( dao );
 		Preconditions.checkNotNull( sessionFactory );
 		Preconditions.checkState( dao.sessionFactory == null );

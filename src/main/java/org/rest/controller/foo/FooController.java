@@ -2,11 +2,10 @@ package org.rest.controller.foo;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.rest.common.event.ResourceCreated;
-import org.rest.common.event.SingleResourceRetrieved;
+import org.rest.common.event.ResourceCreatedEvent;
+import org.rest.common.event.SingleResourceRetrievedEvent;
 import org.rest.common.util.RestPreconditions;
 import org.rest.model.Foo;
 import org.rest.service.foo.IFooService;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 final class FooController{
@@ -44,20 +44,20 @@ final class FooController{
 	
 	@RequestMapping( value = "admin/foo/{id}",method = RequestMethod.GET )
 	@ResponseBody
-	public final Foo get( @PathVariable( "id" ) final Long id, final HttpServletRequest request, final HttpServletResponse response ){
+	public final Foo get( @PathVariable( "id" ) final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		final Foo resourceById = RestPreconditions.checkNotNull( this.service.getById( id ) );
 		
-		this.eventPublisher.publishEvent( new SingleResourceRetrieved( this, request, response ) );
+		this.eventPublisher.publishEvent( new SingleResourceRetrievedEvent< Foo >( Foo.class, uriBuilder, response ) );
 		return resourceById;
 	}
 	
 	@RequestMapping( value = "admin/foo",method = RequestMethod.POST )
 	@ResponseStatus( HttpStatus.CREATED )
-	public final void create( @RequestBody final Foo resource, final HttpServletRequest request, final HttpServletResponse response ){
+	public final void create( @RequestBody final Foo resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		RestPreconditions.checkRequestElementNotNull( resource );
 		this.service.create( resource );
 		
-		this.eventPublisher.publishEvent( new ResourceCreated( this, request, response, resource.getId() ) );
+		this.eventPublisher.publishEvent( new ResourceCreatedEvent< Foo >( Foo.class, uriBuilder, response, resource.getId() ) );
 	}
 	
 	@RequestMapping( value = "admin/foo",method = RequestMethod.PUT )

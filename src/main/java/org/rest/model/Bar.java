@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class Foo implements Serializable{
+public class Bar implements Serializable{
 	
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -23,10 +23,10 @@ public class Foo implements Serializable{
 	@Column( unique = true,nullable = false )
 	private String name;
 	
-	public Foo(){
+	public Bar(){
 		super();
 	}
-	public Foo( final String nameToSet ){
+	public Bar( final String nameToSet ){
 		super();
 		
 		this.name = nameToSet;
@@ -65,7 +65,7 @@ public class Foo implements Serializable{
 			return false;
 		if( this.getClass() != obj.getClass() )
 			return false;
-		final Foo other = (Foo) obj;
+		final Bar other = (Bar) obj;
 		if( this.name == null ){
 			if( other.name != null )
 				return false;
@@ -79,5 +79,4 @@ public class Foo implements Serializable{
 	public String toString(){
 		return "Foo [name=" + this.name + "]";
 	}
-	
 }

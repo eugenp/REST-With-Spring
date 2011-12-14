@@ -11,13 +11,13 @@
 
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="persistence.dialect">${persistence.dialect}</prop>
 				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
 
 				<!-- in progresses still -->
-				<prop key="hibernate.transaction.factory_class">org.springframework.orm.hibernate3.SpringTransactionFactory</prop>
-				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate3.SpringSessionContext</prop>
+				<!--<prop key="hibernate.transaction.factory_class">org.springframework.orm.hibernate3.SpringTransactionFactory</prop> -->
+				<!--<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate3.SpringSessionContext</prop> -->
 			</props>
 		</property>
 	</bean>

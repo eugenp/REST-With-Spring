@@ -9,6 +9,7 @@ import org.springframework.core.io.Resource;
 
 @Configuration
 @ComponentScan( basePackages = "org.rest",excludeFilters = { @ComponentScan.Filter( Configuration.class ) } )
+// ,excludeFilters = { @ComponentScan.Filter( Configuration.class ) } )
 // @PropertySource( { "classpath:persistence.properties", "classpath:restfull.properties" } )
 public class ApplicationConfig{
 	
