@@ -16,6 +16,8 @@
 	</appender>
 
 	<logger name="org.hibernate" level="WARN" />
+	<logger name="org.springframework" level="WARN" />
+	<logger name="org.springframework.transaction" level="WARN" />
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />

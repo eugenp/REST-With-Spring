@@ -26,10 +26,10 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>org.rest.spring</param-value>
 	</context-param>
-	<context-param>
+	<!-- <context-param>
 		<param-name>spring.profiles.active</param-name>
 		<param-value>jpa</param-value>
-	</context-param>
+	</context-param> -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>

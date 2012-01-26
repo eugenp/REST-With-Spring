@@ -39,7 +39,7 @@ public final class ResourceCreatedEvent< T extends Serializable > extends Applic
 	}
 	@SuppressWarnings( "unchecked" )
 	public final Class< T > getClazz(){
-		return (Class< T >) this.getSource();
+		return (Class< T >) getSource();
 	}
 	
 }

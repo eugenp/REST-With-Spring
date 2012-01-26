@@ -1,7 +1,52 @@
-## Overview
+# Overview
 
-This is a **learning project**, and can be used as a starting point for a **RESTful web service** implemented with **Spring 3.1** and Java configuration. <br/> <br/>
+This is a **learning project**; it's purpose be used as a starting point for a **RESTful web service** implemented with **Spring 3.1** and Java configuration and to provide solutions to the common requirements necessary to properly implement REST <br/>
 
+# Technology Stack
+The project uses the following technologies: <br/>
+- **web/REST**: Spring 3.1 <br/>
+- **marshalling**: Jackson (for JSON) and XStream (for XML) <br/>
+- **persistence**: JPA, Spring Data JPA and Hibernate <br/>
+- **testing**: Junit, Hamcrest, Mockito, rest-assured <br/>
+
+
+# THE PERSISTENCE LAYER (technical notes)
+### The DAO layer
+- to create a new DAO, only the interface needs to be created; **Spring Data JPA** will generates the DAO implementation automatically
+- the DAO interface MUST extend the Spring Data managed interface: _JpaRepository_ (with the correct parametrization)
+- the DAO layer is **aware** of the persistence engine it uses; this information MUST be encoded in the name; for **example**: _IPrincipalJpaDAO_ for JPA instead of just _IPrincipalDAO_
+
+
+### The Service layer
+- all Service interfaces MUST extend the _IService_ interface (with the proper parametrization)
+- all Service implementations MUST extend the _AbstractService_ abstract class (with the proper parametrization)
+- extending _AbstractService_ and _IService_ enables a base of consistent and common functionality across services
+- the Service artifacts MUST be annotated with the _@Service_ annotation
+
+- the Service layer is **not aware** of the persistence engine it uses (indirectly); if the persistence engine will change, the DAO artifacts will change, and the service will not
+
+
+
+# THE WEB LAYER (technical notes)
+### The Controller layer
+- the Controller layer MUST only use the Service layer directly (never the DAO layer)
+- the Controller layer SHOULD not implement any interface
+- the Controller layer MUST extend _AbstractController_ (with the proper parametrization)
+- the Controller artifacts MUST be annotated with the _@Controller_ annotation
+
+
+## Transaction Management and Configuration (technical notes)
+- the Service layer is the transaction owner (and is annotated with _@Transactional_)
+- the default transaction semantics are: propagation REQUIRED, default isolation, rollback on runtime exceptions
+- **NOTE**: the transactional semantics MAY be subject to change
+
+
+# Eclipse
+- see the [Eclipse wiki page](https://github.com/eugenp/REST/wiki/Eclipse:-Setup-and-Configuration) of this project
+
+
+
+# A Learning Project
 Because it's a learning project, most of it's implementation is explained carefully and in great detail, in a series of posts:
 ### Spring and Maven basics <br/>
 - [Java based Spring Configuration](http://www.baeldung.com/2011/10/20/bootstraping-a-web-application-with-spring-3-1-and-java-based-configuration-part-1/) <br/>
@@ -26,19 +71,3 @@ Because it's a learning project, most of it's implementation is explained carefu
 ### Testing <br/>
 - [**Integration testing** of the REST service](http://www.baeldung.com/2011/10/13/integration-testing-a-rest-api/) <br/>
 - [Comprehensive unit testing of the web tier, focusing on relevant behaviors to avoid brittleness](http://www.baeldung.com/2011/10/02/testing-the-service-layer/) <br/>
-
-
-## TECHNOLOGY STACK
-
-- Spring 3.1 with Jackson, JAXB <br/>
-- Hibernate 3.6 (to be moved to Hibernate 4.0 soon) <br/>
-- Junit, Mockito, Hamcrest, rest-assured <br/>
-
-
-
-## FURTHER DEVELOPMENT
-======================
-
-* improvements in validation and HTTP response codes
-* improving the marshaling of the server stack trace
-* expand on the design document, covering: details of the transaction strategy

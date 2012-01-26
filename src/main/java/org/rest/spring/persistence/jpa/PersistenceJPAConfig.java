@@ -6,30 +6,32 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@Profile( "jpa" )
 @Configuration
 @EnableTransactionManagement
+@ComponentScan( { "org.rest.persistence", "org.rest.poc.persistence" } )
+@ImportResource( "classpath*:*springDataConfig.xml" )
 public class PersistenceJPAConfig{
 	
-	@Value( "${driverClassName}" )
+	@Value( "${jdbc.driverClassName}" )
 	private String driverClassName;
 	
-	@Value( "${url}" )
+	@Value( "${jdbc.url}" )
 	private String url;
 	
-	@Value( "${persistence.dialect}" )
-	String persistenceDialect;
+	@Value( "${hibernate.dialect}" )
+	String hibernateDialect;
 	
 	@Value( "${hibernate.show_sql}" )
 	boolean hibernateShowSql;
@@ -42,19 +44,20 @@ public class PersistenceJPAConfig{
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(){
 		final LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-		factoryBean.setDataSource( this.restDataSource() );
+		factoryBean.setDataSource( restDataSource() );
 		factoryBean.setPackagesToScan( new String[ ] { "org.rest" } );
 		
 		final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter(){
 			{
-				this.setDatabasePlatform( PersistenceJPAConfig.this.persistenceDialect );
-				this.setShowSql( PersistenceJPAConfig.this.hibernateShowSql );
-				this.setGenerateDdl( true );
+				setDatabase( Database.MYSQL );
+				setDatabasePlatform( hibernateDialect );
+				setShowSql( hibernateShowSql );
+				setGenerateDdl( true );
 			}
 		};
 		factoryBean.setJpaVendorAdapter( vendorAdapter );
 		
-		factoryBean.setJpaProperties( this.additionlProperties() );
+		factoryBean.setJpaProperties( additionlProperties() );
 		
 		return factoryBean;
 	}
@@ -62,17 +65,17 @@ public class PersistenceJPAConfig{
 	@Bean
 	public DataSource restDataSource(){
 		final DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName( this.driverClassName );
-		dataSource.setUrl( this.url );
+		dataSource.setDriverClassName( driverClassName );
+		dataSource.setUrl( url );
 		dataSource.setUsername( "restUser" );
 		dataSource.setPassword( "restmy5ql" );
 		return dataSource;
 	}
 	
 	@Bean
-	public PlatformTransactionManager transactionManager(){
+	public JpaTransactionManager transactionManager(){
 		final JpaTransactionManager transactionManager = new JpaTransactionManager();
-		transactionManager.setEntityManagerFactory( this.entityManagerFactoryBean().getObject() );
+		transactionManager.setEntityManagerFactory( entityManagerFactoryBean().getObject() );
 		
 		return transactionManager;
 	}
