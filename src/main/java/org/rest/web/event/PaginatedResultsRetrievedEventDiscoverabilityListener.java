@@ -9,12 +9,12 @@ import static org.rest.common.util.RESTURIUtil.createLinkHeader;
 import javax.servlet.http.HttpServletResponse;
 
 import org.rest.common.event.PaginatedResultsRetrievedEvent;
-import org.rest.common.util.HttpConstants;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.common.base.Preconditions;
+import com.google.common.net.HttpHeaders;
 
 @SuppressWarnings( "rawtypes" )
 @Component
@@ -25,7 +25,7 @@ final class PaginatedResultsRetrievedEventDiscoverabilityListener implements App
 	@Override
 	public final void onApplicationEvent( final PaginatedResultsRetrievedEvent ev ){
 		Preconditions.checkNotNull( ev );
-
+		
 		addLinkHeaderOnPagedResourceRetrieval( ev.getUriBuilder(), ev.getResponse(), ev.getClazz(), ev.getPage(), ev.getTotalPages(), ev.getPageSize() );
 	}
 	
@@ -56,7 +56,7 @@ final class PaginatedResultsRetrievedEventDiscoverabilityListener implements App
 			linkHeader.append( createLinkHeader( uriForLastPage, REL_LAST ) );
 		}
 		
-		response.addHeader( HttpConstants.LINK_HEADER, linkHeader.toString() );
+		response.addHeader( HttpHeaders.LINK, linkHeader.toString() );
 	}
 	
 	final String constructNextPageUri( final UriComponentsBuilder uriBuilder, final int page, final int size ){

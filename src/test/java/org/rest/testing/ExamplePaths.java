@@ -18,15 +18,15 @@ public final class ExamplePaths{
 	/**
 	 * - note: there is no final '1'; if necessary, it needs to be added
 	 */
-	public final String getFooUri(){
-		return getRootUri() + "/foo";
+	public final String getUserUri(){
+		return getRootUri() + "/user";
 	}
-	public final String getBarUri(){
-		return getRootUri() + "/bar";
+	public final String getPrivilegeUri(){
+		return getRootUri() + "/privilege";
 	}
 	
-	public final String getLoginUri(){
-		return paths.getContext() + "/j_spring_security_check";
+	public final String getAuthenticationUri(){
+		return getRootUri() + "/authentication";
 	}
 	
 }

@@ -129,13 +129,13 @@ public abstract class AbstractController< T extends IEntity >{
 			getService().delete( id );
 		}
 		catch( final InvalidDataAccessApiUsageException dataEx ){
-			logger.error( "InvalidDataAccessApiUsageException on update operation" );
-			logger.warn( "InvalidDataAccessApiUsageException on update operation", dataEx );
+			logger.error( "InvalidDataAccessApiUsageException on delete operation" );
+			logger.warn( "InvalidDataAccessApiUsageException on delete operation", dataEx );
 			throw new ResourceNotFoundException( dataEx );
 		}
-		catch( final Exception ex ){
-			// note: temporary (it will become a data access exception)
-			logger.error( "", ex );
+		catch( final DataAccessException dataEx ){
+			logger.error( "DataAccessException on delete operation" );
+			logger.warn( "DataAccessException on delete operation", dataEx );
 		}
 	}
 	

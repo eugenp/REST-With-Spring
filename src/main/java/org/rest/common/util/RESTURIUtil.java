@@ -1,6 +1,5 @@
 package org.rest.common.util;
 
-
 public final class RESTURIUtil{
 	
 	public static final String REL_COLLECTION = "collection";

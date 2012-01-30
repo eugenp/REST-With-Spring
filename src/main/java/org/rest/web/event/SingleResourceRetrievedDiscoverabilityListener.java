@@ -3,13 +3,13 @@ package org.rest.web.event;
 import javax.servlet.http.HttpServletResponse;
 
 import org.rest.common.event.SingleResourceRetrievedEvent;
-import org.rest.common.util.HttpConstants;
 import org.rest.common.util.RESTURIUtil;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.common.base.Preconditions;
+import com.google.common.net.HttpHeaders;
 
 @SuppressWarnings( "rawtypes" )
 @Component
@@ -27,7 +27,7 @@ final class SingleResourceRetrievedDiscoverabilityListener implements Applicatio
 		final String uriForResourceCreation = uriBuilder.path( "/admin/" + resourceName ).build().encode().toUriString();
 		
 		final String linkHeaderValue = RESTURIUtil.createLinkHeader( uriForResourceCreation, RESTURIUtil.REL_COLLECTION );
-		response.addHeader( HttpConstants.LINK_HEADER, linkHeaderValue );
+		response.addHeader( HttpHeaders.LINK, linkHeaderValue );
 	}
-
+	
 }

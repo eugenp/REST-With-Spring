@@ -7,7 +7,7 @@ import static org.junit.internal.matchers.StringContains.containsString;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.IEntity;
-import org.rest.test.integration.test.AbstractRESTIntegrationTest;
+import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.testing.template.ITemplate;
 import org.springframework.http.MediaType;
 

@@ -1,7 +1,7 @@
 package org.rest.testing.marshaller;
 
-import org.rest.poc.model.Bar;
-import org.rest.poc.model.Foo;
+import org.rest.poc.model.Privilege;
+import org.rest.poc.model.User;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +18,8 @@ public final class XStreamMarshaller implements IMarshaller{
 
 		xstream = new XStream();
 		xstream.autodetectAnnotations( true );
-		xstream.processAnnotations( Foo.class );
-		xstream.processAnnotations( Bar.class );
+		xstream.processAnnotations( User.class );
+		xstream.processAnnotations( Privilege.class );
 	}
 	
 	// API

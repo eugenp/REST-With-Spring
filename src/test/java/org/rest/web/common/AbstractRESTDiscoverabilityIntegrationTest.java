@@ -8,22 +8,20 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
-import org.apache.http.HttpHeaders;
 import org.hamcrest.core.AnyOf;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.IEntity;
-import org.rest.common.util.HttpConstants;
 import org.rest.common.util.RESTURIUtil;
-import org.rest.test.integration.test.AbstractRESTIntegrationTest;
+import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.testing.marshaller.IMarshaller;
-import org.rest.testing.security.SecurityUtil;
 import org.rest.testing.template.ITemplate;
 import org.rest.web.http.HTTPLinkHeaderUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.google.common.base.Preconditions;
+import com.google.common.net.HttpHeaders;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
@@ -56,7 +54,7 @@ public abstract class AbstractRESTDiscoverabilityIntegrationTest< T extends IEnt
 		final Response response = this.getTemplate().createResourceAndGetAsResponse();
 		
 		// Then
-		final String linkHeader = response.getHeader( HttpConstants.LINK_HEADER );
+		final String linkHeader = response.getHeader( HttpHeaders.LINK );
 		final String uriForResourceCreation = HTTPLinkHeaderUtils.extractSingleURI( linkHeader );
 		final Response secondCreationResponse = this.givenAuthenticated().contentType( marshaller.getMime() ).body( this.createNewEntity() ).post( uriForResourceCreation );
 		assertThat( secondCreationResponse.getStatusCode(), is( 201 ) );
@@ -71,7 +69,7 @@ public abstract class AbstractRESTDiscoverabilityIntegrationTest< T extends IEnt
 		final Response getResponse = this.getTemplate().getResourceAsResponse( uriOfExistingResource );
 		
 		// Then
-		final String uriToAllResources = HTTPLinkHeaderUtils.extractURIByRel( getResponse.getHeader( HttpConstants.LINK_HEADER ), RESTURIUtil.REL_COLLECTION );
+		final String uriToAllResources = HTTPLinkHeaderUtils.extractURIByRel( getResponse.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_COLLECTION );
 		
 		final Response getAllResponse = this.getTemplate().getResourceAsResponse( uriToAllResources );
 		assertThat( getAllResponse.getStatusCode(), is( 200 ) );
@@ -85,7 +83,7 @@ public abstract class AbstractRESTDiscoverabilityIntegrationTest< T extends IEnt
 		final Response response = this.getTemplate().getResourceAsResponse( this.getURI() + "?page=1&size=10" );
 		
 		// Then
-		final String linkHeader = response.getHeader( HttpConstants.LINK_HEADER );
+		final String linkHeader = response.getHeader( HttpHeaders.LINK );
 		assertNotNull( linkHeader );
 	}
 	
@@ -98,7 +96,7 @@ public abstract class AbstractRESTDiscoverabilityIntegrationTest< T extends IEnt
 		final Response response = this.getTemplate().getResourceAsResponse( this.getURI() + "?page=1&size=1" );
 		
 		// Then
-		final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpConstants.LINK_HEADER ), RESTURIUtil.REL_NEXT );
+		final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_NEXT );
 		assertNotNull( uriToNextPage );
 	}
 	
@@ -108,7 +106,7 @@ public abstract class AbstractRESTDiscoverabilityIntegrationTest< T extends IEnt
 		final Response response = this.getTemplate().getResourceAsResponse( this.getURI() + "?page=1&size=2" );
 		
 		// Then
-		final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpConstants.LINK_HEADER ), RESTURIUtil.REL_NEXT );
+		final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_NEXT );
 		assertEquals( this.getURI() + "?page=2&size=2", uriToNextPage );
 	}
 	
@@ -118,7 +116,7 @@ public abstract class AbstractRESTDiscoverabilityIntegrationTest< T extends IEnt
 		final Response response = this.getTemplate().getResourceAsResponse( this.getURI() + "?page=1&size=1" );
 		
 		// Then
-		final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpConstants.LINK_HEADER ), RESTURIUtil.REL_LAST );
+		final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_LAST );
 		assertNotNull( uriToLastPage );
 	}
 	
@@ -126,11 +124,11 @@ public abstract class AbstractRESTDiscoverabilityIntegrationTest< T extends IEnt
 	public final void whenLastPageOfResourcesIsRetrieved_thenNoNextPageIsDiscoverable(){
 		// When
 		final Response response = this.getTemplate().getResourceAsResponse( this.getURI() + "?page=1&size=1" );
-		final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpConstants.LINK_HEADER ), RESTURIUtil.REL_LAST );
+		final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_LAST );
 		
 		// Then
 		final Response responseForLastPage = this.getTemplate().getResourceAsResponse( uriToLastPage );
-		final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel( responseForLastPage.getHeader( HttpConstants.LINK_HEADER ), RESTURIUtil.REL_NEXT );
+		final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel( responseForLastPage.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_NEXT );
 		assertNull( uriToNextPage );
 	}
 	
@@ -174,8 +172,6 @@ public abstract class AbstractRESTDiscoverabilityIntegrationTest< T extends IEnt
 	
 	// util
 	
-	protected final RequestSpecification givenAuthenticated(){
-		return SecurityUtil.givenBasicAuthenticatedAsAdmin();
-	}
+	protected abstract RequestSpecification givenAuthenticated();
 	
 }

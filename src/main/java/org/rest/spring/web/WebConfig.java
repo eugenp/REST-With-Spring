@@ -2,8 +2,8 @@ package org.rest.spring.web;
 
 import java.util.List;
 
-import org.rest.poc.model.Bar;
-import org.rest.poc.model.Foo;
+import org.rest.poc.model.Privilege;
+import org.rest.poc.model.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -29,8 +29,8 @@ public class WebConfig extends WebMvcConfigurerAdapter{
 		final XStreamMarshaller xStreamMarshaller = new XStreamMarshaller();
 		xStreamMarshaller.setAutodetectAnnotations( true );
 		// xStreamMarshaller.setSupportedClasses( new Class[ ] { User.class, Privilege.class } );
-		xStreamMarshaller.setAnnotatedClass( Foo.class );
-		xStreamMarshaller.setAnnotatedClass( Bar.class );
+		xStreamMarshaller.setAnnotatedClass( User.class );
+		xStreamMarshaller.setAnnotatedClass( Privilege.class );
 		
 		// this.xstreamMarshaller().getXStream().addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
 		

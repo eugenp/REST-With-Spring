@@ -431,7 +431,7 @@
 		<commons-lang3.version>3.1</commons-lang3.version>
 		<guava.version>11.0</guava.version>
 
-		<jackson-mapper-asl.version>1.9.3</jackson-mapper-asl.version>
+		<jackson-mapper-asl.version>1.9.4</jackson-mapper-asl.version>
 		<jaxb-api.version>2.2.6</jaxb-api.version>
 
 		<!-- VERSIONS - persistence -->

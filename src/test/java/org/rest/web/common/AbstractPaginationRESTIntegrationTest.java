@@ -9,9 +9,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.rest.common.IEntity;
-import org.rest.test.integration.test.AbstractRESTIntegrationTest;
+import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.testing.marshaller.IMarshaller;
-import org.rest.testing.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -59,13 +58,9 @@ public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity >
 		assertThat( response.getStatusCode(), is( 404 ) );
 	}
 	
-	// util
-	
-	protected final RequestSpecification givenAuthenticated(){
-		return SecurityUtil.givenBasicAuthenticatedAsAdmin();
-	}
-	
 	// template method
+	
+	protected abstract RequestSpecification givenAuthenticated();
 	
 	protected abstract String getURI();
 	
