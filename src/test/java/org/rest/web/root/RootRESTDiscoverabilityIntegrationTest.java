@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.rest.test.AbstractRESTIntegrationTest;
+import org.rest.sec.test.AbstractSecRESTIntegrationTest;
 import org.rest.testing.ExamplePaths;
 import org.rest.testing.security.AuthenticationUtil;
 import org.rest.web.http.HTTPLinkHeaderUtils;
@@ -20,11 +20,11 @@ import com.google.common.net.HttpHeaders;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
-public class RootRESTDiscoverabilityIntegrationTest extends AbstractRESTIntegrationTest{
+public class RootRESTDiscoverabilityIntegrationTest extends AbstractSecRESTIntegrationTest{
 	
 	@Autowired
-	ExamplePaths paths;
-	
+	private ExamplePaths paths;
+
 	// tests
 	
 	// GET

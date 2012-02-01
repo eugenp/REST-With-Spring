@@ -10,18 +10,13 @@ import java.util.List;
 import org.junit.Test;
 import org.rest.common.IEntity;
 import org.rest.test.AbstractRESTIntegrationTest;
-import org.rest.testing.marshaller.IMarshaller;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.rest.testing.security.AuthenticationUtil;
+import org.rest.testing.template.ITemplate;
 
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity > extends AbstractRESTIntegrationTest{
-	
-	@Autowired
-	@Qualifier( "xstreamMarshaller" )
-	IMarshaller marshaller;
 	
 	// tests
 	
@@ -43,12 +38,11 @@ public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity >
 	@Test
 	public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned(){
 		// When
-		final Response response = givenAuthenticated().get( getURI() + "?page=1&size=10" );
+		final Response response = givenAuthenticated().get( getURI() + "?page=1&size=1" );
 		
 		// Then
-		assertFalse( marshaller.decode( response.asString(), List.class ).isEmpty() );
+		assertFalse( getTemplate().getMarshaller().decode( response.asString(), List.class ).isEmpty() );
 	}
-	
 	@Test
 	public final void whenPageOfResourcesAreRetrievedOutOfBounds_then404IsReceived(){
 		// When
@@ -58,12 +52,18 @@ public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity >
 		assertThat( response.getStatusCode(), is( 404 ) );
 	}
 	
-	// template method
+	// util
 	
-	protected abstract RequestSpecification givenAuthenticated();
+	protected final RequestSpecification givenAuthenticated(){
+		return AuthenticationUtil.givenBasicAuthenticatedAsAdmin();
+	}
+
+	// template method
 	
 	protected abstract String getURI();
 	
 	protected abstract T createNewEntity();
+	
+	protected abstract ITemplate< T > getTemplate();
 	
 }

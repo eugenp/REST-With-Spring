@@ -178,11 +178,11 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	// @Ignore("some resource may not have an invalid state")
 	public final void whenPutIsDoneOnInvalidResource_then409ConflictIsReceived(){
 		// Given
-		final T createFromServer = this.getTemplate().createResourceAndGetAsEntity();
-		makeInvalid( createFromServer );
+		final T existingResource = this.getTemplate().createResourceAndGetAsEntity();
+		makeInvalid( existingResource );
 		
 		// When
-		final Response response = getTemplate().updateResourceAsResponse( createFromServer );
+		final Response response = getTemplate().updateResourceAsResponse( existingResource );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 409 ) );

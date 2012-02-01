@@ -3,6 +3,7 @@ package org.rest.persistence.service;
 import java.util.List;
 
 import org.rest.common.IEntity;
+import org.springframework.data.domain.Page;
 
 public interface IService< T extends IEntity >{
 	
@@ -12,8 +13,10 @@ public interface IService< T extends IEntity >{
 	
 	List< T > findAll();
 	
+	Page< T > findPaginated( final int page, final int size );
+	
 	// save/create/persist
-
+	
 	T save( final T entity );
 	
 	// update/merge

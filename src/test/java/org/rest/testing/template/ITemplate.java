@@ -1,14 +1,17 @@
 package org.rest.testing.template;
 
 import org.rest.common.IEntity;
+import org.rest.testing.marshaller.IMarshaller;
 
 import com.jayway.restassured.response.Response;
+import com.jayway.restassured.specification.RequestSpecification;
 
 public interface ITemplate< T extends IEntity >{
 	
 	// new entity
 	
 	T createNewEntity();
+	void makeEntityInvalid( final T entity );
 	
 	// get
 	
@@ -44,6 +47,8 @@ public interface ITemplate< T extends IEntity >{
 	Response updateResourceAsResponse( final T resource );
 	Response updateResourceAsResponse( final String resourceAsMime );
 	
+	T updateResourceAndGetAsEntity( final T resource );
+	
 	// delete
 	
 	Response delete( final String uriOfResource );
@@ -51,5 +56,10 @@ public interface ITemplate< T extends IEntity >{
 	// URI
 	
 	String getURI();
+	
+	// authentication
+	
+	RequestSpecification givenAuthenticated();
+	IMarshaller getMarshaller();
 	
 }

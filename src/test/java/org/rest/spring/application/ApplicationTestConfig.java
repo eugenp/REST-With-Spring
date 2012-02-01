@@ -8,7 +8,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 @Configuration
-@ComponentScan( { "org.rest.testing", "org.rest.poc.testing" } )
+@ComponentScan( { "org.rest.testing", "org.rest.sec.testing" } )
 public class ApplicationTestConfig{
 	
 	// API
