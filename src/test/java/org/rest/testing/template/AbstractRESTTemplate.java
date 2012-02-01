@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.google.common.base.Preconditions;
 import com.jayway.restassured.response.Response;
-import com.jayway.restassured.specification.RequestSpecification;
 
 /**
  * Template for the consumption of the REST API <br>
@@ -25,28 +24,36 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements ITemp
 		super();
 		
 		Preconditions.checkNotNull( clazzToSet );
-		this.clazz = clazzToSet;
+		clazz = clazzToSet;
+	}
+	
+	// entity (non REST)
+	
+	@Override
+	public void makeEntityInvalid( final T entity ){
+		throw new UnsupportedOperationException();
 	}
 	
 	// create
 	
 	@Override
 	public final String createResourceAsURI(){
-		return this.createResourceAsURI( createNewEntity() );
+		return createResourceAsURI( createNewEntity() );
 	}
+	
 	@Override
 	public final String createResourceAsURI( final T resource ){
 		Preconditions.checkNotNull( resource );
 		
 		final String resourceAsString = marshaller.encode( resource );
-		final Response response = this.givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsString ).post( getURI() );
+		final Response response = givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsString ).post( getURI() );
 		
 		final String locationOfCreatedResource = response.getHeader( HttpHeaders.LOCATION );
 		
 		Preconditions.checkNotNull( locationOfCreatedResource );
 		return locationOfCreatedResource;
 	}
-
+	
 	@Override
 	public final Response createResourceAsResponse(){
 		return createResourceAsResponse( createNewEntity() );
@@ -56,15 +63,15 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements ITemp
 		Preconditions.checkNotNull( resource );
 		
 		final String resourceAsString = marshaller.encode( resource );
-		return this.givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsString ).post( getURI() );
+		return givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsString ).post( getURI() );
 	}
 	
 	// create and get
 	
 	@Override
 	public final String createResourceAndGetAsMime( final String mime ){
-		final String uriForResourceCreation = this.createResourceAsURI();
-		final String createdResourceAsMime = this.getResourceAsMime( uriForResourceCreation, mime );
+		final String uriForResourceCreation = createResourceAsURI();
+		final String createdResourceAsMime = getResourceAsMime( uriForResourceCreation, mime );
 		
 		return createdResourceAsMime;
 	}
@@ -74,43 +81,48 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements ITemp
 	}
 	@Override
 	public final T createResourceAndGetAsEntity( final T resource ){
-		final String uriForResourceCreation = this.createResourceAsURI( resource );
+		final String uriForResourceCreation = createResourceAsURI( resource );
 		
-		return this.getResourceAsEntity( uriForResourceCreation );
+		return getResourceAsEntity( uriForResourceCreation );
 	}
-
+	
 	@Override
 	public final Response createResourceAndGetAsResponse(){
 		return createResourceAndGetAsResponse( createNewEntity() );
 	}
 	@Override
 	public final Response createResourceAndGetAsResponse( final T resource ){
-		final String uriForResourceCreation = this.createResourceAsURI( resource );
+		final String uriForResourceCreation = createResourceAsURI( resource );
 		
-		return this.getResourceAsResponse( uriForResourceCreation );
+		return getResourceAsResponse( uriForResourceCreation );
 	}
 	
 	// get
 	
 	@Override
 	public final T getResourceAsEntity( final String uriOfResource ){
-		final String resourceAsXML = this.getResourceAsMime( uriOfResource, marshaller.getMime() );
+		final String resourceAsXML = getResourceAsMime( uriOfResource, marshaller.getMime() );
 		
-		return this.marshaller.decode( resourceAsXML, clazz );
+		return marshaller.decode( resourceAsXML, clazz );
+	}
+	public final T getResourceAsEntity( final Long idOfResource ){
+		final String resourceAsXML = getResourceAsMime( getURI() + "/" + idOfResource, marshaller.getMime() );
+		
+		return marshaller.decode( resourceAsXML, clazz );
 	}
 	
 	@Override
 	public final String getResourceAsMime( final String uriOfResource, final String mime ){
-		return this.givenAuthenticated().header( HttpHeaders.ACCEPT, mime ).get( uriOfResource ).asString();
+		return givenAuthenticated().header( HttpHeaders.ACCEPT, mime ).get( uriOfResource ).asString();
 	}
 	
 	@Override
 	public final Response getResourceAsResponse( final String uriOfResource ){
-		return this.givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( uriOfResource );
+		return givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( uriOfResource );
 	}
 	@Override
 	public final Response getResourceAsResponse( final String uriOfResource, final String acceptMime ){
-		return this.givenAuthenticated().header( HttpHeaders.ACCEPT, acceptMime ).get( uriOfResource );
+		return givenAuthenticated().header( HttpHeaders.ACCEPT, acceptMime ).get( uriOfResource );
 	}
 	
 	// update
@@ -120,25 +132,38 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements ITemp
 		Preconditions.checkNotNull( resource );
 		
 		final String resourceAsString = marshaller.encode( resource );
-		return this.givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsString ).put( getURI() );
+		return givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsString ).put( getURI() );
 	}
 	@Override
 	public final Response updateResourceAsResponse( final String resourceAsMime ){
 		Preconditions.checkNotNull( resourceAsMime );
 		
-		return this.givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsMime ).put( getURI() );
+		return givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsMime ).put( getURI() );
+	}
+	
+	@Override
+	public T updateResourceAndGetAsEntity( final T resource ){
+		updateResourceAsResponse( resource );
+		return getResourceAsEntity( resource.getId() );
 	}
 	
 	// delete
 	
 	@Override
 	public final Response delete( final String uriOfResource ){
-		final Response response = this.givenAuthenticated().delete( uriOfResource );
+		final Response response = givenAuthenticated().delete( uriOfResource );
 		return response;
 	}
 	
 	//
 	
-	protected abstract RequestSpecification givenAuthenticated();
+	public final String getMime(){
+		return marshaller.getMime();
+	}
+	
+	@Override
+	public final IMarshaller getMarshaller(){
+		return marshaller;
+	}
 	
 }

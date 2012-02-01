@@ -20,8 +20,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan( { "org.rest.persistence", "org.rest.poc.persistence" } )
 @ImportResource( "classpath*:*springDataConfig.xml" )
+@ComponentScan( { "org.rest.sec.persistence" } )
 public class PersistenceJPAConfig{
 	
 	@Value( "${jdbc.driverClassName}" )
@@ -31,13 +31,20 @@ public class PersistenceJPAConfig{
 	private String url;
 	
 	@Value( "${hibernate.dialect}" )
-	String hibernateDialect;
+	private String hibernateDialect;
 	
 	@Value( "${hibernate.show_sql}" )
-	boolean hibernateShowSql;
+	private boolean hibernateShowSql;
 	
 	@Value( "${hibernate.hbm2ddl.auto}" )
-	String hibernateHbm2ddlAuto;
+	private String hibernateHbm2ddlAuto;
+	
+	@Value( "${jpa.generateDdl}" )
+	private boolean jpaGenerateDdl;
+	
+	public PersistenceJPAConfig(){
+		super();
+	}
 	
 	// beans
 	
@@ -49,10 +56,10 @@ public class PersistenceJPAConfig{
 		
 		final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter(){
 			{
-				setDatabase( Database.MYSQL );
+				setDatabase( Database.H2 ); // TODO: comment this out, see if anything fails
 				setDatabasePlatform( hibernateDialect );
 				setShowSql( hibernateShowSql );
-				setGenerateDdl( true );
+				setGenerateDdl( jpaGenerateDdl );
 			}
 		};
 		factoryBean.setJpaVendorAdapter( vendorAdapter );
@@ -67,8 +74,8 @@ public class PersistenceJPAConfig{
 		final DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName( driverClassName );
 		dataSource.setUrl( url );
-		dataSource.setUsername( "restUser" );
-		dataSource.setPassword( "restmy5ql" );
+		// dataSource.setUsername( "restUser" );
+		// dataSource.setPassword( "restmy5ql" );
 		return dataSource;
 	}
 	

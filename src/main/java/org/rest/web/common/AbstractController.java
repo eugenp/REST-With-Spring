@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.rest.common.IEntity;
+import org.rest.common.event.PaginatedResultsRetrievedEvent;
 import org.rest.common.event.ResourceCreatedEvent;
 import org.rest.common.event.SingleResourceRetrievedEvent;
 import org.rest.common.exceptions.ConflictException;
@@ -18,6 +19,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.data.domain.Page;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.common.base.Preconditions;
@@ -28,7 +30,7 @@ public abstract class AbstractController< T extends IEntity >{
 	private Class< T > clazz;
 	
 	@Autowired
-	protected ApplicationEventPublisher eventPublisher;
+	private ApplicationEventPublisher eventPublisher;
 	
 	public AbstractController( final Class< T > clazzToSet ){
 		super();
@@ -60,7 +62,17 @@ public abstract class AbstractController< T extends IEntity >{
 	}
 	
 	protected final List< T > findAllInternal(){
-		return RestPreconditions.checkNotNull( getService().findAll() );
+		return getService().findAll();
+	}
+	
+	public List< T > findPaginatedInternal( final int page, final int size, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+		final Page< T > resultPage = getService().findPaginated( page, size );
+		if( page > resultPage.getTotalPages() ){
+			throw new ResourceNotFoundException();
+		}
+		eventPublisher.publishEvent( new PaginatedResultsRetrievedEvent< T >( clazz, uriBuilder, response, page, resultPage.getTotalPages(), size ) );
+		
+		return resultPage.getContent();
 	}
 	
 	// save/create/persist

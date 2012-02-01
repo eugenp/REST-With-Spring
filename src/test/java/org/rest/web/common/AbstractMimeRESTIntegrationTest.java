@@ -11,13 +11,22 @@ import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.testing.template.ITemplate;
 import org.springframework.http.MediaType;
 
+import com.google.common.base.Preconditions;
 import com.jayway.restassured.response.Response;
 
 public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > extends AbstractRESTIntegrationTest{
 	
+	private Class< T > clazz;
+	
+	public AbstractMimeRESTIntegrationTest( final Class< T > clazzToSet ){
+		Preconditions.checkNotNull( clazzToSet );
+		this.clazz = clazzToSet;
+	}
+
 	// tests
 	
 	// GET
+
 	@Test
 	@Ignore( "for now, json is not supported" )
 	public final void givenResourceForIdExists_whenResourceOfThatIdIsRetrievedAsJson_then200IsReceived(){
@@ -37,17 +46,6 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 		
 		// When
 		final Response res = getTemplate().getResourceAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
-		
-		// Then
-		assertThat( res.getStatusCode(), is( 200 ) );
-	}
-	@Test
-	public final void givenResourceForIdExists_whenResourceOfThatIdIsRetrievedAsAtom_then200IsReceived(){
-		// Given
-		final String uriForResourceCreation = getTemplate().createResourceAsURI();
-		
-		// When
-		final Response res = getTemplate().getResourceAsResponse( uriForResourceCreation, MediaType.APPLICATION_ATOM_XML.toString() );
 		
 		// Then
 		assertThat( res.getStatusCode(), is( 200 ) );
@@ -76,17 +74,6 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 		// Then
 		assertThat( res.getContentType(), containsString( MediaType.APPLICATION_XML.toString() ) );
 	}
-	@Test
-	public final void givenRequestAcceptsAtom_whenResourceIsRetrievedById_thenResponseContentTypeIsAtom(){
-		// Given
-		final String uriForResourceCreation = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
-		
-		// When
-		final Response res = getTemplate().getResourceAsResponse( uriForResourceCreation, MediaType.APPLICATION_ATOM_XML.toString() );
-		
-		// Then
-		assertThat( res.getContentType(), containsString( MediaType.APPLICATION_ATOM_XML.toString() ) );
-	}
 	
 	@Test
 	public final void givenResourceForIdExists_whenResourceIsRetrievedByIdAsXML_thenRetrievedResourceIsCorrect(){
@@ -94,10 +81,10 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 		final String uriForResourceCreation = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
 		
 		// When
-		getTemplate().getResourceAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
+		final Response resourceAsResponse = getTemplate().getResourceAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
 		
 		// Then
-		// TODO
+		getTemplate().getMarshaller().decode( resourceAsResponse.asString(), clazz );
 	}
 	
 	// template method
