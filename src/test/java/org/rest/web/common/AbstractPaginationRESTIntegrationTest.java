@@ -1,5 +1,6 @@
 package org.rest.web.common;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -52,6 +53,23 @@ public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity >
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 404 ) );
+	}
+	
+	@Test
+	public final void whenResourcesAreRetrievedWithNonNumericPage_then400IsReceived(){
+		// When
+		final Response response = givenAuthenticated().get( getURI() + "?page=" + randomAlphabetic( 5 ).toLowerCase() + "&size=1" );
+		
+		// Then
+		assertThat( response.getStatusCode(), is( 400 ) );
+	}
+	@Test
+	public final void whenResourcesAreRetrievedWithNonNumericPageSize_then400IsReceived(){
+		// When
+		final Response response = givenAuthenticated().get( getURI() + "?page=0" + "&size=" + randomAlphabetic( 5 ) );
+		
+		// Then
+		assertThat( response.getStatusCode(), is( 400 ) );
 	}
 	
 	// util
