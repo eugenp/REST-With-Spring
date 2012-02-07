@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.rest.sec.model.User;
-import org.rest.sec.persistence.service.IUserService;
+import org.rest.sec.model.Role;
+import org.rest.sec.persistence.service.IRoleService;
 import org.rest.web.common.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping( value = "admin/user" )
-public class UserController extends AbstractController< User >{
+@RequestMapping( value = "admin/role" )
+public class RoleController extends AbstractController< Role >{
 	
 	@Autowired
-	private IUserService service;
+	private IRoleService service;
 	
-	public UserController(){
-		super( User.class );
+	public RoleController(){
+		super( Role.class );
 	}
 	
 	// API
@@ -36,13 +36,13 @@ public class UserController extends AbstractController< User >{
 	
 	@RequestMapping( params = { "page", "size" },method = RequestMethod.GET )
 	@ResponseBody
-	public List< User > findPaginated( @RequestParam( "page" ) final int page, @RequestParam( "size" ) final int size, @RequestParam( value = "sortBy",required = false ) final String sortBy, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+	public List< Role > findPaginated( @RequestParam( "page" ) final int page, @RequestParam( "size" ) final int size, @RequestParam( value = "sortBy",required = false ) final String sortBy, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		return findPaginatedInternal( page, size, sortBy, uriBuilder, response );
 	}
 	
 	@RequestMapping( method = RequestMethod.GET )
 	@ResponseBody
-	public List< User > findAll(){
+	public List< Role > findAll(){
 		return findAllInternal();
 	}
 	
@@ -50,7 +50,7 @@ public class UserController extends AbstractController< User >{
 	
 	@RequestMapping( value = "/{id}",method = RequestMethod.GET )
 	@ResponseBody
-	public User findOne( @PathVariable( "id" ) final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+	public Role findOne( @PathVariable( "id" ) final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		return findOneInternal( id, uriBuilder, response );
 	}
 	
@@ -58,8 +58,8 @@ public class UserController extends AbstractController< User >{
 	
 	@RequestMapping( method = RequestMethod.POST )
 	@ResponseStatus( HttpStatus.CREATED )
-	// @Secured( SecurityConstants.PRIVILEGE_USER_WRITE )
-	public void create( @RequestBody final User resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+	// @Secured( SecurityConstants.PRIVILEGE_ROLE_WRITE )
+	public void create( @RequestBody final Role resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		saveInternal( resource, uriBuilder, response );
 	}
 	
@@ -67,8 +67,8 @@ public class UserController extends AbstractController< User >{
 	
 	@RequestMapping( method = RequestMethod.PUT )
 	@ResponseStatus( HttpStatus.OK )
-	// @Secured( SecurityConstants.PRIVILEGE_USER_WRITE )
-	public void update( @RequestBody final User resource ){
+	// @Secured( SecurityConstants.PRIVILEGE_ROLE_WRITE )
+	public void update( @RequestBody final Role resource ){
 		updateInternal( resource );
 	}
 	
@@ -76,7 +76,7 @@ public class UserController extends AbstractController< User >{
 	
 	@RequestMapping( value = "/{id}",method = RequestMethod.DELETE )
 	@ResponseStatus( HttpStatus.NO_CONTENT )
-	// @Secured( SecurityConstants.PRIVILEGE_USER_WRITE )
+	// @Secured( SecurityConstants.PRIVILEGE_ROLE_WRITE )
 	public void delete( @PathVariable( "id" ) final Long id ){
 		deleteByIdInternal( id );
 	}
@@ -84,7 +84,7 @@ public class UserController extends AbstractController< User >{
 	// Spring
 	
 	@Override
-	protected final IUserService getService(){
+	protected final IRoleService getService(){
 		return service;
 	}
 	

@@ -1,4 +1,4 @@
-package org.rest.sec.persistence.dao.user;
+package org.rest.sec.persistence.dao;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.Matchers.contains;
@@ -7,7 +7,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
-import org.rest.persistence.AbstractPersistenceDaoIntegrationTest;
+import org.rest.persistence.AbstractPersistenceDAOIntegrationTest;
 import org.rest.sec.model.Role;
 import org.rest.sec.model.User;
 import org.rest.sec.persistence.dao.IRoleJpaDAO;
@@ -20,7 +20,7 @@ import com.google.common.collect.Sets;
 
 @TransactionConfiguration( defaultRollback = true )
 @Transactional
-public class UserDAOPersistenceIntegrationTest extends AbstractPersistenceDaoIntegrationTest< User >{
+public class UserDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest< User >{
 	
 	@Autowired
 	private IUserJpaDAO dao;
@@ -52,7 +52,7 @@ public class UserDAOPersistenceIntegrationTest extends AbstractPersistenceDaoInt
 	
 	@Test
 	public void whenSaveIsPerformed_thenNoException(){
-		dao.save( new User( randomAlphabetic( 8 ), randomAlphabetic( 8 ) ) );
+		dao.save( createNewEntity() );
 	}
 	
 	// find by

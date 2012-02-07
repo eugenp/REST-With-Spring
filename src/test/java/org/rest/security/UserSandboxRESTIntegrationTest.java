@@ -61,7 +61,7 @@ public class UserSandboxRESTIntegrationTest extends AbstractRESTIntegrationTest{
 		final RestTemplate restTemplate = setUpRestTemplate();
 		
 		// When
-		final ResponseEntity< User > response = restTemplate.exchange( paths.getAuthenticationUri(), HttpMethod.POST, new HttpEntity< String >( createHeaders() ), User.class );
+		final ResponseEntity< User > response = restTemplate.exchange( paths.getAuthenticationUri(), HttpMethod.GET, new HttpEntity< String >( createHeaders() ), User.class );
 		
 		// Then
 		assertThat( response.getStatusCode().value(), is( 201 ) );

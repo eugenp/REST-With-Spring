@@ -1,9 +1,9 @@
-package org.rest.sec.persistence.service.privilege.impl;
+package org.rest.sec.persistence.service.impl;
 
 import org.rest.persistence.service.AbstractService;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.persistence.dao.IPrivilegeJpaDAO;
-import org.rest.sec.persistence.service.privilege.IPrivilegeService;
+import org.rest.sec.persistence.service.IPrivilegeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ public class PrivilegeServiceImpl extends AbstractService< Privilege > implement
 	IPrivilegeJpaDAO dao;
 	
 	public PrivilegeServiceImpl(){
-		super( Privilege.class );
+		super();
 	}
 	
 	// API

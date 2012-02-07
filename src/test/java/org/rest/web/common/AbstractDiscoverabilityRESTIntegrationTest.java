@@ -103,11 +103,11 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenFirstPageOfResourcesAreRetrieved_thenSecondPageIsDiscoverable(){
 		// When
-		final Response response = this.getTemplate().getResourceAsResponse( this.getURI() + "?page=1&size=2" );
+		final Response response = this.getTemplate().getResourceAsResponse( this.getURI() + "?page=1&size=1" );
 		
 		// Then
 		final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_NEXT );
-		assertEquals( this.getURI() + "?page=2&size=2", uriToNextPage );
+		assertEquals( this.getURI() + "?page=2&size=1", uriToNextPage );
 	}
 	
 	@Test

@@ -1,18 +1,17 @@
-package org.rest.sec.persistence.service.user;
+package org.rest.sec.persistence.service;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.junit.Test;
 import org.rest.persistence.AbstractPersistenceServiceIntegrationTest;
-import org.rest.sec.model.User;
-import org.rest.sec.persistence.service.user.IUserService;
+import org.rest.sec.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 
-public class UserServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< User >{
+public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< Role >{
 	
 	@Autowired
-	private IUserService service;
+	private IRoleService service;
 	
 	// create
 	
@@ -32,18 +31,18 @@ public class UserServicePersistenceIntegrationTest extends AbstractPersistenceSe
 	// template method
 	
 	@Override
-	protected final IUserService getService(){
+	protected final IRoleService getService(){
 		return service;
 	}
 	@Override
-	protected final User createNewEntity(){
+	protected final Role createNewEntity(){
 		return this.createNewEntity( randomAlphabetic( 8 ) );
 	}
 	
 	// util
 	
-	protected final User createNewEntity( final String username ){
-		return new User( username, randomAlphabetic( 8 ) );
+	protected final Role createNewEntity( final String name ){
+		return new Role( name );
 	}
 	
 }

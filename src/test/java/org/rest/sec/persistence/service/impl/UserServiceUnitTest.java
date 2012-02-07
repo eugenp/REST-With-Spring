@@ -1,4 +1,4 @@
-package org.rest.sec.persistence.service.user.impl;
+package org.rest.sec.persistence.service.impl;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.mockito.Mockito.mock;
@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.rest.sec.model.User;
 import org.rest.sec.persistence.dao.IUserJpaDAO;
 import org.rest.test.AbstractServiceUnitTest;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;
@@ -34,8 +33,6 @@ public class UserServiceUnitTest extends AbstractServiceUnitTest< User >{
 		daoMock = mock( IUserJpaDAO.class );
 		when( daoMock.findAll() ).thenReturn( Lists.<User> newArrayList() );
 		instance.dao = daoMock;
-		
-		instance.setEventPublisher( mock( ApplicationEventPublisher.class ) );
 	}
 	
 	// get

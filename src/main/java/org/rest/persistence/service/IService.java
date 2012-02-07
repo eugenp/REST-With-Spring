@@ -13,7 +13,7 @@ public interface IService< T extends IEntity >{
 	
 	List< T > findAll();
 	
-	Page< T > findPaginated( final int page, final int size );
+	Page< T > findPaginated( final int page, final int size, final String sortBy );
 	
 	// save/create/persist
 	

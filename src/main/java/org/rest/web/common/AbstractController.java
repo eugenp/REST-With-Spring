@@ -8,6 +8,7 @@ import org.rest.common.IEntity;
 import org.rest.common.event.PaginatedResultsRetrievedEvent;
 import org.rest.common.event.ResourceCreatedEvent;
 import org.rest.common.event.SingleResourceRetrievedEvent;
+import org.rest.common.exceptions.BadRequestException;
 import org.rest.common.exceptions.ConflictException;
 import org.rest.common.exceptions.ResourceNotFoundException;
 import org.rest.common.web.RestPreconditions;
@@ -65,8 +66,17 @@ public abstract class AbstractController< T extends IEntity >{
 		return getService().findAll();
 	}
 	
-	public List< T > findPaginatedInternal( final int page, final int size, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
-		final Page< T > resultPage = getService().findPaginated( page, size );
+	public List< T > findPaginatedInternal( final int page, final int size, final String sortBy, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+		Page< T > resultPage = null;
+		try{
+			resultPage = getService().findPaginated( page, size, sortBy );
+		}
+		catch( final InvalidDataAccessApiUsageException apiEx ){
+			logger.error( "InvalidDataAccessApiUsageException on find operation" );
+			logger.warn( "InvalidDataAccessApiUsageException on find operation", apiEx );
+			throw new BadRequestException( apiEx );
+		}
+		
 		if( page > resultPage.getTotalPages() ){
 			throw new ResourceNotFoundException();
 		}
@@ -74,7 +84,7 @@ public abstract class AbstractController< T extends IEntity >{
 		
 		return resultPage.getContent();
 	}
-	
+
 	// save/create/persist
 	
 	protected final void saveInternal( final T resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){

@@ -24,12 +24,12 @@ public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity >
 	
 	@Test
 	public final void whenResourcesAreRetrievedPaged_thenNoExceptions(){
-		givenAuthenticated().get( getURI() + "?page=1&size=10" );
+		givenAuthenticated().get( getURI() + "?page=1&size=1" );
 	}
 	@Test
 	public final void whenResourcesAreRetrievedPaged_then200IsReceived(){
 		// When
-		final Response response = givenAuthenticated().get( getURI() + "?page=1&size=10" );
+		final Response response = givenAuthenticated().get( getURI() + "?page=0&size=1" );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 200 ) );
@@ -37,8 +37,10 @@ public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity >
 	
 	@Test
 	public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned(){
+		getTemplate().createResourceAsResponse();
+		
 		// When
-		final Response response = givenAuthenticated().get( getURI() + "?page=1&size=1" );
+		final Response response = givenAuthenticated().get( getURI() + "?page=0&size=1" );
 		
 		// Then
 		assertFalse( getTemplate().getMarshaller().decode( response.asString(), List.class ).isEmpty() );
@@ -46,7 +48,7 @@ public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity >
 	@Test
 	public final void whenPageOfResourcesAreRetrievedOutOfBounds_then404IsReceived(){
 		// When
-		final Response response = givenAuthenticated().get( getURI() + "?page=" + randomNumeric( 5 ) + "&size=10" );
+		final Response response = givenAuthenticated().get( getURI() + "?page=" + randomNumeric( 5 ) + "&size=1" );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 404 ) );
@@ -57,7 +59,7 @@ public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity >
 	protected final RequestSpecification givenAuthenticated(){
 		return AuthenticationUtil.givenBasicAuthenticatedAsAdmin();
 	}
-
+	
 	// template method
 	
 	protected abstract String getURI();

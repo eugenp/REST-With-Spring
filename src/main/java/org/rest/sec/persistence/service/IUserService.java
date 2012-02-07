@@ -1,4 +1,4 @@
-package org.rest.sec.persistence.service.user;
+package org.rest.sec.persistence.service;
 
 import org.rest.persistence.service.IService;
 import org.rest.sec.model.User;

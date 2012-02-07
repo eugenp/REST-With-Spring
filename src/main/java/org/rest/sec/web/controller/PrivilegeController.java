@@ -1,17 +1,11 @@
 package org.rest.sec.web.controller;
 
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.rest.persistence.service.IService;
 import org.rest.sec.model.Privilege;
-import org.rest.sec.persistence.service.privilege.IPrivilegeService;
+import org.rest.sec.persistence.service.IPrivilegeService;
 import org.rest.web.common.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
+@RequestMapping( value = "admin/privilege" )
 public class PrivilegeController extends AbstractController< Privilege >{
 	
 	@Autowired
@@ -37,21 +32,23 @@ public class PrivilegeController extends AbstractController< Privilege >{
 	
 	// API
 	
-	// find
+	// find - all/paginated
 	
-	@RequestMapping( value = "admin/privilege",params = { "page", "size" },method = GET )
+	@RequestMapping( params = { "page", "size"/*, "sortBy"*/},method = RequestMethod.GET )
 	@ResponseBody
-	public List< Privilege > findPaginated( @RequestParam( "page" ) final int page, @RequestParam( "size" ) final int size, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
-		return findPaginatedInternal( page, size, uriBuilder, response );
+	public List< Privilege > findPaginated( @RequestParam( "page" ) final int page, @RequestParam( "size" ) final int size, @RequestParam( value = "sortBy",required = false ) final String sortBy, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+		return findPaginatedInternal( page, size, sortBy, uriBuilder, response );
 	}
 	
-	@RequestMapping( value = "admin/privilege",method = RequestMethod.GET )
+	@RequestMapping( method = RequestMethod.GET )
 	@ResponseBody
 	public List< Privilege > findAll(){
 		return findAllInternal();
 	}
 	
-	@RequestMapping( value = "admin/privilege/{id}",method = GET )
+	// find - one
+	
+	@RequestMapping( value = "/{id}",method = RequestMethod.GET )
 	@ResponseBody
 	public Privilege findOne( @PathVariable( "id" ) final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		return findOneInternal( id, uriBuilder, response );
@@ -59,7 +56,7 @@ public class PrivilegeController extends AbstractController< Privilege >{
 	
 	// create
 	
-	@RequestMapping( value = "admin/privilege",method = POST )
+	@RequestMapping( method = RequestMethod.POST )
 	@ResponseStatus( HttpStatus.CREATED )
 	public void create( @RequestBody final Privilege resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		saveInternal( resource, uriBuilder, response );
@@ -67,7 +64,7 @@ public class PrivilegeController extends AbstractController< Privilege >{
 	
 	// update
 	
-	@RequestMapping( value = "admin/privilege",method = PUT )
+	@RequestMapping( method = RequestMethod.PUT )
 	@ResponseStatus( HttpStatus.OK )
 	public void update( @RequestBody final Privilege resource ){
 		updateInternal( resource );
@@ -75,16 +72,16 @@ public class PrivilegeController extends AbstractController< Privilege >{
 	
 	// delete
 	
-	@RequestMapping( value = "admin/privilege/{id}",method = DELETE )
+	@RequestMapping( value = "/{id}",method = RequestMethod.DELETE )
 	@ResponseStatus( HttpStatus.NO_CONTENT )
 	public void delete( @PathVariable( "id" ) final Long id ){
 		deleteByIdInternal( id );
 	}
 	
-	//
+	// Spring
 	
 	@Override
-	protected IService< Privilege > getService(){
+	protected final IPrivilegeService getService(){
 		return service;
 	}
 	

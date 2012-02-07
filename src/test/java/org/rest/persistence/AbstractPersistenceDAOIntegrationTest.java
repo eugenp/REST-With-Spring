@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration( classes = { ApplicationTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
 @Transactional
-public abstract class AbstractPersistenceDaoIntegrationTest< T extends IEntity >{
+public abstract class AbstractPersistenceDAOIntegrationTest< T extends IEntity >{
 	
 	// tests
 	
