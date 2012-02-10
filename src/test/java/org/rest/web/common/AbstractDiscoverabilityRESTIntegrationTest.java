@@ -72,7 +72,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 		final String uriToAllResources = HTTPLinkHeaderUtils.extractURIByRel( getResponse.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_COLLECTION );
 		
 		final Response getAllResponse = this.getTemplate().getResourceAsResponse( uriToAllResources );
-		assertThat( getAllResponse.getStatusCode(), is( 303 ) );
+		assertThat( getAllResponse.getStatusCode(), is( 200 ) );
 	}
 	
 	// GET (paged)

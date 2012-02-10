@@ -25,7 +25,8 @@ final class DiscoverabilityController{
 	public final void adminRoot( final HttpServletRequest request, final HttpServletResponse response ){
 		final String rootUri = request.getRequestURL().toString();
 		
-		final URI uri = new UriTemplate( "{rootUri}/{resource}" ).expand( rootUri, "user" );
+		// TODO: add these in a more dynamic way, not hardcoded
+		final URI uri = new UriTemplate( "{rootUri}{resource}" ).expand( rootUri, "user" );
 		final String linkToEntity = RESTURIUtil.createLinkHeader( uri.toASCIIString(), RESTURIUtil.REL_COLLECTION );
 		final String linkToTest = RESTURIUtil.createLinkHeader( "test", RESTURIUtil.REL_COLLECTION );
 		

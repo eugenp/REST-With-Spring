@@ -12,21 +12,21 @@ public final class ExamplePaths{
 	// API
 	
 	public final String getRootUri(){
-		return paths.getContext() + "/api";
+		return paths.getContext() + "/api/";
 	}
 	
 	public final String getUserUri(){
-		return getRootUri() + "/user";
+		return getRootUri() + "user";
 	}
 	public final String getPrivilegeUri(){
-		return getRootUri() + "/privilege";
+		return getRootUri() + "privilege";
 	}
 	public final String getRoleUri(){
-		return getRootUri() + "/role";
+		return getRootUri() + "role";
 	}
 	
 	public final String getAuthenticationUri(){
-		return getRootUri() + "/authentication";
+		return getRootUri() + "authentication";
 	}
 	
 	public final String getLoginUri(){
