@@ -42,10 +42,6 @@ public abstract class AbstractController< T extends IEntity >{
 		clazz = clazzToSet;
 	}
 	
-	// template method
-	
-	protected abstract IService< T > getService();
-	
 	// find/get
 	
 	protected final T findOneInternal( final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
@@ -63,7 +59,7 @@ public abstract class AbstractController< T extends IEntity >{
 		
 		return resource;
 	}
-	public final void findAllToPagination( final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+	protected final void findAllToPagination( final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		final String resourceName = clazz.getSimpleName().toString().toLowerCase();
 		final String locationValue = uriBuilder.path( "/" + resourceName ).build().encode().toUriString() + "?page=0&size=10";
 		
@@ -95,12 +91,13 @@ public abstract class AbstractController< T extends IEntity >{
 	
 	// save/create/persist
 	
-	protected final void saveInternal( final T resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+	protected final void createInternal( final T resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		RestPreconditions.checkRequestElementNotNull( resource );
 		RestPreconditions.checkRequestState( resource.getId() == null );
 		try{
-			getService().save( resource );
+			getService().create( resource );
 		}
+		// TODO: to remove or document some of these
 		catch( final IllegalStateException ex ){
 			logger.error( "IllegalStateException on create operation for: " + resource.getClass().getSimpleName() );
 			logger.warn( "IllegalStateException on create operation for: " + resource.getClass().getSimpleName(), ex );
@@ -138,7 +135,7 @@ public abstract class AbstractController< T extends IEntity >{
 		RestPreconditions.checkNotNull( getService().findOne( resource.getId() ) );
 		
 		try{
-			getService().save( resource );
+			getService().update( resource );
 		}
 		catch( final InvalidDataAccessApiUsageException dataEx ){
 			logger.error( "InvalidDataAccessApiUsageException on update operation for: " + resource.getClass().getSimpleName() );
@@ -168,5 +165,9 @@ public abstract class AbstractController< T extends IEntity >{
 			logger.warn( "DataAccessException on delete operation", dataEx );
 		}
 	}
+	
+	// template method
+	
+	protected abstract IService< T > getService();
 	
 }

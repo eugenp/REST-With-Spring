@@ -54,7 +54,7 @@ public abstract class AbstractSortRESTIntegrationTest< T extends IEntity > exten
 		getTemplate().createResourceAsResponse();
 		
 		// When
-		final Response response = givenAuthenticated().get( getURI() + "?page=0&size=4" );
+		final Response response = givenAuthenticated().get( getURI() + "?page=0&size=6" );
 		final List< T > resourcesPagedAndSorted = getTemplate().getMarshaller().decode( response.asString(), List.class );
 		
 		// Then

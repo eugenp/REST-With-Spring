@@ -64,7 +64,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 	@Test
 	public void whenEntityIsSaved_thenSavedEntityIsEqualToOriginalEntity(){
 		final T originalEntity = this.createNewEntity();
-		final T savedEntity = this.getService().save( originalEntity );
+		final T savedEntity = this.getService().create( originalEntity );
 		
 		assertEquals( originalEntity, savedEntity );
 	}
@@ -101,7 +101,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 	protected abstract T createNewEntity();
 	
 	protected T persistNewEntity(){
-		return this.getService().save( this.createNewEntity() );
+		return this.getService().create( this.createNewEntity() );
 	}
 	
 }

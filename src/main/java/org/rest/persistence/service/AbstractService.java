@@ -52,7 +52,7 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 	// save/create/persist
 	
 	@Override
-	public T save( final T entity ){
+	public T create( final T entity ){
 		Preconditions.checkNotNull( entity );
 		
 		final T persistedEntity = this.getDao().save( entity );

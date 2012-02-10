@@ -70,7 +70,7 @@ public class SecuritySetup implements ApplicationListener< ContextRefreshedEvent
 		final Privilege entityByName = privilegeService.findByName( name );
 		if( entityByName == null ){
 			final Privilege entity = new Privilege( name );
-			privilegeService.save( entity );
+			privilegeService.create( entity );
 		}
 	}
 	
@@ -87,7 +87,7 @@ public class SecuritySetup implements ApplicationListener< ContextRefreshedEvent
 		if( entityByName == null ){
 			final Role entity = new Role( name );
 			entity.setPrivileges( privileges );
-			roleService.save( entity );
+			roleService.create( entity );
 		}
 	}
 	
@@ -102,7 +102,7 @@ public class SecuritySetup implements ApplicationListener< ContextRefreshedEvent
 		final User entityByName = userService.findByName( loginName );
 		if( entityByName == null ){
 			final User entity = buildUser( loginName, pass, roles );
-			userService.save( entity );
+			userService.create( entity );
 		}
 	}
 	final User buildUser( final String name, final String pass, final Set< Role > roles ){

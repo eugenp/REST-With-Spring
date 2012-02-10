@@ -6,9 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.rest.sec.model.User;
 import org.rest.sec.persistence.service.IUserService;
+import org.rest.sec.util.SecurityConstants;
 import org.rest.web.common.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,14 +62,14 @@ public class UserController extends AbstractController< User >{
 	@ResponseStatus( HttpStatus.CREATED )
 	// @Secured( SecurityConstants.PRIVILEGE_USER_WRITE )
 	public void create( @RequestBody final User resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
-		saveInternal( resource, uriBuilder, response );
+		createInternal( resource, uriBuilder, response );
 	}
 	
 	// update
 	
 	@RequestMapping( method = RequestMethod.PUT )
 	@ResponseStatus( HttpStatus.OK )
-	// @Secured( SecurityConstants.PRIVILEGE_USER_WRITE )
+	@Secured( SecurityConstants.PRIVILEGE_USER_WRITE )
 	public void update( @RequestBody final User resource ){
 		updateInternal( resource );
 	}
@@ -76,7 +78,7 @@ public class UserController extends AbstractController< User >{
 	
 	@RequestMapping( value = "/{id}",method = RequestMethod.DELETE )
 	@ResponseStatus( HttpStatus.NO_CONTENT )
-	// @Secured( SecurityConstants.PRIVILEGE_USER_WRITE )
+	@Secured( SecurityConstants.PRIVILEGE_USER_WRITE )
 	public void delete( @PathVariable( "id" ) final Long id ){
 		deleteByIdInternal( id );
 	}

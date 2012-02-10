@@ -37,7 +37,7 @@ public abstract class AbstractServiceUnitTest< T extends IEntity >{
 	@Test
 	public final void whenCreateIsTriggered_thenNoException(){
 		// When
-		getService().save( this.createNewEntity() );
+		getService().create( this.createNewEntity() );
 		
 		// Then
 	}
@@ -45,7 +45,7 @@ public abstract class AbstractServiceUnitTest< T extends IEntity >{
 	@Test( expected = NullPointerException.class )
 	public final void whenCreateIsTriggeredForNullEntity_thenException(){
 		// When
-		getService().save( null );
+		getService().create( null );
 		
 		// Then
 	}
@@ -53,7 +53,7 @@ public abstract class AbstractServiceUnitTest< T extends IEntity >{
 	@Test
 	public final void whenCreateIsTriggered_thenEntityIsCreated(){
 		// When
-		getService().save( this.createNewEntity() );
+		getService().create( this.createNewEntity() );
 		
 		// Then
 		verify( getDAOMock() ).save( any( clazz ) );
@@ -74,7 +74,7 @@ public abstract class AbstractServiceUnitTest< T extends IEntity >{
 	@Test( expected = NullPointerException.class )
 	public final void whenGetIsTriggeredForNullId_thenException(){
 		// When
-		getService().save( null );
+		getService().create( null );
 		
 		// Then
 	}

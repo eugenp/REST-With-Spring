@@ -4,7 +4,6 @@ import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.sec.testing.template.UserRESTTemplateImpl;
@@ -27,12 +26,12 @@ public class SecurityRESTIntegrationTest{
 	// tests
 	
 	@Test
-	// TODO
-	@Ignore( "REST is not yet secured" )
-	public final void givenUnauthenticated_whenAResourceIsCreated_then401IsReceived(){
+	public final void givenUnauthenticated_whenAResourceIsDeleted_then401IsReceived(){
 		// Given
+		final String uriOfExistingResource = userTemplate.createResourceAsURI();
+
 		// When
-		final Response response = given().contentType( userTemplate.getMime() ).body( userTemplate.createNewEntity() ).post( userTemplate.getURI() );
+		final Response response = given().delete( uriOfExistingResource );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 401 ) );

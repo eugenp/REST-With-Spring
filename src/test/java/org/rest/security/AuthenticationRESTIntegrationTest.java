@@ -3,8 +3,8 @@ package org.rest.security;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.rest.testing.security.AuthenticationUtil.ADMIN_PASSWORD;
-import static org.rest.testing.security.AuthenticationUtil.ADMIN_USERNAME;
+import static org.rest.sec.util.SecurityConstants.ADMIN_PASSWORD;
+import static org.rest.sec.util.SecurityConstants.ADMIN_USERNAME;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

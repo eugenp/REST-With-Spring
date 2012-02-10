@@ -16,7 +16,7 @@ public class Privilege implements IEntity{
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private Long id;
-
+	
 	@Column( unique = true,nullable = false )
 	private String name;
 	
@@ -76,7 +76,7 @@ public class Privilege implements IEntity{
 	
 	@Override
 	public String toString(){
-		return "User [name=" + name + "]";
+		return getName();
 	}
 	
 }

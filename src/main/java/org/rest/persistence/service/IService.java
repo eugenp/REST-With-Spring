@@ -17,7 +17,7 @@ public interface IService< T extends IEntity >{
 	
 	// save/create/persist
 	
-	T save( final T entity );
+	T create( final T entity );
 	
 	// update/merge
 	

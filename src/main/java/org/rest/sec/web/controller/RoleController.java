@@ -60,7 +60,7 @@ public class RoleController extends AbstractController< Role >{
 	@ResponseStatus( HttpStatus.CREATED )
 	// @Secured( SecurityConstants.PRIVILEGE_ROLE_WRITE )
 	public void create( @RequestBody final Role resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
-		saveInternal( resource, uriBuilder, response );
+		createInternal( resource, uriBuilder, response );
 	}
 	
 	// update

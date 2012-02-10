@@ -18,15 +18,15 @@ public class UserServicePersistenceIntegrationTest extends AbstractPersistenceSe
 	
 	@Test
 	public void whenSaveIsPerformed_thenNoException(){
-		service.save( createNewEntity() );
+		service.create( createNewEntity() );
 	}
 	
 	@Test( expected = DataAccessException.class )
 	public void whenAUniqueConstraintIsBroken_thenSpringSpecificExceptionIsThrown(){
 		final String name = randomAlphabetic( 8 );
 		
-		service.save( this.createNewEntity( name ) );
-		service.save( this.createNewEntity( name ) );
+		service.create( this.createNewEntity( name ) );
+		service.create( this.createNewEntity( name ) );
 	}
 	
 	// template method

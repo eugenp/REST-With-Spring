@@ -59,7 +59,7 @@ public class PrivilegeController extends AbstractController< Privilege >{
 	@RequestMapping( method = RequestMethod.POST )
 	@ResponseStatus( HttpStatus.CREATED )
 	public void create( @RequestBody final Privilege resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
-		saveInternal( resource, uriBuilder, response );
+		createInternal( resource, uriBuilder, response );
 	}
 	
 	// update
