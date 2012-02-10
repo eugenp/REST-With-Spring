@@ -6,8 +6,6 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;
 import org.rest.persistence.AbstractPersistenceDAOIntegrationTest;
 import org.rest.sec.model.Privilege;
-import org.rest.sec.model.User;
-import org.rest.sec.persistence.dao.IPrivilegeJpaDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +32,7 @@ public class PrivilegeDAOPersistenceIntegrationTest extends AbstractPersistenceD
 		final String name = randomAlphabetic( 8 );
 		
 		// When
-		final User entityByName = dao.findByName( name );
+		final Privilege entityByName = dao.findByName( name );
 		
 		// Then
 		assertNull( entityByName );

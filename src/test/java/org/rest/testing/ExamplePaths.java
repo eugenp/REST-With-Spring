@@ -12,7 +12,7 @@ public final class ExamplePaths{
 	// API
 	
 	public final String getRootUri(){
-		return paths.getContext() + "/api/admin";
+		return paths.getContext() + "/api";
 	}
 	
 	public final String getUserUri(){
@@ -32,5 +32,5 @@ public final class ExamplePaths{
 	public final String getLoginUri(){
 		return paths.getContext() + "/j_spring_security_check";
 	}
-
+	
 }

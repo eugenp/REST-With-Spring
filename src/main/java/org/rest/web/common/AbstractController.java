@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpHeaders;
 import org.rest.common.IEntity;
 import org.rest.common.event.PaginatedResultsRetrievedEvent;
 import org.rest.common.event.ResourceCreatedEvent;
@@ -24,6 +25,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 
 public abstract class AbstractController< T extends IEntity >{
 	protected final Logger logger = LoggerFactory.getLogger( getClass() );
@@ -61,6 +63,12 @@ public abstract class AbstractController< T extends IEntity >{
 		
 		return resource;
 	}
+	public final void findAllToPagination( final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+		final String resourceName = clazz.getSimpleName().toString().toLowerCase();
+		final String locationValue = uriBuilder.path( "/" + resourceName ).build().encode().toUriString() + "?page=0&size=10";
+		
+		response.setHeader( HttpHeaders.LOCATION, locationValue );
+	}
 	
 	protected final List< T > findAllInternal(){
 		return getService().findAll();
@@ -82,9 +90,9 @@ public abstract class AbstractController< T extends IEntity >{
 		}
 		eventPublisher.publishEvent( new PaginatedResultsRetrievedEvent< T >( clazz, uriBuilder, response, page, resultPage.getTotalPages(), size ) );
 		
-		return resultPage.getContent();
+		return Lists.newArrayList( resultPage.getContent() );
 	}
-
+	
 	// save/create/persist
 	
 	protected final void saveInternal( final T resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){

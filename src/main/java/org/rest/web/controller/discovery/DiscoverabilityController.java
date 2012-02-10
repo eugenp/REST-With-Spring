@@ -20,7 +20,7 @@ final class DiscoverabilityController{
 	
 	// API
 	
-	@RequestMapping( value = "admin",method = RequestMethod.GET )
+	@RequestMapping( value = "/",method = RequestMethod.GET )
 	@ResponseStatus( value = HttpStatus.NO_CONTENT )
 	public final void adminRoot( final HttpServletRequest request, final HttpServletResponse response ){
 		final String rootUri = request.getRequestURL().toString();

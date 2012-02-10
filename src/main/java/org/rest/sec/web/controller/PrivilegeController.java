@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping( value = "admin/privilege" )
+@RequestMapping( value = "privilege" )
 public class PrivilegeController extends AbstractController< Privilege >{
 	
 	@Autowired

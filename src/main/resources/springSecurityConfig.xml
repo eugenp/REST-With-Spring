@@ -13,7 +13,7 @@
 	<global-method-security secured-annotations="enabled" />
 
 	<beans:bean id="digestFilter" class="org.springframework.security.web.authentication.www.DigestAuthenticationFilter">
-		<beans:property name="userDetailsService" ref="securityUserService" />
+		<beans:property name="userDetailsService" ref="myUserDetailsService" />
 		<beans:property name="authenticationEntryPoint" ref="digestEntryPoint" />
 	</beans:bean>
 
@@ -23,12 +23,7 @@
 	</beans:bean>
 
 	<authentication-manager erase-credentials="false">
-		<authentication-provider>
-			<user-service id="securityUserService">
-				<user name="eparaschiv" password="eparaschiv" authorities="ROLE_ADMIN" />
-				<user name="user" password="user" authorities="ROLE_USER" />
-			</user-service>
-		</authentication-provider>
+		<authentication-provider user-service-ref="myUserDetailsService" />
 	</authentication-manager>
 
 </beans:beans>

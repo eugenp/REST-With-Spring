@@ -103,7 +103,7 @@ public class User implements IEntity{
 			return true;
 		if( obj == null )
 			return false;
-		if( this.getClass() != obj.getClass() )
+		if( getClass() != obj.getClass() )
 			return false;
 		final User other = (User) obj;
 		if( name == null ){

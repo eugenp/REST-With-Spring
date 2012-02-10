@@ -24,7 +24,7 @@ final class SingleResourceRetrievedDiscoverabilityListener implements Applicatio
 	
 	final void addLinkHeaderOnSingleResourceRetrieval( final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz ){
 		final String resourceName = clazz.getSimpleName().toString().toLowerCase();
-		final String uriForResourceCreation = uriBuilder.path( "/admin/" + resourceName ).build().encode().toUriString();
+		final String uriForResourceCreation = uriBuilder.path( "/" + resourceName ).build().encode().toUriString();
 		
 		final String linkHeaderValue = RESTURIUtil.createLinkHeader( uriForResourceCreation, RESTURIUtil.REL_COLLECTION );
 		response.addHeader( HttpHeaders.LINK, linkHeaderValue );

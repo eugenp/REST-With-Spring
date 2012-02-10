@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping( value = "admin/user" )
+@RequestMapping( value = "user" )
 public class UserController extends AbstractController< User >{
 	
 	@Autowired
@@ -41,9 +41,9 @@ public class UserController extends AbstractController< User >{
 	}
 	
 	@RequestMapping( method = RequestMethod.GET )
-	@ResponseBody
-	public List< User > findAll(){
-		return findAllInternal();
+	@ResponseStatus( HttpStatus.SEE_OTHER )
+	public void findAll( final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+		findAllToPagination( uriBuilder, response );
 	}
 	
 	// find - one

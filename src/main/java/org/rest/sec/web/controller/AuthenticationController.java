@@ -29,7 +29,7 @@ public class AuthenticationController{
 	
 	// API
 	
-	@RequestMapping( value = "admin/authentication",method = RequestMethod.GET )
+	@RequestMapping( value = "authentication",method = RequestMethod.GET )
 	@ResponseStatus( HttpStatus.CREATED )
 	@ResponseBody
 	public User getAuthentication(){

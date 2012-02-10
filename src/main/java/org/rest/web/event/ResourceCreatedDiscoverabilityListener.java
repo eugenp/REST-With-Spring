@@ -24,7 +24,7 @@ final class ResourceCreatedDiscoverabilityListener implements ApplicationListene
 	
 	final void addLinkHeaderOnEntityCreation( final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final long idOfNewEntity, final Class clazz ){
 		final String resourceName = clazz.getSimpleName().toString().toLowerCase();
-		final String locationValue = uriBuilder.path( "/admin/" + resourceName + "/{id}" ).build().expand( idOfNewEntity ).encode().toUriString();
+		final String locationValue = uriBuilder.path( "/" + resourceName + "/{id}" ).build().expand( idOfNewEntity ).encode().toUriString();
 		
 		response.setHeader( HttpHeaders.LOCATION, locationValue );
 	}
