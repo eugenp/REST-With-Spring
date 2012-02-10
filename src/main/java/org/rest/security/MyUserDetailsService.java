@@ -4,10 +4,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.rest.sec.model.Principal;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
+import org.rest.sec.persistence.service.IPrincipalService;
 import org.rest.sec.persistence.service.IRoleService;
-import org.rest.sec.persistence.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -30,7 +31,7 @@ import com.google.common.collect.Sets;
 public final class MyUserDetailsService implements UserDetailsService{
 	
 	@Autowired
-	IUserService userService;
+	IPrincipalService userService;
 	
 	@Autowired
 	IRoleService roleService;
@@ -48,12 +49,12 @@ public final class MyUserDetailsService implements UserDetailsService{
 	public final UserDetails loadUserByUsername( final String username ){
 		Preconditions.checkNotNull( username );
 		
-		final org.rest.sec.model.User user = userService.findByName( username );
-		if( user == null ){
+		final Principal principal = userService.findByName( username );
+		if( principal == null ){
 			throw new UsernameNotFoundException( "Username was not found: " + username );
 		}
 		
-		final Set< Role > rolesOfUser = user.getRoles();
+		final Set< Role > rolesOfUser = principal.getRoles();
 		final Set< Privilege > privileges = Sets.newHashSet();
 		for( final Role roleOfUser : rolesOfUser ){
 			privileges.addAll( roleOfUser.getPrivileges() );
@@ -63,7 +64,7 @@ public final class MyUserDetailsService implements UserDetailsService{
 		final String[] roleStringsAsArray = rolesToString.toArray( new String[rolesToString.size()] );
 		final List< GrantedAuthority > auths = AuthorityUtils.createAuthorityList( roleStringsAsArray );
 		
-		return new User( user.getName(), user.getPassword(), auths );
+		return new User( principal.getName(), principal.getPassword(), auths );
 	}
 	
 }

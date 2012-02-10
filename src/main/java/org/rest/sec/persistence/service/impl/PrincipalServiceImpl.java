@@ -1,35 +1,35 @@
 package org.rest.sec.persistence.service.impl;
 
 import org.rest.persistence.service.AbstractService;
-import org.rest.sec.model.User;
-import org.rest.sec.persistence.dao.IUserJpaDAO;
-import org.rest.sec.persistence.service.IUserService;
+import org.rest.sec.model.Principal;
+import org.rest.sec.persistence.dao.IPrincipalJpaDAO;
+import org.rest.sec.persistence.service.IPrincipalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class UserServiceImpl extends AbstractService< User > implements IUserService{
+public class PrincipalServiceImpl extends AbstractService< Principal > implements IPrincipalService{
 	
 	@Autowired
-	IUserJpaDAO dao;
+	IPrincipalJpaDAO dao;
 	
-	public UserServiceImpl(){
+	public PrincipalServiceImpl(){
 		super();
 	}
 	
 	// API
 	
 	@Override
-	public User findByName( final String name ){
+	public Principal findByName( final String name ){
 		return dao.findByName( name );
 	}
-
+	
 	// Spring
 	
 	@Override
-	protected final IUserJpaDAO getDao(){
+	protected final IPrincipalJpaDAO getDao(){
 		return dao;
 	}
 	

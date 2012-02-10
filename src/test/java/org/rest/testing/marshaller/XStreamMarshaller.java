@@ -1,7 +1,7 @@
 package org.rest.testing.marshaller;
 
+import org.rest.sec.dto.User;
 import org.rest.sec.model.Privilege;
-import org.rest.sec.model.User;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 

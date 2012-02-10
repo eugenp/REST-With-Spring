@@ -1,44 +1,27 @@
-package org.rest.sec.model;
+package org.rest.sec.dto;
 
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.rest.common.IEntity;
+import org.rest.sec.model.Principal;
+import org.rest.sec.model.Role;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
-@Entity
 @XmlRootElement
 @XStreamAlias( "user" )
 public class User implements IEntity{
 	
-	@Id
-	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	@XStreamAsAttribute
 	private Long id;
 	
-	@Column( unique = true,nullable = false )
 	private String name;
 	
-	@Column( nullable = false )
-	private String password;
-	
-	/* Persistence */
-	@OneToMany( fetch = FetchType.EAGER )
-	@JoinColumn( name = "ROLE_ID" )
-	@Column( nullable = false )
 	/* Marshalling */
 	// - note: this gets rid of the collection entirely
 	@XStreamImplicit
@@ -49,11 +32,16 @@ public class User implements IEntity{
 	public User(){
 		super();
 	}
-	public User( final String nameToSet, final String passwordToSet ){
+	public User( final String nameToSet ){
 		super();
 		
 		name = nameToSet;
-		password = passwordToSet;
+	}
+	public User( final Principal principal ){
+		super();
+		
+		name = principal.getName();
+		roles = principal.getRoles();
 	}
 	
 	// API
@@ -72,13 +60,6 @@ public class User implements IEntity{
 	}
 	public void setName( final String nameToSet ){
 		name = nameToSet;
-	}
-	
-	public String getPassword(){
-		return password;
-	}
-	public void setPassword( final String passwordToSet ){
-		password = passwordToSet;
 	}
 	
 	public Set< Role > getRoles(){

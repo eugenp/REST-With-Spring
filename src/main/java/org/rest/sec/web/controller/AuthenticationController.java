@@ -2,8 +2,8 @@ package org.rest.sec.web.controller;
 
 import java.util.Collection;
 
+import org.rest.sec.dto.User;
 import org.rest.sec.model.Privilege;
-import org.rest.sec.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,7 +35,7 @@ public class AuthenticationController{
 	public User getAuthentication(){
 		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
-		final User authenticationResource = new User( authentication.getName(), (String) authentication.getCredentials() );
+		final User authenticationResource = new User( authentication.getName() );
 		
 		final Function< GrantedAuthority, Privilege > springAuthorityToPrivilegeFunction = new Function< GrantedAuthority, Privilege >(){
 			@Override

@@ -4,15 +4,14 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.junit.Test;
 import org.rest.persistence.AbstractPersistenceServiceIntegrationTest;
-import org.rest.sec.model.User;
-import org.rest.sec.persistence.service.IUserService;
+import org.rest.sec.model.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 
-public class UserServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< User >{
+public class UserServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< Principal >{
 	
 	@Autowired
-	private IUserService service;
+	private IPrincipalService service;
 	
 	// create
 	
@@ -32,18 +31,18 @@ public class UserServicePersistenceIntegrationTest extends AbstractPersistenceSe
 	// template method
 	
 	@Override
-	protected final IUserService getService(){
+	protected final IPrincipalService getService(){
 		return service;
 	}
 	@Override
-	protected final User createNewEntity(){
+	protected final Principal createNewEntity(){
 		return this.createNewEntity( randomAlphabetic( 8 ) );
 	}
 	
 	// util
 	
-	protected final User createNewEntity( final String username ){
-		return new User( username, randomAlphabetic( 8 ) );
+	protected final Principal createNewEntity( final String username ){
+		return new Principal( username, randomAlphabetic( 8 ) );
 	}
 	
 }

@@ -2,12 +2,12 @@ package org.rest.sec.persistence.setup;
 
 import java.util.Set;
 
+import org.rest.sec.model.Principal;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
-import org.rest.sec.model.User;
+import org.rest.sec.persistence.service.IPrincipalService;
 import org.rest.sec.persistence.service.IPrivilegeService;
 import org.rest.sec.persistence.service.IRoleService;
-import org.rest.sec.persistence.service.IUserService;
 import org.rest.sec.util.SecurityConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class SecuritySetup implements ApplicationListener< ContextRefreshedEvent
 	private boolean setupDone;
 	
 	@Autowired
-	private IUserService userService;
+	private IPrincipalService principalService;
 	
 	@Autowired
 	private IRoleService roleService;
@@ -50,7 +50,7 @@ public class SecuritySetup implements ApplicationListener< ContextRefreshedEvent
 		if( !setupDone ){
 			privilegeService.deleteAll();
 			roleService.deleteAll();
-			userService.deleteAll();
+			principalService.deleteAll();
 			
 			createPrivileges();
 			createRoles();
@@ -99,16 +99,16 @@ public class SecuritySetup implements ApplicationListener< ContextRefreshedEvent
 		createPrincipalIfNotExisting( SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD, Sets.<Role> newHashSet( roleAdmin ) );
 	}
 	final void createPrincipalIfNotExisting( final String loginName, final String pass, final Set< Role > roles ){
-		final User entityByName = userService.findByName( loginName );
+		final Principal entityByName = principalService.findByName( loginName );
 		if( entityByName == null ){
-			final User entity = buildUser( loginName, pass, roles );
-			userService.create( entity );
+			final Principal entity = buildPrincipal( loginName, pass, roles );
+			principalService.create( entity );
 		}
 	}
-	final User buildUser( final String name, final String pass, final Set< Role > roles ){
-		final User user = new User( name, pass );
-		user.setRoles( roles );
-		return user;
+	final Principal buildPrincipal( final String name, final String pass, final Set< Role > roles ){
+		final Principal principal = new Principal( name, pass );
+		principal.setRoles( roles );
+		return principal;
 	}
 	
 }

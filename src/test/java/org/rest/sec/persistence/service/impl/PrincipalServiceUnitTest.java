@@ -7,31 +7,31 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.rest.sec.model.User;
-import org.rest.sec.persistence.dao.IUserJpaDAO;
+import org.rest.sec.model.Principal;
+import org.rest.sec.persistence.dao.IPrincipalJpaDAO;
 import org.rest.test.AbstractServiceUnitTest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;
 
-public class UserServiceUnitTest extends AbstractServiceUnitTest< User >{
+public class PrincipalServiceUnitTest extends AbstractServiceUnitTest< Principal >{
 	
-	UserServiceImpl instance;
+	PrincipalServiceImpl instance;
 	
-	private IUserJpaDAO daoMock;
+	private IPrincipalJpaDAO daoMock;
 	
-	public UserServiceUnitTest(){
-		super( User.class );
+	public PrincipalServiceUnitTest(){
+		super( Principal.class );
 	}
 	
 	// fixtures
 	
 	@Before
 	public final void before(){
-		instance = new UserServiceImpl();
+		instance = new PrincipalServiceImpl();
 		
-		daoMock = mock( IUserJpaDAO.class );
-		when( daoMock.findAll() ).thenReturn( Lists.<User> newArrayList() );
+		daoMock = mock( IPrincipalJpaDAO.class );
+		when( daoMock.findAll() ).thenReturn( Lists.<Principal> newArrayList() );
 		instance.dao = daoMock;
 	}
 	
@@ -59,8 +59,8 @@ public class UserServiceUnitTest extends AbstractServiceUnitTest< User >{
 	
 	// mocking behavior
 	
-	final User configureGet( final long id ){
-		final User entity = new User();
+	final Principal configureGet( final long id ){
+		final Principal entity = new Principal();
 		entity.setId( id );
 		when( daoMock.findOne( id ) ).thenReturn( entity );
 		return entity;
@@ -69,22 +69,22 @@ public class UserServiceUnitTest extends AbstractServiceUnitTest< User >{
 	// template method
 	
 	@Override
-	protected final UserServiceImpl getService(){
+	protected final PrincipalServiceImpl getService(){
 		return instance;
 	}
 	@Override
-	protected final JpaRepository< User, Long > getDAOMock(){
+	protected final JpaRepository< Principal, Long > getDAOMock(){
 		return daoMock;
 	}
 	@Override
-	protected final User createNewEntity(){
+	protected final Principal createNewEntity(){
 		return this.createNewEntity( randomAlphabetic( 8 ) );
 	}
 	
 	// util
 	
-	final User createNewEntity( final String username ){
-		return new User( username, randomAlphabetic( 8 ) );
+	final Principal createNewEntity( final String username ){
+		return new Principal( username, randomAlphabetic( 8 ) );
 	}
 	
 }

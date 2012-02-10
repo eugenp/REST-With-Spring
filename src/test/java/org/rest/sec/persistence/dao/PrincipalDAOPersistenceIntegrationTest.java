@@ -8,10 +8,8 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 import org.rest.persistence.AbstractPersistenceDAOIntegrationTest;
+import org.rest.sec.model.Principal;
 import org.rest.sec.model.Role;
-import org.rest.sec.model.User;
-import org.rest.sec.persistence.dao.IRoleJpaDAO;
-import org.rest.sec.persistence.dao.IUserJpaDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +18,10 @@ import com.google.common.collect.Sets;
 
 @TransactionConfiguration( defaultRollback = true )
 @Transactional
-public class UserDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest< User >{
+public class PrincipalDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest< Principal >{
 	
 	@Autowired
-	private IUserJpaDAO dao;
+	private IPrincipalJpaDAO dao;
 	
 	@Autowired
 	private IRoleJpaDAO associationDao;
@@ -31,21 +29,21 @@ public class UserDAOPersistenceIntegrationTest extends AbstractPersistenceDAOInt
 	// involving other entities
 	
 	@Test
-	public void whenUserIsCreated_thenRolesOfUserAreLoaded(){
-		final User persistedUser = this.persistNewEntity();
+	public void whenPrincipalIsCreated_thenRolesOfUserAreLoaded(){
+		final Principal persistedPrincipal = this.persistNewEntity();
 		
-		assertThat( persistedUser.getRoles(), notNullValue() );
+		assertThat( persistedPrincipal.getRoles(), notNullValue() );
 	}
 	@Test
 	public void whenUserIsCreated_thenCorectPrivilegesAreLoaded(){
 		final String nameOfRole = "testRole";
 		
-		final User userWitoutRoles = this.persistNewEntity();
+		final Principal principalWitoutRoles = this.persistNewEntity();
 		final Role savedAssociation = associationDao.save( new Role( nameOfRole ) );
-		userWitoutRoles.getRoles().add( savedAssociation );
-		final User userWithPrivilege = getDAO().save( userWitoutRoles );
+		principalWitoutRoles.getRoles().add( savedAssociation );
+		final Principal principalWithPrivilege = getDAO().save( principalWitoutRoles );
 		
-		assertThat( userWithPrivilege.getRoles(), contains( new Role( nameOfRole ) ) );
+		assertThat( principalWithPrivilege.getRoles(), contains( new Role( nameOfRole ) ) );
 	}
 	
 	// save
@@ -63,7 +61,7 @@ public class UserDAOPersistenceIntegrationTest extends AbstractPersistenceDAOInt
 		final String name = randomAlphabetic( 8 );
 		
 		// When
-		final User entityByName = dao.findByName( name );
+		final Principal entityByName = dao.findByName( name );
 		
 		// Then
 		assertNull( entityByName );
@@ -72,15 +70,15 @@ public class UserDAOPersistenceIntegrationTest extends AbstractPersistenceDAOInt
 	// template method
 	
 	@Override
-	protected final IUserJpaDAO getDAO(){
+	protected final IPrincipalJpaDAO getDAO(){
 		return dao;
 	}
 	
 	@Override
-	protected final User createNewEntity(){
-		final User user = new User( randomAlphabetic( 8 ), randomAlphabetic( 8 ) );
-		user.setRoles( Sets.<Role> newHashSet() );
-		return user;
+	protected final Principal createNewEntity(){
+		final Principal principal = new Principal( randomAlphabetic( 8 ), randomAlphabetic( 8 ) );
+		principal.setRoles( Sets.<Role> newHashSet() );
+		return principal;
 	}
 	
 }

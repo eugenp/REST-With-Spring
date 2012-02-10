@@ -2,8 +2,8 @@ package org.rest.spring.web;
 
 import java.util.List;
 
+import org.rest.sec.dto.User;
 import org.rest.sec.model.Privilege;
-import org.rest.sec.model.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

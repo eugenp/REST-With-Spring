@@ -1,7 +1,7 @@
-package org.rest.sec.persistence.service;
+package org.rest.sec.persistence.service.dto;
 
 import org.rest.persistence.service.IService;
-import org.rest.sec.model.User;
+import org.rest.sec.dto.User;
 
 public interface IUserService extends IService< User >{
 	

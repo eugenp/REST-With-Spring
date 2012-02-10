@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.rest.sec.model.User;
-import org.rest.sec.persistence.service.IUserService;
+import org.rest.sec.dto.User;
+import org.rest.sec.persistence.service.dto.IUserService;
 import org.rest.sec.util.SecurityConstants;
 import org.rest.web.common.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,8 +2,8 @@ package org.rest.sec.testing.template;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
+import org.rest.sec.dto.User;
 import org.rest.sec.model.Role;
-import org.rest.sec.model.User;
 import org.rest.testing.ExamplePaths;
 import org.rest.testing.security.AuthenticationUtil;
 import org.rest.testing.template.AbstractRESTTemplate;
@@ -53,7 +53,7 @@ public final class UserRESTTemplateImpl extends AbstractRESTTemplate< User >{
 	// util
 	
 	public final User createNewEntity( final String username ){
-		final User user = new User( username, randomAlphabetic( 8 ) );
+		final User user = new User( username );
 		user.setRoles( Sets.<Role> newHashSet() );
 		return user;
 	}
