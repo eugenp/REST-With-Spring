@@ -124,7 +124,9 @@ public abstract class AbstractController< T extends IEntity >{
 			throw new ConflictException( dataEx );
 		}
 		
-		eventPublisher.publishEvent( new ResourceCreatedEvent< T >( clazz, uriBuilder, response, resource.getId() ) );
+		// - note: mind the autoboxing and potential NPE when the resource has null id at this point (likely when working with DTOs)
+		final ResourceCreatedEvent< T > resourceCreatedEvent = new ResourceCreatedEvent< T >( clazz, uriBuilder, response, resource.getId() );
+		eventPublisher.publishEvent( resourceCreatedEvent );
 	}
 	
 	// update

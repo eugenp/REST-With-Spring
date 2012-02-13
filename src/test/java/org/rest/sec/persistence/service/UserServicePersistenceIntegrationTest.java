@@ -5,8 +5,11 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import org.junit.Test;
 import org.rest.persistence.AbstractPersistenceServiceIntegrationTest;
 import org.rest.sec.model.Principal;
+import org.rest.sec.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+
+import com.google.common.collect.Sets;
 
 public class UserServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< Principal >{
 	
@@ -42,7 +45,7 @@ public class UserServicePersistenceIntegrationTest extends AbstractPersistenceSe
 	// util
 	
 	protected final Principal createNewEntity( final String username ){
-		return new Principal( username, randomAlphabetic( 8 ) );
+		return new Principal( username, randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
 	}
 	
 }

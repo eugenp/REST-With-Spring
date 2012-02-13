@@ -101,14 +101,9 @@ public class SecuritySetup implements ApplicationListener< ContextRefreshedEvent
 	final void createPrincipalIfNotExisting( final String loginName, final String pass, final Set< Role > roles ){
 		final Principal entityByName = principalService.findByName( loginName );
 		if( entityByName == null ){
-			final Principal entity = buildPrincipal( loginName, pass, roles );
+			final Principal entity = new Principal( loginName, pass, roles );
 			principalService.create( entity );
 		}
-	}
-	final Principal buildPrincipal( final String name, final String pass, final Set< Role > roles ){
-		final Principal principal = new Principal( name, pass );
-		principal.setRoles( roles );
-		return principal;
 	}
 	
 }

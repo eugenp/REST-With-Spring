@@ -8,11 +8,13 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 import org.rest.sec.model.Principal;
+import org.rest.sec.model.Role;
 import org.rest.sec.persistence.dao.IPrincipalJpaDAO;
 import org.rest.test.AbstractServiceUnitTest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 public class PrincipalServiceUnitTest extends AbstractServiceUnitTest< Principal >{
 	
@@ -84,7 +86,7 @@ public class PrincipalServiceUnitTest extends AbstractServiceUnitTest< Principal
 	// util
 	
 	final Principal createNewEntity( final String username ){
-		return new Principal( username, randomAlphabetic( 8 ) );
+		return new Principal( username, randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
 	}
 	
 }

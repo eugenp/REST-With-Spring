@@ -38,11 +38,12 @@ public class Principal implements IEntity{
 	public Principal(){
 		super();
 	}
-	public Principal( final String nameToSet, final String passwordToSet ){
+	public Principal( final String nameToSet, final String passwordToSet, final Set< Role > rolesToSet ){
 		super();
 		
 		name = nameToSet;
 		password = passwordToSet;
+		roles = rolesToSet;
 	}
 	
 	// API

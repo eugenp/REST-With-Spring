@@ -35,7 +35,7 @@ public class AuthenticationController{
 	public User getAuthentication(){
 		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
-		final User authenticationResource = new User( authentication.getName() );
+		final User authenticationResource = new User( authentication.getName(), null );
 		
 		final Function< GrantedAuthority, Privilege > springAuthorityToPrivilegeFunction = new Function< GrantedAuthority, Privilege >(){
 			@Override

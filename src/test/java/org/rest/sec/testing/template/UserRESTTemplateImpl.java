@@ -37,7 +37,7 @@ public final class UserRESTTemplateImpl extends AbstractRESTTemplate< User >{
 	
 	@Override
 	public final User createNewEntity(){
-		return this.createNewEntity( randomAlphabetic( 8 ) );
+		return this.createNewEntity( randomAlphabetic( 8 ), randomAlphabetic( 8 ) );
 	}
 	
 	@Override
@@ -52,8 +52,8 @@ public final class UserRESTTemplateImpl extends AbstractRESTTemplate< User >{
 	
 	// util
 	
-	public final User createNewEntity( final String username ){
-		final User user = new User( username );
+	public final User createNewEntity( final String username, final String password ){
+		final User user = new User( username, password );
 		user.setRoles( Sets.<Role> newHashSet() );
 		return user;
 	}

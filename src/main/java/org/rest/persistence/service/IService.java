@@ -27,8 +27,6 @@ public interface IService< T extends IEntity >{
 	
 	void delete( final long id );
 	
-	void delete( final List< T > entities );
-	
 	void deleteAll();
 	
 }

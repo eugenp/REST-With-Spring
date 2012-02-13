@@ -20,7 +20,7 @@ public final class ResourceCreatedEvent< T extends Serializable > extends Applic
 		Preconditions.checkNotNull( uriBuilderToSet );
 		Preconditions.checkNotNull( responseToSet );
 		Preconditions.checkNotNull( idOfNewResourceToSet );
-
+		
 		this.uriBuilder = uriBuilderToSet;
 		this.response = responseToSet;
 		this.idOfNewResource = idOfNewResourceToSet;

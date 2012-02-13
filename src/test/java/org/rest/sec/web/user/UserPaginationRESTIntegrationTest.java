@@ -1,6 +1,5 @@
 package org.rest.sec.web.user;
 
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.rest.sec.dto.User;
 import org.rest.sec.testing.template.UserRESTTemplateImpl;
@@ -14,7 +13,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration( classes = { ApplicationTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
-@Ignore( "user and principal work is still in progress" )
 public class UserPaginationRESTIntegrationTest extends AbstractPaginationRESTIntegrationTest< User >{
 	
 	@Autowired

@@ -76,8 +76,7 @@ public class PrincipalDAOPersistenceIntegrationTest extends AbstractPersistenceD
 	
 	@Override
 	protected final Principal createNewEntity(){
-		final Principal principal = new Principal( randomAlphabetic( 8 ), randomAlphabetic( 8 ) );
-		principal.setRoles( Sets.<Role> newHashSet() );
+		final Principal principal = new Principal( randomAlphabetic( 8 ), randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
 		return principal;
 	}
 	

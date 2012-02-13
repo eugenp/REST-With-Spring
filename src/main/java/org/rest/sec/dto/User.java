@@ -21,6 +21,7 @@ public class User implements IEntity{
 	private Long id;
 	
 	private String name;
+	private String password;
 	
 	/* Marshalling */
 	// - note: this gets rid of the collection entirely
@@ -32,10 +33,11 @@ public class User implements IEntity{
 	public User(){
 		super();
 	}
-	public User( final String nameToSet ){
+	public User( final String nameToSet, final String passwordToSet ){
 		super();
 		
 		name = nameToSet;
+		password = passwordToSet;
 	}
 	public User( final Principal principal ){
 		super();
@@ -60,6 +62,13 @@ public class User implements IEntity{
 	}
 	public void setName( final String nameToSet ){
 		name = nameToSet;
+	}
+	
+	public String getPassword(){
+		return password;
+	}
+	public void setPassword( final String passwordToSet ){
+		password = passwordToSet;
 	}
 	
 	public Set< Role > getRoles(){

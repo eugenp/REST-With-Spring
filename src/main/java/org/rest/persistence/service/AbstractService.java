@@ -76,12 +76,6 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 		this.getDao().deleteAll();
 	}
 	@Override
-	public void delete( final List< T > entities ){
-		Preconditions.checkNotNull( entities );
-		
-		this.getDao().delete( entities );
-	}
-	@Override
 	public void delete( final long id ){
 		this.getDao().delete( id );
 	}
