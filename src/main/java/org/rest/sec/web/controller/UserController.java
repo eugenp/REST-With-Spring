@@ -45,7 +45,7 @@ public class UserController extends AbstractController< User >{
 	@RequestMapping( method = RequestMethod.GET )
 	@ResponseStatus( HttpStatus.SEE_OTHER )
 	public void findAll( final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
-		findAllToPagination( uriBuilder, response );
+		findAllRedirectToPagination( uriBuilder, response );
 	}
 	
 	// find - one

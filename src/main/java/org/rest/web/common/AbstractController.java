@@ -59,18 +59,18 @@ public abstract class AbstractController< T extends IEntity >{
 		
 		return resource;
 	}
-	protected final void findAllToPagination( final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
-		final String resourceName = clazz.getSimpleName().toString().toLowerCase();
-		final String locationValue = uriBuilder.path( "/" + resourceName ).build().encode().toUriString() + "?page=0&size=10";
-		
-		response.setHeader( HttpHeaders.LOCATION, locationValue );
-	}
 	
 	protected final List< T > findAllInternal(){
 		return getService().findAll();
 	}
 	
-	public List< T > findPaginatedInternal( final int page, final int size, final String sortBy, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+	protected final void findAllRedirectToPagination( final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+		final String resourceName = clazz.getSimpleName().toString().toLowerCase();
+		final String locationValue = uriBuilder.path( "/" + resourceName ).build().encode().toUriString() + "?page=0&size=10";
+		
+		response.setHeader( HttpHeaders.LOCATION, locationValue );
+	}
+	protected final List< T > findPaginatedInternal( final int page, final int size, final String sortBy, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		Page< T > resultPage = null;
 		try{
 			resultPage = getService().findPaginated( page, size, sortBy );
