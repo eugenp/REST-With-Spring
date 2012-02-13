@@ -97,8 +97,8 @@ public abstract class AbstractController< T extends IEntity >{
 		try{
 			getService().create( resource );
 		}
-		// TODO: to remove or document some of these
-		catch( final IllegalStateException ex ){
+		// - these are disabled for now - the IllegalStateException may be reenabled at some point
+		/*catch( final IllegalStateException ex ){
 			logger.error( "IllegalStateException on create operation for: " + resource.getClass().getSimpleName() );
 			logger.warn( "IllegalStateException on create operation for: " + resource.getClass().getSimpleName(), ex );
 			throw new ResourceNotFoundException( ex );
@@ -107,7 +107,7 @@ public abstract class AbstractController< T extends IEntity >{
 			logger.error( "IllegalArgumentException on create operation for: " + resource.getClass().getSimpleName() );
 			logger.warn( "IllegalArgumentException on create operation for: " + resource.getClass().getSimpleName(), ex );
 			throw new ConflictException( ex );
-		}
+		}*/
 		catch( final DataIntegrityViolationException ex ){ // on unique constraint
 			logger.error( "DataIntegrityViolationException on create operation for: " + resource.getClass().getSimpleName() );
 			logger.warn( "DataIntegrityViolationException on create operation for: " + resource.getClass().getSimpleName(), ex );
@@ -125,8 +125,7 @@ public abstract class AbstractController< T extends IEntity >{
 		}
 		
 		// - note: mind the autoboxing and potential NPE when the resource has null id at this point (likely when working with DTOs)
-		final ResourceCreatedEvent< T > resourceCreatedEvent = new ResourceCreatedEvent< T >( clazz, uriBuilder, response, resource.getId() );
-		eventPublisher.publishEvent( resourceCreatedEvent );
+		eventPublisher.publishEvent( new ResourceCreatedEvent< T >( clazz, uriBuilder, response, resource.getId() ) );
 	}
 	
 	// update

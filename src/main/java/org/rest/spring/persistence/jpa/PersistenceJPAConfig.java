@@ -31,16 +31,16 @@ public class PersistenceJPAConfig{
 	private String url;
 	
 	@Value( "${hibernate.dialect}" )
-	private String hibernateDialect;
+	String hibernateDialect;
 	
 	@Value( "${hibernate.show_sql}" )
-	private boolean hibernateShowSql;
+	boolean hibernateShowSql;
 	
 	@Value( "${hibernate.hbm2ddl.auto}" )
-	private String hibernateHbm2ddlAuto;
+	String hibernateHbm2ddlAuto;
 	
 	@Value( "${jpa.generateDdl}" )
-	private boolean jpaGenerateDdl;
+	boolean jpaGenerateDdl;
 	
 	public PersistenceJPAConfig(){
 		super();
