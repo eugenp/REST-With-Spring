@@ -33,11 +33,12 @@ public class User implements IEntity{
 	public User(){
 		super();
 	}
-	public User( final String nameToSet, final String passwordToSet ){
+	public User( final String nameToSet, final String passwordToSet, final Set< Role > rolesToSet ){
 		super();
 		
 		name = nameToSet;
 		password = passwordToSet;
+		roles = rolesToSet;
 	}
 	public User( final Principal principal ){
 		super();
