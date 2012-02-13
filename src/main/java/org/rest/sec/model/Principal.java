@@ -29,7 +29,6 @@ public class Principal implements IEntity{
 	@Column( nullable = false )
 	private String password;
 	
-	/* Persistence */
 	@OneToMany( fetch = FetchType.EAGER )
 	@JoinColumn( name = "ROLE_ID" )
 	@Column( nullable = false )

@@ -2,10 +2,10 @@ package org.rest.sec.persistence.service.impl.dto;
 
 import java.util.List;
 
+import org.rest.common.web.RestPreconditions;
 import org.rest.sec.dto.PrincipalToUserFunction;
 import org.rest.sec.dto.User;
 import org.rest.sec.model.Principal;
-import org.rest.sec.model.Role;
 import org.rest.sec.persistence.service.IPrincipalService;
 import org.rest.sec.persistence.service.dto.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 @Service
 @Transactional
@@ -43,6 +42,9 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public User findOne( final long id ){
 		final Principal principal = principalService.findOne( id );
+		if( principal == null ){
+			return null;
+		}
 		return new User( principal );
 	}
 	
@@ -72,7 +74,7 @@ public class UserServiceImpl implements IUserService{
 	
 	@Override
 	public User create( final User entity ){
-		final Principal newPrincipalEntity = new Principal( entity.getName(), entity.getPassword(), Sets.<Role> newHashSet() );
+		final Principal newPrincipalEntity = new Principal( entity.getName(), entity.getPassword(), entity.getRoles() );
 		principalService.create( newPrincipalEntity );
 		entity.setId( newPrincipalEntity.getId() );
 		return entity;
@@ -82,7 +84,12 @@ public class UserServiceImpl implements IUserService{
 	
 	@Override
 	public void update( final User entity ){
-		throw new UnsupportedOperationException();
+		final Principal principalToUpdate = RestPreconditions.checkNotNull( principalService.findOne( entity.getId() ) );
+		
+		principalToUpdate.setName( entity.getName() );
+		principalToUpdate.setRoles( entity.getRoles() );
+		
+		principalService.update( principalToUpdate );
 	}
 	
 	// delete

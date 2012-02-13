@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.sec.dto.User;
@@ -27,7 +26,6 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration( classes = { ApplicationTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
-@Ignore( "user and principal work is still in progress" )
 public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTest< User >{
 	
 	@Autowired

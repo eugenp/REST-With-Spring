@@ -4,7 +4,6 @@ import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.sec.testing.template.UserRESTTemplateImpl;
@@ -19,7 +18,6 @@ import com.jayway.restassured.response.Response;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration( classes = { ApplicationTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
-@Ignore( "user and principal work is still in progress" )
 public class SecurityRESTIntegrationTest{
 	
 	@Autowired

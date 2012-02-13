@@ -44,6 +44,7 @@ public class User implements IEntity{
 		
 		name = principal.getName();
 		roles = principal.getRoles();
+		id = principal.getId();
 	}
 	
 	// API
