@@ -12,7 +12,6 @@ import org.apache.http.client.AuthCache;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.sec.dto.User;
@@ -58,12 +57,11 @@ public class UserSandboxRESTIntegrationTest extends AbstractRESTIntegrationTest{
 	}
 	
 	@Test
-	@Ignore( "TODO: review" )
 	public final void whenAuthenticating_then201IsReceived(){
 		final RestTemplate restTemplate = setUpRestTemplate();
 		
 		// When
-		final ResponseEntity< User > response = restTemplate.exchange( paths.getAuthenticationUri(), HttpMethod.GET, new HttpEntity< String >( createHeaders() ), User.class );
+		final ResponseEntity< User > response = restTemplate.exchange( paths.getAuthenticationUri(), HttpMethod.POST, new HttpEntity< String >( createHeaders() ), User.class );
 		
 		// Then
 		assertThat( response.getStatusCode().value(), is( 201 ) );

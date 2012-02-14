@@ -6,14 +6,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.rest.sec.util.SecurityConstants.ADMIN_PASSWORD;
 import static org.rest.sec.util.SecurityConstants.ADMIN_USERNAME;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.spring.application.ApplicationTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
 import org.rest.testing.ExamplePaths;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -30,11 +28,10 @@ public class AuthenticationRESTIntegrationTest{
 	// tests
 	
 	@Test
-	@Ignore( "TODO: investigate" )
 	public final void givenCorrectAuthenticationCredentialsSent_whenAuthenticationResourceIsCreated_then201IsReceived(){
 		// Given
 		// When
-		final Response response = given().auth().digest( ADMIN_USERNAME, ADMIN_PASSWORD ).contentType( MediaType.APPLICATION_XML.toString() ).get( paths.getAuthenticationUri() );
+		final Response response = given().auth().digest( ADMIN_USERNAME, ADMIN_PASSWORD ).post( paths.getAuthenticationUri() );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 201 ) );

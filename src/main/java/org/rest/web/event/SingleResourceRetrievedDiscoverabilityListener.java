@@ -19,10 +19,10 @@ final class SingleResourceRetrievedDiscoverabilityListener implements Applicatio
 	public final void onApplicationEvent( final SingleResourceRetrievedEvent ev ){
 		Preconditions.checkNotNull( ev );
 		
-		addLinkHeaderOnSingleResourceRetrieval( ev.getUriBuilder(), ev.getResponse(), ev.getClazz() );
+		discoverGetAllURI( ev.getUriBuilder(), ev.getResponse(), ev.getClazz() );
 	}
 	
-	final void addLinkHeaderOnSingleResourceRetrieval( final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz ){
+	final void discoverGetAllURI( final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz ){
 		final String resourceName = clazz.getSimpleName().toString().toLowerCase();
 		final String uriForResourceCreation = uriBuilder.path( "/" + resourceName ).build().encode().toUriString();
 		

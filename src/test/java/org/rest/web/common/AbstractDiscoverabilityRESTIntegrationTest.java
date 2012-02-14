@@ -9,7 +9,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
 import org.hamcrest.core.AnyOf;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.IEntity;
 import org.rest.common.util.RESTURIUtil;
@@ -41,24 +40,6 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	// tests
 	
 	// GET (single)
-	
-	/**
-	 * - note: this needs to be done manually and not through the template
-	 */
-	@Test
-	@Ignore( "this isn't doing the right thing; actually the Link header doen't contain the URI of the create-POST, but that of the getAll-GET" )
-	// TODO: extract the URI by rel first
-	// TODO: then, this isn't actually implemented anyways
-	public final void whenResourceIsRetrieved_thenURIToCreateANewResourceIsDiscoverable(){
-		// When
-		final Response response = this.getTemplate().createResourceAndGetAsResponse();
-		
-		// Then
-		final String linkHeader = response.getHeader( HttpHeaders.LINK );
-		final String uriForResourceCreation = HTTPLinkHeaderUtils.extractSingleURI( linkHeader );
-		final Response secondCreationResponse = this.givenAuthenticated().contentType( marshaller.getMime() ).body( this.createNewEntity() ).post( uriForResourceCreation );
-		assertThat( secondCreationResponse.getStatusCode(), is( 201 ) );
-	}
 	
 	@Test
 	public final void whenResourceIsRetrieved_thenURIToGetAllResourcesIsDiscoverable(){
