@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
+import java.util.Random;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -27,26 +28,50 @@ public abstract class AbstractPersistenceDAOIntegrationTest< T extends IEntity >
 	// tests
 	
 	// find - findAll
-
-	@Test
-	public void whenEntitiesAreRetrieved_thenNoExceptions(){
-		this.getDAO().findAll();
-	}
 	
 	@Test
+	public void whenEntitiesAreRetrieved_thenNoExceptions(){
+		getDAO().findAll();
+	}
+	@Test
 	public void whenEntitiesAreRetrieved_thenTheResultIsNotNull(){
-		final List< T > entities = this.getDAO().findAll();
+		final List< T > entities = getDAO().findAll();
 		
 		assertNotNull( entities );
 	}
-	
 	@Test
 	public void givenAnEntityExists_whenEntitiesAreRetrieved_thenThereIsAtLeastOneEntity(){
-		this.persistNewEntity();
+		persistNewEntity();
 		
-		final List< T > owners = this.getDAO().findAll();
+		final List< T > owners = getDAO().findAll();
 		
 		assertThat( owners, Matchers.not( Matchers.<T> empty() ) );
+	}
+	
+	// find one
+	
+	@Test
+	public void givenEntityExists_whenEntityIsRetrieved_thenNoExceptions(){
+		final T existingEntity = persistNewEntity();
+		getDAO().findOne( existingEntity.getId() );
+	}
+	@Test
+	public void givenEntityDoesNotExist_whenEntityIsRetrieved_thenNoExceptions(){
+		long id = new Random().nextLong() * 10000;
+		id = ( id < 0 ) ? ( -1 * id ) : id;
+		getDAO().findOne( id );
+	}
+	@Test
+	public void givenEntityExists_whenEntityIsRetrieved_thenTheResultIsNotNull(){
+		final T existingEntity = persistNewEntity();
+		final T retrievedEntity = getDAO().findOne( existingEntity.getId() );
+		assertNotNull( retrievedEntity );
+	}
+	@Test
+	public void givenEntityExists_whenEntityIsRetrieved_thenEntityIsRetrievedCorrectly(){
+		final T existingEntity = persistNewEntity();
+		final T retrievedEntity = getDAO().findOne( existingEntity.getId() );
+		assertEquals( existingEntity, retrievedEntity );
 	}
 	
 	// save
@@ -74,22 +99,55 @@ public abstract class AbstractPersistenceDAOIntegrationTest< T extends IEntity >
 	@Test
 	public void givenEntityExists_whenEntityIsDeleted_thenNoExceptions(){
 		// Given
-		final T existingLocation = this.persistNewEntity();
+		final T existingLocation = persistNewEntity();
 		
 		// When
-		this.getDAO().delete( existingLocation.getId() );
+		getDAO().delete( existingLocation.getId() );
 	}
-	
 	@Test
 	public void givenEntityExists_whenEntityIsDeleted_thenEntityIsNoLongerRetrievable(){
 		// Given
-		final T existingEntity = this.persistNewEntity();
+		final T existingEntity = persistNewEntity();
 		
 		// When
-		this.getDAO().delete( existingEntity.getId() );
+		getDAO().delete( existingEntity.getId() );
 		
 		// Then
-		assertNull( this.getDAO().findOne( existingEntity.getId() ) );
+		assertNull( getDAO().findOne( existingEntity.getId() ) );
+	}
+	
+	// delete all
+	
+	@Test
+	public void whenEntitiesAreDeleted_thenNoException(){
+		getDAO().deleteAll();
+	}
+	@Test
+	public void givenEntityExists_whenEntitiesAreDeleted_thenNoException(){
+		// Given
+		persistNewEntity();
+		
+		// When
+		getDAO().deleteAll();
+	}
+	@Test
+	public void givenNoEntityExists_whenEntitiesAreDeleted_thenNoException(){
+		// Given
+		getDAO().deleteAll();
+		
+		// When
+		getDAO().deleteAll();
+	}
+	@Test
+	public void givenEntityExists_whenEntitiesAreDeleted_thenEntitiesNoLongerRetrievable(){
+		// Given
+		persistNewEntity();
+		
+		// When
+		getDAO().deleteAll();
+		
+		// Then
+		assert ( getDAO().findAll().size() == 0 );
 	}
 	
 	//

@@ -2,6 +2,7 @@ package org.rest.sec.persistence.service;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.rest.persistence.AbstractPersistenceServiceIntegrationTest;
 import org.rest.sec.model.Role;
@@ -11,7 +12,23 @@ import org.springframework.dao.DataAccessException;
 public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< Role >{
 	
 	@Autowired
+	private IPrivilegeService privilegeService;
+	@Autowired
 	private IRoleService service;
+	@Autowired
+	private IPrincipalService principalService;
+	
+	// fixtures
+	
+	/**
+	 * - note: temporary, until: https://github.com/eugenp/REST/issues/7
+	 */
+	@Before
+	public final void before(){
+		privilegeService.deleteAll();
+		service.deleteAll();
+		principalService.deleteAll();
+	}
 	
 	// create
 	

@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.rest.persistence.AbstractPersistenceDAOIntegrationTest;
 import org.rest.sec.model.Principal;
@@ -21,10 +22,23 @@ import com.google.common.collect.Sets;
 public class PrincipalDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest< Principal >{
 	
 	@Autowired
-	private IPrincipalJpaDAO dao;
-	
+	private IPrivilegeJpaDAO privilegeDao;
 	@Autowired
 	private IRoleJpaDAO associationDao;
+	@Autowired
+	private IPrincipalJpaDAO principalDao;
+	
+	// fixtures
+	
+	/**
+	 * - note: temporary, until: https://github.com/eugenp/REST/issues/7
+	 */
+	@Before
+	public final void before(){
+		privilegeDao.deleteAll();
+		associationDao.deleteAll();
+		principalDao.deleteAll();
+	}
 	
 	// involving other entities
 	
@@ -50,7 +64,7 @@ public class PrincipalDAOPersistenceIntegrationTest extends AbstractPersistenceD
 	
 	@Test
 	public void whenSaveIsPerformed_thenNoException(){
-		dao.save( createNewEntity() );
+		getDAO().save( createNewEntity() );
 	}
 	
 	// find by
@@ -61,7 +75,7 @@ public class PrincipalDAOPersistenceIntegrationTest extends AbstractPersistenceD
 		final String name = randomAlphabetic( 8 );
 		
 		// When
-		final Principal entityByName = dao.findByName( name );
+		final Principal entityByName = getDAO().findByName( name );
 		
 		// Then
 		assertNull( entityByName );
@@ -71,7 +85,7 @@ public class PrincipalDAOPersistenceIntegrationTest extends AbstractPersistenceD
 	
 	@Override
 	protected final IPrincipalJpaDAO getDAO(){
-		return dao;
+		return principalDao;
 	}
 	
 	@Override

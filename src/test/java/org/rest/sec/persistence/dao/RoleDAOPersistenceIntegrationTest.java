@@ -3,6 +3,7 @@ package org.rest.sec.persistence.dao;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.rest.persistence.AbstractPersistenceDAOIntegrationTest;
 import org.rest.sec.model.Privilege;
@@ -18,13 +19,29 @@ import com.google.common.collect.Sets;
 public class RoleDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest< Role >{
 	
 	@Autowired
-	private IRoleJpaDAO dao;
+	private IPrivilegeJpaDAO privilegeDao;
+	@Autowired
+	private IRoleJpaDAO roleDao;
+	@Autowired
+	private IPrincipalJpaDAO principalDao;
+	
+	// fixtures
+	
+	/**
+	 * - note: temporary, until: https://github.com/eugenp/REST/issues/7
+	 */
+	@Before
+	public final void before(){
+		privilegeDao.deleteAll();
+		roleDao.deleteAll();
+		principalDao.deleteAll();
+	}
 	
 	// save
 	
 	@Test
 	public void whenSaveIsPerformed_thenNoException(){
-		dao.save( createNewEntity() );
+		roleDao.save( createNewEntity() );
 	}
 	
 	// find by
@@ -35,7 +52,7 @@ public class RoleDAOPersistenceIntegrationTest extends AbstractPersistenceDAOInt
 		final String name = randomAlphabetic( 8 );
 		
 		// When
-		final Role entityByName = dao.findByName( name );
+		final Role entityByName = roleDao.findByName( name );
 		
 		// Then
 		assertNull( entityByName );
@@ -45,7 +62,7 @@ public class RoleDAOPersistenceIntegrationTest extends AbstractPersistenceDAOInt
 	
 	@Override
 	protected final IRoleJpaDAO getDAO(){
-		return dao;
+		return roleDao;
 	}
 	
 	@Override

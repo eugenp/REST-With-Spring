@@ -3,6 +3,7 @@ package org.rest.sec.persistence.dao;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.rest.persistence.AbstractPersistenceDAOIntegrationTest;
 import org.rest.sec.model.Privilege;
@@ -15,13 +16,29 @@ import org.springframework.transaction.annotation.Transactional;
 public class PrivilegeDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest< Privilege >{
 	
 	@Autowired
-	private IPrivilegeJpaDAO dao;
+	private IPrivilegeJpaDAO privilegeDao;
+	@Autowired
+	private IRoleJpaDAO associationDao;
+	@Autowired
+	private IPrincipalJpaDAO principalDao;
+	
+	// fixtures
+	
+	/**
+	 * - note: temporary, until: https://github.com/eugenp/REST/issues/7
+	 */
+	@Before
+	public final void before(){
+		privilegeDao.deleteAll();
+		associationDao.deleteAll();
+		principalDao.deleteAll();
+	}
 	
 	// save
 	
 	@Test
 	public void whenSaveIsPerformed_thenNoException(){
-		dao.save( createNewEntity() );
+		getDAO().save( createNewEntity() );
 	}
 	
 	// find by
@@ -32,7 +49,7 @@ public class PrivilegeDAOPersistenceIntegrationTest extends AbstractPersistenceD
 		final String name = randomAlphabetic( 8 );
 		
 		// When
-		final Privilege entityByName = dao.findByName( name );
+		final Privilege entityByName = getDAO().findByName( name );
 		
 		// Then
 		assertNull( entityByName );
@@ -42,7 +59,7 @@ public class PrivilegeDAOPersistenceIntegrationTest extends AbstractPersistenceD
 	
 	@Override
 	protected final IPrivilegeJpaDAO getDAO(){
-		return dao;
+		return privilegeDao;
 	}
 	
 	@Override
