@@ -113,7 +113,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenPageOfResourcesIsRetrieved_thenLastPageIsDiscoverable(){
 		// When
-		final Response response = this.getTemplate().getResourceAsResponse( this.getURI() + "?page=1&size=1" );
+		final Response response = this.getTemplate().getResourceAsResponse( this.getURI() + "?page=0&size=1" );
 		
 		// Then
 		final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_LAST );

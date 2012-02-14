@@ -118,7 +118,7 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
-			<version>1.0.2.RELEASE</version>
+			<version>1.0.3.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>cglib</groupId>
@@ -141,7 +141,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>1.3.163</version>
+			<version>1.3.164</version>
 		</dependency>
 
 		<dependency>
@@ -277,7 +277,7 @@
 			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
 				<artifactId>cargo-maven2-plugin</artifactId>
-				<version>1.1.4</version>
+				<version>1.2.0</version>
 				<configuration>
 					<wait>true</wait>
 					<container>
@@ -463,7 +463,7 @@
 		<mockito.version>1.9.0</mockito.version>
 
 		<http.version>4.1.4</http.version>
-		<httpclient.version>4.1.2</httpclient.version>
+		<httpclient.version>4.1.3</httpclient.version>
 
 	</properties>
 

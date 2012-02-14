@@ -36,7 +36,6 @@ import org.springframework.web.client.RestTemplate;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration( classes = { ApplicationTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
-@Ignore( "user and principal work is still in progress" )
 public class UserSandboxRESTIntegrationTest extends AbstractRESTIntegrationTest{
 	
 	@Autowired
@@ -59,6 +58,7 @@ public class UserSandboxRESTIntegrationTest extends AbstractRESTIntegrationTest{
 	}
 	
 	@Test
+	@Ignore( "TODO: review" )
 	public final void whenAuthenticating_then201IsReceived(){
 		final RestTemplate restTemplate = setUpRestTemplate();
 		
