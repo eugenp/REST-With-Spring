@@ -15,17 +15,17 @@ public final class RESTPaths{
 	@Value( "${port}" )
 	String port;
 	
-	@Value( "${path}" )
-	String path;
+	@Value( "${war}" )
+	String war;
 	
 	// API
 	
 	public final String getServerRoot(){
-		return this.protocol + "://" + this.host + ":" + this.port;
+		return protocol + "://" + host + ":" + port;
 	}
 	
 	public final String getContext(){
-		return this.protocol + "://" + this.host + ":" + this.port + this.path;
+		return protocol + "://" + host + ":" + port + war;
 	}
 	
 }
