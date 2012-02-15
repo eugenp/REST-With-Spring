@@ -12,7 +12,7 @@ import com.jayway.restassured.response.Response;
 /**
  * Template for the consumption of the REST API <br>
  */
-public abstract class AbstractRESTTemplate< T extends IEntity > implements ITemplate< T >, IRestDao< T >{
+public abstract class AbstractRESTTemplate< T extends IEntity > implements ITemplate< T >{
 	
 	@Autowired
 	@Qualifier( "xstreamMarshaller" )
