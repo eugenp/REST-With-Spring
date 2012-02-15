@@ -96,7 +96,7 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		resourceToCreate.getRoles().add( existingAssociation );
 		
 		// When
-		final User existingResource = getTemplate().createResourceAndGetAsEntity( resourceToCreate );
+		final User existingResource = getTemplate().create( resourceToCreate );
 		for( final Role associationOfResourcePotential : existingResource.getRoles() ){
 			final Role existingAssociationOfResource = associationRestTemplate.getResourceAsEntity( associationRestTemplate.getURI() + "/" + associationOfResourcePotential.getId() );
 			assertThat( existingAssociationOfResource, notNullValue() );

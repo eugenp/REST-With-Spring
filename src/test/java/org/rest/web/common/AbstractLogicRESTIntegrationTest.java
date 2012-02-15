@@ -293,11 +293,11 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public final void givenResourceExist_whenResourceIsDeleted_thenResourceIsNoLongerAvailable(){
 		// Given
-		final String uriForResourceCreation = this.getTemplate().createResourceAsURI();
-		this.getTemplate().delete( uriForResourceCreation );
+		final String uriOfResource = this.getTemplate().createResourceAsURI();
+		this.getTemplate().delete( uriOfResource );
 		
 		// When
-		final Response getResponse = getTemplate().getResourceAsResponse( uriForResourceCreation );
+		final Response getResponse = getTemplate().getResourceAsResponse( uriOfResource );
 		
 		// Then
 		assertThat( getResponse.getStatusCode(), is( 404 ) );

@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
@@ -35,7 +36,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration( classes = { ApplicationTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
-public class UserSandboxRESTIntegrationTest extends AbstractRESTIntegrationTest{
+public class ClientRESTIntegrationTest extends AbstractRESTIntegrationTest{
 	
 	@Autowired
 	private ExamplePaths paths;
@@ -46,7 +47,7 @@ public class UserSandboxRESTIntegrationTest extends AbstractRESTIntegrationTest{
 	
 	@SuppressWarnings( "rawtypes" )
 	@Test
-	public final void whenGetWithAuthentication_then200IsReceived(){
+	public final void whenGetUsersWithAuthentication_then200IsReceived(){
 		final RestTemplate restTemplate = setUpRestTemplate();
 		
 		// When
@@ -72,7 +73,7 @@ public class UserSandboxRESTIntegrationTest extends AbstractRESTIntegrationTest{
 	final HttpHeaders createHeaders(){
 		final HttpHeaders headers = new HttpHeaders(){
 			{
-				set( "Accept", "application/xml" );
+				set( "Accept", MediaType.APPLICATION_XML_VALUE );
 			}
 		};
 		return headers;

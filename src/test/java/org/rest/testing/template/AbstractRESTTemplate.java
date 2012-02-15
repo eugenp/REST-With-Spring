@@ -12,7 +12,7 @@ import com.jayway.restassured.response.Response;
 /**
  * Template for the consumption of the REST API <br>
  */
-public abstract class AbstractRESTTemplate< T extends IEntity > implements ITemplate< T >{
+public abstract class AbstractRESTTemplate< T extends IEntity > implements ITemplate< T >, IRestDao< T >{
 	
 	@Autowired
 	@Qualifier( "xstreamMarshaller" )
@@ -47,9 +47,9 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements ITemp
 		
 		final String resourceAsString = marshaller.encode( resource );
 		final Response response = givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsString ).post( getURI() );
+		Preconditions.checkState( response.getStatusCode() == 201 );
 		
 		final String locationOfCreatedResource = response.getHeader( HttpHeaders.LOCATION );
-		
 		Preconditions.checkNotNull( locationOfCreatedResource );
 		return locationOfCreatedResource;
 	}
@@ -105,11 +105,6 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements ITemp
 		
 		return marshaller.decode( resourceAsXML, clazz );
 	}
-	public final T getResourceAsEntity( final Long idOfResource ){
-		final String resourceAsXML = getResourceAsMime( getURI() + "/" + idOfResource, marshaller.getMime() );
-		
-		return marshaller.decode( resourceAsXML, clazz );
-	}
 	
 	@Override
 	public final String getResourceAsMime( final String uriOfResource, final String mime ){
@@ -142,17 +137,36 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements ITemp
 	}
 	
 	@Override
-	public T updateResourceAndGetAsEntity( final T resource ){
+	public final T updateResourceAndGetAsEntity( final T resource ){
 		updateResourceAsResponse( resource );
-		return getResourceAsEntity( resource.getId() );
+		return findOne( resource.getId() );
 	}
 	
 	// delete
 	
 	@Override
 	public final Response delete( final String uriOfResource ){
-		final Response response = givenAuthenticated().delete( uriOfResource );
-		return response;
+		return givenAuthenticated().delete( uriOfResource );
+	}
+	
+	// valid DAO operations (in progress)
+	
+	@Override
+	public final T findOne( final long id ){
+		final String resourceAsXML = getResourceAsMime( getURI() + "/" + id, marshaller.getMime() );
+		
+		return marshaller.decode( resourceAsXML, clazz );
+	}
+	
+	@Override
+	public final void delete( final long id ){
+		final Response deleteResponse = delete( getURI() + "/" + id );
+		Preconditions.checkState( deleteResponse.getStatusCode() == 204 );
+	}
+	
+	@Override
+	public final T create( final T resource ){
+		return createResourceAndGetAsEntity( resource );
 	}
 	
 	//

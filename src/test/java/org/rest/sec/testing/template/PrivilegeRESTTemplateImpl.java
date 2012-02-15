@@ -45,7 +45,7 @@ public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate< Privi
 	public final void makeEntityInvalid( final Privilege entity ){
 		entity.setName( null );
 	}
-
+	
 	// util
 	
 	public final Privilege createNewEntity( final String name ){

@@ -96,7 +96,7 @@ public class RoleLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		resourceToCreate.getPrivileges().add( existingAssociation );
 		
 		// When
-		final Role existingResource = getTemplate().createResourceAndGetAsEntity( resourceToCreate );
+		final Role existingResource = getTemplate().create( resourceToCreate );
 		for( final Privilege associationOfResourcePotential : existingResource.getPrivileges() ){
 			final Privilege existingAssociationOfResource = associationRestTemplate.getResourceAsEntity( associationRestTemplate.getURI() + "/" + associationOfResourcePotential.getId() );
 			assertThat( existingAssociationOfResource, notNullValue() );
