@@ -2,7 +2,11 @@
 
 This is a **Spring Security RESTful service**; it's purpose be used as a internally deployable, stand alone security implementation<br/>
 
+# Continuous Integration
 ![Built on Cloudbees](http://web-static-cloudfront.s3.amazonaws.com/images/badges/BuiltOnDEV.png "Built on Cloudbees")
+
+- **CI server**: https://rest-security.ci.cloudbees.com/
+
 
 # Technology Stack
 The project uses the following technologies: <br/>
