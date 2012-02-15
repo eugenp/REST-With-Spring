@@ -16,7 +16,7 @@ public class ApplicationTestConfig{
 	@Bean
 	public static PropertyPlaceholderConfigurer properties(){
 		final PropertyPlaceholderConfigurer ppc = new PropertyPlaceholderConfigurer();
-		final Resource[] resources = new ClassPathResource[ ] { new ClassPathResource( "persistence-test.properties" ), new ClassPathResource( "restfull.properties" ) };
+		final Resource[] resources = new ClassPathResource[ ] { new ClassPathResource( "persistence-test.properties" ), new ClassPathResource( "web.properties" ) };
 		ppc.setLocations( resources );
 		ppc.setIgnoreUnresolvablePlaceholders( true );
 		return ppc;

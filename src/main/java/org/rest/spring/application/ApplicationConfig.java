@@ -10,11 +10,11 @@ import org.springframework.core.io.Resource;
 public class ApplicationConfig{
 	
 	// API
-
+	
 	@Bean
 	public static PropertyPlaceholderConfigurer properties(){
 		final PropertyPlaceholderConfigurer ppc = new PropertyPlaceholderConfigurer();
-		final Resource[] resources = new ClassPathResource[ ] { new ClassPathResource( "persistence.properties" ), new ClassPathResource( "restfull.properties" ) };
+		final Resource[] resources = new ClassPathResource[ ] { new ClassPathResource( "persistence.properties" ), new ClassPathResource( "web.properties" ) };
 		ppc.setLocations( resources );
 		ppc.setIgnoreUnresolvablePlaceholders( true );
 		return ppc;
