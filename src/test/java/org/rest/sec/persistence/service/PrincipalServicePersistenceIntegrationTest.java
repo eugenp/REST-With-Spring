@@ -19,7 +19,7 @@ public class PrincipalServicePersistenceIntegrationTest extends AbstractPersiste
 	@Autowired
 	private IRoleService roleService;
 	@Autowired
-	private IPrincipalService service;
+	private IPrincipalService principalService;
 	
 	// fixtures
 	
@@ -30,29 +30,29 @@ public class PrincipalServicePersistenceIntegrationTest extends AbstractPersiste
 	public final void before(){
 		privilegeService.deleteAll();
 		roleService.deleteAll();
-		service.deleteAll();
+		principalService.deleteAll();
 	}
 	
 	// create
 	
 	@Test
 	public void whenSaveIsPerformed_thenNoException(){
-		service.create( createNewEntity() );
+		principalService.create( createNewEntity() );
 	}
 	
 	@Test( expected = DataAccessException.class )
 	public void whenAUniqueConstraintIsBroken_thenSpringSpecificExceptionIsThrown(){
 		final String name = randomAlphabetic( 8 );
 		
-		service.create( this.createNewEntity( name ) );
-		service.create( this.createNewEntity( name ) );
+		principalService.create( this.createNewEntity( name ) );
+		principalService.create( this.createNewEntity( name ) );
 	}
 	
 	// template method
 	
 	@Override
 	protected final IPrincipalService getService(){
-		return service;
+		return principalService;
 	}
 	@Override
 	protected final Principal createNewEntity(){

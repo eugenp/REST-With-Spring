@@ -12,7 +12,7 @@ import org.springframework.dao.DataAccessException;
 public class PrivilegeServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< Privilege >{
 	
 	@Autowired
-	private IPrivilegeService service;
+	private IPrivilegeService privilegeService;
 	@Autowired
 	private IRoleService roleService;
 	@Autowired
@@ -25,7 +25,7 @@ public class PrivilegeServicePersistenceIntegrationTest extends AbstractPersiste
 	 */
 	@Before
 	public final void before(){
-		service.deleteAll();
+		privilegeService.deleteAll();
 		roleService.deleteAll();
 		principalService.deleteAll();
 	}
@@ -34,22 +34,22 @@ public class PrivilegeServicePersistenceIntegrationTest extends AbstractPersiste
 	
 	@Test
 	public void whenSaveIsPerformed_thenNoException(){
-		service.create( createNewEntity() );
+		privilegeService.create( createNewEntity() );
 	}
 	
 	@Test( expected = DataAccessException.class )
 	public void whenAUniqueConstraintIsBroken_thenSpringSpecificExceptionIsThrown(){
 		final String name = randomAlphabetic( 8 );
 		
-		service.create( this.createNewEntity( name ) );
-		service.create( this.createNewEntity( name ) );
+		privilegeService.create( this.createNewEntity( name ) );
+		privilegeService.create( this.createNewEntity( name ) );
 	}
 	
 	// template method
 	
 	@Override
 	protected final IPrivilegeService getService(){
-		return service;
+		return privilegeService;
 	}
 	@Override
 	protected final Privilege createNewEntity(){

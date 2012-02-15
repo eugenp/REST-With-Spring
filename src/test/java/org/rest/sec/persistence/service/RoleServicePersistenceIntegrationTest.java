@@ -14,7 +14,7 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 	@Autowired
 	private IPrivilegeService privilegeService;
 	@Autowired
-	private IRoleService service;
+	private IRoleService roleService;
 	@Autowired
 	private IPrincipalService principalService;
 	
@@ -26,7 +26,7 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 	@Before
 	public final void before(){
 		privilegeService.deleteAll();
-		service.deleteAll();
+		roleService.deleteAll();
 		principalService.deleteAll();
 	}
 	
@@ -34,22 +34,22 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 	
 	@Test
 	public void whenSaveIsPerformed_thenNoException(){
-		service.create( createNewEntity() );
+		roleService.create( createNewEntity() );
 	}
 	
 	@Test( expected = DataAccessException.class )
 	public void whenAUniqueConstraintIsBroken_thenSpringSpecificExceptionIsThrown(){
 		final String name = randomAlphabetic( 8 );
 		
-		service.create( this.createNewEntity( name ) );
-		service.create( this.createNewEntity( name ) );
+		roleService.create( this.createNewEntity( name ) );
+		roleService.create( this.createNewEntity( name ) );
 	}
 	
 	// template method
 	
 	@Override
 	protected final IRoleService getService(){
-		return service;
+		return roleService;
 	}
 	@Override
 	protected final Role createNewEntity(){
