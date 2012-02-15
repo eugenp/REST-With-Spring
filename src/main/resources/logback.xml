@@ -8,7 +8,7 @@
 	</appender>
 
 	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
-		<file>/opt/logs/odesk/infrastructure.log</file>
+		<file>/opt/logs/restsecurity/restsecurity.log</file>
 		<encoder>
 			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n
 			</pattern>
@@ -20,7 +20,6 @@
 	<logger name="org.springframework.transaction" level="WARN" />
 
 	<root level="INFO">
-		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
 	</root>
 
