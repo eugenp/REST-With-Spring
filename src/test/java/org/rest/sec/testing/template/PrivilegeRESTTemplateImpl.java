@@ -38,7 +38,7 @@ public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate< Privi
 	
 	@Override
 	public final RequestSpecification givenAuthenticated(){
-		return AuthenticationUtil.givenBasicAuthenticatedAsAdmin();
+		return AuthenticationUtil.givenBasicAuthenticated();
 	}
 	
 	@Override

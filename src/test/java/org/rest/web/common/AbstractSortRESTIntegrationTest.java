@@ -73,7 +73,7 @@ public abstract class AbstractSortRESTIntegrationTest< T extends IEntity > exten
 	// util
 	
 	protected final RequestSpecification givenAuthenticated(){
-		return AuthenticationUtil.givenBasicAuthenticatedAsAdmin();
+		return AuthenticationUtil.givenBasicAuthenticated();
 	}
 	
 	// template method

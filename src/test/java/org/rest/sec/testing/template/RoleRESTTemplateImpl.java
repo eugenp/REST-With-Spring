@@ -40,7 +40,7 @@ public final class RoleRESTTemplateImpl extends AbstractRESTTemplate< Role >{
 	
 	@Override
 	public final RequestSpecification givenAuthenticated(){
-		return AuthenticationUtil.givenBasicAuthenticatedAsAdmin();
+		return AuthenticationUtil.givenBasicAuthenticated();
 	}
 	
 	@Override

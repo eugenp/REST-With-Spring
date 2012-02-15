@@ -1,9 +1,13 @@
 package org.rest.sec.web.controller;
 
+import java.util.Collection;
+
 import org.rest.sec.dto.User;
+import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
 
 /**
@@ -26,15 +32,22 @@ public class AuthenticationController{
 	// API
 	
 	@RequestMapping( method = RequestMethod.POST,value = "/authentication" )
-	@ResponseStatus( value = HttpStatus.CREATED )
+	@ResponseStatus( HttpStatus.CREATED )
 	@ResponseBody
 	public User createAuthentication(){
 		final Authentication authenticationInSpring = SecurityContextHolder.getContext().getAuthentication();
 		
-		// - note: no need to publish the roles at this point
+		final Function< GrantedAuthority, Privilege > springAuthorityToPrivilegeFunction = new Function< GrantedAuthority, Privilege >(){
+			@Override
+			public final Privilege apply( final GrantedAuthority springAuthority ){
+				return new Privilege( springAuthority.getAuthority() );
+			}
+		};
+		final Collection< Privilege > privileges = Collections2.transform( authenticationInSpring.getAuthorities(), springAuthorityToPrivilegeFunction );
+		final Role defaultRole = new Role( "defaultRole", Sets.<Privilege> newHashSet( privileges ) );
 		
-		final User authenticationResource = new User( authenticationInSpring.getName(), (String) authenticationInSpring.getCredentials(), Sets.<Role> newHashSet() );
+		final User authenticationResource = new User( authenticationInSpring.getName(), (String) authenticationInSpring.getCredentials(), Sets.<Role> newHashSet( defaultRole ) );
 		return authenticationResource;
 	}
-
+	
 }

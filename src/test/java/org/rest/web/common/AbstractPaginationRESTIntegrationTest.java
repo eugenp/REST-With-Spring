@@ -75,7 +75,7 @@ public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity >
 	// util
 	
 	protected final RequestSpecification givenAuthenticated(){
-		return AuthenticationUtil.givenBasicAuthenticatedAsAdmin();
+		return AuthenticationUtil.givenBasicAuthenticated();
 	}
 	
 	// template method

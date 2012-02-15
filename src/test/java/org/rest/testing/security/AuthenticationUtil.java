@@ -13,7 +13,7 @@ public final class AuthenticationUtil{
 	
 	// API
 	
-	public static RequestSpecification givenBasicAuthenticatedAsAdmin(){
+	public static RequestSpecification givenBasicAuthenticated(){
 		return RestAssured.given().auth().preemptive().basic( SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD );
 	}
 	public static RequestSpecification givenBasicAuthenticated( final String username, final String password ){

@@ -40,7 +40,7 @@ public class ScenarioRESTIntegrationTest extends AbstractSecRESTIntegrationTest{
 	// util
 	
 	protected final RequestSpecification givenAuthenticated(){
-		return AuthenticationUtil.givenBasicAuthenticatedAsAdmin();
+		return AuthenticationUtil.givenBasicAuthenticated();
 	}
 	
 }

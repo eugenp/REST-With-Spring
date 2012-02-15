@@ -54,7 +54,7 @@ public class RootRESTDiscoverabilityIntegrationTest extends AbstractSecRESTInteg
 	// util
 	
 	protected final RequestSpecification givenAuthenticated(){
-		return AuthenticationUtil.givenBasicAuthenticatedAsAdmin();
+		return AuthenticationUtil.givenBasicAuthenticated();
 	}
 	
 }

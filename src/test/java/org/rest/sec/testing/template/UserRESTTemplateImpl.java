@@ -47,7 +47,7 @@ public final class UserRESTTemplateImpl extends AbstractRESTTemplate< User >{
 	
 	@Override
 	public final RequestSpecification givenAuthenticated(){
-		return AuthenticationUtil.givenBasicAuthenticatedAsAdmin();
+		return AuthenticationUtil.givenBasicAuthenticated();
 	}
 	
 	// util

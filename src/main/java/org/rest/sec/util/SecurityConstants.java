@@ -13,6 +13,11 @@ public final class SecurityConstants{
 	
 	public static final String ADMIN_USERNAME = "eparaschiv";
 	public static final String ADMIN_PASSWORD = "eparaschiv";
+	public static final String ADMIN_EMAIL = "eparaschiv@gmail.com";
+	
+	public static final String NAME = ADMIN_USERNAME;
+	public static final String PASS = ADMIN_PASSWORD;
+	public static final String EMAIL = ADMIN_EMAIL;
 	
 	private SecurityConstants(){
 		throw new AssertionError();
