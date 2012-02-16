@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.rest.common.IEntity;
 import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.testing.security.AuthenticationUtil;
-import org.rest.testing.template.ITemplate;
+import org.rest.testing.template.IRESTTemplate;
 
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
@@ -84,6 +84,6 @@ public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity >
 	
 	protected abstract T createNewEntity();
 	
-	protected abstract ITemplate< T > getTemplate();
+	protected abstract IRESTTemplate< T > getTemplate();
 	
 }

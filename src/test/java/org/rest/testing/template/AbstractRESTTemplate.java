@@ -1,5 +1,7 @@
 package org.rest.testing.template;
 
+import java.util.List;
+
 import org.apache.http.HttpHeaders;
 import org.rest.common.IEntity;
 import org.rest.testing.marshaller.IMarshaller;
@@ -12,7 +14,7 @@ import com.jayway.restassured.response.Response;
 /**
  * Template for the consumption of the REST API <br>
  */
-public abstract class AbstractRESTTemplate< T extends IEntity > implements ITemplate< T >{
+public abstract class AbstractRESTTemplate< T extends IEntity > implements IRESTTemplate< T >{
 	
 	@Autowired
 	@Qualifier( "xstreamMarshaller" )
@@ -156,6 +158,14 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements ITemp
 		final String resourceAsXML = getResourceAsMime( getURI() + "/" + id, marshaller.getMime() );
 		
 		return marshaller.decode( resourceAsXML, clazz );
+	}
+	
+	@SuppressWarnings( { "unchecked", "rawtypes" } )
+	@Override
+	public final List< T > findAll(){
+		final Response findAllResponse = getResourceAsResponse( getURI() );
+		
+		return marshaller.<List> decode( findAllResponse.getBody().asString(), List.class );
 	}
 	
 	@Override

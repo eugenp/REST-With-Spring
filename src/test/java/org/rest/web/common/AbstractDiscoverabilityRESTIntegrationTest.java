@@ -14,7 +14,7 @@ import org.rest.common.IEntity;
 import org.rest.common.util.RESTURIUtil;
 import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.testing.marshaller.IMarshaller;
-import org.rest.testing.template.ITemplate;
+import org.rest.testing.template.IRESTTemplate;
 import org.rest.web.http.HTTPLinkHeaderUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -143,7 +143,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	
 	// template method
 	
-	protected abstract ITemplate< T > getTemplate();
+	protected abstract IRESTTemplate< T > getTemplate();
 	
 	protected abstract String getURI();
 	

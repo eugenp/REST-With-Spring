@@ -9,8 +9,10 @@ import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.rest.sec.dto.User;
 import org.rest.sec.model.Privilege;
+import org.rest.sec.util.SecurityConstants;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.oxm.xstream.XStreamMarshaller;
@@ -21,6 +23,10 @@ import org.springframework.web.client.RestTemplate;
 public class RestTemplateFactory implements FactoryBean< RestTemplate >, InitializingBean{
 	
 	private RestTemplate restTemplate;
+	
+	@Value( "${port}" ) private int port;
+	@Value( "${host}" ) private String host;
+	@Value( "${protocol}" ) private String protocol;
 	
 	//
 	
@@ -41,11 +47,10 @@ public class RestTemplateFactory implements FactoryBean< RestTemplate >, Initial
 	
 	@Override
 	public final void afterPropertiesSet(){
-		
-		final HttpHost targetHost = new HttpHost( "localhost", 8081, "http" );
+		final HttpHost targetHost = new HttpHost( host, port, protocol );
 		
 		final DefaultHttpClient httpclient = new DefaultHttpClient();
-		httpclient.getCredentialsProvider().setCredentials( new AuthScope( targetHost.getHostName(), targetHost.getPort(), AuthScope.ANY_REALM ), new UsernamePasswordCredentials( "eparaschiv", "eparaschiv" ) );
+		httpclient.getCredentialsProvider().setCredentials( new AuthScope( targetHost.getHostName(), targetHost.getPort(), AuthScope.ANY_REALM ), new UsernamePasswordCredentials( SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_USERNAME ) );
 		final AuthCache authCache = new BasicAuthCache();
 		// Generate BASIC scheme object and add it to the local auth cache
 		final BasicScheme basicAuth = new BasicScheme();
@@ -58,9 +63,8 @@ public class RestTemplateFactory implements FactoryBean< RestTemplate >, Initial
 		} );
 		restTemplate.getMessageConverters().add( marshallingHttpMessageConverter() );
 	}
-	
 	//
-
+	
 	final MarshallingHttpMessageConverter marshallingHttpMessageConverter(){
 		final MarshallingHttpMessageConverter marshallingHttpMessageConverter = new MarshallingHttpMessageConverter();
 		marshallingHttpMessageConverter.setMarshaller( xstreamMarshaller() );

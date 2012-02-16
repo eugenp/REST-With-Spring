@@ -5,7 +5,7 @@ import org.rest.testing.marshaller.IMarshaller;
 
 import com.jayway.restassured.specification.RequestSpecification;
 
-public interface ITemplate< T extends IEntity > extends ITemplateAsResponse< T >, IRestDao< T >, ITemplateAsEntity< T >, ITemplateAsURI< T >{
+public interface IRESTTemplate< T extends IEntity > extends ITemplateAsResponse< T >, IRestDao< T >, ITemplateAsEntity< T >, ITemplateAsURI< T >{
 	
 	// new entity
 	

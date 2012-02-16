@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.rest.security.SecurityRESTIntegrationTest;
 
 @RunWith( Suite.class )
-@SuiteClasses( { SecurityRESTIntegrationTest.class, IntegrationDiscoverabilityRESTTestSuite.class, IntegrationLogicRESTTestSuite.class, IntegrationPaginationRESTTestSuite.class, IntegrationSortRESTTestSuite.class, IntegrationMimeRESTTestSuite.class } )
+@SuiteClasses( { IntegrationClientRESTTestSuite.class, SecurityRESTIntegrationTest.class, IntegrationDiscoverabilityRESTTestSuite.class, IntegrationLogicRESTTestSuite.class, IntegrationPaginationRESTTestSuite.class, IntegrationSortRESTTestSuite.class, IntegrationMimeRESTTestSuite.class } )
 public final class IntegrationRESTTestSuite{
 	//
 }

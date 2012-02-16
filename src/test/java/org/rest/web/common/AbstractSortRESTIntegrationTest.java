@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.rest.common.IEntity;
 import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.testing.security.AuthenticationUtil;
-import org.rest.testing.template.ITemplate;
+import org.rest.testing.template.IRESTTemplate;
 
 import com.google.common.collect.Ordering;
 import com.jayway.restassured.response.Response;
@@ -84,6 +84,6 @@ public abstract class AbstractSortRESTIntegrationTest< T extends IEntity > exten
 	
 	protected abstract T createNewEntity();
 	
-	protected abstract ITemplate< T > getTemplate();
+	protected abstract IRESTTemplate< T > getTemplate();
 	
 }

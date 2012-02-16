@@ -1,4 +1,4 @@
-package org.rest.client;
+package org.rest.sec.client;
 
 import org.rest.sec.dto.User;
 import org.rest.testing.ExamplePaths;

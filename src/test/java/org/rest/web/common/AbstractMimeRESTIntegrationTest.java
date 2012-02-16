@@ -8,7 +8,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.IEntity;
 import org.rest.test.AbstractRESTIntegrationTest;
-import org.rest.testing.template.ITemplate;
+import org.rest.testing.template.IRESTTemplate;
 import org.springframework.http.MediaType;
 
 import com.google.common.base.Preconditions;
@@ -89,6 +89,6 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 	
 	// template method
 	
-	protected abstract ITemplate< T > getTemplate();
+	protected abstract IRESTTemplate< T > getTemplate();
 	
 }

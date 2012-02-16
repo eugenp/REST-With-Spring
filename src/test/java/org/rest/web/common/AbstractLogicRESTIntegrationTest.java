@@ -17,7 +17,7 @@ import org.junit.Test;
 import org.rest.common.IEntity;
 import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.testing.marshaller.IMarshaller;
-import org.rest.testing.template.ITemplate;
+import org.rest.testing.template.IRESTTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -305,7 +305,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	
 	// template method
 	
-	protected abstract ITemplate< T > getTemplate();
+	protected abstract IRESTTemplate< T > getTemplate();
 	
 	protected abstract String getURI();
 	
