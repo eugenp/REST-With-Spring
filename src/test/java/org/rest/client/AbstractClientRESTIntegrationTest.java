@@ -58,7 +58,7 @@ public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 	@Test
 	public final void givenResourceExists_whenResourceIsDeleted_thenResourceNoLongerExists(){
 		// Given
-		final T existingResource = getTemplate().create( getTemplate().createNewEntity() );
+		final T existingResource = getTemplate().givenAuthenticated().create( getTemplate().createNewEntity() );
 		
 		// When
 		getTemplate().delete( existingResource.getId() );

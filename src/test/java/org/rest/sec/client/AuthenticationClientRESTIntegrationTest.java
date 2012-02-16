@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.sec.dto.User;
+import org.rest.sec.util.SecurityConstants;
 import org.rest.spring.application.ApplicationTestConfig;
 import org.rest.spring.client.ClientTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
@@ -29,7 +30,7 @@ public class AuthenticationClientRESTIntegrationTest extends AbstractRESTIntegra
 	@Test
 	public final void whenAuthenticating_then201IsReceived(){
 		// When
-		final ResponseEntity< User > response = authenticationRestTemplate.authenticate();
+		final ResponseEntity< User > response = authenticationRestTemplate.authenticate( SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD );
 		
 		// Then
 		assertThat( response.getStatusCode().value(), is( 201 ) );

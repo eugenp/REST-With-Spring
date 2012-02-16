@@ -2,14 +2,20 @@ package org.rest.client;
 
 import java.util.List;
 
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.rest.common.IEntity;
+import org.rest.sec.util.SecurityConstants;
 import org.rest.testing.marshaller.IMarshaller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,6 +27,9 @@ public abstract class AbstractClientRestTemplate< T extends IEntity > implements
 	
 	@Autowired protected RestTemplate restTemplate;
 	@Autowired @Qualifier( "xstreamMarshaller" ) protected IMarshaller marshaller;
+	
+	@Value( "${port}" ) private int port;
+	@Value( "${host}" ) private String host;
 	
 	public AbstractClientRestTemplate( final Class< T > clazzToSet ){
 		super();
@@ -103,6 +112,14 @@ public abstract class AbstractClientRestTemplate< T extends IEntity > implements
 	// template method
 	
 	public abstract String getURI();
+	
+	protected IClientTemplate< T > givenAuthenticated(){
+		final HttpComponentsClientHttpRequestFactory requestFactory = (HttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
+		final DefaultHttpClient httpClient = (DefaultHttpClient) requestFactory.getHttpClient();
+		httpClient.getCredentialsProvider().setCredentials( new AuthScope( host, port, AuthScope.ANY_REALM ), new UsernamePasswordCredentials( SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD ) );
+		
+		return this;
+	}
 	
 	// entity
 	
