@@ -15,6 +15,10 @@ public interface IRestDao< T extends IEntity >{
 	
 	T create( final T resource );
 	
+	// update
+	
+	void update( final T resource );
+
 	// delete
 	
 	void delete( final long id );

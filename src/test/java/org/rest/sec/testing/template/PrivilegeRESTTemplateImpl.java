@@ -17,8 +17,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 @Component
 public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate< Privilege >{
 	
-	@Autowired
-	protected ExamplePaths paths;
+	@Autowired protected ExamplePaths paths;
 	
 	public PrivilegeRESTTemplateImpl(){
 		super( Privilege.class );
@@ -32,24 +31,21 @@ public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate< Privi
 	}
 	
 	@Override
-	public final Privilege createNewEntity(){
-		return this.createNewEntity( randomAlphabetic( 8 ) );
-	}
-	
-	@Override
 	public final RequestSpecification givenAuthenticated(){
 		return AuthenticationUtil.givenBasicAuthenticated();
 	}
 	
 	@Override
+	public final Privilege createNewEntity(){
+		return new Privilege( randomAlphabetic( 8 ) );
+	}
+	@Override
 	public final void makeEntityInvalid( final Privilege entity ){
 		entity.setName( null );
 	}
-	
-	// util
-	
-	public final Privilege createNewEntity( final String name ){
-		return new Privilege( name );
+	@Override
+	public void change( final Privilege resource ){
+		resource.setName( randomAlphabetic( 8 ) );
 	}
 	
 }

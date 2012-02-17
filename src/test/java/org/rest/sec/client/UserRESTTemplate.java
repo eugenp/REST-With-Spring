@@ -30,7 +30,7 @@ public class UserRESTTemplate extends AbstractClientRestTemplate< User >{
 	}
 	
 	// entity
-
+	
 	@Override
 	public final User createNewEntity(){
 		return new User( randomAlphabetic( 8 ), randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
@@ -38,6 +38,10 @@ public class UserRESTTemplate extends AbstractClientRestTemplate< User >{
 	@Override
 	public final void makeEntityInvalid( final User entity ){
 		entity.setName( null );
+	}
+	@Override
+	public final void change( final User resource ){
+		resource.setName( randomAlphabetic( 8 ) );
 	}
 	
 }

@@ -16,9 +16,7 @@ import com.jayway.restassured.response.Response;
  */
 public abstract class AbstractRESTTemplate< T extends IEntity > implements IRESTTemplate< T >{
 	
-	@Autowired
-	@Qualifier( "xstreamMarshaller" )
-	private IMarshaller marshaller;
+	@Autowired @Qualifier( "xstreamMarshaller" ) private IMarshaller marshaller;
 	
 	private final Class< T > clazz;
 	
@@ -107,6 +105,11 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 		
 		return marshaller.decode( resourceAsXML, clazz );
 	}
+	public final T getResourceAsEntity( final Long idOfResource ){
+		final String resourceAsXML = getResourceAsMime( getURI() + "/" + idOfResource, marshaller.getMime() );
+		
+		return marshaller.decode( resourceAsXML, clazz );
+	}
 	
 	@Override
 	public final String getResourceAsMime( final String uriOfResource, final String mime ){
@@ -179,6 +182,12 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 		return createResourceAndGetAsEntity( resource );
 	}
 	
+	@Override
+	public final void update( final T resource ){
+		final Response updateResponse = updateResourceAsResponse( resource );
+		Preconditions.checkState( updateResponse.getStatusCode() == 200 );
+	}
+
 	//
 	
 	public final String getMime(){

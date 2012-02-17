@@ -53,6 +53,18 @@ public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 		assertNull( createdResource );
 	}
 	
+	// update
+	
+	public final void whenResourceIsUpdated_thenTheChangesAreCorrectlyPersisted(){
+		final T existingResource = getTemplate().givenAuthenticated().create( getTemplate().createNewEntity() );
+		
+		// When
+		// getTemplate().givenAuthenticated().ch
+		getTemplate().givenAuthenticated().update( existingResource );
+		
+		// Then
+	}
+
 	// delete
 	
 	@Test

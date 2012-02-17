@@ -19,8 +19,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 @ContextConfiguration( classes = { ApplicationTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
 public class PrivilegeDiscoverabilityRESTIntegrationTest extends AbstractDiscoverabilityRESTIntegrationTest< Privilege >{
 	
-	@Autowired
-	private PrivilegeRESTTemplateImpl restTemplate;
+	@Autowired private PrivilegeRESTTemplateImpl restTemplate;
 	
 	public PrivilegeDiscoverabilityRESTIntegrationTest(){
 		super( Privilege.class );
@@ -33,9 +32,6 @@ public class PrivilegeDiscoverabilityRESTIntegrationTest extends AbstractDiscove
 	@Override
 	protected final Privilege createNewEntity(){
 		return restTemplate.createNewEntity();
-	}
-	protected final Privilege createNewEntity( final String name ){
-		return restTemplate.createNewEntity( name );
 	}
 	@Override
 	protected final String getURI(){

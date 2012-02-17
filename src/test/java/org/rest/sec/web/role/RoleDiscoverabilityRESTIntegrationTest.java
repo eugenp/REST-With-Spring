@@ -19,8 +19,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 @ContextConfiguration( classes = { ApplicationTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
 public class RoleDiscoverabilityRESTIntegrationTest extends AbstractDiscoverabilityRESTIntegrationTest< Role >{
 	
-	@Autowired
-	private RoleRESTTemplateImpl restTemplate;
+	@Autowired private RoleRESTTemplateImpl restTemplate;
 	
 	public RoleDiscoverabilityRESTIntegrationTest(){
 		super( Role.class );
@@ -50,12 +49,6 @@ public class RoleDiscoverabilityRESTIntegrationTest extends AbstractDiscoverabil
 	@Override
 	protected final RoleRESTTemplateImpl getTemplate(){
 		return restTemplate;
-	}
-	
-	// util
-	
-	protected final Role createNewEntity( final String name ){
-		return restTemplate.createNewEntity( name );
 	}
 	
 }

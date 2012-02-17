@@ -73,11 +73,11 @@ public abstract class AbstractClientRestTemplate< T extends IEntity > implements
 	
 	@Override
 	public final T create( final T resource ){
-		final ResponseEntity responseEntity = restTemplate.exchange( getURI(), HttpMethod.POST, new HttpEntity< T >( resource, createHeaders() ), List.class );
+		final ResponseEntity responseEntity = restTemplate.exchange( getURI(), HttpMethod.POST, new HttpEntity< T >( resource, createHeaders() ), clazz );
 		
 		final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
-		Preconditions.checkNotNull( locationOfCreatedResource );
 		
+		Preconditions.checkNotNull( locationOfCreatedResource );
 		return findOneByURI( locationOfCreatedResource );
 	}
 	public final String createAsURI( final T resource ){
@@ -87,6 +87,14 @@ public abstract class AbstractClientRestTemplate< T extends IEntity > implements
 		Preconditions.checkNotNull( locationOfCreatedResource );
 		
 		return locationOfCreatedResource;
+	}
+	
+	// API - update
+	
+	@Override
+	public final void update( final T resource ){
+		final ResponseEntity responseEntity = restTemplate.exchange( getURI(), HttpMethod.PUT, new HttpEntity< T >( resource, createHeaders() ), clazz );
+		Preconditions.checkState( responseEntity.getStatusCode().value() == 200 );
 	}
 	
 	// API - delete
@@ -122,8 +130,10 @@ public abstract class AbstractClientRestTemplate< T extends IEntity > implements
 	}
 	
 	// entity
-	
+
+	@Override
 	public abstract T createNewEntity();
+	@Override
 	public abstract void makeEntityInvalid( final T entity );
 	
 }

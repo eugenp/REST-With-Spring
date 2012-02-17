@@ -19,8 +19,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 @Component
 public final class RoleRESTTemplateImpl extends AbstractRESTTemplate< Role >{
 	
-	@Autowired
-	protected ExamplePaths paths;
+	@Autowired protected ExamplePaths paths;
 	
 	public RoleRESTTemplateImpl(){
 		super( Role.class );
@@ -34,26 +33,21 @@ public final class RoleRESTTemplateImpl extends AbstractRESTTemplate< Role >{
 	}
 	
 	@Override
-	public final Role createNewEntity(){
-		return this.createNewEntity( randomAlphabetic( 8 ) );
-	}
-	
-	@Override
 	public final RequestSpecification givenAuthenticated(){
 		return AuthenticationUtil.givenBasicAuthenticated();
 	}
 	
 	@Override
+	public final Role createNewEntity(){
+		return new Role( randomAlphabetic( 8 ), Sets.<Privilege> newHashSet() );
+	}
+	@Override
 	public final void makeEntityInvalid( final Role entity ){
 		entity.setName( null );
 	}
-	
-	// util
-	
-	public final Role createNewEntity( final String name ){
-		final Role newRole = new Role( name );
-		newRole.setPrivileges( Sets.<Privilege> newHashSet() );
-		return newRole;
+	@Override
+	public final void change( final Role resource ){
+		resource.setName( randomAlphabetic( 8 ) );
 	}
 	
 }

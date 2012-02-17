@@ -19,14 +19,11 @@ import com.jayway.restassured.specification.RequestSpecification;
 @Component
 public final class UserRESTTemplateImpl extends AbstractRESTTemplate< User >{
 	
-	@Autowired
-	protected ExamplePaths paths;
+	@Autowired protected ExamplePaths paths;
 	
 	public UserRESTTemplateImpl(){
 		super( User.class );
 	}
-	
-	// API
 	
 	// template method
 	
@@ -36,20 +33,21 @@ public final class UserRESTTemplateImpl extends AbstractRESTTemplate< User >{
 	}
 	
 	@Override
-	public final User createNewEntity(){
-		return new User( randomAlphabetic( 8 ), randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
-	}
-	
-	@Override
-	public final void makeEntityInvalid( final User entity ){
-		entity.setName( null );
-	}
-	
-	@Override
 	public final RequestSpecification givenAuthenticated(){
 		return AuthenticationUtil.givenBasicAuthenticated();
 	}
 	
-	// util
+	@Override
+	public final User createNewEntity(){
+		return new User( randomAlphabetic( 8 ), randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
+	}
+	@Override
+	public final void makeEntityInvalid( final User entity ){
+		entity.setName( null );
+	}
+	@Override
+	public final void change( final User resource ){
+		resource.setName( randomAlphabetic( 8 ) );
+	}
 	
 }
