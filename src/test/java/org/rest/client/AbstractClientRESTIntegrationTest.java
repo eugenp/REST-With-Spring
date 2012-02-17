@@ -1,7 +1,9 @@
 package org.rest.client;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 import java.util.Random;
 
@@ -55,16 +57,19 @@ public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 	
 	// update
 	
+	@Test
 	public final void whenResourceIsUpdated_thenTheChangesAreCorrectlyPersisted(){
 		final T existingResource = getTemplate().givenAuthenticated().create( getTemplate().createNewEntity() );
 		
 		// When
-		// getTemplate().givenAuthenticated().ch
+		getTemplate().givenAuthenticated().change( existingResource );
 		getTemplate().givenAuthenticated().update( existingResource );
+		final T updatedResource = getTemplate().givenAuthenticated().findOne( existingResource.getId() );
 		
 		// Then
+		assertThat( existingResource, equalTo( updatedResource ) );
 	}
-
+	
 	// delete
 	
 	@Test
