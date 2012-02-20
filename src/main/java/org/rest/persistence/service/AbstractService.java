@@ -75,6 +75,7 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 	@Override
 	public void update( final T entity ){
 		Preconditions.checkNotNull( entity );
+		// Preconditions.checkState( findOne( entity.getId() ) != null );
 		
 		this.getDao().save( entity );
 	}
