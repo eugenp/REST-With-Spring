@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.google.common.base.Preconditions;
+import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
@@ -93,7 +94,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public final void whenResourcesAreRetrieved_then200IsReceived(){
 		// When
-		final Response response = this.givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( this.getURI() );
+		final Response response = RestAssured.given().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( this.getURI() );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 200 ) );

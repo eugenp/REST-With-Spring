@@ -14,12 +14,9 @@ import com.google.common.collect.Sets;
 
 public class PrincipalServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< Principal >{
 	
-	@Autowired
-	private IPrivilegeService privilegeService;
-	@Autowired
-	private IRoleService roleService;
-	@Autowired
-	private IPrincipalService principalService;
+	@Autowired private IPrivilegeService privilegeService;
+	@Autowired private IRoleService roleService;
+	@Autowired private IPrincipalService principalService;
 	
 	// fixtures
 	
@@ -44,25 +41,36 @@ public class PrincipalServicePersistenceIntegrationTest extends AbstractPersiste
 	public void whenAUniqueConstraintIsBroken_thenSpringSpecificExceptionIsThrown(){
 		final String name = randomAlphabetic( 8 );
 		
-		principalService.create( this.createNewEntity( name ) );
-		principalService.create( this.createNewEntity( name ) );
+		principalService.create( createNewEntity( name ) );
+		principalService.create( createNewEntity( name ) );
 	}
 	
-	// template method
+	// Spring
 	
 	@Override
 	protected final IPrincipalService getService(){
 		return principalService;
 	}
+
+	// template method
+	
 	@Override
 	protected final Principal createNewEntity(){
-		return this.createNewEntity( randomAlphabetic( 8 ) );
+		return new Principal( randomAlphabetic( 8 ), randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
 	}
 	
-	// util
+	protected final Principal createNewEntity( final String name ){
+		return new Principal( name, randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
+	}
+
+	@Override
+	protected final void invalidateEntity( final Principal entity ){
+		entity.setName( null );
+	}
 	
-	protected final Principal createNewEntity( final String username ){
-		return new Principal( username, randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
+	@Override
+	protected void changeEntity( final Principal entity ){
+		entity.setName( randomAlphabetic( 8 ) );
 	}
 	
 }

@@ -62,7 +62,7 @@ public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 		final T existingResource = getTemplate().givenAuthenticated().create( getTemplate().createNewEntity() );
 		
 		// When
-		getTemplate().givenAuthenticated().change( existingResource );
+		getTemplate().change( existingResource );
 		getTemplate().givenAuthenticated().update( existingResource );
 		final T updatedResource = getTemplate().givenAuthenticated().findOne( existingResource.getId() );
 		

@@ -12,11 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PrivilegeServiceImpl extends AbstractService< Privilege > implements IPrivilegeService{
 	
-	@Autowired
-	IPrivilegeJpaDAO dao;
+	@Autowired IPrivilegeJpaDAO dao;
 	
 	public PrivilegeServiceImpl(){
-		super();
+		super( Privilege.class );
 	}
 	
 	// API
@@ -25,7 +24,7 @@ public class PrivilegeServiceImpl extends AbstractService< Privilege > implement
 	public Privilege findByName( final String name ){
 		return getDao().findByName( name );
 	}
-
+	
 	// Spring
 	
 	@Override

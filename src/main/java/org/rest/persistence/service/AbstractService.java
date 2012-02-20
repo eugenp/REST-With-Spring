@@ -3,8 +3,11 @@ package org.rest.persistence.service;
 import java.util.List;
 
 import org.rest.common.IEntity;
+import org.rest.persistence.event.EntityCreatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,8 +21,14 @@ import com.google.common.collect.Lists;
 public abstract class AbstractService< T extends IEntity > implements IService< T >{
 	protected final Logger logger = LoggerFactory.getLogger( this.getClass() );
 	
-	public AbstractService(){
+	private Class< T > clazz;
+	
+	@Autowired ApplicationEventPublisher eventPublisher;
+	
+	public AbstractService( final Class< T > clazzToSet ){
 		super();
+		
+		this.clazz = clazzToSet;
 	}
 	
 	// API
@@ -57,6 +66,7 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 		
 		final T persistedEntity = this.getDao().save( entity );
 		
+		eventPublisher.publishEvent( new EntityCreatedEvent< T >( this, clazz, persistedEntity ) );
 		return persistedEntity;
 	}
 	

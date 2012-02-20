@@ -12,11 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RoleServiceImpl extends AbstractService< Role > implements IRoleService{
 	
-	@Autowired
-	IRoleJpaDAO dao;
+	@Autowired IRoleJpaDAO dao;
 	
 	public RoleServiceImpl(){
-		super();
+		super( Role.class );
 	}
 	
 	// API

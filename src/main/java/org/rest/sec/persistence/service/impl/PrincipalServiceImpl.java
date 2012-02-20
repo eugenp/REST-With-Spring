@@ -16,7 +16,7 @@ public class PrincipalServiceImpl extends AbstractService< Principal > implement
 	IPrincipalJpaDAO dao;
 	
 	public PrincipalServiceImpl(){
-		super();
+		super( Principal.class );
 	}
 	
 	// API

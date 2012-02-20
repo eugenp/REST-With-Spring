@@ -11,18 +11,13 @@ import org.springframework.dao.DataAccessException;
 
 public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< Role >{
 	
-	@Autowired
-	private IPrivilegeService privilegeService;
-	@Autowired
-	private IRoleService roleService;
-	@Autowired
-	private IPrincipalService principalService;
+	@Autowired private IPrivilegeService privilegeService;
+	@Autowired private IRoleService roleService;
+	@Autowired private IPrincipalService principalService;
 	
 	// fixtures
 	
-	/**
-	 * - note: temporary, until: https://github.com/eugenp/REST/issues/7
-	 */
+	/** - note: temporary, until: https://github.com/eugenp/REST/issues/7 */
 	@Before
 	public final void before(){
 		privilegeService.deleteAll();
@@ -54,6 +49,14 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 	@Override
 	protected final Role createNewEntity(){
 		return this.createNewEntity( randomAlphabetic( 8 ) );
+	}
+	@Override
+	protected final void invalidateEntity( final Role entity ){
+		entity.setName( null );
+	}
+	@Override
+	protected final void changeEntity( final Role entity ){
+		entity.setName( randomAlphabetic( 6 ) );
 	}
 	
 	// util

@@ -1,15 +1,16 @@
 package org.rest.sec.persistence.service.impl;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.rest.persistence.service.AbstractServiceUnitTest;
 import org.rest.sec.model.Role;
 import org.rest.sec.persistence.dao.IRoleJpaDAO;
-import org.rest.test.AbstractServiceUnitTest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;
@@ -26,13 +27,16 @@ public class RoleServiceUnitTest extends AbstractServiceUnitTest< Role >{
 	
 	// fixtures
 	
+	@Override
 	@Before
 	public final void before(){
 		instance = new RoleServiceImpl();
 		
 		daoMock = mock( IRoleJpaDAO.class );
+		when( daoMock.save( any( Role.class ) ) ).thenReturn( new Role() );
 		when( daoMock.findAll() ).thenReturn( Lists.<Role> newArrayList() );
 		instance.dao = daoMock;
+		super.before();
 	}
 	
 	// get

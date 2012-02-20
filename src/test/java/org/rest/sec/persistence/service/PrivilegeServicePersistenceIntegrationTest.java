@@ -11,12 +11,9 @@ import org.springframework.dao.DataAccessException;
 
 public class PrivilegeServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< Privilege >{
 	
-	@Autowired
-	private IPrivilegeService privilegeService;
-	@Autowired
-	private IRoleService roleService;
-	@Autowired
-	private IPrincipalService principalService;
+	@Autowired private IPrivilegeService privilegeService;
+	@Autowired private IRoleService roleService;
+	@Autowired private IPrincipalService principalService;
 	
 	// fixtures
 	
@@ -53,7 +50,15 @@ public class PrivilegeServicePersistenceIntegrationTest extends AbstractPersiste
 	}
 	@Override
 	protected final Privilege createNewEntity(){
-		return this.createNewEntity( randomAlphabetic( 8 ) );
+		return new Privilege( randomAlphabetic( 8 ) );
+	}
+	@Override
+	protected final void invalidateEntity( final Privilege entity ){
+		entity.setName( null );
+	}
+	@Override
+	protected final void changeEntity( final Privilege entity ){
+		entity.setName( randomAlphabetic( 6 ) );
 	}
 	
 	// util
