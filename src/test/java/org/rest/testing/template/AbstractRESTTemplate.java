@@ -16,9 +16,9 @@ import com.jayway.restassured.response.Response;
  */
 public abstract class AbstractRESTTemplate< T extends IEntity > implements IRESTTemplate< T >{
 	
-	@Autowired @Qualifier( "xstreamMarshaller" ) private IMarshaller marshaller;
+	@Autowired @Qualifier( "xstreamMarshaller" ) protected IMarshaller marshaller;
 	
-	private final Class< T > clazz;
+	protected final Class< T > clazz;
 	
 	public AbstractRESTTemplate( final Class< T > clazzToSet ){
 		super();
@@ -187,7 +187,7 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 		final Response updateResponse = updateResourceAsResponse( resource );
 		Preconditions.checkState( updateResponse.getStatusCode() == 200 );
 	}
-
+	
 	//
 	
 	public final String getMime(){

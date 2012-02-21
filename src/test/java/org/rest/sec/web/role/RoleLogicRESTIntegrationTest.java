@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.Matchers;
@@ -30,17 +31,27 @@ import com.jayway.restassured.specification.RequestSpecification;
 @ContextConfiguration( classes = { ApplicationTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
 public class RoleLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTest< Role >{
 	
-	@Autowired
-	private RoleRESTTemplateImpl restTemplate;
+	@Autowired private RoleRESTTemplateImpl restTemplate;
 	
-	@Autowired
-	private PrivilegeRESTTemplateImpl associationRestTemplate;
+	@Autowired private PrivilegeRESTTemplateImpl associationRestTemplate;
 	
 	public RoleLogicRESTIntegrationTest(){
 		super( Role.class );
 	}
 	
 	// tests
+	
+	// find one
+	
+	@Test
+	public final void givenResourceExists_whenResourceIsRetrievedByName_thenResourceIsCorrectlyRetrieved(){
+		final Role newResource = getTemplate().createNewEntity();
+		getTemplate().create( newResource );
+		final Role existingResourceByName = getTemplate().findByName( newResource.getName() );
+		assertEquals( newResource, existingResourceByName );
+	}
+	
+	// TO SORT
 	
 	/**
 	 * - note: this test ensures that a new User cannot automatically create new Privileges <br>

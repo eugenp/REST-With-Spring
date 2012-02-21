@@ -25,6 +25,13 @@ public final class RoleRESTTemplateImpl extends AbstractRESTTemplate< Role >{
 		super( Role.class );
 	}
 	
+	// API
+	
+	public final Role findByName( final String name ){
+		final String resourceAsXML = getResourceAsMime( getURI() + "?name=" + name, marshaller.getMime() );
+		return marshaller.decode( resourceAsXML, clazz );
+	}
+
 	// template method
 	
 	@Override
