@@ -2,6 +2,7 @@ package org.rest.sec.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,7 +34,7 @@ public class Role implements IEntity{
 	private String name;
 	
 	/* Persistence */
-	@OneToMany( fetch = FetchType.EAGER )
+	@OneToMany( cascade = { CascadeType.ALL },fetch = FetchType.EAGER )
 	@JoinColumn( name = "PRIVILEGE_ID" )
 	@Column( nullable = false )
 	/* Marshalling */

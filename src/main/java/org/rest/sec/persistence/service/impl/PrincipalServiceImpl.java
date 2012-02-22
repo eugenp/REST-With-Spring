@@ -22,6 +22,7 @@ public class PrincipalServiceImpl extends AbstractService< Principal > implement
 	// API
 	
 	@Override
+	@Transactional( readOnly = true )
 	public Principal findByName( final String name ){
 		return dao.findByName( name );
 	}

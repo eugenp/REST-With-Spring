@@ -8,10 +8,12 @@ import org.rest.common.exceptions.ConflictException;
 import org.rest.common.web.RestPreconditions;
 import org.rest.sec.model.Role;
 import org.rest.sec.persistence.service.IRoleService;
+import org.rest.sec.util.SecurityConstants;
 import org.rest.web.common.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -76,7 +78,7 @@ public class RoleController extends AbstractController< Role >{
 	
 	@RequestMapping( method = RequestMethod.POST )
 	@ResponseStatus( HttpStatus.CREATED )
-	// @Secured( SecurityConstants.PRIVILEGE_ROLE_WRITE )
+	@Secured( SecurityConstants.PRIVILEGE_ROLE_WRITE )
 	public void create( @RequestBody final Role resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		createInternal( resource, uriBuilder, response );
 	}
@@ -85,7 +87,7 @@ public class RoleController extends AbstractController< Role >{
 	
 	@RequestMapping( method = RequestMethod.PUT )
 	@ResponseStatus( HttpStatus.OK )
-	// @Secured( SecurityConstants.PRIVILEGE_ROLE_WRITE )
+	@Secured( SecurityConstants.PRIVILEGE_ROLE_WRITE )
 	public void update( @RequestBody final Role resource ){
 		updateInternal( resource );
 	}
@@ -94,7 +96,7 @@ public class RoleController extends AbstractController< Role >{
 	
 	@RequestMapping( value = "/{id}",method = RequestMethod.DELETE )
 	@ResponseStatus( HttpStatus.NO_CONTENT )
-	// @Secured( SecurityConstants.PRIVILEGE_ROLE_WRITE )
+	@Secured( SecurityConstants.PRIVILEGE_ROLE_WRITE )
 	public void delete( @PathVariable( "id" ) final Long id ){
 		deleteByIdInternal( id );
 	}

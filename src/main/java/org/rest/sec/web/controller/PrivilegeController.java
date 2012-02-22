@@ -4,10 +4,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.rest.common.exceptions.ConflictException;
+import org.rest.common.web.RestPreconditions;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.persistence.service.IPrivilegeService;
 import org.rest.web.common.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +26,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping( value = "privilege" )
 public class PrivilegeController extends AbstractController< Privilege >{
 	
-	@Autowired
-	private IPrivilegeService service;
+	@Autowired private IPrivilegeService service;
 	
 	public PrivilegeController(){
 		super( Privilege.class );
@@ -52,6 +54,22 @@ public class PrivilegeController extends AbstractController< Privilege >{
 	@ResponseBody
 	public Privilege findOne( @PathVariable( "id" ) final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		return findOneInternal( id, uriBuilder, response );
+	}
+	
+	@RequestMapping( params = "name",method = RequestMethod.GET )
+	@ResponseBody
+	public Privilege findOneByName( @RequestParam( "name" ) final String name ){
+		Privilege resource = null;
+		try{
+			resource = RestPreconditions.checkNotNull( getService().findByName( name ) );
+		}
+		catch( final InvalidDataAccessApiUsageException ex ){
+			logger.error( "InvalidDataAccessApiUsageException on find operation" );
+			logger.warn( "InvalidDataAccessApiUsageException on find operation", ex );
+			throw new ConflictException( ex );
+		}
+		
+		return resource;
 	}
 	
 	// create

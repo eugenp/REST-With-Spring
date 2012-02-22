@@ -28,11 +28,9 @@ import com.jayway.restassured.specification.RequestSpecification;
 @ContextConfiguration( classes = { ApplicationTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
 public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTest< User >{
 	
-	@Autowired
-	private UserRESTTemplateImpl userRestTemplate;
+	@Autowired private UserRESTTemplateImpl userRestTemplate;
 	
-	@Autowired
-	private RoleRESTTemplateImpl associationRestTemplate;
+	@Autowired private RoleRESTTemplateImpl associationRestTemplate;
 	
 	public UserLogicRESTIntegrationTest(){
 		super( User.class );
@@ -40,6 +38,8 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	
 	// tests
 	
+	// POST
+
 	/**
 	 * - note: this test ensures that a new User cannot automatically create new Privileges <br>
 	 * - note: the standard way to do this is: first create the Privilege resource(s), then associate them with the new User resource and then create the User resource
@@ -83,12 +83,16 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		assertThat( response.getStatusCode(), is( 409 ) );
 	}
 	
+	// GET
+
 	@Test
 	public final void whenResourceIsRetrieved_thenAssociationsAreAlsoRetrieved(){
 		final User existingResource = getTemplate().createResourceAndGetAsEntity();
 		assertThat( existingResource.getRoles(), not( Matchers.<Role> empty() ) );
 	}
 	
+	// complex scenarios
+
 	@Test
 	public final void whenScenario_getResource_getAssociationsById(){
 		final Role existingAssociation = associationRestTemplate.createResourceAndGetAsEntity();
