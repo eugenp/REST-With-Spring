@@ -78,7 +78,7 @@ public class RoleController extends AbstractController< Role >{
 	
 	@RequestMapping( method = RequestMethod.POST )
 	@ResponseStatus( HttpStatus.CREATED )
-	@Secured( SecurityConstants.PRIVILEGE_ROLE_WRITE )
+	@Secured( SecurityConstants.CAN_ROLE_WRITE )
 	public void create( @RequestBody final Role resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		createInternal( resource, uriBuilder, response );
 	}
@@ -87,7 +87,7 @@ public class RoleController extends AbstractController< Role >{
 	
 	@RequestMapping( method = RequestMethod.PUT )
 	@ResponseStatus( HttpStatus.OK )
-	@Secured( SecurityConstants.PRIVILEGE_ROLE_WRITE )
+	@Secured( SecurityConstants.CAN_ROLE_WRITE )
 	public void update( @RequestBody final Role resource ){
 		updateInternal( resource );
 	}
@@ -96,7 +96,7 @@ public class RoleController extends AbstractController< Role >{
 	
 	@RequestMapping( value = "/{id}",method = RequestMethod.DELETE )
 	@ResponseStatus( HttpStatus.NO_CONTENT )
-	@Secured( SecurityConstants.PRIVILEGE_ROLE_WRITE )
+	@Secured( SecurityConstants.CAN_ROLE_WRITE )
 	public void delete( @PathVariable( "id" ) final Long id ){
 		deleteByIdInternal( id );
 	}

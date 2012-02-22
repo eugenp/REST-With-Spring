@@ -15,7 +15,7 @@ import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
 import org.rest.sec.testing.template.PrivilegeRESTTemplateImpl;
 import org.rest.sec.testing.template.RoleRESTTemplateImpl;
-import org.rest.spring.application.ApplicationTestConfig;
+import org.rest.spring.application.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
 import org.rest.web.common.AbstractLogicRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { ApplicationTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
+@ContextConfiguration( classes = { ContextTestConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
 public class RoleLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTest< Role >{
 	
 	@Autowired private RoleRESTTemplateImpl restTemplate;
@@ -130,16 +130,14 @@ public class RoleLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		final Role role1 = new Role( randomAlphabetic( 6 ), Sets.newHashSet( existingPrivilege ) );
 		getTemplate().createResourceAsResponse( role1 );
 		
-		/*final Role role1ViewOfServerBefore = getTemplate().findByName( role1.getName() );
-		assertThat( role1ViewOfServerBefore.getPrivileges(), hasItem( existingPrivilege ) );*/
+		final Role role1ViewOfServerBefore = getTemplate().findByName( role1.getName() );
+		assertThat( role1ViewOfServerBefore.getPrivileges(), hasItem( existingPrivilege ) );
 		
-		/*
 		final Role role2 = new Role( randomAlphabetic( 6 ), Sets.newHashSet( existingPrivilege ) );
 		getTemplate().createResourceAsResponse( role2 );
 		
 		final Role role1ViewOfServerAfter = getTemplate().findByName( role1.getName() );
 		assertThat( role1ViewOfServerAfter.getPrivileges(), hasItem( existingPrivilege ) );
-		 */
 	}
 	
 	// template

@@ -2,7 +2,6 @@ package org.rest.sec.model;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,24 +24,11 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 @XStreamAlias( "role" )
 public class Role implements IEntity{
 	
-	@Id
-	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	@XStreamAsAttribute
-	private Long id;
+	@Id @GeneratedValue( strategy = GenerationType.AUTO ) @XStreamAsAttribute @Column( name = "ROLE_ID" ) private Long id;
 	
-	@Column( unique = true,nullable = false )
-	private String name;
+	@Column( unique = true,nullable = false ) private String name;
 	
-	/* Persistence */
-	@OneToMany( cascade = { CascadeType.ALL },fetch = FetchType.EAGER )
-	@JoinColumn( name = "PRIVILEGE_ID" )
-	@Column( nullable = false )
-	/* Marshalling */
-	// - note: this gets rid of the collection entirely
-	@XStreamImplicit
-	// - note: this requires: xstream.addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
-	// @XStreamConverter( value = HibernateCollectionConverter.class )
-	private Set< Privilege > privileges;
+	@XStreamImplicit @OneToMany( /*cascade = { CascadeType.ALL },*/fetch = FetchType.EAGER ) @JoinColumn( name = "PRIV_ID" ) private Set< Privilege > privileges;
 	
 	public Role(){
 		super();

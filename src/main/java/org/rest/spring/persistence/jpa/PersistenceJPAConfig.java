@@ -14,7 +14,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -24,23 +23,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan( { "org.rest.sec.persistence" } )
 public class PersistenceJPAConfig{
 	
-	@Value( "${jdbc.driverClassName}" )
-	private String driverClassName;
-	
-	@Value( "${jdbc.url}" )
-	private String url;
-	
-	@Value( "${hibernate.dialect}" )
-	String hibernateDialect;
-	
-	@Value( "${hibernate.show_sql}" )
-	boolean hibernateShowSql;
-	
-	@Value( "${hibernate.hbm2ddl.auto}" )
-	String hibernateHbm2ddlAuto;
-	
-	@Value( "${jpa.generateDdl}" )
-	boolean jpaGenerateDdl;
+	@Value( "${jdbc.driverClassName}" ) private String driverClassName;
+	@Value( "${jdbc.url}" ) private String url;
+	@Value( "${hibernate.dialect}" ) String hibernateDialect;
+	@Value( "${hibernate.show_sql}" ) boolean hibernateShowSql;
+	@Value( "${hibernate.hbm2ddl.auto}" ) String hibernateHbm2ddlAuto;
+	@Value( "${jpa.generateDdl}" ) boolean jpaGenerateDdl;
 	
 	public PersistenceJPAConfig(){
 		super();
@@ -56,7 +44,7 @@ public class PersistenceJPAConfig{
 		
 		final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter(){
 			{
-				setDatabase( Database.H2 ); // TODO: comment this out, see if anything fails
+				// setDatabase( Database.H2 ); // TODO: comment this out, see if anything fails
 				setDatabasePlatform( hibernateDialect );
 				setShowSql( hibernateShowSql );
 				setGenerateDdl( jpaGenerateDdl );
@@ -74,8 +62,8 @@ public class PersistenceJPAConfig{
 		final DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName( driverClassName );
 		dataSource.setUrl( url );
-		// dataSource.setUsername( "restUser" );
-		// dataSource.setPassword( "restmy5ql" );
+		dataSource.setUsername( "restUser" );
+		dataSource.setPassword( "restmy5ql" );
 		return dataSource;
 	}
 	

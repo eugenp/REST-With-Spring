@@ -87,7 +87,7 @@ public class UserController extends AbstractController< User >{
 	
 	@RequestMapping( method = RequestMethod.PUT )
 	@ResponseStatus( HttpStatus.OK )
-	@Secured( SecurityConstants.PRIVILEGE_USER_WRITE )
+	@Secured( SecurityConstants.CAN_USER_WRITE )
 	public void update( @RequestBody final User resource ){
 		updateInternal( resource );
 	}
@@ -96,7 +96,7 @@ public class UserController extends AbstractController< User >{
 	
 	@RequestMapping( value = "/{id}",method = RequestMethod.DELETE )
 	@ResponseStatus( HttpStatus.NO_CONTENT )
-	@Secured( SecurityConstants.PRIVILEGE_USER_WRITE )
+	@Secured( SecurityConstants.CAN_USER_WRITE )
 	public void delete( @PathVariable( "id" ) final Long id ){
 		deleteByIdInternal( id );
 	}

@@ -3,7 +3,7 @@ package org.rest.sec.web.role;
 import org.junit.runner.RunWith;
 import org.rest.sec.model.Role;
 import org.rest.sec.testing.template.RoleRESTTemplateImpl;
-import org.rest.spring.application.ApplicationTestConfig;
+import org.rest.spring.application.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
 import org.rest.web.common.AbstractSortRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import com.google.common.collect.Ordering;
 
 @RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { ApplicationTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
+@ContextConfiguration( classes = { ContextTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
 public class RoleSortRESTIntegrationTest extends AbstractSortRESTIntegrationTest< Role >{
 	
 	@Autowired
@@ -23,7 +23,7 @@ public class RoleSortRESTIntegrationTest extends AbstractSortRESTIntegrationTest
 	// tests
 	
 	// template method (shortcuts)
-	
+
 	@Override
 	protected final Role createNewEntity(){
 		return template.createNewEntity();

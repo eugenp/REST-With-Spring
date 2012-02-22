@@ -49,6 +49,8 @@ public class SecuritySetup implements ApplicationListener< ContextRefreshedEvent
 	@Override
 	public final void onApplicationEvent( final ContextRefreshedEvent event ){
 		if( !setupDone ){
+			logger.info( "Executing Setup" );
+			
 			privilegeService.deleteAll();
 			roleService.deleteAll();
 			principalService.deleteAll();
@@ -64,8 +66,8 @@ public class SecuritySetup implements ApplicationListener< ContextRefreshedEvent
 	// Privilege
 	
 	private void createPrivileges(){
-		createPrivilegeIfNotExisting( SecurityConstants.PRIVILEGE_USER_WRITE );
-		createPrivilegeIfNotExisting( SecurityConstants.PRIVILEGE_ROLE_WRITE );
+		createPrivilegeIfNotExisting( SecurityConstants.CAN_USER_WRITE );
+		createPrivilegeIfNotExisting( SecurityConstants.CAN_ROLE_WRITE );
 	}
 	final void createPrivilegeIfNotExisting( final String name ){
 		final Privilege entityByName = privilegeService.findByName( name );
@@ -78,8 +80,8 @@ public class SecuritySetup implements ApplicationListener< ContextRefreshedEvent
 	// Role
 	
 	private void createRoles(){
-		final Privilege privilegeUserWrite = privilegeService.findByName( SecurityConstants.PRIVILEGE_USER_WRITE );
-		final Privilege privilegeRoleWrite = privilegeService.findByName( SecurityConstants.PRIVILEGE_ROLE_WRITE );
+		final Privilege privilegeUserWrite = privilegeService.findByName( SecurityConstants.CAN_USER_WRITE );
+		final Privilege privilegeRoleWrite = privilegeService.findByName( SecurityConstants.CAN_ROLE_WRITE );
 		
 		createRoleIfNotExisting( SecurityConstants.ROLE_ADMIN, Sets.<Privilege> newHashSet( privilegeUserWrite, privilegeRoleWrite ) );
 	}

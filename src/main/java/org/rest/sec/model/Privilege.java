@@ -13,12 +13,9 @@ import org.rest.common.IEntity;
 @XmlRootElement
 public class Privilege implements IEntity{
 	
-	@Id
-	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private Long id;
+	@Id @GeneratedValue( strategy = GenerationType.AUTO ) @Column( name = "PRIV_ID" ) private Long id;
 	
-	@Column( unique = true,nullable = false )
-	private String name;
+	@Column( unique = true,nullable = false ) private String name;
 	
 	public Privilege(){
 		super();

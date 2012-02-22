@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.sec.testing.template.UserRESTTemplateImpl;
-import org.rest.spring.application.ApplicationTestConfig;
+import org.rest.spring.application.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,11 +17,10 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import com.jayway.restassured.response.Response;
 
 @RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { ApplicationTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
+@ContextConfiguration( classes = { ContextTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
 public class SecurityRESTIntegrationTest{
 	
-	@Autowired
-	private UserRESTTemplateImpl userTemplate;
+	@Autowired private UserRESTTemplateImpl userTemplate;
 	
 	// tests
 	

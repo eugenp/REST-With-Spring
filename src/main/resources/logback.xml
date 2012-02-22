@@ -18,7 +18,10 @@
 	<logger name="org.hibernate" level="WARN" />
 	<logger name="org.springframework" level="WARN" />
 	<logger name="org.springframework.transaction" level="WARN" />
-
+	
+	<!-- to follow if setup is being executed -->
+    <logger name="org.rest.sec.persistence.setup" level="DEBUG" />
+    
 	<root level="INFO">
 		<appender-ref ref="FILE" />
 	</root>

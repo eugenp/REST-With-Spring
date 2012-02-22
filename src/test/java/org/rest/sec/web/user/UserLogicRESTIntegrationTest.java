@@ -13,7 +13,7 @@ import org.rest.sec.dto.User;
 import org.rest.sec.model.Role;
 import org.rest.sec.testing.template.RoleRESTTemplateImpl;
 import org.rest.sec.testing.template.UserRESTTemplateImpl;
-import org.rest.spring.application.ApplicationTestConfig;
+import org.rest.spring.application.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
 import org.rest.web.common.AbstractLogicRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { ApplicationTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
+@ContextConfiguration( classes = { ContextTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
 public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTest< User >{
 	
 	@Autowired private UserRESTTemplateImpl userRestTemplate;
@@ -35,11 +35,11 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	public UserLogicRESTIntegrationTest(){
 		super( User.class );
 	}
-	
+
 	// tests
 	
 	// POST
-
+	
 	/**
 	 * - note: this test ensures that a new User cannot automatically create new Privileges <br>
 	 * - note: the standard way to do this is: first create the Privilege resource(s), then associate them with the new User resource and then create the User resource
@@ -84,7 +84,7 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	}
 	
 	// GET
-
+	
 	@Test
 	public final void whenResourceIsRetrieved_thenAssociationsAreAlsoRetrieved(){
 		final User existingResource = getTemplate().createResourceAndGetAsEntity();
@@ -92,7 +92,7 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	}
 	
 	// complex scenarios
-
+	
 	@Test
 	public final void whenScenario_getResource_getAssociationsById(){
 		final Role existingAssociation = associationRestTemplate.createResourceAndGetAsEntity();

@@ -33,6 +33,10 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<context-param>
+		<param-name>contextInitializerClasses</param-name>
+		<param-value>org.rest.sec.persistence.setup.MyApplicationContextInitializer</param-value>
+	</context-param>
 
 	<!-- rest -->
 	<servlet>
