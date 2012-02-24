@@ -126,20 +126,21 @@ public class RoleLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		assertThat( updatedResource.getPrivileges(), hasItem( existingAssociation ) );
 	}
 	
+	// scenarios
+	
 	@Test
-	public final void whenFailingScenario_thenBadOutcome(){
-		final Privilege existingPrivilege = associationRestTemplate.createResourceAndGetAsEntity( associationRestTemplate.createNewEntity() );
-		final Role role1 = new Role( randomAlphabetic( 6 ), Sets.newHashSet( existingPrivilege ) );
-		getTemplate().createResourceAsResponse( role1 );
+	public final void whenScenarioOfWorkingWithAssociations_thenTheChangesAreCorrectlyPersisted(){
+		final Privilege existingAssociation = associationRestTemplate.createResourceAndGetAsEntity( associationRestTemplate.createNewEntity() );
+		final Role resource1 = new Role( randomAlphabetic( 6 ), Sets.newHashSet( existingAssociation ) );
 		
-		final Role role1ViewOfServerBefore = getTemplate().findByName( role1.getName() );
-		assertThat( role1ViewOfServerBefore.getPrivileges(), hasItem( existingPrivilege ) );
+		final Role resource1ViewOfServerBefore = getTemplate().createResourceAndGetAsEntity( resource1 );
+		assertThat( resource1ViewOfServerBefore.getPrivileges(), hasItem( existingAssociation ) );
 		
-		final Role role2 = new Role( randomAlphabetic( 6 ), Sets.newHashSet( existingPrivilege ) );
-		getTemplate().createResourceAsResponse( role2 );
+		final Role resource2 = new Role( randomAlphabetic( 6 ), Sets.newHashSet( existingAssociation ) );
+		getTemplate().createResourceAsResponse( resource2 );
 		
-		final Role role1ViewOfServerAfter = getTemplate().findByName( role1.getName() );
-		assertThat( role1ViewOfServerAfter.getPrivileges(), hasItem( existingPrivilege ) );
+		final Role resource1ViewOfServerAfter = getTemplate().findOne( resource1ViewOfServerBefore.getId() );
+		assertThat( resource1ViewOfServerAfter.getPrivileges(), hasItem( existingAssociation ) );
 	}
 	
 	// template

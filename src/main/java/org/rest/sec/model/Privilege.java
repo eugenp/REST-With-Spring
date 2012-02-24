@@ -14,7 +14,6 @@ import org.rest.common.IEntity;
 public class Privilege implements IEntity{
 	
 	@Id @GeneratedValue( strategy = GenerationType.AUTO ) @Column( name = "PRIV_ID" ) private Long id;
-	
 	@Column( unique = true,nullable = false ) private String name;
 	
 	public Privilege(){
@@ -22,7 +21,6 @@ public class Privilege implements IEntity{
 	}
 	public Privilege( final String nameToSet ){
 		super();
-		
 		name = nameToSet;
 	}
 	

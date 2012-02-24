@@ -2,6 +2,7 @@ package org.rest.sec.web.user;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -21,6 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import com.google.common.collect.Sets;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
@@ -38,16 +40,37 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	
 	// tests
 	
-	// POST
+	// find - one
+	
+	@Test
+	public final void whenResourceIsRetrieved_thenAssociationsAreAlsoRetrieved(){
+		final User existingResource = getTemplate().createResourceAndGetAsEntity();
+		assertThat( existingResource.getRoles(), not( Matchers.<Role> empty() ) );
+	}
+	
+	// create
 	
 	/**
 	 * - note: this test ensures that a new User cannot automatically create new Privileges <br>
 	 * - note: the standard way to do this is: first create the Privilege resource(s), then associate them with the new User resource and then create the User resource
 	 */
 	@Test
-	public final void whenUserIsCreatedWithNewRole_then409IsReceived(){
+	public final void whenResourceIsCreatedWithNewAssociation_then409IsReceived(){
 		final User newResource = getTemplate().createNewEntity();
 		newResource.getRoles().add( associationRestTemplate.createNewEntity() );
+		
+		// When
+		final Response response = getTemplate().createResourceAsResponse( newResource );
+		
+		// Then
+		assertThat( response.getStatusCode(), is( 409 ) );
+	}
+	@Test
+	public final void whenResourceIsCreatedWithInvalidAssociation_then409IsReceived(){
+		final Role invalidAssociation = associationRestTemplate.createNewEntity();
+		invalidAssociation.setId( 1001l );
+		final User newResource = getTemplate().createNewEntity();
+		newResource.getRoles().add( invalidAssociation );
 		
 		// When
 		final Response response = getTemplate().createResourceAsResponse( newResource );
@@ -69,30 +92,7 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		assertThat( response.getStatusCode(), is( 201 ) );
 	}
 	
-	/** - note: this may intermittently fail (investigate if that's the case) */
-	@Test
-	public final void whenResourceIsCreatedWithInvalidAssociation_then409IsReceived(){
-		final Role invalidAssociation = associationRestTemplate.createNewEntity();
-		invalidAssociation.setId( 1001l );
-		final User newResource = getTemplate().createNewEntity();
-		newResource.getRoles().add( invalidAssociation );
-		
-		// When
-		final Response response = getTemplate().createResourceAsResponse( newResource );
-		
-		// Then
-		assertThat( response.getStatusCode(), is( 409 ) );
-	}
-	
-	// GET
-	
-	@Test
-	public final void whenResourceIsRetrieved_thenAssociationsAreAlsoRetrieved(){
-		final User existingResource = getTemplate().createResourceAndGetAsEntity();
-		assertThat( existingResource.getRoles(), not( Matchers.<Role> empty() ) );
-	}
-	
-	// complex scenarios
+	// TODO: sort
 	
 	@Test
 	public final void whenScenario_getResource_getAssociationsById(){
@@ -101,11 +101,28 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		resourceToCreate.getRoles().add( existingAssociation );
 		
 		// When
-		final User existingResource = getTemplate().create( resourceToCreate );
+		final User existingResource = getTemplate().createResourceAndGetAsEntity( resourceToCreate );
 		for( final Role associationOfResourcePotential : existingResource.getRoles() ){
 			final Role existingAssociationOfResource = associationRestTemplate.getResourceAsEntity( associationRestTemplate.getURI() + "/" + associationOfResourcePotential.getId() );
 			assertThat( existingAssociationOfResource, notNullValue() );
 		}
+	}
+	
+	// scenarios
+	
+	@Test
+	public final void whenScenarioOfWorkingWithAssociations_thenTheChangesAreCorrectlyPersisted(){
+		final Role existingAssociation = associationRestTemplate.createResourceAndGetAsEntity( associationRestTemplate.createNewEntity() );
+		final User resource1 = new User( randomAlphabetic( 6 ), randomAlphabetic( 6 ), Sets.newHashSet( existingAssociation ) );
+		
+		final User resource1ViewOfServerBefore = getTemplate().createResourceAndGetAsEntity( resource1 );
+		assertThat( resource1ViewOfServerBefore.getRoles(), hasItem( existingAssociation ) );
+		
+		final User resource2 = new User( randomAlphabetic( 6 ), randomAlphabetic( 6 ), Sets.newHashSet( existingAssociation ) );
+		getTemplate().createResourceAsResponse( resource2 );
+		
+		final User resource1ViewOfServerAfter = getTemplate().findOne( resource1ViewOfServerBefore.getId() );
+		assertThat( resource1ViewOfServerAfter.getRoles(), hasItem( existingAssociation ) );
 	}
 	
 	// template method
