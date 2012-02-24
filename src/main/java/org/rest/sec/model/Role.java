@@ -25,7 +25,7 @@ public class Role implements IEntity{
 	
 	@Id @GeneratedValue( strategy = GenerationType.AUTO ) @XStreamAsAttribute @Column( name = "ROLE_ID" ) private Long id;
 	@Column( unique = true,nullable = false ) private String name;
-	@OneToMany( fetch = FetchType.EAGER )/*@JoinColumn( name = "PRIV_ID" )*/@XStreamImplicit private Set< Privilege > privileges;
+	@OneToMany( /*cascade = { CascadeType.ALL },*/fetch = FetchType.EAGER )/*@JoinColumn( name = "PRIV_ID" )*/@XStreamImplicit private Set< Privilege > privileges;
 	
 	public Role(){
 		super();

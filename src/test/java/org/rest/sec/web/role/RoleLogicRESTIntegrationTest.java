@@ -9,6 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.sec.model.Privilege;
@@ -32,7 +33,6 @@ import com.jayway.restassured.specification.RequestSpecification;
 public class RoleLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTest< Role >{
 	
 	@Autowired private RoleRESTTemplateImpl restTemplate;
-	
 	@Autowired private PrivilegeRESTTemplateImpl associationRestTemplate;
 	
 	public RoleLogicRESTIntegrationTest(){
@@ -143,6 +143,20 @@ public class RoleLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		assertThat( resource1ViewOfServerAfter.getPrivileges(), hasItem( existingAssociation ) );
 	}
 	
+	@Test
+	// TODO: unignore
+	@Ignore( "IN PROGRESS" )
+	public final void whenCreatingNewResourceWithExistingAssociations_thenNewResourceIsCorrectlyCreated(){
+		final Privilege existingAssociation = getAssociationTemplate().create( getAssociationTemplate().createNewEntity() );
+		final Role newResource = getTemplate().createNewEntity();
+		newResource.getPrivileges().add( existingAssociation );
+		getTemplate().create( newResource );
+		
+		final Role newResource2 = getTemplate().createNewEntity();
+		newResource2.getPrivileges().add( existingAssociation );
+		getTemplate().create( newResource2 );
+	}
+	
 	// template
 	
 	@Override
@@ -168,6 +182,12 @@ public class RoleLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	@Override
 	protected final RequestSpecification givenAuthenticated(){
 		return getTemplate().givenAuthenticated();
+	}
+	
+	// util
+	
+	final PrivilegeRESTTemplateImpl getAssociationTemplate(){
+		return associationRestTemplate;
 	}
 	
 }

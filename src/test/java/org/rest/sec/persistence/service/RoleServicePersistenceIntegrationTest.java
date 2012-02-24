@@ -3,11 +3,15 @@ package org.rest.sec.persistence.service;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.persistence.AbstractPersistenceServiceIntegrationTest;
+import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+
+import com.google.common.collect.Sets;
 
 public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< Role >{
 	
@@ -40,6 +44,28 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 		roleService.create( this.createNewEntity( name ) );
 	}
 	
+	// scenario
+	
+	@Test
+	@Ignore( "TODO" )
+	public void whenCreatingNewEntityWithExistingAssociations_thenNewEntityIsCorrectlyCreated(){
+		privilegeService.create( new Privilege( randomAlphabetic( 6 ) ) );
+	}
+	
+	@Test
+	// TODO: unignore
+	@Ignore( "in progress" )
+	public final void whenCreatingNewResourceWithExistingAssociations_thenNewResourceIsCorrectlyCreated(){
+		final Privilege existingAssociation = privilegeService.create( new Privilege( randomAlphabetic( 6 ) ) );
+		final Role newResource = createNewEntity();
+		newResource.getPrivileges().add( existingAssociation );
+		getService().create( newResource );
+		
+		final Role newResource2 = createNewEntity();
+		newResource2.getPrivileges().add( existingAssociation );
+		getService().create( newResource2 );
+	}
+	
 	// template method
 	
 	@Override
@@ -62,7 +88,11 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 	// util
 	
 	protected final Role createNewEntity( final String name ){
-		return new Role( name );
+		return new Role( name, Sets.<Privilege> newHashSet() );
+	}
+	
+	final IPrivilegeService getAssociationService(){
+		return privilegeService;
 	}
 	
 }
