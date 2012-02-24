@@ -25,10 +25,12 @@ public class PersistenceJPAConfig{
 	
 	@Value( "${jdbc.driverClassName}" ) private String driverClassName;
 	@Value( "${jdbc.url}" ) private String url;
+	@Value( "${jpa.generateDdl}" ) boolean jpaGenerateDdl;
+	
+	// Hibernate specific
 	@Value( "${hibernate.dialect}" ) String hibernateDialect;
 	@Value( "${hibernate.show_sql}" ) boolean hibernateShowSql;
 	@Value( "${hibernate.hbm2ddl.auto}" ) String hibernateHbm2ddlAuto;
-	@Value( "${jpa.generateDdl}" ) boolean jpaGenerateDdl;
 	
 	public PersistenceJPAConfig(){
 		super();
@@ -44,7 +46,7 @@ public class PersistenceJPAConfig{
 		
 		final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter(){
 			{
-				// setDatabase( Database.H2 ); // TODO: comment this out, see if anything fails
+				// setDatabase( Database.H2 ); // TODO: is this necessary
 				setDatabasePlatform( hibernateDialect );
 				setShowSql( hibernateShowSql );
 				setGenerateDdl( jpaGenerateDdl );
@@ -85,6 +87,7 @@ public class PersistenceJPAConfig{
 		return new Properties(){
 			{
 				// use this to inject additional properties in the EntityManager
+				setProperty( "hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto );
 			}
 		};
 	}

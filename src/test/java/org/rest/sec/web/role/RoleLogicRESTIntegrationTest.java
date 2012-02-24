@@ -80,6 +80,8 @@ public class RoleLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		// Then
 		assertThat( response.getStatusCode(), is( 201 ) );
 	}
+	
+	/** - note: this may intermittently fail (investigate if that's the case) */
 	@Test
 	public final void whenResourceIsCreatedWithInvalidAssociation_then409IsReceived(){
 		final Privilege invalidAssociation = associationRestTemplate.createNewEntity();

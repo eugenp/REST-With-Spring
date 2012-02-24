@@ -35,7 +35,7 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	public UserLogicRESTIntegrationTest(){
 		super( User.class );
 	}
-
+	
 	// tests
 	
 	// POST
@@ -69,6 +69,7 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		assertThat( response.getStatusCode(), is( 201 ) );
 	}
 	
+	/** - note: this may intermittently fail (investigate if that's the case) */
 	@Test
 	public final void whenResourceIsCreatedWithInvalidAssociation_then409IsReceived(){
 		final Role invalidAssociation = associationRestTemplate.createNewEntity();

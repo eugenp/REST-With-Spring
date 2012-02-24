@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -28,7 +27,7 @@ public class Role implements IEntity{
 	
 	@Column( unique = true,nullable = false ) private String name;
 	
-	@XStreamImplicit @OneToMany( /*cascade = { CascadeType.ALL },*/fetch = FetchType.EAGER ) @JoinColumn( name = "PRIV_ID" ) private Set< Privilege > privileges;
+	@XStreamImplicit @OneToMany( fetch = FetchType.EAGER )/*@JoinColumn( name = "PRIV_ID" ) */private Set< Privilege > privileges;
 	
 	public Role(){
 		super();

@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -19,13 +18,13 @@ import org.rest.common.IEntity;
 @XmlRootElement
 public class Principal implements IEntity{
 	
-	@Id @GeneratedValue( strategy = GenerationType.IDENTITY ) @Column( name = "PRINCIPAL_ID" ) private Long id;
+	@Id @GeneratedValue( strategy = GenerationType.AUTO ) @Column( name = "PRINCIPAL_ID" ) private Long id;
 	
 	@Column( unique = true,nullable = false ) private String name;
 	
 	@Column( nullable = false ) private String password;
 	
-	@OneToMany( fetch = FetchType.EAGER ) @JoinColumn( name = "ROLE_ID" ) @Column( nullable = false ) private Set< Role > roles;
+	@OneToMany( fetch = FetchType.EAGER )/*@JoinColumn( name = "ROLE_ID" )*//*@Column( nullable = false ) */private Set< Role > roles;
 	
 	public Principal(){
 		super();
