@@ -103,7 +103,7 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		// When
 		final User existingResource = getTemplate().create( resourceToCreate );
 		for( final Role associationOfResourcePotential : existingResource.getRoles() ){
-			final Role existingAssociationOfResource = associationRestTemplate.getResourceAsEntity( associationRestTemplate.getURI() + "/" + associationOfResourcePotential.getId() );
+			final Role existingAssociationOfResource = associationRestTemplate.findOne( associationOfResourcePotential.getId() );
 			assertThat( existingAssociationOfResource, notNullValue() );
 		}
 	}

@@ -6,8 +6,8 @@ public interface ITemplateAsURI< T extends IEntity >{
 	
 	// create
 	
-	String createResourceAsURI();
+	String createResourceAsURI(); // 12
 	
-	String createResourceAsURI( final T resource );
+	String createResourceAsURI( final T resource ); // 8
 	
 }

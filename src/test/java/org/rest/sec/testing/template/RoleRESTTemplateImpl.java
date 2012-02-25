@@ -28,10 +28,10 @@ public final class RoleRESTTemplateImpl extends AbstractRESTTemplate< Role >{
 	// API
 	
 	public final Role findByName( final String name ){
-		final String resourceAsXML = getResourceAsMime( getURI() + "?name=" + name, marshaller.getMime() );
+		final String resourceAsXML = findOneAsMime( getURI() + "?name=" + name );
 		return marshaller.decode( resourceAsXML, clazz );
 	}
-
+	
 	// template method
 	
 	@Override

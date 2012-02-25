@@ -8,30 +8,24 @@ public interface ITemplateAsResponse< T extends IEntity >{
 	
 	// find - one
 	
-	Response findOneAsResponse( final String uriOfResource );
-	Response findOneAsResponse( final String uriOfResource, final String acceptMime );
+	Response findOneAsResponse( final String uriOfResource ); // 19
+	Response findOneAsResponse( final String uriOfResource, final String acceptMime ); // 5
 	
 	// find - all
 	
-	Response findAllAsResponse();
-
+	Response findAllAsResponse(); // 1
+	
 	// create
 	
-	Response createResourceAsResponse();
-	Response createResourceAsResponse( final T resource );
-	
-	// create and get
-	
-	Response createResourceAndGetAsResponse();
-	Response createResourceAndGetAsResponse( final T resource );
+	Response createResourceAsResponse(); // 5
+	Response createResourceAsResponse( final T resource ); // 14
 	
 	// update
 	
-	Response updateAsResponse( final T resource );
-	Response updateAsResponse( final String resourceAsMime );
+	Response updateAsResponse( final T resource ); // 6
 	
 	// delete
 	
-	Response delete( final String uriOfResource );
+	Response delete( final String uriOfResource ); // 5
 	
 }

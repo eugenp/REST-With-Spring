@@ -66,45 +66,7 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 		return givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsString ).post( getURI() );
 	}
 	
-	// create and get
-	
-	@Override
-	public final String createResourceAndGetAsMime( final String mime ){
-		final String uriForResourceCreation = createResourceAsURI();
-		final String createdResourceAsMime = getResourceAsMime( uriForResourceCreation, mime );
-		
-		return createdResourceAsMime;
-	}
-	
-	@Override
-	public final Response createResourceAndGetAsResponse(){
-		return createResourceAndGetAsResponse( createNewEntity() );
-	}
-	@Override
-	public final Response createResourceAndGetAsResponse( final T resource ){
-		final String uriForResourceCreation = createResourceAsURI( resource );
-		
-		return findOneAsResponse( uriForResourceCreation );
-	}
-	
-	// find
-	
-	@Override
-	public final T getResourceAsEntity( final String uriOfResource ){
-		final String resourceAsXML = getResourceAsMime( uriOfResource, marshaller.getMime() );
-		
-		return marshaller.decode( resourceAsXML, clazz );
-	}
-	public final T getResourceAsEntity( final Long idOfResource ){
-		final String resourceAsXML = getResourceAsMime( getURI() + "/" + idOfResource, marshaller.getMime() );
-		
-		return marshaller.decode( resourceAsXML, clazz );
-	}
-	
-	@Override
-	public final String getResourceAsMime( final String uriOfResource, final String mime ){
-		return givenAuthenticated().header( HttpHeaders.ACCEPT, mime ).get( uriOfResource ).asString();
-	}
+	// findOne
 	
 	@Override
 	public final Response findOneAsResponse( final String uriOfResource ){
@@ -115,13 +77,13 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 		return givenAuthenticated().header( HttpHeaders.ACCEPT, acceptMime ).get( uriOfResource );
 	}
 	
-	// find - all
+	// findAll
 	
 	@Override
 	public final Response findAllAsResponse(){
 		return findOneAsResponse( getURI() );
 	}
-
+	
 	// update
 	
 	@Override
@@ -130,12 +92,6 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 		
 		final String resourceAsString = marshaller.encode( resource );
 		return givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsString ).put( getURI() );
-	}
-	@Override
-	public final Response updateAsResponse( final String resourceAsMime ){
-		Preconditions.checkNotNull( resourceAsMime );
-		
-		return givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsMime ).put( getURI() );
 	}
 	
 	// delete
@@ -149,7 +105,7 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 	
 	@Override
 	public final T findOne( final long id ){
-		final String resourceAsXML = getResourceAsMime( getURI() + "/" + id, marshaller.getMime() );
+		final String resourceAsXML = findOneAsMime( getURI() + "/" + id );
 		
 		return marshaller.decode( resourceAsXML, clazz );
 	}
@@ -171,14 +127,21 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 	@Override
 	public final T create( final T resource ){
 		final String uriForResourceCreation = createResourceAsURI( resource );
+		final String resourceAsXML = findOneAsMime( uriForResourceCreation );
 		
-		return getResourceAsEntity( uriForResourceCreation );
+		return marshaller.decode( resourceAsXML, clazz );
 	}
 	
 	@Override
 	public final void update( final T resource ){
 		final Response updateResponse = updateAsResponse( resource );
 		Preconditions.checkState( updateResponse.getStatusCode() == 200 );
+	}
+	
+	// util
+	
+	protected final String findOneAsMime( final String uriOfResource ){
+		return givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( uriOfResource ).asString();
 	}
 	
 	//
