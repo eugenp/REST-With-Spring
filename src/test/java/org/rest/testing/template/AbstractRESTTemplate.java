@@ -75,16 +75,6 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 		
 		return createdResourceAsMime;
 	}
-	@Override
-	public final T createResourceAndGetAsEntity(){
-		return createResourceAndGetAsEntity( createNewEntity() );
-	}
-	@Override
-	public final T createResourceAndGetAsEntity( final T resource ){
-		final String uriForResourceCreation = createResourceAsURI( resource );
-		
-		return getResourceAsEntity( uriForResourceCreation );
-	}
 	
 	@Override
 	public final Response createResourceAndGetAsResponse(){
@@ -94,10 +84,10 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 	public final Response createResourceAndGetAsResponse( final T resource ){
 		final String uriForResourceCreation = createResourceAsURI( resource );
 		
-		return getResourceAsResponse( uriForResourceCreation );
+		return findOneAsResponse( uriForResourceCreation );
 	}
 	
-	// get
+	// find
 	
 	@Override
 	public final T getResourceAsEntity( final String uriOfResource ){
@@ -117,34 +107,35 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 	}
 	
 	@Override
-	public final Response getResourceAsResponse( final String uriOfResource ){
+	public final Response findOneAsResponse( final String uriOfResource ){
 		return givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( uriOfResource );
 	}
 	@Override
-	public final Response getResourceAsResponse( final String uriOfResource, final String acceptMime ){
+	public final Response findOneAsResponse( final String uriOfResource, final String acceptMime ){
 		return givenAuthenticated().header( HttpHeaders.ACCEPT, acceptMime ).get( uriOfResource );
 	}
 	
+	// find - all
+	
+	@Override
+	public final Response findAllAsResponse(){
+		return findOneAsResponse( getURI() );
+	}
+
 	// update
 	
 	@Override
-	public final Response updateResourceAsResponse( final T resource ){
+	public final Response updateAsResponse( final T resource ){
 		Preconditions.checkNotNull( resource );
 		
 		final String resourceAsString = marshaller.encode( resource );
 		return givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsString ).put( getURI() );
 	}
 	@Override
-	public final Response updateResourceAsResponse( final String resourceAsMime ){
+	public final Response updateAsResponse( final String resourceAsMime ){
 		Preconditions.checkNotNull( resourceAsMime );
 		
 		return givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsMime ).put( getURI() );
-	}
-	
-	@Override
-	public final T updateResourceAndGetAsEntity( final T resource ){
-		updateResourceAsResponse( resource );
-		return findOne( resource.getId() );
 	}
 	
 	// delete
@@ -166,7 +157,7 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 	@SuppressWarnings( { "unchecked", "rawtypes" } )
 	@Override
 	public final List< T > findAll(){
-		final Response findAllResponse = getResourceAsResponse( getURI() );
+		final Response findAllResponse = findOneAsResponse( getURI() );
 		
 		return marshaller.<List> decode( findAllResponse.getBody().asString(), List.class );
 	}
@@ -179,12 +170,14 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 	
 	@Override
 	public final T create( final T resource ){
-		return createResourceAndGetAsEntity( resource );
+		final String uriForResourceCreation = createResourceAsURI( resource );
+		
+		return getResourceAsEntity( uriForResourceCreation );
 	}
 	
 	@Override
 	public final void update( final T resource ){
-		final Response updateResponse = updateResourceAsResponse( resource );
+		final Response updateResponse = updateAsResponse( resource );
 		Preconditions.checkState( updateResponse.getStatusCode() == 200 );
 	}
 	

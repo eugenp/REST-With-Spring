@@ -44,7 +44,7 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	
 	@Test
 	public final void whenResourceIsRetrieved_thenAssociationsAreAlsoRetrieved(){
-		final User existingResource = getTemplate().createResourceAndGetAsEntity();
+		final User existingResource = getTemplate().create( getTemplate().createNewEntity() );
 		assertThat( existingResource.getRoles(), not( Matchers.<Role> empty() ) );
 	}
 	
@@ -81,7 +81,7 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	
 	@Test
 	public final void whenUserIsCreatedWithExistingRole_then201IsReceived(){
-		final Role existingAssociation = associationRestTemplate.createResourceAndGetAsEntity();
+		final Role existingAssociation = associationRestTemplate.create( associationRestTemplate.createNewEntity() );
 		final User newResource = getTemplate().createNewEntity();
 		newResource.getRoles().add( existingAssociation );
 		
@@ -96,12 +96,12 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	
 	@Test
 	public final void whenScenario_getResource_getAssociationsById(){
-		final Role existingAssociation = associationRestTemplate.createResourceAndGetAsEntity();
+		final Role existingAssociation = associationRestTemplate.create( associationRestTemplate.createNewEntity() );
 		final User resourceToCreate = getTemplate().createNewEntity();
 		resourceToCreate.getRoles().add( existingAssociation );
 		
 		// When
-		final User existingResource = getTemplate().createResourceAndGetAsEntity( resourceToCreate );
+		final User existingResource = getTemplate().create( resourceToCreate );
 		for( final Role associationOfResourcePotential : existingResource.getRoles() ){
 			final Role existingAssociationOfResource = associationRestTemplate.getResourceAsEntity( associationRestTemplate.getURI() + "/" + associationOfResourcePotential.getId() );
 			assertThat( existingAssociationOfResource, notNullValue() );
@@ -112,10 +112,10 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	
 	@Test
 	public final void whenScenarioOfWorkingWithAssociations_thenTheChangesAreCorrectlyPersisted(){
-		final Role existingAssociation = associationRestTemplate.createResourceAndGetAsEntity( associationRestTemplate.createNewEntity() );
+		final Role existingAssociation = associationRestTemplate.create( associationRestTemplate.createNewEntity() );
 		final User resource1 = new User( randomAlphabetic( 6 ), randomAlphabetic( 6 ), Sets.newHashSet( existingAssociation ) );
 		
-		final User resource1ViewOfServerBefore = getTemplate().createResourceAndGetAsEntity( resource1 );
+		final User resource1ViewOfServerBefore = getTemplate().create( resource1 );
 		assertThat( resource1ViewOfServerBefore.getRoles(), hasItem( existingAssociation ) );
 		
 		final User resource2 = new User( randomAlphabetic( 6 ), randomAlphabetic( 6 ), Sets.newHashSet( existingAssociation ) );

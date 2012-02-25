@@ -6,11 +6,15 @@ import com.jayway.restassured.response.Response;
 
 public interface ITemplateAsResponse< T extends IEntity >{
 	
-	// get
+	// find - one
 	
-	Response getResourceAsResponse( final String uriOfResource );
-	Response getResourceAsResponse( final String uriOfResource, final String acceptMime );
+	Response findOneAsResponse( final String uriOfResource );
+	Response findOneAsResponse( final String uriOfResource, final String acceptMime );
 	
+	// find - all
+	
+	Response findAllAsResponse();
+
 	// create
 	
 	Response createResourceAsResponse();
@@ -23,8 +27,8 @@ public interface ITemplateAsResponse< T extends IEntity >{
 	
 	// update
 	
-	Response updateResourceAsResponse( final T resource );
-	Response updateResourceAsResponse( final String resourceAsMime );
+	Response updateAsResponse( final T resource );
+	Response updateAsResponse( final String resourceAsMime );
 	
 	// delete
 	

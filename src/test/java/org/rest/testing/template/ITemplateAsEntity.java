@@ -8,14 +8,4 @@ public interface ITemplateAsEntity< T extends IEntity >{
 	
 	T getResourceAsEntity( final String uriOfResource );
 	
-	// create and get
-	
-	T createResourceAndGetAsEntity();
-	
-	T createResourceAndGetAsEntity( final T resource );
-	
-	// update
-	
-	T updateResourceAndGetAsEntity( final T resource );
-	
 }

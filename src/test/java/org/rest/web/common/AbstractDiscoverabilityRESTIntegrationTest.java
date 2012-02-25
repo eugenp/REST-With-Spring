@@ -47,12 +47,12 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 		final String uriOfExistingResource = this.getTemplate().createResourceAsURI();
 		
 		// When
-		final Response getResponse = this.getTemplate().getResourceAsResponse( uriOfExistingResource );
+		final Response getResponse = this.getTemplate().findOneAsResponse( uriOfExistingResource );
 		
 		// Then
 		final String uriToAllResources = HTTPLinkHeaderUtils.extractURIByRel( getResponse.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_COLLECTION );
 		
-		final Response getAllResponse = this.getTemplate().getResourceAsResponse( uriToAllResources );
+		final Response getAllResponse = this.getTemplate().findOneAsResponse( uriToAllResources );
 		assertThat( getAllResponse.getStatusCode(), is( 200 ) );
 	}
 	
@@ -61,7 +61,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenFirstPageOfResourcesIsRetrieved_thenSomethingIsDiscoverable(){
 		// When
-		final Response response = this.getTemplate().getResourceAsResponse( this.getURI() + "?page=1&size=10" );
+		final Response response = this.getTemplate().findOneAsResponse( this.getURI() + "?page=1&size=10" );
 		
 		// Then
 		final String linkHeader = response.getHeader( HttpHeaders.LINK );
@@ -74,7 +74,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 		getTemplate().createResourceAsURI();
 		
 		// When
-		final Response response = this.getTemplate().getResourceAsResponse( this.getURI() + "?page=1&size=1" );
+		final Response response = this.getTemplate().findOneAsResponse( this.getURI() + "?page=1&size=1" );
 		
 		// Then
 		final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_NEXT );
@@ -84,7 +84,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenFirstPageOfResourcesAreRetrieved_thenSecondPageIsDiscoverable(){
 		// When
-		final Response response = this.getTemplate().getResourceAsResponse( this.getURI() + "?page=1&size=1" );
+		final Response response = this.getTemplate().findOneAsResponse( this.getURI() + "?page=1&size=1" );
 		
 		// Then
 		final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_NEXT );
@@ -94,7 +94,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenPageOfResourcesIsRetrieved_thenLastPageIsDiscoverable(){
 		// When
-		final Response response = this.getTemplate().getResourceAsResponse( this.getURI() + "?page=0&size=1" );
+		final Response response = this.getTemplate().findOneAsResponse( this.getURI() + "?page=0&size=1" );
 		
 		// Then
 		final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_LAST );
@@ -104,11 +104,11 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenLastPageOfResourcesIsRetrieved_thenNoNextPageIsDiscoverable(){
 		// When
-		final Response response = this.getTemplate().getResourceAsResponse( this.getURI() + "?page=1&size=1" );
+		final Response response = this.getTemplate().findOneAsResponse( this.getURI() + "?page=1&size=1" );
 		final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_LAST );
 		
 		// Then
-		final Response responseForLastPage = this.getTemplate().getResourceAsResponse( uriToLastPage );
+		final Response responseForLastPage = this.getTemplate().findOneAsResponse( uriToLastPage );
 		final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel( responseForLastPage.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_NEXT );
 		assertNull( uriToNextPage );
 	}
@@ -136,7 +136,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 		final String uriOfNewlyCreatedResource = this.getTemplate().createResourceAsURI( unpersistedResource );
 		
 		// Then
-		final Response response = this.getTemplate().getResourceAsResponse( uriOfNewlyCreatedResource );
+		final Response response = this.getTemplate().findOneAsResponse( uriOfNewlyCreatedResource );
 		final T resourceFromServer = marshaller.decode( response.body().asString(), clazz );
 		assertThat( unpersistedResource, equalTo( resourceFromServer ) );
 	}

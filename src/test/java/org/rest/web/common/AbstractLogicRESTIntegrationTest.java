@@ -9,6 +9,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
+import java.util.Random;
 
 import org.apache.http.HttpHeaders;
 import org.hamcrest.Matchers;
@@ -16,24 +17,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.IEntity;
 import org.rest.test.AbstractRESTIntegrationTest;
-import org.rest.testing.marshaller.IMarshaller;
 import org.rest.testing.template.IRESTTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.google.common.base.Preconditions;
-import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
-@SuppressWarnings( "unchecked" )
 public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > extends AbstractRESTIntegrationTest{
 	
 	protected final Class< T > clazz;
-	
-	@Autowired
-	@Qualifier( "xstreamMarshaller" )
-	protected IMarshaller marshaller;
 	
 	public AbstractLogicRESTIntegrationTest( final Class< T > clazzToSet ){
 		super();
@@ -44,16 +36,16 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	
 	// tests
 	
-	// GET
+	// find - one
 	
 	@Test
 	public final void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenNoExceptions(){
-		getTemplate().getResourceAsResponse( this.getURI() + "/" + randomNumeric( 4 ) );
+		getTemplate().findOneAsResponse( this.getURI() + "/" + randomNumeric( 4 ) );
 	}
 	
 	@Test
 	public final void givenResourceForIdDoesNotExist_whenResourceOfThatIdIsRetrieved_then404IsReceived(){
-		final Response response = getTemplate().getResourceAsResponse( this.getURI() + "/" + randomNumeric( 6 ) );
+		final Response response = getTemplate().findOneAsResponse( this.getURI() + "/" + randomNumeric( 6 ) );
 		
 		assertThat( response.getStatusCode(), is( 404 ) );
 	}
@@ -64,7 +56,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 		final String uriForResourceCreation = this.getTemplate().createResourceAsURI();
 		
 		// When
-		final Response res = getTemplate().getResourceAsResponse( uriForResourceCreation );
+		final Response res = getTemplate().findOneAsResponse( uriForResourceCreation );
 		
 		// Then
 		assertThat( res.getStatusCode(), is( 200 ) );
@@ -72,29 +64,50 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	
 	@Test
 	public final void givenResourceForIdExists_whenResourceOfThatIdIsRetrieved_thenResourceIsCorrectlyRetrieved(){
-		// Given
 		final T resource = this.createNewEntity();
-		final String uriForResourceCreation = this.getTemplate().createResourceAsURI( resource );
+		final T existingResource = this.getTemplate().create( resource );
+		final T retrievedResource = this.getTemplate().findOne( existingResource.getId() );
+		
+		assertEquals( resource, retrievedResource );
+	}
+	
+	@Test
+	@Ignore( "this was written for a neo4j persistence engine, which treats null ids differently than Hibernate" )
+	public final void whenResourceIsRetrievedByNegativeId_then409IsReceived(){
+		// Given id is negative number
+		Long id = new Random().nextLong();
+		id = id < 0 ? id : id * -1;
 		
 		// When
-		final Response res = getTemplate().getResourceAsResponse( uriForResourceCreation );
+		final Response res = getTemplate().findOneAsResponse( this.getURI() + "/" + id );
 		
 		// Then
-		final T retrievedResource = this.marshaller.decode( res.asString(), clazz );
-		assertEquals( resource, retrievedResource );
+		assertThat( res.getStatusCode(), is( 409 ) );
+	}
+	
+	@Test
+	public final void whenResourceIsRetrievedByNonNumericId_then400IsReceived(){
+		// Given id is non numeric
+		final String id = randomAlphabetic( 6 );
+		
+		// When
+		final Response res = getTemplate().findOneAsResponse( this.getURI() + "/" + id );
+		
+		// Then
+		assertThat( res.getStatusCode(), is( 400 ) );
 	}
 	
 	// GET (all)
 	
 	@Test
 	public final void whenResourcesAreRetrieved_thenNoExceptions(){
-		getTemplate().getResourceAsResponse( this.getURI() );
+		getTemplate().findOneAsResponse( this.getURI() );
 	}
 	
 	@Test
 	public final void whenResourcesAreRetrieved_then200IsReceived(){
 		// When
-		final Response response = RestAssured.given().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( this.getURI() );
+		final Response response = getTemplate().findAllAsResponse();
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 200 ) );
@@ -106,10 +119,9 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 		this.getTemplate().createResourceAsURI();
 		
 		// When
-		final Response response = getTemplate().getResourceAsResponse( this.getURI() );
+		final List< T > allResources = getTemplate().findAll();
 		
 		// Then
-		final List< T > allResources = marshaller.decode( response.asString(), List.class );
 		assertThat( allResources, not( Matchers.<T> empty() ) );
 	}
 	
@@ -132,12 +144,11 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public final void whenNullResourceIsCreated_then415IsReceived(){
 		// When
-		final Response response = this.givenAuthenticated().contentType( marshaller.getMime() ).post( this.getURI() );
+		final Response response = this.givenAuthenticated().contentType( getTemplate().getMarshaller().getMime() ).post( this.getURI() ); // in case there is a problem with the following:
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 415 ) );
 	}
-	
 	@Test
 	public final void whenAResourceIsCreatedWithNonNullId_then409IsReceived(){
 		final T resourceWithId = this.createNewEntity();
@@ -179,11 +190,11 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	// @Ignore("some resource may not have an invalid state")
 	public final void whenPutIsDoneOnInvalidResource_then409ConflictIsReceived(){
 		// Given
-		final T existingResource = this.getTemplate().createResourceAndGetAsEntity();
+		final T existingResource = this.getTemplate().create( getTemplate().createNewEntity() );
 		makeInvalid( existingResource );
 		
 		// When
-		final Response response = getTemplate().updateResourceAsResponse( existingResource );
+		final Response response = getTemplate().updateAsResponse( existingResource );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 409 ) );
@@ -192,7 +203,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public final void whenAResourceIsUpdatedWithNullId_then409IsReceived(){
 		// When
-		final Response response = getTemplate().updateResourceAsResponse( createNewEntity() );
+		final Response response = getTemplate().updateAsResponse( createNewEntity() );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 409 ) );
@@ -201,19 +212,19 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public final void givenResourceExists_whenResourceIsUpdated_thenNoExceptions(){
 		// Given
-		final T resourceFromServer = this.getTemplate().createResourceAndGetAsEntity();
+		final T existingResource = this.getTemplate().create( getTemplate().createNewEntity() );
 		
 		// When
-		getTemplate().updateResourceAsResponse( resourceFromServer );
+		getTemplate().updateAsResponse( existingResource );
 	}
 	
 	@Test
 	public final void givenResourceExists_whenResourceIsUpdated_then200IsReceived(){
 		// Given
-		final String resourceAsString = this.getTemplate().createResourceAndGetAsMime( marshaller.getMime() );
+		final T existingResource = this.getTemplate().create( getTemplate().createNewEntity() );
 		
 		// When
-		final Response response = getTemplate().updateResourceAsResponse( resourceAsString );
+		final Response response = getTemplate().updateAsResponse( existingResource );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 200 ) );
@@ -223,7 +234,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	public final void whenNullResourceIsUpdated_then415IsReceived(){
 		// Given
 		// When
-		final Response response = this.givenAuthenticated().contentType( marshaller.getMime() ).put( this.getURI() );
+		final Response response = this.givenAuthenticated().contentType( getTemplate().getMarshaller().getMime() ).put( this.getURI() );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 415 ) );
@@ -236,7 +247,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 		unpersistedEntity.setId( new Long( randomNumeric( 6 ) ) );
 		
 		// When
-		final Response response = getTemplate().updateResourceAsResponse( unpersistedEntity );
+		final Response response = getTemplate().updateAsResponse( unpersistedEntity );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 404 ) );
@@ -245,18 +256,16 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public final void givenResourceExists_whenResourceIsUpdated_thenUpdatesArePersisted(){
 		// Given
-		final String uriForResourceCreation = this.getTemplate().createResourceAsURI();
-		final T createdResourceFromServer = this.getTemplate().getResourceAsEntity( uriForResourceCreation );
+		final T existingResource = this.getTemplate().create( getTemplate().createNewEntity() );
 		
 		// When
-		this.change( createdResourceFromServer );
-		getTemplate().updateResourceAsResponse( createdResourceFromServer );
+		this.change( existingResource );
+		getTemplate().update( existingResource );
 		
-		final String updatedResourceAsString = this.getTemplate().getResourceAsMime( uriForResourceCreation, marshaller.getMime() );
-		final T updatedResourceFromServer = this.marshaller.decode( updatedResourceAsString, clazz );
+		final T updatedResourceFromServer = getTemplate().findOne( existingResource.getId() );
 		
 		// Then
-		assertEquals( createdResourceFromServer, updatedResourceFromServer );
+		assertEquals( existingResource, updatedResourceFromServer );
 	}
 	
 	// DELETE
@@ -298,7 +307,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 		this.getTemplate().delete( uriOfResource );
 		
 		// When
-		final Response getResponse = getTemplate().getResourceAsResponse( uriOfResource );
+		final Response getResponse = getTemplate().findOneAsResponse( uriOfResource );
 		
 		// Then
 		assertThat( getResponse.getStatusCode(), is( 404 ) );
@@ -307,15 +316,10 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	// template method
 	
 	protected abstract IRESTTemplate< T > getTemplate();
-	
 	protected abstract String getURI();
-	
 	protected abstract void change( final T resource );
-	
 	protected abstract void makeInvalid( final T resource );
-	
 	protected abstract T createNewEntity();
-	
 	protected abstract RequestSpecification givenAuthenticated();
 	
 }

@@ -70,7 +70,7 @@ public class RoleLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	}
 	@Test
 	public final void whenRoleIsCreatedWithExistingPrivilege_then201IsReceived(){
-		final Privilege existingAssociation = associationRestTemplate.createResourceAndGetAsEntity();
+		final Privilege existingAssociation = associationRestTemplate.create( associationRestTemplate.createNewEntity() );
 		final Role newResource = getTemplate().createNewEntity();
 		newResource.getPrivileges().add( existingAssociation );
 		
@@ -98,13 +98,13 @@ public class RoleLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	
 	@Test
 	public final void whenResourceIsRetrieved_thenAssociationsAreAlsoRetrieved(){
-		final Role resource = getTemplate().createResourceAndGetAsEntity();
+		final Role resource = getTemplate().create( getTemplate().createNewEntity() );
 		assertThat( resource.getPrivileges(), not( Matchers.<Privilege> empty() ) );
 	}
 	
 	@Test
 	public final void whenScenario_getResource_getAssociationsById(){
-		final Privilege existingAssociation = associationRestTemplate.createResourceAndGetAsEntity();
+		final Privilege existingAssociation = associationRestTemplate.create( associationRestTemplate.createNewEntity() );
 		final Role resourceToCreate = getTemplate().createNewEntity();
 		resourceToCreate.getPrivileges().add( existingAssociation );
 		
@@ -118,11 +118,12 @@ public class RoleLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	
 	@Test
 	public final void whenScenario_changeAssociationOfResource(){
-		final Role existingResource = getTemplate().createResourceAndGetAsEntity();
-		final Privilege existingAssociation = associationRestTemplate.createResourceAndGetAsEntity();
+		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
+		final Privilege existingAssociation = associationRestTemplate.create( associationRestTemplate.createNewEntity() );
 		existingResource.setPrivileges( Sets.newHashSet( existingAssociation ) );
 		
-		final Role updatedResource = getTemplate().updateResourceAndGetAsEntity( existingResource );
+		getTemplate().update( existingResource );
+		final Role updatedResource = getTemplate().findOne( existingResource.getId() );
 		assertThat( updatedResource.getPrivileges(), hasItem( existingAssociation ) );
 	}
 	
@@ -130,10 +131,10 @@ public class RoleLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 	
 	@Test
 	public final void whenScenarioOfWorkingWithAssociations_thenTheChangesAreCorrectlyPersisted(){
-		final Privilege existingAssociation = associationRestTemplate.createResourceAndGetAsEntity( associationRestTemplate.createNewEntity() );
+		final Privilege existingAssociation = associationRestTemplate.create( associationRestTemplate.createNewEntity() );
 		final Role resource1 = new Role( randomAlphabetic( 6 ), Sets.newHashSet( existingAssociation ) );
 		
-		final Role resource1ViewOfServerBefore = getTemplate().createResourceAndGetAsEntity( resource1 );
+		final Role resource1ViewOfServerBefore = getTemplate().create( resource1 );
 		assertThat( resource1ViewOfServerBefore.getPrivileges(), hasItem( existingAssociation ) );
 		
 		final Role resource2 = new Role( randomAlphabetic( 6 ), Sets.newHashSet( existingAssociation ) );

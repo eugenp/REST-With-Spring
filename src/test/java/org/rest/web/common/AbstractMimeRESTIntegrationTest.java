@@ -34,7 +34,7 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 		final String uriForResourceCreation = getTemplate().createResourceAsURI();
 		
 		// When
-		final Response res = getTemplate().getResourceAsResponse( uriForResourceCreation, MediaType.APPLICATION_JSON.toString() );
+		final Response res = getTemplate().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_JSON.toString() );
 		
 		// Then
 		assertThat( res.getStatusCode(), is( 200 ) );
@@ -45,7 +45,7 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 		final String uriForResourceCreation = getTemplate().createResourceAsURI();
 		
 		// When
-		final Response res = getTemplate().getResourceAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
+		final Response res = getTemplate().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
 		
 		// Then
 		assertThat( res.getStatusCode(), is( 200 ) );
@@ -58,7 +58,7 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 		final String uriForResourceCreation = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
 		
 		// When
-		final Response res = getTemplate().getResourceAsResponse( uriForResourceCreation, MediaType.APPLICATION_JSON.toString() );
+		final Response res = getTemplate().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_JSON.toString() );
 		
 		// Then
 		assertThat( res.getContentType(), containsString( MediaType.APPLICATION_JSON.toString() ) );
@@ -69,7 +69,7 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 		final String uriForResourceCreation = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
 		
 		// When
-		final Response res = getTemplate().getResourceAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
+		final Response res = getTemplate().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
 		
 		// Then
 		assertThat( res.getContentType(), containsString( MediaType.APPLICATION_XML.toString() ) );
@@ -81,7 +81,7 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 		final String uriForResourceCreation = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
 		
 		// When
-		final Response resourceAsResponse = getTemplate().getResourceAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
+		final Response resourceAsResponse = getTemplate().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
 		
 		// Then
 		getTemplate().getMarshaller().decode( resourceAsResponse.asString(), clazz );

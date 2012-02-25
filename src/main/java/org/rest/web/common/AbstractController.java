@@ -32,8 +32,7 @@ public abstract class AbstractController< T extends IEntity >{
 	
 	private Class< T > clazz;
 	
-	@Autowired
-	private ApplicationEventPublisher eventPublisher;
+	@Autowired private ApplicationEventPublisher eventPublisher;
 	
 	public AbstractController( final Class< T > clazzToSet ){
 		super();
@@ -97,23 +96,18 @@ public abstract class AbstractController< T extends IEntity >{
 		try{
 			getService().create( resource );
 		}
-		// - these are disabled for now - the IllegalStateException may be reenabled at some point
-		/*catch( final IllegalStateException ex ){
-			logger.error( "IllegalStateException on create operation for: " + resource.getClass().getSimpleName() );
-			logger.warn( "IllegalStateException on create operation for: " + resource.getClass().getSimpleName(), ex );
-			throw new ResourceNotFoundException( ex );
-		}
-		catch( final IllegalArgumentException ex ){
+		// this is so that the service layer can MANUALLY throw exceptions that get handled by the exception translation mechanism
+		catch( final IllegalStateException illegalState ){
 			logger.error( "IllegalArgumentException on create operation for: " + resource.getClass().getSimpleName() );
-			logger.warn( "IllegalArgumentException on create operation for: " + resource.getClass().getSimpleName(), ex );
-			throw new ConflictException( ex );
-		}*/
+			logger.warn( "IllegalArgumentException on create operation for: " + resource.getClass().getSimpleName(), illegalState );
+			throw new ConflictException( illegalState );
+		}
 		catch( final DataIntegrityViolationException ex ){ // on unique constraint
 			logger.error( "DataIntegrityViolationException on create operation for: " + resource.getClass().getSimpleName() );
 			logger.warn( "DataIntegrityViolationException on create operation for: " + resource.getClass().getSimpleName(), ex );
 			throw new ConflictException( ex );
 		}
-		catch( final InvalidDataAccessApiUsageException dataEx ){ // on saving a new Entity that also contains new/unsaved entities
+		catch( final InvalidDataAccessApiUsageException dataEx ){ // on saving a new Resource that also contains new/unsaved entities
 			logger.error( "InvalidDataAccessApiUsageException on create operation for: " + resource.getClass().getSimpleName() );
 			logger.warn( "InvalidDataAccessApiUsageException on create operation for: " + resource.getClass().getSimpleName(), dataEx );
 			throw new ConflictException( dataEx );
@@ -137,6 +131,12 @@ public abstract class AbstractController< T extends IEntity >{
 		
 		try{
 			getService().update( resource );
+		}
+		// this is so that the service layer can MANUALLY throw exceptions that get handled by the exception translation mechanism
+		catch( final IllegalStateException illegalState ){
+			logger.error( "IllegalArgumentException on create operation for: " + resource.getClass().getSimpleName() );
+			logger.warn( "IllegalArgumentException on create operation for: " + resource.getClass().getSimpleName(), illegalState );
+			throw new ConflictException( illegalState );
 		}
 		catch( final InvalidDataAccessApiUsageException dataEx ){
 			logger.error( "InvalidDataAccessApiUsageException on update operation for: " + resource.getClass().getSimpleName() );
