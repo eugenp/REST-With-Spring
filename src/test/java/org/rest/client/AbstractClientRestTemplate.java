@@ -44,7 +44,7 @@ public abstract class AbstractClientRestTemplate< T extends IEntity > implements
 	@Override
 	public final T findOne( final long id ){
 		try{
-			final ResponseEntity< String > response = restTemplate.exchange( getURI() + "/" + id, HttpMethod.GET, new HttpEntity< String >( createHeaders() ), String.class );
+			final ResponseEntity< String > response = restTemplate.exchange( getURI() + "/" + id, HttpMethod.GET, new HttpEntity< String >( createAcceptHeaders() ), String.class );
 			return marshaller.decode( response.getBody(), clazz );
 		}
 		catch( final HttpClientErrorException clientEx ){
@@ -52,7 +52,7 @@ public abstract class AbstractClientRestTemplate< T extends IEntity > implements
 		}
 	}
 	public final T findOneByURI( final String uri ){
-		final ResponseEntity< String > response = restTemplate.exchange( uri, HttpMethod.GET, new HttpEntity< String >( createHeaders() ), String.class );
+		final ResponseEntity< String > response = restTemplate.exchange( uri, HttpMethod.GET, new HttpEntity< String >( createAcceptHeaders() ), String.class );
 		
 		return marshaller.decode( response.getBody(), clazz );
 	}
@@ -61,19 +61,19 @@ public abstract class AbstractClientRestTemplate< T extends IEntity > implements
 	
 	@Override
 	public final List< T > findAll(){
-		final ResponseEntity< List > findAllResponse = restTemplate.exchange( getURI(), HttpMethod.GET, new HttpEntity< String >( createHeaders() ), List.class );
+		final ResponseEntity< List > findAllResponse = restTemplate.exchange( getURI(), HttpMethod.GET, new HttpEntity< String >( createAcceptHeaders() ), List.class );
 		return findAllResponse.getBody();
 	}
 	
 	public final ResponseEntity< List > findAllAsResponse(){
-		return restTemplate.exchange( getURI(), HttpMethod.GET, new HttpEntity< String >( createHeaders() ), List.class );
+		return restTemplate.exchange( getURI(), HttpMethod.GET, new HttpEntity< String >( createAcceptHeaders() ), List.class );
 	}
 	
 	// API - create
 	
 	@Override
 	public final T create( final T resource ){
-		final ResponseEntity responseEntity = restTemplate.exchange( getURI(), HttpMethod.POST, new HttpEntity< T >( resource, createHeaders() ), clazz );
+		final ResponseEntity responseEntity = restTemplate.exchange( getURI(), HttpMethod.POST, new HttpEntity< T >( resource, createContentTypeHeaders() ), clazz );
 		
 		final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
 		
@@ -81,7 +81,7 @@ public abstract class AbstractClientRestTemplate< T extends IEntity > implements
 		return findOneByURI( locationOfCreatedResource );
 	}
 	public final String createAsURI( final T resource ){
-		final ResponseEntity responseEntity = restTemplate.exchange( getURI(), HttpMethod.POST, new HttpEntity< T >( resource, createHeaders() ), List.class );
+		final ResponseEntity responseEntity = restTemplate.exchange( getURI(), HttpMethod.POST, new HttpEntity< T >( resource, createContentTypeHeaders() ), List.class );
 		
 		final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
 		Preconditions.checkNotNull( locationOfCreatedResource );
@@ -93,7 +93,7 @@ public abstract class AbstractClientRestTemplate< T extends IEntity > implements
 	
 	@Override
 	public final void update( final T resource ){
-		final ResponseEntity responseEntity = restTemplate.exchange( getURI(), HttpMethod.PUT, new HttpEntity< T >( resource, createHeaders() ), clazz );
+		final ResponseEntity responseEntity = restTemplate.exchange( getURI(), HttpMethod.PUT, new HttpEntity< T >( resource, createContentTypeHeaders() ), clazz );
 		Preconditions.checkState( responseEntity.getStatusCode().value() == 200 );
 	}
 	
@@ -108,10 +108,18 @@ public abstract class AbstractClientRestTemplate< T extends IEntity > implements
 	
 	// util
 	
-	protected final HttpHeaders createHeaders(){
+	protected final HttpHeaders createAcceptHeaders(){
 		final HttpHeaders headers = new HttpHeaders(){
 			{
 				set( com.google.common.net.HttpHeaders.ACCEPT, marshaller.getMime() );
+			}
+		};
+		return headers;
+	}
+	protected final HttpHeaders createContentTypeHeaders(){
+		final HttpHeaders headers = new HttpHeaders(){
+			{
+				set( com.google.common.net.HttpHeaders.CONTENT_TYPE, marshaller.getMime() );
 			}
 		};
 		return headers;
@@ -130,7 +138,7 @@ public abstract class AbstractClientRestTemplate< T extends IEntity > implements
 	}
 	
 	// entity
-
+	
 	@Override
 	public abstract T createNewEntity();
 	@Override

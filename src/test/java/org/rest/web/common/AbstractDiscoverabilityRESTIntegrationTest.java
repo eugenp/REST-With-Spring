@@ -93,6 +93,9 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	
 	@Test
 	public final void whenPageOfResourcesIsRetrieved_thenLastPageIsDiscoverable(){
+		getTemplate().create( getTemplate().createNewEntity() );
+		getTemplate().create( getTemplate().createNewEntity() );
+
 		// When
 		final Response response = this.getTemplate().findOneAsResponse( this.getURI() + "?page=0&size=1" );
 		
