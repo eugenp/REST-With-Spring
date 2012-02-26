@@ -1,5 +1,6 @@
 package org.rest.testing.security;
 
+import org.apache.commons.codec.binary.Base64;
 import org.rest.sec.util.SecurityConstants;
 
 import com.jayway.restassured.RestAssured;
@@ -20,4 +21,11 @@ public final class AuthenticationUtil{
 		return RestAssured.given().auth().preemptive().basic( username, password );
 	}
 	
+	public static String createBasicAuthenticationAuthorizationHeader( final String username, final String password ){
+		final String authorisation = username + ":" + password;
+		final byte[] encodedAuthorisation = Base64.encodeBase64( authorisation.getBytes() );
+		final String basicAuthorizationHeader = "Basic " + new String( encodedAuthorisation );
+		return basicAuthorizationHeader;
+	}
+
 }

@@ -1,12 +1,11 @@
 package org.rest.sec.client;
 
-import org.apache.commons.codec.binary.Base64;
 import org.rest.sec.dto.User;
 import org.rest.testing.ExamplePaths;
 import org.rest.testing.marshaller.IMarshaller;
+import org.rest.testing.security.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -19,12 +18,8 @@ public class AuthenticationRESTTemplate{
 	
 	@Autowired @Qualifier( "xstreamMarshaller" ) IMarshaller marshaller;
 	@Autowired private RestTemplate restTemplate;
-
+	
 	@Autowired private ExamplePaths paths;
-	
-	@Value( "${port}" ) private int port;
-	@Value( "${host}" ) private String host;
-	
 	
 	//
 	
@@ -39,9 +34,8 @@ public class AuthenticationRESTTemplate{
 			{
 				set( com.google.common.net.HttpHeaders.ACCEPT, marshaller.getMime() );
 				
-				final String authorisation = username + ":" + password;
-				final byte[] encodedAuthorisation = Base64.encodeBase64( authorisation.getBytes() );
-				set( "Authorization", "Basic " + new String( encodedAuthorisation ) );
+				final String basicAuthorizationHeader = AuthenticationUtil.createBasicAuthenticationAuthorizationHeader( username, password );
+				set( com.google.common.net.HttpHeaders.AUTHORIZATION, basicAuthorizationHeader );
 			}
 		};
 	}

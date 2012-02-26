@@ -13,28 +13,25 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class RestTemplateFactory implements FactoryBean< RestTemplate >, InitializingBean{
-	
 	private RestTemplate restTemplate;
 	
-	//
-	
 	@Override
-	public final RestTemplate getObject(){
+	public RestTemplate getObject(){
 		return restTemplate;
 	}
 	
 	@Override
-	public final Class< RestTemplate > getObjectType(){
+	public Class< RestTemplate > getObjectType(){
 		return RestTemplate.class;
 	}
 	
 	@Override
-	public final boolean isSingleton(){
+	public boolean isSingleton(){
 		return true;
 	}
 	
 	@Override
-	public final void afterPropertiesSet(){
+	public void afterPropertiesSet(){
 		restTemplate = new RestTemplate( new HttpComponentsClientHttpRequestFactory( new DefaultHttpClient() ){
 			{
 				setReadTimeout( 15000 );
@@ -42,6 +39,7 @@ public class RestTemplateFactory implements FactoryBean< RestTemplate >, Initial
 		} );
 		restTemplate.getMessageConverters().add( marshallingHttpMessageConverter() );
 	}
+	
 	//
 	
 	final MarshallingHttpMessageConverter marshallingHttpMessageConverter(){
