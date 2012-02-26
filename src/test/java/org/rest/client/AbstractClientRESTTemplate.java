@@ -22,7 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import com.google.common.base.Preconditions;
 
 @SuppressWarnings( { "unchecked", "rawtypes" } )
-public abstract class AbstractClientRestTemplate< T extends IEntity > implements IClientTemplate< T >{
+public abstract class AbstractClientRESTTemplate< T extends IEntity > implements IClientTemplate< T >{
 	protected Class< T > clazz;
 	
 	@Autowired protected RestTemplate restTemplate;
@@ -31,7 +31,7 @@ public abstract class AbstractClientRestTemplate< T extends IEntity > implements
 	@Value( "${port}" ) private int port;
 	@Value( "${host}" ) private String host;
 	
-	public AbstractClientRestTemplate( final Class< T > clazzToSet ){
+	public AbstractClientRESTTemplate( final Class< T > clazzToSet ){
 		super();
 		
 		clazz = clazzToSet;
@@ -142,6 +142,6 @@ public abstract class AbstractClientRestTemplate< T extends IEntity > implements
 	@Override
 	public abstract T createNewEntity();
 	@Override
-	public abstract void makeEntityInvalid( final T entity );
+	public abstract void invalidate( final T entity );
 	
 }

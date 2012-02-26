@@ -60,7 +60,7 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		newResource.getRoles().add( associationRestTemplate.createNewEntity() );
 		
 		// When
-		final Response response = getTemplate().createResourceAsResponse( newResource );
+		final Response response = getTemplate().createAsResponse( newResource );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 409 ) );
@@ -73,7 +73,7 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		newResource.getRoles().add( invalidAssociation );
 		
 		// When
-		final Response response = getTemplate().createResourceAsResponse( newResource );
+		final Response response = getTemplate().createAsResponse( newResource );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 409 ) );
@@ -86,7 +86,7 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		newResource.getRoles().add( existingAssociation );
 		
 		// When
-		final Response response = getTemplate().createResourceAsResponse( newResource );
+		final Response response = getTemplate().createAsResponse( newResource );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 201 ) );
@@ -119,7 +119,7 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		assertThat( resource1ViewOfServerBefore.getRoles(), hasItem( existingAssociation ) );
 		
 		final User resource2 = new User( randomAlphabetic( 6 ), randomAlphabetic( 6 ), Sets.newHashSet( existingAssociation ) );
-		getTemplate().createResourceAsResponse( resource2 );
+		getTemplate().createAsResponse( resource2 );
 		
 		final User resource1ViewOfServerAfter = getTemplate().findOne( resource1ViewOfServerBefore.getId() );
 		assertThat( resource1ViewOfServerAfter.getRoles(), hasItem( existingAssociation ) );
@@ -140,8 +140,8 @@ public class UserLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTe
 		resource.setName( randomAlphabetic( 6 ) );
 	}
 	@Override
-	protected final void makeInvalid( final User resource ){
-		getTemplate().makeEntityInvalid( resource );
+	protected final void invalidate( final User resource ){
+		getTemplate().invalidate( resource );
 	}
 	@Override
 	protected final RequestSpecification givenAuthenticated(){

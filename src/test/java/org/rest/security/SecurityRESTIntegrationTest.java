@@ -29,7 +29,7 @@ public class SecurityRESTIntegrationTest{
 	@Test
 	public final void givenUnauthenticated_whenAResourceIsDeleted_then401IsReceived(){
 		// Given
-		final String uriOfExistingResource = userTemplate.createResourceAsURI();
+		final String uriOfExistingResource = userTemplate.createResourceAsURI( userTemplate.createNewEntity() );
 		
 		// When
 		final Response response = given().delete( uriOfExistingResource );

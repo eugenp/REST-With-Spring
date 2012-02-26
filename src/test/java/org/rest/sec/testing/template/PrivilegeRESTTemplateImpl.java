@@ -40,7 +40,7 @@ public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate< Privi
 		return new Privilege( randomAlphabetic( 8 ) );
 	}
 	@Override
-	public final void makeEntityInvalid( final Privilege entity ){
+	public final void invalidate( final Privilege entity ){
 		entity.setName( null );
 	}
 	@Override

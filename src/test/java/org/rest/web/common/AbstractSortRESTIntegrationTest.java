@@ -40,8 +40,8 @@ public abstract class AbstractSortRESTIntegrationTest< T extends IEntity > exten
 	// TODO: unignore
 	@Ignore( "ONLY TEMPORARILY IGNORED" )
 	public final void whenResourcesAreRetrievedSorted_thenResourcesAreIndeedOrdered(){
-		getTemplate().createResourceAsResponse();
-		getTemplate().createResourceAsResponse();
+		getTemplate().createAsResponse( getTemplate().createNewEntity() );
+		getTemplate().createAsResponse( getTemplate().createNewEntity() );
 		
 		// When
 		final Response response = givenAuthenticated().get( getURI() + "?page=0&size=4&sortBy=name" );
@@ -53,8 +53,8 @@ public abstract class AbstractSortRESTIntegrationTest< T extends IEntity > exten
 	@SuppressWarnings( "unchecked" )
 	@Test
 	public final void whenResourcesAreRetrievedNotSorted_thenResourcesAreNotOrdered(){
-		getTemplate().createResourceAsResponse();
-		getTemplate().createResourceAsResponse();
+		getTemplate().createAsResponse( getTemplate().createNewEntity() );
+		getTemplate().createAsResponse( getTemplate().createNewEntity() );
 		
 		// When
 		final Response response = givenAuthenticated().get( getURI() + "?page=0&size=6" );

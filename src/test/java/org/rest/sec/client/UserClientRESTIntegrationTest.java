@@ -2,7 +2,7 @@ package org.rest.sec.client;
 
 import org.junit.runner.RunWith;
 import org.rest.client.AbstractClientRESTIntegrationTest;
-import org.rest.client.AbstractClientRestTemplate;
+import org.rest.client.AbstractClientRESTTemplate;
 import org.rest.sec.dto.User;
 import org.rest.spring.application.ContextTestConfig;
 import org.rest.spring.client.ClientTestConfig;
@@ -16,7 +16,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ContextConfiguration( classes = { ContextTestConfig.class, PersistenceJPAConfig.class, ClientTestConfig.class },loader = AnnotationConfigContextLoader.class )
 public class UserClientRESTIntegrationTest extends AbstractClientRESTIntegrationTest< User >{
 	
-	@Autowired UserRESTTemplate userClientTemplate;
+	@Autowired UserClientRESTTemplate userClientTemplate;
 	
 	public UserClientRESTIntegrationTest(){
 		super();
@@ -27,7 +27,7 @@ public class UserClientRESTIntegrationTest extends AbstractClientRESTIntegration
 	// template method
 	
 	@Override
-	protected final AbstractClientRestTemplate< User > getTemplate(){
+	protected final AbstractClientRESTTemplate< User > getTemplate(){
 		return userClientTemplate;
 	}
 	@Override

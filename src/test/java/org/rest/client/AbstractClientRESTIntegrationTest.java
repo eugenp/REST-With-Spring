@@ -86,7 +86,7 @@ public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 	
 	// template method
 	
-	protected abstract AbstractClientRestTemplate< T > getTemplate();
+	protected abstract AbstractClientRESTTemplate< T > getTemplate();
 	protected abstract String getURI();
 	
 	// util

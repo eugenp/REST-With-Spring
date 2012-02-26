@@ -1,8 +1,7 @@
-package org.rest.testing.template;
+package org.rest.common;
 
 import java.util.List;
 
-import org.rest.common.IEntity;
 
 public interface IRestDao< T extends IEntity >{
 	

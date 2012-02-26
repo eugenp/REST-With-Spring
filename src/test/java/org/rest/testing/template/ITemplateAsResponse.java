@@ -17,15 +17,14 @@ public interface ITemplateAsResponse< T extends IEntity >{
 	
 	// create
 	
-	Response createResourceAsResponse(); // 5
-	Response createResourceAsResponse( final T resource ); // 14
+	Response createAsResponse( final T resource ); // 14
 	
 	// update
 	
 	Response updateAsResponse( final T resource ); // 6
-	
+
 	// delete
 	
-	Response delete( final String uriOfResource ); // 5
+	Response deleteAsResponse( final String uriOfResource ); // 5
 	
 }

@@ -51,7 +51,7 @@ public class PrincipalServicePersistenceIntegrationTest extends AbstractPersiste
 	protected final IPrincipalService getService(){
 		return principalService;
 	}
-
+	
 	// template method
 	
 	@Override
@@ -62,15 +62,15 @@ public class PrincipalServicePersistenceIntegrationTest extends AbstractPersiste
 	protected final Principal createNewEntity( final String name ){
 		return new Principal( name, randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
 	}
-
+	
 	@Override
-	protected final void invalidateEntity( final Principal entity ){
+	protected final void invalidate( final Principal entity ){
 		entity.setName( null );
 	}
 	
 	@Override
 	protected void changeEntity( final Principal entity ){
-		entity.setName( randomAlphabetic( 8 ) );
+		entity.setPassword( randomAlphabetic( 8 ) );
 	}
 	
 }

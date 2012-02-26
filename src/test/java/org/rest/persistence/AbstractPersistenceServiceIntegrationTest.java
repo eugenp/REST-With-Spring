@@ -122,7 +122,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 	@Test( expected = DataAccessException.class )
 	public void whenEntityWithFailedConstraintsIsCreated_thenException(){
 		final T invalidEntity = createNewEntity();
-		invalidateEntity( invalidEntity );
+		invalidate( invalidEntity );
 		
 		getService().create( invalidEntity );
 	}
@@ -142,7 +142,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 	@Test( expected = DataAccessException.class )
 	public void whenEntityIsUpdatedWithFailedConstraints_thenException(){
 		final T existingEntity = persistNewEntity();
-		invalidateEntity( existingEntity );
+		invalidate( existingEntity );
 		
 		getService().update( existingEntity );
 	}
@@ -225,7 +225,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 	
 	protected abstract T createNewEntity();
 	
-	protected abstract void invalidateEntity( final T entity );
+	protected abstract void invalidate( final T entity );
 	
 	protected abstract void changeEntity( final T entity );
 	

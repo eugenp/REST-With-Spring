@@ -77,7 +77,7 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 		return this.createNewEntity( randomAlphabetic( 8 ) );
 	}
 	@Override
-	protected final void invalidateEntity( final Role entity ){
+	protected final void invalidate( final Role entity ){
 		entity.setName( null );
 	}
 	@Override

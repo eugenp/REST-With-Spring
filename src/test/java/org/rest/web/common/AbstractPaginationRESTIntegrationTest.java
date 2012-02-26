@@ -38,7 +38,7 @@ public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity >
 	
 	@Test
 	public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned(){
-		getTemplate().createResourceAsResponse();
+		getTemplate().createAsResponse( getTemplate().createNewEntity() );
 		
 		// When
 		final Response response = givenAuthenticated().get( getURI() + "?page=0&size=1" );

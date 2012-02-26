@@ -22,16 +22,16 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 		Preconditions.checkNotNull( clazzToSet );
 		this.clazz = clazzToSet;
 	}
-
+	
 	// tests
 	
 	// GET
-
+	
 	@Test
 	@Ignore( "for now, json is not supported" )
 	public final void givenResourceForIdExists_whenResourceOfThatIdIsRetrievedAsJson_then200IsReceived(){
 		// Given
-		final String uriForResourceCreation = getTemplate().createResourceAsURI();
+		final String uriForResourceCreation = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
 		
 		// When
 		final Response res = getTemplate().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_JSON.toString() );
@@ -42,7 +42,7 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 	@Test
 	public final void givenResourceForIdExists_whenResourceOfThatIdIsRetrievedAsXML__then200IsReceived(){
 		// Given
-		final String uriForResourceCreation = getTemplate().createResourceAsURI();
+		final String uriForResourceCreation = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
 		
 		// When
 		final Response res = getTemplate().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );

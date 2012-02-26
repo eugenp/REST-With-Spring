@@ -42,7 +42,7 @@ public final class UserRESTTemplateImpl extends AbstractRESTTemplate< User >{
 		return new User( randomAlphabetic( 8 ), randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
 	}
 	@Override
-	public final void makeEntityInvalid( final User entity ){
+	public final void invalidate( final User entity ){
 		entity.setName( null );
 	}
 	@Override

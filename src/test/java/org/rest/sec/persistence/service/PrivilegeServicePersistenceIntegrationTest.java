@@ -53,7 +53,7 @@ public class PrivilegeServicePersistenceIntegrationTest extends AbstractPersiste
 		return new Privilege( randomAlphabetic( 8 ) );
 	}
 	@Override
-	protected final void invalidateEntity( final Privilege entity ){
+	protected final void invalidate( final Privilege entity ){
 		entity.setName( null );
 	}
 	@Override

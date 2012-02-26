@@ -49,7 +49,7 @@ public final class RoleRESTTemplateImpl extends AbstractRESTTemplate< Role >{
 		return new Role( randomAlphabetic( 8 ), Sets.<Privilege> newHashSet() );
 	}
 	@Override
-	public final void makeEntityInvalid( final Role entity ){
+	public final void invalidate( final Role entity ){
 		entity.setName( null );
 	}
 	@Override

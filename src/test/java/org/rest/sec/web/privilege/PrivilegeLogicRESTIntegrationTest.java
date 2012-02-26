@@ -47,8 +47,8 @@ public class PrivilegeLogicRESTIntegrationTest extends AbstractLogicRESTIntegrat
 		resource.setName( randomAlphabetic( 6 ) );
 	}
 	@Override
-	protected final void makeInvalid( final Privilege resource ){
-		getTemplate().makeEntityInvalid( resource );
+	protected final void invalidate( final Privilege resource ){
+		getTemplate().invalidate( resource );
 	}
 	@Override
 	protected final RequestSpecification givenAuthenticated(){

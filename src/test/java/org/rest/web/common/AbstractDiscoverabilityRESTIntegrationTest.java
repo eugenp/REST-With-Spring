@@ -28,9 +28,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	
 	private Class< T > clazz;
 	
-	@Autowired
-	@Qualifier( "xstreamMarshaller" )
-	IMarshaller marshaller;
+	@Autowired @Qualifier( "xstreamMarshaller" ) IMarshaller marshaller;
 	
 	public AbstractDiscoverabilityRESTIntegrationTest( final Class< T > clazzToSet ){
 		Preconditions.checkNotNull( clazzToSet );
@@ -44,7 +42,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenResourceIsRetrieved_thenURIToGetAllResourcesIsDiscoverable(){
 		// Given
-		final String uriOfExistingResource = this.getTemplate().createResourceAsURI();
+		final String uriOfExistingResource = this.getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
 		
 		// When
 		final Response getResponse = this.getTemplate().findOneAsResponse( uriOfExistingResource );
@@ -70,8 +68,8 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	
 	@Test
 	public final void whenFirstPageOfResourcesIsRetrieved_thenNextPageIsDiscoverable(){
-		getTemplate().createResourceAsURI();
-		getTemplate().createResourceAsURI();
+		getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
+		getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
 		
 		// When
 		final Response response = this.getTemplate().findOneAsResponse( this.getURI() + "?page=1&size=1" );
@@ -95,7 +93,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	public final void whenPageOfResourcesIsRetrieved_thenLastPageIsDiscoverable(){
 		getTemplate().create( getTemplate().createNewEntity() );
 		getTemplate().create( getTemplate().createNewEntity() );
-
+		
 		// When
 		final Response response = this.getTemplate().findOneAsResponse( this.getURI() + "?page=0&size=1" );
 		
@@ -122,7 +120,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenInvalidPOSTIsSentToValidURIOfResource_thenAllowHeaderListsTheAllowedActions(){
 		// Given
-		final String uriOfExistingResource = this.getTemplate().createResourceAsURI();
+		final String uriOfExistingResource = this.getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
 		
 		// When
 		final Response res = this.givenAuthenticated().post( uriOfExistingResource );
