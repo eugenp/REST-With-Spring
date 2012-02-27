@@ -8,7 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -25,7 +27,13 @@ public class Role implements IEntity{
 	
 	@Id @GeneratedValue( strategy = GenerationType.AUTO ) @XStreamAsAttribute @Column( name = "ROLE_ID" ) private Long id;
 	@Column( unique = true,nullable = false ) private String name;
-	@OneToMany( /*cascade = { CascadeType.ALL },*/fetch = FetchType.EAGER )/*@JoinColumn( name = "PRIV_ID" )*/@XStreamImplicit private Set< Privilege > privileges;
+	
+	//@formatter:off
+	@ManyToMany( /*cascade = { CascadeType.REMOVE },*/fetch = FetchType.EAGER )
+	@JoinTable( joinColumns = { @JoinColumn( name = "ROLE_ID",referencedColumnName = "ROLE_ID" ) },inverseJoinColumns = { @JoinColumn( name = "PRIV_ID",referencedColumnName = "PRIV_ID" ) } )
+	@XStreamImplicit
+	private Set< Privilege > privileges;
+	//@formatter:on
 	
 	public Role(){
 		super();

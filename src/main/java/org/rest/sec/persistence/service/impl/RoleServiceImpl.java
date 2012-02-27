@@ -33,6 +33,10 @@ public class RoleServiceImpl extends AbstractService< Role > implements IRoleSer
 	
 	@Override
 	public Role create( final Role entity ){
+		/*long id = new Random().nextLong() * 10000;
+		id = ( id < 0 ) ? ( -1 * id ) : id;
+		entity.setId( id );*/
+		
 		/*final List< Privilege > associationsTemp = Lists.newArrayList( entity.getPrivileges() );
 		entity.getPrivileges().clear();
 		for( final Privilege privilege : associationsTemp ){

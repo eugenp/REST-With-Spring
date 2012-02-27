@@ -15,7 +15,7 @@ import com.google.common.base.Preconditions;
 @Component( "jacksonMarshaller" )
 public final class JacksonMarshaller implements IMarshaller{
 	private static final Logger logger = LoggerFactory.getLogger( JacksonMarshaller.class );
-
+	
 	ObjectMapper objectMapper;
 	
 	public JacksonMarshaller(){
@@ -39,7 +39,7 @@ public final class JacksonMarshaller implements IMarshaller{
 		
 		return entityAsJSON;
 	}
-
+	
 	@Override
 	public final < T >T decode( final String entityAsString, final Class< T > clazz ){
 		Preconditions.checkNotNull( entityAsString );

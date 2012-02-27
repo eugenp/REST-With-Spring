@@ -9,10 +9,10 @@ import static org.junit.Assert.assertFalse;
 import java.util.List;
 
 import org.junit.Test;
+import org.rest.client.template.IRESTTemplate;
 import org.rest.common.IEntity;
 import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.testing.security.AuthenticationUtil;
-import org.rest.testing.template.IRESTTemplate;
 
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;

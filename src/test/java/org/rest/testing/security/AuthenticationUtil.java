@@ -27,5 +27,5 @@ public final class AuthenticationUtil{
 		final String basicAuthorizationHeader = "Basic " + new String( encodedAuthorisation );
 		return basicAuthorizationHeader;
 	}
-
+	
 }

@@ -8,11 +8,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.rest.client.ExamplePaths;
 import org.rest.sec.dto.User;
 import org.rest.sec.util.SecurityConstants;
-import org.rest.spring.application.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
-import org.rest.testing.ExamplePaths;
+import org.rest.spring.testing.TestingTestConfig;
 import org.rest.testing.security.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,7 +23,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { ContextTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
+@ContextConfiguration( classes = { TestingTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
 public class AuthenticationRESTIntegrationTest{
 	
 	@Autowired private ExamplePaths paths;
@@ -34,7 +34,7 @@ public class AuthenticationRESTIntegrationTest{
 	public final void whenAuthenticationIsCreated_then201IsReceived(){
 		// When
 		final Response response = givenAuthenticated().contentType( APPLICATION_JSON.toString() ).post( paths.getAuthenticationUri() );
-
+		
 		// Then
 		assertThat( response.getStatusCode(), is( 201 ) );
 	}

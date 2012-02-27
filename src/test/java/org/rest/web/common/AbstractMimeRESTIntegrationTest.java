@@ -6,9 +6,9 @@ import static org.junit.internal.matchers.StringContains.containsString;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.rest.client.template.IRESTTemplate;
 import org.rest.common.IEntity;
 import org.rest.test.AbstractRESTIntegrationTest;
-import org.rest.testing.template.IRESTTemplate;
 import org.springframework.http.MediaType;
 
 import com.google.common.base.Preconditions;

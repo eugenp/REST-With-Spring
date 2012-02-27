@@ -18,12 +18,9 @@ import com.google.common.collect.Sets;
 @Transactional
 public class RoleDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest< Role >{
 	
-	@Autowired
-	private IPrivilegeJpaDAO privilegeDao;
-	@Autowired
-	private IRoleJpaDAO roleDao;
-	@Autowired
-	private IPrincipalJpaDAO principalDao;
+	@Autowired private IPrivilegeJpaDAO privilegeDao;
+	@Autowired private IRoleJpaDAO roleDao;
+	@Autowired private IPrincipalJpaDAO principalDao;
 	
 	// fixtures
 	

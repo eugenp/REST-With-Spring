@@ -1,4 +1,4 @@
-package org.rest.testing.template;
+package org.rest.client.template;
 
 import org.rest.common.IEntity;
 
@@ -22,7 +22,7 @@ public interface ITemplateAsResponse< T extends IEntity >{
 	// update
 	
 	Response updateAsResponse( final T resource ); // 6
-
+	
 	// delete
 	
 	Response deleteAsResponse( final String uriOfResource ); // 5

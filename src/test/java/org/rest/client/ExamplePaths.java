@@ -1,4 +1,4 @@
-package org.rest.testing;
+package org.rest.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -6,8 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public final class ExamplePaths{
 	
-	@Autowired
-	RESTPaths paths;
+	@Autowired RESTPaths paths;
 	
 	// API
 	

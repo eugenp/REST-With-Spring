@@ -15,7 +15,7 @@ public final class XStreamMarshaller implements IMarshaller{
 	
 	public XStreamMarshaller(){
 		super();
-
+		
 		xstream = new XStream();
 		xstream.autodetectAnnotations( true );
 		xstream.processAnnotations( User.class );

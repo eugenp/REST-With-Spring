@@ -10,5 +10,5 @@ public final class PrincipalToUserFunction implements Function< Principal, User 
 	public final User apply( final Principal principal ){
 		return new User( principal );
 	}
-
+	
 }

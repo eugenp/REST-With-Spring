@@ -1,12 +1,12 @@
-package org.rest.sec.testing.template;
+package org.rest.client.template.impl;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
-import org.rest.sec.dto.User;
+import org.rest.client.ExamplePaths;
+import org.rest.client.template.AbstractRESTTemplate;
+import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
-import org.rest.testing.ExamplePaths;
 import org.rest.testing.security.AuthenticationUtil;
-import org.rest.testing.template.AbstractRESTTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,19 +17,26 @@ import com.jayway.restassured.specification.RequestSpecification;
  * Template for the consumption of the REST API <br>
  */
 @Component
-public final class UserRESTTemplateImpl extends AbstractRESTTemplate< User >{
+public final class RoleRESTTemplateImpl extends AbstractRESTTemplate< Role >{
 	
 	@Autowired protected ExamplePaths paths;
 	
-	public UserRESTTemplateImpl(){
-		super( User.class );
+	public RoleRESTTemplateImpl(){
+		super( Role.class );
+	}
+	
+	// API
+	
+	public final Role findByName( final String name ){
+		final String resourceAsXML = findOneAsMime( getURI() + "?name=" + name );
+		return marshaller.decode( resourceAsXML, clazz );
 	}
 	
 	// template method
 	
 	@Override
 	public final String getURI(){
-		return paths.getUserUri();
+		return paths.getRoleUri();
 	}
 	
 	@Override
@@ -38,15 +45,15 @@ public final class UserRESTTemplateImpl extends AbstractRESTTemplate< User >{
 	}
 	
 	@Override
-	public final User createNewEntity(){
-		return new User( randomAlphabetic( 8 ), randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
+	public final Role createNewEntity(){
+		return new Role( randomAlphabetic( 8 ), Sets.<Privilege> newHashSet() );
 	}
 	@Override
-	public final void invalidate( final User entity ){
+	public final void invalidate( final Role entity ){
 		entity.setName( null );
 	}
 	@Override
-	public final void change( final User resource ){
+	public final void change( final Role resource ){
 		resource.setName( randomAlphabetic( 8 ) );
 	}
 	

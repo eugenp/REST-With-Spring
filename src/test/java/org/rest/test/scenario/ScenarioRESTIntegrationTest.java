@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.rest.client.ExamplePaths;
 import org.rest.sec.test.AbstractSecRESTIntegrationTest;
-import org.rest.testing.ExamplePaths;
 import org.rest.testing.security.AuthenticationUtil;
 import org.rest.web.http.HTTPLinkHeaderUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 public class ScenarioRESTIntegrationTest extends AbstractSecRESTIntegrationTest{
 	
-	@Autowired
-	private ExamplePaths paths;
+	@Autowired private ExamplePaths paths;
 	
 	// tests
 	

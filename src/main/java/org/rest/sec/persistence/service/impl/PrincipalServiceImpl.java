@@ -12,8 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PrincipalServiceImpl extends AbstractService< Principal > implements IPrincipalService{
 	
-	@Autowired
-	IPrincipalJpaDAO dao;
+	@Autowired IPrincipalJpaDAO dao;
 	
 	public PrincipalServiceImpl(){
 		super( Principal.class );

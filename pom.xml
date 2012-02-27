@@ -271,8 +271,11 @@
 				<version>2.11</version>
 				<configuration>
 					<excludes>
-						<exclude>**/*IntegrationTest.java</exclude>
+						<exclude>**/*RESTIntegrationTest.java</exclude>
 					</excludes>
+					<systemPropertyVariables>
+						<persistenceTarget>test</persistenceTarget>
+					</systemPropertyVariables>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -403,7 +406,7 @@
 										<exclude>none</exclude>
 									</excludes>
 									<includes>
-										<include>**/*IntegrationTest.java</include>
+										<include>**/*RESTIntegrationTest.java</include>
 									</includes>
 								</configuration>
 							</execution>
@@ -459,7 +462,7 @@
 
 		<!-- VERSIONS - persistence -->
 		<mysql-connector-java.version>5.1.18</mysql-connector-java.version> <!-- latest version on: 02.10.2011 - http://dev.mysql.com/downloads/connector/j/ -->
-		<hibernate.version>4.1.0.Final</hibernate.version> <!-- 3.6.9.Final -->
+		<hibernate.version>4.1.0.Final</hibernate.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 
 		<!-- VERSIONS - logging -->

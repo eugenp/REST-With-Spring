@@ -16,7 +16,7 @@ public final class PaginatedResultsRetrievedEvent< T extends Serializable > exte
 	
 	public PaginatedResultsRetrievedEvent( final Class< T > clazz, final UriComponentsBuilder uriBuilderToSet, final HttpServletResponse responseToSet, final int pageToSet, final int totalPagesToSet, final int pageSizeToSet ){
 		super( clazz );
-
+		
 		this.uriBuilder = uriBuilderToSet;
 		this.response = responseToSet;
 		this.page = pageToSet;

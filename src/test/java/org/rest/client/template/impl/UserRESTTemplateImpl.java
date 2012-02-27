@@ -1,33 +1,35 @@
-package org.rest.sec.testing.template;
+package org.rest.client.template.impl;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
-import org.rest.sec.model.Privilege;
-import org.rest.testing.ExamplePaths;
+import org.rest.client.ExamplePaths;
+import org.rest.client.template.AbstractRESTTemplate;
+import org.rest.sec.dto.User;
+import org.rest.sec.model.Role;
 import org.rest.testing.security.AuthenticationUtil;
-import org.rest.testing.template.AbstractRESTTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.common.collect.Sets;
 import com.jayway.restassured.specification.RequestSpecification;
 
 /**
  * Template for the consumption of the REST API <br>
  */
 @Component
-public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate< Privilege >{
+public final class UserRESTTemplateImpl extends AbstractRESTTemplate< User >{
 	
 	@Autowired protected ExamplePaths paths;
 	
-	public PrivilegeRESTTemplateImpl(){
-		super( Privilege.class );
+	public UserRESTTemplateImpl(){
+		super( User.class );
 	}
 	
 	// template method
 	
 	@Override
 	public final String getURI(){
-		return paths.getPrivilegeUri();
+		return paths.getUserUri();
 	}
 	
 	@Override
@@ -36,15 +38,15 @@ public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate< Privi
 	}
 	
 	@Override
-	public final Privilege createNewEntity(){
-		return new Privilege( randomAlphabetic( 8 ) );
+	public final User createNewEntity(){
+		return new User( randomAlphabetic( 8 ), randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
 	}
 	@Override
-	public final void invalidate( final Privilege entity ){
+	public final void invalidate( final User entity ){
 		entity.setName( null );
 	}
 	@Override
-	public void change( final Privilege resource ){
+	public final void change( final User resource ){
 		resource.setName( randomAlphabetic( 8 ) );
 	}
 	

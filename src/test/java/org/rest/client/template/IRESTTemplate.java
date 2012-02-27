@@ -1,4 +1,4 @@
-package org.rest.testing.template;
+package org.rest.client.template;
 
 import org.rest.common.IEntity;
 import org.rest.common.IRestDao;

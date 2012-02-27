@@ -15,9 +15,9 @@ import org.apache.http.HttpHeaders;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.rest.client.template.IRESTTemplate;
 import org.rest.common.IEntity;
 import org.rest.test.AbstractRESTIntegrationTest;
-import org.rest.testing.template.IRESTTemplate;
 
 import com.google.common.base.Preconditions;
 import com.jayway.restassured.response.Response;

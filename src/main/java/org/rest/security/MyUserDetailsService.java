@@ -30,11 +30,9 @@ import com.google.common.collect.Sets;
 @Component
 public final class MyUserDetailsService implements UserDetailsService{
 	
-	@Autowired
-	IPrincipalService userService;
+	@Autowired IPrincipalService principalService;
 	
-	@Autowired
-	IRoleService roleService;
+	@Autowired IRoleService roleService;
 	
 	public MyUserDetailsService(){
 		super();
@@ -49,7 +47,7 @@ public final class MyUserDetailsService implements UserDetailsService{
 	public final UserDetails loadUserByUsername( final String username ){
 		Preconditions.checkNotNull( username );
 		
-		final Principal principal = userService.findByName( username );
+		final Principal principal = principalService.findByName( username );
 		if( principal == null ){
 			throw new UsernameNotFoundException( "Username was not found: " + username );
 		}

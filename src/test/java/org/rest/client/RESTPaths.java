@@ -1,4 +1,4 @@
-package org.rest.testing;
+package org.rest.client;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -6,17 +6,10 @@ import org.springframework.stereotype.Component;
 @Component
 public final class RESTPaths{
 	
-	@Value( "${protocol}" )
-	String protocol;
-	
-	@Value( "${host}" )
-	String host;
-	
-	@Value( "${port}" )
-	String port;
-	
-	@Value( "${war}" )
-	String war;
+	@Value( "${protocol}" ) private String protocol;
+	@Value( "${host}" ) private String host;
+	@Value( "${port}" ) private String port;
+	@Value( "${war}" ) private String war;
 	
 	// API
 	

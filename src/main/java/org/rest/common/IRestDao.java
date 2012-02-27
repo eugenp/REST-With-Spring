@@ -2,7 +2,6 @@ package org.rest.common;
 
 import java.util.List;
 
-
 public interface IRestDao< T extends IEntity >{
 	
 	// get
@@ -17,7 +16,7 @@ public interface IRestDao< T extends IEntity >{
 	// update
 	
 	void update( final T resource );
-
+	
 	// delete
 	
 	void delete( final long id );

@@ -26,14 +26,11 @@ public class SecuritySetup implements ApplicationListener< ContextRefreshedEvent
 	
 	private boolean setupDone;
 	
-	@Autowired
-	private IPrincipalService principalService;
+	@Autowired private IPrincipalService principalService;
 	
-	@Autowired
-	private IRoleService roleService;
+	@Autowired private IRoleService roleService;
 	
-	@Autowired
-	private IPrivilegeService privilegeService;
+	@Autowired private IPrivilegeService privilegeService;
 	
 	public SecuritySetup(){
 		super();
@@ -51,9 +48,9 @@ public class SecuritySetup implements ApplicationListener< ContextRefreshedEvent
 		if( !setupDone ){
 			logger.info( "Executing Setup" );
 			
-			privilegeService.deleteAll();
+			/*privilegeService.deleteAll();
 			roleService.deleteAll();
-			principalService.deleteAll();
+			principalService.deleteAll();*/
 			
 			createPrivileges();
 			createRoles();

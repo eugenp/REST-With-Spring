@@ -17,17 +17,15 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 @XStreamAlias( "user" )
 public class User implements IEntity{
 	
-	@XStreamAsAttribute
-	private Long id;
+	@XStreamAsAttribute private Long id;
 	
 	private String name;
 	private String password;
 	
 	/* Marshalling */
 	// - note: this gets rid of the collection entirely
-	@XStreamImplicit
-	// - note: this requires: xstream.addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
-	// @XStreamConverter( value = HibernateCollectionConverter.class )
+	@XStreamImplicit// - note: this requires: xstream.addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
+	                // @XStreamConverter( value = HibernateCollectionConverter.class )
 	private Set< Role > roles;
 	
 	public User(){

@@ -23,7 +23,7 @@ public final class RomeMarshaller implements IMarshaller{
 		
 		throw new UnsupportedOperationException();
 	}
-
+	
 	@Override
 	public final < T >T decode( final String entityAsString, final Class< T > clazz ){
 		Preconditions.checkNotNull( entityAsString );
