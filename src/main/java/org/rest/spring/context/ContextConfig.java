@@ -1,4 +1,4 @@
-package org.rest.spring.application;
+package org.rest.spring.context;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;

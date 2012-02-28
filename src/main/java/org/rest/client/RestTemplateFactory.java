@@ -1,4 +1,4 @@
-package org.rest.sec.persistence;
+package org.rest.client;
 
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.rest.sec.dto.User;

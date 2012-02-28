@@ -11,25 +11,18 @@ import static org.junit.Assert.assertThat;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.rest.client.template.impl.PrivilegeRESTTemplateImpl;
 import org.rest.client.template.impl.RoleRESTTemplateImpl;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
-import org.rest.spring.testing.TestingTestConfig;
-import org.rest.web.common.AbstractLogicRESTIntegrationTest;
+import org.rest.sec.test.SecLogicRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.google.common.collect.Sets;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { TestingTestConfig.class, TestingTestConfig.class },loader = AnnotationConfigContextLoader.class )
-public class RoleLogicRESTIntegrationTest extends AbstractLogicRESTIntegrationTest< Role >{
+public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest< Role >{
 	
 	@Autowired private RoleRESTTemplateImpl restTemplate;
 	@Autowired private PrivilegeRESTTemplateImpl associationRestTemplate;

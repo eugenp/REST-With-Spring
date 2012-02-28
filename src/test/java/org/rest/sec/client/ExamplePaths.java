@@ -1,5 +1,6 @@
-package org.rest.client;
+package org.rest.sec.client;
 
+import org.rest.client.RESTPaths;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

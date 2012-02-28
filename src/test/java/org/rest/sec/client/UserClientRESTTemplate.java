@@ -3,7 +3,6 @@ package org.rest.sec.client;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.rest.client.AbstractClientRESTTemplate;
-import org.rest.client.ExamplePaths;
 import org.rest.sec.dto.User;
 import org.rest.sec.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;

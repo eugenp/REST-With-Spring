@@ -10,24 +10,15 @@ import java.util.Random;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
 import org.rest.common.IEntity;
-import org.rest.spring.client.ClientTestConfig;
-import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
-import org.rest.spring.testing.TestingTestConfig;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { TestingTestConfig.class, PersistenceJPAConfig.class, ClientTestConfig.class },loader = AnnotationConfigContextLoader.class )
 public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 	
+	@Rule public ExpectedException thrown = ExpectedException.none();
+
 	public AbstractClientRESTIntegrationTest(){
 		super();
 	}
-	
-	@Rule public ExpectedException thrown = ExpectedException.none();
 	
 	// tests
 	

@@ -1,18 +1,11 @@
 package org.rest.sec.web.user;
 
-import org.junit.runner.RunWith;
 import org.rest.client.template.impl.UserRESTTemplateImpl;
 import org.rest.sec.dto.User;
-import org.rest.spring.testing.TestingTestConfig;
-import org.rest.web.common.AbstractPaginationRESTIntegrationTest;
+import org.rest.sec.test.SecPaginationRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { TestingTestConfig.class },loader = AnnotationConfigContextLoader.class )
-public class UserPaginationRESTIntegrationTest extends AbstractPaginationRESTIntegrationTest< User >{
+public class UserPaginationRESTIntegrationTest extends SecPaginationRESTIntegrationTest< User >{
 	
 	@Autowired private UserRESTTemplateImpl template;
 	

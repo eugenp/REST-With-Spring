@@ -1,6 +1,5 @@
 package org.rest.sec.client;
 
-import org.rest.client.ExamplePaths;
 import org.rest.sec.dto.User;
 import org.rest.testing.marshaller.IMarshaller;
 import org.rest.testing.security.AuthenticationUtil;

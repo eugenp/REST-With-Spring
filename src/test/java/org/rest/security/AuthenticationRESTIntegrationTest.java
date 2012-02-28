@@ -8,10 +8,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.rest.client.ExamplePaths;
+import org.rest.sec.client.ExamplePaths;
 import org.rest.sec.dto.User;
 import org.rest.sec.util.SecurityConstants;
-import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
+import org.rest.spring.client.ClientTestConfig;
+import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.testing.TestingTestConfig;
 import org.rest.testing.security.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { TestingTestConfig.class, PersistenceJPAConfig.class },loader = AnnotationConfigContextLoader.class )
+@ContextConfiguration( classes = { ClientTestConfig.class, TestingTestConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
 public class AuthenticationRESTIntegrationTest{
 	
 	@Autowired private ExamplePaths paths;

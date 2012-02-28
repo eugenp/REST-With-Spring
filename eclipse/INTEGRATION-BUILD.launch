@@ -7,7 +7,7 @@
 <stringAttribute key="M2_PROFILES" value="integration"/>
 <listAttribute key="M2_PROPERTIES">
 <listEntry value="target=dev"/>
-<listEntry value="persistenceTarget=h2"/>
+<listEntry value="persistenceTarget=mysql"/>
 </listAttribute>
 <stringAttribute key="M2_RUNTIME" value="/opt/maven/instances/apache-maven-3.0.4"/>
 <booleanAttribute key="M2_SKIP_TESTS" value="false"/>

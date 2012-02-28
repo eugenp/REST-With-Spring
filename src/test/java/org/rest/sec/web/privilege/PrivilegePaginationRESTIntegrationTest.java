@@ -1,18 +1,11 @@
 package org.rest.sec.web.privilege;
 
-import org.junit.runner.RunWith;
 import org.rest.client.template.impl.PrivilegeRESTTemplateImpl;
 import org.rest.sec.model.Privilege;
-import org.rest.spring.testing.TestingTestConfig;
-import org.rest.web.common.AbstractPaginationRESTIntegrationTest;
+import org.rest.sec.test.SecPaginationRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { TestingTestConfig.class },loader = AnnotationConfigContextLoader.class )
-public class PrivilegePaginationRESTIntegrationTest extends AbstractPaginationRESTIntegrationTest< Privilege >{
+public class PrivilegePaginationRESTIntegrationTest extends SecPaginationRESTIntegrationTest< Privilege >{
 	
 	@Autowired private PrivilegeRESTTemplateImpl template;
 	
