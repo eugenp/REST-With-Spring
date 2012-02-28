@@ -25,7 +25,7 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 @XStreamAlias( "role" )
 public class Role implements IEntity{
 	
-	@Id @GeneratedValue( strategy = GenerationType.AUTO ) @XStreamAsAttribute @Column( name = "ROLE_ID" ) private Long id;
+	@Id @GeneratedValue( strategy = GenerationType.AUTO ) @Column( name = "ROLE_ID" ) @XStreamAsAttribute private Long id;
 	@Column( unique = true,nullable = false ) private String name;
 	
 	//@formatter:off
@@ -40,12 +40,10 @@ public class Role implements IEntity{
 	}
 	public Role( final String nameToSet ){
 		super();
-		
 		name = nameToSet;
 	}
 	public Role( final String nameToSet, final Set< Privilege > privilegesToSet ){
 		super();
-		
 		name = nameToSet;
 		privileges = privilegesToSet;
 	}

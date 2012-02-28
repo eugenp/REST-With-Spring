@@ -13,9 +13,6 @@ import org.springframework.stereotype.Component;
 import com.google.common.collect.Sets;
 import com.jayway.restassured.specification.RequestSpecification;
 
-/**
- * Template for the consumption of the REST API <br>
- */
 @Component
 public final class UserRESTTemplateImpl extends AbstractRESTTemplate< User >{
 	
@@ -25,6 +22,8 @@ public final class UserRESTTemplateImpl extends AbstractRESTTemplate< User >{
 		super( User.class );
 	}
 	
+	// API
+
 	// template method
 	
 	@Override

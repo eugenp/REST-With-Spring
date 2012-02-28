@@ -145,13 +145,9 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	// template method
 	
 	protected abstract IRESTTemplate< T > getTemplate();
-	
 	protected abstract String getURI();
-	
 	protected abstract void change( final T resource );
-	
 	protected abstract T createNewEntity();
-	
 	protected abstract RequestSpecification givenAuthenticated();
 	
 }

@@ -81,12 +81,9 @@ public abstract class AbstractSortRESTIntegrationTest< T extends IEntity > exten
 	
 	// template method
 	
-	protected abstract Ordering< T > getOrdering();
-	
-	protected abstract String getURI();
-	
-	protected abstract T createNewEntity();
-	
 	protected abstract IRESTTemplate< T > getTemplate();
+	protected abstract Ordering< T > getOrdering();
+	protected abstract String getURI();
+	protected abstract T createNewEntity();
 	
 }

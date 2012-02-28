@@ -2,7 +2,6 @@ package org.rest.sec.persistence.service.impl;
 
 import org.rest.persistence.service.AbstractService;
 import org.rest.sec.model.Role;
-import org.rest.sec.persistence.dao.IPrivilegeJpaDAO;
 import org.rest.sec.persistence.dao.IRoleJpaDAO;
 import org.rest.sec.persistence.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class RoleServiceImpl extends AbstractService< Role > implements IRoleService{
 	
 	@Autowired IRoleJpaDAO dao;
-	@Autowired IPrivilegeJpaDAO associationDao;
+	
+	// @Autowired private IPrivilegeJpaDAO associationDao;
 	
 	public RoleServiceImpl(){
 		super( Role.class );

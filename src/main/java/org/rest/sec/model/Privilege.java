@@ -57,7 +57,7 @@ public class Privilege implements IEntity{
 			return true;
 		if( obj == null )
 			return false;
-		if( this.getClass() != obj.getClass() )
+		if( getClass() != obj.getClass() )
 			return false;
 		final Privilege other = (Privilege) obj;
 		if( name == null ){

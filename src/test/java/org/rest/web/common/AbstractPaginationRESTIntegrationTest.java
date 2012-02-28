@@ -81,9 +81,7 @@ public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity >
 	// template method
 	
 	protected abstract String getURI();
-	
 	protected abstract T createNewEntity();
-	
 	protected abstract IRESTTemplate< T > getTemplate();
 	
 }

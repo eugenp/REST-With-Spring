@@ -11,9 +11,6 @@ import org.springframework.stereotype.Component;
 
 import com.jayway.restassured.specification.RequestSpecification;
 
-/**
- * Template for the consumption of the REST API <br>
- */
 @Component
 public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate< Privilege >{
 	
