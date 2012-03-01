@@ -91,6 +91,13 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 		this.getDao().delete( id );
 	}
 	
+	// search
+	
+	public List< T > search(){
+		// getDao().
+		return null;
+	}
+	
 	//
 	protected abstract PagingAndSortingRepository< T, Long > getDao();
 	

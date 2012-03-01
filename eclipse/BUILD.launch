@@ -10,7 +10,7 @@
 <listEntry value="persistenceTarget=mysql"/>
 </listAttribute>
 <stringAttribute key="M2_RUNTIME" value="/opt/maven/instances/apache-maven-3.0.4"/>
-<booleanAttribute key="M2_SKIP_TESTS" value="false"/>
+<booleanAttribute key="M2_SKIP_TESTS" value="true"/>
 <booleanAttribute key="M2_UPDATE_SNAPSHOTS" value="false"/>
 <booleanAttribute key="M2_WORKSPACE_RESOLUTION" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:/rest}"/>
