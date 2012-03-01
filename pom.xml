@@ -133,8 +133,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- <dependency> <groupId>commons-dbcp</groupId> <artifactId>commons-dbcp</artifactId> <version>${commons-dbcp.version}</version> </dependency> -->
-
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
@@ -154,6 +152,27 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql-connector-java.version}</version>
 			<scope>runtime</scope>
+		</dependency>
+
+		<!-- persistence - query -->
+
+		<!-- Querydsl -->
+		<dependency>
+			<groupId>com.mysema.querydsl</groupId>
+			<artifactId>querydsl-core</artifactId>
+			<version>${querydsl.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mysema.querydsl</groupId>
+			<artifactId>querydsl-apt</artifactId>
+			<version>${querydsl.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mysema.querydsl</groupId>
+			<artifactId>querydsl-jpa</artifactId>
+			<version>${querydsl.version}</version>
 		</dependency>
 
 		<!-- logging -->
@@ -268,7 +287,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.11</version>
+				<version>2.12</version>
 				<configuration>
 					<excludes>
 						<exclude>**/*RESTIntegrationTest.java</exclude>
@@ -455,15 +474,16 @@
 		<cglib.version>2.2.2</cglib.version>
 
 		<commons-lang3.version>3.1</commons-lang3.version>
-		<guava.version>11.0.1</guava.version>
+		<guava.version>11.0.2</guava.version>
 
-		<jackson-mapper-asl.version>1.9.4</jackson-mapper-asl.version>
+		<jackson-mapper-asl.version>1.9.5</jackson-mapper-asl.version>
 		<jaxb-api.version>2.2.6</jaxb-api.version>
 
 		<!-- VERSIONS - persistence -->
 		<mysql-connector-java.version>5.1.18</mysql-connector-java.version> <!-- latest version on: 02.10.2011 - http://dev.mysql.com/downloads/connector/j/ -->
 		<hibernate.version>4.1.0.Final</hibernate.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
+		<querydsl.version>2.3.2</querydsl.version>
 
 		<!-- VERSIONS - logging -->
 		<org.slf4j.version>1.6.4</org.slf4j.version>
