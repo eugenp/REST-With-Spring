@@ -56,8 +56,8 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 		getService().create( newResource );
 		
 		privilegeService.deleteAll();
-		roleService.deleteAll();
-		privilegeService.deleteAll();
+		// roleService.deleteAll();
+		// privilegeService.deleteAll();
 	}
 	
 	@Test
