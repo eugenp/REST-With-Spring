@@ -29,9 +29,9 @@ public class RoleDAOPersistenceIntegrationTest extends AbstractPersistenceDAOInt
 	 */
 	@Before
 	public final void before(){
-		privilegeDao.deleteAll();
-		roleDao.deleteAll();
 		principalDao.deleteAll();
+		roleDao.deleteAll();
+		privilegeDao.deleteAll();
 	}
 	
 	// save

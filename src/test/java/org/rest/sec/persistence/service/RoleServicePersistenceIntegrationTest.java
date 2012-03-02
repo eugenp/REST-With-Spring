@@ -25,9 +25,9 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 	/** - note: temporary, until: https://github.com/eugenp/REST/issues/7 */
 	@Before
 	public final void before(){
-		privilegeService.deleteAll();
-		roleService.deleteAll();
 		principalService.deleteAll();
+		roleService.deleteAll();
+		privilegeService.deleteAll();
 	}
 	
 	// create
@@ -55,8 +55,8 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 		newResource.getPrivileges().add( existingAssociation );
 		getService().create( newResource );
 		
-		privilegeService.deleteAll();
-		// roleService.deleteAll();
+		principalService.deleteAll();
+		roleService.deleteAll();
 		// privilegeService.deleteAll();
 	}
 	

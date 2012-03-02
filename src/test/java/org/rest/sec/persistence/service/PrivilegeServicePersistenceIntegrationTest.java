@@ -22,9 +22,9 @@ public class PrivilegeServicePersistenceIntegrationTest extends AbstractPersiste
 	 */
 	@Before
 	public final void before(){
-		privilegeService.deleteAll();
-		roleService.deleteAll();
 		principalService.deleteAll();
+		roleService.deleteAll();
+		privilegeService.deleteAll();
 	}
 	
 	// create

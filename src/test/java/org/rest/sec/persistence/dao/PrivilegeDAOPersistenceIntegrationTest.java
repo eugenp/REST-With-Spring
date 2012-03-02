@@ -26,9 +26,9 @@ public class PrivilegeDAOPersistenceIntegrationTest extends AbstractPersistenceD
 	 */
 	@Before
 	public final void before(){
-		privilegeDao.deleteAll();
-		associationDao.deleteAll();
 		principalDao.deleteAll();
+		associationDao.deleteAll();
+		privilegeDao.deleteAll();
 	}
 	
 	// save

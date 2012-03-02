@@ -8,11 +8,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.rest.common.IEntity;
+
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 @Entity
 @XmlRootElement
@@ -21,7 +25,12 @@ public class Principal implements IEntity{
 	@Id @GeneratedValue( strategy = GenerationType.AUTO ) @Column( name = "PRINCIPAL_ID" ) private Long id;
 	@Column( unique = true,nullable = false ) private String name;
 	@Column( nullable = false ) private String password;
-	@OneToMany( fetch = FetchType.EAGER )/*@JoinColumn( name = "ROLE_ID" )*//*@Column( nullable = false ) */private Set< Role > roles;
+	//@formatter:off
+	@ManyToMany( /*cascade = { CascadeType.REMOVE },*/fetch = FetchType.EAGER )
+	@JoinTable( joinColumns = { @JoinColumn( name = "PRINCIPAL_ID",referencedColumnName = "PRINCIPAL_ID" ) },inverseJoinColumns = { @JoinColumn( name = "ROLE_ID",referencedColumnName = "ROLE_ID" ) } )
+	@XStreamImplicit
+	private Set< Role > roles;
+	//@formatter:on
 	
 	public Principal(){
 		super();
