@@ -116,7 +116,6 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	
 	// POST
 	
-	@SuppressWarnings( "unchecked" )
 	@Test
 	public final void whenInvalidPOSTIsSentToValidURIOfResource_thenAllowHeaderListsTheAllowedActions(){
 		// Given

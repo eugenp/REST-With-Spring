@@ -211,7 +211,7 @@
 
 		<dependency>
 			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<artifactId>junit-dep</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
@@ -356,7 +356,7 @@
 						<phase>generate-sources</phase>
 						<configuration>
 							source output directory
-							<outputDirectory>target/metamodel</outputDirectory>
+							<outputDirectory>src/main/java</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
@@ -374,7 +374,7 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>target/metamodel</source>
+								<source>src/main/java/org/rest/persistence/metamodel</source>
 							</sources>
 						</configuration>
 					</execution>

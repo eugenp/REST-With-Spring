@@ -34,15 +34,15 @@ public class PrincipalServicePersistenceIntegrationTest extends AbstractPersiste
 	
 	@Test
 	public void whenSaveIsPerformed_thenNoException(){
-		principalService.create( createNewEntity() );
+		getService().create( createNewEntity() );
 	}
 	
 	@Test( expected = DataAccessException.class )
 	public void whenAUniqueConstraintIsBroken_thenSpringSpecificExceptionIsThrown(){
 		final String name = randomAlphabetic( 8 );
 		
-		principalService.create( createNewEntity( name ) );
-		principalService.create( createNewEntity( name ) );
+		getService().create( createNewEntity( name ) );
+		getService().create( createNewEntity( name ) );
 	}
 	
 	// Spring
