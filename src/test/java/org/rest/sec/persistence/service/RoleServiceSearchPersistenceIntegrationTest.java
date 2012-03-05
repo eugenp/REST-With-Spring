@@ -20,12 +20,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.google.common.collect.Sets;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration( classes = { TestingTestConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
 @SuppressWarnings( "unchecked" )
+@TransactionConfiguration( defaultRollback = true )
 public class RoleServiceSearchPersistenceIntegrationTest{
 	
 	@Autowired private IPrivilegeService privilegeService;

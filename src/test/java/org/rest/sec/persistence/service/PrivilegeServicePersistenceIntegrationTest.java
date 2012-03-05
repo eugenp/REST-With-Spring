@@ -4,11 +4,20 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.rest.persistence.AbstractPersistenceServiceIntegrationTest;
 import org.rest.sec.model.Privilege;
+import org.rest.spring.context.ContextTestConfig;
+import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
+import org.rest.spring.testing.TestingTestConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration( classes = { TestingTestConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
 public class PrivilegeServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< Privilege >{
 	
 	@Autowired private IPrivilegeService privilegeService;
@@ -22,9 +31,9 @@ public class PrivilegeServicePersistenceIntegrationTest extends AbstractPersiste
 	 */
 	@Before
 	public final void before(){
-		principalService.deleteAll();
+		/*principalService.deleteAll();
 		roleService.deleteAll();
-		privilegeService.deleteAll();
+		privilegeService.deleteAll();*/
 	}
 	
 	// create

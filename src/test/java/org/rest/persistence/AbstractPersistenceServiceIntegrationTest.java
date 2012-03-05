@@ -12,19 +12,11 @@ import java.util.Random;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.rest.common.IEntity;
 import org.rest.persistence.service.IService;
-import org.rest.spring.context.ContextTestConfig;
-import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
-import org.rest.spring.testing.TestingTestConfig;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.annotation.Rollback;
 
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { TestingTestConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
 public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEntity >{
 	
 	// tests
@@ -103,6 +95,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 		getService().create( entityWithId );
 	}
 	@Test
+	@Rollback
 	public void whenEntityIsCreated_thenNoExceptions(){
 		persistNewEntity();
 	}
