@@ -26,14 +26,11 @@ public class PrivilegeServicePersistenceIntegrationTest extends AbstractPersiste
 	
 	// fixtures
 	
-	/**
-	 * - note: temporary, until: https://github.com/eugenp/REST/issues/7
-	 */
 	@Before
 	public final void before(){
-		/*principalService.deleteAll();
+		principalService.deleteAll();
 		roleService.deleteAll();
-		privilegeService.deleteAll();*/
+		privilegeService.deleteAll();
 	}
 	
 	// create

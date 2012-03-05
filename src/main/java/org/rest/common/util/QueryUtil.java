@@ -1,8 +1,5 @@
 package org.rest.common.util;
 
-/**
- * @author eugenp
- */
 public final class QueryUtil{
 	
 	public static final String ID = "id";

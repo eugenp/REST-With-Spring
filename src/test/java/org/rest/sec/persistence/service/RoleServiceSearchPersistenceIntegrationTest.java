@@ -36,7 +36,6 @@ public class RoleServiceSearchPersistenceIntegrationTest{
 	
 	// fixtures
 	
-	/** - note: temporary, until: https://github.com/eugenp/REST/issues/7 */
 	@Before
 	public final void before(){
 		principalService.deleteAll();
