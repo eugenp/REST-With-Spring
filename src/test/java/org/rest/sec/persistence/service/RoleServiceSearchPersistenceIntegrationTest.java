@@ -147,6 +147,18 @@ public class RoleServiceSearchPersistenceIntegrationTest{
 		// Then
 		assertThat( searchResults, not( hasItem( existingEntity ) ) );
 	}
+	@Test
+	public final void givenEntityExists_whenSearchIsPerformedByCorrectIdAndIncorrectName_thenResultIsNotFound(){
+		final Role existingEntity = getService().create( createNewEntity() );
+		
+		// When
+		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( NAME, randomAlphabetic( 8 ) );
+		final ImmutablePair< String, Long > idConstraint = new ImmutablePair< String, Long >( ID, existingEntity.getId() );
+		final List< Role > searchResults = getService().search( nameConstraint, idConstraint );
+		
+		// Then
+		assertThat( searchResults, not( hasItem( existingEntity ) ) );
+	}
 	
 	// template method
 	
