@@ -5,17 +5,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
-import java.util.Random;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.rest.common.IEntity;
+import org.rest.util.IdUtil;
 
 public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 	
 	@Rule public ExpectedException thrown = ExpectedException.none();
-
+	
 	public AbstractClientRESTIntegrationTest(){
 		super();
 	}
@@ -40,7 +39,7 @@ public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 	@Test
 	public final void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoResourceIsReceived(){
 		// When
-		final T createdResource = getTemplate().findOne( randomPositiveLong() );
+		final T createdResource = getTemplate().findOne( IdUtil.randomPositiveLong() );
 		
 		// Then
 		assertNull( createdResource );
@@ -79,13 +78,5 @@ public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 	
 	protected abstract AbstractClientRESTTemplate< T > getTemplate();
 	protected abstract String getURI();
-	
-	// util
-	
-	private final long randomPositiveLong(){
-		long id = new Random().nextLong() * 10000;
-		id = ( id < 0 ) ? ( -1 * id ) : id;
-		return id;
-	}
 	
 }

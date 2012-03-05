@@ -15,8 +15,11 @@ import org.rest.sec.persistence.dao.IRoleJpaDAO;
 import org.rest.sec.persistence.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.google.common.collect.Lists;
 
 @Service
 @Transactional
@@ -35,9 +38,27 @@ public class RoleServiceImpl extends AbstractService< Role > implements IRoleSer
 	// sandbox
 	
 	@Override
-	public List< Role > search( final ImmutablePair< String, String >... constraints ){
-		// Specifications.where( byName( "name" ) );
-		return getDao().findAll( byName( constraints[0].getRight() ) );
+	public List< Role > search( final ImmutablePair< String, ? >... constraints ){
+		final Specification< Role > firstSpec = resolveConstraint( constraints[0] );
+		Specifications< Role > specifications = Specifications.where( firstSpec );
+		for( int i = 1; i < constraints.length; i++ ){
+			specifications = specifications.and( resolveConstraint( constraints[i] ) );
+		}
+		if( firstSpec == null ){
+			return Lists.newArrayList();
+		}
+		
+		return getDao().findAll( specifications );
+	}
+	private Specification< Role > resolveConstraint( final ImmutablePair< String, ? > constraint ){
+		final String constraintName = constraint.getLeft();
+		if( constraintName.equals( "name" ) ){
+			return byName( (String) constraint.getRight() );
+		}
+		if( constraintName.equals( "id" ) ){
+			return byId( (Long) constraint.getRight() );
+		}
+		return null;
 	}
 	
 	// search

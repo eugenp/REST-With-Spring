@@ -16,6 +16,7 @@ import org.rest.sec.model.Role;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
 import org.rest.spring.testing.TestingTestConfig;
+import org.rest.util.IdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -29,6 +30,8 @@ import com.google.common.collect.Sets;
 @SuppressWarnings( "unchecked" )
 @TransactionConfiguration( defaultRollback = true )
 public class RoleServiceSearchPersistenceIntegrationTest{
+	private static final String ID = "id";
+	private static final String NAME = "name";
 	
 	@Autowired private IPrivilegeService privilegeService;
 	@Autowired private IRoleService roleService;
@@ -50,33 +53,99 @@ public class RoleServiceSearchPersistenceIntegrationTest{
 		final Role existingEntity = getService().create( createNewEntity() );
 		
 		// When
-		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( "name", existingEntity.getName() );
+		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( NAME, existingEntity.getName() );
 		getService().search( nameConstraint );
 	}
 	
+	// search - by id
+	
 	@Test
-	public final void givenEntityExists_whenSearchByNameIsPerformed_thenResultIsFound(){
+	public final void givenEntityWithIdExists_whenSearchByIdIsPerformed_thenResultIsFound(){
 		final Role existingEntity = getService().create( createNewEntity() );
 		
 		// When
-		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( "name", existingEntity.getName() );
+		final ImmutablePair< String, Long > idConstraint = new ImmutablePair< String, Long >( ID, existingEntity.getId() );
+		final List< Role > searchResults = getService().search( idConstraint );
+		
+		// Then
+		assertThat( searchResults, hasItem( existingEntity ) );
+	}
+	@Test
+	public final void givenEntityWithIdDoesNotExist_whenSearchByIdIsPerformed_thenResultIsNotFound(){
+		final Role existingEntity = getService().create( createNewEntity() );
+		
+		// When
+		final ImmutablePair< String, Long > idConstraint = new ImmutablePair< String, Long >( ID, IdUtil.randomPositiveLong() );
+		final List< Role > searchResults = getService().search( idConstraint );
+		
+		// Then
+		assertThat( searchResults, not( hasItem( existingEntity ) ) );
+	}
+	
+	// search - by name
+	
+	@Test
+	public final void givenEntityWithNameExists_whenSearchByNameIsPerformed_thenResultIsFound(){
+		final Role existingEntity = getService().create( createNewEntity() );
+		
+		// When
+		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( NAME, existingEntity.getName() );
 		final List< Role > searchResults = getService().search( nameConstraint );
 		
 		// Then
 		assertThat( searchResults, hasItem( existingEntity ) );
 	}
 	@Test
-	public final void givenEntityExists_whenSearchByIdNegatedNameIsPerformed_thenResultsAreFound(){
+	public final void givenEntityWithNameDoesNotExist_whenSearchByNameIsPerformed_thenResultIsNotFound(){
+		final Role existingEntity = getService().create( createNewEntity() );
+		
+		// When
+		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( NAME, randomAlphabetic( 8 ) );
+		final List< Role > searchResults = getService().search( nameConstraint );
+		
+		// Then
+		assertThat( searchResults, not( hasItem( existingEntity ) ) );
+	}
+	
+	@Test
+	public final void givenEntitiesExists_whenSearchByNegatedNameIsPerformed_thenResultsAreCorrect(){
 		final Role existingEntity1 = getService().create( createNewEntity() );
 		final Role existingEntity2 = getService().create( createNewEntity() );
 		
 		// When
-		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( "name", existingEntity1.getName() );
+		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( NAME, existingEntity1.getName() );
 		final List< Role > searchResults = getService().search( nameConstraint );
 		
 		// Then
 		assertThat( searchResults, hasItem( existingEntity1 ) );
 		assertThat( searchResults, not( hasItem( existingEntity2 ) ) );
+	}
+	
+	// search - by id and name
+	
+	@Test
+	public final void givenEntityExists_whenSearchIsPerformedByIdAndName_thenResultIsFound(){
+		final Role existingEntity = getService().create( createNewEntity() );
+		
+		// When
+		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( NAME, existingEntity.getName() );
+		final ImmutablePair< String, Long > idConstraint = new ImmutablePair< String, Long >( ID, existingEntity.getId() );
+		final List< Role > searchResults = getService().search( nameConstraint, idConstraint );
+		
+		// Then
+		assertThat( searchResults, hasItem( existingEntity ) );
+	}
+	@Test
+	public final void givenEntityExists_whenSearchIsPerformedByIncorrectIdAndCorrectName_thenResultIsNotFound(){
+		final Role existingEntity = getService().create( createNewEntity() );
+		
+		// When
+		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( NAME, existingEntity.getName() );
+		final ImmutablePair< String, Long > idConstraint = new ImmutablePair< String, Long >( ID, IdUtil.randomPositiveLong() );
+		final List< Role > searchResults = getService().search( nameConstraint, idConstraint );
+		
+		// Then
+		assertThat( searchResults, not( hasItem( existingEntity ) ) );
 	}
 	
 	// template method

@@ -12,6 +12,6 @@ public interface IRoleService extends IService< Role >{
 	
 	List< Role > search( final Long id );
 	
-	List< Role > search( final ImmutablePair< String, String >... constraints );
+	List< Role > search( final ImmutablePair< String, ? >... constraints );
 	
 }
