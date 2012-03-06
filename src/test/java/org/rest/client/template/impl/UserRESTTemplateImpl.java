@@ -23,7 +23,7 @@ public final class UserRESTTemplateImpl extends AbstractRESTTemplate< User >{
 	}
 	
 	// API
-
+	
 	// template method
 	
 	@Override

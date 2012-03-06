@@ -1,5 +1,7 @@
 package org.rest.client.template;
 
+import java.util.List;
+
 import org.rest.common.IEntity;
 import org.rest.common.IRestDao;
 import org.rest.testing.marshaller.IMarshaller;
@@ -14,5 +16,9 @@ public interface IRESTTemplate< T extends IEntity > extends IRestDao< T >, IEnti
 	
 	RequestSpecification givenAuthenticated();
 	IMarshaller getMarshaller();
+	
+	// search
+	
+	List< T > search( final Long id );
 	
 }

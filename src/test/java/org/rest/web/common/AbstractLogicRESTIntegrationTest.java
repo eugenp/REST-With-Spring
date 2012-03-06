@@ -9,7 +9,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
-import java.util.Random;
 
 import org.apache.http.HttpHeaders;
 import org.hamcrest.Matchers;
@@ -18,6 +17,7 @@ import org.junit.Test;
 import org.rest.client.template.IRESTTemplate;
 import org.rest.common.IEntity;
 import org.rest.test.AbstractRESTIntegrationTest;
+import org.rest.util.IdUtil;
 
 import com.google.common.base.Preconditions;
 import com.jayway.restassured.response.Response;
@@ -75,8 +75,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Ignore( "this was written for a neo4j persistence engine, which treats null ids differently than Hibernate" )
 	public final void whenResourceIsRetrievedByNegativeId_then409IsReceived(){
 		// Given id is negative number
-		Long id = new Random().nextLong();
-		id = id < 0 ? id : id * -1;
+		final Long id = IdUtil.randomNegativeLong();
 		
 		// When
 		final Response res = getTemplate().findOneAsResponse( this.getURI() + "/" + id );
@@ -97,7 +96,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 		assertThat( res.getStatusCode(), is( 400 ) );
 	}
 	
-	// GET (all)
+	// find - all
 	
 	@Test
 	public final void whenResourcesAreRetrieved_thenNoExceptions(){

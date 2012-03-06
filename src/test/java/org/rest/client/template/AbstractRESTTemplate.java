@@ -27,6 +27,17 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 		clazz = clazzToSet;
 	}
 	
+	// search
+	
+	@Override
+	public Response searchAsResponse( final Long id ){
+		throw new UnsupportedOperationException();
+	}
+	@Override
+	public List< T > search( final Long id ){
+		throw new UnsupportedOperationException();
+	}
+	
 	// findOne
 	
 	@Override

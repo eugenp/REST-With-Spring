@@ -15,6 +15,10 @@ public interface ITemplateAsResponse< T extends IEntity >{
 	
 	Response findAllAsResponse(); // 1
 	
+	// search
+	
+	Response searchAsResponse( Long id );
+	
 	// create
 	
 	Response createAsResponse( final T resource ); // 14
