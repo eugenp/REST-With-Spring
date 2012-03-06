@@ -19,6 +19,6 @@ public interface IRESTTemplate< T extends IEntity > extends IRestDao< T >, IEnti
 	
 	// search
 	
-	List< T > search( final Long id );
+	List< T > search( final Long id, final String name );
 	
 }

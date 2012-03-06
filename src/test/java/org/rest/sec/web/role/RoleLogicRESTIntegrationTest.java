@@ -8,7 +8,6 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-import java.util.List;
 import java.util.Set;
 
 import org.hamcrest.Matchers;
@@ -36,40 +35,6 @@ public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest< R
 	}
 	
 	// tests
-	
-	// search
-	
-	@Test
-	public final void givenResourceExists_whenResourceIfSearchedById_thenNoExceptions(){
-		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
-		getTemplate().searchAsResponse( existingResource.getId() );
-	}
-	@Test
-	public final void givenResourceExists_whenResourceIfSearchedById_then200IsReceived(){
-		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
-		
-		// When
-		final Response searchResponse = getTemplate().searchAsResponse( existingResource.getId() );
-		
-		// Then
-		assertThat( searchResponse.getStatusCode(), is( 200 ) );
-	}
-	
-	@Test
-	public final void givenResourceExists_whenResourceIfSearchedByIdAndUnmarshalled_thenNoException(){
-		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
-		getTemplate().search( existingResource.getId() );
-	}
-	@Test
-	public final void givenResourceExists_whenResourceIfSearchedByIdAndUnmarshalled_thenResourceIsFound(){
-		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
-		
-		// When
-		final List< Role > found = getTemplate().search( existingResource.getId() );
-		
-		// Then
-		assertThat( found, hasItem( existingResource ) );
-	}
 	
 	// find one
 	
@@ -134,6 +99,20 @@ public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest< R
 		assertThat( response.getStatusCode(), is( 409 ) );
 	}
 	
+	@Test
+	public final void whenCreatingNewResourceWithExistingAssociation_thenAssociationsAreCorrectlyPersisted(){
+		final Privilege existingAssociation = getAssociationTemplate().create( getAssociationTemplate().createNewEntity() );
+		final Role resourceToCreate = getTemplate().createNewEntity();
+		resourceToCreate.getPrivileges().add( existingAssociation );
+		
+		// When
+		final Role existingResource = getTemplate().create( resourceToCreate );
+		final Set< Privilege > associationsOfExistingResource = existingResource.getPrivileges();
+		Preconditions.checkState( associationsOfExistingResource.size() == 1 );
+		
+		assertThat( existingAssociation, equalTo( associationsOfExistingResource.iterator().next() ) );
+	}
+
 	// update
 	
 	@Test
@@ -149,22 +128,6 @@ public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest< R
 		// Given
 		final Role updatedResource = getTemplate().findOne( existingResource.getId() );
 		assertThat( updatedResource.getPrivileges(), hasItem( existingAssociation ) );
-	}
-	
-	// TO SORT
-	
-	@Test
-	public final void whenCreatingNewResourceWithExistingAssociation_thenAssociationsAreCorrectlyPersisted(){
-		final Privilege existingAssociation = getAssociationTemplate().create( getAssociationTemplate().createNewEntity() );
-		final Role resourceToCreate = getTemplate().createNewEntity();
-		resourceToCreate.getPrivileges().add( existingAssociation );
-		
-		// When
-		final Role existingResource = getTemplate().create( resourceToCreate );
-		final Set< Privilege > associationsOfExistingResource = existingResource.getPrivileges();
-		Preconditions.checkState( associationsOfExistingResource.size() == 1 );
-		
-		assertThat( existingAssociation, equalTo( associationsOfExistingResource.iterator().next() ) );
 	}
 	
 	// scenarios

@@ -17,7 +17,7 @@ public interface ITemplateAsResponse< T extends IEntity >{
 	
 	// search
 	
-	Response searchAsResponse( Long id );
+	Response searchAsResponse( final Long id, final String name );
 	
 	// create
 	

@@ -44,7 +44,7 @@ public class RoleController extends AbstractController< Role >{
 	@RequestMapping( params = { "q" },method = RequestMethod.GET )
 	@ResponseBody
 	public List< Role > search( @RequestParam( "q" ) final String queryString ){
-		final List< ImmutablePair< String, String >> parsedQuery = SearchUtil.parseQueryString( queryString );
+		final List< ImmutablePair< String, ? >> parsedQuery = SearchUtil.parseQueryString( queryString );
 		
 		final List< Role > results = getService().search( parsedQuery.get( 0 ) );
 		

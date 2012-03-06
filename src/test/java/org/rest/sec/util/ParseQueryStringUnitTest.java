@@ -1,0 +1,124 @@
+package org.rest.sec.util;
+
+import static org.hamcrest.Matchers.hasItem;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+
+import java.util.List;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.junit.Test;
+
+public final class ParseQueryStringUnitTest{
+	
+	// single key-value tuple
+	
+	// -- incorrect
+	
+	@Test( expected = NullPointerException.class )
+	public final void whenNullQueryIsParsed_thenException(){
+		SearchUtil.parseQueryString( null );
+	}
+	@Test( expected = IllegalStateException.class )
+	public final void givenQueryDoesNotContainConstraintField_whenQueryIsParsed_thenException(){
+		SearchUtil.parseQueryString( "justtext" );
+	}
+	@Test( expected = IllegalStateException.class )
+	public final void givenQueryContainIdConstraintFieldButNoValue_whenQueryIsParsed_thenException(){
+		SearchUtil.parseQueryString( "id:" );
+	}
+	@Test( expected = IllegalStateException.class )
+	public final void givenQueryContainIdConstraintNonNumericalValueForId_whenQueryIsParsed_thenException(){
+		SearchUtil.parseQueryString( "id:aa" );
+	}
+	@Test( expected = IllegalStateException.class )
+	public final void givenQueryContainSingleIdConstraintWithValidFieldValueAndAdditionalInvalidCharacter_whenQueryIsParsed_thenException(){
+		SearchUtil.parseQueryString( "id:aa," );
+	}
+	@Test( expected = IllegalStateException.class )
+	public final void givenQueryContainSingleIdConstraintWithCorrectFieldValueButInvalidSeparator_whenQueryIsParsed_thenException(){
+		SearchUtil.parseQueryString( "id|aa," );
+	}
+	@Test( expected = IllegalStateException.class )
+	public final void givenQueryContainIdConstraintWithUnknownKey_whenQueryIsParsed_thenException(){
+		SearchUtil.parseQueryString( "somekey|aa" );
+	}
+	
+	// -- correct
+	
+	@Test
+	public final void givenQueryContainsValidIdConstraint_whenQueryIsParsed_thenNoExceptions(){
+		SearchUtil.parseQueryString( "id:2" );
+	}
+	@Test
+	public final void givenValidQueryWithIdConstraint_whenQueryIsParsed_thenResultIsNotNull(){
+		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( "id:2" );
+		
+		assertFalse( queryTyples.isEmpty() );
+	}
+	@Test
+	public final void givenValidQueryWithIdConstraint_whenQueryIsParsed_thenResultKeyIsCorrect(){
+		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( "id:2" );
+		final ImmutablePair< String, ? > pair = queryTyples.get( 0 );
+		assertEquals( "id", pair.getLeft() );
+	}
+	@Test
+	public final void givenValidQueryWithIdConstraint_whenQueryIsParsed_thenResultValueIsCorrect(){
+		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( "id:2" );
+		final ImmutablePair< String, ? > pair = queryTyples.get( 0 );
+		assertEquals( 2l, pair.getRight() );
+	}
+	
+	@Test
+	public final void givenValidQueryWithNameConstraint_whenQueryIsParsed_thenNoExceptions(){
+		SearchUtil.parseQueryString( "name:some" );
+	}
+	@Test
+	public final void givenValidQueryWithNameConstraint_whenQueryIsParsed_thenResultIsNotNull(){
+		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( "name:some" );
+		
+		assertFalse( queryTyples.isEmpty() );
+	}
+	@Test
+	public final void givenValidQueryWithNameConstraint_whenQueryIsParsed_thenResultKeyIsCorrect(){
+		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( "name:some" );
+		final ImmutablePair< String, ? > pair = queryTyples.get( 0 );
+		assertEquals( "name", pair.getLeft() );
+	}
+	@Test
+	public final void givenValidQueryWithNameConstraint_whenQueryIsParsed_thenResultValueIsCorrect(){
+		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( "name:some" );
+		final ImmutablePair< String, ? > pair = queryTyples.get( 0 );
+		assertEquals( "some", pair.getRight() );
+	}
+	@Test
+	public final void givenValidQueryWithNameConstraint_whenQueryIsParsedForNameValueWithUppercase_thenResultValueIsCorrect(){
+		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( "name:Some" );
+		final ImmutablePair< String, ? > pair = queryTyples.get( 0 );
+		assertEquals( "Some", pair.getRight() );
+	}
+	
+	// multiple key-value tuples
+	
+	@Test( expected = IllegalStateException.class )
+	public final void givenQueryContainOneValidConstraintAndOneIncorrectOne_whenQueryIsParsed_thenException(){
+		SearchUtil.parseQueryString( "id:2,name" );
+	}
+	
+	@Test
+	public final void givenQueryContainANameConstraintWithNumbersInTheName_whenQueryIsParsed_thenNoExceptions(){
+		SearchUtil.parseQueryString( "id:2,name:eugen2" );
+	}
+	@Test
+	public final void givenQueryContainTwoValidConstraints_whenQueryIsParsed_thenNoExceptions(){
+		SearchUtil.parseQueryString( "id:2,name:eugen" );
+	}
+	@Test
+	public final void givenQueryContainTwoValidConstraints_whenQueryIsParsed_thenConstraintsAreCorrect(){
+		final List< ImmutablePair< String, ? >> parsedQueryString = SearchUtil.parseQueryString( "id:2,name:eugen" );
+		assertThat( parsedQueryString, hasItem( new ImmutablePair< String, Long >( "id", 2l ) ) );
+		assertThat( parsedQueryString, hasItem( new ImmutablePair< String, String >( "name", "eugen" ) ) );
+	}
+	
+}

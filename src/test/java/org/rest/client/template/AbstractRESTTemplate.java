@@ -30,11 +30,11 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 	// search
 	
 	@Override
-	public Response searchAsResponse( final Long id ){
+	public Response searchAsResponse( final Long id, final String name ){
 		throw new UnsupportedOperationException();
 	}
 	@Override
-	public List< T > search( final Long id ){
+	public List< T > search( final Long id, final String name ){
 		throw new UnsupportedOperationException();
 	}
 	
