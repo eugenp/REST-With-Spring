@@ -2,7 +2,9 @@ package org.rest.client.template;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.HttpHeaders;
+import org.rest.client.template.impl.ClientOperations;
 import org.rest.common.IEntity;
 import org.rest.testing.marshaller.IMarshaller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,10 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 	
 	// search
 	
+	@Override
+	public Response searchAsResponse( final Pair< Long, ClientOperations > idOp, final Pair< String, ClientOperations > nameOp ){
+		throw new UnsupportedOperationException();
+	}
 	@Override
 	public Response searchAsResponse( final Long id, final String name ){
 		throw new UnsupportedOperationException();

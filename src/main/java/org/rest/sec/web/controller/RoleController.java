@@ -50,6 +50,7 @@ public class RoleController extends AbstractController< Role >{
 		
 		return results;
 	}
+
 	// find - all/paginated
 	
 	@RequestMapping( params = { "page", "size" },method = RequestMethod.GET )

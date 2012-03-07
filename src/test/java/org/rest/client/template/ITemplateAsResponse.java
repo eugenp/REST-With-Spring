@@ -1,5 +1,7 @@
 package org.rest.client.template;
 
+import org.apache.commons.lang3.tuple.Pair;
+import org.rest.client.template.impl.ClientOperations;
 import org.rest.common.IEntity;
 
 import com.jayway.restassured.response.Response;
@@ -17,6 +19,11 @@ public interface ITemplateAsResponse< T extends IEntity >{
 	
 	// search
 	
+	Response searchAsResponse( final Pair< Long, ClientOperations > idOp, final Pair< String, ClientOperations > nameOp );
+	/**
+	 * This will make the following assumptions: the operator is positive equals <br>
+	 * For more flexible operators (such as negation), see {@link ITemplateAsResponse#searchAsResponse(Pair, Pair)}
+	 */
 	Response searchAsResponse( final Long id, final String name );
 	
 	// create

@@ -4,6 +4,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.HttpHeaders;
 import org.rest.client.template.AbstractRESTTemplate;
 import org.rest.sec.client.ExamplePaths;
@@ -33,6 +34,12 @@ public final class RoleRESTTemplateImpl extends AbstractRESTTemplate< Role >{
 	public final Role findByName( final String name ){
 		final String resourceAsXML = findOneAsMime( getURI() + "?name=" + name );
 		return marshaller.decode( resourceAsXML, clazz );
+	}
+
+	@Override
+	public final Response searchAsResponse( final Pair< Long, ClientOperations > idOp, final Pair< String, ClientOperations > nameOp ){
+		final String queryURI = getURI() + "?q=" + SearchUtil.constructQueryString( idOp, nameOp );
+		return givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
 	}
 	
 	@Override

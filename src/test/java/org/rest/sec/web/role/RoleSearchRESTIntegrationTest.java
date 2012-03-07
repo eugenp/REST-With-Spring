@@ -8,8 +8,10 @@ import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.rest.client.template.impl.ClientOperations;
 import org.rest.client.template.impl.PrivilegeRESTTemplateImpl;
 import org.rest.client.template.impl.RoleRESTTemplateImpl;
 import org.rest.sec.model.Role;
@@ -165,13 +167,28 @@ public class RoleSearchRESTIntegrationTest{
 	public final void givenResourceExists_whenResourceIfSearchedByNegatedName_then200IsReceived(){
 		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
 		
+		final ImmutablePair< String, ClientOperations > negatedNameConstraint = new ImmutablePair< String, ClientOperations >( existingResource.getName(), ClientOperations.NEG_EQ );
+		
 		// When
-		final Response searchResponse = getTemplate().searchAsResponse( existingResource.getId(), existingResource.getName() );
+		final Response searchResponse = getTemplate().searchAsResponse( null, negatedNameConstraint );
 		
 		// Then
 		assertThat( searchResponse.getStatusCode(), is( 200 ) );
 	}
-
+	
+	@Test
+	public final void givenResourceExists_whenResourceIfSearchedByNegatedId_then200IsReceived(){
+		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
+		
+		final ImmutablePair< Long, ClientOperations > negatedIdConstraint = new ImmutablePair< Long, ClientOperations >( existingResource.getId(), ClientOperations.NEG_EQ );
+		
+		// When
+		final Response searchResponse = getTemplate().searchAsResponse( negatedIdConstraint, null );
+		
+		// Then
+		assertThat( searchResponse.getStatusCode(), is( 200 ) );
+	}
+	
 	// template
 	
 	protected final Role createNewEntity(){

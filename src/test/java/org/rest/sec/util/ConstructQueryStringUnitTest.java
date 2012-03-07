@@ -10,7 +10,7 @@ public final class ConstructQueryStringUnitTest{
 	
 	@Test
 	public final void whenQueryStringIsConstructedFromNull_thenNoException(){
-		SearchUtil.constructQueryString( null, null );
+		SearchUtil.constructQueryString( (Long) null, null );
 	}
 	
 	@Test
@@ -80,5 +80,5 @@ public final class ConstructQueryStringUnitTest{
 		final String queryString = SearchUtil.constructQueryString( 2l, true, "some", true );
 		assertEquals( "~id:2,~name:some", queryString );
 	}
-
+	
 }

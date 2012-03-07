@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -97,6 +98,44 @@ public final class ParseQueryStringUnitTest{
 		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( "name:Some" );
 		final ImmutablePair< String, ? > pair = queryTyples.get( 0 );
 		assertEquals( "Some", pair.getRight() );
+	}
+	
+	// -- correct - with negation
+	
+	@Test
+	public final void givenQueryContainsValidNegatedIdConstraint_whenQueryIsParsed_thenNoExceptions(){
+		SearchUtil.parseQueryString( "~id:2" );
+	}
+	@Test
+	public final void givenQueryContainsValidNegatedNameConstraint_whenQueryIsParsed_thenNoExceptions(){
+		SearchUtil.parseQueryString( "~name:some" );
+	}
+	@Test
+	public final void givenQueryContainsValidNegatedIdAndNegatedNameConstraint_whenQueryIsParsed_thenNoExceptions(){
+		SearchUtil.parseQueryString( "~id:3,~name:some" );
+	}
+	@Test
+	public final void givenQueryContainsValidNegatedIdAndPositiveNameConstraint_whenQueryIsParsed_thenNoExceptions(){
+		SearchUtil.parseQueryString( "~id:3,name:some" );
+	}
+	
+	@Test
+	public final void givenQueryContainsValidNegatedIdAndPositiveNameConstraint_whenQueryIsParsed_thenResultsAreCorrect(){
+		final List< ImmutablePair< String, ? >> parsedQueryString = SearchUtil.parseQueryString( "~id:3,name:some" );
+		
+		assertEquals( 3l, parsedQueryString.get( 0 ).getRight() );
+		assertEquals( "some", parsedQueryString.get( 1 ).getRight() );
+	}
+	
+	@Test
+	public final void givenQueryContainsValidNegatedNameConstraint_whenQueryIsParsed_thenResultTypesAreCorrect(){
+		final List< ImmutablePair< String, ? >> parseQueryString = SearchUtil.parseQueryString( "~name:some" );
+		assertTrue( parseQueryString.get( 0 ).getRight().getClass().equals( String.class ) );
+	}
+	@Test
+	public final void givenQueryContainsValidNegatedIdConstraint_whenQueryIsParsed_thenResultTypesAreCorrect(){
+		final List< ImmutablePair< String, ? >> parseQueryString = SearchUtil.parseQueryString( "~id:2" );
+		assertTrue( parseQueryString.get( 0 ).getRight().getClass().equals( Long.class ) );
 	}
 	
 	// multiple key-value tuples
