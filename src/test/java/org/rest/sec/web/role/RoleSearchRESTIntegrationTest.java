@@ -159,6 +159,19 @@ public class RoleSearchRESTIntegrationTest{
 		assertThat( found, not( hasItem( existingResource ) ) );
 	}
 	
+	// search - by negated id,name
+	
+	@Test
+	public final void givenResourceExists_whenResourceIfSearchedByNegatedName_then200IsReceived(){
+		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
+		
+		// When
+		final Response searchResponse = getTemplate().searchAsResponse( existingResource.getId(), existingResource.getName() );
+		
+		// Then
+		assertThat( searchResponse.getStatusCode(), is( 200 ) );
+	}
+
 	// template
 	
 	protected final Role createNewEntity(){

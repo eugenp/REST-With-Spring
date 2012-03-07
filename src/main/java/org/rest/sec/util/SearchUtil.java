@@ -40,15 +40,22 @@ public final class SearchUtil{
 	//
 	
 	public static String constructQueryString( final Long id, final String name ){
+		return constructQueryString( id, false, name, false );
+	}
+	
+	public static String constructQueryString( final Long id, final boolean negatedId, final String name, final boolean negatedName ){
 		final StringBuffer queryString = new StringBuffer();
+		String key = null;
 		if( id != null ){
-			queryString.append( "id:" + id );
+			key = ( negatedId ) ? "~id" : "id";
+			queryString.append( key + ":" + id );
 		}
 		if( name != null ){
 			if( queryString.length() != 0 ){
 				queryString.append( ',' );
 			}
-			queryString.append( "name:" + name );
+			key = ( negatedName ) ? "~name" : "name";
+			queryString.append( key + ":" + name );
 		}
 		
 		return queryString.toString();

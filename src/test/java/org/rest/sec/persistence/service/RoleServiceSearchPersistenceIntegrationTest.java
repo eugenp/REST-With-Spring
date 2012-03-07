@@ -160,6 +160,35 @@ public class RoleServiceSearchPersistenceIntegrationTest{
 		assertThat( searchResults, not( hasItem( existingEntity ) ) );
 	}
 	
+	// search - by negated id,name
+	
+	@Test
+	public final void whenSearchByNegatedNameIsPerformed_thenResultsAreFound(){
+		final Role existingEntity1 = getService().create( createNewEntity() );
+		final Role existingEntity2 = getService().create( createNewEntity() );
+		
+		// When
+		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( "~" + NAME, existingEntity1.getName() );
+		final List< Role > searchResults = getService().search( nameConstraint );
+		
+		// Then
+		assertThat( searchResults, not( hasItem( existingEntity1 ) ) );
+		assertThat( searchResults, hasItem( existingEntity2 ) );
+	}
+	@Test
+	public final void whenSearchByNegatedIdIsPerformed_thenResultsAreFound(){
+		final Role existingEntity1 = getService().create( createNewEntity() );
+		final Role existingEntity2 = getService().create( createNewEntity() );
+		
+		// When
+		final ImmutablePair< String, Long > idConstraint = new ImmutablePair< String, Long >( "~" + ID, existingEntity1.getId() );
+		final List< Role > searchResults = getService().search( idConstraint );
+		
+		// Then
+		assertThat( searchResults, not( hasItem( existingEntity1 ) ) );
+		assertThat( searchResults, hasItem( existingEntity2 ) );
+	}
+	
 	// template method
 	
 	protected final IRoleService getService(){

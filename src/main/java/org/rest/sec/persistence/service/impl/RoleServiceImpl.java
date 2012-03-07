@@ -27,8 +27,6 @@ public class RoleServiceImpl extends AbstractService< Role > implements IRoleSer
 	
 	@Autowired IRoleJpaDAO dao;
 	
-	// @Autowired private IPrivilegeJpaDAO associationDao;
-	
 	public RoleServiceImpl(){
 		super( Role.class );
 	}
@@ -51,35 +49,42 @@ public class RoleServiceImpl extends AbstractService< Role > implements IRoleSer
 		return getDao().findAll( specifications );
 	}
 	private Specification< Role > resolveConstraint( final ImmutablePair< String, ? > constraint ){
-		final String constraintName = constraint.getLeft();
+		String constraintName = constraint.getLeft();
+		boolean negated = false;
+		if( constraintName.startsWith( "~" ) ){
+			negated = true;
+			constraintName = constraintName.substring( 1 );
+		}
+		
 		if( constraintName.equals( "name" ) ){
-			return byName( (String) constraint.getRight() );
+			return byName( (String) constraint.getRight(), negated );
 		}
 		if( constraintName.equals( "id" ) ){
-			return byId( (Long) constraint.getRight() );
+			return byId( (Long) constraint.getRight(), negated );
 		}
 		return null;
 	}
-	
+
 	// search
 	
-	@Override
-	public List< Role > search( final Long id ){
-		return getDao().findAll( byId( id ) );
-	}
-	
-	public static Specification< Role > byId( final Long id ){
+	public static Specification< Role > byId( final Long id, final boolean negated ){
 		return new Specification< Role >(){
 			@Override
 			public final Predicate toPredicate( final Root< Role > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
+				if( negated ){
+					return cb.notEqual( root.get( Role_.id ), id );
+				}
 				return cb.equal( root.get( Role_.id ), id );
 			}
 		};
 	}
-	public static Specification< Role > byName( final String name ){
+	public static Specification< Role > byName( final String name, final boolean negated ){
 		return new Specification< Role >(){
 			@Override
 			public final Predicate toPredicate( final Root< Role > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
+				if( negated ){
+					return cb.notEqual( root.get( Role_.name ), name );
+				}
 				return cb.equal( root.get( Role_.name ), name );
 			}
 		};
