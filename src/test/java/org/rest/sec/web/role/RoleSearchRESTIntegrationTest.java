@@ -3,6 +3,7 @@ package org.rest.sec.web.role;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import org.rest.sec.model.Role;
 import org.rest.spring.client.ClientTestConfig;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.testing.TestingTestConfig;
+import org.rest.util.IdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -88,23 +90,74 @@ public class RoleSearchRESTIntegrationTest{
 		assertThat( searchResponse.getStatusCode(), is( 200 ) );
 	}
 	
-	/*
-	
 	@Test
 	public final void givenResourceExists_whenResourceIfSearchedByNameAndUnmarshalled_thenNoException(){
 		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
-		getTemplate().search( existingResource.getId() );
+		getTemplate().search( null, existingResource.getName() );
 	}
 	@Test
 	public final void givenResourceExists_whenResourceIfSearchedByNameAndUnmarshalled_thenResourceIsFound(){
 		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
 		
 		// When
-		final List< Role > found = getTemplate().search( existingResource.getId() );
+		final List< Role > found = getTemplate().search( null, existingResource.getName() );
 		
 		// Then
 		assertThat( found, hasItem( existingResource ) );
-	}*/
+	}
+	
+	// search - by id and name
+	
+	@Test
+	public final void givenResourceExists_whenResourceIfSearchedByIdAndName_then200IsReceived(){
+		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
+		
+		// When
+		final Response searchResponse = getTemplate().searchAsResponse( existingResource.getId(), existingResource.getName() );
+		
+		// Then
+		assertThat( searchResponse.getStatusCode(), is( 200 ) );
+	}
+	@Test
+	public final void givenResourceExists_whenResourceIfSearchedByIdAndNameAndUnmarshalled_thenResourceIsFound(){
+		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
+		
+		// When
+		final List< Role > found = getTemplate().search( existingResource.getId(), existingResource.getName() );
+		
+		// Then
+		assertThat( found, hasItem( existingResource ) );
+	}
+	@Test
+	public final void givenResourceExists_whenResourceIfSearchedByIdAndWrongNameAndUnmarshalled_thenResourceIsFound(){
+		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
+		
+		// When
+		final List< Role > found = getTemplate().search( existingResource.getId(), randomAlphabetic( 8 ) );
+		
+		// Then
+		assertThat( found, not( hasItem( existingResource ) ) );
+	}
+	@Test
+	public final void givenResourceExists_whenResourceIfSearchedByWrongIdAndCorrectNameAndUnmarshalled_thenResourceIsFound(){
+		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
+		
+		// When
+		final List< Role > found = getTemplate().search( IdUtil.randomPositiveLong(), existingResource.getName() );
+		
+		// Then
+		assertThat( found, not( hasItem( existingResource ) ) );
+	}
+	@Test
+	public final void givenResourceExists_whenResourceIfSearchedByWrongIdAndWrongNameAndUnmarshalled_thenResourceIsFound(){
+		final Role existingResource = getTemplate().create( getTemplate().createNewEntity() );
+		
+		// When
+		final List< Role > found = getTemplate().search( IdUtil.randomPositiveLong(), randomAlphabetic( 8 ) );
+		
+		// Then
+		assertThat( found, not( hasItem( existingResource ) ) );
+	}
 	
 	// template
 	

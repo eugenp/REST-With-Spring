@@ -44,7 +44,7 @@ public final class RoleRESTTemplateImpl extends AbstractRESTTemplate< Role >{
 	@SuppressWarnings( { "unchecked", "rawtypes" } )
 	@Override
 	public final List< Role > search( final Long id, final String name ){
-		final String queryURI = getURI() + "?q=id:" + id;
+		final String queryURI = getURI() + "?q=" + SearchUtil.constructQueryString( id, name );
 		final Response searchResponse = givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
 		Preconditions.checkState( searchResponse.getStatusCode() == 200 );
 		

@@ -46,11 +46,10 @@ public class RoleController extends AbstractController< Role >{
 	public List< Role > search( @RequestParam( "q" ) final String queryString ){
 		final List< ImmutablePair< String, ? >> parsedQuery = SearchUtil.parseQueryString( queryString );
 		
-		final List< Role > results = getService().search( parsedQuery.get( 0 ) );
+		final List< Role > results = getService().search( parsedQuery.toArray( new ImmutablePair[parsedQuery.size()] ) );
 		
 		return results;
 	}
-	
 	// find - all/paginated
 	
 	@RequestMapping( params = { "page", "size" },method = RequestMethod.GET )
