@@ -35,7 +35,7 @@ public class RoleSortRESTIntegrationTest extends SecSortRESTIntegrationTest< Rol
 		return new Ordering< Role >(){
 			@Override
 			public final int compare( final Role left, final Role right ){
-				return left.getName().compareTo( right.getName() );
+				return left.getName().compareToIgnoreCase( right.getName() );
 			}
 		};
 	}

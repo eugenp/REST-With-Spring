@@ -35,7 +35,7 @@ public class PrivilegeSortRESTIntegrationTest extends SecSortRESTIntegrationTest
 		return new Ordering< Privilege >(){
 			@Override
 			public final int compare( final Privilege left, final Privilege right ){
-				return left.getName().compareTo( right.getName() );
+				return left.getName().compareToIgnoreCase( right.getName() );
 			}
 		};
 	}

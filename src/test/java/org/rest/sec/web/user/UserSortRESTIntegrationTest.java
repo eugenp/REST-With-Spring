@@ -35,7 +35,7 @@ public class UserSortRESTIntegrationTest extends SecSortRESTIntegrationTest< Use
 		return new Ordering< User >(){
 			@Override
 			public final int compare( final User left, final User right ){
-				return left.getName().compareTo( right.getName() );
+				return left.getName().compareToIgnoreCase( right.getName() );
 			}
 		};
 	}
