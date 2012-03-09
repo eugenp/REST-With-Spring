@@ -48,7 +48,7 @@ public final class ConstructQueryStringUnitTest{
 	@Test
 	public final void whenQueryStringIsConstructedFromNegatedId_thenQueryStringIsCorrect(){
 		final String queryString = SearchUtil.constructQueryString( 2l, true, null, false );
-		assertEquals( "~id" + SearchUtil.DELIMITER + "2", queryString );
+		assertEquals( SearchUtil.NEGATION + SearchUtil.ID + SearchUtil.DELIMITER + "2", queryString );
 	}
 	
 	@Test

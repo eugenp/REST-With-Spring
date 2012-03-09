@@ -11,7 +11,7 @@ import com.google.common.collect.Lists;
 
 public final class SearchUtil{
 	
-	private static final String SEPARATOR = ",";
+	public static final String SEPARATOR = ",";
 	public static final String DELIMITER = "=";
 	
 	public static final String ID = "id";
@@ -46,7 +46,7 @@ public final class SearchUtil{
 	}
 	
 	//
-
+	
 	public static String constructQueryString( final Long id, final String name ){
 		return constructQueryString( id, false, name, false );
 	}
