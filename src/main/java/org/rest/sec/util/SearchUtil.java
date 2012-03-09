@@ -11,6 +11,13 @@ import com.google.common.collect.Lists;
 
 public final class SearchUtil{
 	
+	private static final String SEPARATOR = ",";
+	public static final String DELIMITER = "=";
+	
+	public static final String ID = "id";
+	public static final String NAME = "name";
+	public static final String NEGATION = "~";
+	
 	private SearchUtil(){
 		throw new UnsupportedOperationException();
 	}
@@ -19,28 +26,27 @@ public final class SearchUtil{
 	
 	public static List< ImmutablePair< String, ? >> parseQueryString( final String queryString ){
 		Preconditions.checkNotNull( queryString );
-		Preconditions.checkState( queryString.matches( "(~?id:[0-9]+)?,?(~?name:[0-9a-zA-Z]+)?" ) );
+		Preconditions.checkState( queryString.matches( "(~?id=[0-9]+)?,?(~?name=[0-9a-zA-Z]+)?" ) );
 		
 		final List< ImmutablePair< String, ? >> tuplesList = Lists.newArrayList();
-		final String[] tuples = queryString.split( "," );
+		final String[] tuples = queryString.split( SEPARATOR );
 		for( final String tuple : tuples ){
-			final String[] keyAndValue = tuple.split( ":" );
+			final String[] keyAndValue = tuple.split( DELIMITER );
 			Preconditions.checkState( keyAndValue.length == 2 );
 			tuplesList.add( constructTuple( keyAndValue[0], keyAndValue[1] ) );
 		}
 		
 		return tuplesList;
 	}
-	
 	private static ImmutablePair< String, ? > constructTuple( final String key, final String value ){
-		if( key.endsWith( "id" ) ){
+		if( key.endsWith( ID ) ){
 			return new ImmutablePair< String, Long >( key, Long.parseLong( value ) );
 		}
 		return new ImmutablePair< String, String >( key, value );
 	}
 	
 	//
-	
+
 	public static String constructQueryString( final Long id, final String name ){
 		return constructQueryString( id, false, name, false );
 	}
@@ -56,15 +62,15 @@ public final class SearchUtil{
 		final StringBuffer queryString = new StringBuffer();
 		String key = null;
 		if( id != null ){
-			key = ( negatedId ) ? "~id" : "id";
-			queryString.append( key + ":" + id );
+			key = ( negatedId ) ? NEGATION + ID : ID;
+			queryString.append( key + DELIMITER + id );
 		}
 		if( name != null ){
 			if( queryString.length() != 0 ){
-				queryString.append( ',' );
+				queryString.append( SEPARATOR );
 			}
-			key = ( negatedName ) ? "~name" : "name";
-			queryString.append( key + ":" + name );
+			key = ( negatedName ) ? NEGATION + NAME : NAME;
+			queryString.append( key + DELIMITER + name );
 		}
 		
 		return queryString.toString();
