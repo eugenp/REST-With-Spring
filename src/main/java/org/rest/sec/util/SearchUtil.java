@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
 public final class SearchUtil{
 	
 	public static final String SEPARATOR = ",";
-	public static final String DELIMITER = "=";
+	public static final String OP = "=";
 	
 	public static final String ID = "id";
 	public static final String NAME = "name";
@@ -26,12 +26,12 @@ public final class SearchUtil{
 	
 	public static List< ImmutablePair< String, ? >> parseQueryString( final String queryString ){
 		Preconditions.checkNotNull( queryString );
-		Preconditions.checkState( queryString.matches( "(~?id=[0-9]+)?,?(~?name=[0-9a-zA-Z]+)?" ) );
+		Preconditions.checkState( queryString.matches( "(id~?=[0-9]+)?,?(name~?=[0-9a-zA-Z]+)?" ) );
 		
 		final List< ImmutablePair< String, ? >> tuplesList = Lists.newArrayList();
 		final String[] tuples = queryString.split( SEPARATOR );
 		for( final String tuple : tuples ){
-			final String[] keyAndValue = tuple.split( DELIMITER );
+			final String[] keyAndValue = tuple.split( NEGATION + "?" + OP );
 			Preconditions.checkState( keyAndValue.length == 2 );
 			tuplesList.add( constructTuple( keyAndValue[0], keyAndValue[1] ) );
 		}
@@ -60,17 +60,17 @@ public final class SearchUtil{
 	}
 	static String constructQueryString( final Long id, final boolean negatedId, final String name, final boolean negatedName ){
 		final StringBuffer queryString = new StringBuffer();
-		String key = null;
+		String op = null;
 		if( id != null ){
-			key = ( negatedId ) ? NEGATION + ID : ID;
-			queryString.append( key + DELIMITER + id );
+			op = ( negatedId ) ? NEGATION + OP : OP;
+			queryString.append( ID + op + id );
 		}
 		if( name != null ){
 			if( queryString.length() != 0 ){
 				queryString.append( SEPARATOR );
 			}
-			key = ( negatedName ) ? NEGATION + NAME : NAME;
-			queryString.append( key + DELIMITER + name );
+			op = ( negatedName ) ? NEGATION + OP : OP;
+			queryString.append( NAME + op + name );
 		}
 		
 		return queryString.toString();

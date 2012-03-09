@@ -27,15 +27,15 @@ public final class ParseQueryStringUnitTest{
 	}
 	@Test( expected = IllegalStateException.class )
 	public final void givenQueryContainIdConstraintFieldButNoValue_whenQueryIsParsed_thenException(){
-		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.DELIMITER );
+		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.OP );
 	}
 	@Test( expected = IllegalStateException.class )
 	public final void givenQueryContainIdConstraintNonNumericalValueForId_whenQueryIsParsed_thenException(){
-		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.DELIMITER + "aa" );
+		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.OP + "aa" );
 	}
 	@Test( expected = IllegalStateException.class )
 	public final void givenQueryContainSingleIdConstraintWithValidFieldValueAndAdditionalInvalidCharacter_whenQueryIsParsed_thenException(){
-		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.DELIMITER + "aa," );
+		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.OP + "aa," );
 	}
 	@Test( expected = IllegalStateException.class )
 	public final void givenQueryContainSingleIdConstraintWithCorrectFieldValueButInvalidSeparator_whenQueryIsParsed_thenException(){
@@ -50,52 +50,52 @@ public final class ParseQueryStringUnitTest{
 	
 	@Test
 	public final void givenQueryContainsValidIdConstraint_whenQueryIsParsed_thenNoExceptions(){
-		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.DELIMITER + "2" );
+		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.OP + "2" );
 	}
 	@Test
 	public final void givenValidQueryWithIdConstraint_whenQueryIsParsed_thenResultIsNotNull(){
-		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.DELIMITER + "2" );
+		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.OP + "2" );
 		
 		assertFalse( queryTyples.isEmpty() );
 	}
 	@Test
 	public final void givenValidQueryWithIdConstraint_whenQueryIsParsed_thenResultKeyIsCorrect(){
-		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.DELIMITER + "2" );
+		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.OP + "2" );
 		final ImmutablePair< String, ? > pair = queryTyples.get( 0 );
 		assertEquals( SearchUtil.ID, pair.getLeft() );
 	}
 	@Test
 	public final void givenValidQueryWithIdConstraint_whenQueryIsParsed_thenResultValueIsCorrect(){
-		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.DELIMITER + "2" );
+		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.OP + "2" );
 		final ImmutablePair< String, ? > pair = queryTyples.get( 0 );
 		assertEquals( 2l, pair.getRight() );
 	}
 	
 	@Test
 	public final void givenValidQueryWithNameConstraint_whenQueryIsParsed_thenNoExceptions(){
-		SearchUtil.parseQueryString( SearchUtil.NAME + SearchUtil.DELIMITER + "some" );
+		SearchUtil.parseQueryString( SearchUtil.NAME + SearchUtil.OP + "some" );
 	}
 	@Test
 	public final void givenValidQueryWithNameConstraint_whenQueryIsParsed_thenResultIsNotNull(){
-		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( SearchUtil.NAME + SearchUtil.DELIMITER + "some" );
+		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( SearchUtil.NAME + SearchUtil.OP + "some" );
 		
 		assertFalse( queryTyples.isEmpty() );
 	}
 	@Test
 	public final void givenValidQueryWithNameConstraint_whenQueryIsParsed_thenResultKeyIsCorrect(){
-		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( SearchUtil.NAME + SearchUtil.DELIMITER + "some" );
+		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( SearchUtil.NAME + SearchUtil.OP + "some" );
 		final ImmutablePair< String, ? > pair = queryTyples.get( 0 );
 		assertEquals( SearchUtil.NAME, pair.getLeft() );
 	}
 	@Test
 	public final void givenValidQueryWithNameConstraint_whenQueryIsParsed_thenResultValueIsCorrect(){
-		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( SearchUtil.NAME + SearchUtil.DELIMITER + "some" );
+		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( SearchUtil.NAME + SearchUtil.OP + "some" );
 		final ImmutablePair< String, ? > pair = queryTyples.get( 0 );
 		assertEquals( "some", pair.getRight() );
 	}
 	@Test
 	public final void givenValidQueryWithNameConstraint_whenQueryIsParsedForNameValueWithUppercase_thenResultValueIsCorrect(){
-		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( SearchUtil.NAME + SearchUtil.DELIMITER + "Some" );
+		final List< ImmutablePair< String, ? >> queryTyples = SearchUtil.parseQueryString( SearchUtil.NAME + SearchUtil.OP + "Some" );
 		final ImmutablePair< String, ? > pair = queryTyples.get( 0 );
 		assertEquals( "Some", pair.getRight() );
 	}
@@ -104,24 +104,24 @@ public final class ParseQueryStringUnitTest{
 	
 	@Test
 	public final void givenQueryContainsValidNegatedIdConstraint_whenQueryIsParsed_thenNoExceptions(){
-		SearchUtil.parseQueryString( SearchUtil.NEGATION + SearchUtil.ID + SearchUtil.DELIMITER + "2" );
+		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.NEGATION + SearchUtil.OP + "2" );
 	}
 	@Test
 	public final void givenQueryContainsValidNegatedNameConstraint_whenQueryIsParsed_thenNoExceptions(){
-		SearchUtil.parseQueryString( SearchUtil.NEGATION + SearchUtil.NAME + SearchUtil.DELIMITER + "some" );
+		SearchUtil.parseQueryString( SearchUtil.NAME + SearchUtil.NEGATION + SearchUtil.OP + "some" );
 	}
 	@Test
 	public final void givenQueryContainsValidNegatedIdAndNegatedNameConstraint_whenQueryIsParsed_thenNoExceptions(){
-		SearchUtil.parseQueryString( SearchUtil.NEGATION + SearchUtil.ID + SearchUtil.DELIMITER + "3" + SearchUtil.SEPARATOR + SearchUtil.NEGATION + SearchUtil.NAME + SearchUtil.DELIMITER + "some" );
+		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.NEGATION + SearchUtil.OP + "3" + SearchUtil.SEPARATOR + SearchUtil.NAME + SearchUtil.NEGATION + SearchUtil.OP + "some" );
 	}
 	@Test
 	public final void givenQueryContainsValidNegatedIdAndPositiveNameConstraint_whenQueryIsParsed_thenNoExceptions(){
-		SearchUtil.parseQueryString( SearchUtil.NEGATION + SearchUtil.ID + SearchUtil.DELIMITER + "3" + SearchUtil.SEPARATOR + SearchUtil.NAME + SearchUtil.DELIMITER + "some" );
+		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.NEGATION + SearchUtil.OP + "3" + SearchUtil.SEPARATOR + SearchUtil.NAME + SearchUtil.OP + "some" );
 	}
 	
 	@Test
 	public final void givenQueryContainsValidNegatedIdAndPositiveNameConstraint_whenQueryIsParsed_thenResultsAreCorrect(){
-		final List< ImmutablePair< String, ? >> parsedQueryString = SearchUtil.parseQueryString( SearchUtil.NEGATION + "id" + SearchUtil.DELIMITER + "3" + SearchUtil.SEPARATOR + SearchUtil.NAME + SearchUtil.DELIMITER + "some" );
+		final List< ImmutablePair< String, ? >> parsedQueryString = SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.NEGATION + SearchUtil.OP + "3" + SearchUtil.SEPARATOR + SearchUtil.NAME + SearchUtil.OP + "some" );
 		
 		assertEquals( 3l, parsedQueryString.get( 0 ).getRight() );
 		assertEquals( "some", parsedQueryString.get( 1 ).getRight() );
@@ -129,12 +129,12 @@ public final class ParseQueryStringUnitTest{
 	
 	@Test
 	public final void givenQueryContainsValidNegatedNameConstraint_whenQueryIsParsed_thenResultTypesAreCorrect(){
-		final List< ImmutablePair< String, ? >> parseQueryString = SearchUtil.parseQueryString( SearchUtil.NEGATION + SearchUtil.NAME + SearchUtil.DELIMITER + "some" );
+		final List< ImmutablePair< String, ? >> parseQueryString = SearchUtil.parseQueryString( SearchUtil.NAME + SearchUtil.NEGATION + SearchUtil.OP + "some" );
 		assertTrue( parseQueryString.get( 0 ).getRight().getClass().equals( String.class ) );
 	}
 	@Test
 	public final void givenQueryContainsValidNegatedIdConstraint_whenQueryIsParsed_thenResultTypesAreCorrect(){
-		final List< ImmutablePair< String, ? >> parseQueryString = SearchUtil.parseQueryString( SearchUtil.NEGATION + SearchUtil.ID + SearchUtil.DELIMITER + "2" );
+		final List< ImmutablePair< String, ? >> parseQueryString = SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.NEGATION + SearchUtil.OP + "2" );
 		assertTrue( parseQueryString.get( 0 ).getRight().getClass().equals( Long.class ) );
 	}
 	
@@ -142,20 +142,20 @@ public final class ParseQueryStringUnitTest{
 	
 	@Test( expected = IllegalStateException.class )
 	public final void givenQueryContainOneValidConstraintAndOneIncorrectOne_whenQueryIsParsed_thenException(){
-		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.DELIMITER + "2" + SearchUtil.SEPARATOR + "name" );
+		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.OP + "2" + SearchUtil.SEPARATOR + "name" );
 	}
 	
 	@Test
 	public final void givenQueryContainANameConstraintWithNumbersInTheName_whenQueryIsParsed_thenNoExceptions(){
-		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.DELIMITER + "2" + SearchUtil.SEPARATOR + SearchUtil.NAME + SearchUtil.DELIMITER + "eugen2" );
+		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.OP + "2" + SearchUtil.SEPARATOR + SearchUtil.NAME + SearchUtil.OP + "eugen2" );
 	}
 	@Test
 	public final void givenQueryContainTwoValidConstraints_whenQueryIsParsed_thenNoExceptions(){
-		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.DELIMITER + "2" + SearchUtil.SEPARATOR + SearchUtil.NAME + SearchUtil.DELIMITER + "eugen" );
+		SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.OP + "2" + SearchUtil.SEPARATOR + SearchUtil.NAME + SearchUtil.OP + "eugen" );
 	}
 	@Test
 	public final void givenQueryContainTwoValidConstraints_whenQueryIsParsed_thenConstraintsAreCorrect(){
-		final List< ImmutablePair< String, ? >> parsedQueryString = SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.DELIMITER + "2" + SearchUtil.SEPARATOR + SearchUtil.NAME + SearchUtil.DELIMITER + "eugen" );
+		final List< ImmutablePair< String, ? >> parsedQueryString = SearchUtil.parseQueryString( SearchUtil.ID + SearchUtil.OP + "2" + SearchUtil.SEPARATOR + SearchUtil.NAME + SearchUtil.OP + "eugen" );
 		assertThat( parsedQueryString, hasItem( new ImmutablePair< String, Long >( SearchUtil.ID, 2l ) ) );
 		assertThat( parsedQueryString, hasItem( new ImmutablePair< String, String >( SearchUtil.NAME, "eugen" ) ) );
 	}

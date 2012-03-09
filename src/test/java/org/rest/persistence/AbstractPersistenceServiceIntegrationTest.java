@@ -7,13 +7,13 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
-import java.util.Random;
 
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.IEntity;
 import org.rest.persistence.service.IService;
+import org.rest.util.IdUtil;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.annotation.Rollback;
 
@@ -59,8 +59,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 	}
 	@Test
 	public void givenEntityDoesNotExist_whenEntityIsRetrieved_thenNoExceptions(){
-		final long id = randomPositive();
-		getService().findOne( id );
+		getService().findOne( IdUtil.randomPositiveLong() );
 	}
 	@Test
 	public void givenEntityExists_whenEntityIsRetrieved_thenTheResultIsNotNull(){
@@ -70,7 +69,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 	}
 	@Test
 	public void givenEntityDoesNotExist_whenEntityIsRetrieved_thenTheResultIsNull(){
-		final T retrievedEntity = getService().findOne( randomPositive() );
+		final T retrievedEntity = getService().findOne( IdUtil.randomPositiveLong() );
 		assertNull( retrievedEntity );
 	}
 	@Test
@@ -90,7 +89,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 	@Ignore( "Hibernate simply ignores the id silently and still saved (tracking this)" )
 	public void whenEntityWithIdIsCreated_thenDataAccessException(){
 		final T entityWithId = createNewEntity();
-		entityWithId.setId( randomPositive() );
+		entityWithId.setId( IdUtil.randomPositiveLong() );
 		
 		getService().create( entityWithId );
 	}
@@ -156,12 +155,12 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 	@Test( expected = DataAccessException.class )
 	public void givenEntityDoesNotExists_whenEntityIsDeleted_thenDataAccessException(){
 		// When
-		getService().delete( randomPositive() );
+		getService().delete( IdUtil.randomPositiveLong() );
 	}
 	@Test( expected = DataAccessException.class )
 	public void whenEntityIsDeletedByNegativeId_thenDataAccessException(){
 		// When
-		getService().delete( ( randomPositive() * ( -1 ) ) );
+		getService().delete( ( IdUtil.randomNegativeLong() ) );
 	}
 	@Test
 	public void givenEntityExists_whenEntityIsDeleted_thenNoExceptions(){
@@ -227,14 +226,6 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 	
 	protected T persistNewEntity(){
 		return this.getService().create( this.createNewEntity() );
-	}
-	
-	// util
-	
-	protected final long randomPositive(){
-		long id = new Random().nextLong() * 10000;
-		id = ( id < 0 ) ? ( -1 * id ) : id;
-		return id;
 	}
 	
 }

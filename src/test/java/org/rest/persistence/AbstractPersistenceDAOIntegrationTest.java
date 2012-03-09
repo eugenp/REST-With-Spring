@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
-import java.util.Random;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -15,6 +14,7 @@ import org.rest.common.IEntity;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
 import org.rest.spring.testing.TestingTestConfig;
+import org.rest.util.IdUtil;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -56,9 +56,7 @@ public abstract class AbstractPersistenceDAOIntegrationTest< T extends IEntity >
 	}
 	@Test
 	public void givenEntityDoesNotExist_whenEntityIsRetrieved_thenNoExceptions(){
-		long id = new Random().nextLong() * 10000;
-		id = ( id < 0 ) ? ( -1 * id ) : id;
-		getDAO().findOne( id );
+		getDAO().findOne( IdUtil.randomPositiveLong() );
 	}
 	@Test
 	public void givenEntityExists_whenEntityIsRetrieved_thenTheResultIsNotNull(){

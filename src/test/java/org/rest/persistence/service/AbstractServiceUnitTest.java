@@ -5,10 +5,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Random;
-
 import org.junit.Test;
 import org.rest.common.IEntity;
+import org.rest.util.IdUtil;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -134,32 +133,36 @@ public abstract class AbstractServiceUnitTest< T extends IEntity >{
 	@Test
 	public final void givenResourceDoesNotExist_whenDeleteIsTriggered_thenNothingHappens(){
 		// When
-		getService().delete( new Random().nextLong() );
+		getService().delete( IdUtil.randomPositiveLong() );
 		
 		// Then
 	}
 	
 	@Test
 	public final void givenResourceExists_whenDeleteIsTriggered_thenNoExceptions(){
+		final long id = IdUtil.randomPositiveLong();
+		
 		// Given
-		when( getDAOMock().findOne( 1l ) ).thenReturn( this.createNewEntity() );
+		when( getDAOMock().findOne( id ) ).thenReturn( this.createNewEntity() );
 		
 		// When
-		getService().delete( new Random().nextLong() );
+		getService().delete( id );
 		
 		// Then
 	}
 	
 	@Test
 	public final void givenResourceExists_whenDeleteIsTriggered_thenEntityIsDeleted(){
+		final long id = IdUtil.randomPositiveLong();
+		
 		// Given
-		when( getDAOMock().findOne( 1l ) ).thenReturn( this.createNewEntity() );
+		when( getDAOMock().findOne( id ) ).thenReturn( this.createNewEntity() );
 		
 		// When
-		getService().delete( 1l );
+		getService().delete( id );
 		
 		// Then
-		verify( getDAOMock() ).delete( 1l );
+		verify( getDAOMock() ).delete( id );
 	}
 	
 	// getAll

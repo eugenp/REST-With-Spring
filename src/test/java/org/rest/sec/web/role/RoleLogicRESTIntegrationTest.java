@@ -11,7 +11,6 @@ import static org.junit.Assert.assertThat;
 import java.util.Set;
 
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.client.template.impl.PrivilegeRESTTemplateImpl;
 import org.rest.client.template.impl.RoleRESTTemplateImpl;
@@ -83,12 +82,10 @@ public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest< R
 		assertThat( response.getStatusCode(), is( 201 ) );
 	}
 	
-	/** - note: this may intermittently fail (investigate if that's the case) */
 	@Test
-	@Ignore( "TEMP" )
 	public final void whenResourceIsCreatedWithInvalidAssociation_then409IsReceived(){
 		final Privilege invalidAssociation = getAssociationTemplate().createNewEntity();
-		invalidAssociation.setId( 1001l );
+		getAssociationTemplate().invalidate( invalidAssociation );
 		final Role newResource = getTemplate().createNewEntity();
 		newResource.getPrivileges().add( invalidAssociation );
 		
@@ -112,7 +109,7 @@ public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest< R
 		
 		assertThat( existingAssociation, equalTo( associationsOfExistingResource.iterator().next() ) );
 	}
-
+	
 	// update
 	
 	@Test

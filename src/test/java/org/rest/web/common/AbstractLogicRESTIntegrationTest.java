@@ -124,7 +124,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 		assertThat( allResources, not( Matchers.<T> empty() ) );
 	}
 	
-	// POST
+	// create
 	
 	@Test
 	public final void whenAResourceIsCreated_thenNoExceptions(){
@@ -183,11 +183,10 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 		assertThat( response.getStatusCode(), is( 409 ) );
 	}
 	
-	// PUT
+	// update
 	
 	@Test
-	// @Ignore("some resource may not have an invalid state")
-	public final void whenPutIsDoneOnInvalidResource_then409ConflictIsReceived(){
+	public final void givenInvalidResource_whenResourceIsUpdated_then409ConflictIsReceived(){
 		// Given
 		final T existingResource = this.getTemplate().create( getTemplate().createNewEntity() );
 		invalidate( existingResource );
@@ -243,7 +242,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	public final void givenResourceDoesNotExist_whenResourceIsUpdated_then404IsReceived(){
 		// Given
 		final T unpersistedEntity = this.createNewEntity();
-		unpersistedEntity.setId( new Long( randomNumeric( 6 ) ) );
+		unpersistedEntity.setId( IdUtil.randomPositiveLong() );
 		
 		// When
 		final Response response = getTemplate().updateAsResponse( unpersistedEntity );
@@ -267,7 +266,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 		assertEquals( existingResource, updatedResourceFromServer );
 	}
 	
-	// DELETE
+	// delete
 	
 	@Test
 	public final void whenAResourceIsDeletedByIncorrectNonNumericId_then400IsReceived(){
