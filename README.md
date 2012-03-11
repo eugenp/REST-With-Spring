@@ -8,6 +8,8 @@ most of the thorny problems in REST are addressed: <br/>
 - Statelessness <br/> 
 - Basic and Digest Authentication <br/> 
 - support for Multiple Representations (JSON, XML) <br/> 
+- full integration testing suites at every layer: unit tests, integration tests for the DAO and Service layers, integration tests against the REST service <br/>
+
 
 # Continuous Integration
 ![Built on Cloudbees](http://web-static-cloudfront.s3.amazonaws.com/images/badges/BuiltOnDEV.png "Built on Cloudbees")
