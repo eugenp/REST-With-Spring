@@ -286,7 +286,7 @@
 						<exclude>**/*RESTIntegrationTest.java</exclude>
 					</excludes>
 					<systemPropertyVariables>
-						<persistenceTarget>mysql</persistenceTarget>
+						<persistenceTarget>h2</persistenceTarget>
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>
