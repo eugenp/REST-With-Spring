@@ -1,6 +1,13 @@
 # Overview
 
-This is a **Spring Security RESTful service**; it's purpose be used as a internally deployable, stand alone security implementation<br/>
+This is a **Spring Security RESTful service**; it's purpose be used as a internally deployable, stand alone security implementation <br/>
+<br/>
+An **alternative goal** of the project is to server as a starting point of a REST service implementation - a reference REST implementation with Spring and Spring Security, where 
+most of the thorny problems in REST are addressed: <br/> 
+- HATEOAS and Discoverability <br/> 
+- Statelessness <br/> 
+- Basic and Digest Authentication <br/> 
+- support for Multiple Representations (JSON, XML) <br/> 
 
 # Continuous Integration
 ![Built on Cloudbees](http://web-static-cloudfront.s3.amazonaws.com/images/badges/BuiltOnDEV.png "Built on Cloudbees")
