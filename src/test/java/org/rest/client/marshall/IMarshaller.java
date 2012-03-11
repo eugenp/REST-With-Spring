@@ -1,4 +1,4 @@
-package org.rest.testing.marshaller;
+package org.rest.client.marshall;
 
 public interface IMarshaller {
 

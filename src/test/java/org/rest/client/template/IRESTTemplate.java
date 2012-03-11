@@ -2,9 +2,9 @@ package org.rest.client.template;
 
 import java.util.List;
 
+import org.rest.client.marshall.IMarshaller;
 import org.rest.common.IEntity;
 import org.rest.common.IRestDao;
-import org.rest.testing.marshaller.IMarshaller;
 
 import com.jayway.restassured.specification.RequestSpecification;
 

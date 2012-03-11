@@ -2,8 +2,8 @@ package org.rest.client;
 
 import java.util.List;
 
+import org.rest.client.marshall.IMarshaller;
 import org.rest.common.IEntity;
-import org.rest.testing.marshaller.IMarshaller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;

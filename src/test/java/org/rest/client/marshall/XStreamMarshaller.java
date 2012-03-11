@@ -1,4 +1,4 @@
-package org.rest.testing.marshaller;
+package org.rest.client.marshall;
 
 import org.rest.sec.dto.User;
 import org.rest.sec.model.Privilege;

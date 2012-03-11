@@ -1,7 +1,7 @@
 package org.rest.sec.client;
 
+import org.rest.client.marshall.IMarshaller;
 import org.rest.sec.dto.User;
-import org.rest.testing.marshaller.IMarshaller;
 import org.rest.testing.security.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
