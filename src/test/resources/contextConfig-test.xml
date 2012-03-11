@@ -6,7 +6,7 @@
 	<context:property-placeholder local-override="true"
 		location="
         classpath*:*persistence-${persistenceTarget}.properties,
-        classpath*:*env-test.properties,
+        classpath*:*env-${target}.properties,
         classpath*:*web-${target}.properties" />
 
 </beans>

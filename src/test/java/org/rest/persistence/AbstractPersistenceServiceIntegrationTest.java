@@ -25,27 +25,27 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 	
 	@Test
 	public void whenEntitiesAreRetrieved_thenNoExceptions(){
-		getService().findAll();
+		getAPI().findAll();
 	}
 	@Test
 	public void whenEntitiesAreRetrieved_thenTheResultIsNotNull(){
-		final List< T > entities = getService().findAll();
+		final List< T > entities = getAPI().findAll();
 		
 		assertNotNull( entities );
 	}
 	@Test
 	public void givenAnEntityExists_whenEntitiesAreRetrieved_thenThereIsAtLeastOneEntity(){
-		persistNewEntity();
+		this.getAPI().create( this.createNewEntity() );
 		
-		final List< T > owners = getService().findAll();
+		final List< T > owners = getAPI().findAll();
 		
 		assertThat( owners, Matchers.not( Matchers.<T> empty() ) );
 	}
 	@Test
 	public void givenAnEntityExists_whenEntitiesAreRetrieved_thenTheExistingEntityIsIndeedAmongThem(){
-		final T existingEntity = persistNewEntity();
+		final T existingEntity = this.getAPI().create( this.createNewEntity() );
 		
-		final List< T > owners = getService().findAll();
+		final List< T > owners = getAPI().findAll();
 		
 		assertThat( owners, hasItem( existingEntity ) );
 	}
@@ -54,60 +54,52 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 	
 	@Test
 	public void givenEntityExists_whenEntityIsRetrieved_thenNoExceptions(){
-		final T existingEntity = persistNewEntity();
-		getService().findOne( existingEntity.getId() );
+		final T existingEntity = this.getAPI().create( this.createNewEntity() );
+		getAPI().findOne( existingEntity.getId() );
 	}
 	@Test
 	public void givenEntityDoesNotExist_whenEntityIsRetrieved_thenNoExceptions(){
-		getService().findOne( IdUtil.randomPositiveLong() );
+		getAPI().findOne( IdUtil.randomPositiveLong() );
 	}
 	@Test
 	public void givenEntityExists_whenEntityIsRetrieved_thenTheResultIsNotNull(){
-		final T existingEntity = persistNewEntity();
-		final T retrievedEntity = getService().findOne( existingEntity.getId() );
+		final T existingEntity = this.getAPI().create( this.createNewEntity() );
+		final T retrievedEntity = getAPI().findOne( existingEntity.getId() );
 		assertNotNull( retrievedEntity );
 	}
 	@Test
 	public void givenEntityDoesNotExist_whenEntityIsRetrieved_thenTheResultIsNull(){
-		final T retrievedEntity = getService().findOne( IdUtil.randomPositiveLong() );
+		final T retrievedEntity = getAPI().findOne( IdUtil.randomPositiveLong() );
 		assertNull( retrievedEntity );
 	}
 	@Test
 	public void givenEntityExists_whenEntityIsRetrieved_thenEntityIsRetrievedCorrectly(){
-		final T existingEntity = persistNewEntity();
-		final T retrievedEntity = getService().findOne( existingEntity.getId() );
+		final T existingEntity = this.getAPI().create( this.createNewEntity() );
+		final T retrievedEntity = getAPI().findOne( existingEntity.getId() );
 		assertEquals( existingEntity, retrievedEntity );
 	}
 	
-	// create
+	// save/create
 	
 	@Test( expected = RuntimeException.class )
 	public void whenNullEntityIsCreated_thenException(){
-		getService().create( null );
-	}
-	@Test( expected = DataAccessException.class )
-	@Ignore( "Hibernate simply ignores the id silently and still saved (tracking this)" )
-	public void whenEntityWithIdIsCreated_thenDataAccessException(){
-		final T entityWithId = createNewEntity();
-		entityWithId.setId( IdUtil.randomPositiveLong() );
-		
-		getService().create( entityWithId );
+		getAPI().create( null );
 	}
 	@Test
 	@Rollback
 	public void whenEntityIsCreated_thenNoExceptions(){
-		persistNewEntity();
+		this.getAPI().create( this.createNewEntity() );
 	}
 	@Test
 	public void whenEntityIsCreated_thenEntityIsRetrievable(){
-		final T existingEntity = persistNewEntity();
+		final T existingEntity = this.getAPI().create( this.createNewEntity() );
 		
-		assertNotNull( getService().findOne( existingEntity.getId() ) );
+		assertNotNull( getAPI().findOne( existingEntity.getId() ) );
 	}
 	@Test
 	public void whenEntityIsCreated_thenSavedEntityIsEqualToOriginalEntity(){
 		final T originalEntity = createNewEntity();
-		final T savedEntity = getService().create( originalEntity );
+		final T savedEntity = getAPI().create( originalEntity );
 		
 		assertEquals( originalEntity, savedEntity );
 	}
@@ -117,36 +109,47 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 		final T invalidEntity = createNewEntity();
 		invalidate( invalidEntity );
 		
-		getService().create( invalidEntity );
+		getAPI().create( invalidEntity );
+	}
+	
+	// -- specific to the persistence engine
+	
+	@Test( expected = DataAccessException.class )
+	@Ignore( "Hibernate simply ignores the id silently and still saved (tracking this)" )
+	public void whenEntityWithIdIsCreated_thenDataAccessException(){
+		final T entityWithId = createNewEntity();
+		entityWithId.setId( IdUtil.randomPositiveLong() );
+		
+		getAPI().create( entityWithId );
 	}
 	
 	// update
 	
 	@Test( expected = RuntimeException.class )
 	public void whenNullEntityIsUpdated_thenException(){
-		getService().update( null );
+		getAPI().update( null );
 	}
 	@Test
 	public void whenEntityIsUpdated_thenNoExceptions(){
-		final T existingEntity = persistNewEntity();
+		final T existingEntity = this.getAPI().create( this.createNewEntity() );
 		
-		getService().update( existingEntity );
+		getAPI().update( existingEntity );
 	}
 	@Test( expected = DataAccessException.class )
 	public void whenEntityIsUpdatedWithFailedConstraints_thenException(){
-		final T existingEntity = persistNewEntity();
+		final T existingEntity = this.getAPI().create( this.createNewEntity() );
 		invalidate( existingEntity );
 		
-		getService().update( existingEntity );
+		getAPI().update( existingEntity );
 	}
 	@Test
 	public void whenEntityIsUpdated_thenTheUpdatedAreCorrectlyPersisted(){
-		final T existingEntity = persistNewEntity();
+		final T existingEntity = this.getAPI().create( this.createNewEntity() );
 		changeEntity( existingEntity );
 		
-		getService().update( existingEntity );
+		getAPI().update( existingEntity );
 		
-		final T updatedEntity = getService().findOne( existingEntity.getId() );
+		final T updatedEntity = getAPI().findOne( existingEntity.getId() );
 		assertEquals( existingEntity, updatedEntity );
 	}
 	
@@ -155,77 +158,43 @@ public abstract class AbstractPersistenceServiceIntegrationTest< T extends IEnti
 	@Test( expected = DataAccessException.class )
 	public void givenEntityDoesNotExists_whenEntityIsDeleted_thenDataAccessException(){
 		// When
-		getService().delete( IdUtil.randomPositiveLong() );
+		getAPI().delete( IdUtil.randomPositiveLong() );
 	}
 	@Test( expected = DataAccessException.class )
 	public void whenEntityIsDeletedByNegativeId_thenDataAccessException(){
 		// When
-		getService().delete( ( IdUtil.randomNegativeLong() ) );
+		getAPI().delete( ( IdUtil.randomNegativeLong() ) );
 	}
 	@Test
 	public void givenEntityExists_whenEntityIsDeleted_thenNoExceptions(){
 		// Given
-		final T existingLocation = persistNewEntity();
+		final T existingLocation = this.getAPI().create( this.createNewEntity() );
 		
 		// When
-		getService().delete( existingLocation.getId() );
+		getAPI().delete( existingLocation.getId() );
 	}
 	@Test
 	public void givenEntityExists_whenEntityIsDeleted_thenEntityIsNoLongerRetrievable(){
 		// Given
-		final T existingEntity = persistNewEntity();
+		final T existingEntity = this.getAPI().create( this.createNewEntity() );
 		
 		// When
-		getService().delete( existingEntity.getId() );
+		getAPI().delete( existingEntity.getId() );
 		
 		// Then
-		assertNull( getService().findOne( existingEntity.getId() ) );
+		assertNull( getAPI().findOne( existingEntity.getId() ) );
 	}
 	
 	// delete all
-	
-	@Test
-	public void givenEntityExists_whenEntitiesAreDeleted_thenNoException(){
-		// Given
-		persistNewEntity();
-		
-		// When
-		getService().deleteAll();
-	}
-	@Test
-	public void givenNoEntityExists_whenEntitiesAreDeleted_thenNoException(){
-		// Given
-		getService().deleteAll();
-		
-		// When
-		getService().deleteAll();
-	}
-	@Test
-	public void givenEntityExists_whenEntitiesAreDeleted_thenNoEntitiesExist(){
-		// Given
-		persistNewEntity();
-		
-		// When
-		getService().deleteAll();
-		
-		// Then
-		assert ( getService().findAll().size() == 0 );
-	}
+	// - note: the goal of these tests is to be independent of each other; because of this, deleteAll is not an option
 	
 	// template method
 	
-	protected abstract IService< T > getService();
+	protected abstract IService< T > getAPI();
 	
 	protected abstract T createNewEntity();
 	
 	protected abstract void invalidate( final T entity );
-	
 	protected abstract void changeEntity( final T entity );
-	
-	//
-	
-	protected T persistNewEntity(){
-		return this.getService().create( this.createNewEntity() );
-	}
 	
 }

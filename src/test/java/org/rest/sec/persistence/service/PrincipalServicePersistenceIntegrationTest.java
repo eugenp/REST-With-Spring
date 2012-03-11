@@ -2,10 +2,10 @@ package org.rest.sec.persistence.service;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.persistence.AbstractPersistenceServiceIntegrationTest;
+import org.rest.persistence.service.IService;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.Role;
 import org.rest.spring.context.ContextTestConfig;
@@ -23,38 +23,29 @@ import com.google.common.collect.Sets;
 @ContextConfiguration( classes = { TestingTestConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
 public class PrincipalServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< Principal >{
 	
-	@Autowired private IPrivilegeService privilegeService;
-	@Autowired private IRoleService roleService;
+	@Autowired IPrivilegeService privilegeService;
+	@Autowired IRoleService roleService;
 	@Autowired private IPrincipalService principalService;
-	
-	// fixtures
-	
-	@Before
-	public final void before(){
-		principalService.deleteAll();
-		roleService.deleteAll();
-		privilegeService.deleteAll();
-	}
 	
 	// create
 	
 	@Test
 	public void whenSaveIsPerformed_thenNoException(){
-		getService().create( createNewEntity() );
+		getAPI().create( createNewEntity() );
 	}
 	
 	@Test( expected = DataAccessException.class )
 	public void whenAUniqueConstraintIsBroken_thenSpringSpecificExceptionIsThrown(){
 		final String name = randomAlphabetic( 8 );
 		
-		getService().create( createNewEntity( name ) );
-		getService().create( createNewEntity( name ) );
+		getAPI().create( createNewEntity( name ) );
+		getAPI().create( createNewEntity( name ) );
 	}
 	
 	// Spring
 	
 	@Override
-	protected final IPrincipalService getService(){
+	protected final IService< Principal > getAPI(){
 		return principalService;
 	}
 	

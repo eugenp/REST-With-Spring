@@ -3,11 +3,11 @@ package org.rest.sec.persistence.dao;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.rest.persistence.AbstractPersistenceDAOIntegrationTest;
 import org.rest.sec.model.Privilege;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,23 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class PrivilegeDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest< Privilege >{
 	
 	@Autowired private IPrivilegeJpaDAO privilegeDao;
-	@Autowired private IRoleJpaDAO associationDao;
-	@Autowired private IPrincipalJpaDAO principalDao;
-	
-	// fixtures
-	
-	@Before
-	public final void before(){
-		principalDao.deleteAll();
-		associationDao.deleteAll();
-		privilegeDao.deleteAll();
-	}
+	@Autowired IRoleJpaDAO associationDao;
+	@Autowired IPrincipalJpaDAO principalDao;
 	
 	// save
 	
 	@Test
 	public void whenSaveIsPerformed_thenNoException(){
-		getDAO().save( createNewEntity() );
+		getAPI().save( createNewEntity() );
 	}
 	
 	// find by
@@ -43,7 +34,7 @@ public class PrivilegeDAOPersistenceIntegrationTest extends AbstractPersistenceD
 		final String name = randomAlphabetic( 8 );
 		
 		// When
-		final Privilege entityByName = getDAO().findByName( name );
+		final Privilege entityByName = getDAOCasted().findByName( name );
 		
 		// Then
 		assertNull( entityByName );
@@ -52,14 +43,28 @@ public class PrivilegeDAOPersistenceIntegrationTest extends AbstractPersistenceD
 	// template method
 	
 	@Override
-	protected final IPrivilegeJpaDAO getDAO(){
+	protected final JpaRepository< Privilege, Long > getAPI(){
 		return privilegeDao;
 	}
 	
 	@Override
 	protected final Privilege createNewEntity(){
-		final Privilege entity = new Privilege( randomAlphabetic( 8 ) );
-		return entity;
+		return new Privilege( randomAlphabetic( 8 ) );
+	}
+	
+	@Override
+	protected final void invalidate( final Privilege entity ){
+		entity.setName( null );
+	}
+	@Override
+	protected final void changeEntity( final Privilege entity ){
+		entity.setName( randomAlphabetic( 6 ) );
+	}
+	
+	//
+	
+	protected final IPrivilegeJpaDAO getDAOCasted(){
+		return privilegeDao;
 	}
 	
 }

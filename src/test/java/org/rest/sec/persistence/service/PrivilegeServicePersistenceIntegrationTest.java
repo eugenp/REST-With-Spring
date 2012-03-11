@@ -2,10 +2,10 @@ package org.rest.sec.persistence.service;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.persistence.AbstractPersistenceServiceIntegrationTest;
+import org.rest.persistence.service.IService;
 import org.rest.sec.model.Privilege;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
@@ -21,17 +21,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 public class PrivilegeServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< Privilege >{
 	
 	@Autowired private IPrivilegeService privilegeService;
-	@Autowired private IRoleService roleService;
-	@Autowired private IPrincipalService principalService;
-	
-	// fixtures
-	
-	@Before
-	public final void before(){
-		principalService.deleteAll();
-		roleService.deleteAll();
-		privilegeService.deleteAll();
-	}
+	@Autowired IRoleService roleService;
+	@Autowired IPrincipalService principalService;
 	
 	// create
 	
@@ -51,7 +42,7 @@ public class PrivilegeServicePersistenceIntegrationTest extends AbstractPersiste
 	// template method
 	
 	@Override
-	protected final IPrivilegeService getService(){
+	protected final IService< Privilege > getAPI(){
 		return privilegeService;
 	}
 	@Override

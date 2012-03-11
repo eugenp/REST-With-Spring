@@ -4,10 +4,11 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertThat;
 
-import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.persistence.AbstractPersistenceServiceIntegrationTest;
+import org.rest.persistence.service.IService;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
 import org.rest.spring.context.ContextTestConfig;
@@ -29,15 +30,6 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 	@Autowired private IRoleService roleService;
 	@Autowired private IPrincipalService principalService;
 	
-	// fixtures
-	
-	@Before
-	public final void before(){
-		principalService.deleteAll();
-		roleService.deleteAll();
-		privilegeService.deleteAll();
-	}
-	
 	// create
 	
 	@Test
@@ -57,11 +49,12 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 	
 	/** - known issue: this fails on a H2 database */
 	@Test
+	@Ignore
 	public final void givenEntityExistsWithAssociationScenarios_whenDeletingEverything_thenNoException(){
 		final Privilege existingAssociation = getAssociationService().create( new Privilege( randomAlphabetic( 6 ) ) );
 		final Role newResource = createNewEntity();
 		newResource.getPrivileges().add( existingAssociation );
-		getService().create( newResource );
+		getAPI().create( newResource );
 		
 		principalService.deleteAll();
 		roleService.deleteAll();
@@ -73,11 +66,11 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 		final Privilege existingAssociation = getAssociationService().create( new Privilege( randomAlphabetic( 6 ) ) );
 		final Role newResource = createNewEntity();
 		newResource.getPrivileges().add( existingAssociation );
-		getService().create( newResource );
+		getAPI().create( newResource );
 		
 		final Role newResource2 = createNewEntity();
 		newResource2.getPrivileges().add( existingAssociation );
-		getService().create( newResource2 );
+		getAPI().create( newResource2 );
 	}
 	
 	@Test
@@ -85,20 +78,20 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 		final Privilege existingAssociation = getAssociationService().create( new Privilege( randomAlphabetic( 6 ) ) );
 		final Role resource1 = new Role( randomAlphabetic( 6 ), Sets.newHashSet( existingAssociation ) );
 		
-		final Role resource1ViewOfServerBefore = getService().create( resource1 );
+		final Role resource1ViewOfServerBefore = getAPI().create( resource1 );
 		assertThat( resource1ViewOfServerBefore.getPrivileges(), hasItem( existingAssociation ) );
 		
 		final Role resource2 = new Role( randomAlphabetic( 6 ), Sets.newHashSet( existingAssociation ) );
-		getService().create( resource2 );
+		getAPI().create( resource2 );
 		
-		final Role resource1ViewOfServerAfter = getService().findOne( resource1ViewOfServerBefore.getId() );
+		final Role resource1ViewOfServerAfter = getAPI().findOne( resource1ViewOfServerBefore.getId() );
 		assertThat( resource1ViewOfServerAfter.getPrivileges(), hasItem( existingAssociation ) );
 	}
 	
 	// template method
 	
 	@Override
-	protected final IRoleService getService(){
+	protected final IService< Role > getAPI(){
 		return roleService;
 	}
 	@Override

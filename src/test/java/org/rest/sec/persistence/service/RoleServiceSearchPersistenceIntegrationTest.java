@@ -41,9 +41,9 @@ public class RoleServiceSearchPersistenceIntegrationTest{
 	
 	@Before
 	public final void before(){
-		principalService.deleteAll();
+		/*principalService.deleteAll();
 		roleService.deleteAll();
-		privilegeService.deleteAll();
+		privilegeService.deleteAll();*/
 	}
 	
 	// search/filter
