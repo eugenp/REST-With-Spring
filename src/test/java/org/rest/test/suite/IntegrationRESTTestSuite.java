@@ -5,8 +5,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.rest.security.SecurityRESTIntegrationTest;
 
-@RunWith( Suite.class )
-@SuiteClasses( {// @formatter:off
+@RunWith(Suite.class)
+@SuiteClasses({// @formatter:off
 	IntegrationClientRESTTestSuite.class,
 	IntegrationDiscoverabilityRESTTestSuite.class,
 	IntegrationLogicRESTTestSuite.class,
@@ -15,6 +15,6 @@ import org.rest.security.SecurityRESTIntegrationTest;
 	IntegrationMimeRESTTestSuite.class,
 	SecurityRESTIntegrationTest.class
 } ) // @formatter:on
-public final class IntegrationRESTTestSuite{
-	//
+public final class IntegrationRESTTestSuite {
+    //
 }

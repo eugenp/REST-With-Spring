@@ -12,37 +12,40 @@ import org.springframework.stereotype.Component;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @Component
-public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate< Privilege >{
-	
-	@Autowired protected ExamplePaths paths;
-	
-	public PrivilegeRESTTemplateImpl(){
-		super( Privilege.class );
-	}
-	
-	// template method
-	
-	@Override
-	public final String getURI(){
-		return paths.getPrivilegeUri();
-	}
-	
-	@Override
-	public final RequestSpecification givenAuthenticated(){
-		return AuthenticationUtil.givenBasicAuthenticated();
-	}
-	
-	@Override
-	public final Privilege createNewEntity(){
-		return new Privilege( randomAlphabetic( 8 ) );
-	}
-	@Override
-	public final void invalidate( final Privilege entity ){
-		entity.setName( null );
-	}
-	@Override
-	public void change( final Privilege resource ){
-		resource.setName( randomAlphabetic( 8 ) );
-	}
-	
+public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate<Privilege> {
+
+    @Autowired
+    protected ExamplePaths paths;
+
+    public PrivilegeRESTTemplateImpl() {
+	super(Privilege.class);
+    }
+
+    // template method
+
+    @Override
+    public final String getURI() {
+	return paths.getPrivilegeUri();
+    }
+
+    @Override
+    public final RequestSpecification givenAuthenticated() {
+	return AuthenticationUtil.givenBasicAuthenticated();
+    }
+
+    @Override
+    public final Privilege createNewEntity() {
+	return new Privilege(randomAlphabetic(8));
+    }
+
+    @Override
+    public final void invalidate(final Privilege entity) {
+	entity.setName(null);
+    }
+
+    @Override
+    public void change(final Privilege resource) {
+	resource.setName(randomAlphabetic(8));
+    }
+
 }

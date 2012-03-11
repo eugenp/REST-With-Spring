@@ -18,81 +18,83 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
 @Transactional
-public abstract class AbstractService< T extends IEntity > implements IService< T >{
-	protected final Logger logger = LoggerFactory.getLogger( this.getClass() );
-	
-	private Class< T > clazz;
-	
-	protected @Autowired ApplicationEventPublisher eventPublisher;
-	
-	public AbstractService( final Class< T > clazzToSet ){
-		super();
-		
-		this.clazz = clazzToSet;
-	}
-	
-	// API
-	
-	// find/get
-	
-	@Override
-	@Transactional( readOnly = true )
-	public T findOne( final long id ){
-		return this.getDao().findOne( id );
-	}
-	
-	@Override
-	@Transactional( readOnly = true )
-	public List< T > findAll(){
-		return Lists.newArrayList( this.getDao().findAll() );
-	}
-	
-	@Override
-	@Transactional( readOnly = true )
-	public Page< T > findPaginated( final int page, final int size, final String sortBy ){
-		Sort sortInfo = null;
-		if( sortBy != null ){
-			sortInfo = new Sort( sortBy );
-		}
-		
-		return getDao().findAll( new PageRequest( page, size, sortInfo ) );
-	}
-	
-	// save/create/persist
-	
-	@Override
-	public T create( final T entity ){
-		Preconditions.checkNotNull( entity );
-		
-		final T persistedEntity = this.getDao().save( entity );
-		
-		eventPublisher.publishEvent( new EntityCreatedEvent< T >( this, clazz, persistedEntity ) );
-		return persistedEntity;
-	}
-	
-	// update/merge
-	
-	@Override
-	public void update( final T entity ){
-		Preconditions.checkNotNull( entity );
-		// Preconditions.checkState( findOne( entity.getId() ) != null );
-		
-		this.getDao().save( entity );
-	}
-	
-	// delete
-	
-	@Override
-	public void deleteAll(){
-		this.getDao().deleteAll();
-	}
-	@Override
-	public void delete( final long id ){
-		this.getDao().delete( id );
-	}
-	
-	//
+public abstract class AbstractService<T extends IEntity> implements IService<T> {
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	protected abstract PagingAndSortingRepository< T, Long > getDao();
-	
+    private Class<T> clazz;
+
+    protected @Autowired
+    ApplicationEventPublisher eventPublisher;
+
+    public AbstractService(final Class<T> clazzToSet) {
+	super();
+
+	this.clazz = clazzToSet;
+    }
+
+    // API
+
+    // find/get
+
+    @Override
+    @Transactional(readOnly = true)
+    public T findOne(final long id) {
+	return this.getDao().findOne(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<T> findAll() {
+	return Lists.newArrayList(this.getDao().findAll());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<T> findPaginated(final int page, final int size, final String sortBy) {
+	Sort sortInfo = null;
+	if (sortBy != null) {
+	    sortInfo = new Sort(sortBy);
+	}
+
+	return getDao().findAll(new PageRequest(page, size, sortInfo));
+    }
+
+    // save/create/persist
+
+    @Override
+    public T create(final T entity) {
+	Preconditions.checkNotNull(entity);
+
+	final T persistedEntity = this.getDao().save(entity);
+
+	eventPublisher.publishEvent(new EntityCreatedEvent<T>(this, clazz, persistedEntity));
+	return persistedEntity;
+    }
+
+    // update/merge
+
+    @Override
+    public void update(final T entity) {
+	Preconditions.checkNotNull(entity);
+	// Preconditions.checkState( findOne( entity.getId() ) != null );
+
+	this.getDao().save(entity);
+    }
+
+    // delete
+
+    @Override
+    public void deleteAll() {
+	this.getDao().deleteAll();
+    }
+
+    @Override
+    public void delete(final long id) {
+	this.getDao().delete(id);
+    }
+
+    //
+
+    protected abstract PagingAndSortingRepository<T, Long> getDao();
+
 }

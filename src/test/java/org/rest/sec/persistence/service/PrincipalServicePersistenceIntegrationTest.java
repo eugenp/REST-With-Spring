@@ -19,55 +19,58 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.google.common.collect.Sets;
 
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { TestingTestConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
-public class PrincipalServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< Principal >{
-	
-	@Autowired IPrivilegeService privilegeService;
-	@Autowired IRoleService roleService;
-	@Autowired private IPrincipalService principalService;
-	
-	// create
-	
-	@Test
-	public void whenSaveIsPerformed_thenNoException(){
-		getAPI().create( createNewEntity() );
-	}
-	
-	@Test( expected = DataAccessException.class )
-	public void whenAUniqueConstraintIsBroken_thenSpringSpecificExceptionIsThrown(){
-		final String name = randomAlphabetic( 8 );
-		
-		getAPI().create( createNewEntity( name ) );
-		getAPI().create( createNewEntity( name ) );
-	}
-	
-	// Spring
-	
-	@Override
-	protected final IService< Principal > getAPI(){
-		return principalService;
-	}
-	
-	// template method
-	
-	@Override
-	protected final Principal createNewEntity(){
-		return new Principal( randomAlphabetic( 8 ), randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
-	}
-	
-	protected final Principal createNewEntity( final String name ){
-		return new Principal( name, randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
-	}
-	
-	@Override
-	protected final void invalidate( final Principal entity ){
-		entity.setName( null );
-	}
-	
-	@Override
-	protected void changeEntity( final Principal entity ){
-		entity.setPassword( randomAlphabetic( 8 ) );
-	}
-	
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { TestingTestConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
+public class PrincipalServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest<Principal> {
+
+    @Autowired
+    IPrivilegeService privilegeService;
+    @Autowired
+    IRoleService roleService;
+    @Autowired
+    private IPrincipalService principalService;
+
+    // create
+
+    @Test
+    public void whenSaveIsPerformed_thenNoException() {
+	getAPI().create(createNewEntity());
+    }
+
+    @Test(expected = DataAccessException.class)
+    public void whenAUniqueConstraintIsBroken_thenSpringSpecificExceptionIsThrown() {
+	final String name = randomAlphabetic(8);
+
+	getAPI().create(createNewEntity(name));
+	getAPI().create(createNewEntity(name));
+    }
+
+    // Spring
+
+    @Override
+    protected final IService<Principal> getAPI() {
+	return principalService;
+    }
+
+    // template method
+
+    @Override
+    protected final Principal createNewEntity() {
+	return new Principal(randomAlphabetic(8), randomAlphabetic(8), Sets.<Role> newHashSet());
+    }
+
+    protected final Principal createNewEntity(final String name) {
+	return new Principal(name, randomAlphabetic(8), Sets.<Role> newHashSet());
+    }
+
+    @Override
+    protected final void invalidate(final Principal entity) {
+	entity.setName(null);
+    }
+
+    @Override
+    protected void changeEntity(final Principal entity) {
+	entity.setPassword(randomAlphabetic(8));
+    }
+
 }

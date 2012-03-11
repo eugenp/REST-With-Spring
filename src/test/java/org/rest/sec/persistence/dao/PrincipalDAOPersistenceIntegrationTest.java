@@ -17,82 +17,86 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Sets;
 
-@TransactionConfiguration( defaultRollback = true )
+@TransactionConfiguration(defaultRollback = true)
 @Transactional
-public class PrincipalDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest< Principal >{
-	
-	@Autowired IPrivilegeJpaDAO privilegeDao;
-	@Autowired private IRoleJpaDAO associationDao;
-	@Autowired private IPrincipalJpaDAO principalDao;
-	
-	// involving other entities
-	
-	@Test
-	public void whenPrincipalIsCreated_thenRolesOfUserAreLoaded(){
-		final Principal persistedPrincipal = getAPI().save( createNewEntity() );
-		
-		assertThat( persistedPrincipal.getRoles(), notNullValue() );
-	}
-	@Test
-	public void whenUserIsCreated_thenCorectPrivilegesAreLoaded(){
-		final String nameOfRole = "testRole";
-		
-		final Principal principalWitoutRoles = getAPI().save( createNewEntity() );
-		final Role savedAssociation = associationDao.save( new Role( nameOfRole ) );
-		principalWitoutRoles.getRoles().add( savedAssociation );
-		final Principal principalWithPrivilege = getAPI().save( principalWitoutRoles );
-		
-		assertThat( principalWithPrivilege.getRoles(), contains( new Role( nameOfRole ) ) );
-	}
-	
-	// save
-	
-	@Test
-	public void whenSaveIsPerformed_thenNoException(){
-		getAPI().save( createNewEntity() );
-	}
-	
-	// find by
-	
-	@Test
-	public void givenEntityDoesNotExist_whenFindingEntityByName_thenEntityNotFound(){
-		// Given
-		final String name = randomAlphabetic( 8 );
-		
-		// When
-		final Principal entityByName = getDAOCasted().findByName( name );
-		
-		// Then
-		assertNull( entityByName );
-	}
-	
-	// template method
-	
-	@Override
-	protected final JpaRepository< Principal, Long > getAPI(){
-		return principalDao;
-	}
-	
-	@Override
-	protected final Principal createNewEntity(){
-		final Principal principal = new Principal( randomAlphabetic( 8 ), randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
-		return principal;
-	}
-	
-	@Override
-	protected final void invalidate( final Principal entity ){
-		entity.setName( null );
-	}
-	
-	@Override
-	protected void changeEntity( final Principal entity ){
-		entity.setPassword( randomAlphabetic( 8 ) );
-	}
+public class PrincipalDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest<Principal> {
 
-	//
-	
-	protected final IPrincipalJpaDAO getDAOCasted(){
-		return principalDao;
-	}
-	
+    @Autowired
+    IPrivilegeJpaDAO privilegeDao;
+    @Autowired
+    private IRoleJpaDAO associationDao;
+    @Autowired
+    private IPrincipalJpaDAO principalDao;
+
+    // involving other entities
+
+    @Test
+    public void whenPrincipalIsCreated_thenRolesOfUserAreLoaded() {
+	final Principal persistedPrincipal = getAPI().save(createNewEntity());
+
+	assertThat(persistedPrincipal.getRoles(), notNullValue());
+    }
+
+    @Test
+    public void whenUserIsCreated_thenCorectPrivilegesAreLoaded() {
+	final String nameOfRole = "testRole";
+
+	final Principal principalWitoutRoles = getAPI().save(createNewEntity());
+	final Role savedAssociation = associationDao.save(new Role(nameOfRole));
+	principalWitoutRoles.getRoles().add(savedAssociation);
+	final Principal principalWithPrivilege = getAPI().save(principalWitoutRoles);
+
+	assertThat(principalWithPrivilege.getRoles(), contains(new Role(nameOfRole)));
+    }
+
+    // save
+
+    @Test
+    public void whenSaveIsPerformed_thenNoException() {
+	getAPI().save(createNewEntity());
+    }
+
+    // find by
+
+    @Test
+    public void givenEntityDoesNotExist_whenFindingEntityByName_thenEntityNotFound() {
+	// Given
+	final String name = randomAlphabetic(8);
+
+	// When
+	final Principal entityByName = getDAOCasted().findByName(name);
+
+	// Then
+	assertNull(entityByName);
+    }
+
+    // template method
+
+    @Override
+    protected final JpaRepository<Principal, Long> getAPI() {
+	return principalDao;
+    }
+
+    @Override
+    protected final Principal createNewEntity() {
+	final Principal principal = new Principal(randomAlphabetic(8), randomAlphabetic(8), Sets.<Role> newHashSet());
+	return principal;
+    }
+
+    @Override
+    protected final void invalidate(final Principal entity) {
+	entity.setName(null);
+    }
+
+    @Override
+    protected void changeEntity(final Principal entity) {
+	entity.setPassword(randomAlphabetic(8));
+    }
+
+    //
+
+    protected final IPrincipalJpaDAO getDAOCasted() {
+	return principalDao;
+    }
+
 }

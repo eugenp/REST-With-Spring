@@ -9,8 +9,8 @@ import org.rest.sec.web.role.RoleSearchRESTIntegrationTest;
 import org.rest.sec.web.user.UserLogicRESTIntegrationTest;
 import org.rest.security.AuthenticationRESTIntegrationTest;
 
-@RunWith( Suite.class )
-@SuiteClasses( { PrivilegeLogicRESTIntegrationTest.class, RoleLogicRESTIntegrationTest.class, RoleSearchRESTIntegrationTest.class, UserLogicRESTIntegrationTest.class, AuthenticationRESTIntegrationTest.class } )
-public final class IntegrationLogicRESTTestSuite{
-	//
+@RunWith(Suite.class)
+@SuiteClasses({ PrivilegeLogicRESTIntegrationTest.class, RoleLogicRESTIntegrationTest.class, RoleSearchRESTIntegrationTest.class, UserLogicRESTIntegrationTest.class, AuthenticationRESTIntegrationTest.class })
+public final class IntegrationLogicRESTTestSuite {
+    //
 }

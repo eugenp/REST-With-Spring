@@ -10,27 +10,28 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class PrincipalServiceImpl extends AbstractService< Principal > implements IPrincipalService{
-	
-	@Autowired IPrincipalJpaDAO dao;
-	
-	public PrincipalServiceImpl(){
-		super( Principal.class );
-	}
-	
-	// API
+public class PrincipalServiceImpl extends AbstractService<Principal> implements IPrincipalService {
 
-	@Override
-	@Transactional( readOnly = true )
-	public Principal findByName( final String name ){
-		return dao.findByName( name );
-	}
-	
-	// Spring
-	
-	@Override
-	protected final IPrincipalJpaDAO getDao(){
-		return dao;
-	}
-	
+    @Autowired
+    IPrincipalJpaDAO dao;
+
+    public PrincipalServiceImpl() {
+	super(Principal.class);
+    }
+
+    // API
+
+    @Override
+    @Transactional(readOnly = true)
+    public Principal findByName(final String name) {
+	return dao.findByName(name);
+    }
+
+    // Spring
+
+    @Override
+    protected final IPrincipalJpaDAO getDao() {
+	return dao;
+    }
+
 }

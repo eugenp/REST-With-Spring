@@ -9,8 +9,8 @@ import org.rest.sec.persistence.service.impl.RoleServiceUnitTest;
 import org.rest.sec.util.ConstructQueryStringUnitTest;
 import org.rest.sec.util.ParseQueryStringUnitTest;
 
-@RunWith( Suite.class )
-@SuiteClasses( { PrincipalServiceUnitTest.class, RoleServiceUnitTest.class, PrivilegeServiceUnitTest.class, ParseQueryStringUnitTest.class, ConstructQueryStringUnitTest.class } )
-public final class UnitTestSuite{
-	//
+@RunWith(Suite.class)
+@SuiteClasses({ PrincipalServiceUnitTest.class, RoleServiceUnitTest.class, PrivilegeServiceUnitTest.class, ParseQueryStringUnitTest.class, ConstructQueryStringUnitTest.class })
+public final class UnitTestSuite {
+    //
 }

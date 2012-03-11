@@ -6,10 +6,10 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.rest.persistence.service.IService;
 import org.rest.sec.model.Role;
 
-public interface IRoleService extends IService< Role >{
-	
-	Role findByName( final String name );
-	
-	List< Role > search( final ImmutablePair< String, ? >... constraints );
-	
+public interface IRoleService extends IService<Role> {
+
+    Role findByName(final String name);
+
+    List<Role> search(final ImmutablePair<String, ?>... constraints);
+
 }

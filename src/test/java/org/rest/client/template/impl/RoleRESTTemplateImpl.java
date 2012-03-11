@@ -21,66 +21,69 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @Component
-public final class RoleRESTTemplateImpl extends AbstractRESTTemplate< Role >{
-	
-	@Autowired protected ExamplePaths paths;
-	
-	public RoleRESTTemplateImpl(){
-		super( Role.class );
-	}
-	
-	// API
-	
-	public final Role findByName( final String name ){
-		final String resourceAsXML = findOneAsMime( getURI() + "?name=" + name );
-		return marshaller.decode( resourceAsXML, clazz );
-	}
-	
-	@Override
-	public final Response searchAsResponse( final Pair< Long, ClientOperations > idOp, final Pair< String, ClientOperations > nameOp ){
-		final String queryURI = getURI() + "?q=" + SearchTestUtil.constructQueryString( idOp, nameOp );
-		return givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
-	}
-	
-	@Override
-	public final Response searchAsResponse( final Long id, final String name ){
-		final String queryURI = getURI() + "?q=" + SearchTestUtil.constructQueryString( id, name );
-		return givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
-	}
-	
-	@SuppressWarnings( { "unchecked", "rawtypes" } )
-	@Override
-	public final List< Role > search( final Long id, final String name ){
-		final String queryURI = getURI() + "?q=" + SearchTestUtil.constructQueryString( id, name );
-		final Response searchResponse = givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
-		Preconditions.checkState( searchResponse.getStatusCode() == 200 );
-		
-		return getMarshaller().<List> decode( searchResponse.getBody().asString(), List.class );
-	}
-	
-	// template method
-	
-	@Override
-	public final String getURI(){
-		return paths.getRoleUri();
-	}
-	
-	@Override
-	public final RequestSpecification givenAuthenticated(){
-		return AuthenticationUtil.givenBasicAuthenticated();
-	}
-	
-	@Override
-	public final Role createNewEntity(){
-		return new Role( randomAlphabetic( 8 ), Sets.<Privilege> newHashSet() );
-	}
-	@Override
-	public final void invalidate( final Role entity ){
-		entity.setName( null );
-	}
-	@Override
-	public final void change( final Role resource ){
-		resource.setName( randomAlphabetic( 8 ) );
-	}
-	
+public final class RoleRESTTemplateImpl extends AbstractRESTTemplate<Role> {
+
+    @Autowired
+    protected ExamplePaths paths;
+
+    public RoleRESTTemplateImpl() {
+	super(Role.class);
+    }
+
+    // API
+
+    public final Role findByName(final String name) {
+	final String resourceAsXML = findOneAsMime(getURI() + "?name=" + name);
+	return marshaller.decode(resourceAsXML, clazz);
+    }
+
+    @Override
+    public final Response searchAsResponse(final Pair<Long, ClientOperations> idOp, final Pair<String, ClientOperations> nameOp) {
+	final String queryURI = getURI() + "?q=" + SearchTestUtil.constructQueryString(idOp, nameOp);
+	return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
+    }
+
+    @Override
+    public final Response searchAsResponse(final Long id, final String name) {
+	final String queryURI = getURI() + "?q=" + SearchTestUtil.constructQueryString(id, name);
+	return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final List<Role> search(final Long id, final String name) {
+	final String queryURI = getURI() + "?q=" + SearchTestUtil.constructQueryString(id, name);
+	final Response searchResponse = givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
+	Preconditions.checkState(searchResponse.getStatusCode() == 200);
+
+	return getMarshaller().<List> decode(searchResponse.getBody().asString(), List.class);
+    }
+
+    // template method
+
+    @Override
+    public final String getURI() {
+	return paths.getRoleUri();
+    }
+
+    @Override
+    public final RequestSpecification givenAuthenticated() {
+	return AuthenticationUtil.givenBasicAuthenticated();
+    }
+
+    @Override
+    public final Role createNewEntity() {
+	return new Role(randomAlphabetic(8), Sets.<Privilege> newHashSet());
+    }
+
+    @Override
+    public final void invalidate(final Role entity) {
+	entity.setName(null);
+    }
+
+    @Override
+    public final void change(final Role resource) {
+	resource.setName(randomAlphabetic(8));
+    }
+
 }

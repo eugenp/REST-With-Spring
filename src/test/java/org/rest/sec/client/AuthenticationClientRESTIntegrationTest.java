@@ -17,23 +17,24 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { TestingTestConfig.class, ClientTestConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
-public class AuthenticationClientRESTIntegrationTest extends AbstractRESTIntegrationTest{
-	
-	@Autowired private AuthenticationRESTTemplate authenticationRestTemplate;
-	
-	// tests
-	
-	// GET
-	
-	@Test
-	public final void whenAuthenticating_then201IsReceived(){
-		// When
-		final ResponseEntity< User > response = authenticationRestTemplate.authenticate( SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD );
-		
-		// Then
-		assertThat( response.getStatusCode().value(), is( 201 ) );
-	}
-	
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { TestingTestConfig.class, ClientTestConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
+public class AuthenticationClientRESTIntegrationTest extends AbstractRESTIntegrationTest {
+
+    @Autowired
+    private AuthenticationRESTTemplate authenticationRestTemplate;
+
+    // tests
+
+    // GET
+
+    @Test
+    public final void whenAuthenticating_then201IsReceived() {
+	// When
+	final ResponseEntity<User> response = authenticationRestTemplate.authenticate(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD);
+
+	// Then
+	assertThat(response.getStatusCode().value(), is(201));
+    }
+
 }

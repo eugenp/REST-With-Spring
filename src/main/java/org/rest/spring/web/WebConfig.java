@@ -14,42 +14,43 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-@ComponentScan( { "org.rest.web", "org.rest.sec.web" } )
+@ComponentScan({ "org.rest.web", "org.rest.sec.web" })
 @EnableWebMvc
-public class WebConfig extends WebMvcConfigurerAdapter{
-	
-	public WebConfig(){
-		super();
-	}
-	
-	// beans
-	
-	@Bean
-	public XStreamMarshaller xstreamMarshaller(){
-		final XStreamMarshaller xStreamMarshaller = new XStreamMarshaller();
-		xStreamMarshaller.setAutodetectAnnotations( true );
-		// xStreamMarshaller.setSupportedClasses( new Class[ ] { User.class, Privilege.class } );
-		xStreamMarshaller.setAnnotatedClass( User.class );
-		xStreamMarshaller.setAnnotatedClass( Privilege.class );
-		
-		// this.xstreamMarshaller().getXStream().addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
-		
-		return xStreamMarshaller;
-	}
-	@Bean
-	public MarshallingHttpMessageConverter marshallingHttpMessageConverter(){
-		final MarshallingHttpMessageConverter marshallingHttpMessageConverter = new MarshallingHttpMessageConverter();
-		marshallingHttpMessageConverter.setMarshaller( xstreamMarshaller() );
-		marshallingHttpMessageConverter.setUnmarshaller( xstreamMarshaller() );
-		
-		return marshallingHttpMessageConverter;
-	}
-	
-	@Override
-	public void configureMessageConverters( final List< HttpMessageConverter< ? >> converters ){
-		super.configureMessageConverters( converters );
-		
-		converters.add( marshallingHttpMessageConverter() );
-	}
-	
+public class WebConfig extends WebMvcConfigurerAdapter {
+
+    public WebConfig() {
+	super();
+    }
+
+    // beans
+
+    @Bean
+    public XStreamMarshaller xstreamMarshaller() {
+	final XStreamMarshaller xStreamMarshaller = new XStreamMarshaller();
+	xStreamMarshaller.setAutodetectAnnotations(true);
+	// xStreamMarshaller.setSupportedClasses( new Class[ ] { User.class, Privilege.class } );
+	xStreamMarshaller.setAnnotatedClass(User.class);
+	xStreamMarshaller.setAnnotatedClass(Privilege.class);
+
+	// this.xstreamMarshaller().getXStream().addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
+
+	return xStreamMarshaller;
+    }
+
+    @Bean
+    public MarshallingHttpMessageConverter marshallingHttpMessageConverter() {
+	final MarshallingHttpMessageConverter marshallingHttpMessageConverter = new MarshallingHttpMessageConverter();
+	marshallingHttpMessageConverter.setMarshaller(xstreamMarshaller());
+	marshallingHttpMessageConverter.setUnmarshaller(xstreamMarshaller());
+
+	return marshallingHttpMessageConverter;
+    }
+
+    @Override
+    public void configureMessageConverters(final List<HttpMessageConverter<?>> converters) {
+	super.configureMessageConverters(converters);
+
+	converters.add(marshallingHttpMessageConverter());
+    }
+
 }

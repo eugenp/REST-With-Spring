@@ -8,8 +8,8 @@ import org.rest.sec.util.ConstructQueryStringUnitTest;
 import org.rest.sec.util.ParseQueryStringUnitTest;
 import org.rest.sec.web.role.RoleSearchRESTIntegrationTest;
 
-@RunWith( Suite.class )
-@SuiteClasses( { ParseQueryStringUnitTest.class, ConstructQueryStringUnitTest.class, RoleServiceSearchPersistenceIntegrationTest.class, RoleSearchRESTIntegrationTest.class } )
-public final class SearchTestSuite{
-	//
+@RunWith(Suite.class)
+@SuiteClasses({ ParseQueryStringUnitTest.class, ConstructQueryStringUnitTest.class, RoleServiceSearchPersistenceIntegrationTest.class, RoleSearchRESTIntegrationTest.class })
+public final class SearchTestSuite {
+    //
 }

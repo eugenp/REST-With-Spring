@@ -11,8 +11,8 @@ import org.rest.sec.persistence.service.PrivilegeServicePersistenceIntegrationTe
 import org.rest.sec.persistence.service.RoleServicePersistenceIntegrationTest;
 import org.rest.sec.persistence.service.RoleServiceSearchPersistenceIntegrationTest;
 
-@RunWith( Suite.class )
-@SuiteClasses( {// @formatter:off
+@RunWith(Suite.class)
+@SuiteClasses({// @formatter:off
 	PrincipalServicePersistenceIntegrationTest.class,
 	// UserDAOPersistenceIntegrationTest.class,
 	
@@ -25,6 +25,6 @@ import org.rest.sec.persistence.service.RoleServiceSearchPersistenceIntegrationT
 	RoleServiceSearchPersistenceIntegrationTest.class,
 	RoleDAOPersistenceIntegrationTest.class
 } ) // @formatter:on
-public final class IntegrationPersistenceTestSuite{
-	//
+public final class IntegrationPersistenceTestSuite {
+    //
 }

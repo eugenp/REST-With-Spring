@@ -15,80 +15,82 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;
 
-public class PrivilegeServiceUnitTest extends AbstractServiceUnitTest< Privilege >{
-	
-	private PrivilegeServiceImpl instance;
-	
-	private IPrivilegeJpaDAO daoMock;
-	
-	public PrivilegeServiceUnitTest(){
-		super( Privilege.class );
-	}
-	
-	// fixtures
-	
-	@Override
-	@Before
-	public final void before(){
-		instance = new PrivilegeServiceImpl();
-		
-		daoMock = mock( IPrivilegeJpaDAO.class );
-		when( daoMock.save( any( Privilege.class ) ) ).thenReturn( new Privilege() );
-		when( daoMock.findAll() ).thenReturn( Lists.<Privilege> newArrayList() );
-		instance.dao = daoMock;
-		super.before();
-	}
-	
-	// get
-	
-	@Test
-	public final void whenGetIsTriggered_thenNoException(){
-		configureGet( 1l );
-		
-		// When
-		instance.findOne( 1l );
-		
-		// Then
-	}
-	
-	@Test
-	public final void whenGetIsTriggered_thenEntityIsRetrieved(){
-		configureGet( 1l );
-		// When
-		instance.findOne( 1l );
-		
-		// Then
-		verify( daoMock ).findOne( 1l );
-	}
-	
-	// mocking behavior
-	
-	final Privilege configureGet( final long id ){
-		final Privilege entity = new Privilege();
-		entity.setId( id );
-		when( daoMock.findOne( id ) ).thenReturn( entity );
-		return entity;
-	}
-	
-	// template method
-	
-	@Override
-	protected final PrivilegeServiceImpl getService(){
-		return instance;
-	}
-	@Override
-	protected final JpaRepository< Privilege, Long > getDAOMock(){
-		return daoMock;
-	}
-	@Override
-	protected final Privilege createNewEntity(){
-		return this.createNewEntity( randomAlphabetic( 8 ) );
-	}
-	
-	// util
-	
-	final Privilege createNewEntity( final String name ){
-		return new Privilege( name );
-	}
-	
+public class PrivilegeServiceUnitTest extends AbstractServiceUnitTest<Privilege> {
+
+    private PrivilegeServiceImpl instance;
+
+    private IPrivilegeJpaDAO daoMock;
+
+    public PrivilegeServiceUnitTest() {
+	super(Privilege.class);
+    }
+
+    // fixtures
+
+    @Override
+    @Before
+    public final void before() {
+	instance = new PrivilegeServiceImpl();
+
+	daoMock = mock(IPrivilegeJpaDAO.class);
+	when(daoMock.save(any(Privilege.class))).thenReturn(new Privilege());
+	when(daoMock.findAll()).thenReturn(Lists.<Privilege> newArrayList());
+	instance.dao = daoMock;
+	super.before();
+    }
+
+    // get
+
+    @Test
+    public final void whenGetIsTriggered_thenNoException() {
+	configureGet(1l);
+
+	// When
+	instance.findOne(1l);
+
+	// Then
+    }
+
+    @Test
+    public final void whenGetIsTriggered_thenEntityIsRetrieved() {
+	configureGet(1l);
+	// When
+	instance.findOne(1l);
+
+	// Then
+	verify(daoMock).findOne(1l);
+    }
+
+    // mocking behavior
+
+    final Privilege configureGet(final long id) {
+	final Privilege entity = new Privilege();
+	entity.setId(id);
+	when(daoMock.findOne(id)).thenReturn(entity);
+	return entity;
+    }
+
+    // template method
+
+    @Override
+    protected final PrivilegeServiceImpl getService() {
+	return instance;
+    }
+
+    @Override
+    protected final JpaRepository<Privilege, Long> getDAOMock() {
+	return daoMock;
+    }
+
+    @Override
+    protected final Privilege createNewEntity() {
+	return this.createNewEntity(randomAlphabetic(8));
+    }
+
+    // util
+
+    final Privilege createNewEntity(final String name) {
+	return new Privilege(name);
+    }
+
 }

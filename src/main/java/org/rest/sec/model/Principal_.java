@@ -9,10 +9,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Principal.class)
 public abstract class Principal_ {
 
-	public static volatile SingularAttribute<Principal, Long> id;
-	public static volatile SetAttribute<Principal, Role> roles;
-	public static volatile SingularAttribute<Principal, String> name;
-	public static volatile SingularAttribute<Principal, String> password;
+    public static volatile SingularAttribute<Principal, Long> id;
+    public static volatile SetAttribute<Principal, Role> roles;
+    public static volatile SingularAttribute<Principal, String> name;
+    public static volatile SingularAttribute<Principal, String> password;
 
 }
-
