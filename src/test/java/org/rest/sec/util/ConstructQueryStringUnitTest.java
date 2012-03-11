@@ -1,6 +1,10 @@
 package org.rest.sec.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.rest.sec.util.SearchUtil.ID;
+import static org.rest.sec.util.SearchUtil.NAME;
+import static org.rest.sec.util.SearchUtil.NEGATION;
+import static org.rest.sec.util.SearchUtil.OP;
 
 import org.junit.Test;
 
@@ -10,75 +14,75 @@ public final class ConstructQueryStringUnitTest{
 	
 	@Test
 	public final void whenQueryStringIsConstructedFromNull_thenNoException(){
-		SearchUtil.constructQueryString( (Long) null, null );
+		SearchTestUtil.constructQueryString( (Long) null, null );
 	}
 	
 	@Test
 	public final void whenQueryStringIsConstructedFromId_thenNoException(){
-		SearchUtil.constructQueryString( 2l, null );
+		SearchTestUtil.constructQueryString( 2l, null );
 	}
 	@Test
 	public final void whenQueryStringIsConstructedFromName_thenNoException(){
-		SearchUtil.constructQueryString( null, "someName" );
+		SearchTestUtil.constructQueryString( null, "someName" );
 	}
 	
 	@Test
 	public final void whenQueryStringIsConstructedFromId_thenQueryStringIsCorrect(){
-		final String queryString = SearchUtil.constructQueryString( 2l, null );
-		assertEquals( SearchUtil.ID + SearchUtil.OP + "2", queryString );
+		final String queryString = SearchTestUtil.constructQueryString( 2l, null );
+		assertEquals( ID + OP + "2", queryString );
 	}
 	@Test
 	public final void whenQueryStringIsConstructedFromName_thenQueryStringIsCorrect(){
-		final String queryString = SearchUtil.constructQueryString( null, "someName" );
-		assertEquals( SearchUtil.NAME + SearchUtil.OP + "someName", queryString );
+		final String queryString = SearchTestUtil.constructQueryString( null, "someName" );
+		assertEquals( NAME + OP + "someName", queryString );
 	}
 	
 	@Test
 	public final void whenQueryStringIsConstructedFromIdAndName_thenQueryStringIsCorrect(){
-		final String queryString = SearchUtil.constructQueryString( 32l, "someName" );
-		assertEquals( SearchUtil.ID + SearchUtil.OP + "32,name" + SearchUtil.OP + "someName", queryString );
+		final String queryString = SearchTestUtil.constructQueryString( 32l, "someName" );
+		assertEquals( ID + OP + "32,name" + OP + "someName", queryString );
 	}
 	
 	// considering negation
 	
 	@Test
 	public final void whenQueryStringIsConstructedFromNegatedId_thenNoException(){
-		SearchUtil.constructQueryString( 2l, true, null, false );
+		SearchTestUtil.constructQueryString( 2l, true, null, false );
 	}
 	@Test
 	public final void whenQueryStringIsConstructedFromNegatedId_thenQueryStringIsCorrect(){
-		final String queryString = SearchUtil.constructQueryString( 2l, true, null, false );
-		assertEquals( SearchUtil.ID + SearchUtil.NEGATION + SearchUtil.OP + "2", queryString );
+		final String queryString = SearchTestUtil.constructQueryString( 2l, true, null, false );
+		assertEquals( ID + NEGATION + OP + "2", queryString );
 	}
 	
 	@Test
 	public final void whenQueryStringIsConstructedFromNegatedName_thenNoException(){
-		SearchUtil.constructQueryString( null, false, "some", true );
+		SearchTestUtil.constructQueryString( null, false, "some", true );
 	}
 	@Test
 	public final void whenQueryStringIsConstructedFromNegatedName_thenQueryStringIsCorrect(){
-		final String queryString = SearchUtil.constructQueryString( null, false, "some", true );
-		assertEquals( SearchUtil.NAME + SearchUtil.NEGATION + SearchUtil.OP + "some", queryString );
+		final String queryString = SearchTestUtil.constructQueryString( null, false, "some", true );
+		assertEquals( NAME + NEGATION + OP + "some", queryString );
 	}
 	
 	@Test
 	public final void whenQueryStringIsConstructedFromIdAndNegatedName_thenNoException(){
-		SearchUtil.constructQueryString( 2l, false, "some", true );
+		SearchTestUtil.constructQueryString( 2l, false, "some", true );
 	}
 	@Test
 	public final void whenQueryStringIsConstructedFromIdAndNegatedName_thenQueryStringIsCorrect(){
-		final String queryString = SearchUtil.constructQueryString( 2l, false, "some", true );
-		assertEquals( SearchUtil.ID + SearchUtil.OP + "2," + SearchUtil.NAME + SearchUtil.NEGATION + SearchUtil.OP + "some", queryString );
+		final String queryString = SearchTestUtil.constructQueryString( 2l, false, "some", true );
+		assertEquals( ID + OP + "2," + NAME + NEGATION + OP + "some", queryString );
 	}
 	@Test
 	public final void whenQueryStringIsConstructedFromNameAndNegatedId_thenQueryStringIsCorrect(){
-		final String queryString = SearchUtil.constructQueryString( 2l, true, "some", false );
-		assertEquals( SearchUtil.ID + SearchUtil.NEGATION + SearchUtil.OP + "2," + SearchUtil.NAME + SearchUtil.OP + "some", queryString );
+		final String queryString = SearchTestUtil.constructQueryString( 2l, true, "some", false );
+		assertEquals( ID + NEGATION + OP + "2," + NAME + OP + "some", queryString );
 	}
 	@Test
 	public final void whenQueryStringIsConstructedFromNegatedNameAndNegatedId_thenQueryStringIsCorrect(){
-		final String queryString = SearchUtil.constructQueryString( 2l, true, "some", true );
-		assertEquals( SearchUtil.ID + SearchUtil.NEGATION + SearchUtil.OP + "2," + SearchUtil.NAME + SearchUtil.NEGATION + SearchUtil.OP + "some", queryString );
+		final String queryString = SearchTestUtil.constructQueryString( 2l, true, "some", true );
+		assertEquals( ID + NEGATION + OP + "2," + NAME + NEGATION + OP + "some", queryString );
 	}
 	
 }

@@ -3,8 +3,6 @@ package org.rest.sec.util;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-import org.rest.client.template.impl.ClientOperations;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -43,37 +41,6 @@ public final class SearchUtil{
 			return new ImmutablePair< String, Long >( key, Long.parseLong( value ) );
 		}
 		return new ImmutablePair< String, String >( key, value );
-	}
-	
-	//
-	
-	public static String constructQueryString( final Long id, final String name ){
-		return constructQueryString( id, false, name, false );
-	}
-	
-	public static String constructQueryString( final Pair< Long, ClientOperations > idOp, final Pair< String, ClientOperations > nameOp ){
-		final Long id = ( idOp == null ) ? null : idOp.getLeft();
-		final boolean negatedId = ( idOp == null ) ? false : idOp.getRight().isNegated();
-		final String name = ( nameOp == null ) ? null : nameOp.getLeft();
-		final boolean negatedName = ( nameOp == null ) ? false : nameOp.getRight().isNegated();
-		return constructQueryString( id, negatedId, name, negatedName );
-	}
-	static String constructQueryString( final Long id, final boolean negatedId, final String name, final boolean negatedName ){
-		final StringBuffer queryString = new StringBuffer();
-		String op = null;
-		if( id != null ){
-			op = ( negatedId ) ? NEGATION + OP : OP;
-			queryString.append( ID + op + id );
-		}
-		if( name != null ){
-			if( queryString.length() != 0 ){
-				queryString.append( SEPARATOR );
-			}
-			op = ( negatedName ) ? NEGATION + OP : OP;
-			queryString.append( NAME + op + name );
-		}
-		
-		return queryString.toString();
 	}
 	
 }

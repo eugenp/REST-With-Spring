@@ -10,7 +10,7 @@ import org.rest.client.template.AbstractRESTTemplate;
 import org.rest.sec.client.ExamplePaths;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
-import org.rest.sec.util.SearchUtil;
+import org.rest.sec.util.SearchTestUtil;
 import org.rest.testing.security.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,23 +35,23 @@ public final class RoleRESTTemplateImpl extends AbstractRESTTemplate< Role >{
 		final String resourceAsXML = findOneAsMime( getURI() + "?name=" + name );
 		return marshaller.decode( resourceAsXML, clazz );
 	}
-
+	
 	@Override
 	public final Response searchAsResponse( final Pair< Long, ClientOperations > idOp, final Pair< String, ClientOperations > nameOp ){
-		final String queryURI = getURI() + "?q=" + SearchUtil.constructQueryString( idOp, nameOp );
+		final String queryURI = getURI() + "?q=" + SearchTestUtil.constructQueryString( idOp, nameOp );
 		return givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
 	}
 	
 	@Override
 	public final Response searchAsResponse( final Long id, final String name ){
-		final String queryURI = getURI() + "?q=" + SearchUtil.constructQueryString( id, name );
+		final String queryURI = getURI() + "?q=" + SearchTestUtil.constructQueryString( id, name );
 		return givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
 	}
 	
 	@SuppressWarnings( { "unchecked", "rawtypes" } )
 	@Override
 	public final List< Role > search( final Long id, final String name ){
-		final String queryURI = getURI() + "?q=" + SearchUtil.constructQueryString( id, name );
+		final String queryURI = getURI() + "?q=" + SearchTestUtil.constructQueryString( id, name );
 		final Response searchResponse = givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
 		Preconditions.checkState( searchResponse.getStatusCode() == 200 );
 		
