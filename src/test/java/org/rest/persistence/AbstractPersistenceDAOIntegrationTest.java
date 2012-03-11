@@ -177,37 +177,9 @@ public abstract class AbstractPersistenceDAOIntegrationTest< T extends IEntity >
 	}
 	
 	// delete all
+	// - note: the goal of these tests is to be independent of each other; because of this, deleteAll is not an option
 	
-	@Test
-	public void givenEntityExists_whenEntitiesAreDeleted_thenNoException(){
-		// Given
-		this.getAPI().save( this.createNewEntity() );
-		
-		// When
-		getAPI().deleteAll();
-	}
-	@Test
-	public void givenNoEntityExists_whenEntitiesAreDeleted_thenNoException(){
-		// Given
-		getAPI().deleteAll();
-		
-		// When
-		getAPI().deleteAll();
-	}
-	
-	@Test
-	public void givenEntityExists_whenEntitiesAreDeleted_thenEntitiesNoLongerRetrievable(){
-		// Given
-		getAPI().save( createNewEntity() );
-		
-		// When
-		getAPI().deleteAll();
-		
-		// Then
-		assert ( getAPI().findAll().size() == 0 );
-	}
-	
-	//
+	// template method
 	
 	protected abstract JpaRepository< T, Long > getAPI();
 	
