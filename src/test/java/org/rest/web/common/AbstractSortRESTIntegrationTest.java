@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.client.template.IRESTTemplate;
 import org.rest.common.IEntity;
@@ -36,6 +37,7 @@ public abstract class AbstractSortRESTIntegrationTest< T extends IEntity > exten
 	
 	@SuppressWarnings( "unchecked" )
 	@Test
+	@Ignore( "http://forum.springsource.org/showthread.php?124083-Sort-case-sensitivey-in-Spring-Data-%28JPA%29&p=404901#post404901" )
 	public final void whenResourcesAreRetrievedSorted_thenResourcesAreIndeedOrdered(){
 		getTemplate().createAsResponse( getTemplate().createNewEntity() );
 		getTemplate().createAsResponse( getTemplate().createNewEntity() );
