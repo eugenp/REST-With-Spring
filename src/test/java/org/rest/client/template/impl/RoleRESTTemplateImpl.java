@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.HttpHeaders;
 import org.rest.client.template.AbstractRESTTemplate;
+import org.rest.client.template.ClientOperations;
 import org.rest.sec.client.ExamplePaths;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;

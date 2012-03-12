@@ -7,7 +7,7 @@ import static org.rest.sec.util.SearchUtil.OP;
 import static org.rest.sec.util.SearchUtil.SEPARATOR;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.rest.client.template.impl.ClientOperations;
+import org.rest.client.template.ClientOperations;
 
 public final class SearchTestUtil {
     private SearchTestUtil() {

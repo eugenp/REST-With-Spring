@@ -1,4 +1,4 @@
-package org.rest.client.template.impl;
+package org.rest.client.template;
 
 public enum ClientOperations {
     EQ, NEG_EQ;

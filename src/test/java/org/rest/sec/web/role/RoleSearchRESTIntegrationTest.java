@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.rest.client.template.impl.ClientOperations;
+import org.rest.client.template.ClientOperations;
 import org.rest.client.template.impl.PrivilegeRESTTemplateImpl;
 import org.rest.client.template.impl.RoleRESTTemplateImpl;
 import org.rest.sec.model.Role;

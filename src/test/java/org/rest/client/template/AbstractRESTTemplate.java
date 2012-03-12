@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.HttpHeaders;
 import org.rest.client.marshall.IMarshaller;
-import org.rest.client.template.impl.ClientOperations;
 import org.rest.common.IEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
