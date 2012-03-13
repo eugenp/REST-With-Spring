@@ -14,7 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.rest.common.IEntity;
+import org.rest.common.INameableEntity;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
@@ -23,7 +23,7 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 @Entity
 @XmlRootElement
 @XStreamAlias("role")
-public class Role implements IEntity {
+public class Role implements INameableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,11 +34,11 @@ public class Role implements IEntity {
     private String name;
 
     //@formatter:off
-	@ManyToMany( /*cascade = { CascadeType.REMOVE },*/fetch = FetchType.EAGER )
-	@JoinTable( joinColumns = { @JoinColumn( name = "ROLE_ID",referencedColumnName = "ROLE_ID" ) },inverseJoinColumns = { @JoinColumn( name = "PRIV_ID",referencedColumnName = "PRIV_ID" ) } )
-	@XStreamImplicit
-	private Set< Privilege > privileges;
-	//@formatter:on
+    @ManyToMany( /*cascade = { CascadeType.REMOVE },*/fetch = FetchType.EAGER )
+    @JoinTable( joinColumns = { @JoinColumn( name = "ROLE_ID",referencedColumnName = "ROLE_ID" ) },inverseJoinColumns = { @JoinColumn( name = "PRIV_ID",referencedColumnName = "PRIV_ID" ) } )
+    @XStreamImplicit
+    private Set< Privilege > privileges;
+    //@formatter:on
 
     public Role() {
 	super();
@@ -67,6 +67,7 @@ public class Role implements IEntity {
 	id = idToSet;
     }
 
+    @Override
     public String getName() {
 	return name;
     }

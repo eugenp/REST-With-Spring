@@ -7,11 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.rest.common.IEntity;
+import org.rest.common.INameableEntity;
 
 @Entity
 @XmlRootElement
-public class Privilege implements IEntity {
+public class Privilege implements INameableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,6 +41,7 @@ public class Privilege implements IEntity {
 	id = idToSet;
     }
 
+    @Override
     public String getName() {
 	return name;
     }

@@ -1,13 +1,8 @@
 package org.rest.sec.util;
 
-import static org.rest.sec.util.SearchUtil.ID;
-import static org.rest.sec.util.SearchUtil.NAME;
-import static org.rest.sec.util.SearchUtil.NEGATION;
-import static org.rest.sec.util.SearchUtil.OP;
-import static org.rest.sec.util.SearchUtil.SEPARATOR;
-
 import org.apache.commons.lang3.tuple.Pair;
 import org.rest.client.template.ClientOperations;
+import org.rest.util.SearchCommonUtil;
 
 public final class SearchTestUtil {
     private SearchTestUtil() {
@@ -32,15 +27,15 @@ public final class SearchTestUtil {
 	final StringBuffer queryString = new StringBuffer();
 	String op = null;
 	if (id != null) {
-	    op = (negatedId) ? SearchUtil.NEGATION + OP : OP;
-	    queryString.append(ID + op + id);
+	    op = (negatedId) ? SearchCommonUtil.NEGATION + SearchCommonUtil.OP : SearchCommonUtil.OP;
+	    queryString.append(SearchCommonUtil.ID + op + id);
 	}
 	if (name != null) {
 	    if (queryString.length() != 0) {
-		queryString.append(SEPARATOR);
+		queryString.append(SearchCommonUtil.SEPARATOR);
 	    }
-	    op = (negatedName) ? NEGATION + OP : OP;
-	    queryString.append(NAME + op + name);
+	    op = (negatedName) ? SearchCommonUtil.NEGATION + SearchCommonUtil.OP : SearchCommonUtil.OP;
+	    queryString.append(SearchCommonUtil.NAME + op + name);
 	}
 
 	return queryString.toString();

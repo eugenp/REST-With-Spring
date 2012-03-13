@@ -2,6 +2,7 @@ package org.rest.persistence.service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.rest.common.IEntity;
 import org.rest.persistence.event.EntityCreatedEvent;
 import org.slf4j.Logger;
@@ -33,6 +34,13 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
     }
 
     // API
+
+    // search
+
+    @Override
+    public List<T> search(final ImmutablePair<String, ?>... constraints) {
+	throw new UnsupportedOperationException();
+    }
 
     // find/get
 

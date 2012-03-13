@@ -2,6 +2,7 @@ package org.rest.sec.persistence.service.impl.dto;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.rest.common.web.RestPreconditions;
 import org.rest.sec.dto.PrincipalToUserFunction;
 import org.rest.sec.dto.User;
@@ -30,6 +31,13 @@ public class UserServiceImpl implements IUserService {
     }
 
     // API
+
+    // search
+
+    @Override
+    public List<User> search(final ImmutablePair<String, ?>... constraints) {
+	throw new UnsupportedOperationException();
+    }
 
     // find - one
 

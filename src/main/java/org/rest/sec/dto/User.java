@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.rest.common.IEntity;
+import org.rest.common.INameableEntity;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.Role;
 
@@ -15,7 +15,7 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 @XmlRootElement
 @XStreamAlias("user")
-public class User implements IEntity {
+public class User implements INameableEntity {
 
     @XStreamAsAttribute
     private Long id;
@@ -62,6 +62,7 @@ public class User implements IEntity {
 	id = idToSet;
     }
 
+    @Override
     public String getName() {
 	return name;
     }

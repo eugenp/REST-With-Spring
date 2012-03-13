@@ -7,7 +7,7 @@ import org.rest.persistence.service.AbstractService;
 import org.rest.sec.model.Role;
 import org.rest.sec.persistence.dao.IRoleJpaDAO;
 import org.rest.sec.persistence.service.IRoleService;
-import org.rest.sec.util.SearchUtil;
+import org.rest.sec.util.SearchSecUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
@@ -33,10 +33,10 @@ public class RoleServiceImpl extends AbstractService<Role> implements IRoleServi
 
     @Override
     public List<Role> search(final ImmutablePair<String, ?>... constraints) {
-	final Specification<Role> firstSpec = SearchUtil.resolveConstraint(constraints[0]);
+	final Specification<Role> firstSpec = SearchSecUtil.resolveConstraint(constraints[0], Role.class);
 	Specifications<Role> specifications = Specifications.where(firstSpec);
 	for (int i = 1; i < constraints.length; i++) {
-	    specifications = specifications.and(SearchUtil.resolveConstraint(constraints[i]));
+	    specifications = specifications.and(SearchSecUtil.resolveConstraint(constraints[i], Role.class));
 	}
 	if (firstSpec == null) {
 	    return Lists.newArrayList();

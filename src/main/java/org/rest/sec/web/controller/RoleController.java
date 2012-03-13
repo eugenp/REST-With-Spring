@@ -9,8 +9,8 @@ import org.rest.common.exceptions.ConflictException;
 import org.rest.common.web.RestPreconditions;
 import org.rest.sec.model.Role;
 import org.rest.sec.persistence.service.IRoleService;
-import org.rest.sec.util.SearchUtil;
 import org.rest.sec.util.SecurityConstants;
+import org.rest.util.SearchCommonUtil;
 import org.rest.web.common.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -45,10 +45,9 @@ public class RoleController extends AbstractController<Role> {
     @RequestMapping(params = { "q" }, method = RequestMethod.GET)
     @ResponseBody
     public List<Role> search(@RequestParam("q") final String queryString) {
-	final List<ImmutablePair<String, ?>> parsedQuery = SearchUtil.parseQueryString(queryString);
+	final List<ImmutablePair<String, ?>> parsedQuery = SearchCommonUtil.parseQueryString(queryString);
 
 	final List<Role> results = getService().search(parsedQuery.toArray(new ImmutablePair[parsedQuery.size()]));
-
 	return results;
     }
 

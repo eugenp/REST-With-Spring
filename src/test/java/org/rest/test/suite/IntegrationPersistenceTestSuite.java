@@ -8,22 +8,24 @@ import org.rest.sec.persistence.dao.PrivilegeDAOPersistenceIntegrationTest;
 import org.rest.sec.persistence.dao.RoleDAOPersistenceIntegrationTest;
 import org.rest.sec.persistence.service.PrincipalServicePersistenceIntegrationTest;
 import org.rest.sec.persistence.service.PrivilegeServicePersistenceIntegrationTest;
+import org.rest.sec.persistence.service.PrivilegeServiceSearchPersistenceIntegrationTest;
 import org.rest.sec.persistence.service.RoleServicePersistenceIntegrationTest;
 import org.rest.sec.persistence.service.RoleServiceSearchPersistenceIntegrationTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({// @formatter:off
-	PrincipalServicePersistenceIntegrationTest.class,
-	// UserDAOPersistenceIntegrationTest.class,
-	
-	PrincipalDAOPersistenceIntegrationTest.class,
-	
-	PrivilegeServicePersistenceIntegrationTest.class,
-	PrivilegeDAOPersistenceIntegrationTest.class,
-	
-	RoleServicePersistenceIntegrationTest.class,
-	RoleServiceSearchPersistenceIntegrationTest.class,
-	RoleDAOPersistenceIntegrationTest.class
+    PrincipalServicePersistenceIntegrationTest.class,
+    // UserDAOPersistenceIntegrationTest.class,
+
+    PrincipalDAOPersistenceIntegrationTest.class,
+
+    PrivilegeServiceSearchPersistenceIntegrationTest.class,
+    PrivilegeServicePersistenceIntegrationTest.class,
+    PrivilegeDAOPersistenceIntegrationTest.class,
+
+    RoleServiceSearchPersistenceIntegrationTest.class,
+    RoleServicePersistenceIntegrationTest.class,
+    RoleDAOPersistenceIntegrationTest.class
 } ) // @formatter:on
 public final class IntegrationPersistenceTestSuite {
     //

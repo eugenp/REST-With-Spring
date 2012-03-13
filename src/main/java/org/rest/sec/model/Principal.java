@@ -14,13 +14,13 @@ import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.rest.common.IEntity;
+import org.rest.common.INameableEntity;
 
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 @Entity
 @XmlRootElement
-public class Principal implements IEntity {
+public class Principal implements INameableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,11 +31,11 @@ public class Principal implements IEntity {
     @Column(nullable = false)
     private String password;
     //@formatter:off
-	@ManyToMany( /*cascade = { CascadeType.REMOVE },*/fetch = FetchType.EAGER )
-	@JoinTable( joinColumns = { @JoinColumn( name = "PRINCIPAL_ID",referencedColumnName = "PRINCIPAL_ID" ) },inverseJoinColumns = { @JoinColumn( name = "ROLE_ID",referencedColumnName = "ROLE_ID" ) } )
-	@XStreamImplicit
-	private Set< Role > roles;
-	//@formatter:on
+    @ManyToMany( /*cascade = { CascadeType.REMOVE },*/fetch = FetchType.EAGER )
+    @JoinTable( joinColumns = { @JoinColumn( name = "PRINCIPAL_ID",referencedColumnName = "PRINCIPAL_ID" ) },inverseJoinColumns = { @JoinColumn( name = "ROLE_ID",referencedColumnName = "ROLE_ID" ) } )
+    @XStreamImplicit
+    private Set< Role > roles;
+    //@formatter:on
 
     public Principal() {
 	super();
@@ -61,6 +61,7 @@ public class Principal implements IEntity {
 	id = idToSet;
     }
 
+    @Override
     public String getName() {
 	return name;
     }

@@ -2,7 +2,7 @@ package org.rest.sec.persistence.service;
 
 import org.junit.runner.RunWith;
 import org.rest.persistence.AbstractServiceSearchPersistenceIntegrationTest;
-import org.rest.sec.model.Role;
+import org.rest.sec.model.Privilege;
 import org.rest.sec.util.FixtureUtil;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
@@ -14,23 +14,23 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { TestingConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
-public class RoleServiceSearchPersistenceIntegrationTest extends AbstractServiceSearchPersistenceIntegrationTest<Role> {
+public class PrivilegeServiceSearchPersistenceIntegrationTest extends AbstractServiceSearchPersistenceIntegrationTest<Privilege> {
 
     @Autowired
-    private IRoleService roleService;
+    private IPrivilegeService privilegeService;
 
     // tests
 
     // template method
 
     @Override
-    protected final IRoleService getService() {
-	return roleService;
+    protected final IPrivilegeService getService() {
+	return privilegeService;
     }
 
     @Override
-    protected final Role createNewEntity() {
-	return FixtureUtil.createNewRole();
+    protected final Privilege createNewEntity() {
+	return FixtureUtil.createNewPrivilege();
     }
 
 }
