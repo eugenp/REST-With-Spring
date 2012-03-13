@@ -6,6 +6,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.HttpHeaders;
 import org.rest.client.marshall.IMarshaller;
 import org.rest.common.IEntity;
+import org.rest.sec.util.SearchTestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -33,18 +34,25 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     // search
 
     @Override
-    public Response searchAsResponse(final Pair<Long, ClientOperations> idOp, final Pair<String, ClientOperations> nameOp) {
-	throw new UnsupportedOperationException();
+    public final Response searchAsResponse(final Pair<Long, ClientOperations> idOp, final Pair<String, ClientOperations> nameOp) {
+	final String queryURI = getURI() + "?q=" + SearchTestUtil.constructQueryString(idOp, nameOp);
+	return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
     }
 
     @Override
-    public Response searchAsResponse(final Long id, final String name) {
-	throw new UnsupportedOperationException();
+    public final Response searchAsResponse(final Long id, final String name) {
+	final String queryURI = getURI() + "?q=" + SearchTestUtil.constructQueryString(id, name);
+	return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public List<T> search(final Long id, final String name) {
-	throw new UnsupportedOperationException();
+    public final List<T> search(final Long id, final String name) {
+	final String queryURI = getURI() + "?q=" + SearchTestUtil.constructQueryString(id, name);
+	final Response searchResponse = givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
+	Preconditions.checkState(searchResponse.getStatusCode() == 200);
+
+	return getMarshaller().<List> decode(searchResponse.getBody().asString(), List.class);
     }
 
     // findOne

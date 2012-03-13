@@ -9,6 +9,8 @@ import com.google.common.collect.Lists;
 
 public final class SearchCommonUtil {
 
+    public static final String Q_PARAM = "q";
+
     public static final String SEPARATOR = ",";
     public static final String OP = "=";
     public static final String ID = "id";

@@ -1,9 +1,9 @@
-package org.rest.sec.web.role;
+package org.rest.sec.web.privilege;
 
 import org.junit.runner.RunWith;
 import org.rest.client.template.IEntityOperations;
-import org.rest.client.template.impl.RoleRESTTemplateImpl;
-import org.rest.sec.model.Role;
+import org.rest.client.template.impl.PrivilegeRESTTemplateImpl;
+import org.rest.sec.model.Privilege;
 import org.rest.spring.client.ClientTestConfig;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.testing.TestingConfig;
@@ -15,12 +15,12 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ClientTestConfig.class, TestingConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
-public class RoleSearchRESTIntegrationTest extends AbstractSearchRESTIntegrationTest<Role> {
+public class PrivilegeSearchRESTIntegrationTest extends AbstractSearchRESTIntegrationTest<Privilege> {
 
     @Autowired
-    private RoleRESTTemplateImpl restTemplate;
+    private PrivilegeRESTTemplateImpl restTemplate;
 
-    public RoleSearchRESTIntegrationTest() {
+    public PrivilegeSearchRESTIntegrationTest() {
 	super();
     }
 
@@ -29,12 +29,12 @@ public class RoleSearchRESTIntegrationTest extends AbstractSearchRESTIntegration
     // template
 
     @Override
-    protected final RoleRESTTemplateImpl getTemplate() {
+    protected final PrivilegeRESTTemplateImpl getTemplate() {
 	return restTemplate;
     }
 
     @Override
-    protected final IEntityOperations<Role> getEntityOperations() {
+    protected final IEntityOperations<Privilege> getEntityOperations() {
 	return restTemplate;
     }
 

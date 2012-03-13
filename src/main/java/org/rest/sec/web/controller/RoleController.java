@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.rest.common.exceptions.ConflictException;
 import org.rest.common.web.RestPreconditions;
 import org.rest.sec.model.Role;
@@ -41,14 +40,10 @@ public class RoleController extends AbstractController<Role> {
 
     // search
 
-    @SuppressWarnings("unchecked")
-    @RequestMapping(params = { "q" }, method = RequestMethod.GET)
+    @RequestMapping(params = { SearchCommonUtil.Q_PARAM }, method = RequestMethod.GET)
     @ResponseBody
-    public List<Role> search(@RequestParam("q") final String queryString) {
-	final List<ImmutablePair<String, ?>> parsedQuery = SearchCommonUtil.parseQueryString(queryString);
-
-	final List<Role> results = getService().search(parsedQuery.toArray(new ImmutablePair[parsedQuery.size()]));
-	return results;
+    public List<Role> search(@RequestParam(SearchCommonUtil.Q_PARAM) final String queryString) {
+	return searchInternal(queryString);
     }
 
     // find - all/paginated

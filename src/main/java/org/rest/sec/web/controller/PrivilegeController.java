@@ -8,6 +8,7 @@ import org.rest.common.exceptions.ConflictException;
 import org.rest.common.web.RestPreconditions;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.persistence.service.IPrivilegeService;
+import org.rest.util.SearchCommonUtil;
 import org.rest.web.common.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -34,6 +35,14 @@ public class PrivilegeController extends AbstractController<Privilege> {
     }
 
     // API
+
+    // search
+
+    @RequestMapping(params = { SearchCommonUtil.Q_PARAM }, method = RequestMethod.GET)
+    @ResponseBody
+    public List<Privilege> search(@RequestParam(SearchCommonUtil.Q_PARAM) final String queryString) {
+	return searchInternal(queryString);
+    }
 
     // find - all/paginated
 

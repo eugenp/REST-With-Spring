@@ -22,7 +22,7 @@ public final class QuerySpecifications {
 
     // user
 
-    private static Specification<Principal> userById(final Long id, final boolean negated) {
+    private static Specification<Principal> principalById(final Long id, final boolean negated) {
 	return new Specification<Principal>() {
 	    @Override
 	    public final Predicate toPredicate(final Root<Principal> root, final CriteriaQuery<?> query, final CriteriaBuilder cb) {
@@ -34,7 +34,7 @@ public final class QuerySpecifications {
 	};
     }
 
-    private static Specification<Principal> userByName(final String name, final boolean negated) {
+    private static Specification<Principal> principalByName(final String name, final boolean negated) {
 	return new Specification<Principal>() {
 	    @Override
 	    public final Predicate toPredicate(final Root<Principal> root, final CriteriaQuery<?> query, final CriteriaBuilder cb) {
@@ -106,7 +106,7 @@ public final class QuerySpecifications {
 	    return (Specification<T>) roleByName(name, negated);
 	}
 	if (clazz.equals(Principal.class)) {
-	    return (Specification<T>) userByName(name, negated);
+	    return (Specification<T>) principalByName(name, negated);
 	}
 	if (clazz.equals(Privilege.class)) {
 	    return (Specification<T>) privilegeByName(name, negated);
@@ -121,7 +121,7 @@ public final class QuerySpecifications {
 	    return (Specification<T>) roleById(id, negated);
 	}
 	if (clazz.equals(Principal.class)) {
-	    return (Specification<T>) userById(id, negated);
+	    return (Specification<T>) principalById(id, negated);
 	}
 	if (clazz.equals(Privilege.class)) {
 	    return (Specification<T>) privilegeById(id, negated);

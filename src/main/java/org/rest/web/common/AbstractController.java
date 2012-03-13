@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.http.HttpHeaders;
 import org.rest.common.IEntity;
 import org.rest.common.event.PaginatedResultsRetrievedEvent;
@@ -14,6 +15,7 @@ import org.rest.common.exceptions.ConflictException;
 import org.rest.common.exceptions.ResourceNotFoundException;
 import org.rest.common.web.RestPreconditions;
 import org.rest.persistence.service.IService;
+import org.rest.util.SearchCommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.common.base.Preconditions;
@@ -40,6 +43,23 @@ public abstract class AbstractController<T extends IEntity> {
 
 	Preconditions.checkNotNull(clazzToSet);
 	clazz = clazzToSet;
+    }
+
+    // search
+
+    @SuppressWarnings("unchecked")
+    public List<T> searchInternal(@RequestParam(SearchCommonUtil.Q_PARAM) final String queryString) {
+	List<ImmutablePair<String, ?>> parsedQuery = null;
+	try {
+	    parsedQuery = SearchCommonUtil.parseQueryString(queryString);
+	} catch (final IllegalStateException illState) {
+	    logger.error("IllegalStateException on find operation");
+	    logger.warn("IllegalStateException on find operation", illState);
+	    throw new ConflictException(illState);
+	}
+
+	final List<T> results = getService().search(parsedQuery.toArray(new ImmutablePair[parsedQuery.size()]));
+	return results;
     }
 
     // find/get

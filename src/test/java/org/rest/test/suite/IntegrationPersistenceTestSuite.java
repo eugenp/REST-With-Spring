@@ -7,6 +7,7 @@ import org.rest.sec.persistence.dao.PrincipalDAOPersistenceIntegrationTest;
 import org.rest.sec.persistence.dao.PrivilegeDAOPersistenceIntegrationTest;
 import org.rest.sec.persistence.dao.RoleDAOPersistenceIntegrationTest;
 import org.rest.sec.persistence.service.PrincipalServicePersistenceIntegrationTest;
+import org.rest.sec.persistence.service.PrincipalServiceSearchPersistenceIntegrationTest;
 import org.rest.sec.persistence.service.PrivilegeServicePersistenceIntegrationTest;
 import org.rest.sec.persistence.service.PrivilegeServiceSearchPersistenceIntegrationTest;
 import org.rest.sec.persistence.service.RoleServicePersistenceIntegrationTest;
@@ -17,6 +18,8 @@ import org.rest.sec.persistence.service.RoleServiceSearchPersistenceIntegrationT
     PrincipalServicePersistenceIntegrationTest.class,
     // UserDAOPersistenceIntegrationTest.class,
 
+    PrincipalServiceSearchPersistenceIntegrationTest.class,
+    PrincipalServicePersistenceIntegrationTest.class,
     PrincipalDAOPersistenceIntegrationTest.class,
 
     PrivilegeServiceSearchPersistenceIntegrationTest.class,
