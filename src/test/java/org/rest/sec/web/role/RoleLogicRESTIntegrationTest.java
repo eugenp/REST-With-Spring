@@ -161,11 +161,6 @@ public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Ro
     // template
 
     @Override
-    protected final Role createNewEntity() {
-	return restTemplate.createNewEntity();
-    }
-
-    @Override
     protected final RoleRESTTemplateImpl getTemplate() {
 	return restTemplate;
     }
@@ -173,16 +168,6 @@ public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Ro
     @Override
     protected final String getURI() {
 	return getTemplate().getURI() + "/";
-    }
-
-    @Override
-    protected final void change(final Role resource) {
-	resource.setName(randomAlphabetic(6));
-    }
-
-    @Override
-    protected final void invalidate(final Role resource) {
-	getTemplate().invalidate(resource);
     }
 
     @Override

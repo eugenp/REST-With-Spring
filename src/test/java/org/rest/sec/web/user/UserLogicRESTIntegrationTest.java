@@ -125,23 +125,8 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Us
     // template method
 
     @Override
-    protected final User createNewEntity() {
-	return getTemplate().createNewEntity();
-    }
-
-    @Override
     protected final String getURI() {
 	return getTemplate().getURI() + "/";
-    }
-
-    @Override
-    protected final void change(final User resource) {
-	resource.setName(randomAlphabetic(6));
-    }
-
-    @Override
-    protected final void invalidate(final User resource) {
-	getTemplate().invalidate(resource);
     }
 
     @Override

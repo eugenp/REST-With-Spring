@@ -8,7 +8,7 @@ public final class IDUtils {
 	throw new AssertionError();
     }
 
-    //
+    // API
 
     public final static long randomPositiveLong() {
 	long id = new Random().nextLong() * 10000;
