@@ -37,7 +37,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntit
 
     @Test
     public void givenAnEntityExists_whenEntitiesAreRetrieved_thenThereIsAtLeastOneEntity() {
-	this.getAPI().create(this.createNewEntity());
+	getAPI().create(createNewEntity());
 
 	final List<T> owners = getAPI().findAll();
 
@@ -46,7 +46,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntit
 
     @Test
     public void givenAnEntityExists_whenEntitiesAreRetrieved_thenTheExistingEntityIsIndeedAmongThem() {
-	final T existingEntity = this.getAPI().create(this.createNewEntity());
+	final T existingEntity = getAPI().create(createNewEntity());
 
 	final List<T> owners = getAPI().findAll();
 
@@ -57,7 +57,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntit
 
     @Test
     public void givenEntityExists_whenEntityIsRetrieved_thenNoExceptions() {
-	final T existingEntity = this.getAPI().create(this.createNewEntity());
+	final T existingEntity = getAPI().create(createNewEntity());
 	getAPI().findOne(existingEntity.getId());
     }
 
@@ -68,7 +68,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntit
 
     @Test
     public void givenEntityExists_whenEntityIsRetrieved_thenTheResultIsNotNull() {
-	final T existingEntity = this.getAPI().create(this.createNewEntity());
+	final T existingEntity = getAPI().create(createNewEntity());
 	final T retrievedEntity = getAPI().findOne(existingEntity.getId());
 	assertNotNull(retrievedEntity);
     }
@@ -81,7 +81,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntit
 
     @Test
     public void givenEntityExists_whenEntityIsRetrieved_thenEntityIsRetrievedCorrectly() {
-	final T existingEntity = this.getAPI().create(this.createNewEntity());
+	final T existingEntity = getAPI().create(createNewEntity());
 	final T retrievedEntity = getAPI().findOne(existingEntity.getId());
 	assertEquals(existingEntity, retrievedEntity);
     }
@@ -96,12 +96,12 @@ public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntit
     @Test
     @Rollback
     public void whenEntityIsCreated_thenNoExceptions() {
-	this.getAPI().create(this.createNewEntity());
+	getAPI().create(createNewEntity());
     }
 
     @Test
     public void whenEntityIsCreated_thenEntityIsRetrievable() {
-	final T existingEntity = this.getAPI().create(this.createNewEntity());
+	final T existingEntity = getAPI().create(createNewEntity());
 
 	assertNotNull(getAPI().findOne(existingEntity.getId()));
     }
@@ -142,14 +142,14 @@ public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntit
 
     @Test
     public void whenEntityIsUpdated_thenNoExceptions() {
-	final T existingEntity = this.getAPI().create(this.createNewEntity());
+	final T existingEntity = getAPI().create(createNewEntity());
 
 	getAPI().update(existingEntity);
     }
 
     @Test(expected = DataAccessException.class)
     public void whenEntityIsUpdatedWithFailedConstraints_thenException() {
-	final T existingEntity = this.getAPI().create(this.createNewEntity());
+	final T existingEntity = getAPI().create(createNewEntity());
 	invalidate(existingEntity);
 
 	getAPI().update(existingEntity);
@@ -157,7 +157,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntit
 
     @Test
     public void whenEntityIsUpdated_thenTheUpdatedAreCorrectlyPersisted() {
-	final T existingEntity = this.getAPI().create(this.createNewEntity());
+	final T existingEntity = getAPI().create(createNewEntity());
 	changeEntity(existingEntity);
 
 	getAPI().update(existingEntity);
@@ -183,7 +183,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntit
     @Test
     public void givenEntityExists_whenEntityIsDeleted_thenNoExceptions() {
 	// Given
-	final T existingLocation = this.getAPI().create(this.createNewEntity());
+	final T existingLocation = getAPI().create(createNewEntity());
 
 	// When
 	getAPI().delete(existingLocation.getId());
@@ -192,7 +192,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntit
     @Test
     public void givenEntityExists_whenEntityIsDeleted_thenEntityIsNoLongerRetrievable() {
 	// Given
-	final T existingEntity = this.getAPI().create(this.createNewEntity());
+	final T existingEntity = getAPI().create(createNewEntity());
 
 	// When
 	getAPI().delete(existingEntity.getId());

@@ -21,10 +21,6 @@ public class RoleServiceUnitTest extends AbstractServiceUnitTest<Role> {
 
     private IRoleJpaDAO daoMock;
 
-    public RoleServiceUnitTest() {
-	super(Role.class);
-    }
-
     // fixtures
 
     @Override
@@ -78,7 +74,7 @@ public class RoleServiceUnitTest extends AbstractServiceUnitTest<Role> {
     }
 
     @Override
-    protected final JpaRepository<Role, Long> getDAOMock() {
+    protected final JpaRepository<Role, Long> getDAO() {
 	return daoMock;
     }
 

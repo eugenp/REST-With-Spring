@@ -21,10 +21,6 @@ public class PrivilegeServiceUnitTest extends AbstractServiceUnitTest<Privilege>
 
     private IPrivilegeJpaDAO daoMock;
 
-    public PrivilegeServiceUnitTest() {
-	super(Privilege.class);
-    }
-
     // fixtures
 
     @Override
@@ -78,7 +74,7 @@ public class PrivilegeServiceUnitTest extends AbstractServiceUnitTest<Privilege>
     }
 
     @Override
-    protected final JpaRepository<Privilege, Long> getDAOMock() {
+    protected final JpaRepository<Privilege, Long> getDAO() {
 	return daoMock;
     }
 

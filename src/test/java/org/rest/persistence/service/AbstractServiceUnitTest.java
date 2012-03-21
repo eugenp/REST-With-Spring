@@ -1,6 +1,7 @@
 package org.rest.persistence.service;
 
-import static org.mockito.Matchers.any;
+import static org.junit.Assert.assertSame;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,20 +10,17 @@ import org.junit.Test;
 import org.rest.common.IEntity;
 import org.rest.util.IDUtils;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 
+/**
+ * A base class for service layer unit tests.
+ */
 public abstract class AbstractServiceUnitTest<T extends IEntity> {
-
-    private Class<T> clazz;
-
-    public AbstractServiceUnitTest(final Class<T> clazzToSet) {
-	super();
-
-	Preconditions.checkNotNull(clazzToSet);
-	this.clazz = clazzToSet;
-    }
 
     // fixtures
 
@@ -34,23 +32,15 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     // tests
 
     @Test
-    public final void whenServiceIsInitialized_thenNoException() {
+    public void whenServiceIsInitialized_thenNoException() {
 	// When
 	// Then
     }
 
     // create
 
-    @Test
-    public final void whenCreateIsTriggered_thenNoException() {
-	// When
-	getService().create(this.createNewEntity());
-
-	// Then
-    }
-
     @Test(expected = NullPointerException.class)
-    public final void whenCreateIsTriggeredForNullEntity_thenException() {
+    public void whenCreateIsTriggeredForNullEntity_thenException() {
 	// When
 	getService().create(null);
 
@@ -58,41 +48,30 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     }
 
     @Test
-    public final void whenCreateIsTriggered_thenEntityIsCreated() {
+    public void whenCreateIsTriggered_thenNoException() {
 	// When
 	getService().create(this.createNewEntity());
 
 	// Then
-	verify(getDAOMock()).save(any(clazz));
     }
 
-    // get
-    /*
-     * @Test public final void whenGetIsTriggered_thenNoException(){ this.configureGet( 1l );
-     * 
-     * // When getService().findOne( 1l );
-     * 
-     * // Then }
-     */
-    @Test(expected = NullPointerException.class)
-    public final void whenGetIsTriggeredForNullId_thenException() {
+    @Test
+    public void whenCreatingANewEntity_thenEntityIsSaved() {
+	// Given
+	final T entity = createNewEntity();
+	stubDaoSave(entity);
+
 	// When
-	getService().create(null);
+	getService().create(entity);
 
 	// Then
+	verify(getDAO()).save(entity);
     }
 
-    /*
-     * @Test public final void whenGetIsTriggered_thenEntityIsRetrieved(){ this.configureGet( 1l );
-     * 
-     * // When getService().findOne( 1l );
-     * 
-     * // Then verify( getDAOMock() ).findOne( 1l ); }
-     */
     // update
 
     @Test
-    public final void whenUpdateIsTriggered_thenNoException() {
+    public void whenUpdateIsTriggered_thenNoException() {
 	// When
 	getService().update(this.createNewEntity());
 
@@ -100,21 +79,53 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     }
 
     @Test(expected = NullPointerException.class)
-    public final void whenUpdateIsTriggeredForNullEntity_thenException() {
-	// When
+    public void givenNullEntity_whenUpdate_thenException() {
 	getService().update(null);
-
-	// Then
     }
 
     @Test
-    public final void whenUpdateIsTriggered_thenEntityIsUpdated() {
+    public void whenUpdateIsTriggered_thenEntityIsUpdated() {
 	// When
 	final T entity = this.createNewEntity();
 	getService().update(entity);
 
 	// Then
-	verify(getDAOMock()).save(entity);
+	verify(getDAO()).save(entity);
+    }
+
+    // find - paged
+
+    @Test
+    public void whenPageOfEntitiesIsRetrieved_thenResultIsCorrect() {
+	// Given
+	final PageRequest pageRequest = new PageRequest(1, 10);
+	final Page<T> page = new PageImpl<T>(Lists.<T> newArrayList(), pageRequest, 10L);
+	when(getDAO().findAll(eq(pageRequest))).thenReturn(page);
+
+	// When
+	final Page<T> found = getService().findPaginated(1, 10, null);
+
+	// Then
+	assertSame(page, found);
+    }
+
+    // find - all
+
+    @Test
+    public void whenGetAllIsTriggered_thenNoException() {
+	// When
+	getService().findAll();
+
+	// Then
+    }
+
+    @Test
+    public void whenGetAllIsTriggered_thenAllEntitiesAreRetrieved() {
+	// When
+	getService().findAll();
+
+	// Then
+	verify(getDAO()).findAll();
     }
 
     // delete
@@ -123,7 +134,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
      * - note: the responsibility of ensuring data integrity belongs to the database; because this is an unit test, then no exception is thrown
      */
     @Test
-    public final void givenResourceDoesNotExist_whenDeleteIsTriggered_thenNothingHappens() {
+    public void givenResourceDoesNotExist_whenDeleteIsTriggered_thenNoExceptions() {
 	// When
 	getService().delete(IDUtils.randomPositiveLong());
 
@@ -131,11 +142,11 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     }
 
     @Test
-    public final void givenResourceExists_whenDeleteIsTriggered_thenNoExceptions() {
+    public void givenResourceExists_whenDeleteIsTriggered_thenNoExceptions() {
 	final long id = IDUtils.randomPositiveLong();
 
 	// Given
-	when(getDAOMock().findOne(id)).thenReturn(this.createNewEntity());
+	when(getDAO().findOne(id)).thenReturn(this.createNewEntity());
 
 	// When
 	getService().delete(id);
@@ -144,43 +155,55 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     }
 
     @Test
-    public final void givenResourceExists_whenDeleteIsTriggered_thenEntityIsDeleted() {
+    public void givenResourceExists_whenDeleteIsTriggered_thenEntityIsDeleted() {
 	final long id = IDUtils.randomPositiveLong();
 
 	// Given
-	when(getDAOMock().findOne(id)).thenReturn(this.createNewEntity());
+	when(getDAO().findOne(id)).thenReturn(this.createNewEntity());
 
 	// When
 	getService().delete(id);
 
 	// Then
-	verify(getDAOMock()).delete(id);
+	verify(getDAO()).delete(id);
     }
 
-    // getAll
+    // delete - all
 
     @Test
-    public final void whenGetAllIsTriggered_thenNoException() {
+    public void whenDeleteAllEntities_thenEntitiesAreDeleted() {
 	// When
-	getService().findAll();
+	getService().deleteAll();
 
 	// Then
-    }
-
-    @Test
-    public final void whenGetAllIsTriggered_thenAllEntitiesAreRetrieved() {
-	// When
-	getService().findAll();
-
-	// Then
-	verify(getDAOMock()).findAll();
+	verify(getDAO()).deleteAll();
     }
 
     // template method
 
     protected abstract IService<T> getService();
 
-    protected abstract JpaRepository<T, Long> getDAOMock();
+    protected abstract JpaRepository<T, Long> getDAO();
+
+    //
 
     protected abstract T createNewEntity();
+
+    /**
+     * Creates and returns the instance of entity that is existing (ie ID is not null).
+     * 
+     * @return the created entity
+     */
+    protected T createSimulatedExistingEntity() {
+	final T entity = createNewEntity();
+	entity.setId(IDUtils.randomPositiveLong());
+	return entity;
+    }
+
+    //
+
+    protected void stubDaoSave(final T entity) {
+	when(getDAO().save(entity)).thenReturn(entity);
+    }
+
 }

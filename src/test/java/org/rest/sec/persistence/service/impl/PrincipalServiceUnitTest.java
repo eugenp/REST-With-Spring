@@ -23,10 +23,6 @@ public class PrincipalServiceUnitTest extends AbstractServiceUnitTest<Principal>
 
     private IPrincipalJpaDAO daoMock;
 
-    public PrincipalServiceUnitTest() {
-	super(Principal.class);
-    }
-
     // fixtures
 
     @Override
@@ -80,7 +76,7 @@ public class PrincipalServiceUnitTest extends AbstractServiceUnitTest<Principal>
     }
 
     @Override
-    protected final JpaRepository<Principal, Long> getDAOMock() {
+    protected final JpaRepository<Principal, Long> getDAO() {
 	return daoMock;
     }
 
