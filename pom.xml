@@ -531,7 +531,7 @@
 
 	<repositories>
 
-		<repository>
+		<!-- <repository>
 			<id>jboss-public-repository-group</id>
 			<name>JBoss Public Maven Repository Group</name>
 			<url>https://repository.jboss.org/nexus/content/groups/public/</url>
@@ -544,12 +544,21 @@
 				<enabled>true</enabled>
 				<updatePolicy>never</updatePolicy>
 			</snapshots>
-		</repository>
+		</repository> -->
 
 		<repository>
 			<id>spring-maven-snapshot</id>
 			<name>Springframework Maven Snapshot Repository</name>
 			<url>http://maven.springframework.org/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		
+		<repository>
+			<id>apache-snapshot</id>
+			<name>Apache Maven Snapshot Repository</name>
+			<url>https://repository.apache.org/content/groups/snapshots/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
@@ -564,7 +573,7 @@
 		<javassist.version>3.15.0-GA</javassist.version>
 		<cglib.version>2.2.2</cglib.version>
 
-		<commons-lang3.version>3.1</commons-lang3.version>
+		<commons-lang3.version>3.2-SNAPSHOT</commons-lang3.version>
 		<guava.version>11.0.2</guava.version>
 
 		<jackson-mapper-asl.version>1.9.5</jackson-mapper-asl.version>
