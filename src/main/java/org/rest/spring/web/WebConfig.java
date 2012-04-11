@@ -2,8 +2,8 @@ package org.rest.spring.web;
 
 import java.util.List;
 
-import org.rest.sec.dto.User;
 import org.rest.sec.model.Privilege;
+import org.rest.sec.model.dto.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +32,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	xStreamMarshaller.setAnnotatedClass(User.class);
 	xStreamMarshaller.setAnnotatedClass(Privilege.class);
 
-	// this.xstreamMarshaller().getXStream().addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
+	// xstreamMarshaller().getXStream().addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
 
 	return xStreamMarshaller;
     }

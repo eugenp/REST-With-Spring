@@ -2,8 +2,8 @@ package org.rest.sec.web.user;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
-import org.rest.client.template.impl.UserRESTTemplateImpl;
-import org.rest.sec.dto.User;
+import org.rest.sec.client.template.UserRESTTemplateImpl;
+import org.rest.sec.model.dto.User;
 import org.rest.sec.test.SecDiscoverabilityRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 

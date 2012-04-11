@@ -1,7 +1,7 @@
 package org.rest.sec.web.user;
 
-import org.rest.client.template.impl.UserRESTTemplateImpl;
-import org.rest.sec.dto.User;
+import org.rest.sec.client.template.UserRESTTemplateImpl;
+import org.rest.sec.model.dto.User;
 import org.rest.sec.test.SecSortRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 

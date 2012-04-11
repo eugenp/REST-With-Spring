@@ -1,8 +1,8 @@
 package org.rest.client;
 
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.rest.sec.dto.User;
 import org.rest.sec.model.Privilege;
+import org.rest.sec.model.dto.User;
 import org.rest.security.BasicHttpComponentsClientHttpRequestFactory;
 import org.rest.security.DigestHttpComponentsClientHttpRequestFactory;
 import org.springframework.beans.factory.FactoryBean;
@@ -79,7 +79,7 @@ public class RestTemplateFactoryBean implements FactoryBean<RestTemplate>, Initi
 	xStreamMarshaller.setAnnotatedClass(User.class);
 	xStreamMarshaller.setAnnotatedClass(Privilege.class);
 
-	// this.xstreamMarshaller().getXStream().addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
+	// xstreamMarshaller().getXStream().addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
 
 	return xStreamMarshaller;
     }

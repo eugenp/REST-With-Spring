@@ -2,7 +2,7 @@ package org.rest.sec.web.role;
 
 import org.junit.runner.RunWith;
 import org.rest.client.template.IEntityOperations;
-import org.rest.client.template.impl.RoleRESTTemplateImpl;
+import org.rest.sec.client.template.RoleRESTTemplateImpl;
 import org.rest.sec.model.Role;
 import org.rest.spring.client.ClientTestConfig;
 import org.rest.spring.context.ContextTestConfig;

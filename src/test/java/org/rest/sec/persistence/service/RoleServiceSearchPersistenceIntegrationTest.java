@@ -3,7 +3,7 @@ package org.rest.sec.persistence.service;
 import org.junit.runner.RunWith;
 import org.rest.persistence.AbstractServiceSearchPersistenceIntegrationTest;
 import org.rest.sec.model.Role;
-import org.rest.sec.util.FixtureUtil;
+import org.rest.sec.persistence.util.FixtureFactory;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
 import org.rest.spring.testing.TestingConfig;
@@ -30,7 +30,7 @@ public class RoleServiceSearchPersistenceIntegrationTest extends AbstractService
 
     @Override
     protected final Role createNewEntity() {
-	return FixtureUtil.createNewRole();
+	return FixtureFactory.createNewRole();
     }
 
 }

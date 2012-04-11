@@ -2,7 +2,7 @@ package org.rest.common;
 
 import java.util.List;
 
-public interface IRestDao<T extends IEntity> {
+public interface IOperations<T extends IEntity> {
 
     // get
 
@@ -21,5 +21,7 @@ public interface IRestDao<T extends IEntity> {
     // delete
 
     void delete(final long id);
+
+    void deleteAll();
 
 }

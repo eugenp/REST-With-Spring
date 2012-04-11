@@ -21,23 +21,23 @@ public final class ResourceCreatedEvent<T extends Serializable> extends Applicat
 	Preconditions.checkNotNull(responseToSet);
 	Preconditions.checkNotNull(idOfNewResourceToSet);
 
-	this.uriBuilder = uriBuilderToSet;
-	this.response = responseToSet;
-	this.idOfNewResource = idOfNewResourceToSet;
+	uriBuilder = uriBuilderToSet;
+	response = responseToSet;
+	idOfNewResource = idOfNewResourceToSet;
     }
 
     //
 
     public final UriComponentsBuilder getUriBuilder() {
-	return this.uriBuilder;
+	return uriBuilder;
     }
 
     public final HttpServletResponse getResponse() {
-	return this.response;
+	return response;
     }
 
     public final long getIdOfNewResource() {
-	return this.idOfNewResource;
+	return idOfNewResource;
     }
 
     @SuppressWarnings("unchecked")

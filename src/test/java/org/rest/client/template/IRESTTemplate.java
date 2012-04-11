@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.rest.client.marshall.IMarshaller;
 import org.rest.common.IEntity;
-import org.rest.common.IRestDao;
+import org.rest.common.IOperations;
 
 import com.jayway.restassured.specification.RequestSpecification;
 
-public interface IRESTTemplate<T extends IEntity> extends IRestDao<T>, IEntityOperations<T>, ITemplateAsResponse<T>, ITemplateAsURI<T> {
+public interface IRESTTemplate<T extends IEntity> extends IOperations<T>, IEntityOperations<T>, ITemplateAsResponse<T>, ITemplateAsURI<T> {
 
     String getURI();
 

@@ -3,7 +3,7 @@ package org.rest.sec.persistence.service;
 import org.junit.runner.RunWith;
 import org.rest.persistence.AbstractServiceSearchPersistenceIntegrationTest;
 import org.rest.sec.model.Privilege;
-import org.rest.sec.util.FixtureUtil;
+import org.rest.sec.persistence.util.FixtureFactory;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
 import org.rest.spring.testing.TestingConfig;
@@ -30,7 +30,7 @@ public class PrivilegeServiceSearchPersistenceIntegrationTest extends AbstractSe
 
     @Override
     protected final Privilege createNewEntity() {
-	return FixtureUtil.createNewPrivilege();
+	return FixtureFactory.createNewPrivilege();
     }
 
 }

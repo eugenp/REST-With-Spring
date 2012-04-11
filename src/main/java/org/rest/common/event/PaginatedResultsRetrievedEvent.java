@@ -17,33 +17,33 @@ public final class PaginatedResultsRetrievedEvent<T extends Serializable> extend
     public PaginatedResultsRetrievedEvent(final Class<T> clazz, final UriComponentsBuilder uriBuilderToSet, final HttpServletResponse responseToSet, final int pageToSet, final int totalPagesToSet, final int pageSizeToSet) {
 	super(clazz);
 
-	this.uriBuilder = uriBuilderToSet;
-	this.response = responseToSet;
-	this.page = pageToSet;
-	this.totalPages = totalPagesToSet;
-	this.pageSize = pageSizeToSet;
+	uriBuilder = uriBuilderToSet;
+	response = responseToSet;
+	page = pageToSet;
+	totalPages = totalPagesToSet;
+	pageSize = pageSizeToSet;
     }
 
     // API
 
     public final UriComponentsBuilder getUriBuilder() {
-	return this.uriBuilder;
+	return uriBuilder;
     }
 
     public final HttpServletResponse getResponse() {
-	return this.response;
+	return response;
     }
 
     public final int getPage() {
-	return this.page;
+	return page;
     }
 
     public final int getTotalPages() {
-	return this.totalPages;
+	return totalPages;
     }
 
     public final int getPageSize() {
-	return this.pageSize;
+	return pageSize;
     }
 
     @SuppressWarnings("unchecked")

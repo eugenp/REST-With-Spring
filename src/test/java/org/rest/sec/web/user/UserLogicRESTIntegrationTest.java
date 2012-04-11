@@ -10,10 +10,10 @@ import static org.junit.Assert.assertThat;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.rest.client.template.impl.RoleRESTTemplateImpl;
-import org.rest.client.template.impl.UserRESTTemplateImpl;
-import org.rest.sec.dto.User;
+import org.rest.sec.client.template.RoleRESTTemplateImpl;
+import org.rest.sec.client.template.UserRESTTemplateImpl;
 import org.rest.sec.model.Role;
+import org.rest.sec.model.dto.User;
 import org.rest.sec.test.SecLogicRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 

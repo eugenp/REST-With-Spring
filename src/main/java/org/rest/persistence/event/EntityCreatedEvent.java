@@ -14,10 +14,10 @@ public final class EntityCreatedEvent<T extends Serializable> extends Applicatio
 	super(sourceToSet);
 
 	Preconditions.checkNotNull(clazzToSet);
-	this.clazz = clazzToSet;
+	clazz = clazzToSet;
 
 	Preconditions.checkNotNull(entityToSet);
-	this.entity = entityToSet;
+	entity = entityToSet;
     }
 
     // API

@@ -1,19 +1,27 @@
 package org.rest.persistence.service;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.rest.common.IEntity;
+import org.rest.persistence.event.BeforeEntityCreatedEvent;
+import org.rest.persistence.event.EntityCreatedEvent;
+import org.rest.persistence.event.EntityUpdatedEvent;
 import org.rest.util.IDUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import com.google.common.collect.Lists;
 
@@ -22,17 +30,18 @@ import com.google.common.collect.Lists;
  */
 public abstract class AbstractServiceUnitTest<T extends IEntity> {
 
-    // fixtures
-
-    public void before() {
-	final AbstractService<T> instance = (AbstractService<T>) getService();
-	instance.eventPublisher = mock(ApplicationEventPublisher.class);
-    }
+    protected ApplicationEventPublisher eventPublisher;
 
     // tests
 
+    public void before() {
+	when(getDAO().findAll()).thenReturn(Lists.<T> newArrayList());
+	eventPublisher = mock(ApplicationEventPublisher.class);
+	ReflectionTestUtils.setField(getService(), "eventPublisher", eventPublisher);
+    }
+
     @Test
-    public void whenServiceIsInitialized_thenNoException() {
+    public final void whenServiceIsInitialized_thenNoException() {
 	// When
 	// Then
     }
@@ -50,7 +59,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     @Test
     public void whenCreateIsTriggered_thenNoException() {
 	// When
-	getService().create(this.createNewEntity());
+	getService().create(stubDaoSave(createNewEntity()));
 
 	// Then
     }
@@ -58,8 +67,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     @Test
     public void whenCreatingANewEntity_thenEntityIsSaved() {
 	// Given
-	final T entity = createNewEntity();
-	stubDaoSave(entity);
+	final T entity = stubDaoSave(createNewEntity());
 
 	// When
 	getService().create(entity);
@@ -68,12 +76,38 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
 	verify(getDAO()).save(entity);
     }
 
+    @Test
+    public void whenCreatingANewEntity_thenBeforeCreateEventIsPublished() {
+	// Given
+	final T entity = createNewEntity();
+	stubDaoSave(entity);
+
+	// When
+	getService().create(entity);
+
+	// Then
+	verify(getEventPublisher()).publishEvent(isA(BeforeEntityCreatedEvent.class));
+    }
+
+    @Test
+    public void whenCreatingANewEntity_thenEventIsPublished() {
+	// Given
+	final T entity = createNewEntity();
+	stubDaoSave(entity);
+
+	// When
+	getService().create(entity);
+
+	// Then
+	verify(getEventPublisher()).publishEvent(isA(EntityCreatedEvent.class));
+    }
+
     // update
 
     @Test
     public void whenUpdateIsTriggered_thenNoException() {
 	// When
-	getService().update(this.createNewEntity());
+	getService().update(givenEntityExists(stubDaoSave(createSimulatedExistingEntity())));
 
 	// Then
     }
@@ -86,11 +120,24 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     @Test
     public void whenUpdateIsTriggered_thenEntityIsUpdated() {
 	// When
-	final T entity = this.createNewEntity();
+	final T entity = createSimulatedExistingEntity();
 	getService().update(entity);
 
 	// Then
 	verify(getDAO()).save(entity);
+    }
+
+    @Test
+    public void givenEntity_whenUpdate_thenEventIsPublished() {
+	// Given
+	final T entity = createSimulatedExistingEntity();
+	stubDaoSave(entity);
+
+	// When
+	getService().update(entity);
+
+	// Then
+	verify(getEventPublisher()).publishEvent(isA(EntityUpdatedEvent.class));
     }
 
     // find - paged
@@ -128,6 +175,21 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
 	verify(getDAO()).findAll();
     }
 
+    // find - one
+
+    @Test
+    public void whenEntityByIdIsFound_thenItIsReturned() {
+	// Given
+	final T entity = createSimulatedExistingEntity();
+	givenEntityExists(entity);
+
+	// When
+	final T found = getService().findOne(entity.getId());
+
+	// Then
+	assertThat(found, is(equalTo(entity)));
+    }
+
     // delete
 
     /**
@@ -135,8 +197,11 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
      */
     @Test
     public void givenResourceDoesNotExist_whenDeleteIsTriggered_thenNoExceptions() {
+	final long randomId = IDUtils.randomPositiveLong();
+	givenEntityExists(randomId);
+
 	// When
-	getService().delete(IDUtils.randomPositiveLong());
+	getService().delete(randomId);
 
 	// Then
     }
@@ -146,7 +211,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
 	final long id = IDUtils.randomPositiveLong();
 
 	// Given
-	when(getDAO().findOne(id)).thenReturn(this.createNewEntity());
+	givenEntityExists(id);
 
 	// When
 	getService().delete(id);
@@ -156,16 +221,15 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
 
     @Test
     public void givenResourceExists_whenDeleteIsTriggered_thenEntityIsDeleted() {
-	final long id = IDUtils.randomPositiveLong();
-
 	// Given
-	when(getDAO().findOne(id)).thenReturn(this.createNewEntity());
+	final long id = IDUtils.randomPositiveLong();
+	final T entityToBeDeleted = givenEntityExists(id);
 
 	// When
 	getService().delete(id);
 
 	// Then
-	verify(getDAO()).delete(id);
+	verify(getDAO()).delete(entityToBeDeleted);
     }
 
     // delete - all
@@ -181,13 +245,22 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
 
     // template method
 
-    protected abstract IService<T> getService();
+    protected T givenEntityExists(final long id) {
+	final T entity = createNewEntity();
+	entity.setId(id);
+	when(getDAO().findOne(id)).thenReturn(entity);
+	return entity;
+    }
 
-    protected abstract JpaRepository<T, Long> getDAO();
+    protected T givenEntityExists(final T entity) {
+	when(getDAO().findOne(entity.getId())).thenReturn(entity);
+	return entity;
+    }
 
-    //
-
-    protected abstract T createNewEntity();
+    protected final T stubDaoSave(final T entity) {
+	when(getDAO().save(entity)).thenReturn(entity);
+	return entity;
+    }
 
     /**
      * Creates and returns the instance of entity that is existing (ie ID is not null).
@@ -200,10 +273,31 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
 	return entity;
     }
 
+    /**
+     * Gets the service that is need to be tested.
+     * 
+     * @return the service.
+     */
+    protected abstract IService<T> getService();
+
+    /**
+     * Gets the DAO mock.
+     * 
+     * @return the DAO mock.
+     */
+    protected abstract PagingAndSortingRepository<T, Long> getDAO();
+
+    /**
+     * Gets the application event publisher mock.
+     * 
+     * @return the event publisher mock.
+     */
+    protected abstract ApplicationEventPublisher getEventPublisher();
+
     //
 
-    protected void stubDaoSave(final T entity) {
-	when(getDAO().save(entity)).thenReturn(entity);
-    }
+    protected abstract T createNewEntity();
+
+    protected abstract void changeEntity(final T entity);
 
 }

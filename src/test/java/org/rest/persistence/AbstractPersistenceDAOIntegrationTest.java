@@ -53,7 +53,7 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
 
     @Test
     public void givenAnEntityExists_whenEntitiesAreRetrieved_thenTheExistingEntityIsIndeedAmongThem() {
-	final T existingEntity = this.getAPI().save(this.createNewEntity());
+	final T existingEntity = getAPI().save(createNewEntity());
 
 	final List<T> owners = getAPI().findAll();
 
@@ -132,14 +132,14 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
 
     @Test
     public void whenEntityIsUpdated_thenNoExceptions() {
-	final T existingEntity = this.getAPI().save(this.createNewEntity());
+	final T existingEntity = getAPI().save(createNewEntity());
 
 	getAPI().save(existingEntity);
     }
 
     @Test(expected = DataAccessException.class)
     public void whenEntityIsUpdatedWithFailedConstraints_thenException() {
-	final T existingEntity = this.getAPI().save(this.createNewEntity());
+	final T existingEntity = getAPI().save(createNewEntity());
 	invalidate(existingEntity);
 
 	getAPI().save(existingEntity);
@@ -147,7 +147,7 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
 
     @Test
     public void whenEntityIsUpdated_thenTheUpdatedAreCorrectlyPersisted() {
-	final T existingEntity = this.getAPI().save(this.createNewEntity());
+	final T existingEntity = getAPI().save(createNewEntity());
 	changeEntity(existingEntity);
 
 	getAPI().save(existingEntity);
@@ -173,7 +173,7 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
     @Test
     public void givenEntityExists_whenEntityIsDeleted_thenNoExceptions() {
 	// Given
-	final T existingLocation = this.getAPI().save(this.createNewEntity());
+	final T existingLocation = getAPI().save(createNewEntity());
 
 	// When
 	getAPI().delete(existingLocation.getId());
@@ -182,7 +182,7 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
     @Test
     public void givenEntityExists_whenEntityIsDeleted_thenEntityIsNoLongerRetrievable() {
 	// Given
-	final T existingEntity = this.getAPI().save(this.createNewEntity());
+	final T existingEntity = getAPI().save(createNewEntity());
 
 	// When
 	getAPI().delete(existingEntity.getId());

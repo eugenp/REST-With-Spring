@@ -11,6 +11,9 @@ import org.junit.Test;
 import org.rest.persistence.service.AbstractServiceUnitTest;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.persistence.dao.IPrivilegeJpaDAO;
+import org.rest.sec.persistence.util.FixtureFactory;
+import org.rest.util.IDUtils;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;
@@ -79,14 +82,20 @@ public class PrivilegeServiceUnitTest extends AbstractServiceUnitTest<Privilege>
     }
 
     @Override
-    protected final Privilege createNewEntity() {
-	return this.createNewEntity(randomAlphabetic(8));
+    protected final ApplicationEventPublisher getEventPublisher() {
+	return eventPublisher;
     }
 
-    // util
+    @Override
+    protected Privilege createNewEntity() {
+	final Privilege newPrivilege = FixtureFactory.createNewPrivilege();
+	newPrivilege.setId(IDUtils.randomPositiveLong());
+	return newPrivilege;
+    }
 
-    final Privilege createNewEntity(final String name) {
-	return new Privilege(name);
+    @Override
+    protected void changeEntity(final Privilege entity) {
+	entity.setName(randomAlphabetic(8));
     }
 
 }

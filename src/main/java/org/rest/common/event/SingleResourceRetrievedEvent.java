@@ -14,23 +14,23 @@ public final class SingleResourceRetrievedEvent<T extends Serializable> extends 
     public SingleResourceRetrievedEvent(final Class<T> clazz, final UriComponentsBuilder uriBuilderToSet, final HttpServletResponse responseToSet) {
 	super(clazz);
 
-	this.uriBuilder = uriBuilderToSet;
-	this.response = responseToSet;
+	uriBuilder = uriBuilderToSet;
+	response = responseToSet;
     }
 
     //
 
     public final UriComponentsBuilder getUriBuilder() {
-	return this.uriBuilder;
+	return uriBuilder;
     }
 
     public final HttpServletResponse getResponse() {
-	return this.response;
+	return response;
     }
 
     @SuppressWarnings("unchecked")
     public final Class<T> getClazz() {
-	return (Class<T>) this.getSource();
+	return (Class<T>) getSource();
     }
 
 }

@@ -20,7 +20,7 @@ public abstract class AbstractMimeRESTIntegrationTest<T extends IEntity> extends
 
     public AbstractMimeRESTIntegrationTest(final Class<T> clazzToSet) {
 	Preconditions.checkNotNull(clazzToSet);
-	this.clazz = clazzToSet;
+	clazz = clazzToSet;
     }
 
     // tests

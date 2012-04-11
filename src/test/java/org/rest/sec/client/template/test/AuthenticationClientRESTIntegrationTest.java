@@ -1,11 +1,12 @@
-package org.rest.sec.client;
+package org.rest.sec.client.template.test;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.rest.sec.dto.User;
+import org.rest.sec.client.template.newer.AuthenticationRESTTemplate;
+import org.rest.sec.model.dto.User;
 import org.rest.sec.util.SecurityConstants;
 import org.rest.spring.client.ClientTestConfig;
 import org.rest.spring.context.ContextTestConfig;

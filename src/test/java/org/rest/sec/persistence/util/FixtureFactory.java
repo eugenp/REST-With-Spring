@@ -1,17 +1,17 @@
-package org.rest.sec.util;
+package org.rest.sec.persistence.util;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
-import org.rest.sec.dto.User;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
+import org.rest.sec.model.dto.User;
 
 import com.google.common.collect.Sets;
 
-public class FixtureUtil {
+public class FixtureFactory {
 
-    private FixtureUtil() {
+    private FixtureFactory() {
 	throw new AssertionError();
     }
 

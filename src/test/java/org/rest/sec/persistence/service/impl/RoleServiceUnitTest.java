@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.rest.persistence.service.AbstractServiceUnitTest;
 import org.rest.sec.model.Role;
 import org.rest.sec.persistence.dao.IRoleJpaDAO;
+import org.rest.sec.persistence.util.FixtureFactory;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;
@@ -79,14 +81,18 @@ public class RoleServiceUnitTest extends AbstractServiceUnitTest<Role> {
     }
 
     @Override
-    protected final Role createNewEntity() {
-	return this.createNewEntity(randomAlphabetic(8));
+    protected ApplicationEventPublisher getEventPublisher() {
+	return eventPublisher;
     }
 
-    // util
+    @Override
+    protected final Role createNewEntity() {
+	return FixtureFactory.createNewRole();
+    }
 
-    final Role createNewEntity(final String name) {
-	return new Role(name);
+    @Override
+    protected void changeEntity(final Role entity) {
+	entity.setName(randomAlphabetic(6));
     }
 
 }

@@ -22,31 +22,31 @@ public class MySavedRequestAwareAuthenticationSuccessHandler extends SimpleUrlAu
 
     @Override
     public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws ServletException, IOException {
-	final SavedRequest savedRequest = this.requestCache.getRequest(request, response);
+	final SavedRequest savedRequest = requestCache.getRequest(request, response);
 
 	if (savedRequest == null) {
 	    super.onAuthenticationSuccess(request, response, authentication);
 
 	    return;
 	}
-	final String targetUrlParameter = this.getTargetUrlParameter();
-	if (this.isAlwaysUseDefaultTargetUrl() || (targetUrlParameter != null && StringUtils.hasText(request.getParameter(targetUrlParameter)))) {
-	    this.requestCache.removeRequest(request, response);
+	final String targetUrlParameter = getTargetUrlParameter();
+	if (isAlwaysUseDefaultTargetUrl() || (targetUrlParameter != null && StringUtils.hasText(request.getParameter(targetUrlParameter)))) {
+	    requestCache.removeRequest(request, response);
 	    super.onAuthenticationSuccess(request, response, authentication);
 
 	    return;
 	}
 
-	this.clearAuthenticationAttributes(request);
+	clearAuthenticationAttributes(request);
 
 	// Use the DefaultSavedRequest URL
 	// final String targetUrl = savedRequest.getRedirectUrl();
-	// this.logger.debug( "Redirecting to DefaultSavedRequest Url: " + targetUrl );
-	// this.getRedirectStrategy().sendRedirect( request, response, targetUrl );
+	// logger.debug( "Redirecting to DefaultSavedRequest Url: " + targetUrl );
+	// getRedirectStrategy().sendRedirect( request, response, targetUrl );
     }
 
     public void setRequestCache(final RequestCache requestCacheToSet) {
-	this.requestCache = requestCacheToSet;
+	requestCache = requestCacheToSet;
     }
 
 }

@@ -1,6 +1,6 @@
 package org.rest.sec.web.role;
 
-import org.rest.client.template.impl.RoleRESTTemplateImpl;
+import org.rest.sec.client.template.RoleRESTTemplateImpl;
 import org.rest.sec.model.Role;
 import org.rest.sec.test.SecPaginationRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;

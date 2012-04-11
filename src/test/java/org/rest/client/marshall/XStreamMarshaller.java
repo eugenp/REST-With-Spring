@@ -1,7 +1,7 @@
 package org.rest.client.marshall;
 
-import org.rest.sec.dto.User;
 import org.rest.sec.model.Privilege;
+import org.rest.sec.model.dto.User;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 

@@ -1,11 +1,12 @@
-package org.rest.sec.client;
+package org.rest.sec.client.template.test;
 
 import org.junit.runner.RunWith;
 import org.rest.client.AbstractClientRESTIntegrationTest;
 import org.rest.client.AbstractClientRESTTemplate;
 import org.rest.client.template.IEntityOperations;
-import org.rest.client.template.impl.UserRESTTemplateImpl;
-import org.rest.sec.dto.User;
+import org.rest.sec.client.template.UserRESTTemplateImpl;
+import org.rest.sec.client.template.newer.UserClientRESTTemplate;
+import org.rest.sec.model.dto.User;
 import org.rest.spring.client.ClientTestConfig;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.testing.TestingConfig;

@@ -6,7 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.rest.client.template.impl.UserRESTTemplateImpl;
+import org.rest.sec.client.template.UserRESTTemplateImpl;
 import org.rest.spring.client.ClientTestConfig;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.testing.TestingConfig;

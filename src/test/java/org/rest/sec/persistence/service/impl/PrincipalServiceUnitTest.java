@@ -10,12 +10,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rest.persistence.service.AbstractServiceUnitTest;
 import org.rest.sec.model.Principal;
-import org.rest.sec.model.Role;
 import org.rest.sec.persistence.dao.IPrincipalJpaDAO;
+import org.rest.sec.persistence.util.FixtureFactory;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 public class PrincipalServiceUnitTest extends AbstractServiceUnitTest<Principal> {
 
@@ -82,13 +82,17 @@ public class PrincipalServiceUnitTest extends AbstractServiceUnitTest<Principal>
 
     @Override
     protected final Principal createNewEntity() {
-	return this.createNewEntity(randomAlphabetic(8));
+	return FixtureFactory.createNewPrincipal();
     }
 
-    // util
+    @Override
+    protected ApplicationEventPublisher getEventPublisher() {
+	return eventPublisher;
+    }
 
-    final Principal createNewEntity(final String username) {
-	return new Principal(username, randomAlphabetic(8), Sets.<Role> newHashSet());
+    @Override
+    protected void changeEntity(final Principal entity) {
+	entity.setPassword(randomAlphabetic(8));
     }
 
 }

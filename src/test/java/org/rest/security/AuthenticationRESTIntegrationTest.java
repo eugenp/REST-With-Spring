@@ -9,7 +9,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.sec.client.ExamplePaths;
-import org.rest.sec.dto.User;
+import org.rest.sec.model.dto.User;
 import org.rest.sec.util.SecurityConstants;
 import org.rest.spring.client.ClientTestConfig;
 import org.rest.spring.context.ContextTestConfig;

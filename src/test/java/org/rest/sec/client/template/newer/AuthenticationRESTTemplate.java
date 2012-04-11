@@ -1,7 +1,8 @@
-package org.rest.sec.client;
+package org.rest.sec.client.template.newer;
 
 import org.rest.client.marshall.IMarshaller;
-import org.rest.sec.dto.User;
+import org.rest.sec.client.ExamplePaths;
+import org.rest.sec.model.dto.User;
 import org.rest.testing.security.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

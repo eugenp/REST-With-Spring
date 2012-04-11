@@ -1,11 +1,11 @@
-package org.rest.client.template.impl;
+package org.rest.sec.client.template;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.rest.client.template.AbstractRESTTemplate;
 import org.rest.sec.client.ExamplePaths;
-import org.rest.sec.dto.User;
 import org.rest.sec.model.Role;
+import org.rest.sec.model.dto.User;
 import org.rest.testing.security.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.rest.common.web.RestPreconditions;
-import org.rest.sec.dto.PrincipalToUserFunction;
-import org.rest.sec.dto.User;
 import org.rest.sec.model.Principal;
+import org.rest.sec.model.dto.PrincipalToUserFunction;
+import org.rest.sec.model.dto.User;
 import org.rest.sec.persistence.service.IPrincipalService;
 import org.rest.sec.persistence.service.dto.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -33,10 +33,10 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 
     // API
 
-    // API - find
+    // find - one
 
     @Override
-    public final T findOne(final long id) {
+    public T findOne(final long id) {
 	try {
 	    final ResponseEntity<String> response = restTemplate.exchange(getURI() + "/" + id, HttpMethod.GET, new HttpEntity<String>(createAcceptHeaders()), String.class);
 	    return marshaller.decode(response.getBody(), clazz);
@@ -45,28 +45,28 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 	}
     }
 
-    public final T findOneByURI(final String uri) {
+    public T findOneByURI(final String uri) {
 	final ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity<String>(createAcceptHeaders()), String.class);
 
 	return marshaller.decode(response.getBody(), clazz);
     }
 
-    // API - find all
+    // find - all
 
     @Override
-    public final List<T> findAll() {
+    public List<T> findAll() {
 	final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI(), HttpMethod.GET, new HttpEntity<String>(createAcceptHeaders()), List.class);
 	return findAllResponse.getBody();
     }
 
-    public final ResponseEntity<List> findAllAsResponse() {
+    public ResponseEntity<List> findAllAsResponse() {
 	return restTemplate.exchange(getURI(), HttpMethod.GET, new HttpEntity<String>(createAcceptHeaders()), List.class);
     }
 
-    // API - create
+    // create
 
     @Override
-    public final T create(final T resource) {
+    public T create(final T resource) {
 	final ResponseEntity responseEntity = restTemplate.exchange(getURI(), HttpMethod.POST, new HttpEntity<T>(resource, createContentTypeHeaders()), clazz);
 
 	final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
@@ -75,7 +75,7 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 	return findOneByURI(locationOfCreatedResource);
     }
 
-    public final String createAsURI(final T resource) {
+    public String createAsURI(final T resource) {
 	final ResponseEntity responseEntity = restTemplate.exchange(getURI(), HttpMethod.POST, new HttpEntity<T>(resource, createContentTypeHeaders()), List.class);
 
 	final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
@@ -84,21 +84,26 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 	return locationOfCreatedResource;
     }
 
-    // API - update
+    // update
 
     @Override
-    public final void update(final T resource) {
+    public void update(final T resource) {
 	final ResponseEntity responseEntity = restTemplate.exchange(getURI(), HttpMethod.PUT, new HttpEntity<T>(resource, createContentTypeHeaders()), clazz);
 	Preconditions.checkState(responseEntity.getStatusCode().value() == 200);
     }
 
-    // API - delete
+    // delete
 
     @Override
-    public final void delete(final long id) {
+    public void delete(final long id) {
 	final ResponseEntity<Object> deleteResourceResponse = restTemplate.exchange(getURI() + "/" + id, HttpMethod.DELETE, null, null);
 
 	Preconditions.checkState(deleteResourceResponse.getStatusCode().value() == 204);
+    }
+
+    @Override
+    public void deleteAll() {
+	throw new UnsupportedOperationException();
     }
 
     // util

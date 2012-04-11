@@ -3,7 +3,7 @@ package org.rest.sec.persistence.service;
 import org.junit.runner.RunWith;
 import org.rest.persistence.AbstractServiceSearchPersistenceIntegrationTest;
 import org.rest.sec.model.Principal;
-import org.rest.sec.util.FixtureUtil;
+import org.rest.sec.persistence.util.FixtureFactory;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
 import org.rest.spring.testing.TestingConfig;
@@ -30,7 +30,7 @@ public class PrincipalServiceSearchPersistenceIntegrationTest extends AbstractSe
 
     @Override
     protected final Principal createNewEntity() {
-	return FixtureUtil.createNewPrincipal();
+	return FixtureFactory.createNewPrincipal();
     }
 
 }

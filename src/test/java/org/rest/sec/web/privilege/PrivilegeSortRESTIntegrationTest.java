@@ -1,6 +1,6 @@
 package org.rest.sec.web.privilege;
 
-import org.rest.client.template.impl.PrivilegeRESTTemplateImpl;
+import org.rest.sec.client.template.PrivilegeRESTTemplateImpl;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.test.SecSortRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package org.rest.sec.client;
+package org.rest.sec.client.template.newer;
 
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -11,7 +11,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.rest.client.AbstractClientRESTTemplate;
 import org.rest.client.IClientTemplate;
-import org.rest.sec.dto.User;
+import org.rest.sec.client.ExamplePaths;
+import org.rest.sec.model.dto.User;
 import org.rest.sec.util.SecurityConstants;
 import org.rest.security.DigestHttpComponentsClientHttpRequestFactory;
 import org.springframework.beans.factory.annotation.Autowired;

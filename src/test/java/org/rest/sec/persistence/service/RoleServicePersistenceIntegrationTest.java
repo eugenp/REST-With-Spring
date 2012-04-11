@@ -44,8 +44,8 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
     public void whenAUniqueConstraintIsBroken_thenSpringSpecificExceptionIsThrown() {
 	final String name = randomAlphabetic(8);
 
-	roleService.create(this.createNewEntity(name));
-	roleService.create(this.createNewEntity(name));
+	roleService.create(createNewEntity(name));
+	roleService.create(createNewEntity(name));
     }
 
     // scenario
@@ -100,7 +100,7 @@ public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceSe
 
     @Override
     protected final Role createNewEntity() {
-	return this.createNewEntity(randomAlphabetic(8));
+	return createNewEntity(randomAlphabetic(8));
     }
 
     @Override

@@ -2,7 +2,7 @@ package org.rest.sec.web.role;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
-import org.rest.client.template.impl.RoleRESTTemplateImpl;
+import org.rest.sec.client.template.RoleRESTTemplateImpl;
 import org.rest.sec.model.Role;
 import org.rest.sec.test.SecDiscoverabilityRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;

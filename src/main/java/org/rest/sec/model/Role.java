@@ -100,7 +100,7 @@ public class Role implements INameableEntity {
 	    return true;
 	if (obj == null)
 	    return false;
-	if (this.getClass() != obj.getClass())
+	if (getClass() != obj.getClass())
 	    return false;
 	final Role other = (Role) obj;
 	if (name == null) {

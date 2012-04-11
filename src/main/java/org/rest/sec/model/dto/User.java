@@ -1,4 +1,4 @@
-package org.rest.sec.dto;
+package org.rest.sec.model.dto;
 
 import java.util.Set;
 

@@ -1,4 +1,4 @@
-package org.rest.sec.dto;
+package org.rest.sec.model.dto;
 
 import org.rest.sec.model.Principal;
 

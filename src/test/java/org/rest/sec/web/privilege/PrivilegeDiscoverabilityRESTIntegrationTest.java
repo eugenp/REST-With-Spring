@@ -2,7 +2,7 @@ package org.rest.sec.web.privilege;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
-import org.rest.client.template.impl.PrivilegeRESTTemplateImpl;
+import org.rest.sec.client.template.PrivilegeRESTTemplateImpl;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.test.SecDiscoverabilityRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;

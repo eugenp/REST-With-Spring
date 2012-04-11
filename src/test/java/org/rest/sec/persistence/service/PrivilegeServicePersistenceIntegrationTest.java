@@ -38,8 +38,8 @@ public class PrivilegeServicePersistenceIntegrationTest extends AbstractPersiste
     public void whenAUniqueConstraintIsBroken_thenSpringSpecificExceptionIsThrown() {
 	final String name = randomAlphabetic(8);
 
-	privilegeService.create(this.createNewEntity(name));
-	privilegeService.create(this.createNewEntity(name));
+	privilegeService.create(createNewEntity(name));
+	privilegeService.create(createNewEntity(name));
     }
 
     // template method

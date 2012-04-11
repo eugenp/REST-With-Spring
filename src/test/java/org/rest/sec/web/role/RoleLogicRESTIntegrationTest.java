@@ -12,8 +12,8 @@ import java.util.Set;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.rest.client.template.impl.PrivilegeRESTTemplateImpl;
-import org.rest.client.template.impl.RoleRESTTemplateImpl;
+import org.rest.sec.client.template.PrivilegeRESTTemplateImpl;
+import org.rest.sec.client.template.RoleRESTTemplateImpl;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
 import org.rest.sec.test.SecLogicRESTIntegrationTest;

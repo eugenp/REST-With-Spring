@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.rest.common.exceptions.ConflictException;
 import org.rest.common.web.RestPreconditions;
-import org.rest.sec.dto.User;
+import org.rest.sec.model.dto.User;
 import org.rest.sec.persistence.service.dto.IUserService;
 import org.rest.sec.util.SecurityConstants;
 import org.rest.web.common.AbstractController;
