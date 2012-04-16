@@ -130,6 +130,20 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 
     public abstract String getURI();
 
-    public abstract IClientTemplate<T> givenAuthenticated();
+    public final IClientTemplate<T> givenAuthenticated() {
+	if (isBasicAuth()) {
+	    basicAuth();
+	} else {
+	    digestAuth();
+	}
+
+	return this;
+    }
+
+    protected abstract boolean isBasicAuth();
+
+    protected abstract void basicAuth();
+
+    protected abstract void digestAuth();
 
 }

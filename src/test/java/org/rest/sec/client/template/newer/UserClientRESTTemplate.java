@@ -1,20 +1,12 @@
 package org.rest.sec.client.template.newer;
 
-import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.AuthCache;
-import org.apache.http.client.protocol.ClientContext;
-import org.apache.http.impl.auth.DigestScheme;
-import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.BasicHttpContext;
 import org.rest.client.AbstractClientRESTTemplate;
-import org.rest.client.IClientTemplate;
 import org.rest.sec.client.ExamplePaths;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.util.SecurityConstants;
-import org.rest.security.DigestHttpComponentsClientHttpRequestFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -30,8 +22,6 @@ public class UserClientRESTTemplate extends AbstractClientRESTTemplate<User> {
     private String host;
     @Value("${http.port}")
     private int port;
-    @Value("${http.protocol}")
-    private String protocol;
 
     @Value("${sec.auth.basic}")
     private boolean basicAuth;
@@ -39,8 +29,6 @@ public class UserClientRESTTemplate extends AbstractClientRESTTemplate<User> {
     public UserClientRESTTemplate() {
 	super(User.class);
     }
-
-    //
 
     // template method
 
@@ -50,35 +38,20 @@ public class UserClientRESTTemplate extends AbstractClientRESTTemplate<User> {
     }
 
     @Override
-    public final IClientTemplate<User> givenAuthenticated() {
-	if (basicAuth) {
-	    final HttpComponentsClientHttpRequestFactory requestFactory = (HttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
-	    final DefaultHttpClient httpClient = (DefaultHttpClient) requestFactory.getHttpClient();
-	    httpClient.getCredentialsProvider().setCredentials(new AuthScope(host, port, AuthScope.ANY_REALM), new UsernamePasswordCredentials(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD));
-	} else {
-	    final HttpHost targetHost = new HttpHost(host, port, protocol);
+    protected boolean isBasicAuth() {
+	return basicAuth;
+    }
 
-	    // Create AuthCache instance
-	    final AuthCache authCache = new BasicAuthCache();
-	    // Generate DIGEST scheme object, initialize it and add it to the local auth cache
-	    final DigestScheme digestAuth = new DigestScheme();
-	    // Suppose we already know the realm name
-	    digestAuth.overrideParamter("realm", "Contacts Realm via Digest Authentication");
-	    // Suppose we already know the expected nonce value
-	    digestAuth.overrideParamter("nonce", "acegi");
-	    authCache.put(targetHost, digestAuth);
+    @Override
+    protected void basicAuth() {
+	final HttpComponentsClientHttpRequestFactory requestFactory = (HttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
+	final DefaultHttpClient httpClient = (DefaultHttpClient) requestFactory.getHttpClient();
+	httpClient.getCredentialsProvider().setCredentials(new AuthScope(host, port, AuthScope.ANY_REALM), new UsernamePasswordCredentials(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD));
+    }
 
-	    // Add AuthCache to the execution context
-	    final BasicHttpContext localcontext = new BasicHttpContext();
-	    localcontext.setAttribute(ClientContext.AUTH_CACHE, authCache);
-
-	    final DigestHttpComponentsClientHttpRequestFactory requestFactory = (DigestHttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
-	    requestFactory.setHttpContext(localcontext);
-	    final DefaultHttpClient httpClient = (DefaultHttpClient) requestFactory.getHttpClient();
-	    httpClient.getCredentialsProvider().setCredentials(new AuthScope(host, port, AuthScope.ANY_REALM), new UsernamePasswordCredentials(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD));
-	}
-
-	return this;
+    @Override
+    protected void digestAuth() {
+	throw new UnsupportedOperationException();
     }
 
 }
