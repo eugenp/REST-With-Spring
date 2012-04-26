@@ -15,31 +15,29 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { ContextTestConfig.class, TestingConfig.class, ClientTestConfig.class }, loader = AnnotationConfigContextLoader.class)
-public class UserClientRESTIntegrationTest extends AbstractClientRESTIntegrationTest<User> {
-
-    @Autowired
-    private UserClientRESTTemplate userClientTemplate;
-    @Autowired
-    private UserRESTTemplateImpl userEntityOps;
-
-    public UserClientRESTIntegrationTest() {
-	super();
-    }
-
-    // tests
-
-    // template method
-
-    @Override
-    protected final AbstractClientRESTTemplate<User> getTemplate() {
-	return userClientTemplate;
-    }
-
-    @Override
-    protected final IEntityOperations<User> getEntityOps() {
-	return userEntityOps;
-    }
-
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration( classes = { ContextTestConfig.class, TestingConfig.class, ClientTestConfig.class },loader = AnnotationConfigContextLoader.class )
+public class UserClientRESTIntegrationTest extends AbstractClientRESTIntegrationTest< User >{
+	
+	@Autowired private UserClientRESTTemplate userClientTemplate;
+	@Autowired private UserRESTTemplateImpl userEntityOps;
+	
+	public UserClientRESTIntegrationTest(){
+		super();
+	}
+	
+	// tests
+	
+	// template method
+	
+	@Override
+	protected final AbstractClientRESTTemplate< User > getTemplate(){
+		return userClientTemplate;
+	}
+	
+	@Override
+	protected final IEntityOperations< User > getEntityOps(){
+		return userEntityOps;
+	}
+	
 }

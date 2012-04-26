@@ -25,88 +25,87 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping(value = "user")
-public class UserController extends AbstractController<User> {
-
-    @Autowired
-    private IUserService service;
-
-    public UserController() {
-	super(User.class);
-    }
-
-    // API
-
-    // find - all/paginated
-
-    @RequestMapping(params = { "page", "size" }, method = RequestMethod.GET)
-    @ResponseBody
-    public List<User> findPaginated(@RequestParam("page") final int page, @RequestParam("size") final int size, @RequestParam(value = "sortBy", required = false) final String sortBy,
-	    final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-	return findPaginatedInternal(page, size, sortBy, uriBuilder, response);
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.SEE_OTHER)
-    public void findAll(final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-	findAllRedirectToPagination(uriBuilder, response);
-    }
-
-    // find - one
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public User findOne(@PathVariable("id") final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-	return findOneInternal(id, uriBuilder, response);
-    }
-
-    @RequestMapping(params = "name", method = RequestMethod.GET)
-    @ResponseBody
-    public User findOneByName(@RequestParam("name") final String name) {
-	User resource = null;
-	try {
-	    resource = RestPreconditions.checkNotNull(getService().findByName(name));
-	} catch (final InvalidDataAccessApiUsageException ex) {
-	    logger.error("InvalidDataAccessApiUsageException on find operation");
-	    logger.warn("InvalidDataAccessApiUsageException on find operation", ex);
-	    throw new ConflictException(ex);
+@RequestMapping( value = "user" )
+public class UserController extends AbstractController< User >{
+	
+	@Autowired private IUserService service;
+	
+	public UserController(){
+		super( User.class );
 	}
-
-	return resource;
-    }
-
-    // create
-
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    // @Secured( SecurityConstants.PRIVILEGE_USER_WRITE )
-    public void create(@RequestBody final User resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-	createInternal(resource, uriBuilder, response);
-    }
-
-    // update
-
-    @RequestMapping(method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.OK)
-    @Secured(SecurityConstants.CAN_USER_WRITE)
-    public void update(@RequestBody final User resource) {
-	updateInternal(resource);
-    }
-
-    // delete
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Secured(SecurityConstants.CAN_USER_WRITE)
-    public void delete(@PathVariable("id") final Long id) {
-	deleteByIdInternal(id);
-    }
-
-    // Spring
-
-    @Override
-    protected final IUserService getService() {
-	return service;
-    }
-
+	
+	// API
+	
+	// find - all/paginated
+	
+	@RequestMapping( params = { "page", "size" },method = RequestMethod.GET )
+	@ResponseBody
+	public List< User > findPaginated( @RequestParam( "page" ) final int page, @RequestParam( "size" ) final int size, @RequestParam( value = "sortBy",required = false ) final String sortBy, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+		return findPaginatedInternal( page, size, sortBy, uriBuilder, response );
+	}
+	
+	@RequestMapping( method = RequestMethod.GET )
+	@ResponseStatus( HttpStatus.SEE_OTHER )
+	public void findAll( final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+		findAllRedirectToPagination( uriBuilder, response );
+	}
+	
+	// find - one
+	
+	@RequestMapping( value = "/{id}",method = RequestMethod.GET )
+	@ResponseBody
+	public User findOne( @PathVariable( "id" ) final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+		return findOneInternal( id, uriBuilder, response );
+	}
+	
+	@RequestMapping( params = "name",method = RequestMethod.GET )
+	@ResponseBody
+	public User findOneByName( @RequestParam( "name" ) final String name ){
+		User resource = null;
+		try{
+			resource = RestPreconditions.checkNotNull( getService().findByName( name ) );
+		}
+		catch( final InvalidDataAccessApiUsageException ex ){
+			logger.error( "InvalidDataAccessApiUsageException on find operation" );
+			logger.warn( "InvalidDataAccessApiUsageException on find operation", ex );
+			throw new ConflictException( ex );
+		}
+		
+		return resource;
+	}
+	
+	// create
+	
+	@RequestMapping( method = RequestMethod.POST )
+	@ResponseStatus( HttpStatus.CREATED )
+	// @Secured( SecurityConstants.PRIVILEGE_USER_WRITE )
+	public void create( @RequestBody final User resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+		createInternal( resource, uriBuilder, response );
+	}
+	
+	// update
+	
+	@RequestMapping( method = RequestMethod.PUT )
+	@ResponseStatus( HttpStatus.OK )
+	@Secured( SecurityConstants.CAN_USER_WRITE )
+	public void update( @RequestBody final User resource ){
+		updateInternal( resource );
+	}
+	
+	// delete
+	
+	@RequestMapping( value = "/{id}",method = RequestMethod.DELETE )
+	@ResponseStatus( HttpStatus.NO_CONTENT )
+	@Secured( SecurityConstants.CAN_USER_WRITE )
+	public void delete( @PathVariable( "id" ) final Long id ){
+		deleteByIdInternal( id );
+	}
+	
+	// Spring
+	
+	@Override
+	protected final IUserService getService(){
+		return service;
+	}
+	
 }

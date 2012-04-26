@@ -18,45 +18,44 @@ import com.google.common.collect.Lists;
 
 @Service
 @Transactional
-public class PrivilegeServiceImpl extends AbstractService<Privilege> implements IPrivilegeService {
-
-    @Autowired
-    IPrivilegeJpaDAO dao;
-
-    public PrivilegeServiceImpl() {
-	super(Privilege.class);
-    }
-
-    // API
-
-    // search
-
-    @Override
-    public List<Privilege> search(final ImmutablePair<String, ?>... constraints) {
-	final Specification<Privilege> firstSpec = SearchSecUtil.resolveConstraint(constraints[0], Privilege.class);
-	Specifications<Privilege> specifications = Specifications.where(firstSpec);
-	for (int i = 1; i < constraints.length; i++) {
-	    specifications = specifications.and(SearchSecUtil.resolveConstraint(constraints[i], Privilege.class));
+public class PrivilegeServiceImpl extends AbstractService< Privilege > implements IPrivilegeService{
+	
+	@Autowired IPrivilegeJpaDAO dao;
+	
+	public PrivilegeServiceImpl(){
+		super( Privilege.class );
 	}
-	if (firstSpec == null) {
-	    return Lists.newArrayList();
+	
+	// API
+	
+	// search
+	
+	@Override
+	public List< Privilege > search( final ImmutablePair< String, ? >... constraints ){
+		final Specification< Privilege > firstSpec = SearchSecUtil.resolveConstraint( constraints[0], Privilege.class );
+		Specifications< Privilege > specifications = Specifications.where( firstSpec );
+		for( int i = 1; i < constraints.length; i++ ){
+			specifications = specifications.and( SearchSecUtil.resolveConstraint( constraints[i], Privilege.class ) );
+		}
+		if( firstSpec == null ){
+			return Lists.newArrayList();
+		}
+		
+		return getDao().findAll( specifications );
 	}
-
-	return getDao().findAll(specifications);
-    }
-
-    // find
-
-    @Override
-    public Privilege findByName(final String name) {
-	return getDao().findByName(name);
-    }
-
-    // Spring
-
-    @Override
-    protected final IPrivilegeJpaDAO getDao() {
-	return dao;
-    }
-
+	
+	// find
+	
+	@Override
+	public Privilege findByName( final String name ){
+		return getDao().findByName( name );
+	}
+	
+	// Spring
+	
+	@Override
+	protected final IPrivilegeJpaDAO getDao(){
+		return dao;
+	}
+	
 }

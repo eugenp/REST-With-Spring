@@ -17,49 +17,48 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.jayway.restassured.response.Response;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { ClientTestConfig.class, TestingConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
-public class SecurityRESTIntegrationTest {
-
-    @Autowired
-    private UserRESTTemplateImpl userTemplate;
-
-    // tests
-
-    // Unauthenticated
-
-    @Test
-    public final void givenUnauthenticated_whenAResourceIsDeleted_then401IsReceived() {
-	// Given
-	final String uriOfExistingResource = userTemplate.createResourceAsURI(userTemplate.createNewEntity());
-
-	// When
-	final Response response = given().delete(uriOfExistingResource);
-
-	// Then
-	assertThat(response.getStatusCode(), is(401));
-    }
-
-    // Authenticated
-
-    @Test
-    public final void givenAuthenticatedByBasicAuth_whenAResourceIsCreated_then201IsReceived() {
-	// Given
-	// When
-	final Response response = userTemplate.givenAuthenticated().contentType(userTemplate.getMime()).body(userTemplate.createNewEntity()).post(userTemplate.getURI());
-
-	// Then7
-	assertThat(response.getStatusCode(), is(201));
-    }
-
-    @Test
-    public final void givenAuthenticatedByDigestAuth_whenAResourceIsCreated_then201IsReceived() {
-	// Given
-	// When
-	final Response response = userTemplate.givenAuthenticated().contentType(userTemplate.getMime()).body(userTemplate.createNewEntity()).post(userTemplate.getURI());
-
-	// Then
-	assertThat(response.getStatusCode(), is(201));
-    }
-
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration( classes = { ClientTestConfig.class, TestingConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
+public class SecurityRESTIntegrationTest{
+	
+	@Autowired private UserRESTTemplateImpl userTemplate;
+	
+	// tests
+	
+	// Unauthenticated
+	
+	@Test
+	public final void givenUnauthenticated_whenAResourceIsDeleted_then401IsReceived(){
+		// Given
+		final String uriOfExistingResource = userTemplate.createResourceAsURI( userTemplate.createNewEntity() );
+		
+		// When
+		final Response response = given().delete( uriOfExistingResource );
+		
+		// Then
+		assertThat( response.getStatusCode(), is( 401 ) );
+	}
+	
+	// Authenticated
+	
+	@Test
+	public final void givenAuthenticatedByBasicAuth_whenAResourceIsCreated_then201IsReceived(){
+		// Given
+		// When
+		final Response response = userTemplate.givenAuthenticated().contentType( userTemplate.getMime() ).body( userTemplate.createNewEntity() ).post( userTemplate.getURI() );
+		
+		// Then7
+		assertThat( response.getStatusCode(), is( 201 ) );
+	}
+	
+	@Test
+	public final void givenAuthenticatedByDigestAuth_whenAResourceIsCreated_then201IsReceived(){
+		// Given
+		// When
+		final Response response = userTemplate.givenAuthenticated().contentType( userTemplate.getMime() ).body( userTemplate.createNewEntity() ).post( userTemplate.getURI() );
+		
+		// Then
+		assertThat( response.getStatusCode(), is( 201 ) );
+	}
+	
 }

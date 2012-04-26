@@ -12,25 +12,24 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { TestingConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
-public class PrivilegeServiceSearchPersistenceIntegrationTest extends AbstractServiceSearchPersistenceIntegrationTest<Privilege> {
-
-    @Autowired
-    private IPrivilegeService privilegeService;
-
-    // tests
-
-    // template method
-
-    @Override
-    protected final IPrivilegeService getService() {
-	return privilegeService;
-    }
-
-    @Override
-    protected final Privilege createNewEntity() {
-	return FixtureFactory.createNewPrivilege();
-    }
-
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration( classes = { TestingConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
+public class PrivilegeServiceSearchPersistenceIntegrationTest extends AbstractServiceSearchPersistenceIntegrationTest< Privilege >{
+	
+	@Autowired private IPrivilegeService privilegeService;
+	
+	// tests
+	
+	// template method
+	
+	@Override
+	protected final IPrivilegeService getService(){
+		return privilegeService;
+	}
+	
+	@Override
+	protected final Privilege createNewEntity(){
+		return FixtureFactory.createNewPrivilege();
+	}
+	
 }

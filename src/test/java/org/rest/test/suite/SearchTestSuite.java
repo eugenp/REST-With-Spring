@@ -11,8 +11,8 @@ import org.rest.sec.util.ParseQueryStringUnitTest;
 import org.rest.sec.web.privilege.PrivilegeSearchRESTIntegrationTest;
 import org.rest.sec.web.role.RoleSearchRESTIntegrationTest;
 
-@RunWith(Suite.class)
-@SuiteClasses({// @formatter:off
+@RunWith( Suite.class )
+@SuiteClasses( {// @formatter:off
     ParseQueryStringUnitTest.class,
     ConstructQueryStringUnitTest.class,
 
@@ -23,6 +23,6 @@ import org.rest.sec.web.role.RoleSearchRESTIntegrationTest;
     RoleSearchRESTIntegrationTest.class,
     PrivilegeSearchRESTIntegrationTest.class
 }) // @formatter:on
-public final class SearchTestSuite {
-    //
+public final class SearchTestSuite{
+	//
 }

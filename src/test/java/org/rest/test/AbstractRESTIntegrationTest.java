@@ -1,5 +1,5 @@
 package org.rest.test;
 
-public abstract class AbstractRESTIntegrationTest {
-    //
+public abstract class AbstractRESTIntegrationTest{
+	//
 }

@@ -12,25 +12,24 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { TestingConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
-public class PrincipalServiceSearchPersistenceIntegrationTest extends AbstractServiceSearchPersistenceIntegrationTest<Principal> {
-
-    @Autowired
-    private IPrincipalService principalService;
-
-    // tests
-
-    // template method
-
-    @Override
-    protected final IPrincipalService getService() {
-	return principalService;
-    }
-
-    @Override
-    protected final Principal createNewEntity() {
-	return FixtureFactory.createNewPrincipal();
-    }
-
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration( classes = { TestingConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
+public class PrincipalServiceSearchPersistenceIntegrationTest extends AbstractServiceSearchPersistenceIntegrationTest< Principal >{
+	
+	@Autowired private IPrincipalService principalService;
+	
+	// tests
+	
+	// template method
+	
+	@Override
+	protected final IPrincipalService getService(){
+		return principalService;
+	}
+	
+	@Override
+	protected final Principal createNewEntity(){
+		return FixtureFactory.createNewPrincipal();
+	}
+	
 }

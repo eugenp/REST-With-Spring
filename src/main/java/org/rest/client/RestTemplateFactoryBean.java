@@ -15,72 +15,71 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class RestTemplateFactoryBean implements FactoryBean<RestTemplate>, InitializingBean {
-    private RestTemplate restTemplate;
-
-    @Value("${sec.auth.basic}")
-    boolean basicAuth;
-    @Value("${http.req.timeout}")
-    int timeout;
-
-    // API
-
-    @Override
-    public RestTemplate getObject() {
-	return restTemplate;
-    }
-
-    @Override
-    public Class<RestTemplate> getObjectType() {
-	return RestTemplate.class;
-    }
-
-    @Override
-    public boolean isSingleton() {
-	return true;
-    }
-
-    @Override
-    public void afterPropertiesSet() {
-	final DefaultHttpClient httpClient = new DefaultHttpClient();
-	final HttpComponentsClientHttpRequestFactory requestFactory;
-	if (basicAuth) {
-	    requestFactory = new BasicHttpComponentsClientHttpRequestFactory(httpClient) {
-		{
-		    setReadTimeout(timeout);
-		}
-	    };
-	} else {
-	    requestFactory = new DigestHttpComponentsClientHttpRequestFactory(httpClient) {
-		{
-		    setReadTimeout(timeout);
-		}
-	    };
+public class RestTemplateFactoryBean implements FactoryBean< RestTemplate >, InitializingBean{
+	private RestTemplate restTemplate;
+	
+	@Value( "${sec.auth.basic}" ) boolean basicAuth;
+	@Value( "${http.req.timeout}" ) int timeout;
+	
+	// API
+	
+	@Override
+	public RestTemplate getObject(){
+		return restTemplate;
 	}
-	restTemplate = new RestTemplate(requestFactory);
-
-	restTemplate.getMessageConverters().add(marshallingHttpMessageConverter());
-    }
-
-    //
-
-    final MarshallingHttpMessageConverter marshallingHttpMessageConverter() {
-	final MarshallingHttpMessageConverter marshallingHttpMessageConverter = new MarshallingHttpMessageConverter();
-	marshallingHttpMessageConverter.setMarshaller(xstreamMarshaller());
-	marshallingHttpMessageConverter.setUnmarshaller(xstreamMarshaller());
-
-	return marshallingHttpMessageConverter;
-    }
-
-    final XStreamMarshaller xstreamMarshaller() {
-	final XStreamMarshaller xStreamMarshaller = new XStreamMarshaller();
-	xStreamMarshaller.setAutodetectAnnotations(true);
-	// xStreamMarshaller.setSupportedClasses( new Class[ ] { User.class, Privilege.class } );
-	xStreamMarshaller.setAnnotatedClass(User.class);
-	xStreamMarshaller.setAnnotatedClass(Privilege.class);
-
-	// xstreamMarshaller().getXStream().addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
-
-	return xStreamMarshaller;
-    }
+	
+	@Override
+	public Class< RestTemplate > getObjectType(){
+		return RestTemplate.class;
+	}
+	
+	@Override
+	public boolean isSingleton(){
+		return true;
+	}
+	
+	@Override
+	public void afterPropertiesSet(){
+		final DefaultHttpClient httpClient = new DefaultHttpClient();
+		final HttpComponentsClientHttpRequestFactory requestFactory;
+		if( basicAuth ){
+			requestFactory = new BasicHttpComponentsClientHttpRequestFactory( httpClient ){
+				{
+					setReadTimeout( timeout );
+				}
+			};
+		}
+		else{
+			requestFactory = new DigestHttpComponentsClientHttpRequestFactory( httpClient ){
+				{
+					setReadTimeout( timeout );
+				}
+			};
+		}
+		restTemplate = new RestTemplate( requestFactory );
+		
+		restTemplate.getMessageConverters().add( marshallingHttpMessageConverter() );
+	}
+	
+	//
+	
+	final MarshallingHttpMessageConverter marshallingHttpMessageConverter(){
+		final MarshallingHttpMessageConverter marshallingHttpMessageConverter = new MarshallingHttpMessageConverter();
+		marshallingHttpMessageConverter.setMarshaller( xstreamMarshaller() );
+		marshallingHttpMessageConverter.setUnmarshaller( xstreamMarshaller() );
+		
+		return marshallingHttpMessageConverter;
+	}
+	
+	final XStreamMarshaller xstreamMarshaller(){
+		final XStreamMarshaller xStreamMarshaller = new XStreamMarshaller();
+		xStreamMarshaller.setAutodetectAnnotations( true );
+		// xStreamMarshaller.setSupportedClasses( new Class[ ] { User.class, Privilege.class } );
+		xStreamMarshaller.setAnnotatedClass( User.class );
+		xStreamMarshaller.setAnnotatedClass( Privilege.class );
+		
+		// xstreamMarshaller().getXStream().addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
+		
+		return xStreamMarshaller;
+	}
 }

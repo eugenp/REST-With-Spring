@@ -18,46 +18,45 @@ import com.google.common.collect.Lists;
 
 @Service
 @Transactional
-public class PrincipalServiceImpl extends AbstractService<Principal> implements IPrincipalService {
-
-    @Autowired
-    IPrincipalJpaDAO dao;
-
-    public PrincipalServiceImpl() {
-	super(Principal.class);
-    }
-
-    // API
-
-    // search
-
-    @Override
-    public List<Principal> search(final ImmutablePair<String, ?>... constraints) {
-	final Specification<Principal> firstSpec = SearchSecUtil.resolveConstraint(constraints[0], Principal.class);
-	Specifications<Principal> specifications = Specifications.where(firstSpec);
-	for (int i = 1; i < constraints.length; i++) {
-	    specifications = specifications.and(SearchSecUtil.resolveConstraint(constraints[i], Principal.class));
+public class PrincipalServiceImpl extends AbstractService< Principal > implements IPrincipalService{
+	
+	@Autowired IPrincipalJpaDAO dao;
+	
+	public PrincipalServiceImpl(){
+		super( Principal.class );
 	}
-	if (firstSpec == null) {
-	    return Lists.newArrayList();
+	
+	// API
+	
+	// search
+	
+	@Override
+	public List< Principal > search( final ImmutablePair< String, ? >... constraints ){
+		final Specification< Principal > firstSpec = SearchSecUtil.resolveConstraint( constraints[0], Principal.class );
+		Specifications< Principal > specifications = Specifications.where( firstSpec );
+		for( int i = 1; i < constraints.length; i++ ){
+			specifications = specifications.and( SearchSecUtil.resolveConstraint( constraints[i], Principal.class ) );
+		}
+		if( firstSpec == null ){
+			return Lists.newArrayList();
+		}
+		
+		return getDao().findAll( specifications );
 	}
-
-	return getDao().findAll(specifications);
-    }
-
-    // find
-
-    @Override
-    @Transactional(readOnly = true)
-    public Principal findByName(final String name) {
-	return dao.findByName(name);
-    }
-
-    // Spring
-
-    @Override
-    protected final IPrincipalJpaDAO getDao() {
-	return dao;
-    }
-
+	
+	// find
+	
+	@Override
+	@Transactional( readOnly = true )
+	public Principal findByName( final String name ){
+		return dao.findByName( name );
+	}
+	
+	// Spring
+	
+	@Override
+	protected final IPrincipalJpaDAO getDao(){
+		return dao;
+	}
+	
 }

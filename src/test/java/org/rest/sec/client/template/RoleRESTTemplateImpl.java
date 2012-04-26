@@ -14,47 +14,46 @@ import com.google.common.collect.Sets;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @Component
-public final class RoleRESTTemplateImpl extends AbstractRESTTemplate<Role> {
-
-    @Autowired
-    protected ExamplePaths paths;
-
-    public RoleRESTTemplateImpl() {
-	super(Role.class);
-    }
-
-    // API
-
-    public final Role findByName(final String name) {
-	final String resourceAsXML = findOneAsMime(getURI() + "?name=" + name);
-	return marshaller.decode(resourceAsXML, clazz);
-    }
-
-    // template method
-
-    @Override
-    public final String getURI() {
-	return paths.getRoleUri();
-    }
-
-    @Override
-    public final RequestSpecification givenAuthenticated() {
-	return AuthenticationUtil.givenBasicAuthenticated();
-    }
-
-    @Override
-    public final Role createNewEntity() {
-	return new Role(randomAlphabetic(8), Sets.<Privilege> newHashSet());
-    }
-
-    @Override
-    public final void invalidate(final Role entity) {
-	entity.setName(null);
-    }
-
-    @Override
-    public final void change(final Role resource) {
-	resource.setName(randomAlphabetic(8));
-    }
-
+public final class RoleRESTTemplateImpl extends AbstractRESTTemplate< Role >{
+	
+	@Autowired protected ExamplePaths paths;
+	
+	public RoleRESTTemplateImpl(){
+		super( Role.class );
+	}
+	
+	// API
+	
+	public final Role findByName( final String name ){
+		final String resourceAsXML = findOneAsMime( getURI() + "?name=" + name );
+		return marshaller.decode( resourceAsXML, clazz );
+	}
+	
+	// template method
+	
+	@Override
+	public final String getURI(){
+		return paths.getRoleUri();
+	}
+	
+	@Override
+	public final RequestSpecification givenAuthenticated(){
+		return AuthenticationUtil.givenBasicAuthenticated();
+	}
+	
+	@Override
+	public final Role createNewEntity(){
+		return new Role( randomAlphabetic( 8 ), Sets.<Privilege> newHashSet() );
+	}
+	
+	@Override
+	public final void invalidate( final Role entity ){
+		entity.setName( null );
+	}
+	
+	@Override
+	public final void change( final Role resource ){
+		resource.setName( randomAlphabetic( 8 ) );
+	}
+	
 }

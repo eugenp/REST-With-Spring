@@ -12,25 +12,24 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { TestingConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
-public class RoleServiceSearchPersistenceIntegrationTest extends AbstractServiceSearchPersistenceIntegrationTest<Role> {
-
-    @Autowired
-    private IRoleService roleService;
-
-    // tests
-
-    // template method
-
-    @Override
-    protected final IRoleService getService() {
-	return roleService;
-    }
-
-    @Override
-    protected final Role createNewEntity() {
-	return FixtureFactory.createNewRole();
-    }
-
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration( classes = { TestingConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
+public class RoleServiceSearchPersistenceIntegrationTest extends AbstractServiceSearchPersistenceIntegrationTest< Role >{
+	
+	@Autowired private IRoleService roleService;
+	
+	// tests
+	
+	// template method
+	
+	@Override
+	protected final IRoleService getService(){
+		return roleService;
+	}
+	
+	@Override
+	protected final Role createNewEntity(){
+		return FixtureFactory.createNewRole();
+	}
+	
 }
