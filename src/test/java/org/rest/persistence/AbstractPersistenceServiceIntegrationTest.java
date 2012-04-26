@@ -15,7 +15,6 @@ import org.rest.common.IEntity;
 import org.rest.persistence.service.IService;
 import org.rest.util.IDUtils;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.annotation.Rollback;
 
 public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntity> {
 
@@ -94,7 +93,6 @@ public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntit
     }
 
     @Test
-    @Rollback
     public void whenEntityIsCreated_thenNoExceptions() {
 	getAPI().create(createNewEntity());
     }
@@ -177,7 +175,7 @@ public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntit
     @Test(expected = DataAccessException.class)
     public void whenEntityIsDeletedByNegativeId_thenDataAccessException() {
 	// When
-	getAPI().delete((IDUtils.randomNegativeLong()));
+	getAPI().delete(IDUtils.randomNegativeLong());
     }
 
     @Test

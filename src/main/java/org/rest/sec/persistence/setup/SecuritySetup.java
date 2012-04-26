@@ -60,6 +60,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 	    createPrincipals();
 
 	    setupDone = true;
+	    logger.info("Setup Done");
 	}
     }
 

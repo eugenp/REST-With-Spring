@@ -24,10 +24,6 @@ import com.google.common.collect.Sets;
 public class PrincipalServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest<Principal> {
 
     @Autowired
-    IPrivilegeService privilegeService;
-    @Autowired
-    IRoleService roleService;
-    @Autowired
     private IPrincipalService principalService;
 
     // create
@@ -45,22 +41,16 @@ public class PrincipalServicePersistenceIntegrationTest extends AbstractPersiste
 	getAPI().create(createNewEntity(name));
     }
 
-    // Spring
+    // template method
 
     @Override
     protected final IService<Principal> getAPI() {
 	return principalService;
     }
 
-    // template method
-
     @Override
     protected final Principal createNewEntity() {
 	return new Principal(randomAlphabetic(8), randomAlphabetic(8), Sets.<Role> newHashSet());
-    }
-
-    protected final Principal createNewEntity(final String name) {
-	return new Principal(name, randomAlphabetic(8), Sets.<Role> newHashSet());
     }
 
     @Override
@@ -69,8 +59,14 @@ public class PrincipalServicePersistenceIntegrationTest extends AbstractPersiste
     }
 
     @Override
-    protected void changeEntity(final Principal entity) {
+    protected final void changeEntity(final Principal entity) {
 	entity.setPassword(randomAlphabetic(8));
+    }
+
+    //
+
+    protected final Principal createNewEntity(final String name) {
+	return new Principal(name, randomAlphabetic(8), Sets.<Role> newHashSet());
     }
 
 }

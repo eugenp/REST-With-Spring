@@ -16,7 +16,7 @@ import com.google.common.base.Preconditions;
 import com.jayway.restassured.response.Response;
 
 /**
- * Template for the consumption of the REST API <br>
+ * REST Template for the consumption of the REST API <br>
  */
 public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTemplate<T> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
