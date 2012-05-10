@@ -2,7 +2,8 @@ package org.rest.sec.persistence.service.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.rest.common.ClientOperation;
 import org.rest.persistence.service.AbstractService;
 import org.rest.sec.model.Role;
 import org.rest.sec.persistence.dao.IRoleJpaDAO;
@@ -31,7 +32,7 @@ public class RoleServiceImpl extends AbstractService< Role > implements IRoleSer
 	// search
 	
 	@Override
-	public List< Role > search( final ImmutablePair< String, ? >... constraints ){
+	public List< Role > search( final ImmutableTriple< String, ClientOperation, ? >... constraints ){
 		final Specification< Role > firstSpec = SearchSecUtil.resolveConstraint( constraints[0], Role.class );
 		Specifications< Role > specifications = Specifications.where( firstSpec );
 		for( int i = 1; i < constraints.length; i++ ){

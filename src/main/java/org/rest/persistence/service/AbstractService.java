@@ -2,7 +2,8 @@ package org.rest.persistence.service;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.rest.common.ClientOperation;
 import org.rest.common.IEntity;
 import org.rest.persistence.event.BeforeEntityCreatedEvent;
 import org.rest.persistence.event.EntitiesDeletedEvent;
@@ -41,7 +42,7 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 	// search
 	
 	@Override
-	public List< T > search( final ImmutablePair< String, ? >... constraints ){
+	public List< T > search( final ImmutableTriple< String, ClientOperation, ? >... constraints ){
 		throw new UnsupportedOperationException();
 	}
 	

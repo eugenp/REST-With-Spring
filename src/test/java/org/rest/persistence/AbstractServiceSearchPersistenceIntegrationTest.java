@@ -9,12 +9,12 @@ import static org.rest.util.SearchCommonUtil.NAME;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.junit.Test;
+import org.rest.common.ClientOperation;
 import org.rest.common.INameableEntity;
 import org.rest.persistence.service.IService;
 import org.rest.util.IDUtils;
-import org.rest.util.SearchCommonUtil;
 
 @SuppressWarnings( "unchecked" )
 public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends INameableEntity >{
@@ -26,7 +26,7 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 		final T existingEntity = getService().create( createNewEntity() );
 		
 		// When
-		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( NAME, existingEntity.getName() );
+		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.EQ, existingEntity.getName() );
 		getService().search( nameConstraint );
 	}
 	
@@ -37,7 +37,7 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 		final T existingEntity = getService().create( createNewEntity() );
 		
 		// When
-		final ImmutablePair< String, Long > idConstraint = new ImmutablePair< String, Long >( ID, existingEntity.getId() );
+		final ImmutableTriple< String, ClientOperation, Long > idConstraint = new ImmutableTriple< String, ClientOperation, Long >( ID, ClientOperation.EQ, existingEntity.getId() );
 		final List< T > searchResults = getService().search( idConstraint );
 		
 		// Then
@@ -49,7 +49,7 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 		final T existingEntity = getService().create( createNewEntity() );
 		
 		// When
-		final ImmutablePair< String, Long > idConstraint = new ImmutablePair< String, Long >( SearchCommonUtil.ID, IDUtils.randomPositiveLong() );
+		final ImmutableTriple< String, ClientOperation, Long > idConstraint = new ImmutableTriple< String, ClientOperation, Long >( ID, ClientOperation.EQ, IDUtils.randomPositiveLong() );
 		final List< T > searchResults = getService().search( idConstraint );
 		
 		// Then
@@ -63,7 +63,7 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 		final T existingEntity = getService().create( createNewEntity() );
 		
 		// When
-		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( NAME, existingEntity.getName() );
+		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.EQ, existingEntity.getName() );
 		final List< T > searchResults = getService().search( nameConstraint );
 		
 		// Then
@@ -75,7 +75,7 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 		final T existingEntity = getService().create( createNewEntity() );
 		
 		// When
-		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( NAME, randomAlphabetic( 8 ) );
+		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.EQ, randomAlphabetic( 8 ) );
 		final List< T > searchResults = getService().search( nameConstraint );
 		
 		// Then
@@ -88,7 +88,7 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 		final T existingEntity2 = getService().create( createNewEntity() );
 		
 		// When
-		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( SearchCommonUtil.NAME, existingEntity1.getName() );
+		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.EQ, existingEntity1.getName() );
 		final List< T > searchResults = getService().search( nameConstraint );
 		
 		// Then
@@ -103,8 +103,8 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 		final T existingEntity = getService().create( createNewEntity() );
 		
 		// When
-		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( NAME, existingEntity.getName() );
-		final ImmutablePair< String, Long > idConstraint = new ImmutablePair< String, Long >( ID, existingEntity.getId() );
+		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.EQ, existingEntity.getName() );
+		final ImmutableTriple< String, ClientOperation, Long > idConstraint = new ImmutableTriple< String, ClientOperation, Long >( ID, ClientOperation.EQ, existingEntity.getId() );
 		final List< T > searchResults = getService().search( nameConstraint, idConstraint );
 		
 		// Then
@@ -116,8 +116,8 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 		final T existingEntity = getService().create( createNewEntity() );
 		
 		// When
-		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( NAME, existingEntity.getName() );
-		final ImmutablePair< String, Long > idConstraint = new ImmutablePair< String, Long >( ID, IDUtils.randomPositiveLong() );
+		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.EQ, existingEntity.getName() );
+		final ImmutableTriple< String, ClientOperation, Long > idConstraint = new ImmutableTriple< String, ClientOperation, Long >( ID, ClientOperation.EQ, IDUtils.randomPositiveLong() );
 		final List< T > searchResults = getService().search( nameConstraint, idConstraint );
 		
 		// Then
@@ -129,8 +129,8 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 		final T existingEntity = getService().create( createNewEntity() );
 		
 		// When
-		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( NAME, randomAlphabetic( 8 ) );
-		final ImmutablePair< String, Long > idConstraint = new ImmutablePair< String, Long >( ID, existingEntity.getId() );
+		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.EQ, randomAlphabetic( 8 ) );
+		final ImmutableTriple< String, ClientOperation, Long > idConstraint = new ImmutableTriple< String, ClientOperation, Long >( ID, ClientOperation.EQ, existingEntity.getId() );
 		final List< T > searchResults = getService().search( nameConstraint, idConstraint );
 		
 		// Then
@@ -145,7 +145,7 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 		final T existingEntity2 = getService().create( createNewEntity() );
 		
 		// When
-		final ImmutablePair< String, String > nameConstraint = new ImmutablePair< String, String >( "~" + NAME, existingEntity1.getName() );
+		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.NEG_EQ, existingEntity1.getName() );
 		final List< T > searchResults = getService().search( nameConstraint );
 		
 		// Then
@@ -159,7 +159,7 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 		final T existingEntity2 = getService().create( createNewEntity() );
 		
 		// When
-		final ImmutablePair< String, Long > idConstraint = new ImmutablePair< String, Long >( "~" + ID, existingEntity1.getId() );
+		final ImmutableTriple< String, ClientOperation, Long > idConstraint = new ImmutableTriple< String, ClientOperation, Long >( ID, ClientOperation.NEG_EQ, existingEntity1.getId() );
 		final List< T > searchResults = getService().search( idConstraint );
 		
 		// Then

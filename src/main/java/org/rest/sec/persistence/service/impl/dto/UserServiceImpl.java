@@ -2,7 +2,8 @@ package org.rest.sec.persistence.service.impl.dto;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.rest.common.ClientOperation;
 import org.rest.common.web.RestPreconditions;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.dto.PrincipalToUserFunction;
@@ -34,7 +35,7 @@ public class UserServiceImpl implements IUserService{
 	// search
 	
 	@Override
-	public List< User > search( final ImmutablePair< String, ? >... constraints ){
+	public List< User > search( final ImmutableTriple< String, ClientOperation, ? >... constraints ){
 		throw new UnsupportedOperationException();
 	}
 	

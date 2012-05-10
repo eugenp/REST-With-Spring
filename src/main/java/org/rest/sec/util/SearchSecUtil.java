@@ -1,6 +1,7 @@
 package org.rest.sec.util;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.rest.common.ClientOperation;
 import org.rest.common.IEntity;
 import org.rest.util.SearchCommonUtil;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,13 +14,9 @@ public final class SearchSecUtil{
 	
 	// util
 	
-	public static < T extends IEntity >Specification< T > resolveConstraint( final ImmutablePair< String, ? > constraint, final Class< T > clazz ){
-		String constraintName = constraint.getLeft();
-		boolean negated = false;
-		if( constraintName.startsWith( SearchCommonUtil.NEGATION ) ){
-			negated = true;
-			constraintName = constraintName.substring( 1 );
-		}
+	public static < T extends IEntity >Specification< T > resolveConstraint( final ImmutableTriple< String, ClientOperation, ? > constraint, final Class< T > clazz ){
+		final String constraintName = constraint.getLeft();
+		final boolean negated = isConstraintNegated( constraint );
 		
 		if( constraintName.equals( SearchCommonUtil.NAME ) ){
 			return QuerySpecifications.getByNameSpecification( clazz, (String) constraint.getRight(), negated );
@@ -30,4 +27,8 @@ public final class SearchSecUtil{
 		return null;
 	}
 	
+	static boolean isConstraintNegated( final ImmutableTriple< String, ClientOperation, ? > constraint ){
+		return constraint.getMiddle().isNegated();
+	}
+
 }

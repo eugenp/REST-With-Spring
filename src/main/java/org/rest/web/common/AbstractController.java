@@ -4,8 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.http.HttpHeaders;
+import org.rest.common.ClientOperation;
 import org.rest.common.IEntity;
 import org.rest.common.event.PaginatedResultsRetrievedEvent;
 import org.rest.common.event.ResourceCreatedEvent;
@@ -48,7 +49,7 @@ public abstract class AbstractController< T extends IEntity >{
 	
 	@SuppressWarnings( "unchecked" )
 	public List< T > searchInternal( @RequestParam( SearchCommonUtil.Q_PARAM ) final String queryString ){
-		List< ImmutablePair< String, ? >> parsedQuery = null;
+		List< ImmutableTriple< String, ClientOperation, ? >> parsedQuery = null;
 		try{
 			parsedQuery = SearchCommonUtil.parseQueryString( queryString );
 		}
@@ -58,7 +59,7 @@ public abstract class AbstractController< T extends IEntity >{
 			throw new ConflictException( illState );
 		}
 		
-		final List< T > results = getService().search( parsedQuery.toArray( new ImmutablePair[parsedQuery.size()] ) );
+		final List< T > results = getService().search( parsedQuery.toArray( new ImmutableTriple[parsedQuery.size()] ) );
 		return results;
 	}
 	

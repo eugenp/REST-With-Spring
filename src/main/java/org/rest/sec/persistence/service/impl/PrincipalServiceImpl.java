@@ -2,7 +2,8 @@ package org.rest.sec.persistence.service.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.rest.common.ClientOperation;
 import org.rest.persistence.service.AbstractService;
 import org.rest.sec.model.Principal;
 import org.rest.sec.persistence.dao.IPrincipalJpaDAO;
@@ -31,7 +32,7 @@ public class PrincipalServiceImpl extends AbstractService< Principal > implement
 	// search
 	
 	@Override
-	public List< Principal > search( final ImmutablePair< String, ? >... constraints ){
+	public List< Principal > search( final ImmutableTriple< String, ClientOperation, ? >... constraints ){
 		final Specification< Principal > firstSpec = SearchSecUtil.resolveConstraint( constraints[0], Principal.class );
 		Specifications< Principal > specifications = Specifications.where( firstSpec );
 		for( int i = 1; i < constraints.length; i++ ){

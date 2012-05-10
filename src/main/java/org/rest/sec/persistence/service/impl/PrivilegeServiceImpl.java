@@ -2,7 +2,8 @@ package org.rest.sec.persistence.service.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.rest.common.ClientOperation;
 import org.rest.persistence.service.AbstractService;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.persistence.dao.IPrivilegeJpaDAO;
@@ -31,7 +32,7 @@ public class PrivilegeServiceImpl extends AbstractService< Privilege > implement
 	// search
 	
 	@Override
-	public List< Privilege > search( final ImmutablePair< String, ? >... constraints ){
+	public List< Privilege > search( final ImmutableTriple< String, ClientOperation, ? >... constraints ){
 		final Specification< Privilege > firstSpec = SearchSecUtil.resolveConstraint( constraints[0], Privilege.class );
 		Specifications< Privilege > specifications = Specifications.where( firstSpec );
 		for( int i = 1; i < constraints.length; i++ ){
