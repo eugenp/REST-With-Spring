@@ -1,8 +1,10 @@
 package org.rest.sec.client.template.test;
 
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.client.AbstractClientRESTIntegrationTest;
-import org.rest.client.AbstractClientRESTTemplate;
 import org.rest.client.template.IEntityOperations;
 import org.rest.sec.client.template.UserRESTTemplateImpl;
 import org.rest.sec.client.template.newer.UserClientRESTTemplate;
@@ -28,10 +30,33 @@ public class UserClientRESTIntegrationTest extends AbstractClientRESTIntegration
 	
 	// tests
 	
+	// search by name
+	
+	@Test
+	public final void givenResourceExists_whenResourceIsSearchedByName_thenNoExceptions(){
+		// Given
+		final User existingResource = getTemplate().create( getEntityOps().createNewEntity() );
+		
+		// When
+		getTemplate().findOneByName( existingResource.getName() );
+	}
+	
+	@Test
+	public final void givenResourceExists_whenResourceIsSearchedByName_thenResourceIsFound(){
+		// Given
+		final User existingResource = getTemplate().create( getEntityOps().createNewEntity() );
+		
+		// When
+		final User resourceByName = getTemplate().findOneByName( existingResource.getName() );
+		
+		// Then
+		assertNotNull( resourceByName );
+	}
+	
 	// template method
 	
 	@Override
-	protected final AbstractClientRESTTemplate< User > getTemplate(){
+	protected final UserClientRESTTemplate getTemplate(){
 		return userClientTemplate;
 	}
 	

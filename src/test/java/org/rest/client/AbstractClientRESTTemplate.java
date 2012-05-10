@@ -45,7 +45,6 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 	
 	public T findOneByURI( final String uri ){
 		final ResponseEntity< String > response = restTemplate.exchange( uri, HttpMethod.GET, new HttpEntity< String >( createAcceptHeaders() ), String.class );
-		
 		return marshaller.decode( response.getBody(), clazz );
 	}
 	
@@ -61,6 +60,11 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 		return restTemplate.exchange( getURI(), HttpMethod.GET, new HttpEntity< String >( createAcceptHeaders() ), List.class );
 	}
 	
+	public final List< T > findAllByURI( final String uri ){
+		final ResponseEntity< List > response = restTemplate.exchange( uri, HttpMethod.GET, new HttpEntity< T >( createAcceptHeaders() ), List.class );
+		return response.getBody();
+	}
+
 	// create
 	
 	@Override
