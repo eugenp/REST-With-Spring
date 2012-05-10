@@ -9,6 +9,7 @@ import org.rest.common.web.RestPreconditions;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.persistence.service.dto.IUserService;
 import org.rest.sec.util.SecurityConstants;
+import org.rest.util.SearchCommonUtil;
 import org.rest.web.common.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -36,6 +37,14 @@ public class UserController extends AbstractController< User >{
 	
 	// API
 	
+	// search
+	
+	@RequestMapping( params = { SearchCommonUtil.Q_PARAM },method = RequestMethod.GET )
+	@ResponseBody
+	public List< User > search( @RequestParam( SearchCommonUtil.Q_PARAM ) final String queryString ){
+		return searchInternal( queryString );
+	}
+
 	// find - all/paginated
 	
 	@RequestMapping( params = { "page", "size" },method = RequestMethod.GET )

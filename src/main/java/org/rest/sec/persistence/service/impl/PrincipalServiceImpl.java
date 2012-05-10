@@ -12,6 +12,7 @@ import org.rest.sec.util.SearchSecUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +58,16 @@ public class PrincipalServiceImpl extends AbstractService< Principal > implement
 	
 	@Override
 	protected final IPrincipalJpaDAO getDao(){
+		return dao;
+	}
+
+	@Override
+	public Specification< Principal > resolveConstraint( final ImmutableTriple< String, ClientOperation, ? > constraint ){
+		return SearchSecUtil.resolveConstraint( constraint, Principal.class );
+	}
+	
+	@Override
+	protected JpaSpecificationExecutor< Principal > getSpecificationExecutor(){
 		return dao;
 	}
 	

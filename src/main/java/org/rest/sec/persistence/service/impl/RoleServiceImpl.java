@@ -12,6 +12,7 @@ import org.rest.sec.util.SearchSecUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,4 +76,13 @@ public class RoleServiceImpl extends AbstractService< Role > implements IRoleSer
 		return dao;
 	}
 	
+	@Override
+	public Specification< Role > resolveConstraint( final ImmutableTriple< String, ClientOperation, ? > constraint ){
+		return SearchSecUtil.resolveConstraint( constraint, Role.class );
+	}
+	
+	@Override
+	protected JpaSpecificationExecutor< Role > getSpecificationExecutor(){
+		return dao;
+	}
 }

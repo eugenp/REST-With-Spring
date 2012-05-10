@@ -112,4 +112,10 @@ public class UserServiceImpl implements IUserService{
 		principalService.deleteAll();
 	}
 	
+	@Override
+	public Page< User > searchPaged( final int page, final int size, final String sortBy, final ImmutableTriple< String, ClientOperation, ? >... constraints ){
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

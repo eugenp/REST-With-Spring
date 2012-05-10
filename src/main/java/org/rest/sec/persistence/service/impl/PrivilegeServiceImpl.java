@@ -12,6 +12,7 @@ import org.rest.sec.util.SearchSecUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,6 +57,16 @@ public class PrivilegeServiceImpl extends AbstractService< Privilege > implement
 	
 	@Override
 	protected final IPrivilegeJpaDAO getDao(){
+		return dao;
+	}
+	
+	@Override
+	public Specification< Privilege > resolveConstraint( final ImmutableTriple< String, ClientOperation, ? > constraint ){
+		return SearchSecUtil.resolveConstraint( constraint, Privilege.class );
+	}
+	
+	@Override
+	protected JpaSpecificationExecutor< Privilege > getSpecificationExecutor(){
 		return dao;
 	}
 	

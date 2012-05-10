@@ -63,6 +63,22 @@ public abstract class AbstractController< T extends IEntity >{
 		return results;
 	}
 	
+	@SuppressWarnings( "unchecked" )
+	public List< T > searchInternalPaged( @RequestParam( SearchCommonUtil.Q_PARAM ) final String queryString, final int page, final int size ){
+		List< ImmutableTriple< String, ClientOperation, ? >> parsedQuery = null;
+		try{
+			parsedQuery = SearchCommonUtil.parseQueryString( queryString );
+		}
+		catch( final IllegalStateException illState ){
+			logger.error( "IllegalStateException on find operation" );
+			logger.warn( "IllegalStateException on find operation", illState );
+			throw new ConflictException( illState );
+		}
+		
+		final Page< T > resultPage = getService().searchPaged( page, size, null, parsedQuery.toArray( new ImmutableTriple[parsedQuery.size()] ) );
+		return Lists.newArrayList( resultPage.getContent() );
+	}
+
 	// find/get
 	
 	protected final T findOneInternal( final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){

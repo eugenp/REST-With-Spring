@@ -34,7 +34,7 @@ public class UserClientRESTTemplate extends AbstractClientRESTTemplate< User >{
 	
 	public User findOneByName( final String name ){
 		Preconditions.checkNotNull( name );
-		final List< User > usersByName = findAllByURI( getURI() + "/search?name=" + name );
+		final List< User > usersByName = findAllByURI( getURI() + "?q=name=" + name );
 		Preconditions.checkState( usersByName.size() <= 1 );
 		return usersByName.get( 0 );
 	}

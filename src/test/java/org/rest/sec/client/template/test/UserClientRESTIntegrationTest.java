@@ -2,6 +2,7 @@ package org.rest.sec.client.template.test;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.client.AbstractClientRESTIntegrationTest;
@@ -33,6 +34,7 @@ public class UserClientRESTIntegrationTest extends AbstractClientRESTIntegration
 	// search by name
 	
 	@Test
+	@Ignore( "TODO: create (and move to) PrincipalClientRESTIntegrationTest" )
 	public final void givenResourceExists_whenResourceIsSearchedByName_thenNoExceptions(){
 		// Given
 		final User existingResource = getTemplate().create( getEntityOps().createNewEntity() );
@@ -42,6 +44,7 @@ public class UserClientRESTIntegrationTest extends AbstractClientRESTIntegration
 	}
 	
 	@Test
+	@Ignore( "TODO: create (and move to) PrincipalClientRESTIntegrationTest" )
 	public final void givenResourceExists_whenResourceIsSearchedByName_thenResourceIsFound(){
 		// Given
 		final User existingResource = getTemplate().create( getEntityOps().createNewEntity() );

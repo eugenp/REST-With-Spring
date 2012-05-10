@@ -11,10 +11,6 @@ public final class SearchTestUtil{
 	
 	//
 	
-	public static String constructQueryString( final Long id, final String name ){
-		return constructQueryString( id, false, name, false );
-	}
-	
 	public static String constructQueryString( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp ){
 		final Long id = ( idOp == null ) ? null : idOp.getLeft();
 		final boolean negatedId = ( idOp == null ) ? false : idOp.getRight().isNegated();
@@ -41,4 +37,8 @@ public final class SearchTestUtil{
 		return queryString.toString();
 	}
 	
+	public static String constructQueryString( final Long id, final String name ){
+		return constructQueryString( id, false, name, false );
+	}
+
 }

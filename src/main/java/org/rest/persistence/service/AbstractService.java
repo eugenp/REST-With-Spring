@@ -17,6 +17,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +46,33 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 	
 	@Override
 	public List< T > search( final ImmutableTriple< String, ClientOperation, ? >... constraints ){
-		throw new UnsupportedOperationException();
+		final Specification< T > firstSpec = resolveConstraint( constraints[0] );
+		Specifications< T > specifications = Specifications.where( firstSpec );
+		for( int i = 1; i < constraints.length; i++ ){
+			specifications = specifications.and( resolveConstraint( constraints[i] ) );
+		}
+		if( firstSpec == null ){
+			return Lists.newArrayList();
+		}
+		
+		return getSpecificationExecutor().findAll( specifications );
+	}
+	
+	@Override
+	public Page< T > searchPaged( final int page, final int size, final String sortBy, final ImmutableTriple< String, ClientOperation, ? >... constraints ){
+		Sort sortInfo = null;
+		if( sortBy != null ){
+			sortInfo = new Sort( sortBy );
+		}
+		
+		final Specification< T > firstSpec = resolveConstraint( constraints[0] );
+		Preconditions.checkState( firstSpec != null );
+		Specifications< T > specifications = Specifications.where( firstSpec );
+		for( int i = 1; i < constraints.length; i++ ){
+			specifications = specifications.and( resolveConstraint( constraints[i] ) );
+		}
+		
+		return getSpecificationExecutor().findAll( specifications, new PageRequest( page, size, sortInfo ) );
 	}
 	
 	// find
@@ -112,5 +141,11 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 	// template method
 	
 	protected abstract PagingAndSortingRepository< T, Long > getDao();
-	
+	protected abstract JpaSpecificationExecutor< T > getSpecificationExecutor();
+
+	@SuppressWarnings( "static-method" )
+	public Specification< T > resolveConstraint( final ImmutableTriple< String, ClientOperation, ? > constraint ){
+		throw new UnsupportedOperationException();
+	}
+
 }
