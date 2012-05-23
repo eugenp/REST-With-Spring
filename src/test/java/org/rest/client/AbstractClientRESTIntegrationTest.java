@@ -27,10 +27,10 @@ public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 	public final void givenResourceExists_whenResourceIsRetrieved_thenResourceIsCorrectlyRetrieved(){
 		// Given
 		final T newResource = getEntityOps().createNewEntity();
-		final String uriOfExistingResource = getTemplate().createAsURI( newResource );
+		final String uriOfExistingResource = getAPI().createAsURI( newResource );
 		
 		// When
-		final T createdResource = getTemplate().findOneByURI( uriOfExistingResource );
+		final T createdResource = getAPI().findOneByURI( uriOfExistingResource );
 		
 		// Then
 		assertEquals( createdResource, newResource );
@@ -39,7 +39,7 @@ public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 	@Test
 	public final void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoResourceIsReceived(){
 		// When
-		final T createdResource = getTemplate().findOne( IDUtils.randomPositiveLong() );
+		final T createdResource = getAPI().findOne( IDUtils.randomPositiveLong() );
 		
 		// Then
 		assertNull( createdResource );
@@ -49,7 +49,7 @@ public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 	
 	@Test
 	public final void whenAllResourcesAreRetrieved_thenResourcesExist(){
-		final List< T > allResources = getTemplate().findAll();
+		final List< T > allResources = getAPI().findAll();
 		assertFalse( allResources.isEmpty() );
 	}
 	
@@ -57,12 +57,12 @@ public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 	
 	@Test
 	public final void whenResourceIsUpdated_thenTheChangesAreCorrectlyPersisted(){
-		final T existingResource = getTemplate().givenAuthenticated().create( getEntityOps().createNewEntity() );
+		final T existingResource = getAPI().givenAuthenticated().create( getEntityOps().createNewEntity() );
 		
 		// When
 		getEntityOps().change( existingResource );
-		getTemplate().givenAuthenticated().update( existingResource );
-		final T updatedResource = getTemplate().findOne( existingResource.getId() );
+		getAPI().givenAuthenticated().update( existingResource );
+		final T updatedResource = getAPI().findOne( existingResource.getId() );
 		
 		// Then
 		assertThat( existingResource, equalTo( updatedResource ) );
@@ -73,18 +73,18 @@ public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 	@Test
 	public final void givenResourceExists_whenResourceIsDeleted_thenResourceNoLongerExists(){
 		// Given
-		final T existingResource = getTemplate().givenAuthenticated().create( getEntityOps().createNewEntity() );
+		final T existingResource = getAPI().givenAuthenticated().create( getEntityOps().createNewEntity() );
 		
 		// When
-		getTemplate().delete( existingResource.getId() );
+		getAPI().delete( existingResource.getId() );
 		
 		// Then
-		assertNull( getTemplate().findOne( existingResource.getId() ) );
+		assertNull( getAPI().findOne( existingResource.getId() ) );
 	}
 	
 	// template method
 	
-	protected abstract AbstractClientRESTTemplate< T > getTemplate();
+	protected abstract AbstractClientRESTTemplate< T > getAPI();
 	
 	protected abstract IEntityOperations< T > getEntityOps();
 	

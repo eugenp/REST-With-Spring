@@ -28,7 +28,7 @@ public class PrivilegeSearchRESTIntegrationTest extends AbstractSearchRESTIntegr
 	// template
 	
 	@Override
-	protected final PrivilegeRESTTemplateImpl getTemplate(){
+	protected final PrivilegeRESTTemplateImpl getAPI(){
 		return restTemplate;
 	}
 	

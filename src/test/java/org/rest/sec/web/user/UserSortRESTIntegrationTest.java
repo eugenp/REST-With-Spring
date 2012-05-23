@@ -26,7 +26,7 @@ public class UserSortRESTIntegrationTest extends SecSortRESTIntegrationTest< Use
 	}
 	
 	@Override
-	protected final UserRESTTemplateImpl getTemplate(){
+	protected final UserRESTTemplateImpl getAPI(){
 		return template;
 	}
 	

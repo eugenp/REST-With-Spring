@@ -24,7 +24,7 @@ public class PrivilegePaginationRESTIntegrationTest extends SecPaginationRESTInt
 	}
 	
 	@Override
-	protected final PrivilegeRESTTemplateImpl getTemplate(){
+	protected final PrivilegeRESTTemplateImpl getAPI(){
 		return template;
 	}
 	

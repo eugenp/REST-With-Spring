@@ -26,7 +26,7 @@ public class RoleSortRESTIntegrationTest extends SecSortRESTIntegrationTest< Rol
 	}
 	
 	@Override
-	protected final RoleRESTTemplateImpl getTemplate(){
+	protected final RoleRESTTemplateImpl getAPI(){
 		return template;
 	}
 	

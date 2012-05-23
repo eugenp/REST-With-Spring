@@ -26,7 +26,7 @@ public class PrivilegeSortRESTIntegrationTest extends SecSortRESTIntegrationTest
 	}
 	
 	@Override
-	protected final PrivilegeRESTTemplateImpl getTemplate(){
+	protected final PrivilegeRESTTemplateImpl getAPI(){
 		return template;
 	}
 	

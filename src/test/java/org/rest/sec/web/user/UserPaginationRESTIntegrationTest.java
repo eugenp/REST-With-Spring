@@ -24,7 +24,7 @@ public class UserPaginationRESTIntegrationTest extends SecPaginationRESTIntegrat
 	}
 	
 	@Override
-	protected final UserRESTTemplateImpl getTemplate(){
+	protected final UserRESTTemplateImpl getAPI(){
 		return template;
 	}
 	

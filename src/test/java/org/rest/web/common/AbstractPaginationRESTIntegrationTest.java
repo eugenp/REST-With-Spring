@@ -39,13 +39,13 @@ public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity >
 	
 	@Test
 	public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned(){
-		getTemplate().createAsResponse( getTemplate().createNewEntity() );
+		getAPI().createAsResponse( getAPI().createNewEntity() );
 		
 		// When
 		final Response response = givenAuthenticated().get( getURI() + "?page=0&size=1" );
 		
 		// Then
-		assertFalse( getTemplate().getMarshaller().decode( response.asString(), List.class ).isEmpty() );
+		assertFalse( getAPI().getMarshaller().decode( response.asString(), List.class ).isEmpty() );
 	}
 	
 	@Test
@@ -87,6 +87,6 @@ public abstract class AbstractPaginationRESTIntegrationTest< T extends IEntity >
 	
 	protected abstract T createNewEntity();
 	
-	protected abstract IRESTTemplate< T > getTemplate();
+	protected abstract IRESTTemplate< T > getAPI();
 	
 }

@@ -42,15 +42,15 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenResourceIsRetrieved_thenURIToGetAllResourcesIsDiscoverable(){
 		// Given
-		final String uriOfExistingResource = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
+		final String uriOfExistingResource = getAPI().createResourceAsURI( getAPI().createNewEntity() );
 		
 		// When
-		final Response getResponse = getTemplate().findOneAsResponse( uriOfExistingResource );
+		final Response getResponse = getAPI().findOneAsResponse( uriOfExistingResource );
 		
 		// Then
 		final String uriToAllResources = HTTPLinkHeaderUtils.extractURIByRel( getResponse.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_COLLECTION );
 		
-		final Response getAllResponse = getTemplate().findOneAsResponse( uriToAllResources );
+		final Response getAllResponse = getAPI().findOneAsResponse( uriToAllResources );
 		assertThat( getAllResponse.getStatusCode(), is( 200 ) );
 	}
 	
@@ -59,7 +59,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenFirstPageOfResourcesIsRetrieved_thenSomethingIsDiscoverable(){
 		// When
-		final Response response = getTemplate().findOneAsResponse( getURI() + "?page=1&size=10" );
+		final Response response = getAPI().findOneAsResponse( getURI() + "?page=1&size=10" );
 		
 		// Then
 		final String linkHeader = response.getHeader( HttpHeaders.LINK );
@@ -68,11 +68,11 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	
 	@Test
 	public final void whenFirstPageOfResourcesIsRetrieved_thenNextPageIsDiscoverable(){
-		getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
-		getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
+		getAPI().createResourceAsURI( getAPI().createNewEntity() );
+		getAPI().createResourceAsURI( getAPI().createNewEntity() );
 		
 		// When
-		final Response response = getTemplate().findOneAsResponse( getURI() + "?page=1&size=1" );
+		final Response response = getAPI().findOneAsResponse( getURI() + "?page=1&size=1" );
 		
 		// Then
 		final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_NEXT );
@@ -82,7 +82,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenFirstPageOfResourcesAreRetrieved_thenSecondPageIsDiscoverable(){
 		// When
-		final Response response = getTemplate().findOneAsResponse( getURI() + "?page=1&size=1" );
+		final Response response = getAPI().findOneAsResponse( getURI() + "?page=1&size=1" );
 		
 		// Then
 		final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_NEXT );
@@ -91,11 +91,11 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	
 	@Test
 	public final void whenPageOfResourcesIsRetrieved_thenLastPageIsDiscoverable(){
-		getTemplate().create( getTemplate().createNewEntity() );
-		getTemplate().create( getTemplate().createNewEntity() );
+		getAPI().create( getAPI().createNewEntity() );
+		getAPI().create( getAPI().createNewEntity() );
 		
 		// When
-		final Response response = getTemplate().findOneAsResponse( getURI() + "?page=0&size=1" );
+		final Response response = getAPI().findOneAsResponse( getURI() + "?page=0&size=1" );
 		
 		// Then
 		final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_LAST );
@@ -105,11 +105,11 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenLastPageOfResourcesIsRetrieved_thenNoNextPageIsDiscoverable(){
 		// When
-		final Response response = getTemplate().findOneAsResponse( getURI() + "?page=1&size=1" );
+		final Response response = getAPI().findOneAsResponse( getURI() + "?page=1&size=1" );
 		final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel( response.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_LAST );
 		
 		// Then
-		final Response responseForLastPage = getTemplate().findOneAsResponse( uriToLastPage );
+		final Response responseForLastPage = getAPI().findOneAsResponse( uriToLastPage );
 		final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel( responseForLastPage.getHeader( HttpHeaders.LINK ), RESTURIUtil.REL_NEXT );
 		assertNull( uriToNextPage );
 	}
@@ -119,7 +119,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenInvalidPOSTIsSentToValidURIOfResource_thenAllowHeaderListsTheAllowedActions(){
 		// Given
-		final String uriOfExistingResource = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
+		final String uriOfExistingResource = getAPI().createResourceAsURI( getAPI().createNewEntity() );
 		
 		// When
 		final Response res = givenAuthenticated().post( uriOfExistingResource );
@@ -133,17 +133,17 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	public final void whenResourceIsCreated_thenURIOfTheNewlyCreatedResourceIsDiscoverable(){
 		// When
 		final T unpersistedResource = createNewEntity();
-		final String uriOfNewlyCreatedResource = getTemplate().createResourceAsURI( unpersistedResource );
+		final String uriOfNewlyCreatedResource = getAPI().createResourceAsURI( unpersistedResource );
 		
 		// Then
-		final Response response = getTemplate().findOneAsResponse( uriOfNewlyCreatedResource );
+		final Response response = getAPI().findOneAsResponse( uriOfNewlyCreatedResource );
 		final T resourceFromServer = marshaller.decode( response.body().asString(), clazz );
 		assertThat( unpersistedResource, equalTo( resourceFromServer ) );
 	}
 	
 	// template method
 	
-	protected abstract IRESTTemplate< T > getTemplate();
+	protected abstract IRESTTemplate< T > getAPI();
 	
 	protected abstract String getURI();
 	

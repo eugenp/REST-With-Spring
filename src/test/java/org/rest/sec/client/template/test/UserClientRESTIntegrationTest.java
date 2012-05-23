@@ -37,20 +37,20 @@ public class UserClientRESTIntegrationTest extends AbstractClientRESTIntegration
 	@Ignore( "TODO: create (and move to) PrincipalClientRESTIntegrationTest" )
 	public final void givenResourceExists_whenResourceIsSearchedByName_thenNoExceptions(){
 		// Given
-		final User existingResource = getTemplate().create( getEntityOps().createNewEntity() );
+		final User existingResource = getAPI().create( getEntityOps().createNewEntity() );
 		
 		// When
-		getTemplate().findOneByName( existingResource.getName() );
+		getAPI().findOneByName( existingResource.getName() );
 	}
 	
 	@Test
 	@Ignore( "TODO: create (and move to) PrincipalClientRESTIntegrationTest" )
 	public final void givenResourceExists_whenResourceIsSearchedByName_thenResourceIsFound(){
 		// Given
-		final User existingResource = getTemplate().create( getEntityOps().createNewEntity() );
+		final User existingResource = getAPI().create( getEntityOps().createNewEntity() );
 		
 		// When
-		final User resourceByName = getTemplate().findOneByName( existingResource.getName() );
+		final User resourceByName = getAPI().findOneByName( existingResource.getName() );
 		
 		// Then
 		assertNotNull( resourceByName );
@@ -59,7 +59,7 @@ public class UserClientRESTIntegrationTest extends AbstractClientRESTIntegration
 	// template method
 	
 	@Override
-	protected final UserClientRESTTemplate getTemplate(){
+	protected final UserClientRESTTemplate getAPI(){
 		return userClientTemplate;
 	}
 	

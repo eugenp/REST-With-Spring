@@ -28,7 +28,7 @@ public class RoleSearchRESTIntegrationTest extends AbstractSearchRESTIntegration
 	// template
 	
 	@Override
-	protected final RoleRESTTemplateImpl getTemplate(){
+	protected final RoleRESTTemplateImpl getAPI(){
 		return restTemplate;
 	}
 	

@@ -31,10 +31,10 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 	@Ignore( "for now, json is not supported" )
 	public final void givenResourceForIdExists_whenResourceOfThatIdIsRetrievedAsJson_then200IsReceived(){
 		// Given
-		final String uriForResourceCreation = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
+		final String uriForResourceCreation = getAPI().createResourceAsURI( getAPI().createNewEntity() );
 		
 		// When
-		final Response res = getTemplate().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_JSON.toString() );
+		final Response res = getAPI().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_JSON.toString() );
 		
 		// Then
 		assertThat( res.getStatusCode(), is( 200 ) );
@@ -43,10 +43,10 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 	@Test
 	public final void givenResourceForIdExists_whenResourceOfThatIdIsRetrievedAsXML__then200IsReceived(){
 		// Given
-		final String uriForResourceCreation = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
+		final String uriForResourceCreation = getAPI().createResourceAsURI( getAPI().createNewEntity() );
 		
 		// When
-		final Response res = getTemplate().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
+		final Response res = getAPI().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
 		
 		// Then
 		assertThat( res.getStatusCode(), is( 200 ) );
@@ -56,10 +56,10 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 	@Ignore( "for now, json is not supported" )
 	public final void givenRequestAcceptsJson_whenResourceIsRetrievedById_thenResponseContentTypeIsJson(){
 		// Given
-		final String uriForResourceCreation = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
+		final String uriForResourceCreation = getAPI().createResourceAsURI( getAPI().createNewEntity() );
 		
 		// When
-		final Response res = getTemplate().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_JSON.toString() );
+		final Response res = getAPI().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_JSON.toString() );
 		
 		// Then
 		assertThat( res.getContentType(), containsString( MediaType.APPLICATION_JSON.toString() ) );
@@ -68,10 +68,10 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 	@Test
 	public final void givenRequestAcceptsXML_whenResourceIsRetrievedById__thenResponseContentTypeIsXML(){
 		// Given
-		final String uriForResourceCreation = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
+		final String uriForResourceCreation = getAPI().createResourceAsURI( getAPI().createNewEntity() );
 		
 		// When
-		final Response res = getTemplate().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
+		final Response res = getAPI().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
 		
 		// Then
 		assertThat( res.getContentType(), containsString( MediaType.APPLICATION_XML.toString() ) );
@@ -80,17 +80,17 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 	@Test
 	public final void givenResourceForIdExists_whenResourceIsRetrievedByIdAsXML_thenRetrievedResourceIsCorrect(){
 		// Given
-		final String uriForResourceCreation = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
+		final String uriForResourceCreation = getAPI().createResourceAsURI( getAPI().createNewEntity() );
 		
 		// When
-		final Response resourceAsResponse = getTemplate().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
+		final Response resourceAsResponse = getAPI().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
 		
 		// Then
-		getTemplate().getMarshaller().decode( resourceAsResponse.asString(), clazz );
+		getAPI().getMarshaller().decode( resourceAsResponse.asString(), clazz );
 	}
 	
 	// template method
 	
-	protected abstract IRESTTemplate< T > getTemplate();
+	protected abstract IRESTTemplate< T > getAPI();
 	
 }

@@ -37,7 +37,7 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest< U
 	
 	@Test
 	public final void whenResourceIsRetrieved_thenAssociationsAreAlsoRetrieved(){
-		final User existingResource = getTemplate().create( getTemplate().createNewEntity() );
+		final User existingResource = getAPI().create( getAPI().createNewEntity() );
 		assertThat( existingResource.getRoles(), not( Matchers.<Role> empty() ) );
 	}
 	
@@ -49,11 +49,11 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest< U
 	 */
 	@Test
 	public final void whenResourceIsCreatedWithNewAssociation_then409IsReceived(){
-		final User newResource = getTemplate().createNewEntity();
+		final User newResource = getAPI().createNewEntity();
 		newResource.getRoles().add( associationRestTemplate.createNewEntity() );
 		
 		// When
-		final Response response = getTemplate().createAsResponse( newResource );
+		final Response response = getAPI().createAsResponse( newResource );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 409 ) );
@@ -64,11 +64,11 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest< U
 	public final void whenResourceIsCreatedWithInvalidAssociation_then409IsReceived(){
 		final Role invalidAssociation = associationRestTemplate.createNewEntity();
 		invalidAssociation.setId( 1001l );
-		final User newResource = getTemplate().createNewEntity();
+		final User newResource = getAPI().createNewEntity();
 		newResource.getRoles().add( invalidAssociation );
 		
 		// When
-		final Response response = getTemplate().createAsResponse( newResource );
+		final Response response = getAPI().createAsResponse( newResource );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 409 ) );
@@ -77,11 +77,11 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest< U
 	@Test
 	public final void whenUserIsCreatedWithExistingRole_then201IsReceived(){
 		final Role existingAssociation = associationRestTemplate.create( associationRestTemplate.createNewEntity() );
-		final User newResource = getTemplate().createNewEntity();
+		final User newResource = getAPI().createNewEntity();
 		newResource.getRoles().add( existingAssociation );
 		
 		// When
-		final Response response = getTemplate().createAsResponse( newResource );
+		final Response response = getAPI().createAsResponse( newResource );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 201 ) );
@@ -92,11 +92,11 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest< U
 	@Test
 	public final void whenScenario_getResource_getAssociationsById(){
 		final Role existingAssociation = associationRestTemplate.create( associationRestTemplate.createNewEntity() );
-		final User resourceToCreate = getTemplate().createNewEntity();
+		final User resourceToCreate = getAPI().createNewEntity();
 		resourceToCreate.getRoles().add( existingAssociation );
 		
 		// When
-		final User existingResource = getTemplate().create( resourceToCreate );
+		final User existingResource = getAPI().create( resourceToCreate );
 		for( final Role associationOfResourcePotential : existingResource.getRoles() ){
 			final Role existingAssociationOfResource = associationRestTemplate.findOne( associationOfResourcePotential.getId() );
 			assertThat( existingAssociationOfResource, notNullValue() );
@@ -110,13 +110,13 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest< U
 		final Role existingAssociation = associationRestTemplate.create( associationRestTemplate.createNewEntity() );
 		final User resource1 = new User( randomAlphabetic( 6 ), randomAlphabetic( 6 ), Sets.newHashSet( existingAssociation ) );
 		
-		final User resource1ViewOfServerBefore = getTemplate().create( resource1 );
+		final User resource1ViewOfServerBefore = getAPI().create( resource1 );
 		assertThat( resource1ViewOfServerBefore.getRoles(), hasItem( existingAssociation ) );
 		
 		final User resource2 = new User( randomAlphabetic( 6 ), randomAlphabetic( 6 ), Sets.newHashSet( existingAssociation ) );
-		getTemplate().createAsResponse( resource2 );
+		getAPI().createAsResponse( resource2 );
 		
-		final User resource1ViewOfServerAfter = getTemplate().findOne( resource1ViewOfServerBefore.getId() );
+		final User resource1ViewOfServerAfter = getAPI().findOne( resource1ViewOfServerBefore.getId() );
 		assertThat( resource1ViewOfServerAfter.getRoles(), hasItem( existingAssociation ) );
 	}
 	
@@ -124,16 +124,16 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest< U
 	
 	@Override
 	protected final String getURI(){
-		return getTemplate().getURI() + "/";
+		return getAPI().getURI() + "/";
 	}
 	
 	@Override
 	protected final RequestSpecification givenAuthenticated(){
-		return getTemplate().givenAuthenticated();
+		return getAPI().givenAuthenticated();
 	}
 	
 	@Override
-	protected final UserRESTTemplateImpl getTemplate(){
+	protected final UserRESTTemplateImpl getAPI(){
 		return userRestTemplate;
 	}
 	

@@ -20,18 +20,18 @@ public class PrivilegeLogicRESTIntegrationTest extends SecLogicRESTIntegrationTe
 	// template
 	
 	@Override
-	protected final PrivilegeRESTTemplateImpl getTemplate(){
+	protected final PrivilegeRESTTemplateImpl getAPI(){
 		return restTemplate;
 	}
 	
 	@Override
 	protected final String getURI(){
-		return getTemplate().getURI() + "/";
+		return getAPI().getURI() + "/";
 	}
 	
 	@Override
 	protected final RequestSpecification givenAuthenticated(){
-		return getTemplate().givenAuthenticated();
+		return getAPI().givenAuthenticated();
 	}
 	
 }

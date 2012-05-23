@@ -28,7 +28,7 @@ public class RoleDiscoverabilityRESTIntegrationTest extends SecDiscoverabilityRE
 	
 	@Override
 	protected final String getURI(){
-		return getTemplate().getURI();
+		return getAPI().getURI();
 	}
 	
 	@Override
@@ -38,11 +38,11 @@ public class RoleDiscoverabilityRESTIntegrationTest extends SecDiscoverabilityRE
 	
 	@Override
 	protected RequestSpecification givenAuthenticated(){
-		return getTemplate().givenAuthenticated();
+		return getAPI().givenAuthenticated();
 	}
 	
 	@Override
-	protected final RoleRESTTemplateImpl getTemplate(){
+	protected final RoleRESTTemplateImpl getAPI(){
 		return restTemplate;
 	}
 	

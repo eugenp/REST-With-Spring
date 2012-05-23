@@ -24,7 +24,7 @@ public class RolePaginationRESTIntegrationTest extends SecPaginationRESTIntegrat
 	}
 	
 	@Override
-	protected final RoleRESTTemplateImpl getTemplate(){
+	protected final RoleRESTTemplateImpl getAPI(){
 		return template;
 	}
 	

@@ -40,12 +40,12 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	
 	@Test
 	public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenNoExceptions(){
-		getTemplate().findOneAsResponse( getURI() + "/" + randomNumeric( 4 ) );
+		getAPI().findOneAsResponse( getURI() + "/" + randomNumeric( 4 ) );
 	}
 	
 	@Test
 	public void givenResourceForIdDoesNotExist_whenResourceOfThatIdIsRetrieved_then404IsReceived(){
-		final Response response = getTemplate().findOneAsResponse( getURI() + "/" + randomNumeric( 6 ) );
+		final Response response = getAPI().findOneAsResponse( getURI() + "/" + randomNumeric( 6 ) );
 		
 		assertThat( response.getStatusCode(), is( 404 ) );
 	}
@@ -53,10 +53,10 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void givenResourceForIdExists_whenResourceOfThatIdIsRetrieved_then200IsRetrieved(){
 		// Given
-		final String uriForResourceCreation = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
+		final String uriForResourceCreation = getAPI().createResourceAsURI( getAPI().createNewEntity() );
 		
 		// When
-		final Response res = getTemplate().findOneAsResponse( uriForResourceCreation );
+		final Response res = getAPI().findOneAsResponse( uriForResourceCreation );
 		
 		// Then
 		assertThat( res.getStatusCode(), is( 200 ) );
@@ -64,9 +64,9 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	
 	@Test
 	public void givenResourceForIdExists_whenResourceOfThatIdIsRetrieved_thenResourceIsCorrectlyRetrieved(){
-		final T resource = getTemplate().createNewEntity();
-		final T existingResource = getTemplate().create( resource );
-		final T retrievedResource = getTemplate().findOne( existingResource.getId() );
+		final T resource = getAPI().createNewEntity();
+		final T existingResource = getAPI().create( resource );
+		final T retrievedResource = getAPI().findOne( existingResource.getId() );
 		
 		assertEquals( resource, retrievedResource );
 	}
@@ -77,7 +77,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 		final Long id = IDUtils.randomNegativeLong();
 		
 		// When
-		final Response res = getTemplate().findOneAsResponse( getURI() + "/" + id );
+		final Response res = getAPI().findOneAsResponse( getURI() + "/" + id );
 		
 		// Then
 		assertThat( res.getStatusCode(), is( 409 ) );
@@ -89,7 +89,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 		final String id = randomAlphabetic( 6 );
 		
 		// When
-		final Response res = getTemplate().findOneAsResponse( getURI() + "/" + id );
+		final Response res = getAPI().findOneAsResponse( getURI() + "/" + id );
 		
 		// Then
 		assertThat( res.getStatusCode(), is( 400 ) );
@@ -99,13 +99,13 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	
 	@Test
 	public void whenResourcesAreRetrieved_thenNoExceptions(){
-		getTemplate().findOneAsResponse( getURI() );
+		getAPI().findOneAsResponse( getURI() );
 	}
 	
 	@Test
 	public void whenResourcesAreRetrieved_then200IsReceived(){
 		// When
-		final Response response = getTemplate().findAllAsResponse();
+		final Response response = getAPI().findAllAsResponse();
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 200 ) );
@@ -114,10 +114,10 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void whenResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved(){
 		// Given
-		getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
+		getAPI().createResourceAsURI( getAPI().createNewEntity() );
 		
 		// When
-		final List< T > allResources = getTemplate().findAll();
+		final List< T > allResources = getAPI().findAll();
 		
 		// Then
 		assertThat( allResources, not( Matchers.<T> empty() ) );
@@ -127,13 +127,13 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	
 	@Test
 	public void whenAResourceIsCreated_thenNoExceptions(){
-		getTemplate().createAsResponse( getTemplate().createNewEntity() );
+		getAPI().createAsResponse( getAPI().createNewEntity() );
 	}
 	
 	@Test
 	public void whenAResourceIsCreated_then201IsReceived(){
 		// When
-		final Response response = getTemplate().createAsResponse( getTemplate().createNewEntity() );
+		final Response response = getAPI().createAsResponse( getAPI().createNewEntity() );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 201 ) );
@@ -142,7 +142,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void whenNullResourceIsCreated_then415IsReceived(){
 		// When
-		final Response response = givenAuthenticated().contentType( getTemplate().getMarshaller().getMime() ).post( getURI() );
+		final Response response = givenAuthenticated().contentType( getAPI().getMarshaller().getMime() ).post( getURI() );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 415 ) );
@@ -150,11 +150,11 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	
 	@Test
 	public void whenAResourceIsCreatedWithNonNullId_then409IsReceived(){
-		final T resourceWithId = getTemplate().createNewEntity();
+		final T resourceWithId = getAPI().createNewEntity();
 		resourceWithId.setId( 5l );
 		
 		// When
-		final Response response = getTemplate().createAsResponse( resourceWithId );
+		final Response response = getAPI().createAsResponse( resourceWithId );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 409 ) );
@@ -163,7 +163,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void whenAResourceIsCreated_thenALocationIsReturnedToTheClient(){
 		// When
-		final Response response = getTemplate().createAsResponse( getTemplate().createNewEntity() );
+		final Response response = getAPI().createAsResponse( getAPI().createNewEntity() );
 		
 		// Then
 		assertNotNull( response.getHeader( HttpHeaders.LOCATION ) );
@@ -173,11 +173,11 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Ignore( "this will not always pass at this time" )
 	public void givenResourceExists_whenResourceWithSameAttributesIsCreated_then409IsReceived(){
 		// Given
-		final T newEntity = getTemplate().createNewEntity();
-		getTemplate().createResourceAsURI( newEntity );
+		final T newEntity = getAPI().createNewEntity();
+		getAPI().createResourceAsURI( newEntity );
 		
 		// When
-		final Response response = getTemplate().createAsResponse( newEntity );
+		final Response response = getAPI().createAsResponse( newEntity );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 409 ) );
@@ -189,11 +189,11 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	// @Ignore("some resource may not have an invalid state")
 	public void givenInvalidResource_whenResourceIsUpdated_then409ConflictIsReceived(){
 		// Given
-		final T existingResource = getTemplate().create( getTemplate().createNewEntity() );
-		getTemplate().invalidate( existingResource );
+		final T existingResource = getAPI().create( getAPI().createNewEntity() );
+		getAPI().invalidate( existingResource );
 		
 		// When
-		final Response response = getTemplate().updateAsResponse( existingResource );
+		final Response response = getAPI().updateAsResponse( existingResource );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 409 ) );
@@ -202,7 +202,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void whenAResourceIsUpdatedWithNullId_then409IsReceived(){
 		// When
-		final Response response = getTemplate().updateAsResponse( getTemplate().createNewEntity() );
+		final Response response = getAPI().updateAsResponse( getAPI().createNewEntity() );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 409 ) );
@@ -211,19 +211,19 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void givenResourceExists_whenResourceIsUpdated_thenNoExceptions(){
 		// Given
-		final T existingResource = getTemplate().create( getTemplate().createNewEntity() );
+		final T existingResource = getAPI().create( getAPI().createNewEntity() );
 		
 		// When
-		getTemplate().updateAsResponse( existingResource );
+		getAPI().updateAsResponse( existingResource );
 	}
 	
 	@Test
 	public void givenResourceExists_whenResourceIsUpdated_then200IsReceived(){
 		// Given
-		final T existingResource = getTemplate().create( getTemplate().createNewEntity() );
+		final T existingResource = getAPI().create( getAPI().createNewEntity() );
 		
 		// When
-		final Response response = getTemplate().updateAsResponse( existingResource );
+		final Response response = getAPI().updateAsResponse( existingResource );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 200 ) );
@@ -233,7 +233,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	public void whenNullResourceIsUpdated_then415IsReceived(){
 		// Given
 		// When
-		final Response response = givenAuthenticated().contentType( getTemplate().getMarshaller().getMime() ).put( getURI() );
+		final Response response = givenAuthenticated().contentType( getAPI().getMarshaller().getMime() ).put( getURI() );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 415 ) );
@@ -242,11 +242,11 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void givenResourceDoesNotExist_whenResourceIsUpdated_then404IsReceived(){
 		// Given
-		final T unpersistedEntity = getTemplate().createNewEntity();
+		final T unpersistedEntity = getAPI().createNewEntity();
 		unpersistedEntity.setId( IDUtils.randomPositiveLong() );
 		
 		// When
-		final Response response = getTemplate().updateAsResponse( unpersistedEntity );
+		final Response response = getAPI().updateAsResponse( unpersistedEntity );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 404 ) );
@@ -255,13 +255,13 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void givenResourceExists_whenResourceIsUpdated_thenUpdatesArePersisted(){
 		// Given
-		final T existingResource = getTemplate().create( getTemplate().createNewEntity() );
+		final T existingResource = getAPI().create( getAPI().createNewEntity() );
 		
 		// When
-		getTemplate().change( existingResource );
-		getTemplate().update( existingResource );
+		getAPI().change( existingResource );
+		getAPI().update( existingResource );
 		
-		final T updatedResourceFromServer = getTemplate().findOne( existingResource.getId() );
+		final T updatedResourceFromServer = getAPI().findOne( existingResource.getId() );
 		
 		// Then
 		assertEquals( existingResource, updatedResourceFromServer );
@@ -272,7 +272,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void whenAResourceIsDeletedByIncorrectNonNumericId_then400IsReceived(){
 		// When
-		final Response response = getTemplate().deleteAsResponse( getURI() + randomAlphabetic( 6 ) );
+		final Response response = getAPI().deleteAsResponse( getURI() + randomAlphabetic( 6 ) );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 400 ) );
@@ -281,7 +281,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void givenResourceDoesNotExist_whenResourceIsDeleted_then404IsReceived(){
 		// When
-		final Response response = getTemplate().deleteAsResponse( getURI() + randomNumeric( 6 ) );
+		final Response response = getAPI().deleteAsResponse( getURI() + randomNumeric( 6 ) );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 404 ) );
@@ -290,10 +290,10 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void givenResourceExist_whenResourceIsDeleted_then204IsReceived(){
 		// Given
-		final String uriForResourceCreation = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
+		final String uriForResourceCreation = getAPI().createResourceAsURI( getAPI().createNewEntity() );
 		
 		// When
-		final Response response = getTemplate().deleteAsResponse( uriForResourceCreation );
+		final Response response = getAPI().deleteAsResponse( uriForResourceCreation );
 		
 		// Then
 		assertThat( response.getStatusCode(), is( 204 ) );
@@ -302,11 +302,11 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void givenResourceExist_whenResourceIsDeleted_thenResourceIsNoLongerAvailable(){
 		// Given
-		final String uriOfResource = getTemplate().createResourceAsURI( getTemplate().createNewEntity() );
-		getTemplate().deleteAsResponse( uriOfResource );
+		final String uriOfResource = getAPI().createResourceAsURI( getAPI().createNewEntity() );
+		getAPI().deleteAsResponse( uriOfResource );
 		
 		// When
-		final Response getResponse = getTemplate().findOneAsResponse( uriOfResource );
+		final Response getResponse = getAPI().findOneAsResponse( uriOfResource );
 		
 		// Then
 		assertThat( getResponse.getStatusCode(), is( 404 ) );
@@ -314,7 +314,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	
 	// template method
 	
-	protected abstract IRESTTemplate< T > getTemplate();
+	protected abstract IRESTTemplate< T > getAPI();
 	
 	protected abstract String getURI();
 	

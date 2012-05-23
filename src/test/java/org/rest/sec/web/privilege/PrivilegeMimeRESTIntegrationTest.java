@@ -18,7 +18,7 @@ public class PrivilegeMimeRESTIntegrationTest extends SecMimeRESTIntegrationTest
 	// template method
 	
 	@Override
-	protected final PrivilegeRESTTemplateImpl getTemplate(){
+	protected final PrivilegeRESTTemplateImpl getAPI(){
 		return restTemplate;
 	}
 	

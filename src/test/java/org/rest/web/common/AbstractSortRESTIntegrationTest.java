@@ -40,12 +40,12 @@ public abstract class AbstractSortRESTIntegrationTest< T extends IEntity > exten
 	@Test
 	@Ignore( "http://forum.springsource.org/showthread.php?124083-Sort-case-sensitivey-in-Spring-Data-%28JPA%29&p=404901#post404901" )
 	public final void whenResourcesAreRetrievedSorted_thenResourcesAreIndeedOrdered(){
-		getTemplate().createAsResponse( getTemplate().createNewEntity() );
-		getTemplate().createAsResponse( getTemplate().createNewEntity() );
+		getAPI().createAsResponse( getAPI().createNewEntity() );
+		getAPI().createAsResponse( getAPI().createNewEntity() );
 		
 		// When
 		final Response response = givenAuthenticated().get( getURI() + "?page=0&size=4&sortBy=name" );
-		final List< T > resourcesPagedAndSorted = getTemplate().getMarshaller().decode( response.asString(), List.class );
+		final List< T > resourcesPagedAndSorted = getAPI().getMarshaller().decode( response.asString(), List.class );
 		
 		// Then
 		assertTrue( getOrdering().isOrdered( resourcesPagedAndSorted ) );
@@ -54,12 +54,12 @@ public abstract class AbstractSortRESTIntegrationTest< T extends IEntity > exten
 	@SuppressWarnings( "unchecked" )
 	@Test
 	public final void whenResourcesAreRetrievedNotSorted_thenResourcesAreNotOrdered(){
-		getTemplate().createAsResponse( getTemplate().createNewEntity() );
-		getTemplate().createAsResponse( getTemplate().createNewEntity() );
+		getAPI().createAsResponse( getAPI().createNewEntity() );
+		getAPI().createAsResponse( getAPI().createNewEntity() );
 		
 		// When
 		final Response response = givenAuthenticated().get( getURI() + "?page=0&size=6" );
-		final List< T > resourcesPagedAndSorted = getTemplate().getMarshaller().decode( response.asString(), List.class );
+		final List< T > resourcesPagedAndSorted = getAPI().getMarshaller().decode( response.asString(), List.class );
 		
 		// Then
 		assertFalse( getOrdering().isOrdered( resourcesPagedAndSorted ) );
@@ -82,7 +82,7 @@ public abstract class AbstractSortRESTIntegrationTest< T extends IEntity > exten
 	
 	// template method
 	
-	protected abstract IRESTTemplate< T > getTemplate();
+	protected abstract IRESTTemplate< T > getAPI();
 	
 	protected abstract Ordering< T > getOrdering();
 	
