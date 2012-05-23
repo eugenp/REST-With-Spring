@@ -39,7 +39,9 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 	@Override
 	public T findOne( final long id ){
 		final String resourceAsMime = findOneAsMime( getURI() + "/" + id );
-		
+		if( resourceAsMime == null ){
+			return null;
+		}
 		return marshaller.decode( resourceAsMime, clazz );
 	}
 	
@@ -177,7 +179,11 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 	// util
 	
 	protected String findOneAsMime( final String uriOfResource ){
-		return givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( uriOfResource ).asString();
+		final Response response = givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( uriOfResource );
+		if( response.getStatusCode() != 200 ){
+			return null;
+		}
+		return response.asString();
 	}
 	
 	//
