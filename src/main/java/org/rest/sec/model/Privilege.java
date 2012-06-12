@@ -9,8 +9,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.rest.common.INameableEntity;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 @Entity
 @XmlRootElement
+@XStreamAlias( "privilege" )
 public class Privilege implements INameableEntity{
 	
 	@Id @GeneratedValue( strategy = GenerationType.AUTO ) @Column( name = "PRIV_ID" ) private Long id;

@@ -3,17 +3,22 @@ package org.rest.client;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.client.template.IEntityOperations;
-import org.rest.common.IEntity;
+import org.rest.common.INameableEntity;
 import org.rest.util.IDUtils;
 
-public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
+public abstract class AbstractClientRESTIntegrationTest< T extends INameableEntity >{
+	
+	private static final String NAME_KEY = "name";
+	private static final String NAGATED_NAME_KEY = "name~";
 	
 	public AbstractClientRESTIntegrationTest(){
 		super();
@@ -43,6 +48,94 @@ public abstract class AbstractClientRESTIntegrationTest< T extends IEntity >{
 		
 		// Then
 		assertNull( createdResource );
+	}
+	
+	// find one - by name
+	
+	@Test
+	@Ignore( "not yet done" )
+	public final void givenResourceExists_whenResourceIsSearchedByName_thenNoExceptions(){
+		// Given
+		final T existingResource = getAPI().create( getEntityOps().createNewEntity() );
+		
+		// When
+		getAPI().findOneByName( existingResource.getName() );
+	}
+	
+	@Test
+	@Ignore( "not yet done" )
+	public final void givenResourceExists_whenResourceIsSearchedByName_thenResourceIsFound(){
+		// Given
+		final T existingResource = getAPI().create( getEntityOps().createNewEntity() );
+		
+		// When
+		final T resourceByName = getAPI().findOneByName( existingResource.getName() );
+		
+		// Then
+		assertNotNull( resourceByName );
+	}
+	
+	@Test
+	@Ignore( "not yet done" )
+	public final void givenResourceExists_whenResourceIsSearchedByName_thenFoundResourceIsCorrect(){
+		// Given
+		final T existingResource = getAPI().create( getEntityOps().createNewEntity() );
+		
+		// When
+		final T resourceByName = getAPI().findOneByName( existingResource.getName() );
+		
+		// Then
+		assertThat( existingResource, equalTo( resourceByName ) );
+	}
+	
+	// find one by attributes
+	
+	@Test
+	@Ignore( "not yet done" )
+	public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenNoExceptions(){
+		// Given
+		final T existingResource = getAPI().create( getEntityOps().createNewEntity() );
+		
+		// When
+		getAPI().findOneByAttributes( NAME_KEY, existingResource.getName() );
+	}
+	
+	@Test
+	@Ignore( "not yet done" )
+	public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenResourceIsFound(){
+		// Given
+		final T existingResource = getAPI().create( getEntityOps().createNewEntity() );
+		
+		// When
+		final T resourceByName = getAPI().findOneByAttributes( NAME_KEY, existingResource.getName() );
+		
+		// Then
+		assertNotNull( resourceByName );
+	}
+	
+	@Test
+	@Ignore( "not yet done" )
+	public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenFoundResourceIsCorrect(){
+		// Given
+		final T existingResource = getAPI().create( getEntityOps().createNewEntity() );
+		
+		// When
+		final T resourceByName = getAPI().findOneByAttributes( NAME_KEY, existingResource.getName() );
+		
+		// Then
+		assertThat( existingResource, equalTo( resourceByName ) );
+	}
+	
+	@Test
+	@Ignore( "not yet done" )
+	public final void givenResourceExists_whenResourceIsSearchedByNagatedNameAttribute_thenNoExceptions(){
+		// Given
+		final T existingResource = getAPI().create( getEntityOps().createNewEntity() );
+		
+		// When
+		getAPI().findAllByAttributes( NAGATED_NAME_KEY, existingResource.getName() );
+		
+		// Then
 	}
 	
 	// find all

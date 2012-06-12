@@ -3,9 +3,9 @@ package org.rest.sec.client.template.test;
 import org.junit.runner.RunWith;
 import org.rest.client.AbstractClientRESTIntegrationTest;
 import org.rest.client.template.IEntityOperations;
-import org.rest.sec.client.template.UserRESTTemplateImpl;
-import org.rest.sec.client.template.newer.UserClientRESTTemplate;
-import org.rest.sec.model.dto.User;
+import org.rest.sec.client.template.PrivilegeRESTTemplateImpl;
+import org.rest.sec.client.template.newer.PrivilegeClientRESTTemplate;
+import org.rest.sec.model.Privilege;
 import org.rest.spring.client.ClientTestConfig;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.testing.TestingConfig;
@@ -16,12 +16,12 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration( classes = { ContextTestConfig.class, TestingConfig.class, ClientTestConfig.class },loader = AnnotationConfigContextLoader.class )
-public class UserClientRESTIntegrationTest extends AbstractClientRESTIntegrationTest< User >{
+public class PrivilegeClientRESTIntegrationTest extends AbstractClientRESTIntegrationTest< Privilege >{
 	
-	@Autowired private UserClientRESTTemplate userClientTemplate;
-	@Autowired private UserRESTTemplateImpl userEntityOps;
+	@Autowired private PrivilegeClientRESTTemplate clientTemplate;
+	@Autowired private PrivilegeRESTTemplateImpl entityOps;
 	
-	public UserClientRESTIntegrationTest(){
+	public PrivilegeClientRESTIntegrationTest(){
 		super();
 	}
 	
@@ -30,13 +30,13 @@ public class UserClientRESTIntegrationTest extends AbstractClientRESTIntegration
 	// template method
 	
 	@Override
-	protected final UserClientRESTTemplate getAPI(){
-		return userClientTemplate;
+	protected final PrivilegeClientRESTTemplate getAPI(){
+		return clientTemplate;
 	}
 	
 	@Override
-	protected final IEntityOperations< User > getEntityOps(){
-		return userEntityOps;
+	protected final IEntityOperations< Privilege > getEntityOps(){
+		return entityOps;
 	}
 	
 }

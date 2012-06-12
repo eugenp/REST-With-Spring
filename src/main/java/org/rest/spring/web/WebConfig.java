@@ -3,6 +3,7 @@ package org.rest.spring.web;
 import java.util.List;
 
 import org.rest.sec.model.Privilege;
+import org.rest.sec.model.Role;
 import org.rest.sec.model.dto.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,11 +29,8 @@ public class WebConfig extends WebMvcConfigurerAdapter{
 	public XStreamMarshaller xstreamMarshaller(){
 		final XStreamMarshaller xStreamMarshaller = new XStreamMarshaller();
 		xStreamMarshaller.setAutodetectAnnotations( true );
-		// xStreamMarshaller.setSupportedClasses( new Class[ ] { User.class, Privilege.class } );
-		xStreamMarshaller.setAnnotatedClass( User.class );
-		xStreamMarshaller.setAnnotatedClass( Privilege.class );
-		
-		// xstreamMarshaller().getXStream().addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
+		xStreamMarshaller.setAnnotatedClasses( new Class[ ] { User.class, Role.class, Privilege.class } );
+		xStreamMarshaller.getXStream().addDefaultImplementation( java.sql.Timestamp.class, java.util.Date.class );
 		
 		return xStreamMarshaller;
 	}
@@ -40,8 +38,9 @@ public class WebConfig extends WebMvcConfigurerAdapter{
 	@Bean
 	public MarshallingHttpMessageConverter marshallingHttpMessageConverter(){
 		final MarshallingHttpMessageConverter marshallingHttpMessageConverter = new MarshallingHttpMessageConverter();
-		marshallingHttpMessageConverter.setMarshaller( xstreamMarshaller() );
-		marshallingHttpMessageConverter.setUnmarshaller( xstreamMarshaller() );
+		final XStreamMarshaller xstreamMarshaller = xstreamMarshaller();
+		marshallingHttpMessageConverter.setMarshaller( xstreamMarshaller );
+		marshallingHttpMessageConverter.setUnmarshaller( xstreamMarshaller );
 		
 		return marshallingHttpMessageConverter;
 	}

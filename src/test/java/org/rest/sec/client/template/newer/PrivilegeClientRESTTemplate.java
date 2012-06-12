@@ -5,7 +5,7 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.rest.client.AbstractClientRESTTemplate;
 import org.rest.sec.client.ExamplePaths;
-import org.rest.sec.model.dto.User;
+import org.rest.sec.model.Privilege;
 import org.rest.sec.util.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +13,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserClientRESTTemplate extends AbstractClientRESTTemplate< User >{
+public class PrivilegeClientRESTTemplate extends AbstractClientRESTTemplate< Privilege >{
 	
 	@Autowired private ExamplePaths paths;
 	
@@ -22,8 +22,8 @@ public class UserClientRESTTemplate extends AbstractClientRESTTemplate< User >{
 	
 	@Value( "${sec.auth.basic}" ) private boolean basicAuth;
 	
-	public UserClientRESTTemplate(){
-		super( User.class );
+	public PrivilegeClientRESTTemplate(){
+		super( Privilege.class );
 	}
 	
 	// operations
@@ -32,7 +32,7 @@ public class UserClientRESTTemplate extends AbstractClientRESTTemplate< User >{
 	
 	@Override
 	public final String getURI(){
-		return paths.getUserUri();
+		return paths.getPrivilegeUri();
 	}
 	
 	@Override
