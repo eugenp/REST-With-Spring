@@ -1,8 +1,8 @@
 package org.rest.sec.persistence.service;
 
 import org.junit.runner.RunWith;
-import org.rest.persistence.AbstractServiceSearchPersistenceIntegrationTest;
-import org.rest.sec.model.Principal;
+import org.rest.persistence.AbstractSearchPersistenceIntegrationTest;
+import org.rest.sec.model.Privilege;
 import org.rest.sec.persistence.util.FixtureFactory;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
@@ -14,22 +14,22 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration( classes = { TestingConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
-public class PrincipalServiceSearchPersistenceIntegrationTest extends AbstractServiceSearchPersistenceIntegrationTest< Principal >{
+public class PrivilegeSearchPersistenceIntegrationTest extends AbstractSearchPersistenceIntegrationTest< Privilege >{
 	
-	@Autowired private IPrincipalService principalService;
+	@Autowired private IPrivilegeService privilegeService;
 	
 	// tests
 	
 	// template method
 	
 	@Override
-	protected final IPrincipalService getService(){
-		return principalService;
+	protected final IPrivilegeService getAPI(){
+		return privilegeService;
 	}
 	
 	@Override
-	protected final Principal createNewEntity(){
-		return FixtureFactory.createNewPrincipal();
+	protected final Privilege createNewEntity(){
+		return FixtureFactory.createNewPrivilege();
 	}
 	
 }

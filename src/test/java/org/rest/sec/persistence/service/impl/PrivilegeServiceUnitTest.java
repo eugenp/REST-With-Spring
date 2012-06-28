@@ -72,7 +72,7 @@ public class PrivilegeServiceUnitTest extends AbstractServiceUnitTest< Privilege
 	// template method
 	
 	@Override
-	protected final PrivilegeServiceImpl getService(){
+	protected final PrivilegeServiceImpl getAPI(){
 		return instance;
 	}
 	

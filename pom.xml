@@ -311,6 +311,9 @@
 					<container>
 						<containerId>jetty7x</containerId>
 						<type>embedded</type>
+						<systemProperties>
+							<persistenceTarget>cargo</persistenceTarget>
+						</systemProperties>
 					</container>
 					<configuration>
 						<properties>
@@ -554,7 +557,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-		
+
 		<repository>
 			<id>apache-snapshot</id>
 			<name>Apache Maven Snapshot Repository</name>

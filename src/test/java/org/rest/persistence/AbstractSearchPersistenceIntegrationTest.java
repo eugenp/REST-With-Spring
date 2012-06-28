@@ -17,28 +17,28 @@ import org.rest.persistence.service.IService;
 import org.rest.util.IDUtils;
 
 @SuppressWarnings( "unchecked" )
-public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends INameableEntity >{
+public abstract class AbstractSearchPersistenceIntegrationTest< T extends INameableEntity >{
 	
 	// search/filter
 	
 	@Test
 	public final void whenSearchByNameIsPerformed_thenNoExceptions(){
-		final T existingEntity = getService().create( createNewEntity() );
+		final T existingEntity = getAPI().create( createNewEntity() );
 		
 		// When
 		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.EQ, existingEntity.getName() );
-		getService().search( nameConstraint );
+		getAPI().search( nameConstraint );
 	}
 	
 	// search - by id
 	
 	@Test
 	public final void givenEntityWithIdExists_whenSearchByIdIsPerformed_thenResultIsFound(){
-		final T existingEntity = getService().create( createNewEntity() );
+		final T existingEntity = getAPI().create( createNewEntity() );
 		
 		// When
 		final ImmutableTriple< String, ClientOperation, Long > idConstraint = new ImmutableTriple< String, ClientOperation, Long >( ID, ClientOperation.EQ, existingEntity.getId() );
-		final List< T > searchResults = getService().search( idConstraint );
+		final List< T > searchResults = getAPI().search( idConstraint );
 		
 		// Then
 		assertThat( searchResults, hasItem( existingEntity ) );
@@ -46,11 +46,11 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 	
 	@Test
 	public final void givenEntityWithIdDoesNotExist_whenSearchByIdIsPerformed_thenResultIsNotFound(){
-		final T existingEntity = getService().create( createNewEntity() );
+		final T existingEntity = getAPI().create( createNewEntity() );
 		
 		// When
 		final ImmutableTriple< String, ClientOperation, Long > idConstraint = new ImmutableTriple< String, ClientOperation, Long >( ID, ClientOperation.EQ, IDUtils.randomPositiveLong() );
-		final List< T > searchResults = getService().search( idConstraint );
+		final List< T > searchResults = getAPI().search( idConstraint );
 		
 		// Then
 		assertThat( searchResults, not( hasItem( existingEntity ) ) );
@@ -60,11 +60,11 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 	
 	@Test
 	public final void givenEntityWithNameExists_whenSearchByNameIsPerformed_thenResultIsFound(){
-		final T existingEntity = getService().create( createNewEntity() );
+		final T existingEntity = getAPI().create( createNewEntity() );
 		
 		// When
 		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.EQ, existingEntity.getName() );
-		final List< T > searchResults = getService().search( nameConstraint );
+		final List< T > searchResults = getAPI().search( nameConstraint );
 		
 		// Then
 		assertThat( searchResults, hasItem( existingEntity ) );
@@ -72,11 +72,11 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 	
 	@Test
 	public final void givenEntityWithNameDoesNotExist_whenSearchByNameIsPerformed_thenResultIsNotFound(){
-		final T existingEntity = getService().create( createNewEntity() );
+		final T existingEntity = getAPI().create( createNewEntity() );
 		
 		// When
 		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.EQ, randomAlphabetic( 8 ) );
-		final List< T > searchResults = getService().search( nameConstraint );
+		final List< T > searchResults = getAPI().search( nameConstraint );
 		
 		// Then
 		assertThat( searchResults, not( hasItem( existingEntity ) ) );
@@ -84,12 +84,12 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 	
 	@Test
 	public final void givenEntitiesExists_whenSearchByNegatedNameIsPerformed_thenResultsAreCorrect(){
-		final T existingEntity1 = getService().create( createNewEntity() );
-		final T existingEntity2 = getService().create( createNewEntity() );
+		final T existingEntity1 = getAPI().create( createNewEntity() );
+		final T existingEntity2 = getAPI().create( createNewEntity() );
 		
 		// When
 		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.EQ, existingEntity1.getName() );
-		final List< T > searchResults = getService().search( nameConstraint );
+		final List< T > searchResults = getAPI().search( nameConstraint );
 		
 		// Then
 		assertThat( searchResults, hasItem( existingEntity1 ) );
@@ -100,12 +100,12 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 	
 	@Test
 	public final void givenEntityExists_whenSearchIsPerformedByIdAndName_thenResultIsFound(){
-		final T existingEntity = getService().create( createNewEntity() );
+		final T existingEntity = getAPI().create( createNewEntity() );
 		
 		// When
 		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.EQ, existingEntity.getName() );
 		final ImmutableTriple< String, ClientOperation, Long > idConstraint = new ImmutableTriple< String, ClientOperation, Long >( ID, ClientOperation.EQ, existingEntity.getId() );
-		final List< T > searchResults = getService().search( nameConstraint, idConstraint );
+		final List< T > searchResults = getAPI().search( nameConstraint, idConstraint );
 		
 		// Then
 		assertThat( searchResults, hasItem( existingEntity ) );
@@ -113,12 +113,12 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 	
 	@Test
 	public final void givenEntityExists_whenSearchIsPerformedByIncorrectIdAndCorrectName_thenResultIsNotFound(){
-		final T existingEntity = getService().create( createNewEntity() );
+		final T existingEntity = getAPI().create( createNewEntity() );
 		
 		// When
 		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.EQ, existingEntity.getName() );
 		final ImmutableTriple< String, ClientOperation, Long > idConstraint = new ImmutableTriple< String, ClientOperation, Long >( ID, ClientOperation.EQ, IDUtils.randomPositiveLong() );
-		final List< T > searchResults = getService().search( nameConstraint, idConstraint );
+		final List< T > searchResults = getAPI().search( nameConstraint, idConstraint );
 		
 		// Then
 		assertThat( searchResults, not( hasItem( existingEntity ) ) );
@@ -126,12 +126,12 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 	
 	@Test
 	public final void givenEntityExists_whenSearchIsPerformedByCorrectIdAndIncorrectName_thenResultIsNotFound(){
-		final T existingEntity = getService().create( createNewEntity() );
+		final T existingEntity = getAPI().create( createNewEntity() );
 		
 		// When
 		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.EQ, randomAlphabetic( 8 ) );
 		final ImmutableTriple< String, ClientOperation, Long > idConstraint = new ImmutableTriple< String, ClientOperation, Long >( ID, ClientOperation.EQ, existingEntity.getId() );
-		final List< T > searchResults = getService().search( nameConstraint, idConstraint );
+		final List< T > searchResults = getAPI().search( nameConstraint, idConstraint );
 		
 		// Then
 		assertThat( searchResults, not( hasItem( existingEntity ) ) );
@@ -141,12 +141,12 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 	
 	@Test
 	public final void whenSearchByNegatedNameIsPerformed_thenResultsAreFound(){
-		final T existingEntity1 = getService().create( createNewEntity() );
-		final T existingEntity2 = getService().create( createNewEntity() );
+		final T existingEntity1 = getAPI().create( createNewEntity() );
+		final T existingEntity2 = getAPI().create( createNewEntity() );
 		
 		// When
 		final ImmutableTriple< String, ClientOperation, String > nameConstraint = new ImmutableTriple< String, ClientOperation, String >( NAME, ClientOperation.NEG_EQ, existingEntity1.getName() );
-		final List< T > searchResults = getService().search( nameConstraint );
+		final List< T > searchResults = getAPI().search( nameConstraint );
 		
 		// Then
 		assertThat( searchResults, not( hasItem( existingEntity1 ) ) );
@@ -155,12 +155,12 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 	
 	@Test
 	public final void whenSearchByNegatedIdIsPerformed_thenResultsAreFound(){
-		final T existingEntity1 = getService().create( createNewEntity() );
-		final T existingEntity2 = getService().create( createNewEntity() );
+		final T existingEntity1 = getAPI().create( createNewEntity() );
+		final T existingEntity2 = getAPI().create( createNewEntity() );
 		
 		// When
 		final ImmutableTriple< String, ClientOperation, Long > idConstraint = new ImmutableTriple< String, ClientOperation, Long >( ID, ClientOperation.NEG_EQ, existingEntity1.getId() );
-		final List< T > searchResults = getService().search( idConstraint );
+		final List< T > searchResults = getAPI().search( idConstraint );
 		
 		// Then
 		assertThat( searchResults, not( hasItem( existingEntity1 ) ) );
@@ -169,7 +169,7 @@ public abstract class AbstractServiceSearchPersistenceIntegrationTest< T extends
 	
 	// template method
 	
-	protected abstract IService< T > getService();
+	protected abstract IService< T > getAPI();
 	
 	protected abstract T createNewEntity();
 	

@@ -71,7 +71,7 @@ public class PrincipalServiceUnitTest extends AbstractServiceUnitTest< Principal
 	// template method
 	
 	@Override
-	protected final PrincipalServiceImpl getService(){
+	protected final PrincipalServiceImpl getAPI(){
 		return instance;
 	}
 	

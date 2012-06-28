@@ -7,26 +7,26 @@ import org.rest.sec.persistence.dao.PrincipalDAOPersistenceIntegrationTest;
 import org.rest.sec.persistence.dao.PrivilegeDAOPersistenceIntegrationTest;
 import org.rest.sec.persistence.dao.RoleDAOPersistenceIntegrationTest;
 import org.rest.sec.persistence.service.PrincipalServicePersistenceIntegrationTest;
-import org.rest.sec.persistence.service.PrincipalServiceSearchPersistenceIntegrationTest;
+import org.rest.sec.persistence.service.PrincipalSearchPersistenceIntegrationTest;
 import org.rest.sec.persistence.service.PrivilegeServicePersistenceIntegrationTest;
-import org.rest.sec.persistence.service.PrivilegeServiceSearchPersistenceIntegrationTest;
+import org.rest.sec.persistence.service.PrivilegeSearchPersistenceIntegrationTest;
 import org.rest.sec.persistence.service.RoleServicePersistenceIntegrationTest;
-import org.rest.sec.persistence.service.RoleServiceSearchPersistenceIntegrationTest;
+import org.rest.sec.persistence.service.RoleSearchPersistenceIntegrationTest;
 
 @RunWith( Suite.class )
 @SuiteClasses( {// @formatter:off
     PrincipalServicePersistenceIntegrationTest.class,
     // UserDAOPersistenceIntegrationTest.class,
 
-    PrincipalServiceSearchPersistenceIntegrationTest.class,
+    PrincipalSearchPersistenceIntegrationTest.class,
     PrincipalServicePersistenceIntegrationTest.class,
     PrincipalDAOPersistenceIntegrationTest.class,
 
-    PrivilegeServiceSearchPersistenceIntegrationTest.class,
+    PrivilegeSearchPersistenceIntegrationTest.class,
     PrivilegeServicePersistenceIntegrationTest.class,
     PrivilegeDAOPersistenceIntegrationTest.class,
 
-    RoleServiceSearchPersistenceIntegrationTest.class,
+    RoleSearchPersistenceIntegrationTest.class,
     RoleServicePersistenceIntegrationTest.class,
     RoleDAOPersistenceIntegrationTest.class
 } ) // @formatter:on

@@ -71,7 +71,7 @@ public class RoleServiceUnitTest extends AbstractServiceUnitTest< Role >{
 	// template method
 	
 	@Override
-	protected final RoleServiceImpl getService(){
+	protected final RoleServiceImpl getAPI(){
 		return instance;
 	}
 	

@@ -5,7 +5,7 @@
 
 	<context:property-placeholder
 		location="
-        classpath*:*persistence-${persistenceTarget}.properties,
+        classpath*:*persistence-${persistenceTarget:h2}.properties,
         classpath*:*env-${target}.properties,
         classpath*:*web-${target}.properties" />
 
