@@ -12,8 +12,8 @@ public interface IService< T extends IEntity > extends IOperations< T >{
 	
 	// search
 	
-	List< T > search( final ImmutableTriple< String, ClientOperation, ? >... constraints );
-	Page< T > searchPaged( final int page, final int size, final String sortBy, final ImmutableTriple< String, ClientOperation, ? >... constraints );
+	List< T > search( final ImmutableTriple< String, ClientOperation, String >... constraints );
+	Page< T > searchPaged( final int page, final int size, final String sortBy, final ImmutableTriple< String, ClientOperation, String >... constraints );
 	
 	// find - all
 	

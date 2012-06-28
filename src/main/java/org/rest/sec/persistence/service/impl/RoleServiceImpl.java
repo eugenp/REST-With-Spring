@@ -33,7 +33,7 @@ public class RoleServiceImpl extends AbstractService< Role > implements IRoleSer
 	// search
 	
 	@Override
-	public List< Role > search( final ImmutableTriple< String, ClientOperation, ? >... constraints ){
+	public List< Role > search( final ImmutableTriple< String, ClientOperation, String >... constraints ){
 		final Specification< Role > firstSpec = SearchSecUtil.resolveConstraint( constraints[0], Role.class );
 		Specifications< Role > specifications = Specifications.where( firstSpec );
 		for( int i = 1; i < constraints.length; i++ ){
@@ -77,7 +77,7 @@ public class RoleServiceImpl extends AbstractService< Role > implements IRoleSer
 	}
 	
 	@Override
-	public Specification< Role > resolveConstraint( final ImmutableTriple< String, ClientOperation, ? > constraint ){
+	public Specification< Role > resolveConstraint( final ImmutableTriple< String, ClientOperation, String > constraint ){
 		return SearchSecUtil.resolveConstraint( constraint, Role.class );
 	}
 	

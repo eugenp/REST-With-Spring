@@ -10,6 +10,13 @@ public final class IDUtils{
 	
 	// API
 	
+	public final static String randomPositiveLongAsString(){
+		return Long.toString( randomPositiveLong() );
+	}
+	public final static String randomNegativeLongAsString(){
+		return Long.toString( randomNegativeLong() );
+	}
+	
 	public final static long randomPositiveLong(){
 		long id = new Random().nextLong() * 10000;
 		id = ( id < 0 ) ? ( -1 * id ) : id;

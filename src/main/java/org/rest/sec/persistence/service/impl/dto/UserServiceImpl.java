@@ -35,7 +35,7 @@ public class UserServiceImpl implements IUserService{
 	// search
 	
 	@Override
-	public List< User > search( final ImmutableTriple< String, ClientOperation, ? >... constraints ){
+	public List< User > search( final ImmutableTriple< String, ClientOperation, String >... constraints ){
 		throw new UnsupportedOperationException();
 	}
 	
@@ -113,7 +113,7 @@ public class UserServiceImpl implements IUserService{
 	}
 	
 	@Override
-	public Page< User > searchPaged( final int page, final int size, final String sortBy, final ImmutableTriple< String, ClientOperation, ? >... constraints ){
+	public Page< User > searchPaged( final int page, final int size, final String sortBy, final ImmutableTriple< String, ClientOperation, String >... constraints ){
 		// TODO Auto-generated method stub
 		return null;
 	}

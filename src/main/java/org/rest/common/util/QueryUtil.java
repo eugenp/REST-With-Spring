@@ -14,6 +14,10 @@ public final class QueryUtil{
 	public static final String PAGE = "page";
 	public static final String SIZE = "size";
 	public static final String QUESTIONMARK = "?";
+	/** - note: this character represents the ANY wildcard for the server side (persistence layer) */
+	public static final String ANY_SERVER = "%";
+	/** - note: this character represents the ANY wildcard for the client consumption of the API */
+	public static final String ANY_CLIENT = "*";
 	
 	private QueryUtil(){
 		throw new AssertionError();

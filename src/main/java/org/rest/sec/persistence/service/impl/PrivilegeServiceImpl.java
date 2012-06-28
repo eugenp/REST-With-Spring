@@ -33,7 +33,7 @@ public class PrivilegeServiceImpl extends AbstractService< Privilege > implement
 	// search
 	
 	@Override
-	public List< Privilege > search( final ImmutableTriple< String, ClientOperation, ? >... constraints ){
+	public List< Privilege > search( final ImmutableTriple< String, ClientOperation, String >... constraints ){
 		final Specification< Privilege > firstSpec = SearchSecUtil.resolveConstraint( constraints[0], Privilege.class );
 		Specifications< Privilege > specifications = Specifications.where( firstSpec );
 		for( int i = 1; i < constraints.length; i++ ){
@@ -61,7 +61,7 @@ public class PrivilegeServiceImpl extends AbstractService< Privilege > implement
 	}
 	
 	@Override
-	public Specification< Privilege > resolveConstraint( final ImmutableTriple< String, ClientOperation, ? > constraint ){
+	public Specification< Privilege > resolveConstraint( final ImmutableTriple< String, ClientOperation, String > constraint ){
 		return SearchSecUtil.resolveConstraint( constraint, Privilege.class );
 	}
 	

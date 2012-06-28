@@ -33,7 +33,7 @@ public class PrincipalServiceImpl extends AbstractService< Principal > implement
 	// search
 	
 	@Override
-	public List< Principal > search( final ImmutableTriple< String, ClientOperation, ? >... constraints ){
+	public List< Principal > search( final ImmutableTriple< String, ClientOperation, String >... constraints ){
 		final Specification< Principal > firstSpec = SearchSecUtil.resolveConstraint( constraints[0], Principal.class );
 		Specifications< Principal > specifications = Specifications.where( firstSpec );
 		for( int i = 1; i < constraints.length; i++ ){
@@ -62,7 +62,7 @@ public class PrincipalServiceImpl extends AbstractService< Principal > implement
 	}
 
 	@Override
-	public Specification< Principal > resolveConstraint( final ImmutableTriple< String, ClientOperation, ? > constraint ){
+	public Specification< Principal > resolveConstraint( final ImmutableTriple< String, ClientOperation, String > constraint ){
 		return SearchSecUtil.resolveConstraint( constraint, Principal.class );
 	}
 	

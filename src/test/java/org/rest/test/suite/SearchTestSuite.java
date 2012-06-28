@@ -7,9 +7,9 @@ import org.rest.sec.persistence.service.PrincipalSearchPersistenceIntegrationTes
 import org.rest.sec.persistence.service.PrivilegeSearchPersistenceIntegrationTest;
 import org.rest.sec.persistence.service.RoleSearchPersistenceIntegrationTest;
 import org.rest.sec.util.ConstructQueryStringUnitTest;
-import org.rest.sec.util.ParseQueryStringUnitTest;
 import org.rest.sec.web.privilege.PrivilegeSearchRESTIntegrationTest;
 import org.rest.sec.web.role.RoleSearchRESTIntegrationTest;
+import org.rest.util.ParseQueryStringUnitTest;
 
 @RunWith( Suite.class )
 @SuiteClasses( {// @formatter:off

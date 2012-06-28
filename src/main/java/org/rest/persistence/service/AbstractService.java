@@ -45,7 +45,7 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 	// search
 	
 	@Override
-	public List< T > search( final ImmutableTriple< String, ClientOperation, ? >... constraints ){
+	public List< T > search( final ImmutableTriple< String, ClientOperation, String >... constraints ){
 		final Specification< T > firstSpec = resolveConstraint( constraints[0] );
 		Specifications< T > specifications = Specifications.where( firstSpec );
 		for( int i = 1; i < constraints.length; i++ ){
@@ -59,7 +59,7 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 	}
 	
 	@Override
-	public Page< T > searchPaged( final int page, final int size, final String sortBy, final ImmutableTriple< String, ClientOperation, ? >... constraints ){
+	public Page< T > searchPaged( final int page, final int size, final String sortBy, final ImmutableTriple< String, ClientOperation, String >... constraints ){
 		Sort sortInfo = null;
 		if( sortBy != null ){
 			sortInfo = new Sort( sortBy );
@@ -142,10 +142,10 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 	
 	protected abstract PagingAndSortingRepository< T, Long > getDao();
 	protected abstract JpaSpecificationExecutor< T > getSpecificationExecutor();
-
+	
 	@SuppressWarnings( "static-method" )
-	public Specification< T > resolveConstraint( final ImmutableTriple< String, ClientOperation, ? > constraint ){
+	public Specification< T > resolveConstraint( final ImmutableTriple< String, ClientOperation, String > constraint ){
 		throw new UnsupportedOperationException();
 	}
-
+	
 }

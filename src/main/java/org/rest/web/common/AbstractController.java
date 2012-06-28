@@ -49,34 +49,58 @@ public abstract class AbstractController< T extends IEntity >{
 	
 	@SuppressWarnings( "unchecked" )
 	public List< T > searchInternal( @RequestParam( SearchCommonUtil.Q_PARAM ) final String queryString ){
-		List< ImmutableTriple< String, ClientOperation, ? >> parsedQuery = null;
 		try{
-			parsedQuery = SearchCommonUtil.parseQueryString( queryString );
+			List< ImmutableTriple< String, ClientOperation, String >> parsedQuery = null;
+			try{
+				parsedQuery = SearchCommonUtil.parseQueryString( queryString );
+			}
+			catch( final IllegalStateException illState ){
+				logger.error( "IllegalStateException on find operation" );
+				logger.warn( "IllegalStateException on find operation", illState );
+				throw new ConflictException( illState );
+			}
+			
+			final List< T > results = getService().search( parsedQuery.toArray( new ImmutableTriple[parsedQuery.size()] ) );
+			return results;
 		}
-		catch( final IllegalStateException illState ){
-			logger.error( "IllegalStateException on find operation" );
-			logger.warn( "IllegalStateException on find operation", illState );
-			throw new ConflictException( illState );
+		catch( final IllegalStateException illEx ){
+			logger.error( "IllegalStateException on search operation" );
+			logger.warn( "IllegalStateException on search operation", illEx );
+			throw new BadRequestException( illEx );
 		}
-		
-		final List< T > results = getService().search( parsedQuery.toArray( new ImmutableTriple[parsedQuery.size()] ) );
-		return results;
+		catch( final UnsupportedOperationException unsupEx ){
+			logger.error( "UnsupportedOperationException on search operation" );
+			logger.warn( "UnsupportedOperationException on search operation", unsupEx );
+			throw new BadRequestException( unsupEx );
+		}
 	}
 	
 	@SuppressWarnings( "unchecked" )
 	public List< T > searchInternalPaged( @RequestParam( SearchCommonUtil.Q_PARAM ) final String queryString, final int page, final int size ){
-		List< ImmutableTriple< String, ClientOperation, ? >> parsedQuery = null;
 		try{
-			parsedQuery = SearchCommonUtil.parseQueryString( queryString );
+			List< ImmutableTriple< String, ClientOperation, String >> parsedQuery = null;
+			try{
+				parsedQuery = SearchCommonUtil.parseQueryString( queryString );
+			}
+			catch( final IllegalStateException illState ){
+				logger.error( "IllegalStateException on find operation" );
+				logger.warn( "IllegalStateException on find operation", illState );
+				throw new ConflictException( illState );
+			}
+			
+			final Page< T > resultPage = getService().searchPaged( page, size, null, parsedQuery.toArray( new ImmutableTriple[parsedQuery.size()] ) );
+			return Lists.newArrayList( resultPage.getContent() );
 		}
-		catch( final IllegalStateException illState ){
-			logger.error( "IllegalStateException on find operation" );
-			logger.warn( "IllegalStateException on find operation", illState );
-			throw new ConflictException( illState );
+		catch( final IllegalStateException illEx ){
+			logger.error( "IllegalStateException on search operation" );
+			logger.warn( "IllegalStateException on search operation", illEx );
+			throw new BadRequestException( illEx );
 		}
-		
-		final Page< T > resultPage = getService().searchPaged( page, size, null, parsedQuery.toArray( new ImmutableTriple[parsedQuery.size()] ) );
-		return Lists.newArrayList( resultPage.getContent() );
+		catch( final UnsupportedOperationException unsupEx ){
+			logger.error( "UnsupportedOperationException on search operation" );
+			logger.warn( "UnsupportedOperationException on search operation", unsupEx );
+			throw new BadRequestException( unsupEx );
+		}
 	}
 
 	// find/get
