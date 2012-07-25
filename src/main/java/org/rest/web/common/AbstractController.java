@@ -2,6 +2,7 @@ package org.rest.web.common;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
@@ -14,6 +15,7 @@ import org.rest.common.event.SingleResourceRetrievedEvent;
 import org.rest.common.exceptions.BadRequestException;
 import org.rest.common.exceptions.ConflictException;
 import org.rest.common.exceptions.ResourceNotFoundException;
+import org.rest.common.util.QueryUtil;
 import org.rest.common.web.RestPreconditions;
 import org.rest.persistence.service.IService;
 import org.rest.util.SearchCommonUtil;
@@ -102,8 +104,8 @@ public abstract class AbstractController< T extends IEntity >{
 			throw new BadRequestException( unsupEx );
 		}
 	}
-
-	// find/get
+	
+	// find - one
 	
 	protected final T findOneInternal( final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		T resource = null;
@@ -121,21 +123,50 @@ public abstract class AbstractController< T extends IEntity >{
 		return resource;
 	}
 	
-	protected final List< T > findAllInternal(){
+	// find - all
+	
+	protected final List< T > findAllInternal( final HttpServletRequest request ){
+		if( request.getParameterNames().hasMoreElements() ){
+			throw new ResourceNotFoundException();
+		}
 		return getService().findAll();
 	}
 	
 	protected final void findAllRedirectToPagination( final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		final String resourceName = clazz.getSimpleName().toString().toLowerCase();
-		final String locationValue = uriBuilder.path( "/" + resourceName ).build().encode().toUriString() + "?page=0&size=10";
+		final String locationValue = uriBuilder.path( "/" + resourceName ).build().encode().toUriString() + QueryUtil.QUESTIONMARK + "page=0&size=10";
 		
 		response.setHeader( HttpHeaders.LOCATION, locationValue );
+	}
+	
+	protected final List< T > findPaginatedAndSortedInternal( final int page, final int size, final String sortBy, final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+		Page< T > resultPage = null;
+		try{
+			resultPage = getService().findAllPaginatedAndSorted( page, size, sortBy );
+		}
+		catch( final InvalidDataAccessApiUsageException apiEx ){
+			logger.error( "InvalidDataAccessApiUsageException on find operation" );
+			logger.warn( "InvalidDataAccessApiUsageException on find operation", apiEx );
+			throw new BadRequestException( apiEx );
+		}
+		catch( final IllegalArgumentException apiEx ){ // thrown by PageRequest in case the page parameters are wrong
+			logger.error( "IllegalArgumentException on find operation" );
+			logger.warn( "IllegalArgumentException on find operation", apiEx );
+			throw new BadRequestException( apiEx );
+		}
+		
+		if( page > resultPage.getTotalPages() ){
+			throw new ResourceNotFoundException();
+		}
+		eventPublisher.publishEvent( new PaginatedResultsRetrievedEvent< T >( clazz, uriBuilder, response, page, resultPage.getTotalPages(), size ) );
+		
+		return Lists.newArrayList( resultPage.getContent() );
 	}
 	
 	protected final List< T > findPaginatedInternal( final int page, final int size, final String sortBy, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		Page< T > resultPage = null;
 		try{
-			resultPage = getService().findPaginated( page, size, sortBy );
+			resultPage = getService().findAllPaginatedAndSorted( page, size, sortBy );
 		}
 		catch( final InvalidDataAccessApiUsageException apiEx ){
 			logger.error( "InvalidDataAccessApiUsageException on find operation" );
@@ -149,6 +180,20 @@ public abstract class AbstractController< T extends IEntity >{
 		eventPublisher.publishEvent( new PaginatedResultsRetrievedEvent< T >( clazz, uriBuilder, response, page, resultPage.getTotalPages(), size ) );
 		
 		return Lists.newArrayList( resultPage.getContent() );
+	}
+	
+	protected final List< T > findAllSortedInternal( final String sortBy, final String sortOrder ){
+		List< T > resultPage = null;
+		try{
+			resultPage = getService().findAll( sortBy, sortOrder );
+		}
+		catch( final InvalidDataAccessApiUsageException apiEx ){
+			logger.error( "InvalidDataAccessApiUsageException on find operation" );
+			logger.warn( "InvalidDataAccessApiUsageException on find operation", apiEx );
+			throw new BadRequestException( apiEx );
+		}
+		
+		return resultPage;
 	}
 	
 	// save/create/persist

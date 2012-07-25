@@ -67,8 +67,13 @@ public class UserServiceImpl implements IUserService{
 	}
 	
 	@Override
-	public Page< User > findPaginated( final int page, final int size, final String sortBy ){
-		final Page< Principal > principalsPaginated = principalService.findPaginated( page, size, sortBy );
+	public List< User > findAll( final String sortBy, final String sortOrder ){
+		throw new UnsupportedOperationException();
+	}
+	
+	@Override
+	public Page< User > findAllPaginatedAndSorted( final int page, final int size, final String sortBy ){
+		final Page< Principal > principalsPaginated = principalService.findAllPaginatedAndSorted( page, size, sortBy );
 		final List< User > usersPaginated = Lists.transform( principalsPaginated.getContent(), new PrincipalToUserFunction() );
 		
 		Sort sortInfo = null;
@@ -114,8 +119,12 @@ public class UserServiceImpl implements IUserService{
 	
 	@Override
 	public Page< User > searchPaged( final int page, final int size, final String sortBy, final ImmutableTriple< String, ClientOperation, String >... constraints ){
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
+	}
+	
+	@Override
+	public long count(){
+		throw new UnsupportedOperationException();
 	}
 	
 }

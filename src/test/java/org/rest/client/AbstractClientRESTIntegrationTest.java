@@ -24,6 +24,8 @@ public abstract class AbstractClientRESTIntegrationTest< T extends INameableEnti
 		super();
 	}
 	
+	// @Rule public ExpectedException thrown = ExpectedException.none();
+	
 	// tests
 	
 	// find one
@@ -177,7 +179,7 @@ public abstract class AbstractClientRESTIntegrationTest< T extends INameableEnti
 	
 	// template method
 	
-	protected abstract AbstractClientRESTTemplate< T > getAPI();
+	protected abstract IClientTemplate< T > getAPI();
 	
 	protected abstract IEntityOperations< T > getEntityOps();
 	

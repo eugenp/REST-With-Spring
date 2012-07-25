@@ -36,7 +36,7 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 	// find - one
 	
 	@Override
-	public T findOne( final long id ){
+	public final T findOne( final long id ){
 		try{
 			final ResponseEntity< String > response = restTemplate.exchange( getURI() + "/" + id, HttpMethod.GET, new HttpEntity< String >( createAcceptHeaders() ), String.class );
 			return marshaller.decode( response.getBody(), clazz );
@@ -46,17 +46,20 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 		}
 	}
 	
-	public T findOneByURI( final String uri ){
+	@Override
+	public final T findOneByURI( final String uri ){
 		final ResponseEntity< String > response = restTemplate.exchange( uri, HttpMethod.GET, new HttpEntity< String >( createAcceptHeaders() ), String.class );
 		return marshaller.decode( response.getBody(), clazz );
 	}
 	
 	// find one - by attributes
 	
+	@Override
 	public T findOneByName( final String name ){
 		return findOneByAttributes( "name", name );
 	}
 	
+	@Override
 	public T findOneByAttributes( final String... attributes ){
 		final List< T > resourcesByName = findAllByURI( getURI() + QueryUtil.QUESTIONMARK + "q=" + constructURI( attributes ) );
 		Preconditions.checkState( resourcesByName.size() <= 1 );
@@ -66,12 +69,18 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 	// find - all
 	
 	@Override
-	public List< T > findAll(){
+	public final List< T > findAll(){
 		final ResponseEntity< List > findAllResponse = restTemplate.exchange( getURI(), HttpMethod.GET, new HttpEntity< String >( createAcceptHeaders() ), List.class );
 		return findAllResponse.getBody();
 	}
 	
-	public ResponseEntity< List > findAllAsResponse(){
+	@Override
+	public final List< T > findAll( final String sortBy, final String sortOrder ){
+		final ResponseEntity< List > findAllResponse = restTemplate.exchange( getURI() + QueryUtil.Q_SORT_BY + sortBy, HttpMethod.GET, new HttpEntity< String >( createAcceptHeaders() ), List.class );
+		return findAllResponse.getBody();
+	}
+	
+	public final ResponseEntity< List > findAllAsResponse(){
 		return restTemplate.exchange( getURI(), HttpMethod.GET, new HttpEntity< String >( createAcceptHeaders() ), List.class );
 	}
 	
@@ -80,7 +89,8 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 		return response.getBody();
 	}
 	
-	public List< T > findAllByAttributes( final String... attributes ){
+	@Override
+	public final List< T > findAllByAttributes( final String... attributes ){
 		final List< T > resourcesByAttributes = findAllByURI( getURI() + QueryUtil.QUESTIONMARK + "q=" + constructURI( attributes ) );
 		return resourcesByAttributes;
 	}
@@ -97,7 +107,8 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 		return findOneByURI( locationOfCreatedResource );
 	}
 	
-	public String createAsURI( final T resource ){
+	@Override
+	public final String createAsURI( final T resource ){
 		final ResponseEntity responseEntity = restTemplate.exchange( getURI(), HttpMethod.POST, new HttpEntity< T >( resource, createContentTypeHeaders() ), List.class );
 		
 		final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
@@ -109,7 +120,7 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 	// update
 	
 	@Override
-	public void update( final T resource ){
+	public final void update( final T resource ){
 		final ResponseEntity responseEntity = restTemplate.exchange( getURI(), HttpMethod.PUT, new HttpEntity< T >( resource, createContentTypeHeaders() ), clazz );
 		Preconditions.checkState( responseEntity.getStatusCode().value() == 200 );
 	}
@@ -117,14 +128,23 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 	// delete
 	
 	@Override
-	public void delete( final long id ){
+	public final void delete( final long id ){
 		final ResponseEntity< Object > deleteResourceResponse = restTemplate.exchange( getURI() + "/" + id, HttpMethod.DELETE, null, null );
 		
 		Preconditions.checkState( deleteResourceResponse.getStatusCode().value() == 204 );
 	}
 	
 	@Override
-	public void deleteAll(){
+	public final void deleteAll(){
+		throw new UnsupportedOperationException();
+	}
+	
+	// search
+	
+	// count
+	
+	@Override
+	public long count(){
 		throw new UnsupportedOperationException();
 	}
 	
@@ -166,6 +186,7 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 	
 	public abstract String getURI();
 	
+	@Override
 	public final IClientTemplate< T > givenAuthenticated(){
 		if( isBasicAuth() ){
 			basicAuth();
@@ -177,10 +198,13 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 		return this;
 	}
 	
-	protected abstract boolean isBasicAuth();
+	protected boolean isBasicAuth(){
+		return true;
+	}
 	
 	protected abstract void basicAuth();
-	
-	protected abstract void digestAuth();
+	protected final void digestAuth(){
+		throw new UnsupportedOperationException();
+	}
 	
 }

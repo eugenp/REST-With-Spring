@@ -17,6 +17,6 @@ public interface IService< T extends IEntity > extends IOperations< T >{
 	
 	// find - all
 	
-	Page< T > findPaginated( final int page, final int size, final String sortBy );
+	Page< T > findAllPaginatedAndSorted( final int page, final int size, final String sortBy );
 	
 }

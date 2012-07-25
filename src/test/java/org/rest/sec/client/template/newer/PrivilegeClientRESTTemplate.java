@@ -20,8 +20,6 @@ public class PrivilegeClientRESTTemplate extends AbstractClientRESTTemplate< Pri
 	@Value( "${http.host}" ) private String host;
 	@Value( "${http.port}" ) private int port;
 	
-	@Value( "${sec.auth.basic}" ) private boolean basicAuth;
-	
 	public PrivilegeClientRESTTemplate(){
 		super( Privilege.class );
 	}
@@ -36,20 +34,10 @@ public class PrivilegeClientRESTTemplate extends AbstractClientRESTTemplate< Pri
 	}
 	
 	@Override
-	protected boolean isBasicAuth(){
-		return basicAuth;
-	}
-	
-	@Override
 	protected void basicAuth(){
 		final HttpComponentsClientHttpRequestFactory requestFactory = (HttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
 		final DefaultHttpClient httpClient = (DefaultHttpClient) requestFactory.getHttpClient();
 		httpClient.getCredentialsProvider().setCredentials( new AuthScope( host, port, AuthScope.ANY_REALM ), new UsernamePasswordCredentials( SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD ) );
-	}
-	
-	@Override
-	protected void digestAuth(){
-		throw new UnsupportedOperationException();
 	}
 	
 }

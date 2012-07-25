@@ -51,7 +51,28 @@ public final class SearchCommonUtil{
 	}
 	
 	public static boolean validateParameters( final Set< String > paramKeys ){
-		if( paramKeys.retainAll( Lists.newArrayList( QueryUtil.NAME, QueryUtil.LOGIN_NAME, QueryUtil.ID, QueryUtil.ID_NEG, QueryUtil.NAME_NEG, QueryUtil.LOGIN_NAME_NEG ) ) ){
+		if( paramKeys.retainAll( Lists.newArrayList(// @formatter:off
+				SearchField.name.toString(),
+				QueryUtil.NAME_NEG,
+				
+				SearchField.loginName.toString(),
+				QueryUtil.LOGIN_NAME_NEG,
+				
+				SearchField.id.toString(),
+				QueryUtil.ID_NEG,
+				
+				SearchField.email.toString(),
+				QueryUtil.EMAIL_NEG,
+				
+				SearchField.tenant.toString(),
+				QueryUtil.TENANT_NEG,
+				
+				SearchField.locked.toString(),
+				QueryUtil.LOCKED_NEG,
+				
+				SearchField.description.toString(),
+				QueryUtil.DESCRIPTION_NEG
+				) ) ){ // @formatter:on
 			return false;
 		}
 		return true;

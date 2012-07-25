@@ -232,7 +232,7 @@ public abstract class AbstractSearchRESTIntegrationTest< T extends INameableEnti
 		
 		// When
 		final ImmutablePair< String, ClientOperation > nameConstraint = new ImmutablePair< String, ClientOperation >( existingResource1.getName(), ClientOperation.NEG_EQ );
-		final List< T > searchResults = getAPI().search( null, nameConstraint, 0, 2 );
+		final List< T > searchResults = getAPI().searchPaged( null, nameConstraint, 0, 2 );
 		
 		// Then
 		assertThat( searchResults.size(), is( 2 ) );

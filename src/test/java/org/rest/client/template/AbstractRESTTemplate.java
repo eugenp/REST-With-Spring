@@ -63,6 +63,12 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 		final Response findAllResponse = findOneAsResponse( getURI() );
 		return marshaller.<List> decode( findAllResponse.getBody().asString(), List.class );
 	}
+	@Override
+	@SuppressWarnings( { "unchecked", "rawtypes" } )
+	public final List< T > findAll( final String sortBy, final String sortOrder ){
+		final Response findAllResponse = findOneAsResponse( getURI() + QueryUtil.Q_SORT_BY + sortBy + QueryUtil.S_ORDER + sortOrder );
+		return marshaller.<List> decode( findAllResponse.getBody().asString(), List.class );
+	}
 	
 	@Override
 	public Response findAllAsResponse(){
@@ -161,12 +167,19 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 	}
 	
 	@Override
-	public List< T > search( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp, final int page, final int size ){
+	public List< T > searchPaged( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp, final int page, final int size ){
 		final String queryURI = getURI() + QueryUtil.QUESTIONMARK + "q=" + SearchTestUtil.constructQueryString( idOp, nameOp ) + "&page=" + page + "&size=" + size;
 		final Response searchResponse = givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
 		Preconditions.checkState( searchResponse.getStatusCode() == 200 );
 		
 		return getMarshaller().<List> decode( searchResponse.getBody().asString(), List.class );
+	}
+	
+	// count
+	
+	@Override
+	public long count(){
+		throw new UnsupportedOperationException();
 	}
 	
 	// entity (non REST)

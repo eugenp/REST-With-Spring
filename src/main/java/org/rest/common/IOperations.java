@@ -9,6 +9,7 @@ public interface IOperations< T extends IEntity >{
 	T findOne( final long id );
 	
 	List< T > findAll();
+	List< T > findAll( final String sortBy, final String sortOrder );
 	
 	// create
 	
@@ -24,4 +25,8 @@ public interface IOperations< T extends IEntity >{
 	
 	void deleteAll();
 	
+	// count
+	
+	long count();
+
 }

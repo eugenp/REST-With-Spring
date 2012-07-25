@@ -2,6 +2,7 @@ package org.rest.sec.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.rest.common.exceptions.ConflictException;
@@ -55,8 +56,8 @@ public class RoleController extends AbstractController< Role >{
 	
 	@RequestMapping( method = RequestMethod.GET )
 	@ResponseBody
-	public List< Role > findAll(){
-		return findAllInternal();
+	public List< Role > findAll( final HttpServletRequest request ){
+		return findAllInternal( request );
 	}
 	
 	// find - one

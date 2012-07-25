@@ -17,6 +17,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -91,13 +92,19 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 	
 	@Override
 	@Transactional( readOnly = true )
-	public Page< T > findPaginated( final int page, final int size, final String sortBy ){
+	public Page< T > findAllPaginatedAndSorted( final int page, final int size, final String sortBy ){
 		Sort sortInfo = null;
 		if( sortBy != null ){
 			sortInfo = new Sort( sortBy );
 		}
 		
 		return getDao().findAll( new PageRequest( page, size, sortInfo ) );
+	}
+	@Override
+	@Transactional( readOnly = true )
+	public List< T > findAll( final String sortBy, final String sortOrder ){
+		final Sort sortInfo = constructSort( sortBy, sortOrder );
+		return Lists.newArrayList( getDao().findAll( sortInfo ) );
 	}
 	
 	// save/create/persist
@@ -138,6 +145,13 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 		eventPublisher.publishEvent( new EntityDeletedEvent< T >( this, clazz, entity ) );
 	}
 	
+	// count
+	
+	@Override
+	public long count(){
+		return getDao().count();
+	}
+	
 	// template method
 	
 	protected abstract PagingAndSortingRepository< T, Long > getDao();
@@ -146,6 +160,16 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 	@SuppressWarnings( "static-method" )
 	public Specification< T > resolveConstraint( final ImmutableTriple< String, ClientOperation, String > constraint ){
 		throw new UnsupportedOperationException();
+	}
+	
+	// util
+	
+	final Sort constructSort( final String sortBy, final String sortOrder ){
+		Sort sortInfo = null;
+		if( sortBy != null ){
+			sortInfo = new Sort( Direction.fromString( sortOrder ), sortBy );
+		}
+		return sortInfo;
 	}
 	
 }

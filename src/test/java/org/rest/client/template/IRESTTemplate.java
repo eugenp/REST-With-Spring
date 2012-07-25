@@ -24,6 +24,6 @@ public interface IRESTTemplate< T extends IEntity > extends IOperations< T >, IE
 	
 	List< T > search( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp );
 	
-	List< T > search( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp, final int page, final int size );
+	List< T > searchPaged( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp, final int page, final int size );
 	
 }
