@@ -15,6 +15,8 @@ public final class SearchCommonUtil{
 	public static final String Q_PARAM = "q";
 	
 	public static final String SEPARATOR = ",";
+	public static final String SEPARATOR_AMPER = "&";
+	
 	public static final String OP = "=";
 	public static final String NEGATION = "~";
 	

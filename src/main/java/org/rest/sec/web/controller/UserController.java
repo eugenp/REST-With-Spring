@@ -2,15 +2,18 @@ package org.rest.sec.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.rest.common.exceptions.ConflictException;
+import org.rest.common.util.QueryUtil;
 import org.rest.common.web.RestPreconditions;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.persistence.service.dto.IUserService;
 import org.rest.sec.util.SecurityConstants;
 import org.rest.util.SearchCommonUtil;
 import org.rest.web.common.AbstractController;
+import org.rest.web.common.ISortingController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
@@ -27,7 +30,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping( value = "user" )
-public class UserController extends AbstractController< User >{
+public class UserController extends AbstractController< User > implements ISortingController< User >{
 	
 	@Autowired private IUserService service;
 	
@@ -44,19 +47,33 @@ public class UserController extends AbstractController< User >{
 	public List< User > search( @RequestParam( SearchCommonUtil.Q_PARAM ) final String queryString ){
 		return searchInternal( queryString );
 	}
-
+	
 	// find - all/paginated
 	
-	@RequestMapping( params = { "page", "size" },method = RequestMethod.GET )
+	@Override
+	@RequestMapping( params = { QueryUtil.PAGE, QueryUtil.SIZE, QueryUtil.SORT_BY },method = RequestMethod.GET )
 	@ResponseBody
-	public List< User > findPaginated( @RequestParam( "page" ) final int page, @RequestParam( "size" ) final int size, @RequestParam( value = "sortBy",required = false ) final String sortBy, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
-		return findPaginatedInternal( page, size, sortBy, uriBuilder, response );
+	public List< User > findAllPaginatedAndSorted( @RequestParam( value = QueryUtil.PAGE ) final int page, @RequestParam( value = QueryUtil.SIZE ) final int size, @RequestParam( value = QueryUtil.SORT_BY ) final String sortBy, @RequestParam( value = QueryUtil.SORT_ORDER ) final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+		return findPaginatedAndSortedInternal( page, size, sortBy, sortOrder, uriBuilder, response );
+	}
+	@Override
+	@RequestMapping( params = { QueryUtil.PAGE, QueryUtil.SIZE },method = RequestMethod.GET )
+	@ResponseBody
+	public List< User > findAllPaginated( @RequestParam( value = QueryUtil.PAGE ) final int page, @RequestParam( value = QueryUtil.SIZE ) final int size, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+		return findPaginatedAndSortedInternal( page, size, null, null, uriBuilder, response );
+	}
+	@Override
+	@RequestMapping( params = { QueryUtil.SORT_BY },method = RequestMethod.GET )
+	@ResponseBody
+	public List< User > findAllSorted( @RequestParam( value = QueryUtil.SORT_BY ) final String sortBy, @RequestParam( value = QueryUtil.SORT_ORDER ) final String sortOrder ){
+		return findAllSortedInternal( sortBy, sortOrder );
 	}
 	
+	@Override
 	@RequestMapping( method = RequestMethod.GET )
-	@ResponseStatus( HttpStatus.SEE_OTHER )
-	public void findAll( final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
-		findAllRedirectToPagination( uriBuilder, response );
+	@ResponseBody
+	public List< User > findAll( final HttpServletRequest request ){
+		return findAllInternal( request );
 	}
 	
 	// find - one

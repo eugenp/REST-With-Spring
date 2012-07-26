@@ -21,7 +21,7 @@ public final class QueryUtil{
 	public static final String SORT_BY = "sortBy";
 	public static final String SORT_ORDER = "sortOrder";
 	public static final String Q_SORT_BY = QUESTIONMARK + SORT_BY + SearchCommonUtil.OP;
-	public static final String S_ORDER = SearchCommonUtil.SEPARATOR + QueryUtil.SORT_ORDER + SearchCommonUtil.OP;
+	public static final String S_ORDER = SearchCommonUtil.SEPARATOR_AMPER + QueryUtil.SORT_ORDER + SearchCommonUtil.OP;
 	public static final String S_ORDER_ASC = S_ORDER + Sort.Direction.ASC.name();
 	public static final String S_ORDER_DESC = S_ORDER + Sort.Direction.DESC.name();
 	

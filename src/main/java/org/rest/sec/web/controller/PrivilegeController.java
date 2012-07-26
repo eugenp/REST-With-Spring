@@ -12,6 +12,7 @@ import org.rest.sec.model.Privilege;
 import org.rest.sec.persistence.service.IPrivilegeService;
 import org.rest.util.SearchCommonUtil;
 import org.rest.web.common.AbstractController;
+import org.rest.web.common.ISortingController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping( value = "privilege" )
-public class PrivilegeController extends AbstractController< Privilege >{
+public class PrivilegeController extends AbstractController< Privilege > implements ISortingController< Privilege >{
 	
 	@Autowired private IPrivilegeService service;
 	
@@ -47,22 +48,26 @@ public class PrivilegeController extends AbstractController< Privilege >{
 	
 	// find - all/paginated
 	
+	@Override
 	@RequestMapping( params = { QueryUtil.PAGE, QueryUtil.SIZE, QueryUtil.SORT_BY },method = RequestMethod.GET )
 	@ResponseBody
-	public List< Privilege > findPaginatedAndSorted( @RequestParam( value = QueryUtil.PAGE ) final int page, @RequestParam( value = QueryUtil.SIZE ) final int size, @RequestParam( value = QueryUtil.SORT_BY ) final String sortBy, @RequestParam( value = QueryUtil.SORT_ORDER ) final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+	public List< Privilege > findAllPaginatedAndSorted( @RequestParam( value = QueryUtil.PAGE ) final int page, @RequestParam( value = QueryUtil.SIZE ) final int size, @RequestParam( value = QueryUtil.SORT_BY ) final String sortBy, @RequestParam( value = QueryUtil.SORT_ORDER ) final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		return findPaginatedAndSortedInternal( page, size, sortBy, sortOrder, uriBuilder, response );
 	}
+	@Override
 	@RequestMapping( params = { QueryUtil.PAGE, QueryUtil.SIZE },method = RequestMethod.GET )
 	@ResponseBody
-	public List< Privilege > findPaginated( @RequestParam( value = QueryUtil.PAGE ) final int page, @RequestParam( value = QueryUtil.SIZE ) final int size, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+	public List< Privilege > findAllPaginated( @RequestParam( value = QueryUtil.PAGE ) final int page, @RequestParam( value = QueryUtil.SIZE ) final int size, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		return findPaginatedAndSortedInternal( page, size, null, null, uriBuilder, response );
 	}
+	@Override
 	@RequestMapping( params = { QueryUtil.SORT_BY },method = RequestMethod.GET )
 	@ResponseBody
-	public List< Privilege > findSorted( @RequestParam( value = QueryUtil.SORT_BY ) final String sortBy, @RequestParam( value = QueryUtil.SORT_ORDER ) final String sortOrder ){
+	public List< Privilege > findAllSorted( @RequestParam( value = QueryUtil.SORT_BY ) final String sortBy, @RequestParam( value = QueryUtil.SORT_ORDER ) final String sortOrder ){
 		return findAllSortedInternal( sortBy, sortOrder );
 	}
 	
+	@Override
 	@RequestMapping( method = RequestMethod.GET )
 	@ResponseBody
 	public List< Privilege > findAll( final HttpServletRequest request ){
