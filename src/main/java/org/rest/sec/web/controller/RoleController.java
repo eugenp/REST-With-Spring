@@ -104,7 +104,7 @@ public class RoleController extends AbstractController< Role > implements ISorti
 	
 	@RequestMapping( method = RequestMethod.POST )
 	@ResponseStatus( HttpStatus.CREATED )
-	// @Secured( SecurityConstants.CAN_ROLE_WRITE )
+	@Secured( SecurityConstants.CAN_ROLE_WRITE )
 	public void create( @RequestBody final Role resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		createInternal( resource, uriBuilder, response );
 	}
@@ -113,7 +113,7 @@ public class RoleController extends AbstractController< Role > implements ISorti
 	
 	@RequestMapping( method = RequestMethod.PUT )
 	@ResponseStatus( HttpStatus.OK )
-	// @Secured( SecurityConstants.CAN_ROLE_WRITE )
+	@Secured( SecurityConstants.CAN_ROLE_WRITE )
 	public void update( @RequestBody final Role resource ){
 		updateInternal( resource );
 	}

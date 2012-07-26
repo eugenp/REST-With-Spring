@@ -10,12 +10,14 @@ import org.rest.common.util.QueryUtil;
 import org.rest.common.web.RestPreconditions;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.persistence.service.dto.IUserService;
+import org.rest.sec.util.SecurityConstants;
 import org.rest.util.SearchCommonUtil;
 import org.rest.web.common.AbstractController;
 import org.rest.web.common.ISortingController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -102,7 +104,6 @@ public class UserController extends AbstractController< User > implements ISorti
 	
 	@RequestMapping( method = RequestMethod.POST )
 	@ResponseStatus( HttpStatus.CREATED )
-	// @Secured( SecurityConstants.PRIVILEGE_USER_WRITE )
 	public void create( @RequestBody final User resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		createInternal( resource, uriBuilder, response );
 	}
@@ -111,7 +112,7 @@ public class UserController extends AbstractController< User > implements ISorti
 	
 	@RequestMapping( method = RequestMethod.PUT )
 	@ResponseStatus( HttpStatus.OK )
-	// @Secured( SecurityConstants.CAN_USER_WRITE )
+	@Secured( SecurityConstants.CAN_USER_WRITE )
 	public void update( @RequestBody final User resource ){
 		updateInternal( resource );
 	}
@@ -120,7 +121,7 @@ public class UserController extends AbstractController< User > implements ISorti
 	
 	@RequestMapping( value = "/{id}",method = RequestMethod.DELETE )
 	@ResponseStatus( HttpStatus.NO_CONTENT )
-	// @Secured( SecurityConstants.CAN_USER_WRITE )
+	@Secured( SecurityConstants.CAN_USER_WRITE )
 	public void delete( @PathVariable( "id" ) final Long id ){
 		deleteByIdInternal( id );
 	}

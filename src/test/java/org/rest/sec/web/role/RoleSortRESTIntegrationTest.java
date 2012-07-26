@@ -3,6 +3,7 @@ package org.rest.sec.web.role;
 import org.rest.sec.client.template.RoleRESTTemplateImpl;
 import org.rest.sec.model.Role;
 import org.rest.sec.test.SecSortRESTIntegrationTest;
+import org.rest.util.order.OrderByName;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Ordering;
@@ -32,12 +33,7 @@ public class RoleSortRESTIntegrationTest extends SecSortRESTIntegrationTest< Rol
 	
 	@Override
 	protected final Ordering< Role > getOrdering(){
-		return new Ordering< Role >(){
-			@Override
-			public final int compare( final Role left, final Role right ){
-				return left.getName().compareToIgnoreCase( right.getName() );
-			}
-		};
+		return new OrderByName< Role >();
 	}
 	
 }
