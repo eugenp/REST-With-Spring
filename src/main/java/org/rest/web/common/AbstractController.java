@@ -90,7 +90,7 @@ public abstract class AbstractController< T extends IEntity >{
 				throw new ConflictException( illState );
 			}
 			
-			final Page< T > resultPage = getService().searchPaged( page, size, null, parsedQuery.toArray( new ImmutableTriple[parsedQuery.size()] ) );
+			final Page< T > resultPage = getService().searchPaged( page, size, parsedQuery.toArray( new ImmutableTriple[parsedQuery.size()] ) );
 			return Lists.newArrayList( resultPage.getContent() );
 		}
 		catch( final IllegalStateException illEx ){
@@ -142,7 +142,7 @@ public abstract class AbstractController< T extends IEntity >{
 	protected final List< T > findPaginatedAndSortedInternal( final int page, final int size, final String sortBy, final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		Page< T > resultPage = null;
 		try{
-			resultPage = getService().findAllPaginatedAndSorted( page, size, sortBy );
+			resultPage = getService().findAllPaginatedAndSorted( page, size, sortBy, sortOrder );
 		}
 		catch( final InvalidDataAccessApiUsageException apiEx ){
 			logger.error( "InvalidDataAccessApiUsageException on find operation" );
@@ -163,10 +163,10 @@ public abstract class AbstractController< T extends IEntity >{
 		return Lists.newArrayList( resultPage.getContent() );
 	}
 	
-	protected final List< T > findPaginatedInternal( final int page, final int size, final String sortBy, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
+	protected final List< T > findPaginatedInternal( final int page, final int size, final String sortBy, final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
 		Page< T > resultPage = null;
 		try{
-			resultPage = getService().findAllPaginatedAndSorted( page, size, sortBy );
+			resultPage = getService().findAllPaginatedAndSorted( page, size, sortBy, sortOrder );
 		}
 		catch( final InvalidDataAccessApiUsageException apiEx ){
 			logger.error( "InvalidDataAccessApiUsageException on find operation" );

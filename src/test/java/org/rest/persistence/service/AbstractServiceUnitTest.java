@@ -150,7 +150,7 @@ public abstract class AbstractServiceUnitTest< T extends IEntity >{
 		when( getDAO().findAll( eq( pageRequest ) ) ).thenReturn( page );
 		
 		// When
-		final Page< T > found = getAPI().findAllPaginatedAndSorted( 1, 10, null );
+		final Page< T > found = getAPI().findAllPaginatedAndSorted( 1, 10, null, null );
 		
 		// Then
 		assertSame( page, found );

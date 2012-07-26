@@ -60,12 +60,7 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 	}
 	
 	@Override
-	public Page< T > searchPaged( final int page, final int size, final String sortBy, final ImmutableTriple< String, ClientOperation, String >... constraints ){
-		Sort sortInfo = null;
-		if( sortBy != null ){
-			sortInfo = new Sort( sortBy );
-		}
-		
+	public Page< T > searchPaged( final int page, final int size, final ImmutableTriple< String, ClientOperation, String >... constraints ){
 		final Specification< T > firstSpec = resolveConstraint( constraints[0] );
 		Preconditions.checkState( firstSpec != null );
 		Specifications< T > specifications = Specifications.where( firstSpec );
@@ -73,7 +68,7 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 			specifications = specifications.and( resolveConstraint( constraints[i] ) );
 		}
 		
-		return getSpecificationExecutor().findAll( specifications, new PageRequest( page, size, sortInfo ) );
+		return getSpecificationExecutor().findAll( specifications, new PageRequest( page, size, null ) );
 	}
 	
 	// find
@@ -92,7 +87,7 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 	
 	@Override
 	@Transactional( readOnly = true )
-	public Page< T > findAllPaginatedAndSorted( final int page, final int size, final String sortBy ){
+	public Page< T > findAllPaginatedAndSorted( final int page, final int size, final String sortBy, final String sortOrder ){
 		Sort sortInfo = null;
 		if( sortBy != null ){
 			sortInfo = new Sort( sortBy );

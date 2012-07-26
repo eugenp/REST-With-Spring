@@ -68,12 +68,15 @@ public class UserServiceImpl implements IUserService{
 	
 	@Override
 	public List< User > findAll( final String sortBy, final String sortOrder ){
-		throw new UnsupportedOperationException();
+		final List< Principal > allPrincipalEntitiesSortedAndOrdered = principalService.findAll( sortBy, sortOrder );
+		final List< User > allUsers = Lists.transform( allPrincipalEntitiesSortedAndOrdered, new PrincipalToUserFunction() );
+		
+		return allUsers;
 	}
 	
 	@Override
-	public Page< User > findAllPaginatedAndSorted( final int page, final int size, final String sortBy ){
-		final Page< Principal > principalsPaginated = principalService.findAllPaginatedAndSorted( page, size, sortBy );
+	public Page< User > findAllPaginatedAndSorted( final int page, final int size, final String sortBy, final String sortOrder ){
+		final Page< Principal > principalsPaginated = principalService.findAllPaginatedAndSorted( page, size, sortBy, sortOrder );
 		final List< User > usersPaginated = Lists.transform( principalsPaginated.getContent(), new PrincipalToUserFunction() );
 		
 		Sort sortInfo = null;
@@ -83,6 +86,11 @@ public class UserServiceImpl implements IUserService{
 		return new PageImpl< User >( usersPaginated, new PageRequest( page, size, sortInfo ), principalsPaginated.getTotalElements() );
 	}
 	
+	@Override
+	public Page< User > searchPaged( final int page, final int size, final ImmutableTriple< String, ClientOperation, String >... constraints ){
+		throw new UnsupportedOperationException();
+	}
+
 	// create
 	
 	@Override
@@ -117,10 +125,7 @@ public class UserServiceImpl implements IUserService{
 		principalService.deleteAll();
 	}
 	
-	@Override
-	public Page< User > searchPaged( final int page, final int size, final String sortBy, final ImmutableTriple< String, ClientOperation, String >... constraints ){
-		throw new UnsupportedOperationException();
-	}
+	// count
 	
 	@Override
 	public long count(){
