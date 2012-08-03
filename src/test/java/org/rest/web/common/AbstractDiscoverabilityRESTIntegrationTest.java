@@ -42,7 +42,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenResourceIsRetrieved_thenURIToGetAllResourcesIsDiscoverable(){
 		// Given
-		final String uriOfExistingResource = getAPI().createResourceAsURI( getAPI().createNewEntity() );
+		final String uriOfExistingResource = getAPI().createAsURI( getAPI().createNewEntity() );
 		
 		// When
 		final Response getResponse = getAPI().findOneAsResponse( uriOfExistingResource );
@@ -68,8 +68,8 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	
 	@Test
 	public final void whenFirstPageOfResourcesIsRetrieved_thenNextPageIsDiscoverable(){
-		getAPI().createResourceAsURI( getAPI().createNewEntity() );
-		getAPI().createResourceAsURI( getAPI().createNewEntity() );
+		getAPI().createAsURI( getAPI().createNewEntity() );
+		getAPI().createAsURI( getAPI().createNewEntity() );
 		
 		// When
 		final Response response = getAPI().findOneAsResponse( getURI() + "?page=1&size=1" );
@@ -119,7 +119,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	@Test
 	public final void whenInvalidPOSTIsSentToValidURIOfResource_thenAllowHeaderListsTheAllowedActions(){
 		// Given
-		final String uriOfExistingResource = getAPI().createResourceAsURI( getAPI().createNewEntity() );
+		final String uriOfExistingResource = getAPI().createAsURI( getAPI().createNewEntity() );
 		
 		// When
 		final Response res = givenAuthenticated().post( uriOfExistingResource );
@@ -133,7 +133,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest< T extends IEnt
 	public final void whenResourceIsCreated_thenURIOfTheNewlyCreatedResourceIsDiscoverable(){
 		// When
 		final T unpersistedResource = createNewEntity();
-		final String uriOfNewlyCreatedResource = getAPI().createResourceAsURI( unpersistedResource );
+		final String uriOfNewlyCreatedResource = getAPI().createAsURI( unpersistedResource );
 		
 		// Then
 		final Response response = getAPI().findOneAsResponse( uriOfNewlyCreatedResource );

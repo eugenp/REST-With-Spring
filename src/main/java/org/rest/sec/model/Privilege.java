@@ -18,6 +18,7 @@ public class Privilege implements INameableEntity{
 	
 	@Id @GeneratedValue( strategy = GenerationType.AUTO ) @Column( name = "PRIV_ID" ) private Long id;
 	@Column( unique = true,nullable = false ) private String name;
+	@Column( unique = false,nullable = true ) private String description;
 	
 	public Privilege(){
 		super();
@@ -49,6 +50,14 @@ public class Privilege implements INameableEntity{
 		name = nameToSet;
 	}
 	
+	public String getDescription(){
+		return description;
+	}
+	
+	public void setDescription( final String descriptionToSet ){
+		description = descriptionToSet;
+	}
+
 	//
 	
 	@Override

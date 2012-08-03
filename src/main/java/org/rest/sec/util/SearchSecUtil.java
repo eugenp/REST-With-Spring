@@ -1,6 +1,6 @@
 package org.rest.sec.util;
 
-import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.ClientOperation;
 import org.rest.common.IEntity;
 import org.rest.util.SearchCommonUtil;
@@ -14,7 +14,7 @@ public final class SearchSecUtil{
 	
 	// util
 	
-	public static < T extends IEntity >Specification< T > resolveConstraint( final ImmutableTriple< String, ClientOperation, String > constraint, final Class< T > clazz ){
+	public static < T extends IEntity >Specification< T > resolveConstraint( final Triple< String, ClientOperation, String > constraint, final Class< T > clazz ){
 		final String constraintName = constraint.getLeft();
 		final boolean negated = isConstraintNegated( constraint );
 		
@@ -27,7 +27,7 @@ public final class SearchSecUtil{
 		return null;
 	}
 	
-	static boolean isConstraintNegated( final ImmutableTriple< String, ClientOperation, String > constraint ){
+	static boolean isConstraintNegated( final Triple< String, ClientOperation, String > constraint ){
 		return constraint.getMiddle().isNegated();
 	}
 	

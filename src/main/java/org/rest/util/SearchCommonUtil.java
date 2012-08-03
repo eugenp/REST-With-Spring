@@ -31,7 +31,7 @@ public final class SearchCommonUtil{
 	
 	public static List< ImmutableTriple< String, ClientOperation, String >> parseQueryString( final String queryString ){
 		Preconditions.checkNotNull( queryString );
-		Preconditions.checkState( queryString.matches( "((id~?=[0-9]+)?,?)*((name~?=[0-9a-zA-Z]+),?)*" ) );
+		Preconditions.checkState( queryString.matches( "((id~?=[0-9]+)?,?)*((name~?=[0-9a-zA-Z*]+),?)*" ) );
 		
 		final List< ImmutableTriple< String, ClientOperation, String >> tuplesList = Lists.newArrayList();
 		final String[] tuples = queryString.split( SEPARATOR );

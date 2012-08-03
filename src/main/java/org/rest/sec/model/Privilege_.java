@@ -10,5 +10,6 @@ public abstract class Privilege_{
 	
 	public static volatile SingularAttribute< Privilege, Long > id;
 	public static volatile SingularAttribute< Privilege, String > name;
+	public static volatile SingularAttribute< Privilege, String > description;
 	
 }

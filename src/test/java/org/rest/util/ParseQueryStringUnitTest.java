@@ -173,6 +173,13 @@ public final class ParseQueryStringUnitTest{
 		assertTrue( parseQueryString.get( 0 ).getLeft().equals( ID ) );
 	}
 	
+	// correct - with startsWith, endsWith, contains operations
+	
+	@Test
+	public final void givenQueryContainsValidOpStartsWithNameConstraint_whenQueryIsParsed_thenNoExceptions(){
+		parseQueryString( SearchField.name.toString() + OP + randomAlphabetic( 8 ) + "*" );
+	}
+
 	// multiple key-value tuples
 	
 	@Test( expected = IllegalStateException.class )

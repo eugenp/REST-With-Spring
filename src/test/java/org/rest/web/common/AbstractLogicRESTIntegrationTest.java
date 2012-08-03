@@ -53,7 +53,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void givenResourceForIdExists_whenResourceOfThatIdIsRetrieved_then200IsRetrieved(){
 		// Given
-		final String uriForResourceCreation = getAPI().createResourceAsURI( getAPI().createNewEntity() );
+		final String uriForResourceCreation = getAPI().createAsURI( getAPI().createNewEntity() );
 		
 		// When
 		final Response res = getAPI().findOneAsResponse( uriForResourceCreation );
@@ -114,7 +114,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void whenResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved(){
 		// Given
-		getAPI().createResourceAsURI( getAPI().createNewEntity() );
+		getAPI().createAsURI( getAPI().createNewEntity() );
 		
 		// When
 		final List< T > allResources = getAPI().findAll();
@@ -174,7 +174,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	public void givenResourceExists_whenResourceWithSameAttributesIsCreated_then409IsReceived(){
 		// Given
 		final T newEntity = getAPI().createNewEntity();
-		getAPI().createResourceAsURI( newEntity );
+		getAPI().createAsURI( newEntity );
 		
 		// When
 		final Response response = getAPI().createAsResponse( newEntity );
@@ -290,7 +290,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void givenResourceExist_whenResourceIsDeleted_then204IsReceived(){
 		// Given
-		final String uriForResourceCreation = getAPI().createResourceAsURI( getAPI().createNewEntity() );
+		final String uriForResourceCreation = getAPI().createAsURI( getAPI().createNewEntity() );
 		
 		// When
 		final Response response = getAPI().deleteAsResponse( uriForResourceCreation );
@@ -302,7 +302,7 @@ public abstract class AbstractLogicRESTIntegrationTest< T extends IEntity > exte
 	@Test
 	public void givenResourceExist_whenResourceIsDeleted_thenResourceIsNoLongerAvailable(){
 		// Given
-		final String uriOfResource = getAPI().createResourceAsURI( getAPI().createNewEntity() );
+		final String uriOfResource = getAPI().createAsURI( getAPI().createNewEntity() );
 		getAPI().deleteAsResponse( uriOfResource );
 		
 		// When

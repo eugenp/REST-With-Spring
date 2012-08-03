@@ -4,6 +4,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.SingularAttribute;
 
 import org.rest.common.ClientOperation;
 import org.rest.common.IEntity;
@@ -16,6 +17,10 @@ import org.rest.sec.model.Role;
 import org.rest.sec.model.Role_;
 import org.springframework.data.jpa.domain.Specification;
 
+/**
+ * The query specifications are built manually here; this is a limitation and should be contained to this only class
+ */
+@SuppressWarnings( "unchecked" )
 public final class QuerySpecifications{
 	
 	private QuerySpecifications(){
@@ -38,6 +43,13 @@ public final class QuerySpecifications{
 		case ENDS_WITH:
 			return getByNameSpecificationEndsWith( clazz, name, negated );
 			
+		case NEG_CONTAINS:
+			return getByNameSpecificationContains( clazz, name, negated );
+		case NEG_STARTS_WITH:
+			return getByNameSpecificationStartsWith( clazz, name, negated );
+		case NEG_ENDS_WITH:
+			return getByNameSpecificationEndsWith( clazz, name, negated );
+			
 		default:
 			break;
 		}
@@ -47,7 +59,8 @@ public final class QuerySpecifications{
 	
 	// in between
 	
-	@SuppressWarnings( "unchecked" )
+	// id
+	
 	static < T extends IEntity >Specification< T > getByIdSpecification( final Class< T > clazz, final Long id, final boolean negated ){
 		if( clazz.equals( Role.class ) ){
 			return (Specification< T >) roleByIdEq( id, negated );
@@ -62,7 +75,8 @@ public final class QuerySpecifications{
 		return null;
 	}
 	
-	@SuppressWarnings( "unchecked" )
+	// name
+	
 	static < T extends IEntity >Specification< T > getByNameSpecificationEq( final Class< T > clazz, final String name, final boolean negated ){
 		if( clazz.equals( Role.class ) ){
 			return (Specification< T >) roleByNameEq( name, negated );
@@ -76,7 +90,6 @@ public final class QuerySpecifications{
 		
 		return null;
 	}
-	@SuppressWarnings( "unchecked" )
 	static < T extends IEntity >Specification< T > getByNameSpecificationContains( final Class< T > clazz, final String name, final boolean negated ){
 		if( clazz.equals( Role.class ) ){
 			return (Specification< T >) roleByNameContains( name, negated );
@@ -90,7 +103,6 @@ public final class QuerySpecifications{
 		
 		return null;
 	}
-	@SuppressWarnings( "unchecked" )
 	static < T extends IEntity >Specification< T > getByNameSpecificationStartsWith( final Class< T > clazz, final String name, final boolean negated ){
 		if( clazz.equals( Role.class ) ){
 			return (Specification< T >) roleByNameStartsWith( name, negated );
@@ -104,7 +116,6 @@ public final class QuerySpecifications{
 		
 		return null;
 	}
-	@SuppressWarnings( "unchecked" )
 	static < T extends IEntity >Specification< T > getByNameSpecificationEndsWith( final Class< T > clazz, final String name, final boolean negated ){
 		if( clazz.equals( Role.class ) ){
 			return (Specification< T >) roleByNameEndsWith( name, negated );
@@ -126,59 +137,26 @@ public final class QuerySpecifications{
 	private static Specification< Principal > userByIdEq( final Long id, final boolean negated ){
 		return new Specification< Principal >(){
 			@Override
-			public final Predicate toPredicate( final Root< Principal > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
+			public final Predicate toPredicate( final Root< Principal > root, final CriteriaQuery< ? > query, final CriteriaBuilder builder ){
 				if( negated ){
-					return cb.notEqual( root.get( Principal_.id ), id );
+					return builder.notEqual( root.get( Principal_.id ), id );
 				}
-				return cb.equal( root.get( Principal_.id ), id );
+				return builder.equal( root.get( Principal_.id ), id );
 			}
 		};
 	}
 	
 	private static Specification< Principal > userByNameEq( final String name, final boolean negated ){
-		return new Specification< Principal >(){
-			@Override
-			public final Predicate toPredicate( final Root< Principal > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
-				if( negated ){
-					return cb.notEqual( root.get( Principal_.name ), name );
-				}
-				return cb.equal( root.get( Principal_.name ), name );
-			}
-		};
+		return QuerySpecifications.<Principal> entityByKeyEq( name, negated, Principal_.name );
 	}
-	
 	private static Specification< Principal > userByNameContains( final String name, final boolean negated ){
-		return new Specification< Principal >(){
-			@Override
-			public final Predicate toPredicate( final Root< Principal > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
-				if( negated ){
-					return cb.notLike( root.get( Principal_.name ), QueryUtil.ANY_SERVER + name + QueryUtil.ANY_SERVER );
-				}
-				return cb.like( root.get( Principal_.name ), QueryUtil.ANY_SERVER + name + QueryUtil.ANY_SERVER );
-			}
-		};
+		return QuerySpecifications.<Principal> entityByKeyContains( name, negated, Principal_.name );
 	}
 	private static Specification< Principal > userByNameStartsWith( final String name, final boolean negated ){
-		return new Specification< Principal >(){
-			@Override
-			public final Predicate toPredicate( final Root< Principal > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
-				if( negated ){
-					return cb.notLike( root.get( Principal_.name ), name + QueryUtil.ANY_SERVER );
-				}
-				return cb.like( root.get( Principal_.name ), name + QueryUtil.ANY_SERVER );
-			}
-		};
+		return QuerySpecifications.<Principal> entityByKeyStartsWith( name, negated, Principal_.name );
 	}
 	private static Specification< Principal > userByNameEndsWith( final String name, final boolean negated ){
-		return new Specification< Principal >(){
-			@Override
-			public final Predicate toPredicate( final Root< Principal > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
-				if( negated ){
-					return cb.notLike( root.get( Principal_.name ), QueryUtil.ANY_SERVER + name );
-				}
-				return cb.like( root.get( Principal_.name ), QueryUtil.ANY_SERVER + name );
-			}
-		};
+		return QuerySpecifications.<Principal> entityByKeyEndsWith( name, negated, Principal_.name );
 	}
 	
 	// role
@@ -186,58 +164,26 @@ public final class QuerySpecifications{
 	private static Specification< Role > roleByIdEq( final Long id, final boolean negated ){
 		return new Specification< Role >(){
 			@Override
-			public final Predicate toPredicate( final Root< Role > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
+			public final Predicate toPredicate( final Root< Role > root, final CriteriaQuery< ? > query, final CriteriaBuilder builder ){
 				if( negated ){
-					return cb.notEqual( root.get( Role_.id ), id );
+					return builder.notEqual( root.get( Role_.id ), id );
 				}
-				return cb.equal( root.get( Role_.id ), id );
+				return builder.equal( root.get( Role_.id ), id );
 			}
 		};
 	}
 	
 	private static Specification< Role > roleByNameEq( final String name, final boolean negated ){
-		return new Specification< Role >(){
-			@Override
-			public final Predicate toPredicate( final Root< Role > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
-				if( negated ){
-					return cb.notEqual( root.get( Role_.name ), name );
-				}
-				return cb.equal( root.get( Role_.name ), name );
-			}
-		};
+		return QuerySpecifications.<Role> entityByKeyEq( name, negated, Role_.name );
 	}
 	private static Specification< Role > roleByNameContains( final String name, final boolean negated ){
-		return new Specification< Role >(){
-			@Override
-			public final Predicate toPredicate( final Root< Role > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
-				if( negated ){
-					return cb.notLike( root.get( Role_.name ), QueryUtil.ANY_SERVER + name + QueryUtil.ANY_SERVER );
-				}
-				return cb.like( root.get( Role_.name ), QueryUtil.ANY_SERVER + name + QueryUtil.ANY_SERVER );
-			}
-		};
+		return QuerySpecifications.<Role> entityByKeyContains( name, negated, Role_.name );
 	}
 	private static Specification< Role > roleByNameEndsWith( final String name, final boolean negated ){
-		return new Specification< Role >(){
-			@Override
-			public final Predicate toPredicate( final Root< Role > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
-				if( negated ){
-					return cb.notLike( root.get( Role_.name ), QueryUtil.ANY_SERVER + name );
-				}
-				return cb.like( root.get( Role_.name ), QueryUtil.ANY_SERVER + name );
-			}
-		};
+		return QuerySpecifications.<Role> entityByKeyEndsWith( name, negated, Role_.name );
 	}
 	private static Specification< Role > roleByNameStartsWith( final String name, final boolean negated ){
-		return new Specification< Role >(){
-			@Override
-			public final Predicate toPredicate( final Root< Role > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
-				if( negated ){
-					return cb.notLike( root.get( Role_.name ), name + QueryUtil.ANY_SERVER );
-				}
-				return cb.like( root.get( Role_.name ), name + QueryUtil.ANY_SERVER );
-			}
-		};
+		return QuerySpecifications.<Role> entityByKeyStartsWith( name, negated, Role_.name );
 	}
 	
 	// privilege
@@ -245,56 +191,84 @@ public final class QuerySpecifications{
 	private static Specification< Privilege > privilegeByIdEq( final Long id, final boolean negated ){
 		return new Specification< Privilege >(){
 			@Override
-			public final Predicate toPredicate( final Root< Privilege > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
+			public final Predicate toPredicate( final Root< Privilege > root, final CriteriaQuery< ? > query, final CriteriaBuilder builder ){
 				if( negated ){
-					return cb.notEqual( root.get( Privilege_.id ), id );
+					return builder.notEqual( root.get( Privilege_.id ), id );
 				}
-				return cb.equal( root.get( Privilege_.id ), id );
+				return builder.equal( root.get( Privilege_.id ), id );
 			}
 		};
 	}
 	
 	private static Specification< Privilege > privilegeByNameEq( final String name, final boolean negated ){
-		return new Specification< Privilege >(){
-			@Override
-			public final Predicate toPredicate( final Root< Privilege > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
-				if( negated ){
-					return cb.notEqual( root.get( Privilege_.name ), name );
-				}
-				return cb.equal( root.get( Privilege_.name ), name );
-			}
-		};
+		return QuerySpecifications.<Privilege> entityByKeyEq( name, negated, Privilege_.name );
 	}
 	private static Specification< Privilege > privilegeByNameContains( final String name, final boolean negated ){
-		return new Specification< Privilege >(){
-			@Override
-			public final Predicate toPredicate( final Root< Privilege > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
-				if( negated ){
-					return cb.notLike( root.get( Privilege_.name ), QueryUtil.ANY_SERVER + name + QueryUtil.ANY_SERVER );
-				}
-				return cb.like( root.get( Privilege_.name ), QueryUtil.ANY_SERVER + name + QueryUtil.ANY_SERVER );
-			}
-		};
+		return QuerySpecifications.<Privilege> entityByKeyContains( name, negated, Privilege_.name );
 	}
 	private static Specification< Privilege > privilegeByNameStartsWith( final String name, final boolean negated ){
-		return new Specification< Privilege >(){
+		return QuerySpecifications.<Privilege> entityByKeyStartsWith( name, negated, Privilege_.name );
+	}
+	private static Specification< Privilege > privilegeByNameEndsWith( final String name, final boolean negated ){
+		return QuerySpecifications.<Privilege> entityByKeyEndsWith( name, negated, Privilege_.name );
+	}
+	
+	private static Specification< Privilege > privilegeByDescriptionEq( final String description, final boolean negated ){
+		return QuerySpecifications.<Privilege> entityByKeyEq( description, negated, Privilege_.description );
+	}
+	private static Specification< Privilege > privilegeByDescriptionContains( final String description, final boolean negated ){
+		return QuerySpecifications.<Privilege> entityByKeyContains( description, negated, Privilege_.description );
+	}
+	private static Specification< Privilege > privilegeByDescriptionStartsWith( final String description, final boolean negated ){
+		return QuerySpecifications.<Privilege> entityByKeyStartsWith( description, negated, Privilege_.description );
+	}
+	private static Specification< Privilege > privilegeByDescriptionEndsWith( final String description, final boolean negated ){
+		return QuerySpecifications.<Privilege> entityByKeyEndsWith( description, negated, Privilege_.description );
+	}
+	
+	// generic
+	
+	private static < T extends IEntity >Specification< T > entityByKeyEndsWith( final String value, final boolean negated, final SingularAttribute< T, String > metaField ){
+		return new Specification< T >(){
 			@Override
-			public final Predicate toPredicate( final Root< Privilege > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
+			public final Predicate toPredicate( final Root< T > root, final CriteriaQuery< ? > query, final CriteriaBuilder builder ){
 				if( negated ){
-					return cb.notLike( root.get( Privilege_.name ), name + QueryUtil.ANY_SERVER );
+					return builder.notLike( builder.lower( root.get( metaField ) ), QueryUtil.ANY_SERVER + value.toLowerCase() );
 				}
-				return cb.like( root.get( Privilege_.name ), name + QueryUtil.ANY_SERVER );
+				return builder.like( builder.lower( root.get( metaField ) ), QueryUtil.ANY_SERVER + value.toLowerCase() );
 			}
 		};
 	}
-	private static Specification< Privilege > privilegeByNameEndsWith( final String name, final boolean negated ){
-		return new Specification< Privilege >(){
+	private static < T extends IEntity >Specification< T > entityByKeyStartsWith( final String value, final boolean negated, final SingularAttribute< T, String > metaField ){
+		return new Specification< T >(){
 			@Override
-			public final Predicate toPredicate( final Root< Privilege > root, final CriteriaQuery< ? > query, final CriteriaBuilder cb ){
+			public final Predicate toPredicate( final Root< T > root, final CriteriaQuery< ? > query, final CriteriaBuilder builder ){
 				if( negated ){
-					return cb.notLike( root.get( Privilege_.name ), QueryUtil.ANY_SERVER + name );
+					return builder.notLike( builder.lower( root.get( metaField ) ), value.toLowerCase() + QueryUtil.ANY_SERVER );
 				}
-				return cb.like( root.get( Privilege_.name ), QueryUtil.ANY_SERVER + name );
+				return builder.like( builder.lower( root.get( metaField ) ), value.toLowerCase() + QueryUtil.ANY_SERVER );
+			}
+		};
+	}
+	private static < T extends IEntity >Specification< T > entityByKeyContains( final String value, final boolean negated, final SingularAttribute< T, String > metaField ){
+		return new Specification< T >(){
+			@Override
+			public final Predicate toPredicate( final Root< T > root, final CriteriaQuery< ? > query, final CriteriaBuilder builder ){
+				if( negated ){
+					return builder.notLike( builder.lower( root.get( metaField ) ), QueryUtil.ANY_SERVER + value.toLowerCase() + QueryUtil.ANY_SERVER );
+				}
+				return builder.like( builder.lower( root.get( metaField ) ), QueryUtil.ANY_SERVER + value.toLowerCase() + QueryUtil.ANY_SERVER );
+			}
+		};
+	}
+	private static < T extends IEntity >Specification< T > entityByKeyEq( final String value, final boolean negated, final SingularAttribute< T, String > metaField ){
+		return new Specification< T >(){
+			@Override
+			public final Predicate toPredicate( final Root< T > root, final CriteriaQuery< ? > query, final CriteriaBuilder builder ){
+				if( negated ){
+					return builder.notEqual( builder.lower( root.get( metaField ) ), value.toLowerCase() );
+				}
+				return builder.equal( builder.lower( root.get( metaField ) ), value.toLowerCase() );
 			}
 		};
 	}

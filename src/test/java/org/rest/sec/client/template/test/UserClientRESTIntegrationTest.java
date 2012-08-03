@@ -8,14 +8,13 @@ import org.rest.sec.client.template.newer.UserClientRESTTemplate;
 import org.rest.sec.model.dto.User;
 import org.rest.spring.client.ClientTestConfig;
 import org.rest.spring.context.ContextTestConfig;
-import org.rest.spring.testing.TestingConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { ContextTestConfig.class, TestingConfig.class, ClientTestConfig.class },loader = AnnotationConfigContextLoader.class )
+@ContextConfiguration( classes = { ContextTestConfig.class, ClientTestConfig.class },loader = AnnotationConfigContextLoader.class )
 public class UserClientRESTIntegrationTest extends AbstractClientRESTIntegrationTest< User >{
 	
 	@Autowired private UserClientRESTTemplate userClientTemplate;

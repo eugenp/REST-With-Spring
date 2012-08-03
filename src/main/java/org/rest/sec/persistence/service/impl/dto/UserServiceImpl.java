@@ -2,7 +2,7 @@ package org.rest.sec.persistence.service.impl.dto;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.ClientOperation;
 import org.rest.common.web.RestPreconditions;
 import org.rest.sec.model.Principal;
@@ -35,7 +35,7 @@ public class UserServiceImpl implements IUserService{
 	// search
 	
 	@Override
-	public List< User > search( final ImmutableTriple< String, ClientOperation, String >... constraints ){
+	public List< User > search( final Triple< String, ClientOperation, String >... constraints ){
 		throw new UnsupportedOperationException();
 	}
 	
@@ -87,10 +87,10 @@ public class UserServiceImpl implements IUserService{
 	}
 	
 	@Override
-	public Page< User > searchPaged( final int page, final int size, final ImmutableTriple< String, ClientOperation, String >... constraints ){
+	public Page< User > searchPaged( final int page, final int size, final Triple< String, ClientOperation, String >... constraints ){
 		throw new UnsupportedOperationException();
 	}
-
+	
 	// create
 	
 	@Override

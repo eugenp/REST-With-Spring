@@ -13,7 +13,6 @@ import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
-import org.rest.spring.testing.TestingConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,7 +22,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import com.google.common.collect.Sets;
 
 @RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { TestingConfig.class, PersistenceJPAConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
+@ContextConfiguration( classes = { PersistenceJPAConfig.class, ContextTestConfig.class },loader = AnnotationConfigContextLoader.class )
 public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest< Role >{
 	
 	@Autowired private IPrivilegeService privilegeService;

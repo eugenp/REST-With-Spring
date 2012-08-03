@@ -1,44 +1,26 @@
 package org.rest.sec.util;
 
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.ClientOperation;
-import org.rest.util.SearchCommonUtil;
+import org.rest.util.SearchField;
 
 public final class SearchTestUtil{
+
 	private SearchTestUtil(){
 		throw new UnsupportedOperationException();
 	}
 	
-	//
+	// API
 	
-	public static String constructQueryString( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp ){
-		final Long id = ( idOp == null ) ? null : idOp.getLeft();
-		final boolean negatedId = ( idOp == null ) ? false : idOp.getRight().isNegated();
-		final String name = ( nameOp == null ) ? null : nameOp.getLeft();
-		final boolean negatedName = ( nameOp == null ) ? false : nameOp.getRight().isNegated();
-		return constructQueryString( id, negatedId, name, negatedName );
+	public static String constructQueryString( final String idVal, final String nameVal ){
+		return new SearchUriBuilder().consume( ClientOperation.EQ, SearchField.id.toString(), idVal, false ).consume( ClientOperation.EQ, SearchField.name.toString(), nameVal, false ).build();
+	}
+	public static String constructQueryString( final String idVal, final boolean negatedId, final String nameVal, final boolean negatedName ){
+		return new SearchUriBuilder().consume( ClientOperation.EQ, SearchField.id.toString(), idVal, negatedId ).consume( ClientOperation.EQ, SearchField.name.toString(), nameVal, negatedName ).build();
 	}
 	
-	static String constructQueryString( final Long id, final boolean negatedId, final String name, final boolean negatedName ){
-		final StringBuffer queryString = new StringBuffer();
-		String op = null;
-		if( id != null ){
-			op = ( negatedId ) ? SearchCommonUtil.NEGATION + SearchCommonUtil.OP : SearchCommonUtil.OP;
-			queryString.append( SearchCommonUtil.ID + op + id );
-		}
-		if( name != null ){
-			if( queryString.length() != 0 ){
-				queryString.append( SearchCommonUtil.SEPARATOR );
-			}
-			op = ( negatedName ) ? SearchCommonUtil.NEGATION + SearchCommonUtil.OP : SearchCommonUtil.OP;
-			queryString.append( SearchCommonUtil.NAME + op + name );
-		}
-		
-		return queryString.toString();
+	public static String constructQueryString( final Triple< String, ClientOperation, String > idConstraint, final Triple< String, ClientOperation, String > nameConstraint ){
+		return new SearchUriBuilder().consume( idConstraint ).consume( nameConstraint ).build();
 	}
 	
-	public static String constructQueryString( final Long id, final String name ){
-		return constructQueryString( id, false, name, false );
-	}
-
 }

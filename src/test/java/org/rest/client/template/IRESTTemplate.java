@@ -2,7 +2,7 @@ package org.rest.client.template;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 import org.rest.client.marshall.IMarshaller;
 import org.rest.common.ClientOperation;
 import org.rest.common.IEntity;
@@ -22,8 +22,6 @@ public interface IRESTTemplate< T extends IEntity > extends IOperations< T >, IE
 	
 	// search
 	
-	List< T > search( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp );
-	
-	List< T > searchPaged( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp, final int page, final int size );
+	List< T > searchPaged( final Triple< String, ClientOperation, String > idOp, final Triple< String, ClientOperation, String > nameOp, final int page, final int size );
 	
 }

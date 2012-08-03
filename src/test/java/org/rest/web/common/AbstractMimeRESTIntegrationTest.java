@@ -31,7 +31,7 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 	@Ignore( "for now, json is not supported" )
 	public final void givenResourceForIdExists_whenResourceOfThatIdIsRetrievedAsJson_then200IsReceived(){
 		// Given
-		final String uriForResourceCreation = getAPI().createResourceAsURI( getAPI().createNewEntity() );
+		final String uriForResourceCreation = getAPI().createAsURI( getAPI().createNewEntity() );
 		
 		// When
 		final Response res = getAPI().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_JSON.toString() );
@@ -43,7 +43,7 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 	@Test
 	public final void givenResourceForIdExists_whenResourceOfThatIdIsRetrievedAsXML__then200IsReceived(){
 		// Given
-		final String uriForResourceCreation = getAPI().createResourceAsURI( getAPI().createNewEntity() );
+		final String uriForResourceCreation = getAPI().createAsURI( getAPI().createNewEntity() );
 		
 		// When
 		final Response res = getAPI().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
@@ -56,7 +56,7 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 	@Ignore( "for now, json is not supported" )
 	public final void givenRequestAcceptsJson_whenResourceIsRetrievedById_thenResponseContentTypeIsJson(){
 		// Given
-		final String uriForResourceCreation = getAPI().createResourceAsURI( getAPI().createNewEntity() );
+		final String uriForResourceCreation = getAPI().createAsURI( getAPI().createNewEntity() );
 		
 		// When
 		final Response res = getAPI().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_JSON.toString() );
@@ -68,7 +68,7 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 	@Test
 	public final void givenRequestAcceptsXML_whenResourceIsRetrievedById__thenResponseContentTypeIsXML(){
 		// Given
-		final String uriForResourceCreation = getAPI().createResourceAsURI( getAPI().createNewEntity() );
+		final String uriForResourceCreation = getAPI().createAsURI( getAPI().createNewEntity() );
 		
 		// When
 		final Response res = getAPI().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );
@@ -80,7 +80,7 @@ public abstract class AbstractMimeRESTIntegrationTest< T extends IEntity > exten
 	@Test
 	public final void givenResourceForIdExists_whenResourceIsRetrievedByIdAsXML_thenRetrievedResourceIsCorrect(){
 		// Given
-		final String uriForResourceCreation = getAPI().createResourceAsURI( getAPI().createNewEntity() );
+		final String uriForResourceCreation = getAPI().createAsURI( getAPI().createNewEntity() );
 		
 		// When
 		final Response resourceAsResponse = getAPI().findOneAsResponse( uriForResourceCreation, MediaType.APPLICATION_XML.toString() );

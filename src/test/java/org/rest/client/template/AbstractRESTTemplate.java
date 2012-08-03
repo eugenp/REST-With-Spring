@@ -2,13 +2,14 @@ package org.rest.client.template;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 import org.apache.http.HttpHeaders;
 import org.rest.client.marshall.IMarshaller;
 import org.rest.common.ClientOperation;
 import org.rest.common.IEntity;
 import org.rest.common.util.QueryUtil;
 import org.rest.sec.util.SearchTestUtil;
+import org.rest.sec.util.SearchUriBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import com.jayway.restassured.response.Response;
  * REST Template for the consumption of the REST API <br>
  */
 public abstract class AbstractRESTTemplate< T extends IEntity > implements IRESTTemplate< T >{
+	private static final String START_QUERY_PARAM = QueryUtil.QUESTIONMARK + "q=";
+
 	protected final Logger logger = LoggerFactory.getLogger( getClass() );
 	
 	@Autowired @Qualifier( "xstreamMarshaller" ) protected IMarshaller marshaller;
@@ -79,14 +82,14 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 	
 	@Override
 	public T create( final T resource ){
-		final String uriForResourceCreation = createResourceAsURI( resource );
+		final String uriForResourceCreation = createAsURI( resource );
 		final String resourceAsXML = findOneAsMime( uriForResourceCreation );
 		
 		return marshaller.decode( resourceAsXML, clazz );
 	}
 	
 	@Override
-	public String createResourceAsURI( final T resource ){
+	public String createAsURI( final T resource ){
 		Preconditions.checkNotNull( resource );
 		
 		final String resourceAsString = marshaller.encode( resource );
@@ -144,22 +147,27 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 	// search - as response
 	
 	@Override
-	public Response searchAsResponse( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp ){
-		final String queryURI = getURI() + QueryUtil.QUESTIONMARK + "q=" + SearchTestUtil.constructQueryString( idOp, nameOp );
+	public Response searchAsResponse( final Triple< String, ClientOperation, String > idOp, final Triple< String, ClientOperation, String > nameOp ){
+		final String queryURI = getURI() + START_QUERY_PARAM + SearchTestUtil.constructQueryString( idOp, nameOp );
 		return givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
 	}
 	
 	@Override
-	public Response searchAsResponse( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp, final int page, final int size ){
-		final String queryURI = getURI() + QueryUtil.QUESTIONMARK + "q=" + SearchTestUtil.constructQueryString( idOp, nameOp ) + "&page=" + page + "&size=" + size;
+	public Response searchAsResponse( final Triple< String, ClientOperation, String > idOp, final Triple< String, ClientOperation, String > nameOp, final int page, final int size ){
+		final String queryURI = getURI() + START_QUERY_PARAM + SearchTestUtil.constructQueryString( idOp, nameOp ) + "&page=" + page + "&size=" + size;
 		return givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
 	}
 	
 	// search
 	
 	@Override
-	public List< T > search( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp ){
-		final String queryURI = getURI() + QueryUtil.QUESTIONMARK + "q=" + SearchTestUtil.constructQueryString( idOp, nameOp );
+	public List< T > search( final Triple< String, ClientOperation, String >... constraints ){
+		final SearchUriBuilder builder = new SearchUriBuilder();
+		for( final Triple< String, ClientOperation, String > constraint : constraints ){
+			builder.consume( constraint );
+		}
+		final String queryURI = getURI() + START_QUERY_PARAM + builder.build();
+		
 		final Response searchResponse = givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
 		Preconditions.checkState( searchResponse.getStatusCode() == 200 );
 		
@@ -167,8 +175,8 @@ public abstract class AbstractRESTTemplate< T extends IEntity > implements IREST
 	}
 	
 	@Override
-	public List< T > searchPaged( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp, final int page, final int size ){
-		final String queryURI = getURI() + QueryUtil.QUESTIONMARK + "q=" + SearchTestUtil.constructQueryString( idOp, nameOp ) + "&page=" + page + "&size=" + size;
+	public List< T > searchPaged( final Triple< String, ClientOperation, String > idOp, final Triple< String, ClientOperation, String > nameOp, final int page, final int size ){
+		final String queryURI = getURI() + START_QUERY_PARAM + SearchTestUtil.constructQueryString( idOp, nameOp ) + "&page=" + page + "&size=" + size;
 		final Response searchResponse = givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
 		Preconditions.checkState( searchResponse.getStatusCode() == 200 );
 		

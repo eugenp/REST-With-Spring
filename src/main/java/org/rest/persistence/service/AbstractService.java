@@ -2,7 +2,7 @@ package org.rest.persistence.service;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.ClientOperation;
 import org.rest.common.IEntity;
 import org.rest.persistence.event.BeforeEntityCreatedEvent;
@@ -46,7 +46,9 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 	// search
 	
 	@Override
-	public List< T > search( final ImmutableTriple< String, ClientOperation, String >... constraints ){
+	public List< T > search( final Triple< String, ClientOperation, String >... constraints ){
+		Preconditions.checkState( constraints != null );
+		Preconditions.checkState( constraints.length > 0 );
 		final Specification< T > firstSpec = resolveConstraint( constraints[0] );
 		Specifications< T > specifications = Specifications.where( firstSpec );
 		for( int i = 1; i < constraints.length; i++ ){
@@ -59,8 +61,9 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 		return getSpecificationExecutor().findAll( specifications );
 	}
 	
+	
 	@Override
-	public Page< T > searchPaged( final int page, final int size, final ImmutableTriple< String, ClientOperation, String >... constraints ){
+	public Page< T > searchPaged( final int page, final int size, final Triple< String, ClientOperation, String >... constraints ){
 		final Specification< T > firstSpec = resolveConstraint( constraints[0] );
 		Preconditions.checkState( firstSpec != null );
 		Specifications< T > specifications = Specifications.where( firstSpec );
@@ -153,7 +156,7 @@ public abstract class AbstractService< T extends IEntity > implements IService< 
 	protected abstract JpaSpecificationExecutor< T > getSpecificationExecutor();
 	
 	@SuppressWarnings( "static-method" )
-	public Specification< T > resolveConstraint( final ImmutableTriple< String, ClientOperation, String > constraint ){
+	public Specification< T > resolveConstraint( final Triple< String, ClientOperation, String > constraint ){
 		throw new UnsupportedOperationException();
 	}
 	

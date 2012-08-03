@@ -2,7 +2,9 @@ package org.rest.client;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Triple;
 import org.rest.client.marshall.IMarshaller;
+import org.rest.common.ClientOperation;
 import org.rest.common.IEntity;
 import org.rest.common.util.QueryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +40,8 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 	@Override
 	public final T findOne( final long id ){
 		try{
-			final ResponseEntity< String > response = restTemplate.exchange( getURI() + "/" + id, HttpMethod.GET, new HttpEntity< String >( createAcceptHeaders() ), String.class );
-			return marshaller.decode( response.getBody(), clazz );
+			final ResponseEntity< T > response = restTemplate.exchange( getURI() + "/" + id, HttpMethod.GET, new HttpEntity< String >( createAcceptHeaders() ), clazz );
+			return response.getBody();
 		}
 		catch( final HttpClientErrorException clientEx ){
 			return null;
@@ -48,10 +50,9 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 	
 	@Override
 	public final T findOneByURI( final String uri ){
-		final ResponseEntity< String > response = restTemplate.exchange( uri, HttpMethod.GET, new HttpEntity< String >( createAcceptHeaders() ), String.class );
+		final ResponseEntity< String > response = restTemplate.exchange( uri, HttpMethod.GET, new HttpEntity< T >( createAcceptHeaders() ), String.class );
 		return marshaller.decode( response.getBody(), clazz );
 	}
-	
 	// find one - by attributes
 	
 	@Override
@@ -62,6 +63,9 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 	@Override
 	public T findOneByAttributes( final String... attributes ){
 		final List< T > resourcesByName = findAllByURI( getURI() + QueryUtil.QUESTIONMARK + "q=" + constructURI( attributes ) );
+		if( resourcesByName.isEmpty() ){
+			return null;
+		}
 		Preconditions.checkState( resourcesByName.size() <= 1 );
 		return resourcesByName.get( 0 );
 	}
@@ -99,11 +103,11 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 	
 	@Override
 	public T create( final T resource ){
-		final ResponseEntity responseEntity = restTemplate.exchange( getURI(), HttpMethod.POST, new HttpEntity< T >( resource, createContentTypeHeaders() ), clazz );
+		final ResponseEntity responseEntity = restTemplate.exchange( getURI(), HttpMethod.POST, new HttpEntity< T >( resource, createContentTypeHeaders() ), Void.class );
 		
 		final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
-		
 		Preconditions.checkNotNull( locationOfCreatedResource );
+		
 		return findOneByURI( locationOfCreatedResource );
 	}
 	
@@ -141,6 +145,11 @@ public abstract class AbstractClientRESTTemplate< T extends IEntity > implements
 	
 	// search
 	
+	@Override
+	public List< T > search( final Triple< String, ClientOperation, String >... constraints ){
+		throw new UnsupportedOperationException();
+	}
+
 	// count
 	
 	@Override

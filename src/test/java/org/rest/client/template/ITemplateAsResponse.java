@@ -1,6 +1,6 @@
 package org.rest.client.template;
 
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.ClientOperation;
 import org.rest.common.IEntity;
 
@@ -20,9 +20,9 @@ public interface ITemplateAsResponse< T extends IEntity >{
 	
 	// search
 	
-	Response searchAsResponse( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp );
+	Response searchAsResponse( final Triple< String, ClientOperation, String > idOp, final Triple< String, ClientOperation, String > nameOp );
 	
-	Response searchAsResponse( final Pair< Long, ClientOperation > idOp, final Pair< String, ClientOperation > nameOp, final int page, final int size );
+	Response searchAsResponse( final Triple< String, ClientOperation, String > idOp, final Triple< String, ClientOperation, String > nameOp, final int page, final int size );
 	
 	// create
 	

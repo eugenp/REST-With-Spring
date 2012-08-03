@@ -1,8 +1,6 @@
 package org.rest.persistence.service;
 
-import java.util.List;
-
-import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.ClientOperation;
 import org.rest.common.IEntity;
 import org.rest.common.IOperations;
@@ -12,10 +10,7 @@ public interface IService< T extends IEntity > extends IOperations< T >{
 	
 	// search
 	
-	List< T > search( final ImmutableTriple< String, ClientOperation, String >... constraints );
-	Page< T > searchPaged( final int page, final int size, final ImmutableTriple< String, ClientOperation, String >... constraints );
-	
-	// find - all
+	Page< T > searchPaged( final int page, final int size, final Triple< String, ClientOperation, String >... constraints );
 	
 	Page< T > findAllPaginatedAndSorted( final int page, final int size, final String sortBy, final String sortOrder );
 	

@@ -2,6 +2,8 @@ package org.rest.common;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Triple;
+
 public interface IOperations< T extends IEntity >{
 	
 	// get
@@ -28,5 +30,9 @@ public interface IOperations< T extends IEntity >{
 	// count
 	
 	long count();
+	
+	// search
+	
+	List< T > search( final Triple< String, ClientOperation, String >... constraints );
 
 }
