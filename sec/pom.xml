@@ -4,14 +4,22 @@
 	<artifactId>rest-sec</artifactId>
 	<packaging>war</packaging>
 	<name>rest-sec</name>
-	
+
 	<parent>
 		<groupId>org</groupId>
 		<artifactId>rest-parent</artifactId>
 		<version>0.3-SNAPSHOT</version>
 	</parent>
-	
+
 	<dependencies>
+
+		<!-- internal -->
+
+		<dependency>
+			<groupId>org</groupId>
+			<artifactId>rest-common</artifactId>
+			<version>0.3-SNAPSHOT</version>
+		</dependency>
 
 		<!-- util -->
 

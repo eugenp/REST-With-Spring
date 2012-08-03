@@ -55,6 +55,7 @@
 	</properties>
 
 	<modules>
+		<module>common</module>
 		<module>sec</module>
 	</modules>
 
