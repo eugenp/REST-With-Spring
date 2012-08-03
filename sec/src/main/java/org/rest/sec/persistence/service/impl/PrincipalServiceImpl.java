@@ -15,39 +15,39 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class PrincipalServiceImpl extends AbstractService< Principal > implements IPrincipalService{
-	
-	@Autowired IPrincipalJpaDAO dao;
-	
-	public PrincipalServiceImpl(){
-		super( Principal.class );
-	}
-	
-	// API
-	
-	// find
-	
-	@Override
-	@Transactional( readOnly = true )
-	public Principal findByName( final String name ){
-		return dao.findByName( name );
-	}
-	
-	// Spring
-	
-	@Override
-	protected final IPrincipalJpaDAO getDao(){
-		return dao;
-	}
-	
-	@Override
-	public Specification< Principal > resolveConstraint( final Triple< String, ClientOperation, String > constraint ){
-		return SearchSecUtil.resolveConstraint( constraint, Principal.class );
-	}
-	
-	@Override
-	protected JpaSpecificationExecutor< Principal > getSpecificationExecutor(){
-		return dao;
-	}
-	
+public class PrincipalServiceImpl extends AbstractService<Principal> implements IPrincipalService {
+
+    @Autowired IPrincipalJpaDAO dao;
+
+    public PrincipalServiceImpl() {
+        super(Principal.class);
+    }
+
+    // API
+
+    // find
+
+    @Override
+    @Transactional(readOnly = true)
+    public Principal findByName(final String name) {
+        return dao.findByName(name);
+    }
+
+    // Spring
+
+    @Override
+    protected final IPrincipalJpaDAO getDao() {
+        return dao;
+    }
+
+    @Override
+    public Specification<Principal> resolveConstraint(final Triple<String, ClientOperation, String> constraint) {
+        return SearchSecUtil.resolveConstraint(constraint, Principal.class);
+    }
+
+    @Override
+    protected JpaSpecificationExecutor<Principal> getSpecificationExecutor() {
+        return dao;
+    }
+
 }

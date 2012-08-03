@@ -13,29 +13,29 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { ContextTestConfig.class, ClientTestConfig.class },loader = AnnotationConfigContextLoader.class )
-public class PrivilegeClientRESTIntegrationTest extends AbstractClientRESTIntegrationTest< Privilege >{
-	
-	@Autowired private PrivilegeClientRESTTemplate clientTemplate;
-	@Autowired private PrivilegeRESTTemplateImpl entityOps;
-	
-	public PrivilegeClientRESTIntegrationTest(){
-		super();
-	}
-	
-	// tests
-	
-	// template method
-	
-	@Override
-	protected final PrivilegeClientRESTTemplate getAPI(){
-		return clientTemplate;
-	}
-	
-	@Override
-	protected final IEntityOperations< Privilege > getEntityOps(){
-		return entityOps;
-	}
-	
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { ContextTestConfig.class, ClientTestConfig.class }, loader = AnnotationConfigContextLoader.class)
+public class PrivilegeClientRESTIntegrationTest extends AbstractClientRESTIntegrationTest<Privilege> {
+
+    @Autowired private PrivilegeClientRESTTemplate clientTemplate;
+    @Autowired private PrivilegeRESTTemplateImpl entityOps;
+
+    public PrivilegeClientRESTIntegrationTest() {
+        super();
+    }
+
+    // tests
+
+    // template method
+
+    @Override
+    protected final PrivilegeClientRESTTemplate getAPI() {
+        return clientTemplate;
+    }
+
+    @Override
+    protected final IEntityOperations<Privilege> getEntityOps() {
+        return entityOps;
+    }
+
 }

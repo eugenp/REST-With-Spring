@@ -15,41 +15,41 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-@ComponentScan( { "org.rest.web", "org.rest.sec.web" } )
+@ComponentScan({ "org.rest.web", "org.rest.sec.web" })
 @EnableWebMvc
-public class WebConfig extends WebMvcConfigurerAdapter{
-	
-	public WebConfig(){
-		super();
-	}
-	
-	// beans
-	
-	@Bean
-	public XStreamMarshaller xstreamMarshaller(){
-		final XStreamMarshaller xStreamMarshaller = new XStreamMarshaller();
-		xStreamMarshaller.setAutodetectAnnotations( true );
-		xStreamMarshaller.setAnnotatedClasses( new Class[ ] { User.class, Role.class, Privilege.class } );
-		xStreamMarshaller.getXStream().addDefaultImplementation( java.sql.Timestamp.class, java.util.Date.class );
-		
-		return xStreamMarshaller;
-	}
-	
-	@Bean
-	public MarshallingHttpMessageConverter marshallingHttpMessageConverter(){
-		final MarshallingHttpMessageConverter marshallingHttpMessageConverter = new MarshallingHttpMessageConverter();
-		final XStreamMarshaller xstreamMarshaller = xstreamMarshaller();
-		marshallingHttpMessageConverter.setMarshaller( xstreamMarshaller );
-		marshallingHttpMessageConverter.setUnmarshaller( xstreamMarshaller );
-		
-		return marshallingHttpMessageConverter;
-	}
-	
-	@Override
-	public void configureMessageConverters( final List< HttpMessageConverter< ? >> converters ){
-		super.configureMessageConverters( converters );
-		
-		converters.add( marshallingHttpMessageConverter() );
-	}
-	
+public class WebConfig extends WebMvcConfigurerAdapter {
+
+    public WebConfig() {
+        super();
+    }
+
+    // beans
+
+    @Bean
+    public XStreamMarshaller xstreamMarshaller() {
+        final XStreamMarshaller xStreamMarshaller = new XStreamMarshaller();
+        xStreamMarshaller.setAutodetectAnnotations(true);
+        xStreamMarshaller.setAnnotatedClasses(new Class[] { User.class, Role.class, Privilege.class });
+        xStreamMarshaller.getXStream().addDefaultImplementation(java.sql.Timestamp.class, java.util.Date.class);
+
+        return xStreamMarshaller;
+    }
+
+    @Bean
+    public MarshallingHttpMessageConverter marshallingHttpMessageConverter() {
+        final MarshallingHttpMessageConverter marshallingHttpMessageConverter = new MarshallingHttpMessageConverter();
+        final XStreamMarshaller xstreamMarshaller = xstreamMarshaller();
+        marshallingHttpMessageConverter.setMarshaller(xstreamMarshaller);
+        marshallingHttpMessageConverter.setUnmarshaller(xstreamMarshaller);
+
+        return marshallingHttpMessageConverter;
+    }
+
+    @Override
+    public void configureMessageConverters(final List<HttpMessageConverter<?>> converters) {
+        super.configureMessageConverters(converters);
+
+        converters.add(marshallingHttpMessageConverter());
+    }
+
 }

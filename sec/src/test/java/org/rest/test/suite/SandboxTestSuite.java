@@ -6,9 +6,9 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.rest.sec.web.role.RoleLogicRESTIntegrationTest;
 
-@RunWith( Suite.class )
-@SuiteClasses( { RoleLogicRESTIntegrationTest.class } )
+@RunWith(Suite.class)
+@SuiteClasses({ RoleLogicRESTIntegrationTest.class })
 @Ignore
-public final class SandboxTestSuite{
-	//
+public final class SandboxTestSuite {
+    //
 }

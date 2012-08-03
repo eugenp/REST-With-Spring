@@ -17,29 +17,29 @@ import com.google.common.net.HttpHeaders;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
-public class ScenarioRESTIntegrationTest extends SecGeneralRESTIntegrationTest{
-	
-	@Autowired private ExamplePaths paths;
-	
-	// tests
-	
-	// GET
-	
-	@Test
-	public final void whenGetIsDoneOnRoot_then(){
-		// When
-		final Response getOnRootResponse = givenAuthenticated().get( paths.getRootUri() );
-		
-		// Then
-		final List< String > allURIsDiscoverableFromRoot = HTTPLinkHeaderUtils.extractAllURIs( getOnRootResponse.getHeader( HttpHeaders.LINK ) );
-		
-		assertThat( allURIsDiscoverableFromRoot, not( Matchers.<String> empty() ) );
-	}
-	
-	// util
-	
-	protected final RequestSpecification givenAuthenticated(){
-		return AuthenticationUtil.givenBasicAuthenticated();
-	}
-	
+public class ScenarioRESTIntegrationTest extends SecGeneralRESTIntegrationTest {
+
+    @Autowired private ExamplePaths paths;
+
+    // tests
+
+    // GET
+
+    @Test
+    public final void whenGetIsDoneOnRoot_then() {
+        // When
+        final Response getOnRootResponse = givenAuthenticated().get(paths.getRootUri());
+
+        // Then
+        final List<String> allURIsDiscoverableFromRoot = HTTPLinkHeaderUtils.extractAllURIs(getOnRootResponse.getHeader(HttpHeaders.LINK));
+
+        assertThat(allURIsDiscoverableFromRoot, not(Matchers.<String> empty()));
+    }
+
+    // util
+
+    protected final RequestSpecification givenAuthenticated() {
+        return AuthenticationUtil.givenBasicAuthenticated();
+    }
+
 }

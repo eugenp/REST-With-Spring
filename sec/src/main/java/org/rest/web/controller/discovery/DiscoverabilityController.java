@@ -16,21 +16,21 @@ import org.springframework.web.util.UriTemplate;
 import com.google.common.net.HttpHeaders;
 
 @Controller
-final class DiscoverabilityController{
-	
-	// API
-	
-	@RequestMapping( value = "/",method = RequestMethod.GET )
-	@ResponseStatus( value = HttpStatus.NO_CONTENT )
-	public final void adminRoot( final HttpServletRequest request, final HttpServletResponse response ){
-		final String rootUri = request.getRequestURL().toString();
-		
-		// TODO: add these in a more dynamic way, not hardcoded
-		final URI uri = new UriTemplate( "{rootUri}{resource}" ).expand( rootUri, "user" );
-		final String linkToEntity = RESTURIUtil.createLinkHeader( uri.toASCIIString(), RESTURIUtil.REL_COLLECTION );
-		final String linkToTest = RESTURIUtil.createLinkHeader( "test", RESTURIUtil.REL_COLLECTION );
-		
-		response.addHeader( HttpHeaders.LINK, RESTURIUtil.gatherLinkHeaders( linkToEntity, linkToTest ) );
-	}
-	
+final class DiscoverabilityController {
+
+    // API
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public final void adminRoot(final HttpServletRequest request, final HttpServletResponse response) {
+        final String rootUri = request.getRequestURL().toString();
+
+        // TODO: add these in a more dynamic way, not hardcoded
+        final URI uri = new UriTemplate("{rootUri}{resource}").expand(rootUri, "user");
+        final String linkToEntity = RESTURIUtil.createLinkHeader(uri.toASCIIString(), RESTURIUtil.REL_COLLECTION);
+        final String linkToTest = RESTURIUtil.createLinkHeader("test", RESTURIUtil.REL_COLLECTION);
+
+        response.addHeader(HttpHeaders.LINK, RESTURIUtil.gatherLinkHeaders(linkToEntity, linkToTest));
+    }
+
 }

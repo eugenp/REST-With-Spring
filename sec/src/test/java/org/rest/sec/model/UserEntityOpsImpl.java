@@ -9,29 +9,29 @@ import org.springframework.stereotype.Component;
 import com.google.common.collect.Sets;
 
 @Component
-public final class UserEntityOpsImpl implements IEntityOperations< User >{
-	
-	public UserEntityOpsImpl(){
-		super();
-	}
-	
-	// API
-	
-	// template method
+public final class UserEntityOpsImpl implements IEntityOperations<User> {
 
-	@Override
-	public final User createNewEntity(){
-		return new User( randomAlphabetic( 8 ), randomAlphabetic( 8 ), Sets.<Role> newHashSet() );
-	}
-	
-	@Override
-	public final void invalidate( final User entity ){
-		entity.setName( null );
-	}
-	
-	@Override
-	public final void change( final User resource ){
-		resource.setName( randomAlphabetic( 8 ) );
-	}
-	
+    public UserEntityOpsImpl() {
+        super();
+    }
+
+    // API
+
+    // template method
+
+    @Override
+    public final User createNewEntity() {
+        return new User(randomAlphabetic(8), randomAlphabetic(8), Sets.<Role> newHashSet());
+    }
+
+    @Override
+    public final void invalidate(final User entity) {
+        entity.setName(null);
+    }
+
+    @Override
+    public final void change(final User resource) {
+        resource.setName(randomAlphabetic(8));
+    }
+
 }

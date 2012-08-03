@@ -27,106 +27,109 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping( value = "privilege" )
-public class PrivilegeController extends AbstractController< Privilege > implements ISortingController< Privilege >{
-	
-	@Autowired private IPrivilegeService service;
-	
-	public PrivilegeController(){
-		super( Privilege.class );
-	}
-	
-	// API
-	
-	// search
-	
-	@RequestMapping( params = { SearchCommonUtil.Q_PARAM },method = RequestMethod.GET )
-	@ResponseBody
-	public List< Privilege > search( @RequestParam( SearchCommonUtil.Q_PARAM ) final String queryString ){
-		return searchInternal( queryString );
-	}
-	
-	// find - all/paginated
-	
-	@Override
-	@RequestMapping( params = { QueryUtil.PAGE, QueryUtil.SIZE, QueryUtil.SORT_BY },method = RequestMethod.GET )
-	@ResponseBody
-	public List< Privilege > findAllPaginatedAndSorted( @RequestParam( value = QueryUtil.PAGE ) final int page, @RequestParam( value = QueryUtil.SIZE ) final int size, @RequestParam( value = QueryUtil.SORT_BY ) final String sortBy, @RequestParam( value = QueryUtil.SORT_ORDER ) final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
-		return findPaginatedAndSortedInternal( page, size, sortBy, sortOrder, uriBuilder, response );
-	}
-	@Override
-	@RequestMapping( params = { QueryUtil.PAGE, QueryUtil.SIZE },method = RequestMethod.GET )
-	@ResponseBody
-	public List< Privilege > findAllPaginated( @RequestParam( value = QueryUtil.PAGE ) final int page, @RequestParam( value = QueryUtil.SIZE ) final int size, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
-		return findPaginatedAndSortedInternal( page, size, null, null, uriBuilder, response );
-	}
-	@Override
-	@RequestMapping( params = { QueryUtil.SORT_BY },method = RequestMethod.GET )
-	@ResponseBody
-	public List< Privilege > findAllSorted( @RequestParam( value = QueryUtil.SORT_BY ) final String sortBy, @RequestParam( value = QueryUtil.SORT_ORDER ) final String sortOrder ){
-		return findAllSortedInternal( sortBy, sortOrder );
-	}
-	
-	@Override
-	@RequestMapping( method = RequestMethod.GET )
-	@ResponseBody
-	public List< Privilege > findAll( final HttpServletRequest request ){
-		return findAllInternal( request );
-	}
-	
-	// find - one
-	
-	@RequestMapping( value = "/{id}",method = RequestMethod.GET )
-	@ResponseBody
-	public Privilege findOne( @PathVariable( "id" ) final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
-		return findOneInternal( id, uriBuilder, response );
-	}
-	
-	@RequestMapping( params = "name",method = RequestMethod.GET )
-	@ResponseBody
-	public Privilege findOneByName( @RequestParam( "name" ) final String name ){
-		Privilege resource = null;
-		try{
-			resource = RestPreconditions.checkNotNull( getService().findByName( name ) );
-		}
-		catch( final InvalidDataAccessApiUsageException ex ){
-			logger.error( "InvalidDataAccessApiUsageException on find operation" );
-			logger.warn( "InvalidDataAccessApiUsageException on find operation", ex );
-			throw new ConflictException( ex );
-		}
-		
-		return resource;
-	}
-	
-	// create
-	
-	@RequestMapping( method = RequestMethod.POST )
-	@ResponseStatus( HttpStatus.CREATED )
-	public void create( @RequestBody final Privilege resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response ){
-		createInternal( resource, uriBuilder, response );
-	}
-	
-	// update
-	
-	@RequestMapping( method = RequestMethod.PUT )
-	@ResponseStatus( HttpStatus.OK )
-	public void update( @RequestBody final Privilege resource ){
-		updateInternal( resource );
-	}
-	
-	// delete
-	
-	@RequestMapping( value = "/{id}",method = RequestMethod.DELETE )
-	@ResponseStatus( HttpStatus.NO_CONTENT )
-	public void delete( @PathVariable( "id" ) final Long id ){
-		deleteByIdInternal( id );
-	}
-	
-	// Spring
-	
-	@Override
-	protected final IPrivilegeService getService(){
-		return service;
-	}
-	
+@RequestMapping(value = "privilege")
+public class PrivilegeController extends AbstractController<Privilege> implements ISortingController<Privilege> {
+
+    @Autowired private IPrivilegeService service;
+
+    public PrivilegeController() {
+        super(Privilege.class);
+    }
+
+    // API
+
+    // search
+
+    @RequestMapping(params = { SearchCommonUtil.Q_PARAM }, method = RequestMethod.GET)
+    @ResponseBody
+    public List<Privilege> search(@RequestParam(SearchCommonUtil.Q_PARAM) final String queryString) {
+        return searchInternal(queryString);
+    }
+
+    // find - all/paginated
+
+    @Override
+    @RequestMapping(params = { QueryUtil.PAGE, QueryUtil.SIZE, QueryUtil.SORT_BY }, method = RequestMethod.GET)
+    @ResponseBody
+    public List<Privilege> findAllPaginatedAndSorted(@RequestParam(value = QueryUtil.PAGE) final int page, @RequestParam(value = QueryUtil.SIZE) final int size,
+            @RequestParam(value = QueryUtil.SORT_BY) final String sortBy, @RequestParam(value = QueryUtil.SORT_ORDER) final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+        return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder, uriBuilder, response);
+    }
+
+    @Override
+    @RequestMapping(params = { QueryUtil.PAGE, QueryUtil.SIZE }, method = RequestMethod.GET)
+    @ResponseBody
+    public List<Privilege> findAllPaginated(@RequestParam(value = QueryUtil.PAGE) final int page, @RequestParam(value = QueryUtil.SIZE) final int size, final UriComponentsBuilder uriBuilder,
+            final HttpServletResponse response) {
+        return findPaginatedAndSortedInternal(page, size, null, null, uriBuilder, response);
+    }
+
+    @Override
+    @RequestMapping(params = { QueryUtil.SORT_BY }, method = RequestMethod.GET)
+    @ResponseBody
+    public List<Privilege> findAllSorted(@RequestParam(value = QueryUtil.SORT_BY) final String sortBy, @RequestParam(value = QueryUtil.SORT_ORDER) final String sortOrder) {
+        return findAllSortedInternal(sortBy, sortOrder);
+    }
+
+    @Override
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody
+    public List<Privilege> findAll(final HttpServletRequest request) {
+        return findAllInternal(request);
+    }
+
+    // find - one
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Privilege findOne(@PathVariable("id") final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+        return findOneInternal(id, uriBuilder, response);
+    }
+
+    @RequestMapping(params = "name", method = RequestMethod.GET)
+    @ResponseBody
+    public Privilege findOneByName(@RequestParam("name") final String name) {
+        Privilege resource = null;
+        try {
+            resource = RestPreconditions.checkNotNull(getService().findByName(name));
+        } catch (final InvalidDataAccessApiUsageException ex) {
+            logger.error("InvalidDataAccessApiUsageException on find operation");
+            logger.warn("InvalidDataAccessApiUsageException on find operation", ex);
+            throw new ConflictException(ex);
+        }
+
+        return resource;
+    }
+
+    // create
+
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@RequestBody final Privilege resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+        createInternal(resource, uriBuilder, response);
+    }
+
+    // update
+
+    @RequestMapping(method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@RequestBody final Privilege resource) {
+        updateInternal(resource);
+    }
+
+    // delete
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id") final Long id) {
+        deleteByIdInternal(id);
+    }
+
+    // Spring
+
+    @Override
+    protected final IPrivilegeService getService() {
+        return service;
+    }
+
 }

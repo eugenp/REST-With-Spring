@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ImportResource;
 
 @Configuration
 @ImportResource("classpath*:secContextConfig-test.xml")
-@ComponentScan( { "org.rest.sec.model" } )
-public class ContextTestConfig{
+@ComponentScan({ "org.rest.sec.model" })
+public class ContextTestConfig {
     //
 }

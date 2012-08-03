@@ -7,8 +7,8 @@ import org.rest.sec.web.privilege.PrivilegePaginationRESTIntegrationTest;
 import org.rest.sec.web.role.RolePaginationRESTIntegrationTest;
 import org.rest.sec.web.user.UserPaginationRESTIntegrationTest;
 
-@RunWith( Suite.class )
-@SuiteClasses( { PrivilegePaginationRESTIntegrationTest.class, RolePaginationRESTIntegrationTest.class, UserPaginationRESTIntegrationTest.class } )
-public final class IntegrationPaginationRESTTestSuite{
-	//
+@RunWith(Suite.class)
+@SuiteClasses({ PrivilegePaginationRESTIntegrationTest.class, RolePaginationRESTIntegrationTest.class, UserPaginationRESTIntegrationTest.class })
+public final class IntegrationPaginationRESTTestSuite {
+    //
 }

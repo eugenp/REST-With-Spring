@@ -21,201 +21,202 @@ import com.jayway.restassured.response.Response;
 /**
  * REST Template for the consumption of the REST API <br>
  */
-public abstract class AbstractRESTTemplate< T extends IEntity > implements IRESTTemplate< T >{
-	private static final String START_QUERY_PARAM = QueryUtil.QUESTIONMARK + "q=";
+public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTemplate<T> {
+    private static final String START_QUERY_PARAM = QueryUtil.QUESTIONMARK + "q=";
 
-	protected final Logger logger = LoggerFactory.getLogger( getClass() );
-	
-	@Autowired @Qualifier( "xstreamMarshaller" ) protected IMarshaller marshaller;
-	
-	protected final Class< T > clazz;
-	
-	public AbstractRESTTemplate( final Class< T > clazzToSet ){
-		super();
-		
-		Preconditions.checkNotNull( clazzToSet );
-		clazz = clazzToSet;
-	}
-	
-	// find - one
-	
-	@Override
-	public T findOne( final long id ){
-		final String resourceAsMime = findOneAsMime( getURI() + "/" + id );
-		if( resourceAsMime == null ){
-			return null;
-		}
-		return marshaller.decode( resourceAsMime, clazz );
-	}
-	
-	@Override
-	public Response findOneAsResponse( final String uriOfResource ){
-		return givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( uriOfResource );
-	}
-	
-	@Override
-	public Response findOneAsResponse( final String uriOfResource, final String acceptMime ){
-		return givenAuthenticated().header( HttpHeaders.ACCEPT, acceptMime ).get( uriOfResource );
-	}
-	
-	// find - all
-	
-	@SuppressWarnings( { "unchecked", "rawtypes" } )
-	@Override
-	public List< T > findAll(){
-		final Response findAllResponse = findOneAsResponse( getURI() );
-		return marshaller.<List> decode( findAllResponse.getBody().asString(), List.class );
-	}
-	@Override
-	@SuppressWarnings( { "unchecked", "rawtypes" } )
-	public final List< T > findAll( final String sortBy, final String sortOrder ){
-		final Response findAllResponse = findOneAsResponse( getURI() + QueryUtil.Q_SORT_BY + sortBy + QueryUtil.S_ORDER + sortOrder );
-		return marshaller.<List> decode( findAllResponse.getBody().asString(), List.class );
-	}
-	
-	@Override
-	public Response findAllAsResponse(){
-		return findOneAsResponse( getURI() );
-	}
-	
-	// create
-	
-	@Override
-	public T create( final T resource ){
-		final String uriForResourceCreation = createAsURI( resource );
-		final String resourceAsXML = findOneAsMime( uriForResourceCreation );
-		
-		return marshaller.decode( resourceAsXML, clazz );
-	}
-	
-	@Override
-	public String createAsURI( final T resource ){
-		Preconditions.checkNotNull( resource );
-		
-		final String resourceAsString = marshaller.encode( resource );
-		final Response response = givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsString ).post( getURI() );
-		Preconditions.checkState( response.getStatusCode() == 201, "create operation: " + response.getStatusCode() );
-		
-		final String locationOfCreatedResource = response.getHeader( HttpHeaders.LOCATION );
-		Preconditions.checkNotNull( locationOfCreatedResource );
-		return locationOfCreatedResource;
-	}
-	
-	@Override
-	public Response createAsResponse( final T resource ){
-		Preconditions.checkNotNull( resource );
-		
-		final String resourceAsString = marshaller.encode( resource );
-		logger.debug( "Creating Resource against URI: " + getURI() );
-		return givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsString ).post( getURI() );
-	}
-	
-	// update
-	
-	@Override
-	public void update( final T resource ){
-		final Response updateResponse = updateAsResponse( resource );
-		Preconditions.checkState( updateResponse.getStatusCode() == 200, "update operation: " + updateResponse.getStatusCode() );
-	}
-	
-	@Override
-	public Response updateAsResponse( final T resource ){
-		Preconditions.checkNotNull( resource );
-		
-		final String resourceAsString = marshaller.encode( resource );
-		return givenAuthenticated().contentType( marshaller.getMime() ).body( resourceAsString ).put( getURI() );
-	}
-	
-	// delete
-	
-	@Override
-	public void deleteAll(){
-		throw new UnsupportedOperationException();
-	}
-	
-	@Override
-	public void delete( final long id ){
-		final Response deleteResponse = deleteAsResponse( getURI() + "/" + id );
-		Preconditions.checkState( deleteResponse.getStatusCode() == 204 );
-	}
-	
-	@Override
-	public Response deleteAsResponse( final String uriOfResource ){
-		return givenAuthenticated().delete( uriOfResource );
-	}
-	
-	// search - as response
-	
-	@Override
-	public Response searchAsResponse( final Triple< String, ClientOperation, String > idOp, final Triple< String, ClientOperation, String > nameOp ){
-		final String queryURI = getURI() + START_QUERY_PARAM + SearchTestUtil.constructQueryString( idOp, nameOp );
-		return givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
-	}
-	
-	@Override
-	public Response searchAsResponse( final Triple< String, ClientOperation, String > idOp, final Triple< String, ClientOperation, String > nameOp, final int page, final int size ){
-		final String queryURI = getURI() + START_QUERY_PARAM + SearchTestUtil.constructQueryString( idOp, nameOp ) + "&page=" + page + "&size=" + size;
-		return givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
-	}
-	
-	// search
-	
-	@Override
-	public List< T > search( final Triple< String, ClientOperation, String >... constraints ){
-		final SearchUriBuilder builder = new SearchUriBuilder();
-		for( final Triple< String, ClientOperation, String > constraint : constraints ){
-			builder.consume( constraint );
-		}
-		final String queryURI = getURI() + START_QUERY_PARAM + builder.build();
-		
-		final Response searchResponse = givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
-		Preconditions.checkState( searchResponse.getStatusCode() == 200 );
-		
-		return getMarshaller().<List> decode( searchResponse.getBody().asString(), List.class );
-	}
-	
-	@Override
-	public List< T > searchPaged( final Triple< String, ClientOperation, String > idOp, final Triple< String, ClientOperation, String > nameOp, final int page, final int size ){
-		final String queryURI = getURI() + START_QUERY_PARAM + SearchTestUtil.constructQueryString( idOp, nameOp ) + "&page=" + page + "&size=" + size;
-		final Response searchResponse = givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( queryURI );
-		Preconditions.checkState( searchResponse.getStatusCode() == 200 );
-		
-		return getMarshaller().<List> decode( searchResponse.getBody().asString(), List.class );
-	}
-	
-	// count
-	
-	@Override
-	public long count(){
-		throw new UnsupportedOperationException();
-	}
-	
-	// entity (non REST)
-	
-	@Override
-	public void invalidate( final T entity ){
-		throw new UnsupportedOperationException();
-	}
-	
-	// util
-	
-	protected String findOneAsMime( final String uriOfResource ){
-		final Response response = givenAuthenticated().header( HttpHeaders.ACCEPT, marshaller.getMime() ).get( uriOfResource );
-		if( response.getStatusCode() != 200 ){
-			return null;
-		}
-		return response.asString();
-	}
-	
-	//
-	
-	public final String getMime(){
-		return marshaller.getMime();
-	}
-	
-	@Override
-	public final IMarshaller getMarshaller(){
-		return marshaller;
-	}
-	
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired @Qualifier("xstreamMarshaller") protected IMarshaller marshaller;
+
+    protected final Class<T> clazz;
+
+    public AbstractRESTTemplate(final Class<T> clazzToSet) {
+        super();
+
+        Preconditions.checkNotNull(clazzToSet);
+        clazz = clazzToSet;
+    }
+
+    // find - one
+
+    @Override
+    public T findOne(final long id) {
+        final String resourceAsMime = findOneAsMime(getURI() + "/" + id);
+        if (resourceAsMime == null) {
+            return null;
+        }
+        return marshaller.decode(resourceAsMime, clazz);
+    }
+
+    @Override
+    public Response findOneAsResponse(final String uriOfResource) {
+        return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(uriOfResource);
+    }
+
+    @Override
+    public Response findOneAsResponse(final String uriOfResource, final String acceptMime) {
+        return givenAuthenticated().header(HttpHeaders.ACCEPT, acceptMime).get(uriOfResource);
+    }
+
+    // find - all
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public List<T> findAll() {
+        final Response findAllResponse = findOneAsResponse(getURI());
+        return marshaller.<List> decode(findAllResponse.getBody().asString(), List.class);
+    }
+
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final List<T> findAll(final String sortBy, final String sortOrder) {
+        final Response findAllResponse = findOneAsResponse(getURI() + QueryUtil.Q_SORT_BY + sortBy + QueryUtil.S_ORDER + sortOrder);
+        return marshaller.<List> decode(findAllResponse.getBody().asString(), List.class);
+    }
+
+    @Override
+    public Response findAllAsResponse() {
+        return findOneAsResponse(getURI());
+    }
+
+    // create
+
+    @Override
+    public T create(final T resource) {
+        final String uriForResourceCreation = createAsURI(resource);
+        final String resourceAsXML = findOneAsMime(uriForResourceCreation);
+
+        return marshaller.decode(resourceAsXML, clazz);
+    }
+
+    @Override
+    public String createAsURI(final T resource) {
+        Preconditions.checkNotNull(resource);
+
+        final String resourceAsString = marshaller.encode(resource);
+        final Response response = givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).post(getURI());
+        Preconditions.checkState(response.getStatusCode() == 201, "create operation: " + response.getStatusCode());
+
+        final String locationOfCreatedResource = response.getHeader(HttpHeaders.LOCATION);
+        Preconditions.checkNotNull(locationOfCreatedResource);
+        return locationOfCreatedResource;
+    }
+
+    @Override
+    public Response createAsResponse(final T resource) {
+        Preconditions.checkNotNull(resource);
+
+        final String resourceAsString = marshaller.encode(resource);
+        logger.debug("Creating Resource against URI: " + getURI());
+        return givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).post(getURI());
+    }
+
+    // update
+
+    @Override
+    public void update(final T resource) {
+        final Response updateResponse = updateAsResponse(resource);
+        Preconditions.checkState(updateResponse.getStatusCode() == 200, "update operation: " + updateResponse.getStatusCode());
+    }
+
+    @Override
+    public Response updateAsResponse(final T resource) {
+        Preconditions.checkNotNull(resource);
+
+        final String resourceAsString = marshaller.encode(resource);
+        return givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).put(getURI());
+    }
+
+    // delete
+
+    @Override
+    public void deleteAll() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void delete(final long id) {
+        final Response deleteResponse = deleteAsResponse(getURI() + "/" + id);
+        Preconditions.checkState(deleteResponse.getStatusCode() == 204);
+    }
+
+    @Override
+    public Response deleteAsResponse(final String uriOfResource) {
+        return givenAuthenticated().delete(uriOfResource);
+    }
+
+    // search - as response
+
+    @Override
+    public Response searchAsResponse(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp) {
+        final String queryURI = getURI() + START_QUERY_PARAM + SearchTestUtil.constructQueryString(idOp, nameOp);
+        return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
+    }
+
+    @Override
+    public Response searchAsResponse(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size) {
+        final String queryURI = getURI() + START_QUERY_PARAM + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
+        return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
+    }
+
+    // search
+
+    @Override
+    public List<T> search(final Triple<String, ClientOperation, String>... constraints) {
+        final SearchUriBuilder builder = new SearchUriBuilder();
+        for (final Triple<String, ClientOperation, String> constraint : constraints) {
+            builder.consume(constraint);
+        }
+        final String queryURI = getURI() + START_QUERY_PARAM + builder.build();
+
+        final Response searchResponse = givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
+        Preconditions.checkState(searchResponse.getStatusCode() == 200);
+
+        return getMarshaller().<List> decode(searchResponse.getBody().asString(), List.class);
+    }
+
+    @Override
+    public List<T> searchPaged(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size) {
+        final String queryURI = getURI() + START_QUERY_PARAM + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
+        final Response searchResponse = givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
+        Preconditions.checkState(searchResponse.getStatusCode() == 200);
+
+        return getMarshaller().<List> decode(searchResponse.getBody().asString(), List.class);
+    }
+
+    // count
+
+    @Override
+    public long count() {
+        throw new UnsupportedOperationException();
+    }
+
+    // entity (non REST)
+
+    @Override
+    public void invalidate(final T entity) {
+        throw new UnsupportedOperationException();
+    }
+
+    // util
+
+    protected String findOneAsMime(final String uriOfResource) {
+        final Response response = givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(uriOfResource);
+        if (response.getStatusCode() != 200) {
+            return null;
+        }
+        return response.asString();
+    }
+
+    //
+
+    public final String getMime() {
+        return marshaller.getMime();
+    }
+
+    @Override
+    public final IMarshaller getMarshaller() {
+        return marshaller;
+    }
+
 }

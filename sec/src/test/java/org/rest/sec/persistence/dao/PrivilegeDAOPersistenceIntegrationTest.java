@@ -11,61 +11,61 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-@TransactionConfiguration( defaultRollback = true )
+@TransactionConfiguration(defaultRollback = true)
 @Transactional
-public class PrivilegeDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest< Privilege >{
-	
-	@Autowired private IPrivilegeJpaDAO privilegeDao;
-	@Autowired IRoleJpaDAO associationDao;
-	@Autowired IPrincipalJpaDAO principalDao;
-	
-	// save
-	
-	@Test
-	public void whenSaveIsPerformed_thenNoException(){
-		getAPI().save( createNewEntity() );
-	}
-	
-	// find by
-	
-	@Test
-	public void givenEntityDoesNotExist_whenFindingEntityByName_thenEntityNotFound(){
-		// Given
-		final String name = randomAlphabetic( 8 );
-		
-		// When
-		final Privilege entityByName = getDAOCasted().findByName( name );
-		
-		// Then
-		assertNull( entityByName );
-	}
-	
-	// template method
-	
-	@Override
-	protected final JpaRepository< Privilege, Long > getAPI(){
-		return privilegeDao;
-	}
-	
-	@Override
-	protected final Privilege createNewEntity(){
-		return new Privilege( randomAlphabetic( 8 ) );
-	}
-	
-	@Override
-	protected final void invalidate( final Privilege entity ){
-		entity.setName( null );
-	}
-	
-	@Override
-	protected final void changeEntity( final Privilege entity ){
-		entity.setName( randomAlphabetic( 6 ) );
-	}
-	
-	//
-	
-	protected final IPrivilegeJpaDAO getDAOCasted(){
-		return privilegeDao;
-	}
-	
+public class PrivilegeDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest<Privilege> {
+
+    @Autowired private IPrivilegeJpaDAO privilegeDao;
+    @Autowired IRoleJpaDAO associationDao;
+    @Autowired IPrincipalJpaDAO principalDao;
+
+    // save
+
+    @Test
+    public void whenSaveIsPerformed_thenNoException() {
+        getAPI().save(createNewEntity());
+    }
+
+    // find by
+
+    @Test
+    public void givenEntityDoesNotExist_whenFindingEntityByName_thenEntityNotFound() {
+        // Given
+        final String name = randomAlphabetic(8);
+
+        // When
+        final Privilege entityByName = getDAOCasted().findByName(name);
+
+        // Then
+        assertNull(entityByName);
+    }
+
+    // template method
+
+    @Override
+    protected final JpaRepository<Privilege, Long> getAPI() {
+        return privilegeDao;
+    }
+
+    @Override
+    protected final Privilege createNewEntity() {
+        return new Privilege(randomAlphabetic(8));
+    }
+
+    @Override
+    protected final void invalidate(final Privilege entity) {
+        entity.setName(null);
+    }
+
+    @Override
+    protected final void changeEntity(final Privilege entity) {
+        entity.setName(randomAlphabetic(6));
+    }
+
+    //
+
+    protected final IPrivilegeJpaDAO getDAOCasted() {
+        return privilegeDao;
+    }
+
 }

@@ -7,8 +7,8 @@ import org.rest.sec.web.privilege.PrivilegeSortRESTIntegrationTest;
 import org.rest.sec.web.role.RoleSortRESTIntegrationTest;
 import org.rest.sec.web.user.UserSortRESTIntegrationTest;
 
-@RunWith( Suite.class )
-@SuiteClasses( { PrivilegeSortRESTIntegrationTest.class, RoleSortRESTIntegrationTest.class, UserSortRESTIntegrationTest.class } )
-public final class IntegrationSortRESTTestSuite{
-	//
+@RunWith(Suite.class)
+@SuiteClasses({ PrivilegeSortRESTIntegrationTest.class, RoleSortRESTIntegrationTest.class, UserSortRESTIntegrationTest.class })
+public final class IntegrationSortRESTTestSuite {
+    //
 }

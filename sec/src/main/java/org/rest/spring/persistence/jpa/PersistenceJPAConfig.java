@@ -20,74 +20,74 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @ImportResource("classpath*:*secPersistenceConfig.xml")
-@ComponentScan( { "org.rest.sec.persistence" } )
-public class PersistenceJPAConfig{
+@ComponentScan({ "org.rest.sec.persistence" })
+public class PersistenceJPAConfig {
 
-    @Value( "${jdbc.driverClassName}" ) private String driverClassName;
-    @Value( "${jdbc.url}" ) private String url;
-    @Value( "${jpa.generateDdl}" ) boolean jpaGenerateDdl;
+    @Value("${jdbc.driverClassName}") private String driverClassName;
+    @Value("${jdbc.url}") private String url;
+    @Value("${jpa.generateDdl}") boolean jpaGenerateDdl;
 
     // Hibernate specific
-    @Value( "${hibernate.dialect}" ) String hibernateDialect;
-    @Value( "${hibernate.show_sql}" ) boolean hibernateShowSql;
-    @Value( "${hibernate.hbm2ddl.auto}" ) String hibernateHbm2ddlAuto;
+    @Value("${hibernate.dialect}") String hibernateDialect;
+    @Value("${hibernate.show_sql}") boolean hibernateShowSql;
+    @Value("${hibernate.hbm2ddl.auto}") String hibernateHbm2ddlAuto;
 
-    public PersistenceJPAConfig(){
+    public PersistenceJPAConfig() {
         super();
     }
 
     // beans
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(){
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
         final LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-        factoryBean.setDataSource( restDataSource() );
-        factoryBean.setPackagesToScan( new String[ ] { "org.rest" } );
+        factoryBean.setDataSource(restDataSource());
+        factoryBean.setPackagesToScan(new String[] { "org.rest" });
 
-        final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter(){
+        final JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter() {
             {
                 // setDatabase( Database.H2 ); // TODO: is this necessary
-                setDatabasePlatform( hibernateDialect );
-                setShowSql( hibernateShowSql );
-                setGenerateDdl( jpaGenerateDdl );
+                setDatabasePlatform(hibernateDialect);
+                setShowSql(hibernateShowSql);
+                setGenerateDdl(jpaGenerateDdl);
             }
         };
-        factoryBean.setJpaVendorAdapter( vendorAdapter );
+        factoryBean.setJpaVendorAdapter(vendorAdapter);
 
-        factoryBean.setJpaProperties( additionlProperties() );
+        factoryBean.setJpaProperties(additionlProperties());
 
         return factoryBean;
     }
 
     @Bean
-    public DataSource restDataSource(){
+    public DataSource restDataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName( driverClassName );
-        dataSource.setUrl( url );
-        dataSource.setUsername( "restUser" );
-        dataSource.setPassword( "restmy5ql" );
+        dataSource.setDriverClassName(driverClassName);
+        dataSource.setUrl(url);
+        dataSource.setUsername("restUser");
+        dataSource.setPassword("restmy5ql");
         return dataSource;
     }
 
     @Bean
-    public JpaTransactionManager transactionManager(){
+    public JpaTransactionManager transactionManager() {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory( entityManagerFactoryBean().getObject() );
+        transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
 
         return transactionManager;
     }
 
     @Bean
-    public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor(){
+    public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
     //
-    final Properties additionlProperties(){
-        return new Properties(){
+    final Properties additionlProperties() {
+        return new Properties() {
             {
                 // use this to inject additional properties in the EntityManager
-                setProperty( "hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto );
+                setProperty("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
             }
         };
     }

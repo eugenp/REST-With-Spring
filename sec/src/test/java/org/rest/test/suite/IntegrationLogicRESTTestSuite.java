@@ -10,8 +10,8 @@ import org.rest.sec.web.role.RoleSearchRESTIntegrationTest;
 import org.rest.sec.web.user.UserLogicRESTIntegrationTest;
 import org.rest.security.AuthenticationRESTIntegrationTest;
 
-@RunWith( Suite.class )
-@SuiteClasses( {// @formatter:off
+@RunWith(Suite.class)
+@SuiteClasses({// @formatter:off
     UserLogicRESTIntegrationTest.class,
     RoleLogicRESTIntegrationTest.class,
     PrivilegeLogicRESTIntegrationTest.class,

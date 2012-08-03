@@ -23,31 +23,31 @@ import com.google.common.collect.Sets;
  * - note: this controller will start working with the User model and, if necessary, will move to a Authentication resource (which is the way it should work)
  */
 @Controller
-public class AuthenticationController{
-	
-	public AuthenticationController(){
-		super();
-	}
-	
-	// API
-	
-	@RequestMapping( method = RequestMethod.POST,value = "/authentication" )
-	@ResponseStatus( HttpStatus.CREATED )
-	@ResponseBody
-	public User createAuthentication(){
-		final Authentication authenticationInSpring = SecurityContextHolder.getContext().getAuthentication();
-		
-		final Function< GrantedAuthority, Privilege > springAuthorityToPrivilegeFunction = new Function< GrantedAuthority, Privilege >(){
-			@Override
-			public final Privilege apply( final GrantedAuthority springAuthority ){
-				return new Privilege( springAuthority.getAuthority() );
-			}
-		};
-		final Collection< Privilege > privileges = Collections2.transform( authenticationInSpring.getAuthorities(), springAuthorityToPrivilegeFunction );
-		final Role defaultRole = new Role( "defaultRole", Sets.<Privilege> newHashSet( privileges ) );
-		
-		final User authenticationResource = new User( authenticationInSpring.getName(), (String) authenticationInSpring.getCredentials(), Sets.<Role> newHashSet( defaultRole ) );
-		return authenticationResource;
-	}
-	
+public class AuthenticationController {
+
+    public AuthenticationController() {
+        super();
+    }
+
+    // API
+
+    @RequestMapping(method = RequestMethod.POST, value = "/authentication")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public User createAuthentication() {
+        final Authentication authenticationInSpring = SecurityContextHolder.getContext().getAuthentication();
+
+        final Function<GrantedAuthority, Privilege> springAuthorityToPrivilegeFunction = new Function<GrantedAuthority, Privilege>() {
+            @Override
+            public final Privilege apply(final GrantedAuthority springAuthority) {
+                return new Privilege(springAuthority.getAuthority());
+            }
+        };
+        final Collection<Privilege> privileges = Collections2.transform(authenticationInSpring.getAuthorities(), springAuthorityToPrivilegeFunction);
+        final Role defaultRole = new Role("defaultRole", Sets.<Privilege> newHashSet(privileges));
+
+        final User authenticationResource = new User(authenticationInSpring.getName(), (String) authenticationInSpring.getCredentials(), Sets.<Role> newHashSet(defaultRole));
+        return authenticationResource;
+    }
+
 }

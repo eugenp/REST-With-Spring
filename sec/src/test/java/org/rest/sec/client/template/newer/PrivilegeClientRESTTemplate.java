@@ -13,31 +13,31 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PrivilegeClientRESTTemplate extends AbstractClientRESTTemplate< Privilege >{
-	
-	@Autowired private ExamplePaths paths;
-	
-	@Value( "${http.host}" ) private String host;
-	@Value( "${http.port}" ) private int port;
-	
-	public PrivilegeClientRESTTemplate(){
-		super( Privilege.class );
-	}
-	
-	// operations
-	
-	// template method
-	
-	@Override
-	public final String getURI(){
-		return paths.getPrivilegeUri();
-	}
-	
-	@Override
-	protected void basicAuth(){
-		final HttpComponentsClientHttpRequestFactory requestFactory = (HttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
-		final DefaultHttpClient httpClient = (DefaultHttpClient) requestFactory.getHttpClient();
-		httpClient.getCredentialsProvider().setCredentials( new AuthScope( host, port, AuthScope.ANY_REALM ), new UsernamePasswordCredentials( SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD ) );
-	}
-	
+public class PrivilegeClientRESTTemplate extends AbstractClientRESTTemplate<Privilege> {
+
+    @Autowired private ExamplePaths paths;
+
+    @Value("${http.host}") private String host;
+    @Value("${http.port}") private int port;
+
+    public PrivilegeClientRESTTemplate() {
+        super(Privilege.class);
+    }
+
+    // operations
+
+    // template method
+
+    @Override
+    public final String getURI() {
+        return paths.getPrivilegeUri();
+    }
+
+    @Override
+    protected void basicAuth() {
+        final HttpComponentsClientHttpRequestFactory requestFactory = (HttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
+        final DefaultHttpClient httpClient = (DefaultHttpClient) requestFactory.getHttpClient();
+        httpClient.getCredentialsProvider().setCredentials(new AuthScope(host, port, AuthScope.ANY_REALM), new UsernamePasswordCredentials(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD));
+    }
+
 }
