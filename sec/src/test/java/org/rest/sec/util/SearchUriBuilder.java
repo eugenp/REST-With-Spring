@@ -3,7 +3,7 @@ package org.rest.sec.util;
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.ClientOperation;
 import org.rest.common.util.QueryUtil;
-import org.rest.util.SearchCommonUtil;
+import org.rest.common.util.SearchCommonUtil;
 
 public final class SearchUriBuilder{
 	private StringBuilder uri;

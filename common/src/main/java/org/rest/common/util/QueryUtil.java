@@ -1,7 +1,5 @@
 package org.rest.common.util;
 
-import org.rest.util.SearchCommonUtil;
-import org.rest.util.SearchField;
 import org.springframework.data.domain.Sort;
 
 public final class QueryUtil{

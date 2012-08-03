@@ -1,4 +1,4 @@
-package org.rest.util;
+package org.rest.common.util;
 
 import java.util.List;
 import java.util.Map;
@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.rest.common.ClientOperation;
-import org.rest.common.util.QueryUtil;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;

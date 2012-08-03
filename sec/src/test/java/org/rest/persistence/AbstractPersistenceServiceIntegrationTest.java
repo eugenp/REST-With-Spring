@@ -12,7 +12,7 @@ import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.IEntity;
-import org.rest.persistence.service.IService;
+import org.rest.common.persistence.service.IService;
 import org.rest.util.IDUtils;
 import org.springframework.dao.DataAccessException;
 

@@ -1,4 +1,4 @@
-package org.rest.persistence.service;
+package org.rest.common.persistence.service;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.ClientOperation;

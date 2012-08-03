@@ -10,6 +10,7 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.rest.common.ClientOperation;
 import org.rest.common.IEntity;
 import org.rest.common.IOperations;
+import org.rest.common.util.SearchField;
 
 @SuppressWarnings( "unchecked" )
 public final class SearchIntegrationTestUtil{

@@ -12,9 +12,10 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.rest.common.IEntity;
-import org.rest.persistence.event.BeforeEntityCreatedEvent;
-import org.rest.persistence.event.EntityCreatedEvent;
-import org.rest.persistence.event.EntityUpdatedEvent;
+import org.rest.common.persistence.event.BeforeEntityCreatedEvent;
+import org.rest.common.persistence.event.EntityCreatedEvent;
+import org.rest.common.persistence.event.EntityUpdatedEvent;
+import org.rest.common.persistence.service.IService;
 import org.rest.util.IDUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;

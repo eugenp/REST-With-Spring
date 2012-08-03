@@ -1,15 +1,19 @@
-package org.rest.persistence.event;
+package org.rest.common.persistence.event;
 
 import org.rest.common.IEntity;
 import org.springframework.context.ApplicationEvent;
 
 import com.google.common.base.Preconditions;
 
-public final class BeforeEntityCreatedEvent< T extends IEntity > extends ApplicationEvent{
+/**
+ * This event should be fired when entity is updated.
+ */
+public final class EntityUpdatedEvent< T extends IEntity > extends ApplicationEvent{
+	
 	private final Class< T > clazz;
 	private final T entity;
 	
-	public BeforeEntityCreatedEvent( final Object sourceToSet, final Class< T > clazzToSet, final T entityToSet ){
+	public EntityUpdatedEvent( final Object sourceToSet, final Class< T > clazzToSet, final T entityToSet ){
 		super( sourceToSet );
 		
 		Preconditions.checkNotNull( clazzToSet );

@@ -1,4 +1,4 @@
-package org.rest.util;
+package org.rest.common.util;
 
 public enum SearchField{
 	id, name, // common

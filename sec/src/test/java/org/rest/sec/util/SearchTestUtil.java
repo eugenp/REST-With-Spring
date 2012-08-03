@@ -2,7 +2,7 @@ package org.rest.sec.util;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.ClientOperation;
-import org.rest.util.SearchField;
+import org.rest.common.util.SearchField;
 
 public final class SearchTestUtil{
 

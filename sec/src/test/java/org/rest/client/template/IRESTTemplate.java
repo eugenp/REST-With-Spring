@@ -7,6 +7,7 @@ import org.rest.client.marshall.IMarshaller;
 import org.rest.common.ClientOperation;
 import org.rest.common.IEntity;
 import org.rest.common.IOperations;
+import org.rest.common.client.template.IEntityOperations;
 
 import com.jayway.restassured.specification.RequestSpecification;
 

@@ -1,7 +1,7 @@
 package org.rest.sec.web.privilege;
 
 import org.junit.runner.RunWith;
-import org.rest.client.template.IEntityOperations;
+import org.rest.common.client.template.IEntityOperations;
 import org.rest.sec.client.template.PrivilegeRESTTemplateImpl;
 import org.rest.sec.model.Privilege;
 import org.rest.spring.client.ClientTestConfig;

@@ -12,9 +12,9 @@ import org.junit.Test;
 import org.rest.client.template.IRESTTemplate;
 import org.rest.common.IEntity;
 import org.rest.common.util.QueryUtil;
+import org.rest.common.util.SearchField;
 import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.testing.security.AuthenticationUtil;
-import org.rest.util.SearchField;
 import org.rest.util.order.OrderById;
 import org.springframework.data.domain.Sort;
 

@@ -7,18 +7,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.rest.util.SearchCommonUtil.ID;
-import static org.rest.util.SearchCommonUtil.NAME;
-import static org.rest.util.SearchCommonUtil.NEGATION;
-import static org.rest.util.SearchCommonUtil.OP;
-import static org.rest.util.SearchCommonUtil.SEPARATOR;
-import static org.rest.util.SearchCommonUtil.parseQueryString;
+import static org.rest.common.util.SearchCommonUtil.ID;
+import static org.rest.common.util.SearchCommonUtil.NAME;
+import static org.rest.common.util.SearchCommonUtil.NEGATION;
+import static org.rest.common.util.SearchCommonUtil.OP;
+import static org.rest.common.util.SearchCommonUtil.SEPARATOR;
+import static org.rest.common.util.SearchCommonUtil.parseQueryString;
 
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.junit.Test;
 import org.rest.common.ClientOperation;
+import org.rest.common.util.SearchField;
 
 public final class ParseQueryStringUnitTest{
 	

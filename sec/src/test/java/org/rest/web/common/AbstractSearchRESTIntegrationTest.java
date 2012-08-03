@@ -17,13 +17,13 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.rest.client.template.IEntityOperations;
 import org.rest.client.template.IRESTTemplate;
 import org.rest.common.ClientOperation;
 import org.rest.common.INameableEntity;
+import org.rest.common.client.template.IEntityOperations;
+import org.rest.common.util.SearchField;
 import org.rest.util.IDUtils;
 import org.rest.util.ISearchIntegrationTest;
-import org.rest.util.SearchField;
 import org.rest.util.SearchIntegrationTestUtil;
 
 import com.jayway.restassured.response.Response;

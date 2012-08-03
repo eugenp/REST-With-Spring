@@ -4,8 +4,8 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.rest.common.persistence.service.IService;
 import org.rest.persistence.AbstractPersistenceServiceIntegrationTest;
-import org.rest.persistence.service.IService;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.Role;
 import org.rest.spring.context.ContextTestConfig;

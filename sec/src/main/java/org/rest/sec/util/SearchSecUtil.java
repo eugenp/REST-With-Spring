@@ -3,7 +3,7 @@ package org.rest.sec.util;
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.ClientOperation;
 import org.rest.common.IEntity;
-import org.rest.util.SearchCommonUtil;
+import org.rest.common.util.SearchCommonUtil;
 import org.springframework.data.jpa.domain.Specification;
 
 public final class SearchSecUtil{

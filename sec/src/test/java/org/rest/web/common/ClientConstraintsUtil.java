@@ -3,7 +3,7 @@ package org.rest.web.common;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.ClientOperation;
-import org.rest.util.SearchField;
+import org.rest.common.util.SearchField;
 
 public class ClientConstraintsUtil{
 	

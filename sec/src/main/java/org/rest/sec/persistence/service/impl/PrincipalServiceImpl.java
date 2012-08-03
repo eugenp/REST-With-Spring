@@ -2,7 +2,7 @@ package org.rest.sec.persistence.service.impl;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.ClientOperation;
-import org.rest.persistence.service.AbstractService;
+import org.rest.common.persistence.service.AbstractService;
 import org.rest.sec.model.Principal;
 import org.rest.sec.persistence.dao.IPrincipalJpaDAO;
 import org.rest.sec.persistence.service.IPrincipalService;

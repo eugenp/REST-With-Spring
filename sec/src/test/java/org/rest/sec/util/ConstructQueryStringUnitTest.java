@@ -7,16 +7,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.rest.common.ClientOperation.CONTAINS;
 import static org.rest.common.ClientOperation.EQ;
-import static org.rest.util.SearchCommonUtil.NEGATION;
-import static org.rest.util.SearchCommonUtil.OP;
-import static org.rest.util.SearchCommonUtil.SEPARATOR;
+import static org.rest.common.util.SearchCommonUtil.NEGATION;
+import static org.rest.common.util.SearchCommonUtil.OP;
+import static org.rest.common.util.SearchCommonUtil.SEPARATOR;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import org.junit.Test;
 import org.rest.common.ClientOperation;
 import org.rest.common.util.QueryUtil;
-import org.rest.util.SearchField;
+import org.rest.common.util.SearchField;
 
 public final class ConstructQueryStringUnitTest{
 	

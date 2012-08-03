@@ -1,4 +1,4 @@
-package org.rest.persistence.event;
+package org.rest.common.persistence.event;
 
 import java.io.Serializable;
 

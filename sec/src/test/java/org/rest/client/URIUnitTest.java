@@ -6,8 +6,8 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.rest.common.util.SearchCommonUtil;
 import org.rest.sec.client.template.newer.UserClientRESTTemplate;
-import org.rest.util.SearchCommonUtil;
 
 public class URIUnitTest{
 	

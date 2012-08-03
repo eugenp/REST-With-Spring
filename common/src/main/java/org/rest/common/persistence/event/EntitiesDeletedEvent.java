@@ -1,4 +1,4 @@
-package org.rest.persistence.event;
+package org.rest.common.persistence.event;
 
 import org.rest.common.IEntity;
 import org.springframework.context.ApplicationEvent;

@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.rest.common.exceptions.ConflictException;
 import org.rest.common.util.QueryUtil;
+import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.web.RestPreconditions;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.persistence.service.IPrivilegeService;
-import org.rest.util.SearchCommonUtil;
 import org.rest.web.common.AbstractController;
 import org.rest.web.common.ISortingController;
 import org.springframework.beans.factory.annotation.Autowired;
