@@ -2,9 +2,11 @@ package org.rest.sec.client;
 
 import org.rest.client.RESTPaths;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("client")
 public final class ExamplePaths {
 
     @Autowired RESTPaths paths;

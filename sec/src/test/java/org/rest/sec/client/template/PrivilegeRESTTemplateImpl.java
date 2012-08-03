@@ -7,11 +7,13 @@ import org.rest.sec.client.ExamplePaths;
 import org.rest.sec.model.Privilege;
 import org.rest.testing.security.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.jayway.restassured.specification.RequestSpecification;
 
 @Component
+@Profile("client")
 public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate<Privilege> {
 
     @Autowired protected ExamplePaths paths;

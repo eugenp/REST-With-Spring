@@ -8,12 +8,14 @@ import org.rest.sec.model.Role;
 import org.rest.sec.model.dto.User;
 import org.rest.testing.security.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @Component
+@Profile("client")
 public final class UserRESTTemplateImpl extends AbstractRESTTemplate<User> {
 
     @Autowired protected ExamplePaths paths;

@@ -291,7 +291,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>rest</finalName>
+		<finalName>rest-sec</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -335,6 +335,7 @@
 						<containerId>jetty7x</containerId>
 						<type>embedded</type>
 						<systemProperties>
+							<envTarget>dev</envTarget>
 							<persistenceTarget>cargo</persistenceTarget>
 						</systemProperties>
 					</container>
@@ -467,28 +468,41 @@
 				<plugins>
 
 					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<configuration>
-							<wait>false</wait>
-						</configuration>
-						<executions>
-							<execution>
-								<id>start-server</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>start</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>stop-server</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <configuration>
+                            <wait>false</wait>
+                            <container>
+                                <containerId>jetty7x</containerId>
+                                <type>embedded</type>
+                                <systemProperties>
+                                    <envTarget>dev</envTarget>
+                                    <persistenceTarget>cargo</persistenceTarget>
+                                </systemProperties>
+                            </container>
+                            <configuration>
+                                <properties>
+                                    <cargo.servlet.port>8083</cargo.servlet.port>
+                                </properties>
+                            </configuration>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>start-server</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>stop-server</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
 
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>

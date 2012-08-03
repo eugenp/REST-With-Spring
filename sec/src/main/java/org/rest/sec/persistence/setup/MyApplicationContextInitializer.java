@@ -54,17 +54,17 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
      */
     private String getEnvTarget(final ConfigurableEnvironment environment) {
         final String targetOverride = getTargetFromOverride();
-        final String target;
+        final String envTarget;
         if (targetOverride == null) {
-            target = environment.getProperty(ENV_TARGET);
+            envTarget = environment.getProperty(ENV_TARGET);
         } else {
-            target = targetOverride;
+            envTarget = targetOverride;
         }
 
-        if (target == null) {
+        if (envTarget == null) {
             logger.warn("Didn't find a value for {} in the current Environment!", ENV_TARGET);
         }
-        return Preconditions.checkNotNull(target);
+        return Preconditions.checkNotNull(envTarget);
     }
 
     /**
