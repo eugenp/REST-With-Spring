@@ -5,12 +5,12 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.ImportResource;
 
 @Configuration
-@ImportResource( "classpath*:contextConfig.xml" )
+@ImportResource("classpath*:secContextConfig.xml")
 @EnableAspectJAutoProxy( proxyTargetClass = true )
 public class ContextConfig{
-	
-	public ContextConfig(){
-		super();
-	}
-	
+
+    public ContextConfig(){
+        super();
+    }
+
 }
