@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.apache.http.HttpHeaders;
-import org.rest.common.ClientOperation;
 import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.QueryUtil;
+import org.rest.common.web.ClientOperation;
 import org.rest.sec.util.SearchTestUtil;
 import org.rest.sec.util.SearchUriBuilder;
 import org.slf4j.Logger;

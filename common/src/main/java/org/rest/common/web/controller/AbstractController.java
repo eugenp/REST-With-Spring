@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.http.HttpHeaders;
-import org.rest.common.ClientOperation;
 import org.rest.common.event.PaginatedResultsRetrievedEvent;
 import org.rest.common.event.ResourceCreatedEvent;
 import org.rest.common.event.SingleResourceRetrievedEvent;
@@ -18,6 +17,7 @@ import org.rest.common.persistence.model.IEntity;
 import org.rest.common.persistence.service.IService;
 import org.rest.common.util.QueryUtil;
 import org.rest.common.util.SearchCommonUtil;
+import org.rest.common.web.ClientOperation;
 import org.rest.common.web.RestPreconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

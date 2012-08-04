@@ -7,10 +7,10 @@ import static org.junit.Assert.assertThat;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
-import org.rest.common.ClientOperation;
 import org.rest.common.IOperations;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.SearchField;
+import org.rest.common.web.ClientOperation;
 
 @SuppressWarnings("unchecked")
 public final class SearchIntegrationTestUtil {

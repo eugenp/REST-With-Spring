@@ -3,10 +3,10 @@ package org.rest.common.client.template;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
-import org.rest.common.ClientOperation;
 import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.QueryUtil;
+import org.rest.common.web.ClientOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;

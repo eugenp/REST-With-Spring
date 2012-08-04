@@ -18,8 +18,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.junit.Test;
-import org.rest.common.ClientOperation;
 import org.rest.common.util.SearchField;
+import org.rest.common.web.ClientOperation;
 
 public final class ParseQueryStringUnitTest {
 

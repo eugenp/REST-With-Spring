@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
-import org.rest.common.ClientOperation;
+import org.rest.common.web.ClientOperation;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;

@@ -3,11 +3,11 @@ package org.rest.common.client.template;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
-import org.rest.common.ClientOperation;
 import org.rest.common.IOperations;
 import org.rest.common.client.IEntityOperations;
 import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.persistence.model.IEntity;
+import org.rest.common.web.ClientOperation;
 
 import com.jayway.restassured.specification.RequestSpecification;
 

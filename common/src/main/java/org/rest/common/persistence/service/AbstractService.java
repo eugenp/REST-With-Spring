@@ -3,13 +3,13 @@ package org.rest.common.persistence.service;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
-import org.rest.common.ClientOperation;
 import org.rest.common.persistence.event.BeforeEntityCreatedEvent;
 import org.rest.common.persistence.event.EntitiesDeletedEvent;
 import org.rest.common.persistence.event.EntityCreatedEvent;
 import org.rest.common.persistence.event.EntityDeletedEvent;
 import org.rest.common.persistence.event.EntityUpdatedEvent;
 import org.rest.common.persistence.model.IEntity;
+import org.rest.common.web.ClientOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

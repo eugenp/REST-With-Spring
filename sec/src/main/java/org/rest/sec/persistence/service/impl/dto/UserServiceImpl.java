@@ -3,7 +3,7 @@ package org.rest.sec.persistence.service.impl.dto;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
-import org.rest.common.ClientOperation;
+import org.rest.common.web.ClientOperation;
 import org.rest.common.web.RestPreconditions;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.dto.PrincipalToUserFunction;

@@ -5,9 +5,9 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.rest.common.ClientOperation.EQ;
-import static org.rest.common.ClientOperation.NEG_EQ;
 import static org.rest.common.util.SearchCommonUtil.NAME;
+import static org.rest.common.web.ClientOperation.EQ;
+import static org.rest.common.web.ClientOperation.NEG_EQ;
 
 import java.util.List;
 
@@ -16,12 +16,12 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.rest.common.ClientOperation;
 import org.rest.common.client.IEntityOperations;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.persistence.service.IService;
 import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.util.SearchField;
+import org.rest.common.web.ClientOperation;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
 import org.rest.util.IDUtils;
