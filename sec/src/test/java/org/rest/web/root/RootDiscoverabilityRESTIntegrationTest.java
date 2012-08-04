@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import java.util.List;
 
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.sec.client.ExamplePaths;
 import org.rest.sec.test.SecGeneralRESTIntegrationTest;
@@ -20,6 +21,7 @@ import com.google.common.net.HttpHeaders;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
+@Ignore("temp")
 public class RootDiscoverabilityRESTIntegrationTest extends SecGeneralRESTIntegrationTest {
 
     @Autowired private ExamplePaths paths;
