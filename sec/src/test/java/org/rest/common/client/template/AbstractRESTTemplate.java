@@ -8,7 +8,8 @@ import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.search.SearchUriBuilder;
-import org.rest.common.util.QueryUtil;
+import org.rest.common.util.QueryConstants;
+import org.rest.common.web.WebConstants;
 import org.rest.sec.util.SearchTestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ import com.jayway.restassured.response.Response;
 public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTemplate<T> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private static final String START_QUERY_PARAM = QueryUtil.QUESTIONMARK + "q=";
+    private static final String START_QUERY_PARAM = QueryConstants.QUESTIONMARK + "q=";
 
     @Autowired @Qualifier("xstreamMarshaller") protected IMarshaller marshaller;
 
@@ -41,7 +42,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public T findOne(final long id) {
-        final String resourceAsMime = findOneAsMime(getURI() + "/" + id);
+        final String resourceAsMime = findOneAsMime(getURI() + WebConstants.PATH_SEP + id);
         if (resourceAsMime == null) {
             return null;
         }
@@ -70,7 +71,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public final List<T> findAll(final String sortBy, final String sortOrder) {
-        final Response findAllResponse = findOneAsResponse(getURI() + QueryUtil.Q_SORT_BY + sortBy + QueryUtil.S_ORDER + sortOrder);
+        final Response findAllResponse = findOneAsResponse(getURI() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder);
         return marshaller.<List> decode(findAllResponse.getBody().asString(), List.class);
     }
 
@@ -136,7 +137,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public void delete(final long id) {
-        final Response deleteResponse = deleteAsResponse(getURI() + "/" + id);
+        final Response deleteResponse = deleteAsResponse(getURI() + WebConstants.PATH_SEP + id);
         Preconditions.checkState(deleteResponse.getStatusCode() == 204);
     }
 

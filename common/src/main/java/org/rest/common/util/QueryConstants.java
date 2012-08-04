@@ -2,7 +2,7 @@ package org.rest.common.util;
 
 import org.springframework.data.domain.Sort;
 
-public final class QueryUtil {
+public final class QueryConstants {
 
     public static final String ID_NEG = SearchField.id.toString() + SearchCommonUtil.NEGATION;
     public static final String NAME_NEG = SearchField.name.toString() + SearchCommonUtil.NEGATION;
@@ -19,7 +19,7 @@ public final class QueryUtil {
     public static final String SORT_BY = "sortBy";
     public static final String SORT_ORDER = "sortOrder";
     public static final String Q_SORT_BY = QUESTIONMARK + SORT_BY + SearchCommonUtil.OP;
-    public static final String S_ORDER = SearchCommonUtil.SEPARATOR_AMPER + QueryUtil.SORT_ORDER + SearchCommonUtil.OP;
+    public static final String S_ORDER = SearchCommonUtil.SEPARATOR_AMPER + QueryConstants.SORT_ORDER + SearchCommonUtil.OP;
     public static final String S_ORDER_ASC = S_ORDER + Sort.Direction.ASC.name();
     public static final String S_ORDER_DESC = S_ORDER + Sort.Direction.DESC.name();
 
@@ -28,7 +28,7 @@ public final class QueryUtil {
     /** - note: this character represents the ANY wildcard for the client consumption of the API */
     public static final String ANY_CLIENT = "*";
 
-    private QueryUtil() {
+    private QueryConstants() {
         throw new AssertionError();
     }
 

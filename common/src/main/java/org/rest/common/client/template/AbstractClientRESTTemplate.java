@@ -6,7 +6,8 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
-import org.rest.common.util.QueryUtil;
+import org.rest.common.util.QueryConstants;
+import org.rest.common.web.WebConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
@@ -40,7 +41,7 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
     @Override
     public final T findOne(final long id) {
         try {
-            final ResponseEntity<T> response = restTemplate.exchange(getURI() + "/" + id, HttpMethod.GET, new HttpEntity<String>(createAcceptHeaders()), clazz);
+            final ResponseEntity<T> response = restTemplate.exchange(getURI() + WebConstants.PATH_SEP + id, HttpMethod.GET, new HttpEntity<String>(createAcceptHeaders()), clazz);
             return response.getBody();
         } catch (final HttpClientErrorException clientEx) {
             return null;
@@ -62,7 +63,7 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 
     @Override
     public T findOneByAttributes(final String... attributes) {
-        final List<T> resourcesByName = findAllByURI(getURI() + QueryUtil.QUESTIONMARK + "q=" + constructURI(attributes));
+        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUESTIONMARK + "q=" + constructURI(attributes));
         if (resourcesByName.isEmpty()) {
             return null;
         }
@@ -80,7 +81,7 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 
     @Override
     public final List<T> findAll(final String sortBy, final String sortOrder) {
-        final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI() + QueryUtil.Q_SORT_BY + sortBy, HttpMethod.GET, new HttpEntity<String>(createAcceptHeaders()), List.class);
+        final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI() + QueryConstants.Q_SORT_BY + sortBy, HttpMethod.GET, new HttpEntity<String>(createAcceptHeaders()), List.class);
         return findAllResponse.getBody();
     }
 
@@ -95,7 +96,7 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 
     @Override
     public final List<T> findAllByAttributes(final String... attributes) {
-        final List<T> resourcesByAttributes = findAllByURI(getURI() + QueryUtil.QUESTIONMARK + "q=" + constructURI(attributes));
+        final List<T> resourcesByAttributes = findAllByURI(getURI() + QueryConstants.QUESTIONMARK + "q=" + constructURI(attributes));
         return resourcesByAttributes;
     }
 
@@ -133,7 +134,7 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 
     @Override
     public final void delete(final long id) {
-        final ResponseEntity<Object> deleteResourceResponse = restTemplate.exchange(getURI() + "/" + id, HttpMethod.DELETE, null, null);
+        final ResponseEntity<Object> deleteResourceResponse = restTemplate.exchange(getURI() + WebConstants.PATH_SEP + id, HttpMethod.DELETE, null, null);
 
         Preconditions.checkState(deleteResourceResponse.getStatusCode().value() == 204);
     }

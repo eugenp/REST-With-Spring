@@ -11,7 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
-import org.rest.common.util.QueryUtil;
+import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchField;
 import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.testing.security.AuthenticationUtil;
@@ -30,19 +30,19 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> extends
 
     @Test
     public final void whenResourcesAreRetrievedSorted_thenNoExceptions() {
-        givenAuthenticated().get(getURI() + QueryUtil.QUESTIONMARK + "page=0&size=41&sortBy=name");
+        givenAuthenticated().get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=41&sortBy=name");
     }
 
     @Test
     public final void whenResourcesAreRetrievedPagedAndSorted_then200IsReceived() {
-        final Response response = givenAuthenticated().get(getURI() + QueryUtil.QUESTIONMARK + "page=0&size=1&sortBy=name" + QueryUtil.S_ORDER_ASC);
+        final Response response = givenAuthenticated().get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=1&sortBy=name" + QueryConstants.S_ORDER_ASC);
 
         assertThat(response.getStatusCode(), is(200));
     }
 
     @Test
     public final void whenResourcesAreRetrievedSorted_then200IsReceived() {
-        final Response response = givenAuthenticated().get(getURI() + QueryUtil.QUESTIONMARK + "sortBy=name" + QueryUtil.S_ORDER_ASC);
+        final Response response = givenAuthenticated().get(getURI() + QueryConstants.QUESTIONMARK + "sortBy=name" + QueryConstants.S_ORDER_ASC);
 
         assertThat(response.getStatusCode(), is(200));
     }
@@ -56,7 +56,7 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> extends
         getAPI().createAsResponse(getAPI().createNewEntity());
 
         // When
-        final Response response = givenAuthenticated().get(getURI() + QueryUtil.QUESTIONMARK + "page=0&size=4&sortBy=name" + QueryUtil.S_ORDER_ASC);
+        final Response response = givenAuthenticated().get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=4&sortBy=name" + QueryConstants.S_ORDER_ASC);
         final List<T> resourcesPagedAndSorted = getAPI().getMarshaller().decode(response.asString(), List.class);
 
         // Then
@@ -71,7 +71,7 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> extends
         getAPI().createAsResponse(getAPI().createNewEntity());
 
         // When
-        final Response response = givenAuthenticated().get(getURI() + QueryUtil.QUESTIONMARK + "page=0&size=6");
+        final Response response = givenAuthenticated().get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=6");
         final List<T> resourcesPagedAndSorted = getAPI().getMarshaller().decode(response.asString(), List.class);
 
         // Then
@@ -81,7 +81,7 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> extends
     @Test
     public final void whenResourcesAreRetrievedByInvalidSorting_then400IsReceived() {
         // When
-        final Response response = givenAuthenticated().get(getURI() + QueryUtil.QUESTIONMARK + "page=0&size=4&sortBy=invalid");
+        final Response response = givenAuthenticated().get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=4&sortBy=invalid");
 
         // Then
         assertThat(response.getStatusCode(), is(400));

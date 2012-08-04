@@ -16,9 +16,10 @@ import org.rest.common.exceptions.ResourceNotFoundException;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.persistence.service.IService;
 import org.rest.common.search.ClientOperation;
-import org.rest.common.util.QueryUtil;
+import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.web.RestPreconditions;
+import org.rest.common.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,7 +128,7 @@ public abstract class AbstractController<T extends IEntity> {
 
     protected final void findAllRedirectToPagination(final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         final String resourceName = clazz.getSimpleName().toString().toLowerCase();
-        final String locationValue = uriBuilder.path("/" + resourceName).build().encode().toUriString() + QueryUtil.QUESTIONMARK + "page=0&size=10";
+        final String locationValue = uriBuilder.path(WebConstants.PATH_SEP + resourceName).build().encode().toUriString() + QueryConstants.QUESTIONMARK + "page=0&size=10";
 
         response.setHeader(HttpHeaders.LOCATION, locationValue);
     }

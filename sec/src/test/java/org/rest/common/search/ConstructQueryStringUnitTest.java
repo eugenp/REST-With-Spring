@@ -14,7 +14,7 @@ import static org.rest.common.util.SearchCommonUtil.SEPARATOR;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import org.junit.Test;
-import org.rest.common.util.QueryUtil;
+import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchField;
 import org.rest.sec.util.SearchTestUtil;
 
@@ -73,7 +73,7 @@ public final class ConstructQueryStringUnitTest {
         final Triple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), CONTAINS, name);
         final String queryString = SearchTestUtil.constructQueryString(null, nameConstraint);
 
-        assertEquals(SearchField.name.toString() + OP + QueryUtil.ANY_CLIENT + name + QueryUtil.ANY_CLIENT, queryString);
+        assertEquals(SearchField.name.toString() + OP + QueryConstants.ANY_CLIENT + name + QueryConstants.ANY_CLIENT, queryString);
     }
 
     // value for different operations
@@ -91,7 +91,7 @@ public final class ConstructQueryStringUnitTest {
         final String queryValue = new SearchUriBuilder().constructStringQueryValue(value, CONTAINS);
 
         // Then
-        assertThat(queryValue, equalTo(QueryUtil.ANY_CLIENT + value + QueryUtil.ANY_CLIENT));
+        assertThat(queryValue, equalTo(QueryConstants.ANY_CLIENT + value + QueryConstants.ANY_CLIENT));
     }
 
     @Test
@@ -124,7 +124,7 @@ public final class ConstructQueryStringUnitTest {
         final String queryValue = new SearchUriBuilder().constructStringQueryValue(value, ClientOperation.NEG_CONTAINS);
 
         // Then
-        assertThat(queryValue, equalTo(QueryUtil.ANY_CLIENT + value + QueryUtil.ANY_CLIENT));
+        assertThat(queryValue, equalTo(QueryConstants.ANY_CLIENT + value + QueryConstants.ANY_CLIENT));
     }
 
     @Test
@@ -135,7 +135,7 @@ public final class ConstructQueryStringUnitTest {
         final String queryValue = new SearchUriBuilder().constructStringQueryValue(value, ClientOperation.STARTS_WITH);
 
         // Then
-        assertThat(queryValue, equalTo(value + QueryUtil.ANY_CLIENT));
+        assertThat(queryValue, equalTo(value + QueryConstants.ANY_CLIENT));
     }
 
     @Test
@@ -146,7 +146,7 @@ public final class ConstructQueryStringUnitTest {
         final String queryValue = new SearchUriBuilder().constructStringQueryValue(value, ClientOperation.ENDS_WITH);
 
         // Then
-        assertThat(queryValue, equalTo(QueryUtil.ANY_CLIENT + value));
+        assertThat(queryValue, equalTo(QueryConstants.ANY_CLIENT + value));
     }
 
     @Test
@@ -157,7 +157,7 @@ public final class ConstructQueryStringUnitTest {
         final String queryValue = new SearchUriBuilder().constructStringQueryValue(value, ClientOperation.STARTS_WITH);
 
         // Then
-        assertThat(queryValue, equalTo(value + QueryUtil.ANY_CLIENT));
+        assertThat(queryValue, equalTo(value + QueryConstants.ANY_CLIENT));
     }
 
     @Test
@@ -168,7 +168,7 @@ public final class ConstructQueryStringUnitTest {
         final String queryValue = new SearchUriBuilder().constructStringQueryValue(value, ClientOperation.ENDS_WITH);
 
         // Then
-        assertThat(queryValue, equalTo(QueryUtil.ANY_CLIENT + value));
+        assertThat(queryValue, equalTo(QueryConstants.ANY_CLIENT + value));
     }
 
     // considering negation

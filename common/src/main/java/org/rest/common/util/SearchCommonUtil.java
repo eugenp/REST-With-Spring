@@ -53,19 +53,19 @@ public final class SearchCommonUtil {
 
     public static boolean validateParameters(final Set<String> paramKeys) {
         if (paramKeys.retainAll(Lists.newArrayList(// @formatter:off
-                SearchField.name.toString(), QueryUtil.NAME_NEG,
+                SearchField.name.toString(), QueryConstants.NAME_NEG,
 
-                SearchField.loginName.toString(), QueryUtil.LOGIN_NAME_NEG,
+                SearchField.loginName.toString(), QueryConstants.LOGIN_NAME_NEG,
 
-                SearchField.id.toString(), QueryUtil.ID_NEG,
+                SearchField.id.toString(), QueryConstants.ID_NEG,
 
-                SearchField.email.toString(), QueryUtil.EMAIL_NEG,
+                SearchField.email.toString(), QueryConstants.EMAIL_NEG,
 
-                SearchField.tenant.toString(), QueryUtil.TENANT_NEG,
+                SearchField.tenant.toString(), QueryConstants.TENANT_NEG,
 
-                SearchField.locked.toString(), QueryUtil.LOCKED_NEG,
+                SearchField.locked.toString(), QueryConstants.LOCKED_NEG,
 
-                SearchField.description.toString(), QueryUtil.DESCRIPTION_NEG))) { // @formatter:on
+                SearchField.description.toString(), QueryConstants.DESCRIPTION_NEG))) { // @formatter:on
             return false;
         }
         return true;
@@ -86,7 +86,7 @@ public final class SearchCommonUtil {
     }
 
     static String determineValue(final String value) {
-        return value.replaceAll("\\*", QueryUtil.ANY_SERVER);
+        return value.replaceAll("\\*", QueryConstants.ANY_SERVER);
     }
 
     static String determineKey(final boolean negated, final String key) {
@@ -98,13 +98,13 @@ public final class SearchCommonUtil {
 
     static ClientOperation determineOperation(final boolean negated, final String value) {
         ClientOperation op = null;
-        if (value.startsWith(QueryUtil.ANY_CLIENT)) {
-            if (value.endsWith(QueryUtil.ANY_CLIENT)) {
+        if (value.startsWith(QueryConstants.ANY_CLIENT)) {
+            if (value.endsWith(QueryConstants.ANY_CLIENT)) {
                 op = negated ? ClientOperation.NEG_CONTAINS : ClientOperation.CONTAINS;
             } else {
                 op = negated ? ClientOperation.NEG_ENDS_WITH : ClientOperation.ENDS_WITH;
             }
-        } else if (value.endsWith(QueryUtil.ANY_CLIENT)) {
+        } else if (value.endsWith(QueryConstants.ANY_CLIENT)) {
             op = negated ? ClientOperation.NEG_STARTS_WITH : ClientOperation.STARTS_WITH;
         } else {
             op = negated ? ClientOperation.NEG_EQ : ClientOperation.EQ;

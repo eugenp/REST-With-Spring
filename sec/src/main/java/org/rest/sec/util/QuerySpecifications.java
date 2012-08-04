@@ -8,7 +8,7 @@ import javax.persistence.metamodel.SingularAttribute;
 
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
-import org.rest.common.util.QueryUtil;
+import org.rest.common.util.QueryConstants;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.Principal_;
 import org.rest.sec.model.Privilege;
@@ -248,9 +248,9 @@ public final class QuerySpecifications {
             @Override
             public final Predicate toPredicate(final Root<T> root, final CriteriaQuery<?> query, final CriteriaBuilder builder) {
                 if (negated) {
-                    return builder.notLike(builder.lower(root.get(metaField)), QueryUtil.ANY_SERVER + value.toLowerCase());
+                    return builder.notLike(builder.lower(root.get(metaField)), QueryConstants.ANY_SERVER + value.toLowerCase());
                 }
-                return builder.like(builder.lower(root.get(metaField)), QueryUtil.ANY_SERVER + value.toLowerCase());
+                return builder.like(builder.lower(root.get(metaField)), QueryConstants.ANY_SERVER + value.toLowerCase());
             }
         };
     }
@@ -260,9 +260,9 @@ public final class QuerySpecifications {
             @Override
             public final Predicate toPredicate(final Root<T> root, final CriteriaQuery<?> query, final CriteriaBuilder builder) {
                 if (negated) {
-                    return builder.notLike(builder.lower(root.get(metaField)), value.toLowerCase() + QueryUtil.ANY_SERVER);
+                    return builder.notLike(builder.lower(root.get(metaField)), value.toLowerCase() + QueryConstants.ANY_SERVER);
                 }
-                return builder.like(builder.lower(root.get(metaField)), value.toLowerCase() + QueryUtil.ANY_SERVER);
+                return builder.like(builder.lower(root.get(metaField)), value.toLowerCase() + QueryConstants.ANY_SERVER);
             }
         };
     }
@@ -272,9 +272,9 @@ public final class QuerySpecifications {
             @Override
             public final Predicate toPredicate(final Root<T> root, final CriteriaQuery<?> query, final CriteriaBuilder builder) {
                 if (negated) {
-                    return builder.notLike(builder.lower(root.get(metaField)), QueryUtil.ANY_SERVER + value.toLowerCase() + QueryUtil.ANY_SERVER);
+                    return builder.notLike(builder.lower(root.get(metaField)), QueryConstants.ANY_SERVER + value.toLowerCase() + QueryConstants.ANY_SERVER);
                 }
-                return builder.like(builder.lower(root.get(metaField)), QueryUtil.ANY_SERVER + value.toLowerCase() + QueryUtil.ANY_SERVER);
+                return builder.like(builder.lower(root.get(metaField)), QueryConstants.ANY_SERVER + value.toLowerCase() + QueryConstants.ANY_SERVER);
             }
         };
     }

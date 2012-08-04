@@ -1,7 +1,7 @@
 package org.rest.common.search;
 
 import org.apache.commons.lang3.tuple.Triple;
-import org.rest.common.util.QueryUtil;
+import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchCommonUtil;
 
 public final class SearchUriBuilder {
@@ -53,19 +53,19 @@ public final class SearchUriBuilder {
     String constructStringQueryValue(final String name, final ClientOperation op) {
         switch (op) {
         case CONTAINS:
-            return QueryUtil.ANY_CLIENT + name + QueryUtil.ANY_CLIENT;
+            return QueryConstants.ANY_CLIENT + name + QueryConstants.ANY_CLIENT;
         case NEG_CONTAINS:
-            return QueryUtil.ANY_CLIENT + name + QueryUtil.ANY_CLIENT;
+            return QueryConstants.ANY_CLIENT + name + QueryConstants.ANY_CLIENT;
 
         case STARTS_WITH:
-            return name + QueryUtil.ANY_CLIENT;
+            return name + QueryConstants.ANY_CLIENT;
         case NEG_STARTS_WITH:
-            return name + QueryUtil.ANY_CLIENT;
+            return name + QueryConstants.ANY_CLIENT;
 
         case ENDS_WITH:
-            return QueryUtil.ANY_CLIENT + name;
+            return QueryConstants.ANY_CLIENT + name;
         case NEG_ENDS_WITH:
-            return QueryUtil.ANY_CLIENT + name;
+            return QueryConstants.ANY_CLIENT + name;
 
         default:
             break;

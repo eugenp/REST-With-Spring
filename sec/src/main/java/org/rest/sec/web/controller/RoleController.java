@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.rest.common.exceptions.ConflictException;
-import org.rest.common.util.QueryUtil;
+import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.web.RestPreconditions;
 import org.rest.common.web.controller.AbstractController;
@@ -51,24 +51,24 @@ public class RoleController extends AbstractController<Role> implements ISorting
     // find - all/paginated
 
     @Override
-    @RequestMapping(params = { QueryUtil.PAGE, QueryUtil.SIZE, QueryUtil.SORT_BY }, method = RequestMethod.GET)
+    @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<Role> findAllPaginatedAndSorted(@RequestParam(value = QueryUtil.PAGE) final int page, @RequestParam(value = QueryUtil.SIZE) final int size, @RequestParam(value = QueryUtil.SORT_BY) final String sortBy,
-            @RequestParam(value = QueryUtil.SORT_ORDER) final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+    public List<Role> findAllPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+            @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder, uriBuilder, response);
     }
 
     @Override
-    @RequestMapping(params = { QueryUtil.PAGE, QueryUtil.SIZE }, method = RequestMethod.GET)
+    @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
-    public List<Role> findAllPaginated(@RequestParam(value = QueryUtil.PAGE) final int page, @RequestParam(value = QueryUtil.SIZE) final int size, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+    public List<Role> findAllPaginated(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         return findPaginatedAndSortedInternal(page, size, null, null, uriBuilder, response);
     }
 
     @Override
-    @RequestMapping(params = { QueryUtil.SORT_BY }, method = RequestMethod.GET)
+    @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    public List<Role> findAllSorted(@RequestParam(value = QueryUtil.SORT_BY) final String sortBy, @RequestParam(value = QueryUtil.SORT_ORDER) final String sortOrder) {
+    public List<Role> findAllSorted(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         return findAllSortedInternal(sortBy, sortOrder);
     }
 

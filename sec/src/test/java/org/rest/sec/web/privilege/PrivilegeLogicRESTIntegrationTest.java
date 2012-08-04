@@ -1,5 +1,6 @@
 package org.rest.sec.web.privilege;
 
+import org.rest.common.web.WebConstants;
 import org.rest.sec.client.template.PrivilegeRESTTemplateImpl;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.test.SecLogicRESTIntegrationTest;
@@ -26,7 +27,7 @@ public class PrivilegeLogicRESTIntegrationTest extends SecLogicRESTIntegrationTe
 
     @Override
     protected final String getURI() {
-        return getAPI().getURI() + "/";
+        return getAPI().getURI() + WebConstants.PATH_SEP;
     }
 
     @Override

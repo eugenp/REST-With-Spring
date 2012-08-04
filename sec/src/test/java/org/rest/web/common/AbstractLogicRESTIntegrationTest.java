@@ -16,6 +16,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
+import org.rest.common.web.WebConstants;
 import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.util.IDUtils;
 
@@ -40,12 +41,12 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> extend
 
     @Test
     public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenNoExceptions() {
-        getAPI().findOneAsResponse(getURI() + "/" + randomNumeric(4));
+        getAPI().findOneAsResponse(getURI() + WebConstants.PATH_SEP + randomNumeric(4));
     }
 
     @Test
     public void givenResourceForIdDoesNotExist_whenResourceOfThatIdIsRetrieved_then404IsReceived() {
-        final Response response = getAPI().findOneAsResponse(getURI() + "/" + randomNumeric(6));
+        final Response response = getAPI().findOneAsResponse(getURI() + WebConstants.PATH_SEP + randomNumeric(6));
 
         assertThat(response.getStatusCode(), is(404));
     }
@@ -77,7 +78,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> extend
         final Long id = IDUtils.randomNegativeLong();
 
         // When
-        final Response res = getAPI().findOneAsResponse(getURI() + "/" + id);
+        final Response res = getAPI().findOneAsResponse(getURI() + WebConstants.PATH_SEP + id);
 
         // Then
         assertThat(res.getStatusCode(), is(409));
@@ -89,7 +90,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> extend
         final String id = randomAlphabetic(6);
 
         // When
-        final Response res = getAPI().findOneAsResponse(getURI() + "/" + id);
+        final Response res = getAPI().findOneAsResponse(getURI() + WebConstants.PATH_SEP + id);
 
         // Then
         assertThat(res.getStatusCode(), is(400));
