@@ -9,7 +9,7 @@ import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.rest.sec.client.ExamplePaths;
+import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.test.SecGeneralRESTIntegrationTest;
 import org.rest.testing.security.AuthenticationUtil;
 import org.rest.web.http.HTTPLinkHeaderUtils;
@@ -24,7 +24,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 @Ignore("temp")
 public class RootDiscoverabilityRESTIntegrationTest extends SecGeneralRESTIntegrationTest {
 
-    @Autowired private ExamplePaths paths;
+    @Autowired private SecBusinessPaths paths;
 
     // tests
 

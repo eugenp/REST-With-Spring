@@ -2,6 +2,7 @@ package org.rest.sec.persistence.setup;
 
 import java.util.Set;
 
+import org.rest.common.event.BeforeSetupEvent;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
@@ -12,6 +13,7 @@ import org.rest.sec.util.SecurityConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -32,6 +34,8 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
     @Autowired private IPrivilegeService privilegeService;
 
+    @Autowired private ApplicationContext eventPublisher;
+
     public SecuritySetup() {
         super();
     }
@@ -47,10 +51,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
     public final void onApplicationEvent(final ContextRefreshedEvent event) {
         if (!setupDone) {
             logger.info("Executing Setup");
-
-            /*
-             * privilegeService.deleteAll(); roleService.deleteAll(); principalService.deleteAll();
-             */
+            eventPublisher.publishEvent(new BeforeSetupEvent(this));
 
             createPrivileges();
             createRoles();

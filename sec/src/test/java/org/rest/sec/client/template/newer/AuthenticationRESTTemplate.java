@@ -1,7 +1,7 @@
 package org.rest.sec.client.template.newer;
 
 import org.rest.common.client.marshall.IMarshaller;
-import org.rest.sec.client.ExamplePaths;
+import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.model.dto.User;
 import org.rest.testing.security.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class AuthenticationRESTTemplate {
     @Autowired @Qualifier("xstreamMarshaller") IMarshaller marshaller;
     @Autowired private RestTemplate restTemplate;
 
-    @Autowired private ExamplePaths paths;
+    @Autowired private SecBusinessPaths paths;
 
     //
 

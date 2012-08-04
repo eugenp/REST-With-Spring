@@ -1,40 +1,40 @@
 package org.rest.sec.client;
 
-import org.rest.common.client.RESTPaths;
+import org.rest.common.client.SecPaths;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
 @Profile("client")
-public final class ExamplePaths {
+public final class SecBusinessPaths {
 
-    @Autowired RESTPaths paths;
+    @Autowired SecPaths secPaths;
 
     // API
 
-    public final String getRootUri() {
-        return paths.getContext() + "/api/";
-    }
-
     public final String getUserUri() {
-        return getRootUri() + "user";
+        return secPaths.getRootUri() + "user";
     }
 
     public final String getPrivilegeUri() {
-        return getRootUri() + "privilege";
+        return secPaths.getRootUri() + "privilege";
     }
 
     public final String getRoleUri() {
-        return getRootUri() + "role";
+        return secPaths.getRootUri() + "role";
     }
 
     public final String getAuthenticationUri() {
-        return getRootUri() + "authentication";
+        return secPaths.getRootUri() + "authentication";
     }
 
     public final String getLoginUri() {
-        return paths.getContext() + "/j_spring_security_check";
+        return secPaths.getContext() + "/j_spring_security_check";
+    }
+
+    public final String getRootUri() {
+        return secPaths.getRootUri();
     }
 
 }

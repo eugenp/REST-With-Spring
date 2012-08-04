@@ -8,7 +8,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.rest.sec.client.ExamplePaths;
+import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.util.SecurityConstants;
 import org.rest.spring.client.ClientTestConfig;
@@ -26,7 +26,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class AuthenticationRESTIntegrationTest {
 
-    @Autowired private ExamplePaths paths;
+    @Autowired private SecBusinessPaths paths;
 
     // tests
 

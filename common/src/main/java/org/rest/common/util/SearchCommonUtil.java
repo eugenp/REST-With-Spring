@@ -23,36 +23,36 @@ public final class SearchCommonUtil {
     public static final String NAME = "name";
 
     private SearchCommonUtil() {
-        throw new UnsupportedOperationException();
+	throw new UnsupportedOperationException();
     }
 
     // API
 
     public static List<ImmutableTriple<String, ClientOperation, String>> parseQueryString(final String queryString) {
-        Preconditions.checkNotNull(queryString);
-        Preconditions.checkState(queryString.matches("((id~?=[0-9]+)?,?)*((name~?=[0-9a-zA-Z*]+),?)*"));
+	Preconditions.checkNotNull(queryString);
+	Preconditions.checkState(queryString.matches("((id~?=[0-9]+)?,?)*((name~?=[0-9a-zA-Z*]+),?)*"));
 
-        final List<ImmutableTriple<String, ClientOperation, String>> tuplesList = Lists.newArrayList();
-        final String[] tuples = queryString.split(SEPARATOR);
-        for (final String tuple : tuples) {
-            final String[] keyAndValue = tuple.split(OP);
-            Preconditions.checkState(keyAndValue.length == 2);
-            tuplesList.add(createConstraintFromUriParam(keyAndValue[0], keyAndValue[1]));
-        }
+	final List<ImmutableTriple<String, ClientOperation, String>> tuplesList = Lists.newArrayList();
+	final String[] tuples = queryString.split(SEPARATOR);
+	for (final String tuple : tuples) {
+	    final String[] keyAndValue = tuple.split(OP);
+	    Preconditions.checkState(keyAndValue.length == 2);
+	    tuplesList.add(createConstraintFromUriParam(keyAndValue[0], keyAndValue[1]));
+	}
 
-        return tuplesList;
+	return tuplesList;
     }
 
     public static List<ImmutableTriple<String, ClientOperation, ?>> uriParamsToConstraints(final Map<String, String[]> validParameters) {
-        final List<ImmutableTriple<String, ClientOperation, ?>> tuplesList = Lists.newArrayList();
-        for (final Map.Entry<String, String[]> mapKeyValue : validParameters.entrySet()) {
-            tuplesList.add(createConstraintFromUriParam(mapKeyValue.getKey(), mapKeyValue.getValue()[0]));
-        }
-        return tuplesList;
+	final List<ImmutableTriple<String, ClientOperation, ?>> tuplesList = Lists.newArrayList();
+	for (final Map.Entry<String, String[]> mapKeyValue : validParameters.entrySet()) {
+	    tuplesList.add(createConstraintFromUriParam(mapKeyValue.getKey(), mapKeyValue.getValue()[0]));
+	}
+	return tuplesList;
     }
 
     public static boolean validateParameters(final Set<String> paramKeys) {
-        if (paramKeys.retainAll(Lists.newArrayList(// @formatter:off
+	if (paramKeys.retainAll(Lists.newArrayList(// @formatter:off
 				SearchField.name.toString(),
 				QueryUtil.NAME_NEG,
 				
@@ -74,50 +74,50 @@ public final class SearchCommonUtil {
 				SearchField.description.toString(),
 				QueryUtil.DESCRIPTION_NEG
 				) ) ){ // @formatter:on
-            return false;
-        }
-        return true;
+	    return false;
+	}
+	return true;
     }
 
     // util
 
     static ImmutableTriple<String, ClientOperation, String> createConstraintFromUriParam(final String key, final String value) {
-        boolean negated = false;
-        if (key.endsWith(NEGATION)) {
-            negated = true;
-        }
+	boolean negated = false;
+	if (key.endsWith(NEGATION)) {
+	    negated = true;
+	}
 
-        final ClientOperation op = determineOperation(negated, value);
-        final String theKey = determineKey(negated, key);
-        final String theValue = determineValue(value);
-        return new ImmutableTriple<String, ClientOperation, String>(theKey, op, theValue);
+	final ClientOperation op = determineOperation(negated, value);
+	final String theKey = determineKey(negated, key);
+	final String theValue = determineValue(value);
+	return new ImmutableTriple<String, ClientOperation, String>(theKey, op, theValue);
     }
 
     static String determineValue(final String value) {
-        return value.replaceAll("\\*", QueryUtil.ANY_SERVER);
+	return value.replaceAll("\\*", QueryUtil.ANY_SERVER);
     }
 
     static String determineKey(final boolean negated, final String key) {
-        if (negated) {
-            return key.substring(0, key.length() - 1);
-        }
-        return key;
+	if (negated) {
+	    return key.substring(0, key.length() - 1);
+	}
+	return key;
     }
 
     static ClientOperation determineOperation(final boolean negated, final String value) {
-        ClientOperation op = null;
-        if (value.startsWith(QueryUtil.ANY_CLIENT)) {
-            if (value.endsWith(QueryUtil.ANY_CLIENT)) {
-                op = negated ? ClientOperation.NEG_CONTAINS : ClientOperation.CONTAINS;
-            } else {
-                op = negated ? ClientOperation.NEG_ENDS_WITH : ClientOperation.ENDS_WITH;
-            }
-        } else if (value.endsWith(QueryUtil.ANY_CLIENT)) {
-            op = negated ? ClientOperation.NEG_STARTS_WITH : ClientOperation.STARTS_WITH;
-        } else {
-            op = negated ? ClientOperation.NEG_EQ : ClientOperation.EQ;
-        }
-        return op;
+	ClientOperation op = null;
+	if (value.startsWith(QueryUtil.ANY_CLIENT)) {
+	    if (value.endsWith(QueryUtil.ANY_CLIENT)) {
+		op = negated ? ClientOperation.NEG_CONTAINS : ClientOperation.CONTAINS;
+	    } else {
+		op = negated ? ClientOperation.NEG_ENDS_WITH : ClientOperation.ENDS_WITH;
+	    }
+	} else if (value.endsWith(QueryUtil.ANY_CLIENT)) {
+	    op = negated ? ClientOperation.NEG_STARTS_WITH : ClientOperation.STARTS_WITH;
+	} else {
+	    op = negated ? ClientOperation.NEG_EQ : ClientOperation.EQ;
+	}
+	return op;
     }
 
 }

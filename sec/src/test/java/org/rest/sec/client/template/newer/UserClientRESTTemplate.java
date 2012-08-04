@@ -4,7 +4,7 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.rest.common.client.template.AbstractClientRESTTemplate;
-import org.rest.sec.client.ExamplePaths;
+import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.util.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Profile("client")
 public class UserClientRESTTemplate extends AbstractClientRESTTemplate<User> {
 
-    @Autowired private ExamplePaths paths;
+    @Autowired private SecBusinessPaths paths;
 
     @Value("${http.host}") private String host;
     @Value("${http.port}") private int port;

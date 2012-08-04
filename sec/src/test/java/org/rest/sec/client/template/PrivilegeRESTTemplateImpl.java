@@ -3,7 +3,7 @@ package org.rest.sec.client.template;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.rest.common.client.template.AbstractRESTTemplate;
-import org.rest.sec.client.ExamplePaths;
+import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.model.Privilege;
 import org.rest.testing.security.AuthenticationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 @Profile("client")
 public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate<Privilege> {
 
-    @Autowired protected ExamplePaths paths;
+    @Autowired protected SecBusinessPaths paths;
 
     public PrivilegeRESTTemplateImpl() {
         super(Privilege.class);
