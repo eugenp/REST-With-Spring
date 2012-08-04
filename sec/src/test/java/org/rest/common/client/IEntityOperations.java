@@ -1,4 +1,4 @@
-package org.rest.common.client.template;
+package org.rest.common.client;
 
 import org.rest.common.IEntity;
 

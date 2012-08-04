@@ -117,12 +117,6 @@
 		<!-- json, xml, atom -->
 
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>${jackson-mapper-asl.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 			<version>${jaxb-api.version}</version>
@@ -202,26 +196,6 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
 			<version>1.2.0.Final</version>
-		</dependency>
-
-		<!-- logging -->
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${org.slf4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.0.6</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${org.slf4j.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 
 		<!-- test scoped -->
@@ -468,41 +442,41 @@
 				<plugins>
 
 					<plugin>
-                        <groupId>org.codehaus.cargo</groupId>
-                        <artifactId>cargo-maven2-plugin</artifactId>
-                        <configuration>
-                            <wait>false</wait>
-                            <container>
-                                <containerId>jetty7x</containerId>
-                                <type>embedded</type>
-                                <systemProperties>
-                                    <envTarget>dev</envTarget>
-                                    <persistenceTarget>cargo</persistenceTarget>
-                                </systemProperties>
-                            </container>
-                            <configuration>
-                                <properties>
-                                    <cargo.servlet.port>8083</cargo.servlet.port>
-                                </properties>
-                            </configuration>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>start-server</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>stop-server</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<configuration>
+							<wait>false</wait>
+							<container>
+								<containerId>jetty7x</containerId>
+								<type>embedded</type>
+								<systemProperties>
+									<envTarget>dev</envTarget>
+									<persistenceTarget>cargo</persistenceTarget>
+								</systemProperties>
+							</container>
+							<configuration>
+								<properties>
+									<cargo.servlet.port>8083</cargo.servlet.port>
+								</properties>
+							</configuration>
+						</configuration>
+						<executions>
+							<execution>
+								<id>start-server</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>start</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>stop-server</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>

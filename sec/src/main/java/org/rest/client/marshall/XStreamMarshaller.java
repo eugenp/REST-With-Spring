@@ -1,5 +1,6 @@
 package org.rest.client.marshall;
 
+import org.rest.common.client.marshall.IMarshaller;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.dto.User;
 import org.springframework.http.MediaType;

@@ -2,7 +2,7 @@ package org.rest.sec.client.template.test;
 
 import org.junit.runner.RunWith;
 import org.rest.client.AbstractClientRESTIntegrationTest;
-import org.rest.common.client.template.IEntityOperations;
+import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.UserRESTTemplateImpl;
 import org.rest.sec.client.template.newer.UserClientRESTTemplate;
 import org.rest.sec.model.dto.User;

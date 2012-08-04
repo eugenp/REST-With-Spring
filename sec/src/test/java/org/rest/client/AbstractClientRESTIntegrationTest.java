@@ -12,7 +12,8 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.INameableEntity;
-import org.rest.common.client.template.IEntityOperations;
+import org.rest.common.client.IEntityOperations;
+import org.rest.common.client.template.IClientTemplate;
 import org.rest.util.IDUtils;
 
 public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntity> {

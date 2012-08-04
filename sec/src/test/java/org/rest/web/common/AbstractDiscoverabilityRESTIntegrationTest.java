@@ -10,9 +10,9 @@ import static org.junit.matchers.JUnitMatchers.containsString;
 
 import org.hamcrest.core.AnyOf;
 import org.junit.Test;
-import org.rest.client.marshall.IMarshaller;
 import org.rest.client.template.IRESTTemplate;
 import org.rest.common.IEntity;
+import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.util.RESTURIUtil;
 import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.web.http.HTTPLinkHeaderUtils;

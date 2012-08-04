@@ -1,4 +1,4 @@
-package org.rest.client.marshall;
+package org.rest.common.client.marshall;
 
 public interface IMarshaller {
 

@@ -20,7 +20,7 @@ import org.junit.Test;
 import org.rest.client.template.IRESTTemplate;
 import org.rest.common.ClientOperation;
 import org.rest.common.INameableEntity;
-import org.rest.common.client.template.IEntityOperations;
+import org.rest.common.client.IEntityOperations;
 import org.rest.common.util.SearchField;
 import org.rest.util.IDUtils;
 import org.rest.util.ISearchIntegrationTest;

@@ -1,4 +1,4 @@
-package org.rest.client;
+package org.rest.common.client.template;
 
 import java.util.List;
 

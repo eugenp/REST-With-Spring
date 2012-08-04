@@ -3,7 +3,7 @@ package org.rest.sec.client.template.newer;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.rest.client.AbstractClientRESTTemplate;
+import org.rest.common.client.template.AbstractClientRESTTemplate;
 import org.rest.sec.client.ExamplePaths;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.util.SecurityConstants;

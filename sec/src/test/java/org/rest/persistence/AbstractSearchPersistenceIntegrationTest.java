@@ -18,7 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.common.ClientOperation;
 import org.rest.common.INameableEntity;
-import org.rest.common.client.template.IEntityOperations;
+import org.rest.common.client.IEntityOperations;
 import org.rest.common.persistence.service.IService;
 import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.util.SearchField;
