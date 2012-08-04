@@ -25,9 +25,12 @@ import com.google.common.collect.Sets;
 @ContextConfiguration(classes = { PersistenceJPAConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class RoleServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest<Role> {
 
-    @Autowired private IPrivilegeService privilegeService;
-    @Autowired private IRoleService roleService;
-    @Autowired private IPrincipalService principalService;
+    @Autowired
+    private IPrivilegeService privilegeService;
+    @Autowired
+    private IRoleService roleService;
+    @Autowired
+    private IPrincipalService principalService;
 
     // create
 

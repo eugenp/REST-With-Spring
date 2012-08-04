@@ -11,7 +11,8 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 public class PrivilegeDiscoverabilityRESTIntegrationTest extends SecDiscoverabilityRESTIntegrationTest<Privilege> {
 
-    @Autowired private PrivilegeRESTTemplateImpl restTemplate;
+    @Autowired
+    private PrivilegeRESTTemplateImpl restTemplate;
 
     public PrivilegeDiscoverabilityRESTIntegrationTest() {
         super(Privilege.class);

@@ -10,8 +10,10 @@ import org.springframework.web.client.RestTemplate;
 // @Component
 public final class SecurityAuthenticationComponent {
 
-    @Value("${http.host}") private String host;
-    @Value("${http.port}") private int port;
+    @Value("${http.host}")
+    private String host;
+    @Value("${http.port}")
+    private int port;
 
     public SecurityAuthenticationComponent() {
         super();

@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class RoleSearchPersistenceIntegrationTest extends AbstractSearchPersistenceIntegrationTest<Role> {
 
-    @Autowired private IRoleService roleService;
-    @Autowired private RoleEntityOpsImpl entityOps;
+    @Autowired
+    private IRoleService roleService;
+    @Autowired
+    private RoleEntityOpsImpl entityOps;
 
     // tests
 

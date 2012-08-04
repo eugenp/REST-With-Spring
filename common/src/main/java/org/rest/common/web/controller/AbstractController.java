@@ -39,7 +39,8 @@ public abstract class AbstractController<T extends IEntity> {
 
     private Class<T> clazz;
 
-    @Autowired private ApplicationEventPublisher eventPublisher;
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     public AbstractController(final Class<T> clazzToSet) {
         super();

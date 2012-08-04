@@ -33,7 +33,8 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
 
     private Class<T> clazz;
 
-    @Autowired protected ApplicationEventPublisher eventPublisher;
+    @Autowired
+    protected ApplicationEventPublisher eventPublisher;
 
     public AbstractService(final Class<T> clazzToSet) {
         super();

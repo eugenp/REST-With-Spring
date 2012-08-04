@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserPaginationRESTIntegrationTest extends SecPaginationRESTIntegrationTest<User> {
 
-    @Autowired private UserRESTTemplateImpl template;
+    @Autowired
+    private UserRESTTemplateImpl template;
 
     // tests
 

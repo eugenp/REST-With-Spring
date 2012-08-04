@@ -8,9 +8,12 @@ import org.springframework.stereotype.Component;
 @Profile("client")
 public final class CommonPaths {
 
-    @Value("${http.protocol}") private String protocol;
-    @Value("${http.host}") private String host;
-    @Value("${http.port}") private String port;
+    @Value("${http.protocol}")
+    private String protocol;
+    @Value("${http.host}")
+    private String host;
+    @Value("${http.port}")
+    private String port;
 
     // API
 

@@ -26,7 +26,8 @@ import com.jayway.restassured.specification.RequestSpecification;
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class AuthenticationRESTIntegrationTest {
 
-    @Autowired private SecBusinessPaths paths;
+    @Autowired
+    private SecBusinessPaths paths;
 
     // tests
 

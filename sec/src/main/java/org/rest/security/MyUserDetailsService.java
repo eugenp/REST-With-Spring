@@ -30,9 +30,11 @@ import com.google.common.collect.Sets;
 @Component
 public final class MyUserDetailsService implements UserDetailsService {
 
-    @Autowired IPrincipalService principalService;
+    @Autowired
+    IPrincipalService principalService;
 
-    @Autowired IRoleService roleService;
+    @Autowired
+    IRoleService roleService;
 
     public MyUserDetailsService() {
         super();

@@ -22,7 +22,8 @@ import com.google.common.collect.Sets;
 @ContextConfiguration(classes = { PersistenceJPAConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class PrincipalServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest<Principal> {
 
-    @Autowired private IPrincipalService principalService;
+    @Autowired
+    private IPrincipalService principalService;
 
     // create
 

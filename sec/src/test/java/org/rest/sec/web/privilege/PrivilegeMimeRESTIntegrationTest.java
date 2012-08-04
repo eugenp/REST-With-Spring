@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class PrivilegeMimeRESTIntegrationTest extends SecMimeRESTIntegrationTest<Privilege> {
 
-    @Autowired private PrivilegeRESTTemplateImpl restTemplate;
+    @Autowired
+    private PrivilegeRESTTemplateImpl restTemplate;
 
     public PrivilegeMimeRESTIntegrationTest() {
         super(Privilege.class);

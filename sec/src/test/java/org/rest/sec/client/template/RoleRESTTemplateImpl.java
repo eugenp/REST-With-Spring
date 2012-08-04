@@ -18,7 +18,8 @@ import com.jayway.restassured.specification.RequestSpecification;
 @Profile("client")
 public final class RoleRESTTemplateImpl extends AbstractRESTTemplate<Role> {
 
-    @Autowired protected SecBusinessPaths paths;
+    @Autowired
+    protected SecBusinessPaths paths;
 
     public RoleRESTTemplateImpl() {
         super(Role.class);

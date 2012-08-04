@@ -18,9 +18,12 @@ import com.google.common.collect.Sets;
 @Transactional
 public class RoleDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest<Role> {
 
-    @Autowired IPrivilegeJpaDAO privilegeDao;
-    @Autowired private IRoleJpaDAO roleDao;
-    @Autowired IPrincipalJpaDAO principalDao;
+    @Autowired
+    IPrivilegeJpaDAO privilegeDao;
+    @Autowired
+    private IRoleJpaDAO roleDao;
+    @Autowired
+    IPrincipalJpaDAO principalDao;
 
     // find by
 

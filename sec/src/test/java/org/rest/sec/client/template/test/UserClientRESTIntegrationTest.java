@@ -17,8 +17,10 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ContextConfiguration(classes = { ContextTestConfig.class, ClientTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class UserClientRESTIntegrationTest extends AbstractClientRESTIntegrationTest<User> {
 
-    @Autowired private UserClientRESTTemplate userClientTemplate;
-    @Autowired private UserRESTTemplateImpl userEntityOps;
+    @Autowired
+    private UserClientRESTTemplate userClientTemplate;
+    @Autowired
+    private UserRESTTemplateImpl userEntityOps;
 
     public UserClientRESTIntegrationTest() {
         super();

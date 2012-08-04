@@ -24,7 +24,8 @@ import com.google.common.collect.Lists;
 @Transactional
 public class UserServiceImpl implements IUserService {
 
-    @Autowired IPrincipalService principalService;
+    @Autowired
+    IPrincipalService principalService;
 
     public UserServiceImpl() {
         super();

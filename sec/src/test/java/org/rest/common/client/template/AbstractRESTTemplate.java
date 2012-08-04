@@ -27,7 +27,9 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     private static final String START_QUERY_PARAM = QueryConstants.QUESTIONMARK + "q=";
 
-    @Autowired @Qualifier("xstreamMarshaller") protected IMarshaller marshaller;
+    @Autowired
+    @Qualifier("xstreamMarshaller")
+    protected IMarshaller marshaller;
 
     protected final Class<T> clazz;
 

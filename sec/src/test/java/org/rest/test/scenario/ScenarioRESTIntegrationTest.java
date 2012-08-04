@@ -21,7 +21,8 @@ import com.jayway.restassured.specification.RequestSpecification;
 @Ignore("temp")
 public class ScenarioRESTIntegrationTest extends SecGeneralRESTIntegrationTest {
 
-    @Autowired private SecBusinessPaths paths;
+    @Autowired
+    private SecBusinessPaths paths;
 
     // tests
 

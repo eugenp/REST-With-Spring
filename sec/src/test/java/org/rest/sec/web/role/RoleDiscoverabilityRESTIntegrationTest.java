@@ -11,7 +11,8 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 public class RoleDiscoverabilityRESTIntegrationTest extends SecDiscoverabilityRESTIntegrationTest<Role> {
 
-    @Autowired private RoleRESTTemplateImpl restTemplate;
+    @Autowired
+    private RoleRESTTemplateImpl restTemplate;
 
     public RoleDiscoverabilityRESTIntegrationTest() {
         super(Role.class);

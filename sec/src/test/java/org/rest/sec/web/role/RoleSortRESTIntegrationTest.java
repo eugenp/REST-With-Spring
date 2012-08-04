@@ -10,7 +10,8 @@ import com.google.common.collect.Ordering;
 
 public class RoleSortRESTIntegrationTest extends SecSortRESTIntegrationTest<Role> {
 
-    @Autowired private RoleRESTTemplateImpl template;
+    @Autowired
+    private RoleRESTTemplateImpl template;
 
     // tests
 

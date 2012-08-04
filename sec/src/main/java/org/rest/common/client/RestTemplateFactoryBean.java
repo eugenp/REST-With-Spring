@@ -21,8 +21,10 @@ import org.springframework.web.client.RestTemplate;
 public class RestTemplateFactoryBean implements FactoryBean<RestTemplate>, InitializingBean {
     private RestTemplate restTemplate;
 
-    @Value("${sec.auth.basic}") boolean basicAuth;
-    @Value("${http.req.timeout}") int timeout;
+    @Value("${sec.auth.basic}")
+    boolean basicAuth;
+    @Value("${http.req.timeout}")
+    int timeout;
 
     // API
 

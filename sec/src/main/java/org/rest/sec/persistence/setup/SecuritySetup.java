@@ -28,13 +28,17 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
     private boolean setupDone;
 
-    @Autowired private IPrincipalService principalService;
+    @Autowired
+    private IPrincipalService principalService;
 
-    @Autowired private IRoleService roleService;
+    @Autowired
+    private IRoleService roleService;
 
-    @Autowired private IPrivilegeService privilegeService;
+    @Autowired
+    private IPrivilegeService privilegeService;
 
-    @Autowired private ApplicationContext eventPublisher;
+    @Autowired
+    private ApplicationContext eventPublisher;
 
     public SecuritySetup() {
         super();

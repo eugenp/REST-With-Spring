@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
 @Profile("client")
 public final class SecPaths {
 
-    @Autowired CommonPaths commonPaths;
+    @Autowired
+    CommonPaths commonPaths;
 
-    @Value("${http.sec.path}") private String secPaths;
+    @Value("${http.sec.path}")
+    private String secPaths;
 
     // API
 

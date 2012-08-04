@@ -16,7 +16,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class PrivilegeSearchRESTIntegrationTest extends AbstractSearchRESTIntegrationTest<Privilege> {
 
-    @Autowired private PrivilegeRESTTemplateImpl restTemplate;
+    @Autowired
+    private PrivilegeRESTTemplateImpl restTemplate;
 
     public PrivilegeSearchRESTIntegrationTest() {
         super();

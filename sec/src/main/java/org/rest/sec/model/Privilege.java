@@ -16,9 +16,14 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("privilege")
 public class Privilege implements INameableEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name = "PRIV_ID") private Long id;
-    @Column(unique = true, nullable = false) private String name;
-    @Column(unique = false, nullable = true) private String description;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "PRIV_ID")
+    private Long id;
+    @Column(unique = true, nullable = false)
+    private String name;
+    @Column(unique = false, nullable = true)
+    private String description;
 
     public Privilege() {
         super();

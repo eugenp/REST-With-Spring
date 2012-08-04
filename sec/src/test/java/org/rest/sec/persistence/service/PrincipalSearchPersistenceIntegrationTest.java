@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class PrincipalSearchPersistenceIntegrationTest extends AbstractSearchPersistenceIntegrationTest<Principal> {
 
-    @Autowired private IPrincipalService principalService;
-    @Autowired private PrincipalEntityOpsImpl entityOps;
+    @Autowired
+    private IPrincipalService principalService;
+    @Autowired
+    private PrincipalEntityOpsImpl entityOps;
 
     // tests
 

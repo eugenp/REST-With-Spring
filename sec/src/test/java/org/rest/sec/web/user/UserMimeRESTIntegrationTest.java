@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserMimeRESTIntegrationTest extends SecMimeRESTIntegrationTest<User> {
 
-    @Autowired private UserRESTTemplateImpl restTemplate;
+    @Autowired
+    private UserRESTTemplateImpl restTemplate;
 
     public UserMimeRESTIntegrationTest() {
         super(User.class);

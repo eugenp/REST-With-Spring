@@ -30,7 +30,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping(value = "privilege")
 public class PrivilegeController extends AbstractController<Privilege> implements ISortingController<Privilege> {
 
-    @Autowired private IPrivilegeService service;
+    @Autowired
+    private IPrivilegeService service;
 
     public PrivilegeController() {
         super(Privilege.class);
@@ -52,7 +53,8 @@ public class PrivilegeController extends AbstractController<Privilege> implement
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
     public List<Privilege> findAllPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size,
-            @RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+            @RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder, final UriComponentsBuilder uriBuilder,
+            final HttpServletResponse response) {
         return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder, uriBuilder, response);
     }
 

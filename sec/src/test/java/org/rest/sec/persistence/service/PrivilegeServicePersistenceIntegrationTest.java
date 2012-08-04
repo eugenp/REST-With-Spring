@@ -19,9 +19,12 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ContextConfiguration(classes = { PersistenceJPAConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class PrivilegeServicePersistenceIntegrationTest extends AbstractPersistenceServiceIntegrationTest<Privilege> {
 
-    @Autowired private IPrivilegeService privilegeService;
-    @Autowired IRoleService roleService;
-    @Autowired IPrincipalService principalService;
+    @Autowired
+    private IPrivilegeService privilegeService;
+    @Autowired
+    IRoleService roleService;
+    @Autowired
+    IPrincipalService principalService;
 
     // create
 

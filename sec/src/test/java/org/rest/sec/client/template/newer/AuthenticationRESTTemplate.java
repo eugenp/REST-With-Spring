@@ -18,10 +18,14 @@ import org.springframework.web.client.RestTemplate;
 @Profile("client")
 public class AuthenticationRESTTemplate {
 
-    @Autowired @Qualifier("xstreamMarshaller") IMarshaller marshaller;
-    @Autowired private RestTemplate restTemplate;
+    @Autowired
+    @Qualifier("xstreamMarshaller")
+    IMarshaller marshaller;
+    @Autowired
+    private RestTemplate restTemplate;
 
-    @Autowired private SecBusinessPaths paths;
+    @Autowired
+    private SecBusinessPaths paths;
 
     //
 

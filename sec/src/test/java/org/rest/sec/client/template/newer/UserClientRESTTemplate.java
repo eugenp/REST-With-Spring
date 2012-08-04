@@ -17,10 +17,13 @@ import org.springframework.stereotype.Component;
 @Profile("client")
 public class UserClientRESTTemplate extends AbstractClientRESTTemplate<User> {
 
-    @Autowired private SecBusinessPaths paths;
+    @Autowired
+    private SecBusinessPaths paths;
 
-    @Value("${http.host}") private String host;
-    @Value("${http.port}") private int port;
+    @Value("${http.host}")
+    private String host;
+    @Value("${http.port}")
+    private int port;
 
     public UserClientRESTTemplate() {
         super(User.class);

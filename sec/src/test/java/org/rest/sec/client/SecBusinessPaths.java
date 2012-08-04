@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
 @Profile("client")
 public final class SecBusinessPaths {
 
-    @Autowired SecPaths secPaths;
+    @Autowired
+    SecPaths secPaths;
 
     // API
 

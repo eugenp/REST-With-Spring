@@ -23,14 +23,20 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan({ "org.rest.sec.persistence" })
 public class PersistenceJPAConfig {
 
-    @Value("${jdbc.driverClassName}") private String driverClassName;
-    @Value("${jdbc.url}") private String url;
-    @Value("${jpa.generateDdl}") boolean jpaGenerateDdl;
+    @Value("${jdbc.driverClassName}")
+    private String driverClassName;
+    @Value("${jdbc.url}")
+    private String url;
+    @Value("${jpa.generateDdl}")
+    boolean jpaGenerateDdl;
 
     // Hibernate specific
-    @Value("${hibernate.dialect}") String hibernateDialect;
-    @Value("${hibernate.show_sql}") boolean hibernateShowSql;
-    @Value("${hibernate.hbm2ddl.auto}") String hibernateHbm2ddlAuto;
+    @Value("${hibernate.dialect}")
+    String hibernateDialect;
+    @Value("${hibernate.show_sql}")
+    boolean hibernateShowSql;
+    @Value("${hibernate.hbm2ddl.auto}")
+    String hibernateHbm2ddlAuto;
 
     public PersistenceJPAConfig() {
         super();

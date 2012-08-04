@@ -18,7 +18,8 @@ import com.google.common.base.Preconditions;
 public final class SpringVerificationsBeforeSetupListener implements ApplicationListener<BeforeSetupEvent> {
     // private static final Logger logger = LoggerFactory.getLogger(SpringVerificationsBeforeSetupListener.class);
 
-    @Autowired ApplicationContext context;
+    @Autowired
+    ApplicationContext context;
 
     public SpringVerificationsBeforeSetupListener() {
         super();

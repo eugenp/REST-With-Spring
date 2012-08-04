@@ -20,7 +20,8 @@ import com.jayway.restassured.response.Response;
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class SecurityRESTIntegrationTest {
 
-    @Autowired private UserRESTTemplateImpl userTemplate;
+    @Autowired
+    private UserRESTTemplateImpl userTemplate;
 
     // tests
 

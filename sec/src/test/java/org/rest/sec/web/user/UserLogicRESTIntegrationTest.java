@@ -24,9 +24,11 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<User> {
 
-    @Autowired private UserRESTTemplateImpl userRestTemplate;
+    @Autowired
+    private UserRESTTemplateImpl userRestTemplate;
 
-    @Autowired private RoleRESTTemplateImpl associationRestTemplate;
+    @Autowired
+    private RoleRESTTemplateImpl associationRestTemplate;
 
     public UserLogicRESTIntegrationTest() {
         super(User.class);

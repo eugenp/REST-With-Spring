@@ -10,7 +10,8 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 public class PrivilegeLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Privilege> {
 
-    @Autowired private PrivilegeRESTTemplateImpl restTemplate;
+    @Autowired
+    private PrivilegeRESTTemplateImpl restTemplate;
 
     public PrivilegeLogicRESTIntegrationTest() {
         super(Privilege.class);

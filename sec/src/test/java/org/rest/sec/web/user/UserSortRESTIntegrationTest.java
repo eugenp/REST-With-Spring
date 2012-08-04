@@ -9,7 +9,8 @@ import com.google.common.collect.Ordering;
 
 public class UserSortRESTIntegrationTest extends SecSortRESTIntegrationTest<User> {
 
-    @Autowired private UserRESTTemplateImpl template;
+    @Autowired
+    private UserRESTTemplateImpl template;
 
     // tests
 

@@ -22,13 +22,22 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 @XmlRootElement
 public class Principal implements INameableEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO) @Column(name = "PRINCIPAL_ID") private Long id;
-    @Column(unique = true, nullable = false) private String name;
-    @Column(nullable = false) private String password;
-    @Column( /* nullable = false */) private Boolean locked;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "PRINCIPAL_ID")
+    private Long id;
+    @Column(unique = true, nullable = false)
+    private String name;
+    @Column(nullable = false)
+    private String password;
+    @Column( /* nullable = false */)
+    private Boolean locked;
 
     // @formatter:off
-    @ManyToMany( /* cascade = { CascadeType.REMOVE }, */fetch = FetchType.EAGER) @JoinTable(joinColumns = { @JoinColumn(name = "PRINCIPAL_ID", referencedColumnName = "PRINCIPAL_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID") }) @XStreamImplicit private Set<Role> roles;
+    @ManyToMany( /* cascade = { CascadeType.REMOVE }, */fetch = FetchType.EAGER)
+    @JoinTable(joinColumns = { @JoinColumn(name = "PRINCIPAL_ID", referencedColumnName = "PRINCIPAL_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID") })
+    @XStreamImplicit
+    private Set<Role> roles;
 
     // @formatter:on
 

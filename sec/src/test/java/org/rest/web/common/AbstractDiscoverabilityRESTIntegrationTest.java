@@ -28,7 +28,9 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
 
     private Class<T> clazz;
 
-    @Autowired @Qualifier("xstreamMarshaller") IMarshaller marshaller;
+    @Autowired
+    @Qualifier("xstreamMarshaller")
+    IMarshaller marshaller;
 
     public AbstractDiscoverabilityRESTIntegrationTest(final Class<T> clazzToSet) {
         Preconditions.checkNotNull(clazzToSet);

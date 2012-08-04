@@ -25,8 +25,11 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 
     protected Class<T> clazz;
 
-    @Autowired protected RestTemplate restTemplate;
-    @Autowired @Qualifier("xstreamMarshaller") protected IMarshaller marshaller;
+    @Autowired
+    protected RestTemplate restTemplate;
+    @Autowired
+    @Qualifier("xstreamMarshaller")
+    protected IMarshaller marshaller;
 
     public AbstractClientRESTTemplate(final Class<T> clazzToSet) {
         super();

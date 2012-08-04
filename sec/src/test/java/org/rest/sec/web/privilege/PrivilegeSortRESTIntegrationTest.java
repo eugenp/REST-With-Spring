@@ -9,7 +9,8 @@ import com.google.common.collect.Ordering;
 
 public class PrivilegeSortRESTIntegrationTest extends SecSortRESTIntegrationTest<Privilege> {
 
-    @Autowired private PrivilegeRESTTemplateImpl template;
+    @Autowired
+    private PrivilegeRESTTemplateImpl template;
 
     // tests
 

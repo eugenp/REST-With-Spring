@@ -15,9 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PrivilegeDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest<Privilege> {
 
-    @Autowired private IPrivilegeJpaDAO privilegeDao;
-    @Autowired IRoleJpaDAO associationDao;
-    @Autowired IPrincipalJpaDAO principalDao;
+    @Autowired
+    private IPrivilegeJpaDAO privilegeDao;
+    @Autowired
+    IRoleJpaDAO associationDao;
+    @Autowired
+    IPrincipalJpaDAO principalDao;
 
     // save
 

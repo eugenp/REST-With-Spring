@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class PrivilegeSearchPersistenceIntegrationTest extends AbstractSearchPersistenceIntegrationTest<Privilege> {
 
-    @Autowired private IPrivilegeService privilegeService;
-    @Autowired private PrivilegeEntityOpsImpl entityOps;
+    @Autowired
+    private IPrivilegeService privilegeService;
+    @Autowired
+    private PrivilegeEntityOpsImpl entityOps;
 
     // tests
 

@@ -12,7 +12,8 @@ import org.rest.sec.client.template.newer.UserClientRESTTemplate;
 
 public class URIUnitTest {
 
-    @SuppressWarnings("rawtypes") public static AbstractClientRESTTemplate instance;
+    @SuppressWarnings("rawtypes")
+    public static AbstractClientRESTTemplate instance;
 
     @BeforeClass
     public static void beforeClass() {

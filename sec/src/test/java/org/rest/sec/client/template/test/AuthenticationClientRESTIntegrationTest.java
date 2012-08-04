@@ -21,7 +21,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class AuthenticationClientRESTIntegrationTest extends AbstractRESTIntegrationTest {
 
-    @Autowired private AuthenticationRESTTemplate authenticationRestTemplate;
+    @Autowired
+    private AuthenticationRESTTemplate authenticationRestTemplate;
 
     // tests
 

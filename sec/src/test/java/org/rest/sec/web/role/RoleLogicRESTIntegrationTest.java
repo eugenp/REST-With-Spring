@@ -23,8 +23,10 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Role> {
 
-    @Autowired private RoleRESTTemplateImpl restTemplate;
-    @Autowired private PrivilegeRESTTemplateImpl associationRestTemplate;
+    @Autowired
+    private RoleRESTTemplateImpl restTemplate;
+    @Autowired
+    private PrivilegeRESTTemplateImpl associationRestTemplate;
 
     public RoleLogicRESTIntegrationTest() {
         super(Role.class);
