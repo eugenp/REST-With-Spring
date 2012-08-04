@@ -38,8 +38,7 @@ final class PaginatedResultsRetrievedEventDiscoverabilityListener implements App
 
     //
 
-    final void addLinkHeaderOnPagedResourceRetrieval(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz, final int page,
-            final int totalPages, final int pageSize) {
+    final void addLinkHeaderOnPagedResourceRetrieval(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz, final int page, final int totalPages, final int pageSize) {
         final String resourceName = clazz.getSimpleName().toString().toLowerCase();
         uriBuilder.path(PATH_SEP + resourceName);
 

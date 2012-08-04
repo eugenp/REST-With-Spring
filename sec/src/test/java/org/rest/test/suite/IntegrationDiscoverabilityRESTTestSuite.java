@@ -9,8 +9,7 @@ import org.rest.sec.web.user.UserDiscoverabilityRESTIntegrationTest;
 import org.rest.web.root.RootDiscoverabilityRESTIntegrationTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({ UserDiscoverabilityRESTIntegrationTest.class, RoleDiscoverabilityRESTIntegrationTest.class, PrivilegeDiscoverabilityRESTIntegrationTest.class,
-        RootDiscoverabilityRESTIntegrationTest.class })
+@SuiteClasses({ UserDiscoverabilityRESTIntegrationTest.class, RoleDiscoverabilityRESTIntegrationTest.class, PrivilegeDiscoverabilityRESTIntegrationTest.class, RootDiscoverabilityRESTIntegrationTest.class })
 public final class IntegrationDiscoverabilityRESTTestSuite {
     //
 }

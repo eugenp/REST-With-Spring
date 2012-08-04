@@ -80,8 +80,7 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 
     @Override
     public final List<T> findAll(final String sortBy, final String sortOrder) {
-        final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI() + QueryUtil.Q_SORT_BY + sortBy, HttpMethod.GET, new HttpEntity<String>(createAcceptHeaders()),
-                List.class);
+        final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI() + QueryUtil.Q_SORT_BY + sortBy, HttpMethod.GET, new HttpEntity<String>(createAcceptHeaders()), List.class);
         return findAllResponse.getBody();
     }
 

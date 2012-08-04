@@ -41,8 +41,8 @@ public class RoleServiceImpl extends AbstractService<Role> implements IRoleServi
          */
 
         /*
-         * final List< Privilege > associationsTemp = Lists.newArrayList( entity.getPrivileges() ); entity.getPrivileges().clear(); for( final Privilege privilege :
-         * associationsTemp ){ entity.getPrivileges().add( associationDao.findByName( privilege.getName() ) ); }
+         * final List< Privilege > associationsTemp = Lists.newArrayList( entity.getPrivileges() ); entity.getPrivileges().clear(); for( final Privilege privilege : associationsTemp ){ entity.getPrivileges().add(
+         * associationDao.findByName( privilege.getName() ) ); }
          */
 
         return super.create(entity);

@@ -21,8 +21,7 @@ public class MySavedRequestAwareAuthenticationSuccessHandler extends SimpleUrlAu
     }
 
     @Override
-    public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws ServletException,
-            IOException {
+    public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws ServletException, IOException {
         final SavedRequest savedRequest = requestCache.getRequest(request, response);
 
         if (savedRequest == null) {

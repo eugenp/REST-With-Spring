@@ -21,8 +21,7 @@ public final class PaginatedResultsRetrievedEvent<T extends Serializable> extend
     private final int totalPages;
     private final int pageSize;
 
-    public PaginatedResultsRetrievedEvent(final Class<T> clazz, final UriComponentsBuilder uriBuilderToSet, final HttpServletResponse responseToSet, final int pageToSet,
-            final int totalPagesToSet, final int pageSizeToSet) {
+    public PaginatedResultsRetrievedEvent(final Class<T> clazz, final UriComponentsBuilder uriBuilderToSet, final HttpServletResponse responseToSet, final int pageToSet, final int totalPagesToSet, final int pageSizeToSet) {
         super(clazz);
 
         uriBuilder = uriBuilderToSet;
