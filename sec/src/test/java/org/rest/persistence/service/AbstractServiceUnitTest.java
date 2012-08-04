@@ -293,7 +293,9 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
      * 
      * @return the event publisher mock.
      */
-    protected abstract ApplicationEventPublisher getEventPublisher();
+    protected final ApplicationEventPublisher getEventPublisher() {
+        return eventPublisher;
+    }
 
     //
 

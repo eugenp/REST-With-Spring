@@ -13,7 +13,6 @@ import org.rest.sec.model.Privilege;
 import org.rest.sec.persistence.dao.IPrivilegeJpaDAO;
 import org.rest.sec.persistence.util.FixtureFactory;
 import org.rest.util.IDUtils;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;
@@ -79,11 +78,6 @@ public class PrivilegeServiceUnitTest extends AbstractServiceUnitTest<Privilege>
     @Override
     protected final JpaRepository<Privilege, Long> getDAO() {
         return daoMock;
-    }
-
-    @Override
-    protected final ApplicationEventPublisher getEventPublisher() {
-        return eventPublisher;
     }
 
     @Override

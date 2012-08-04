@@ -12,7 +12,6 @@ import org.rest.persistence.service.AbstractServiceUnitTest;
 import org.rest.sec.model.Role;
 import org.rest.sec.persistence.dao.IRoleJpaDAO;
 import org.rest.sec.persistence.util.FixtureFactory;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;
@@ -78,11 +77,6 @@ public class RoleServiceUnitTest extends AbstractServiceUnitTest<Role> {
     @Override
     protected final JpaRepository<Role, Long> getDAO() {
         return daoMock;
-    }
-
-    @Override
-    protected ApplicationEventPublisher getEventPublisher() {
-        return eventPublisher;
     }
 
     @Override

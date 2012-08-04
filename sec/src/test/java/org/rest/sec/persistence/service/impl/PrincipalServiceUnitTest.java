@@ -12,7 +12,6 @@ import org.rest.persistence.service.AbstractServiceUnitTest;
 import org.rest.sec.model.Principal;
 import org.rest.sec.persistence.dao.IPrincipalJpaDAO;
 import org.rest.sec.persistence.util.FixtureFactory;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;
@@ -83,11 +82,6 @@ public class PrincipalServiceUnitTest extends AbstractServiceUnitTest<Principal>
     @Override
     protected final Principal createNewEntity() {
         return FixtureFactory.createNewPrincipal();
-    }
-
-    @Override
-    protected ApplicationEventPublisher getEventPublisher() {
-        return eventPublisher;
     }
 
     @Override
