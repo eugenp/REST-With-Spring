@@ -6,10 +6,10 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.apache.http.HttpHeaders;
 import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.persistence.model.IEntity;
+import org.rest.common.search.ClientOperation;
+import org.rest.common.search.SearchUriBuilder;
 import org.rest.common.util.QueryUtil;
-import org.rest.common.web.ClientOperation;
 import org.rest.sec.util.SearchTestUtil;
-import org.rest.sec.util.SearchUriBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,9 @@ import com.jayway.restassured.response.Response;
  * REST Template for the consumption of the REST API <br>
  */
 public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTemplate<T> {
-    private static final String START_QUERY_PARAM = QueryUtil.QUESTIONMARK + "q=";
-
     protected final Logger logger = LoggerFactory.getLogger(getClass());
+
+    private static final String START_QUERY_PARAM = QueryUtil.QUESTIONMARK + "q=";
 
     @Autowired @Qualifier("xstreamMarshaller") protected IMarshaller marshaller;
 

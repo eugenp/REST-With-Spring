@@ -1,9 +1,8 @@
-package org.rest.sec.util;
+package org.rest.common.search;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.util.QueryUtil;
 import org.rest.common.util.SearchCommonUtil;
-import org.rest.common.web.ClientOperation;
 
 public final class SearchUriBuilder {
     private StringBuilder uri;

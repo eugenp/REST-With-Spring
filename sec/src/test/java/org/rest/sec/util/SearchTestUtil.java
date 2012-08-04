@@ -1,8 +1,9 @@
 package org.rest.sec.util;
 
 import org.apache.commons.lang3.tuple.Triple;
+import org.rest.common.search.ClientOperation;
+import org.rest.common.search.SearchUriBuilder;
 import org.rest.common.util.SearchField;
-import org.rest.common.web.ClientOperation;
 
 public final class SearchTestUtil {
 

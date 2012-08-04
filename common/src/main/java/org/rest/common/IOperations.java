@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.persistence.model.IEntity;
-import org.rest.common.web.ClientOperation;
+import org.rest.common.search.ClientOperation;
 
 public interface IOperations<T extends IEntity> {
 

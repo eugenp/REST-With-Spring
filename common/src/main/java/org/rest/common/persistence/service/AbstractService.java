@@ -9,7 +9,7 @@ import org.rest.common.persistence.event.EntityCreatedEvent;
 import org.rest.common.persistence.event.EntityDeletedEvent;
 import org.rest.common.persistence.event.EntityUpdatedEvent;
 import org.rest.common.persistence.model.IEntity;
-import org.rest.common.web.ClientOperation;
+import org.rest.common.search.ClientOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -7,8 +7,8 @@ import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
 
 import org.rest.common.persistence.model.IEntity;
+import org.rest.common.search.ClientOperation;
 import org.rest.common.util.QueryUtil;
-import org.rest.common.web.ClientOperation;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.Principal_;
 import org.rest.sec.model.Privilege;

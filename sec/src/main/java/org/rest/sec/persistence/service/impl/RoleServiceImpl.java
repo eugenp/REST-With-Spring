@@ -2,7 +2,7 @@ package org.rest.sec.persistence.service.impl;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.persistence.service.AbstractService;
-import org.rest.common.web.ClientOperation;
+import org.rest.common.search.ClientOperation;
 import org.rest.sec.model.Role;
 import org.rest.sec.persistence.dao.IRoleJpaDAO;
 import org.rest.sec.persistence.service.IRoleService;
@@ -29,7 +29,7 @@ public class RoleServiceImpl extends AbstractService<Role> implements IRoleServi
 
     @Override
     public Role findByName(final String name) {
-        return dao.findByName(name);
+        return getDao().findByName(name);
     }
 
     // create
@@ -51,17 +51,18 @@ public class RoleServiceImpl extends AbstractService<Role> implements IRoleServi
     // Spring
 
     @Override
-    protected final IRoleJpaDAO getDao() {
-        return dao;
+    public Specification<Role> resolveConstraint(final Triple<String, ClientOperation, String> constraint) {
+        return SearchSecUtil.resolveConstraint(constraint, Role.class);
     }
 
     @Override
-    public Specification<Role> resolveConstraint(final Triple<String, ClientOperation, String> constraint) {
-        return SearchSecUtil.resolveConstraint(constraint, Role.class);
+    protected final IRoleJpaDAO getDao() {
+        return dao;
     }
 
     @Override
     protected JpaSpecificationExecutor<Role> getSpecificationExecutor() {
         return dao;
     }
+
 }
