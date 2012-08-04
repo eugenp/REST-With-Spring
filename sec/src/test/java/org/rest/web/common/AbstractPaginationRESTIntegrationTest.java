@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.test.AbstractRESTIntegrationTest;
-import org.rest.testing.security.AuthenticationUtil;
 
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
@@ -77,9 +76,7 @@ public abstract class AbstractPaginationRESTIntegrationTest<T extends IEntity> e
 
     // util
 
-    protected final RequestSpecification givenAuthenticated() {
-        return AuthenticationUtil.givenBasicAuthenticated();
-    }
+    protected abstract RequestSpecification givenAuthenticated();
 
     // template method
 
