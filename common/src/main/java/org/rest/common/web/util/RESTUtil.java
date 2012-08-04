@@ -8,7 +8,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 public final class RESTUtil {
 
     private RESTUtil() {
-	throw new AssertionError();
+        throw new AssertionError();
     }
 
     //
@@ -20,12 +20,12 @@ public final class RESTUtil {
      * @param message	the message to show if failed to create.
      */
     public static void propagateStatusCodeOnCreate(final ResponseEntity<?> createResponse, final String message) {
-	if (createResponse.getStatusCode().value() == 409) {
-	    throw new ConflictException(message);
-	}
-	if (createResponse.getStatusCode().value() != 201) {
-	    throw new IllegalStateException(message);
-	}
+        if (createResponse.getStatusCode().value() == 409) {
+            throw new ConflictException(message);
+        }
+        if (createResponse.getStatusCode().value() != 201) {
+            throw new IllegalStateException(message);
+        }
     }
 
     /**
@@ -34,10 +34,10 @@ public final class RESTUtil {
      * @param message the message to show if failed to created
      */
     public static void propagateStatusCodeOnException(final HttpStatusCodeException ex, final String message) {
-	if (ex.getStatusCode().value() == 409) {
-	    throw new ValidationException(ex.getStatusText());
-	}
+        if (ex.getStatusCode().value() == 409) {
+            throw new ValidationException(ex.getStatusText());
+        }
 
-	throw new IllegalStateException(message);
+        throw new IllegalStateException(message);
     }
 }

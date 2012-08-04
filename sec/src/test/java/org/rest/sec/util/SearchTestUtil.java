@@ -13,11 +13,13 @@ public final class SearchTestUtil {
     // API
 
     public static String constructQueryString(final String idVal, final String nameVal) {
-        return new SearchUriBuilder().consume(ClientOperation.EQ, SearchField.id.toString(), idVal, false).consume(ClientOperation.EQ, SearchField.name.toString(), nameVal, false).build();
+        return new SearchUriBuilder().consume(ClientOperation.EQ, SearchField.id.toString(), idVal, false).consume(ClientOperation.EQ, SearchField.name.toString(), nameVal, false)
+                .build();
     }
 
     public static String constructQueryString(final String idVal, final boolean negatedId, final String nameVal, final boolean negatedName) {
-        return new SearchUriBuilder().consume(ClientOperation.EQ, SearchField.id.toString(), idVal, negatedId).consume(ClientOperation.EQ, SearchField.name.toString(), nameVal, negatedName).build();
+        return new SearchUriBuilder().consume(ClientOperation.EQ, SearchField.id.toString(), idVal, negatedId)
+                .consume(ClientOperation.EQ, SearchField.name.toString(), nameVal, negatedName).build();
     }
 
     public static String constructQueryString(final Triple<String, ClientOperation, String> idConstraint, final Triple<String, ClientOperation, String> nameConstraint) {

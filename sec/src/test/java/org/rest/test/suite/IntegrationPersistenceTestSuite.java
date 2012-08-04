@@ -15,18 +15,12 @@ import org.rest.sec.persistence.service.RoleServicePersistenceIntegrationTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({// @formatter:off
-    PrincipalSearchPersistenceIntegrationTest.class,
-    PrincipalServicePersistenceIntegrationTest.class,
-    PrincipalDAOPersistenceIntegrationTest.class,
+PrincipalSearchPersistenceIntegrationTest.class, PrincipalServicePersistenceIntegrationTest.class, PrincipalDAOPersistenceIntegrationTest.class,
 
-    PrivilegeSearchPersistenceIntegrationTest.class,
-    PrivilegeServicePersistenceIntegrationTest.class,
-    PrivilegeDAOPersistenceIntegrationTest.class,
+PrivilegeSearchPersistenceIntegrationTest.class, PrivilegeServicePersistenceIntegrationTest.class, PrivilegeDAOPersistenceIntegrationTest.class,
 
-    RoleSearchPersistenceIntegrationTest.class,
-    RoleServicePersistenceIntegrationTest.class,
-    RoleDAOPersistenceIntegrationTest.class
-} ) // @formatter:on
+RoleSearchPersistenceIntegrationTest.class, RoleServicePersistenceIntegrationTest.class, RoleDAOPersistenceIntegrationTest.class })
+// @formatter:on
 public final class IntegrationPersistenceTestSuite {
     //
 }

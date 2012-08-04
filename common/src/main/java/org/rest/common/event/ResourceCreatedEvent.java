@@ -22,29 +22,29 @@ public final class ResourceCreatedEvent<T extends Serializable> extends Applicat
     private final UriComponentsBuilder uriBuilder;
 
     public ResourceCreatedEvent(final Class<T> clazz, final UriComponentsBuilder uriBuilderToSet, final HttpServletResponse responseToSet, final long idOfNewResourceToSet) {
-	super(clazz);
+        super(clazz);
 
-	Preconditions.checkNotNull(uriBuilderToSet);
-	Preconditions.checkNotNull(responseToSet);
-	Preconditions.checkNotNull(idOfNewResourceToSet);
+        Preconditions.checkNotNull(uriBuilderToSet);
+        Preconditions.checkNotNull(responseToSet);
+        Preconditions.checkNotNull(idOfNewResourceToSet);
 
-	uriBuilder = uriBuilderToSet;
-	response = responseToSet;
-	idOfNewResource = idOfNewResourceToSet;
+        uriBuilder = uriBuilderToSet;
+        response = responseToSet;
+        idOfNewResource = idOfNewResourceToSet;
     }
 
     //
 
     public final UriComponentsBuilder getUriBuilder() {
-	return uriBuilder;
+        return uriBuilder;
     }
 
     public final HttpServletResponse getResponse() {
-	return response;
+        return response;
     }
 
     public final long getIdOfNewResource() {
-	return idOfNewResource;
+        return idOfNewResource;
     }
 
     /**
@@ -54,7 +54,7 @@ public final class ResourceCreatedEvent<T extends Serializable> extends Applicat
      */
     @SuppressWarnings("unchecked")
     public final Class<T> getClazz() {
-	return (Class<T>) getSource();
+        return (Class<T>) getSource();
     }
 
 }

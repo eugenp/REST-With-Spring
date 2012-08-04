@@ -39,7 +39,8 @@ public class PrivilegeClientRESTTemplate extends AbstractClientRESTTemplate<Priv
     protected void basicAuth() {
         final HttpComponentsClientHttpRequestFactory requestFactory = (HttpComponentsClientHttpRequestFactory) restTemplate.getRequestFactory();
         final DefaultHttpClient httpClient = (DefaultHttpClient) requestFactory.getHttpClient();
-        httpClient.getCredentialsProvider().setCredentials(new AuthScope(host, port, AuthScope.ANY_REALM), new UsernamePasswordCredentials(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD));
+        httpClient.getCredentialsProvider().setCredentials(new AuthScope(host, port, AuthScope.ANY_REALM),
+                new UsernamePasswordCredentials(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD));
     }
 
 }

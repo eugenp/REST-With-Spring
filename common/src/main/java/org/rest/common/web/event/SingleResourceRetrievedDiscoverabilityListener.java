@@ -18,24 +18,24 @@ import com.google.common.net.HttpHeaders;
 final class SingleResourceRetrievedDiscoverabilityListener implements ApplicationListener<SingleResourceRetrievedEvent> {
 
     public SingleResourceRetrievedDiscoverabilityListener() {
-	super();
+        super();
     }
 
     //
 
     @Override
     public final void onApplicationEvent(final SingleResourceRetrievedEvent ev) {
-	Preconditions.checkNotNull(ev);
+        Preconditions.checkNotNull(ev);
 
-	discoverGetAllURI(ev.getUriBuilder(), ev.getResponse(), ev.getClazz());
+        discoverGetAllURI(ev.getUriBuilder(), ev.getResponse(), ev.getClazz());
     }
 
     final void discoverGetAllURI(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz) {
-	final String resourceName = clazz.getSimpleName().toString().toLowerCase();
-	final String uriForResourceCreation = uriBuilder.path(PATH_SEP + resourceName).build().encode().toUriString();
+        final String resourceName = clazz.getSimpleName().toString().toLowerCase();
+        final String uriForResourceCreation = uriBuilder.path(PATH_SEP + resourceName).build().encode().toUriString();
 
-	final String linkHeaderValue = LinkUtil.createLinkHeader(uriForResourceCreation, LinkUtil.REL_COLLECTION);
-	response.addHeader(HttpHeaders.LINK, linkHeaderValue);
+        final String linkHeaderValue = LinkUtil.createLinkHeader(uriForResourceCreation, LinkUtil.REL_COLLECTION);
+        response.addHeader(HttpHeaders.LINK, linkHeaderValue);
     }
 
 }

@@ -52,15 +52,16 @@ public class PrivilegeController extends AbstractController<Privilege> implement
     @RequestMapping(params = { QueryUtil.PAGE, QueryUtil.SIZE, QueryUtil.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
     public List<Privilege> findAllPaginatedAndSorted(@RequestParam(value = QueryUtil.PAGE) final int page, @RequestParam(value = QueryUtil.SIZE) final int size,
-            @RequestParam(value = QueryUtil.SORT_BY) final String sortBy, @RequestParam(value = QueryUtil.SORT_ORDER) final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+            @RequestParam(value = QueryUtil.SORT_BY) final String sortBy, @RequestParam(value = QueryUtil.SORT_ORDER) final String sortOrder,
+            final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder, uriBuilder, response);
     }
 
     @Override
     @RequestMapping(params = { QueryUtil.PAGE, QueryUtil.SIZE }, method = RequestMethod.GET)
     @ResponseBody
-    public List<Privilege> findAllPaginated(@RequestParam(value = QueryUtil.PAGE) final int page, @RequestParam(value = QueryUtil.SIZE) final int size, final UriComponentsBuilder uriBuilder,
-            final HttpServletResponse response) {
+    public List<Privilege> findAllPaginated(@RequestParam(value = QueryUtil.PAGE) final int page, @RequestParam(value = QueryUtil.SIZE) final int size,
+            final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         return findPaginatedAndSortedInternal(page, size, null, null, uriBuilder, response);
     }
 

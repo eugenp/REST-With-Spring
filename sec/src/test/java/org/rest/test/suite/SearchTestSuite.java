@@ -13,16 +13,12 @@ import org.rest.util.ParseQueryStringUnitTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({// @formatter:off
-    ParseQueryStringUnitTest.class,
-    ConstructQueryStringUnitTest.class,
+ParseQueryStringUnitTest.class, ConstructQueryStringUnitTest.class,
 
-    PrincipalSearchPersistenceIntegrationTest.class,
-    RoleSearchPersistenceIntegrationTest.class,
-    PrivilegeSearchPersistenceIntegrationTest.class,
+PrincipalSearchPersistenceIntegrationTest.class, RoleSearchPersistenceIntegrationTest.class, PrivilegeSearchPersistenceIntegrationTest.class,
 
-    RoleSearchRESTIntegrationTest.class,
-    PrivilegeSearchRESTIntegrationTest.class
-}) // @formatter:on
+RoleSearchRESTIntegrationTest.class, PrivilegeSearchRESTIntegrationTest.class })
+// @formatter:on
 public final class SearchTestSuite {
     //
 }

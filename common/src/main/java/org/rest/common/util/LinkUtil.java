@@ -14,7 +14,7 @@ public final class LinkUtil {
     public static final String REL_LAST = "last";
 
     private LinkUtil() {
-	throw new AssertionError();
+        throw new AssertionError();
     }
 
     //
@@ -28,16 +28,16 @@ public final class LinkUtil {
      * @return the complete url
      */
     public static String createLinkHeader(final String uri, final String rel) {
-	return "<" + uri + ">; rel=\"" + rel + "\"";
+        return "<" + uri + ">; rel=\"" + rel + "\"";
     }
 
     public static String gatherLinkHeaders(final String... uris) {
-	final StringBuilder linkHeaderValue = new StringBuilder();
-	for (final String uri : uris) {
-	    linkHeaderValue.append(uri);
-	    linkHeaderValue.append(", ");
-	}
-	return linkHeaderValue.substring(0, linkHeaderValue.length() - 2).toString();
+        final StringBuilder linkHeaderValue = new StringBuilder();
+        for (final String uri : uris) {
+            linkHeaderValue.append(uri);
+            linkHeaderValue.append(", ");
+        }
+        return linkHeaderValue.substring(0, linkHeaderValue.length() - 2).toString();
     }
 
 }

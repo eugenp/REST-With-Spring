@@ -19,20 +19,20 @@ public final class SingleResourceRetrievedEvent<T extends Serializable> extends 
     private final HttpServletResponse response;
 
     public SingleResourceRetrievedEvent(final Class<T> clazz, final UriComponentsBuilder uriBuilderToSet, final HttpServletResponse responseToSet) {
-	super(clazz);
+        super(clazz);
 
-	uriBuilder = uriBuilderToSet;
-	response = responseToSet;
+        uriBuilder = uriBuilderToSet;
+        response = responseToSet;
     }
 
     //
 
     public final UriComponentsBuilder getUriBuilder() {
-	return uriBuilder;
+        return uriBuilder;
     }
 
     public final HttpServletResponse getResponse() {
-	return response;
+        return response;
     }
 
     /**
@@ -42,7 +42,7 @@ public final class SingleResourceRetrievedEvent<T extends Serializable> extends 
      */
     @SuppressWarnings("unchecked")
     public final Class<T> getClazz() {
-	return (Class<T>) getSource();
+        return (Class<T>) getSource();
     }
 
 }

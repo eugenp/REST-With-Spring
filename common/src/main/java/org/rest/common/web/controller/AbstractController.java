@@ -132,7 +132,8 @@ public abstract class AbstractController<T extends IEntity> {
         response.setHeader(HttpHeaders.LOCATION, locationValue);
     }
 
-    protected final List<T> findPaginatedAndSortedInternal(final int page, final int size, final String sortBy, final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+    protected final List<T> findPaginatedAndSortedInternal(final int page, final int size, final String sortBy, final String sortOrder, final UriComponentsBuilder uriBuilder,
+            final HttpServletResponse response) {
         Page<T> resultPage = null;
         try {
             resultPage = getService().findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
@@ -154,7 +155,8 @@ public abstract class AbstractController<T extends IEntity> {
         return Lists.newArrayList(resultPage.getContent());
     }
 
-    protected final List<T> findPaginatedInternal(final int page, final int size, final String sortBy, final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+    protected final List<T> findPaginatedInternal(final int page, final int size, final String sortBy, final String sortOrder, final UriComponentsBuilder uriBuilder,
+            final HttpServletResponse response) {
         Page<T> resultPage = null;
         try {
             resultPage = getService().findAllPaginatedAndSorted(page, size, sortBy, sortOrder);

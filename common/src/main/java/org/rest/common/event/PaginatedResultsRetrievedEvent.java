@@ -21,36 +21,37 @@ public final class PaginatedResultsRetrievedEvent<T extends Serializable> extend
     private final int totalPages;
     private final int pageSize;
 
-    public PaginatedResultsRetrievedEvent(final Class<T> clazz, final UriComponentsBuilder uriBuilderToSet, final HttpServletResponse responseToSet, final int pageToSet, final int totalPagesToSet, final int pageSizeToSet) {
-	super(clazz);
+    public PaginatedResultsRetrievedEvent(final Class<T> clazz, final UriComponentsBuilder uriBuilderToSet, final HttpServletResponse responseToSet, final int pageToSet,
+            final int totalPagesToSet, final int pageSizeToSet) {
+        super(clazz);
 
-	uriBuilder = uriBuilderToSet;
-	response = responseToSet;
-	page = pageToSet;
-	totalPages = totalPagesToSet;
-	pageSize = pageSizeToSet;
+        uriBuilder = uriBuilderToSet;
+        response = responseToSet;
+        page = pageToSet;
+        totalPages = totalPagesToSet;
+        pageSize = pageSizeToSet;
     }
 
     // API
 
     public final UriComponentsBuilder getUriBuilder() {
-	return uriBuilder;
+        return uriBuilder;
     }
 
     public final HttpServletResponse getResponse() {
-	return response;
+        return response;
     }
 
     public final int getPage() {
-	return page;
+        return page;
     }
 
     public final int getTotalPages() {
-	return totalPages;
+        return totalPages;
     }
 
     public final int getPageSize() {
-	return pageSize;
+        return pageSize;
     }
 
     /**
@@ -60,7 +61,7 @@ public final class PaginatedResultsRetrievedEvent<T extends Serializable> extend
      */
     @SuppressWarnings("unchecked")
     public final Class<T> getClazz() {
-	return (Class<T>) getSource();
+        return (Class<T>) getSource();
     }
 
 }

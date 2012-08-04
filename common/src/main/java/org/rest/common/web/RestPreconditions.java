@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 public final class RestPreconditions {
 
     private RestPreconditions() {
-	throw new AssertionError();
+        throw new AssertionError();
     }
 
     // API
@@ -25,10 +25,10 @@ public final class RestPreconditions {
      * @throws ResourceNotFoundException if {@code reference} is null
      */
     public static <T> T checkNotNull(final T reference) {
-	if (reference == null) {
-	    throw new ResourceNotFoundException();
-	}
-	return reference;
+        if (reference == null) {
+            throw new ResourceNotFoundException();
+        }
+        return reference;
     }
 
     /**
@@ -39,10 +39,10 @@ public final class RestPreconditions {
      * @throws ConflictException if {@code reference} is null
      */
     public static <T> T checkRequestElementNotNull(final T reference) {
-	if (reference == null) {
-	    throw new ConflictException();
-	}
-	return reference;
+        if (reference == null) {
+            throw new ConflictException();
+        }
+        return reference;
     }
 
     /**
@@ -51,9 +51,9 @@ public final class RestPreconditions {
      * @param expression a boolean expression
      */
     public static void checkRequestState(final boolean expression) {
-	if (!expression) {
-	    throw new ConflictException();
-	}
+        if (!expression) {
+            throw new ConflictException();
+        }
     }
 
     /**
@@ -63,9 +63,9 @@ public final class RestPreconditions {
      * @throws ResourceNotFoundException if expression is false, means value not found.
      */
     public static void checkFound(final boolean expression) {
-	if (!expression) {
-	    throw new ResourceNotFoundException();
-	}
+        if (!expression) {
+            throw new ResourceNotFoundException();
+        }
     }
 
     /**
@@ -75,9 +75,9 @@ public final class RestPreconditions {
      * @throws ForbiddenException if expression is false, means operation not allowed.
      */
     public static void checkAllowed(final boolean expression) {
-	if (!expression) {
-	    throw new ForbiddenException();
-	}
+        if (!expression) {
+            throw new ForbiddenException();
+        }
     }
 
 }

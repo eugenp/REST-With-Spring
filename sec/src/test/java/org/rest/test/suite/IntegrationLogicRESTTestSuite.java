@@ -12,15 +12,12 @@ import org.rest.security.AuthenticationRESTIntegrationTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({// @formatter:off
-    UserLogicRESTIntegrationTest.class,
-    RoleLogicRESTIntegrationTest.class,
-    PrivilegeLogicRESTIntegrationTest.class,
+UserLogicRESTIntegrationTest.class, RoleLogicRESTIntegrationTest.class, PrivilegeLogicRESTIntegrationTest.class,
 
-    RoleSearchRESTIntegrationTest.class,
-    PrivilegeSearchRESTIntegrationTest.class,
+RoleSearchRESTIntegrationTest.class, PrivilegeSearchRESTIntegrationTest.class,
 
-    AuthenticationRESTIntegrationTest.class
-}) //@formatter:off
+AuthenticationRESTIntegrationTest.class })
+// @formatter:off
 public final class IntegrationLogicRESTTestSuite {
     //
 }

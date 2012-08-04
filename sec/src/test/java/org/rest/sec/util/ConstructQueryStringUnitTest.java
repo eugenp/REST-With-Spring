@@ -63,7 +63,8 @@ public final class ConstructQueryStringUnitTest {
 
     @Test
     public final void whenQueryURIConstructedFromContainsName_thenNoExceptions() {
-        final Triple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), CONTAINS, randomAlphabetic(8));
+        final Triple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), CONTAINS,
+                randomAlphabetic(8));
         SearchTestUtil.constructQueryString(null, nameConstraint);
     }
 
