@@ -1,4 +1,4 @@
-package org.rest.common;
+package org.rest.common.persistence.model;
 
 public interface INameableEntity extends IEntity {
 

@@ -5,7 +5,7 @@ import java.net.URI;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.rest.common.util.RESTURIUtil;
+import org.rest.common.util.LinkUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +27,10 @@ final class DiscoverabilityController {
 
         // TODO: add these in a more dynamic way, not hardcoded
         final URI uri = new UriTemplate("{rootUri}{resource}").expand(rootUri, "user");
-        final String linkToEntity = RESTURIUtil.createLinkHeader(uri.toASCIIString(), RESTURIUtil.REL_COLLECTION);
-        final String linkToTest = RESTURIUtil.createLinkHeader("test", RESTURIUtil.REL_COLLECTION);
+        final String linkToEntity = LinkUtil.createLinkHeader(uri.toASCIIString(), LinkUtil.REL_COLLECTION);
+        final String linkToTest = LinkUtil.createLinkHeader("test", LinkUtil.REL_COLLECTION);
 
-        response.addHeader(HttpHeaders.LINK, RESTURIUtil.gatherLinkHeaders(linkToEntity, linkToTest));
+        response.addHeader(HttpHeaders.LINK, LinkUtil.gatherLinkHeaders(linkToEntity, linkToTest));
     }
 
 }

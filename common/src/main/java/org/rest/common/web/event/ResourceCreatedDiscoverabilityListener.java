@@ -1,4 +1,4 @@
-package org.rest.web.event;
+package org.rest.common.web.event;
 
 import javax.servlet.http.HttpServletResponse;
 

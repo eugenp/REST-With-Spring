@@ -11,7 +11,7 @@ import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.rest.common.IEntity;
+import org.rest.common.persistence.model.IEntity;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
 import org.rest.util.IDUtils;

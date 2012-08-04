@@ -1,8 +1,8 @@
-package org.rest.client.template;
+package org.rest.common.client.template;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.ClientOperation;
-import org.rest.common.IEntity;
+import org.rest.common.persistence.model.IEntity;
 
 import com.jayway.restassured.response.Response;
 

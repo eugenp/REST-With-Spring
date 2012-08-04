@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.rest.common.INameableEntity;
+import org.rest.common.persistence.model.INameableEntity;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

@@ -2,7 +2,7 @@ package org.rest.sec.client.template;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
-import org.rest.client.template.AbstractRESTTemplate;
+import org.rest.common.client.template.AbstractRESTTemplate;
 import org.rest.sec.client.ExamplePaths;
 import org.rest.sec.model.Privilege;
 import org.rest.testing.security.AuthenticationUtil;

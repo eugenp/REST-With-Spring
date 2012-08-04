@@ -1,4 +1,4 @@
-package org.rest.web.common;
+package org.rest.common.web.controller;
 
 import java.util.List;
 
@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.http.HttpHeaders;
 import org.rest.common.ClientOperation;
-import org.rest.common.IEntity;
 import org.rest.common.event.PaginatedResultsRetrievedEvent;
 import org.rest.common.event.ResourceCreatedEvent;
 import org.rest.common.event.SingleResourceRetrievedEvent;
 import org.rest.common.exceptions.BadRequestException;
 import org.rest.common.exceptions.ConflictException;
 import org.rest.common.exceptions.ResourceNotFoundException;
+import org.rest.common.persistence.model.IEntity;
 import org.rest.common.persistence.service.IService;
 import org.rest.common.util.QueryUtil;
 import org.rest.common.util.SearchCommonUtil;

@@ -1,4 +1,4 @@
-package org.rest.client;
+package org.rest.common.client;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
@@ -11,9 +11,8 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.rest.common.INameableEntity;
-import org.rest.common.client.IEntityOperations;
 import org.rest.common.client.template.IClientTemplate;
+import org.rest.common.persistence.model.INameableEntity;
 import org.rest.util.IDUtils;
 
 public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntity> {

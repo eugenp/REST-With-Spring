@@ -1,4 +1,4 @@
-package org.rest.client;
+package org.rest.common.client;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;

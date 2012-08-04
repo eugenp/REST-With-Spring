@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-@ComponentScan({ "org.rest.web", "org.rest.sec.web" })
+@ComponentScan({ "org.rest.common.web", "org.rest.sec.web" })
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 

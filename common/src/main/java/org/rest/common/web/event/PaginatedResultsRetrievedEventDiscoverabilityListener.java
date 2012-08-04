@@ -1,10 +1,10 @@
-package org.rest.web.event;
+package org.rest.common.web.event;
 
-import static org.rest.common.util.RESTURIUtil.REL_FIRST;
-import static org.rest.common.util.RESTURIUtil.REL_LAST;
-import static org.rest.common.util.RESTURIUtil.REL_NEXT;
-import static org.rest.common.util.RESTURIUtil.REL_PREV;
-import static org.rest.common.util.RESTURIUtil.createLinkHeader;
+import static org.rest.common.util.LinkUtil.REL_FIRST;
+import static org.rest.common.util.LinkUtil.REL_LAST;
+import static org.rest.common.util.LinkUtil.REL_NEXT;
+import static org.rest.common.util.LinkUtil.REL_PREV;
+import static org.rest.common.util.LinkUtil.createLinkHeader;
 
 import javax.servlet.http.HttpServletResponse;
 

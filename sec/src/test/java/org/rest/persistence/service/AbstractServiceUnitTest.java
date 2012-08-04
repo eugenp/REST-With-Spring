@@ -11,10 +11,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
-import org.rest.common.IEntity;
 import org.rest.common.persistence.event.BeforeEntityCreatedEvent;
 import org.rest.common.persistence.event.EntityCreatedEvent;
 import org.rest.common.persistence.event.EntityUpdatedEvent;
+import org.rest.common.persistence.model.IEntity;
 import org.rest.common.persistence.service.IService;
 import org.rest.util.IDUtils;
 import org.springframework.context.ApplicationEventPublisher;

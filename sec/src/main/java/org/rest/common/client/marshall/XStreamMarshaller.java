@@ -1,4 +1,4 @@
-package org.rest.client.marshall;
+package org.rest.common.client.marshall;
 
 import org.rest.common.client.marshall.IMarshaller;
 import org.rest.sec.model.Privilege;

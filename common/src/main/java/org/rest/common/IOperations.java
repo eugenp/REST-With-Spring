@@ -3,6 +3,7 @@ package org.rest.common;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
+import org.rest.common.persistence.model.IEntity;
 
 public interface IOperations<T extends IEntity> {
 

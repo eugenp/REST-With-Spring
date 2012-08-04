@@ -1,11 +1,11 @@
-package org.rest.web.common;
+package org.rest.common.web.controller;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.rest.common.IEntity;
+import org.rest.common.persistence.model.IEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
 public interface ISortingController<T extends IEntity> {

@@ -2,8 +2,8 @@ package org.rest.common.client.template;
 
 import java.util.List;
 
-import org.rest.common.IEntity;
 import org.rest.common.IOperations;
+import org.rest.common.persistence.model.IEntity;
 
 public interface IClientTemplate<T extends IEntity> extends IOperations<T> {
 

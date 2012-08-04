@@ -1,6 +1,6 @@
 package org.rest.common.persistence.event;
 
-import org.rest.common.IEntity;
+import org.rest.common.persistence.model.IEntity;
 import org.springframework.context.ApplicationEvent;
 
 import com.google.common.base.Preconditions;

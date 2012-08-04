@@ -9,8 +9,8 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.rest.client.template.IRESTTemplate;
-import org.rest.common.IEntity;
+import org.rest.common.client.template.IRESTTemplate;
+import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.QueryUtil;
 import org.rest.common.util.SearchField;
 import org.rest.test.AbstractRESTIntegrationTest;

@@ -1,4 +1,4 @@
-package org.rest.client;
+package org.rest.common.client;
 
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.rest.sec.model.Privilege;

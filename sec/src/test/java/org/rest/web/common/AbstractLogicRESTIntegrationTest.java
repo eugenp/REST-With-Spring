@@ -14,8 +14,8 @@ import org.apache.http.HttpHeaders;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.rest.client.template.IRESTTemplate;
-import org.rest.common.IEntity;
+import org.rest.common.client.template.IRESTTemplate;
+import org.rest.common.persistence.model.IEntity;
 import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.util.IDUtils;
 

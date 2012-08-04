@@ -1,6 +1,6 @@
 package org.rest.util.order;
 
-import org.rest.common.IEntity;
+import org.rest.common.persistence.model.IEntity;
 
 import com.google.common.collect.Ordering;
 

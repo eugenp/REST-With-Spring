@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.ClientOperation;
-import org.rest.common.IEntity;
 import org.rest.common.persistence.event.BeforeEntityCreatedEvent;
 import org.rest.common.persistence.event.EntitiesDeletedEvent;
 import org.rest.common.persistence.event.EntityCreatedEvent;
 import org.rest.common.persistence.event.EntityDeletedEvent;
 import org.rest.common.persistence.event.EntityUpdatedEvent;
+import org.rest.common.persistence.model.IEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +33,13 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
 
     private Class<T> clazz;
 
-    @Autowired protected ApplicationEventPublisher eventPublisher;
+    @Autowired
+    protected ApplicationEventPublisher eventPublisher;
 
     public AbstractService(final Class<T> clazzToSet) {
-        super();
+	super();
 
-        clazz = clazzToSet;
+	clazz = clazzToSet;
     }
 
     // API
@@ -47,30 +48,30 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
 
     @Override
     public List<T> search(final Triple<String, ClientOperation, String>... constraints) {
-        Preconditions.checkState(constraints != null);
-        Preconditions.checkState(constraints.length > 0);
-        final Specification<T> firstSpec = resolveConstraint(constraints[0]);
-        Specifications<T> specifications = Specifications.where(firstSpec);
-        for (int i = 1; i < constraints.length; i++) {
-            specifications = specifications.and(resolveConstraint(constraints[i]));
-        }
-        if (firstSpec == null) {
-            return Lists.newArrayList();
-        }
+	Preconditions.checkState(constraints != null);
+	Preconditions.checkState(constraints.length > 0);
+	final Specification<T> firstSpec = resolveConstraint(constraints[0]);
+	Specifications<T> specifications = Specifications.where(firstSpec);
+	for (int i = 1; i < constraints.length; i++) {
+	    specifications = specifications.and(resolveConstraint(constraints[i]));
+	}
+	if (firstSpec == null) {
+	    return Lists.newArrayList();
+	}
 
-        return getSpecificationExecutor().findAll(specifications);
+	return getSpecificationExecutor().findAll(specifications);
     }
 
     @Override
     public Page<T> searchPaged(final int page, final int size, final Triple<String, ClientOperation, String>... constraints) {
-        final Specification<T> firstSpec = resolveConstraint(constraints[0]);
-        Preconditions.checkState(firstSpec != null);
-        Specifications<T> specifications = Specifications.where(firstSpec);
-        for (int i = 1; i < constraints.length; i++) {
-            specifications = specifications.and(resolveConstraint(constraints[i]));
-        }
+	final Specification<T> firstSpec = resolveConstraint(constraints[0]);
+	Preconditions.checkState(firstSpec != null);
+	Specifications<T> specifications = Specifications.where(firstSpec);
+	for (int i = 1; i < constraints.length; i++) {
+	    specifications = specifications.and(resolveConstraint(constraints[i]));
+	}
 
-        return getSpecificationExecutor().findAll(specifications, new PageRequest(page, size, null));
+	return getSpecificationExecutor().findAll(specifications, new PageRequest(page, size, null));
     }
 
     // find
@@ -78,76 +79,76 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
     @Override
     @Transactional(readOnly = true)
     public T findOne(final long id) {
-        return getDao().findOne(id);
+	return getDao().findOne(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<T> findAll() {
-        return Lists.newArrayList(getDao().findAll());
+	return Lists.newArrayList(getDao().findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
-        Sort sortInfo = null;
-        if (sortBy != null) {
-            sortInfo = new Sort(sortBy);
-        }
+	Sort sortInfo = null;
+	if (sortBy != null) {
+	    sortInfo = new Sort(sortBy);
+	}
 
-        return getDao().findAll(new PageRequest(page, size, sortInfo));
+	return getDao().findAll(new PageRequest(page, size, sortInfo));
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<T> findAll(final String sortBy, final String sortOrder) {
-        final Sort sortInfo = constructSort(sortBy, sortOrder);
-        return Lists.newArrayList(getDao().findAll(sortInfo));
+	final Sort sortInfo = constructSort(sortBy, sortOrder);
+	return Lists.newArrayList(getDao().findAll(sortInfo));
     }
 
     // save/create/persist
 
     @Override
     public T create(final T entity) {
-        Preconditions.checkNotNull(entity);
-        eventPublisher.publishEvent(new BeforeEntityCreatedEvent<T>(this, clazz, entity));
+	Preconditions.checkNotNull(entity);
+	eventPublisher.publishEvent(new BeforeEntityCreatedEvent<T>(this, clazz, entity));
 
-        final T persistedEntity = getDao().save(entity);
+	final T persistedEntity = getDao().save(entity);
 
-        eventPublisher.publishEvent(new EntityCreatedEvent<T>(this, clazz, persistedEntity));
-        return persistedEntity;
+	eventPublisher.publishEvent(new EntityCreatedEvent<T>(this, clazz, persistedEntity));
+	return persistedEntity;
     }
 
     // update/merge
 
     @Override
     public void update(final T entity) {
-        Preconditions.checkNotNull(entity);
+	Preconditions.checkNotNull(entity);
 
-        getDao().save(entity);
-        eventPublisher.publishEvent(new EntityUpdatedEvent<T>(this, clazz, entity));
+	getDao().save(entity);
+	eventPublisher.publishEvent(new EntityUpdatedEvent<T>(this, clazz, entity));
     }
 
     // delete
 
     @Override
     public void deleteAll() {
-        getDao().deleteAll();
-        eventPublisher.publishEvent(new EntitiesDeletedEvent<T>(this, clazz));
+	getDao().deleteAll();
+	eventPublisher.publishEvent(new EntitiesDeletedEvent<T>(this, clazz));
     }
 
     @Override
     public void delete(final long id) {
-        final T entity = getDao().findOne(id);
-        getDao().delete(entity);
-        eventPublisher.publishEvent(new EntityDeletedEvent<T>(this, clazz, entity));
+	final T entity = getDao().findOne(id);
+	getDao().delete(entity);
+	eventPublisher.publishEvent(new EntityDeletedEvent<T>(this, clazz, entity));
     }
 
     // count
 
     @Override
     public long count() {
-        return getDao().count();
+	return getDao().count();
     }
 
     // template method
@@ -158,17 +159,17 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
 
     @SuppressWarnings("static-method")
     public Specification<T> resolveConstraint(final Triple<String, ClientOperation, String> constraint) {
-        throw new UnsupportedOperationException();
+	throw new UnsupportedOperationException();
     }
 
     // util
 
     final Sort constructSort(final String sortBy, final String sortOrder) {
-        Sort sortInfo = null;
-        if (sortBy != null) {
-            sortInfo = new Sort(Direction.fromString(sortOrder), sortBy);
-        }
-        return sortInfo;
+	Sort sortInfo = null;
+	if (sortBy != null) {
+	    sortInfo = new Sort(Direction.fromString(sortOrder), sortBy);
+	}
+	return sortInfo;
     }
 
 }

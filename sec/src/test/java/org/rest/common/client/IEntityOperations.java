@@ -1,6 +1,6 @@
 package org.rest.common.client;
 
-import org.rest.common.IEntity;
+import org.rest.common.persistence.model.IEntity;
 
 public interface IEntityOperations<T extends IEntity> {
 

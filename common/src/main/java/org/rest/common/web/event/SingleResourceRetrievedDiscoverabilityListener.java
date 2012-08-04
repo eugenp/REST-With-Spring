@@ -1,9 +1,9 @@
-package org.rest.web.event;
+package org.rest.common.web.event;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.rest.common.event.SingleResourceRetrievedEvent;
-import org.rest.common.util.RESTURIUtil;
+import org.rest.common.util.LinkUtil;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -26,7 +26,7 @@ final class SingleResourceRetrievedDiscoverabilityListener implements Applicatio
         final String resourceName = clazz.getSimpleName().toString().toLowerCase();
         final String uriForResourceCreation = uriBuilder.path("/" + resourceName).build().encode().toUriString();
 
-        final String linkHeaderValue = RESTURIUtil.createLinkHeader(uriForResourceCreation, RESTURIUtil.REL_COLLECTION);
+        final String linkHeaderValue = LinkUtil.createLinkHeader(uriForResourceCreation, LinkUtil.REL_COLLECTION);
         response.addHeader(HttpHeaders.LINK, linkHeaderValue);
     }
 
