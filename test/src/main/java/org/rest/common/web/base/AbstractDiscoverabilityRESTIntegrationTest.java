@@ -15,7 +15,6 @@ import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.LinkUtil;
 import org.rest.common.web.util.HTTPLinkHeaderUtils;
-import org.rest.test.AbstractRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -24,7 +23,7 @@ import com.google.common.net.HttpHeaders;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
-public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEntity> extends AbstractRESTIntegrationTest {
+public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEntity> {
 
     private Class<T> clazz;
 

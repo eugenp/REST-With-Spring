@@ -17,14 +17,13 @@ import org.junit.Test;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.web.WebConstants;
-import org.rest.test.AbstractRESTIntegrationTest;
 import org.rest.util.IDUtils;
 
 import com.google.common.base.Preconditions;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
-public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> extends AbstractRESTIntegrationTest {
+public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
 
     protected final Class<T> clazz;
 

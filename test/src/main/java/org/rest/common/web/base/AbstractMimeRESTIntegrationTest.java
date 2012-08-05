@@ -8,13 +8,12 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
-import org.rest.test.AbstractRESTIntegrationTest;
 import org.springframework.http.MediaType;
 
 import com.google.common.base.Preconditions;
 import com.jayway.restassured.response.Response;
 
-public abstract class AbstractMimeRESTIntegrationTest<T extends IEntity> extends AbstractRESTIntegrationTest {
+public abstract class AbstractMimeRESTIntegrationTest<T extends IEntity> {
 
     private Class<T> clazz;
 

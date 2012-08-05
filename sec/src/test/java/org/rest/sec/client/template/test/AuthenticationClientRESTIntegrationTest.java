@@ -10,7 +10,6 @@ import org.rest.sec.model.dto.User;
 import org.rest.sec.util.SecurityConstants;
 import org.rest.spring.client.ClientTestConfig;
 import org.rest.spring.context.ContextTestConfig;
-import org.rest.test.AbstractRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,7 +18,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
-public class AuthenticationClientRESTIntegrationTest extends AbstractRESTIntegrationTest {
+public class AuthenticationClientRESTIntegrationTest {
 
     @Autowired
     private AuthenticationRESTTemplate authenticationRestTemplate;

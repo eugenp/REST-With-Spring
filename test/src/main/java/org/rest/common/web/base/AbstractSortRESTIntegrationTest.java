@@ -14,7 +14,6 @@ import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchField;
 import org.rest.common.util.order.OrderById;
-import org.rest.test.AbstractRESTIntegrationTest;
 import org.springframework.data.domain.Sort;
 
 import com.google.common.collect.Ordering;
@@ -22,7 +21,7 @@ import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
-public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> extends AbstractRESTIntegrationTest {
+public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
 
     // tests
 
