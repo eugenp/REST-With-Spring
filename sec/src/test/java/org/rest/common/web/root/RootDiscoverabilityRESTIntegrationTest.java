@@ -1,4 +1,4 @@
-package org.rest.web.root;
+package org.rest.common.web.root;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -9,10 +9,10 @@ import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.rest.common.web.util.HTTPLinkHeaderUtils;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.test.SecGeneralRESTIntegrationTest;
 import org.rest.testing.security.AuthenticationUtil;
-import org.rest.web.http.HTTPLinkHeaderUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Predicates;

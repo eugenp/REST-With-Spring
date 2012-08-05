@@ -8,10 +8,10 @@ import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.rest.common.web.util.HTTPLinkHeaderUtils;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.test.SecGeneralRESTIntegrationTest;
 import org.rest.testing.security.AuthenticationUtil;
-import org.rest.web.http.HTTPLinkHeaderUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.net.HttpHeaders;

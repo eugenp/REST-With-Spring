@@ -2,11 +2,11 @@ package org.rest.sec.web.role;
 
 import org.junit.runner.RunWith;
 import org.rest.common.client.IEntityOperations;
+import org.rest.common.web.base.AbstractSearchRESTIntegrationTest;
 import org.rest.sec.client.template.RoleRESTTemplateImpl;
 import org.rest.sec.model.Role;
 import org.rest.spring.client.ClientTestConfig;
 import org.rest.spring.context.ContextTestConfig;
-import org.rest.web.common.AbstractSearchRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;

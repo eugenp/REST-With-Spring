@@ -1,4 +1,4 @@
-package org.rest.web.common;
+package org.rest.common.web.base;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;

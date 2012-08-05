@@ -1,4 +1,4 @@
-package org.rest.web.common;
+package org.rest.common.web.base;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
@@ -18,6 +18,7 @@ import org.rest.test.AbstractRESTIntegrationTest;
 import org.springframework.data.domain.Sort;
 
 import com.google.common.collect.Ordering;
+import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
@@ -34,14 +35,14 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> extends
 
     @Test
     public final void whenResourcesAreRetrievedPagedAndSorted_then200IsReceived() {
-        final Response response = givenAuthenticated().get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=1&sortBy=name" + QueryConstants.S_ORDER_ASC);
+        final Response response = RestAssured.get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=1&sortBy=name" + QueryConstants.S_ORDER_ASC);
 
         assertThat(response.getStatusCode(), is(200));
     }
 
     @Test
     public final void whenResourcesAreRetrievedSorted_then200IsReceived() {
-        final Response response = givenAuthenticated().get(getURI() + QueryConstants.QUESTIONMARK + "sortBy=name" + QueryConstants.S_ORDER_ASC);
+        final Response response = RestAssured.get(getURI() + QueryConstants.QUESTIONMARK + "sortBy=name" + QueryConstants.S_ORDER_ASC);
 
         assertThat(response.getStatusCode(), is(200));
     }
@@ -80,7 +81,7 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> extends
     @Test
     public final void whenResourcesAreRetrievedByInvalidSorting_then400IsReceived() {
         // When
-        final Response response = givenAuthenticated().get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=4&sortBy=invalid");
+        final Response response = RestAssured.get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=4&sortBy=invalid");
 
         // Then
         assertThat(response.getStatusCode(), is(400));

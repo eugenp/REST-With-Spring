@@ -1,4 +1,4 @@
-package org.rest.web.common;
+package org.rest.common.web.base;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,8 +14,8 @@ import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.LinkUtil;
+import org.rest.common.web.util.HTTPLinkHeaderUtils;
 import org.rest.test.AbstractRESTIntegrationTest;
-import org.rest.web.http.HTTPLinkHeaderUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

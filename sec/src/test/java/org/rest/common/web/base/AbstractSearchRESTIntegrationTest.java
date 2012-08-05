@@ -1,4 +1,4 @@
-package org.rest.web.common;
+package org.rest.common.web.base;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
@@ -22,6 +22,7 @@ import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.util.SearchField;
+import org.rest.common.web.util.ClientConstraintsUtil;
 import org.rest.test.contract.ISearchIntegrationTest;
 import org.rest.util.IDUtils;
 import org.rest.util.SearchIntegrationTestUtil;

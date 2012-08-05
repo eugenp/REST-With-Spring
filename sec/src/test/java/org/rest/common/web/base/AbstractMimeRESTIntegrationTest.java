@@ -1,4 +1,4 @@
-package org.rest.web.common;
+package org.rest.common.web.base;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

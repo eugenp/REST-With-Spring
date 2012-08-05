@@ -1,4 +1,4 @@
-package org.rest.web.http;
+package org.rest.common.web.util;
 
 import java.util.List;
 

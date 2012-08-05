@@ -1,4 +1,4 @@
-package org.rest.web.common;
+package org.rest.common.web.util;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
