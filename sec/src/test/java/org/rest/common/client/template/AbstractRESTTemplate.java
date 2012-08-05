@@ -22,6 +22,7 @@ import com.jayway.restassured.response.Response;
 /**
  * REST Template for the consumption of the REST API <br>
  */
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTemplate<T> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -63,7 +64,6 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     // find - all
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public List<T> findAll() {
         final Response findAllResponse = findOneAsResponse(getURI());
@@ -71,7 +71,6 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     }
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final List<T> findAll(final String sortBy, final String sortOrder) {
         final Response findAllResponse = findOneAsResponse(getURI() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder);
         return marshaller.<List> decode(findAllResponse.getBody().asString(), List.class);

@@ -6,7 +6,7 @@ import org.rest.common.search.ClientOperation;
 import org.rest.sec.model.Principal;
 import org.rest.sec.persistence.dao.IPrincipalJpaDAO;
 import org.rest.sec.persistence.service.IPrincipalService;
-import org.rest.sec.util.SearchSecUtil;
+import org.rest.sec.util.SearchUtilSec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -43,7 +43,7 @@ public class PrincipalServiceImpl extends AbstractService<Principal> implements 
 
     @Override
     public Specification<Principal> resolveConstraint(final Triple<String, ClientOperation, String> constraint) {
-        return SearchSecUtil.resolveConstraint(constraint, Principal.class);
+        return SearchUtilSec.resolveConstraint(constraint, Principal.class);
     }
 
     @Override

@@ -3,6 +3,8 @@ package org.rest.sec.model;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.rest.common.client.IEntityOperations;
+import org.rest.sec.model.Principal;
+import org.rest.sec.model.Role;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;

@@ -6,7 +6,7 @@ import org.rest.common.search.ClientOperation;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.persistence.dao.IPrivilegeJpaDAO;
 import org.rest.sec.persistence.service.IPrivilegeService;
-import org.rest.sec.util.SearchSecUtil;
+import org.rest.sec.util.SearchUtilSec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -42,7 +42,7 @@ public class PrivilegeServiceImpl extends AbstractService<Privilege> implements 
 
     @Override
     public Specification<Privilege> resolveConstraint(final Triple<String, ClientOperation, String> constraint) {
-        return SearchSecUtil.resolveConstraint(constraint, Privilege.class);
+        return SearchUtilSec.resolveConstraint(constraint, Privilege.class);
     }
 
     @Override

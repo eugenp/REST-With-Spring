@@ -1,4 +1,4 @@
-package org.rest.util;
+package org.rest.test.contract;
 
 public interface ISearchIntegrationTest {
 
@@ -22,11 +22,11 @@ public interface ISearchIntegrationTest {
 
     void givenResourceWithNameExists_whenResourceIsSearchedByName_thenResourceIsFound();
 
+    void givenResourceWithNameExists_whenResourceIsSearchedByNameLowerCase_thenResourceIsFound();
+
     void givenResourceWithNameDoesNotExist_whenResourceIsSearchedByName_thenResourceIsNotFound();
 
     void givenResourceWithNameExists_whenSearchByNegatedNameIsPerformed_thenResourcesAreCorrect();
-
-    void givenResourceWithNameExists_whenResourceIsSearchedByLowerCaseName_thenResourceIsFound();
 
     // id and name
 

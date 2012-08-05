@@ -6,9 +6,9 @@ import org.rest.common.search.ClientOperation;
 import org.rest.common.util.SearchCommonUtil;
 import org.springframework.data.jpa.domain.Specification;
 
-public final class SearchSecUtil {
+public final class SearchUtilSec {
 
-    private SearchSecUtil() {
+    private SearchUtilSec() {
         throw new UnsupportedOperationException();
     }
 
@@ -19,10 +19,10 @@ public final class SearchSecUtil {
         final boolean negated = isConstraintNegated(constraint);
 
         if (constraintName.equals(SearchCommonUtil.NAME)) {
-            return QuerySpecifications.getByNameSpecification(clazz, constraint.getMiddle(), constraint.getRight(), negated);
+            return QuerySpecificationSec.getByNameSpecification(clazz, constraint.getMiddle(), constraint.getRight(), negated);
         }
         if (constraintName.equals(SearchCommonUtil.ID)) {
-            return QuerySpecifications.getByIdSpecification(clazz, Long.parseLong(constraint.getRight()), negated);
+            return QuerySpecificationSec.getByIdSpecification(clazz, Long.parseLong(constraint.getRight()), negated);
         }
         return null;
     }

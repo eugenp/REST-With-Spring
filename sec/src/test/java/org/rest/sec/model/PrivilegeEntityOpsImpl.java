@@ -3,6 +3,7 @@ package org.rest.sec.model;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.rest.common.client.IEntityOperations;
+import org.rest.sec.model.Privilege;
 import org.springframework.stereotype.Component;
 
 @Component

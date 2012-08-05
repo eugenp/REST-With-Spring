@@ -1,4 +1,4 @@
-package org.rest.util.order;
+package org.rest.common.util.order;
 
 import org.rest.common.persistence.model.INameableEntity;
 

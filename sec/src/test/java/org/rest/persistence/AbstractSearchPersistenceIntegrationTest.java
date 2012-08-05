@@ -24,8 +24,8 @@ import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.util.SearchField;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
+import org.rest.test.contract.ISearchIntegrationTest;
 import org.rest.util.IDUtils;
-import org.rest.util.ISearchIntegrationTest;
 import org.rest.util.SearchIntegrationTestUtil;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -163,7 +163,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
     @Override
     @Test
-    public final void givenResourceWithNameExists_whenResourceIsSearchedByLowerCaseName_thenResourceIsFound() {
+    public final void givenResourceWithNameExists_whenResourceIsSearchedByNameLowerCase_thenResourceIsFound() {
         final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
 
         // When

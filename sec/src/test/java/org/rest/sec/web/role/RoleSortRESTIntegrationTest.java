@@ -1,9 +1,9 @@
 package org.rest.sec.web.role;
 
+import org.rest.common.util.order.OrderByName;
 import org.rest.sec.client.template.RoleRESTTemplateImpl;
 import org.rest.sec.model.Role;
 import org.rest.sec.test.SecSortRESTIntegrationTest;
-import org.rest.util.order.OrderByName;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Ordering;

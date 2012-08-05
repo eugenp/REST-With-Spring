@@ -6,7 +6,7 @@ import org.rest.common.search.ClientOperation;
 import org.rest.sec.model.Role;
 import org.rest.sec.persistence.dao.IRoleJpaDAO;
 import org.rest.sec.persistence.service.IRoleService;
-import org.rest.sec.util.SearchSecUtil;
+import org.rest.sec.util.SearchUtilSec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -53,7 +53,7 @@ public class RoleServiceImpl extends AbstractService<Role> implements IRoleServi
 
     @Override
     public Specification<Role> resolveConstraint(final Triple<String, ClientOperation, String> constraint) {
-        return SearchSecUtil.resolveConstraint(constraint, Role.class);
+        return SearchUtilSec.resolveConstraint(constraint, Role.class);
     }
 
     @Override

@@ -13,9 +13,8 @@ import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchField;
+import org.rest.common.util.order.OrderById;
 import org.rest.test.AbstractRESTIntegrationTest;
-import org.rest.testing.security.AuthenticationUtil;
-import org.rest.util.order.OrderById;
 import org.springframework.data.domain.Sort;
 
 import com.google.common.collect.Ordering;
@@ -108,13 +107,9 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> extends
         assertTrue(new OrderById<T>().reverse().isOrdered(resourcesOrderedById));
     }
 
-    // util
-
-    protected final RequestSpecification givenAuthenticated() {
-        return AuthenticationUtil.givenBasicAuthenticated();
-    }
-
     // template method
+
+    protected abstract RequestSpecification givenAuthenticated();
 
     protected abstract IRESTTemplate<T> getAPI();
 
