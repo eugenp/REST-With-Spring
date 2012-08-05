@@ -1,6 +1,8 @@
 package org.rest.common.client.marshall;
 
+import org.rest.sec.model.Principal;
 import org.rest.sec.model.Privilege;
+import org.rest.sec.model.Role;
 import org.rest.sec.model.dto.User;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
@@ -9,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Preconditions;
 import com.thoughtworks.xstream.XStream;
 
-@Component
+@Component("xStreamMarshaller")
 @Profile("client")
 public final class XStreamMarshaller implements IMarshaller {
 
@@ -21,6 +23,8 @@ public final class XStreamMarshaller implements IMarshaller {
         xstream = new XStream();
         xstream.autodetectAnnotations(true);
         xstream.processAnnotations(User.class);
+        xstream.processAnnotations(Principal.class);
+        xstream.processAnnotations(Role.class);
         xstream.processAnnotations(Privilege.class);
     }
 
