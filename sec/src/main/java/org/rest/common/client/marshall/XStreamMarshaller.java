@@ -1,15 +1,16 @@
 package org.rest.common.client.marshall;
 
-import org.rest.common.client.marshall.IMarshaller;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.dto.User;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Preconditions;
 import com.thoughtworks.xstream.XStream;
 
-@Component("xstreamMarshaller")
+@Component
+@Profile("client")
 public final class XStreamMarshaller implements IMarshaller {
 
     private XStream xstream;

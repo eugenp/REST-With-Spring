@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 public class AuthenticationRESTTemplate {
 
     @Autowired
-    @Qualifier("xstreamMarshaller")
+    @Qualifier("xStreamMarshaller")
     IMarshaller marshaller;
     @Autowired
     private RestTemplate restTemplate;
