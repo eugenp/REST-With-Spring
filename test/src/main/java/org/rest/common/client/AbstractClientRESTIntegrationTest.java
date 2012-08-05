@@ -61,7 +61,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(getEntityOps().createNewEntity());
 
         // When
-        getAPI().findOneByName(existingResource.getName());
+        getAPI().findByName(existingResource.getName());
     }
 
     @Test
@@ -71,7 +71,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(getEntityOps().createNewEntity());
 
         // When
-        final T resourceByName = getAPI().findOneByName(existingResource.getName());
+        final T resourceByName = getAPI().findByName(existingResource.getName());
 
         // Then
         assertNotNull(resourceByName);
@@ -84,7 +84,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(getEntityOps().createNewEntity());
 
         // When
-        final T resourceByName = getAPI().findOneByName(existingResource.getName());
+        final T resourceByName = getAPI().findByName(existingResource.getName());
 
         // Then
         assertThat(existingResource, equalTo(resourceByName));

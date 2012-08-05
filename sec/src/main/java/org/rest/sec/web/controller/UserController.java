@@ -14,6 +14,7 @@ import org.rest.common.web.controller.ISortingController;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.persistence.service.dto.IUserService;
 import org.rest.sec.util.SecurityConstants;
+import org.rest.web.common.URIMappingConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping(value = "user")
+@RequestMapping(value = URIMappingConstants.USER)
 public class UserController extends AbstractController<User> implements ISortingController<User> {
 
     @Autowired
@@ -92,7 +93,7 @@ public class UserController extends AbstractController<User> implements ISorting
 
     @RequestMapping(params = "name", method = RequestMethod.GET)
     @ResponseBody
-    public User findOneByName(@RequestParam("name") final String name) {
+    public User findByName(@RequestParam("name") final String name) {
         User resource = null;
         try {
             resource = RestPreconditions.checkNotNull(getService().findByName(name));

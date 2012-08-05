@@ -32,6 +32,7 @@ public class AuthenticationController {
     // API
 
     @RequestMapping(method = RequestMethod.POST, value = "/authentication")
+    // should be: URIMappingConstants.AUTHENTICATION
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public User createAuthentication() {

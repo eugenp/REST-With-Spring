@@ -13,6 +13,7 @@ import org.rest.common.web.controller.AbstractController;
 import org.rest.common.web.controller.ISortingController;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.persistence.service.IPrivilegeService;
+import org.rest.web.common.URIMappingConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping(value = "privilege")
+@RequestMapping(value = URIMappingConstants.PRIVILEGE)
 public class PrivilegeController extends AbstractController<Privilege> implements ISortingController<Privilege> {
 
     @Autowired
@@ -90,7 +91,7 @@ public class PrivilegeController extends AbstractController<Privilege> implement
 
     @RequestMapping(params = "name", method = RequestMethod.GET)
     @ResponseBody
-    public Privilege findOneByName(@RequestParam("name") final String name) {
+    public Privilege findByName(@RequestParam("name") final String name) {
         Privilege resource = null;
         try {
             resource = RestPreconditions.checkNotNull(getService().findByName(name));

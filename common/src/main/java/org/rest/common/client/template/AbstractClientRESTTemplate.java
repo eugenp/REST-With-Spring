@@ -60,7 +60,7 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
     // find one - by attributes
 
     @Override
-    public T findOneByName(final String name) {
+    public T findByName(final String name) {
         return findOneByAttributes("name", name);
     }
 

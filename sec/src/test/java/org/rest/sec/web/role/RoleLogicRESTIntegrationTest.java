@@ -161,7 +161,7 @@ public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Ro
     // update
 
     @Test
-    public final void givenResourceExists_whenResourceIsUpdatedWithExistingAsscoaition_thenAssociationIsCorrectlyUpdated() {
+    public final void givenResourceExists_whenResourceIsUpdatedWithExistingAssociation_thenAssociationIsCorrectlyUpdated() {
         // Given
         final Role existingResource = getAPI().create(getAPI().createNewEntity());
         final Privilege existingAssociation = getAssociationAPI().create(getAssociationAPI().createNewEntity());

@@ -13,7 +13,7 @@ public interface IClientTemplate<T extends IEntity> extends IOperations<T> {
 
     List<T> findAllByAttributes(final String... attributes);
 
-    T findOneByName(final String name);
+    T findByName(final String name);
 
     T findOneByURI(final String uri);
 
