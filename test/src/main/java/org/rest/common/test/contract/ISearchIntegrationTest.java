@@ -1,4 +1,4 @@
-package org.rest.test.contract;
+package org.rest.common.test.contract;
 
 public interface ISearchIntegrationTest {
 

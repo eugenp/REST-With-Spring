@@ -1,4 +1,4 @@
-package org.rest.persistence;
+package org.rest.common.persistence;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
@@ -9,13 +9,14 @@ import static org.junit.Assert.assertThat;
 import java.util.List;
 
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.persistence.model.IEntity;
-import org.rest.util.IDUtils;
+import org.rest.common.persistence.service.IService;
+import org.rest.common.util.IDUtils;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
+public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntity> {
 
     // tests
 
@@ -35,7 +36,7 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
 
     @Test
     public void givenAnEntityExists_whenEntitiesAreRetrieved_thenThereIsAtLeastOneEntity() {
-        getAPI().save(createNewEntity());
+        getAPI().create(createNewEntity());
 
         final List<T> owners = getAPI().findAll();
 
@@ -44,7 +45,7 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
 
     @Test
     public void givenAnEntityExists_whenEntitiesAreRetrieved_thenTheExistingEntityIsIndeedAmongThem() {
-        final T existingEntity = getAPI().save(createNewEntity());
+        final T existingEntity = getAPI().create(createNewEntity());
 
         final List<T> owners = getAPI().findAll();
 
@@ -55,7 +56,7 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
 
     @Test
     public void givenEntityExists_whenEntityIsRetrieved_thenNoExceptions() {
-        final T existingEntity = getAPI().save(createNewEntity());
+        final T existingEntity = getAPI().create(createNewEntity());
         getAPI().findOne(existingEntity.getId());
     }
 
@@ -66,7 +67,7 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
 
     @Test
     public void givenEntityExists_whenEntityIsRetrieved_thenTheResultIsNotNull() {
-        final T existingEntity = getAPI().save(createNewEntity());
+        final T existingEntity = getAPI().create(createNewEntity());
         final T retrievedEntity = getAPI().findOne(existingEntity.getId());
         assertNotNull(retrievedEntity);
     }
@@ -79,7 +80,7 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
 
     @Test
     public void givenEntityExists_whenEntityIsRetrieved_thenEntityIsRetrievedCorrectly() {
-        final T existingEntity = getAPI().save(createNewEntity());
+        final T existingEntity = getAPI().create(createNewEntity());
         final T retrievedEntity = getAPI().findOne(existingEntity.getId());
         assertEquals(existingEntity, retrievedEntity);
     }
@@ -88,25 +89,25 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
 
     @Test(expected = RuntimeException.class)
     public void whenNullEntityIsCreated_thenException() {
-        getAPI().save((T) null);
+        getAPI().create(null);
     }
 
     @Test
     public void whenEntityIsCreated_thenNoExceptions() {
-        getAPI().save(createNewEntity());
+        getAPI().create(createNewEntity());
     }
 
     @Test
     public void whenEntityIsCreated_thenEntityIsRetrievable() {
-        final T existingEntity = getAPI().save(createNewEntity());
+        final T existingEntity = getAPI().create(createNewEntity());
 
         assertNotNull(getAPI().findOne(existingEntity.getId()));
     }
 
     @Test
-    public void whenEntityIsSaved_thenSavedEntityIsEqualToOriginalEntity() {
+    public void whenEntityIsCreated_thenSavedEntityIsEqualToOriginalEntity() {
         final T originalEntity = createNewEntity();
-        final T savedEntity = getAPI().save(originalEntity);
+        final T savedEntity = getAPI().create(originalEntity);
 
         assertEquals(originalEntity, savedEntity);
     }
@@ -116,32 +117,48 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
         final T invalidEntity = createNewEntity();
         invalidate(invalidEntity);
 
-        getAPI().save(invalidEntity);
+        getAPI().create(invalidEntity);
+    }
+
+    // -- specific to the persistence engine
+
+    @Test(expected = DataAccessException.class)
+    @Ignore("Hibernate simply ignores the id silently and still saved (tracking this)")
+    public void whenEntityWithIdIsCreated_thenDataAccessException() {
+        final T entityWithId = createNewEntity();
+        entityWithId.setId(IDUtils.randomPositiveLong());
+
+        getAPI().create(entityWithId);
     }
 
     // update
 
+    @Test(expected = RuntimeException.class)
+    public void whenNullEntityIsUpdated_thenException() {
+        getAPI().update(null);
+    }
+
     @Test
     public void whenEntityIsUpdated_thenNoExceptions() {
-        final T existingEntity = getAPI().save(createNewEntity());
+        final T existingEntity = getAPI().create(createNewEntity());
 
-        getAPI().save(existingEntity);
+        getAPI().update(existingEntity);
     }
 
     @Test(expected = DataAccessException.class)
     public void whenEntityIsUpdatedWithFailedConstraints_thenException() {
-        final T existingEntity = getAPI().save(createNewEntity());
+        final T existingEntity = getAPI().create(createNewEntity());
         invalidate(existingEntity);
 
-        getAPI().save(existingEntity);
+        getAPI().update(existingEntity);
     }
 
     @Test
     public void whenEntityIsUpdated_thenTheUpdatedAreCorrectlyPersisted() {
-        final T existingEntity = getAPI().save(createNewEntity());
+        final T existingEntity = getAPI().create(createNewEntity());
         changeEntity(existingEntity);
 
-        getAPI().save(existingEntity);
+        getAPI().update(existingEntity);
 
         final T updatedEntity = getAPI().findOne(existingEntity.getId());
         assertEquals(existingEntity, updatedEntity);
@@ -158,13 +175,13 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
     @Test(expected = DataAccessException.class)
     public void whenEntityIsDeletedByNegativeId_thenDataAccessException() {
         // When
-        getAPI().delete((IDUtils.randomNegativeLong()));
+        getAPI().delete(IDUtils.randomNegativeLong());
     }
 
     @Test
     public void givenEntityExists_whenEntityIsDeleted_thenNoExceptions() {
         // Given
-        final T existingLocation = getAPI().save(createNewEntity());
+        final T existingLocation = getAPI().create(createNewEntity());
 
         // When
         getAPI().delete(existingLocation.getId());
@@ -173,7 +190,7 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
     @Test
     public void givenEntityExists_whenEntityIsDeleted_thenEntityIsNoLongerRetrievable() {
         // Given
-        final T existingEntity = getAPI().save(createNewEntity());
+        final T existingEntity = getAPI().create(createNewEntity());
 
         // When
         getAPI().delete(existingEntity.getId());
@@ -187,7 +204,7 @@ public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
 
     // template method
 
-    protected abstract JpaRepository<T, Long> getAPI();
+    protected abstract IService<T> getAPI();
 
     protected abstract T createNewEntity();
 

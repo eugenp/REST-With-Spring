@@ -1,4 +1,4 @@
-package org.rest.persistence.service;
+package org.rest.common.persistence.service;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -16,7 +16,7 @@ import org.rest.common.persistence.event.EntityCreatedEvent;
 import org.rest.common.persistence.event.EntityUpdatedEvent;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.persistence.service.IService;
-import org.rest.util.IDUtils;
+import org.rest.common.util.IDUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

@@ -8,7 +8,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.rest.persistence.service.AbstractServiceUnitTest;
+import org.rest.common.persistence.service.AbstractServiceUnitTest;
 import org.rest.sec.model.Role;
 import org.rest.sec.persistence.dao.IRoleJpaDAO;
 import org.rest.sec.persistence.util.FixtureFactory;

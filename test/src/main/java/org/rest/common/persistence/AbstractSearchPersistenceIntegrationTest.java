@@ -1,4 +1,4 @@
-package org.rest.persistence;
+package org.rest.common.persistence;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.Matchers.hasItem;
@@ -19,11 +19,11 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.persistence.service.IService;
 import org.rest.common.search.ClientOperation;
+import org.rest.common.test.contract.ISearchIntegrationTest;
+import org.rest.common.util.IDUtils;
 import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.util.SearchField;
-import org.rest.test.contract.ISearchIntegrationTest;
-import org.rest.util.IDUtils;
-import org.rest.util.SearchIntegrationTestUtil;
+import org.rest.common.util.SearchIntegrationTestUtil;
 
 @SuppressWarnings("unchecked")
 public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameableEntity> implements ISearchIntegrationTest {

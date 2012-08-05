@@ -13,7 +13,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.client.template.IClientTemplate;
 import org.rest.common.persistence.model.INameableEntity;
-import org.rest.util.IDUtils;
+import org.rest.common.util.IDUtils;
 
 public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntity> {
 

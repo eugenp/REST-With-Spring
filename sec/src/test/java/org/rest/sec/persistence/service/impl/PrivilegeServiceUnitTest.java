@@ -8,11 +8,11 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.rest.persistence.service.AbstractServiceUnitTest;
+import org.rest.common.persistence.service.AbstractServiceUnitTest;
+import org.rest.common.util.IDUtils;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.persistence.dao.IPrivilegeJpaDAO;
 import org.rest.sec.persistence.util.FixtureFactory;
-import org.rest.util.IDUtils;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.google.common.collect.Lists;

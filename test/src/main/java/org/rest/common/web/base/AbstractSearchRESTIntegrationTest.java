@@ -21,11 +21,11 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
+import org.rest.common.test.contract.ISearchIntegrationTest;
+import org.rest.common.util.IDUtils;
 import org.rest.common.util.SearchField;
+import org.rest.common.util.SearchIntegrationTestUtil;
 import org.rest.common.web.util.ClientConstraintsUtil;
-import org.rest.test.contract.ISearchIntegrationTest;
-import org.rest.util.IDUtils;
-import org.rest.util.SearchIntegrationTestUtil;
 
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;

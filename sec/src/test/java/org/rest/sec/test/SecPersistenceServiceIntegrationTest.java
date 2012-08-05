@@ -1,8 +1,8 @@
 package org.rest.sec.test;
 
 import org.junit.runner.RunWith;
+import org.rest.common.persistence.AbstractPersistenceServiceIntegrationTest;
 import org.rest.common.persistence.model.IEntity;
-import org.rest.persistence.AbstractPersistenceServiceIntegrationTest;
 import org.rest.spring.context.ContextTestConfig;
 import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
 import org.springframework.test.context.ContextConfiguration;

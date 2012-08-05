@@ -16,8 +16,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
+import org.rest.common.util.IDUtils;
 import org.rest.common.web.WebConstants;
-import org.rest.util.IDUtils;
 
 import com.google.common.base.Preconditions;
 import com.jayway.restassured.response.Response;
