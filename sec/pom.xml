@@ -21,6 +21,13 @@
 			<version>0.3-SNAPSHOT</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org</groupId>
+			<artifactId>rest-test</artifactId>
+			<version>0.3-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- util -->
 
 		<dependency>
