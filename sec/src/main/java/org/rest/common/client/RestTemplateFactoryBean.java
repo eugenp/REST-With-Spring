@@ -1,6 +1,7 @@
 package org.rest.common.client;
 
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.rest.sec.model.Principal;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
 import org.rest.sec.model.dto.User;
@@ -78,7 +79,7 @@ public class RestTemplateFactoryBean implements FactoryBean<RestTemplate>, Initi
     final XStreamMarshaller xstreamMarshaller() {
         final XStreamMarshaller xStreamMarshaller = new XStreamMarshaller();
         xStreamMarshaller.setAutodetectAnnotations(true);
-        xStreamMarshaller.setAnnotatedClasses(new Class[] { User.class, Role.class, Privilege.class });
+        xStreamMarshaller.setAnnotatedClasses(new Class[] { Principal.class, User.class, Role.class, Privilege.class });
         xStreamMarshaller.getXStream().addDefaultImplementation(java.sql.Timestamp.class, java.util.Date.class);
 
         return xStreamMarshaller;
