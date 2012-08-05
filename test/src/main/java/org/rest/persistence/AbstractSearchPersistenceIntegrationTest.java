@@ -15,25 +15,17 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.rest.common.client.IEntityOperations;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.persistence.service.IService;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.util.SearchField;
-import org.rest.spring.context.ContextTestConfig;
-import org.rest.spring.persistence.jpa.PersistenceJPAConfig;
 import org.rest.test.contract.ISearchIntegrationTest;
 import org.rest.util.IDUtils;
 import org.rest.util.SearchIntegrationTestUtil;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @SuppressWarnings("unchecked")
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { PersistenceJPAConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameableEntity> implements ISearchIntegrationTest {
 
     // search/filter

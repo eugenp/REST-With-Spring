@@ -4,9 +4,9 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
-import org.rest.persistence.AbstractPersistenceDAOIntegrationTest;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
+import org.rest.sec.test.SecPersistenceDAOIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -16,7 +16,7 @@ import com.google.common.collect.Sets;
 
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
-public class RoleDAOPersistenceIntegrationTest extends AbstractPersistenceDAOIntegrationTest<Role> {
+public class RoleDAOPersistenceIntegrationTest extends SecPersistenceDAOIntegrationTest<Role> {
 
     @Autowired
     IPrivilegeJpaDAO privilegeDao;

@@ -1,13 +1,13 @@
 package org.rest.sec.persistence.service;
 
 import org.rest.common.client.IEntityOperations;
-import org.rest.persistence.AbstractSearchPersistenceIntegrationTest;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.PrincipalEntityOpsImpl;
 import org.rest.sec.persistence.util.FixtureFactory;
+import org.rest.sec.test.SecSearchPersistenceIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class PrincipalSearchPersistenceIntegrationTest extends AbstractSearchPersistenceIntegrationTest<Principal> {
+public class PrincipalSearchPersistenceIntegrationTest extends SecSearchPersistenceIntegrationTest<Principal> {
 
     @Autowired
     private IPrincipalService principalService;
