@@ -8,6 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.web.WebConstants;
 import org.rest.sec.client.template.PrivilegeRESTTemplateImpl;
@@ -60,6 +61,7 @@ public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Ro
     // find all
 
     @Test
+    @Ignore("in progress - create association first")
     public final void whenResourceIsRetrieved_thenAssociationsAreAlsoRetrieved() {
         final Role existingResource = getAPI().create(getAPI().createNewEntity());
         assertThat(existingResource.getPrivileges(), not(Matchers.<Privilege> empty()));

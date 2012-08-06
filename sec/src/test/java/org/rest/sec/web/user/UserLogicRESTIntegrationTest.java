@@ -39,6 +39,7 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Us
     // find - one
 
     @Test
+    @Ignore("in progress - create association first")
     public final void whenResourceIsRetrieved_thenAssociationsAreAlsoRetrieved() {
         final User existingResource = getAPI().create(getAPI().createNewEntity());
         assertThat(existingResource.getRoles(), not(Matchers.<Role> empty()));

@@ -73,7 +73,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     @Override
     public final List<T> findAll(final String sortBy, final String sortOrder) {
         final Response findAllResponse = findOneAsResponse(getURI() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder);
-        return marshaller.<List> decode(findAllResponse.getBody().asString(), List.class);
+        return marshaller.<T> decodeList(findAllResponse.getBody().asString(), clazz);
     }
 
     @Override
