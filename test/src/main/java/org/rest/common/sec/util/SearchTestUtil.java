@@ -1,4 +1,4 @@
-package org.rest.sec.util;
+package org.rest.common.sec.util;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.search.ClientOperation;

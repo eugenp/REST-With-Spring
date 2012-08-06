@@ -14,9 +14,9 @@ import static org.rest.common.util.SearchCommonUtil.SEPARATOR;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import org.junit.Test;
+import org.rest.common.sec.util.SearchTestUtil;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchField;
-import org.rest.sec.util.SearchTestUtil;
 
 public final class ConstructQueryStringUnitTest {
 
