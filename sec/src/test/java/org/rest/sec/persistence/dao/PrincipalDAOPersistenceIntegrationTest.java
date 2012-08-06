@@ -9,7 +9,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.Role;
-import org.rest.sec.test.SecPersistenceDAOIntegrationTest;
+import org.rest.sec.test.SecDAOPersistenceIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -19,7 +19,7 @@ import com.google.common.collect.Sets;
 
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
-public class PrincipalDAOPersistenceIntegrationTest extends SecPersistenceDAOIntegrationTest<Principal> {
+public class PrincipalDAOPersistenceIntegrationTest extends SecDAOPersistenceIntegrationTest<Principal> {
 
     @Autowired
     IPrivilegeJpaDAO privilegeDao;

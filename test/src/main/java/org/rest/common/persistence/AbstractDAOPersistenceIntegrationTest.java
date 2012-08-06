@@ -15,7 +15,7 @@ import org.rest.common.util.IDUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public abstract class AbstractPersistenceDAOIntegrationTest<T extends IEntity> {
+public abstract class AbstractDAOPersistenceIntegrationTest<T extends IEntity> {
 
     // tests
 

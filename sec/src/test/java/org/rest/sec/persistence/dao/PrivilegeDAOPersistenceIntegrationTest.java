@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 import org.rest.sec.model.Privilege;
-import org.rest.sec.test.SecPersistenceDAOIntegrationTest;
+import org.rest.sec.test.SecDAOPersistenceIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
-public class PrivilegeDAOPersistenceIntegrationTest extends SecPersistenceDAOIntegrationTest<Privilege> {
+public class PrivilegeDAOPersistenceIntegrationTest extends SecDAOPersistenceIntegrationTest<Privilege> {
 
     @Autowired
     private IPrivilegeJpaDAO privilegeDao;

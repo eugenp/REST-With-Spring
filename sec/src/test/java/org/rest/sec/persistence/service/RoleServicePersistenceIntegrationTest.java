@@ -9,13 +9,13 @@ import org.junit.Test;
 import org.rest.common.persistence.service.IService;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
-import org.rest.sec.test.SecPersistenceServiceIntegrationTest;
+import org.rest.sec.test.SecServicePersistenceIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 
 import com.google.common.collect.Sets;
 
-public class RoleServicePersistenceIntegrationTest extends SecPersistenceServiceIntegrationTest<Role> {
+public class RoleServicePersistenceIntegrationTest extends SecServicePersistenceIntegrationTest<Role> {
 
     @Autowired
     private IPrivilegeService privilegeService;

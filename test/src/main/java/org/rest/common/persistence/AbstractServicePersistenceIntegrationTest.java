@@ -16,7 +16,7 @@ import org.rest.common.persistence.service.IService;
 import org.rest.common.util.IDUtils;
 import org.springframework.dao.DataAccessException;
 
-public abstract class AbstractPersistenceServiceIntegrationTest<T extends IEntity> {
+public abstract class AbstractServicePersistenceIntegrationTest<T extends IEntity> {
 
     // tests
 

@@ -5,11 +5,11 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import org.junit.Test;
 import org.rest.common.persistence.service.IService;
 import org.rest.sec.model.Privilege;
-import org.rest.sec.test.SecPersistenceServiceIntegrationTest;
+import org.rest.sec.test.SecServicePersistenceIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 
-public class PrivilegeServicePersistenceIntegrationTest extends SecPersistenceServiceIntegrationTest<Privilege> {
+public class PrivilegeServicePersistenceIntegrationTest extends SecServicePersistenceIntegrationTest<Privilege> {
 
     @Autowired
     private IPrivilegeService privilegeService;
