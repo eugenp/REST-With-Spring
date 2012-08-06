@@ -13,12 +13,11 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @ComponentScan({ "org.rest.common.web", "org.rest.sec.web" })
 @EnableWebMvc
-public class WebConfig extends WebMvcConfigurerAdapter {
+public class WebConfig /*extends WebMvcConfigurerAdapter */{
 
     public WebConfig() {
         super();
@@ -46,9 +45,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return marshallingHttpMessageConverter;
     }
 
-    @Override
+    // @Override
     public void configureMessageConverters(final List<HttpMessageConverter<?>> converters) {
-        super.configureMessageConverters(converters);
+        // super.configureMessageConverters(converters);
 
         converters.add(marshallingHttpMessageConverter());
     }

@@ -28,7 +28,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
     private Class<T> clazz;
 
     @Autowired
-    @Qualifier("xStreamMarshaller")
+    @Qualifier("jacksonMarshaller")
     IMarshaller marshaller;
 
     public AbstractDiscoverabilityRESTIntegrationTest(final Class<T> clazzToSet) {

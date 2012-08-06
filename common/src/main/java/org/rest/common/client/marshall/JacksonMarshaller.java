@@ -9,13 +9,15 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
-/*@Component
-@Profile("client")*/
+@Component("jacksonMarshaller")
+@Profile("client")
 public final class JacksonMarshaller implements IMarshaller {
     private static final Logger logger = LoggerFactory.getLogger(JacksonMarshaller.class);
 
