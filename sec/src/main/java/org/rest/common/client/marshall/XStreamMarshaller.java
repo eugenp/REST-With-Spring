@@ -1,5 +1,7 @@
 package org.rest.common.client.marshall;
 
+import java.util.List;
+
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
@@ -46,6 +48,12 @@ public final class XStreamMarshaller implements IMarshaller {
     @Override
     public final String getMime() {
         return MediaType.APPLICATION_XML.toString();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> List<T> decodeList(final String entityAsXML, final Class<T> clazz) {
+        return this.decode(entityAsXML, List.class);
     }
 
 }

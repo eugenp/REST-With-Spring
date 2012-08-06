@@ -24,6 +24,8 @@ public interface ITemplateAsResponse<T extends IEntity> {
 
     Response searchAsResponse(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size);
 
+    Response searchAsResponse(final Triple<String, ClientOperation, String>... constraints);
+
     // create
 
     Response createAsResponse(final T resource); // 14

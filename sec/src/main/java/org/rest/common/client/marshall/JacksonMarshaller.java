@@ -7,6 +7,10 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
+import org.rest.sec.model.Principal;
+import org.rest.sec.model.Privilege;
+import org.rest.sec.model.Role;
+import org.rest.sec.model.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -14,7 +18,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 
 @Component("jacksonMarshaller")
 @Profile("client")
@@ -66,11 +69,31 @@ public final class JacksonMarshaller implements IMarshaller {
         return entity;
     }
 
-    public final <T> List<T> decodeList(final String entitiesAsString) {
+    @Override
+    public final <T> List<T> decodeList(final String entitiesAsString, final Class<T> clazz) {
+        Preconditions.checkNotNull(entitiesAsString);
+
+        List<T> entities = null;
         try {
-            return objectMapper.readValue(entitiesAsString, new TypeReference<List<T>>() {
-                // ...
-            });
+            if (clazz.equals(Role.class)) {
+                entities = objectMapper.readValue(entitiesAsString, new TypeReference<List<Role>>() {
+                    // ...
+                });
+            } else if (clazz.equals(Privilege.class)) {
+                entities = objectMapper.readValue(entitiesAsString, new TypeReference<List<Privilege>>() {
+                    // ...
+                });
+            } else if (clazz.equals(User.class)) {
+                entities = objectMapper.readValue(entitiesAsString, new TypeReference<List<User>>() {
+                    // ...
+                });
+            } else if (clazz.equals(Principal.class)) {
+                entities = objectMapper.readValue(entitiesAsString, new TypeReference<List<Principal>>() {
+                    // ...
+                });
+            } else {
+                entities = objectMapper.readValue(entitiesAsString, List.class);
+            }
         } catch (final JsonParseException parseEx) {
             logger.error("", parseEx);
         } catch (final JsonMappingException mappingEx) {
@@ -79,7 +102,7 @@ public final class JacksonMarshaller implements IMarshaller {
             logger.error("", ioEx);
         }
 
-        return Lists.newArrayList();
+        return entities;
     }
 
     @Override
