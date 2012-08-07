@@ -27,7 +27,7 @@ public final class QueryConstants {
     public static final String ANY_SERVER = "%";
     /** - note: this character represents the ANY wildcard for the client consumption of the API */
     public static final String ANY_CLIENT = "*";
-    public static final String START_QUERY_PARAM = QUESTIONMARK + "q=";
+    public static final String QUERY_PREFIX = QUESTIONMARK + "q=";
 
     private QueryConstants() {
         throw new AssertionError();

@@ -149,13 +149,13 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public Response searchAsResponse(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp) {
-        final String queryURI = getURI() + QueryConstants.START_QUERY_PARAM + SearchTestUtil.constructQueryString(idOp, nameOp);
+        final String queryURI = getURI() + QueryConstants.QUERY_PREFIX + SearchTestUtil.constructQueryString(idOp, nameOp);
         return findOneRequest().get(queryURI);
     }
 
     @Override
     public Response searchAsResponse(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size) {
-        final String queryURI = getURI() + QueryConstants.START_QUERY_PARAM + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
+        final String queryURI = getURI() + QueryConstants.QUERY_PREFIX + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
         return findOneRequest().get(queryURI);
     }
 
@@ -174,7 +174,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         for (final Triple<String, ClientOperation, String> constraint : constraints) {
             builder.consume(constraint);
         }
-        final String queryURI = getURI() + QueryConstants.START_QUERY_PARAM + builder.build();
+        final String queryURI = getURI() + QueryConstants.QUERY_PREFIX + builder.build();
 
         final Response searchResponse = findOneRequest().get(queryURI);
         Preconditions.checkState(searchResponse.getStatusCode() == 200);
@@ -184,7 +184,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public List<T> searchPaged(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size) {
-        final String queryURI = getURI() + QueryConstants.START_QUERY_PARAM + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
+        final String queryURI = getURI() + QueryConstants.QUERY_PREFIX + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
         final Response searchResponse = findOneRequest().get(queryURI);
         Preconditions.checkState(searchResponse.getStatusCode() == 200);
 
