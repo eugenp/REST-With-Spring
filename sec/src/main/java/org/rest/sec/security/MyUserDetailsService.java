@@ -8,7 +8,6 @@ import org.rest.sec.model.Principal;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
 import org.rest.sec.persistence.service.IPrincipalService;
-import org.rest.sec.persistence.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -31,10 +30,7 @@ import com.google.common.collect.Sets;
 public final class MyUserDetailsService implements UserDetailsService {
 
     @Autowired
-    IPrincipalService principalService;
-
-    @Autowired
-    IRoleService roleService;
+    private IPrincipalService principalService;
 
     public MyUserDetailsService() {
         super();
