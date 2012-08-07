@@ -1,4 +1,4 @@
-package org.rest.web.controller.discovery;
+package org.rest.common.web.controller.discovery;
 
 import java.net.URI;
 

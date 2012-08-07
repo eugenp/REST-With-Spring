@@ -45,15 +45,15 @@ public final class XStreamMarshaller implements IMarshaller {
         return (T) xstream.fromXML(entityAsXML);
     }
 
-    @Override
-    public final String getMime() {
-        return MediaType.APPLICATION_XML.toString();
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public <T> List<T> decodeList(final String entityAsXML, final Class<T> clazz) {
         return this.decode(entityAsXML, List.class);
+    }
+
+    @Override
+    public final String getMime() {
+        return MediaType.APPLICATION_XML.toString();
     }
 
 }

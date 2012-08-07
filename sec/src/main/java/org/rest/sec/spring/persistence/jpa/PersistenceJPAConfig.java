@@ -1,4 +1,4 @@
-package org.rest.spring.persistence.jpa;
+package org.rest.sec.spring.persistence.jpa;
 
 import java.util.Properties;
 

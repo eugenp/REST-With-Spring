@@ -1,4 +1,4 @@
-package org.rest.web.common;
+package org.rest.sec.web.common;
 
 public final class URIMappingConstants {
 

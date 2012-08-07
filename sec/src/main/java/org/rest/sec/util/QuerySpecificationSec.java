@@ -61,7 +61,7 @@ public final class QuerySpecificationSec {
 
     // id
 
-    static <T extends IEntity> Specification<T> getByIdSpecification(final Class<T> clazz, final Long id, final boolean negated) {
+    public static <T extends IEntity> Specification<T> getByIdSpecification(final Class<T> clazz, final Long id, final boolean negated) {
         if (clazz.equals(Role.class)) {
             return (Specification<T>) roleByIdEq(id, negated);
         }

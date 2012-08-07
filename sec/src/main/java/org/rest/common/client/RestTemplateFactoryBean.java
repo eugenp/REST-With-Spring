@@ -1,12 +1,12 @@
 package org.rest.common.client;
 
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.rest.common.security.BasicHttpComponentsClientHttpRequestFactory;
+import org.rest.common.security.DigestHttpComponentsClientHttpRequestFactory;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
 import org.rest.sec.model.dto.User;
-import org.rest.security.BasicHttpComponentsClientHttpRequestFactory;
-import org.rest.security.DigestHttpComponentsClientHttpRequestFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;

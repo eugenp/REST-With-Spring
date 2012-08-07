@@ -1,7 +1,7 @@
 package org.rest.sec.client;
 
 import org.rest.common.client.SecPaths;
-import org.rest.web.common.URIMappingConstants;
+import org.rest.sec.web.common.URIMappingConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;

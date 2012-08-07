@@ -24,7 +24,7 @@
 	</context-param>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>org.rest.spring</param-value>
+		<param-value>org.rest.sec.spring</param-value>
 	</context-param>
 	<context-param>
 		<param-name>spring.profiles.active</param-name>
@@ -48,7 +48,7 @@
 		</init-param>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>org.spring.rest</param-value> <!-- won't find anything -->
+			<param-value>org.spring.sec2.spring</param-value> <!-- won't find anything -->
 		</init-param>
 
 		<load-on-startup>1</load-on-startup>

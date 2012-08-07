@@ -14,7 +14,7 @@ import org.rest.common.web.controller.ISortingController;
 import org.rest.sec.model.Role;
 import org.rest.sec.persistence.service.IRoleService;
 import org.rest.sec.util.SecurityConstants;
-import org.rest.web.common.URIMappingConstants;
+import org.rest.sec.web.common.URIMappingConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;

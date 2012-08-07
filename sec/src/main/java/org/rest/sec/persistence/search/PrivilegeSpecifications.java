@@ -1,4 +1,4 @@
-package org.rest.persistence.search;
+package org.rest.sec.persistence.search;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

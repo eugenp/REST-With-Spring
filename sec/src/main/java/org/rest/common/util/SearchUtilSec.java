@@ -1,9 +1,10 @@
-package org.rest.sec.util;
+package org.rest.common.util;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.util.SearchCommonUtil;
+import org.rest.sec.util.QuerySpecificationSec;
 import org.springframework.data.jpa.domain.Specification;
 
 public final class SearchUtilSec {

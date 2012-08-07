@@ -1,4 +1,4 @@
-package org.rest.security;
+package org.rest.sec.security;
 
 import java.util.Collection;
 import java.util.List;

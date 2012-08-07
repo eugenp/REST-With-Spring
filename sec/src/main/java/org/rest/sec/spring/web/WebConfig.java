@@ -1,4 +1,4 @@
-package org.rest.spring.web;
+package org.rest.sec.spring.web;
 
 import java.util.List;
 
