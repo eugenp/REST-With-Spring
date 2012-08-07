@@ -13,8 +13,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public abstract class SecMimeRESTIntegrationTest<T extends IEntity> extends AbstractMimeRESTIntegrationTest<T> {
 
-    public SecMimeRESTIntegrationTest(final Class<T> clazzToSet) {
-        super(clazzToSet);
+    public SecMimeRESTIntegrationTest() {
+        super();
     }
 
 }

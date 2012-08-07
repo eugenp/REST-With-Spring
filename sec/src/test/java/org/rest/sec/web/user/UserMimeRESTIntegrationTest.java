@@ -11,7 +11,7 @@ public class UserMimeRESTIntegrationTest extends SecMimeRESTIntegrationTest<User
     private UserRESTTemplateImpl restTemplate;
 
     public UserMimeRESTIntegrationTest() {
-        super(User.class);
+        super();
     }
 
     // tests

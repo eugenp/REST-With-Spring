@@ -11,7 +11,7 @@ public class RoleMimeRESTIntegrationTest extends SecMimeRESTIntegrationTest<Role
     private RoleRESTTemplateImpl restTemplate;
 
     public RoleMimeRESTIntegrationTest() {
-        super(Role.class);
+        super();
     }
 
     // tests

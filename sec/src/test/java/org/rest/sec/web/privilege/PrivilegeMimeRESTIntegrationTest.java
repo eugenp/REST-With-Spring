@@ -11,7 +11,7 @@ public class PrivilegeMimeRESTIntegrationTest extends SecMimeRESTIntegrationTest
     private PrivilegeRESTTemplateImpl restTemplate;
 
     public PrivilegeMimeRESTIntegrationTest() {
-        super(Privilege.class);
+        super();
     }
 
     // tests

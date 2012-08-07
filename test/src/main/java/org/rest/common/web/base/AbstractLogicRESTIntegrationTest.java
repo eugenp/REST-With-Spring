@@ -98,12 +98,12 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
     // find - all
 
     @Test
-    public void whenResourcesAreRetrieved_thenNoExceptions() {
+    public void whenAllResourcesAreRetrieved_thenNoExceptions() {
         getAPI().findOneAsResponse(getURI());
     }
 
     @Test
-    public void whenResourcesAreRetrieved_then200IsReceived() {
+    public void whenAllResourcesAreRetrieved_then200IsReceived() {
         // When
         final Response response = getAPI().findAllAsResponse();
 
@@ -112,7 +112,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
     }
 
     @Test
-    public void whenResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
+    public void whenAllResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
         // Given
         getAPI().createAsURI(getAPI().createNewEntity());
 
@@ -121,6 +121,20 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
 
         // Then
         assertThat(allResources, not(Matchers.<T> empty()));
+    }
+
+    @Test
+    public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
+        // Given
+        this.getAPI().createAsResponse(getAPI().createNewEntity());
+
+        // When
+        final List<T> allResources = getAPI().findAll();
+
+        // Then
+        for (T resource : allResources) {
+            assertNotNull(resource.getId());
+        }
     }
 
     // create

@@ -12,8 +12,6 @@ public interface ITemplateAsResponse<T extends IEntity> {
 
     Response findOneAsResponse(final String uriOfResource); // 19
 
-    Response findOneAsResponse(final String uriOfResource, final String acceptMime); // 5
-
     // find - all
 
     Response findAllAsResponse(); // 1

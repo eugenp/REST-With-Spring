@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.google.common.base.Preconditions;
 import com.jayway.restassured.response.Response;
+import com.jayway.restassured.specification.RequestSpecification;
 
 /**
  * REST Template for the consumption of the REST API <br>
@@ -25,8 +26,6 @@ import com.jayway.restassured.response.Response;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTemplate<T> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-
-    private static final String START_QUERY_PARAM = QueryConstants.QUESTIONMARK + "q=";
 
     @Autowired
     @Qualifier("jacksonMarshaller")
@@ -54,12 +53,11 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public Response findOneAsResponse(final String uriOfResource) {
-        return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(uriOfResource);
+        return findOneRequest().get(uriOfResource);
     }
 
-    @Override
-    public Response findOneAsResponse(final String uriOfResource, final String acceptMime) {
-        return givenAuthenticated().header(HttpHeaders.ACCEPT, acceptMime).get(uriOfResource);
+    protected RequestSpecification findOneRequest() {
+        return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime());
     }
 
     // find - all
@@ -151,28 +149,21 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public Response searchAsResponse(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp) {
-        final String queryURI = getURI() + START_QUERY_PARAM + SearchTestUtil.constructQueryString(idOp, nameOp);
-        return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
+        final String queryURI = getURI() + QueryConstants.START_QUERY_PARAM + SearchTestUtil.constructQueryString(idOp, nameOp);
+        return findOneRequest().get(queryURI);
     }
 
     @Override
     public Response searchAsResponse(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size) {
-        final String queryURI = getURI() + START_QUERY_PARAM + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
-        return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
+        final String queryURI = getURI() + QueryConstants.START_QUERY_PARAM + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
+        return findOneRequest().get(queryURI);
     }
 
     // search
 
     @Override
     public List<T> search(final Triple<String, ClientOperation, String>... constraints) {
-        final SearchUriBuilder builder = new SearchUriBuilder();
-        for (final Triple<String, ClientOperation, String> constraint : constraints) {
-            builder.consume(constraint);
-        }
-        final String queryURI = getURI() + START_QUERY_PARAM + builder.build();
-
-        final Response searchResponse = givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
-        Preconditions.checkState(searchResponse.getStatusCode() == 200);
+        final Response searchResponse = searchAsResponse(constraints);
 
         return getMarshaller().<T> decodeList(searchResponse.getBody().asString(), clazz);
     }
@@ -183,9 +174,9 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         for (final Triple<String, ClientOperation, String> constraint : constraints) {
             builder.consume(constraint);
         }
-        final String queryURI = getURI() + START_QUERY_PARAM + builder.build();
+        final String queryURI = getURI() + QueryConstants.START_QUERY_PARAM + builder.build();
 
-        final Response searchResponse = givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
+        final Response searchResponse = findOneRequest().get(queryURI);
         Preconditions.checkState(searchResponse.getStatusCode() == 200);
 
         return searchResponse;
@@ -193,8 +184,8 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public List<T> searchPaged(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size) {
-        final String queryURI = getURI() + START_QUERY_PARAM + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
-        final Response searchResponse = givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(queryURI);
+        final String queryURI = getURI() + QueryConstants.START_QUERY_PARAM + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
+        final Response searchResponse = findOneRequest().get(queryURI);
         Preconditions.checkState(searchResponse.getStatusCode() == 200);
 
         return getMarshaller().<List> decode(searchResponse.getBody().asString(), List.class);
@@ -217,7 +208,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     // util
 
     protected String findOneAsMime(final String uriOfResource) {
-        final Response response = givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime()).get(uriOfResource);
+        final Response response = findOneRequest().get(uriOfResource);
         if (response.getStatusCode() != 200) {
             return null;
         }
