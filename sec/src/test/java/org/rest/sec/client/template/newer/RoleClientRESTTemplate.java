@@ -35,7 +35,7 @@ public class RoleClientRESTTemplate extends AbstractClientRESTTemplate<Role> {
 
     @Override
     public final String getURI() {
-        return paths.getPrivilegeUri();
+        return paths.getRoleUri();
     }
 
     @Override

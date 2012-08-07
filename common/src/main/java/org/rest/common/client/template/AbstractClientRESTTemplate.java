@@ -117,6 +117,7 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 
     @Override
     public final String createAsURI(final T resource) {
+        givenAuthenticated();
         final ResponseEntity responseEntity = restTemplate.exchange(getURI(), HttpMethod.POST, new HttpEntity<T>(resource, createContentTypeHeaders()), List.class);
 
         final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
