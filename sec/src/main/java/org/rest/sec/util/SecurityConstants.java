@@ -8,6 +8,7 @@ public final class SecurityConstants {
      */
     public static final String CAN_USER_WRITE = "ROLE_USER_WRITE";
     public static final String CAN_ROLE_WRITE = "ROLE_ROLE_WRITE";
+    public static final String CAN_PRIVILEGE_WRITE = "ROLE_PRIVILEGE_WRITE";
 
     public static final String ROLE_ADMIN = "AdminOfSecurityService";
 

@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 
 @Component
@@ -71,6 +72,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
     private void createPrivileges() {
         createPrivilegeIfNotExisting(SecurityConstants.CAN_USER_WRITE);
         createPrivilegeIfNotExisting(SecurityConstants.CAN_ROLE_WRITE);
+        createPrivilegeIfNotExisting(SecurityConstants.CAN_PRIVILEGE_WRITE);
     }
 
     final void createPrivilegeIfNotExisting(final String name) {
@@ -84,10 +86,14 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
     // Role
 
     private void createRoles() {
-        final Privilege privilegeUserWrite = privilegeService.findByName(SecurityConstants.CAN_USER_WRITE);
-        final Privilege privilegeRoleWrite = privilegeService.findByName(SecurityConstants.CAN_ROLE_WRITE);
+        final Privilege canUserWrite = privilegeService.findByName(SecurityConstants.CAN_USER_WRITE);
+        final Privilege canRoleWrite = privilegeService.findByName(SecurityConstants.CAN_ROLE_WRITE);
+        final Privilege canPrivilegeWrite = privilegeService.findByName(SecurityConstants.CAN_PRIVILEGE_WRITE);
+        Preconditions.checkNotNull(canUserWrite);
+        Preconditions.checkNotNull(canRoleWrite);
+        Preconditions.checkNotNull(canPrivilegeWrite);
 
-        createRoleIfNotExisting(SecurityConstants.ROLE_ADMIN, Sets.<Privilege> newHashSet(privilegeUserWrite, privilegeRoleWrite));
+        createRoleIfNotExisting(SecurityConstants.ROLE_ADMIN, Sets.<Privilege> newHashSet(canUserWrite, canRoleWrite, canPrivilegeWrite));
     }
 
     final void createRoleIfNotExisting(final String name, final Set<Privilege> privileges) {
