@@ -1,13 +1,13 @@
 # Overview
 
-This is a **Spring Security RESTful service**; it's purpose be used as a internally deployable, stand alone security implementation <br/>
-<br/>
-An **alternative goal** of the project is to server as a starting point of a REST service implementation - a reference REST implementation with Spring and Spring Security, where 
-most of the thorny problems in REST are addressed: <br/> 
-- HATEOAS and Discoverability <br/> 
-- Statelessness <br/> 
+This is a **Spring RESTful Service secured with Spring Security** - it provides a Proof of Concept implementation of a REST service with Spring and Spring Security. 
+It also provides a reference implementation in the following connected areas: 
+- REST Discoverability and HATEOAS <br/> 
 - Basic and Digest Authentication <br/> 
-- support for Multiple Representations (JSON, XML) <br/> 
+- support for Multiple Representations (on the same URIs) (JSON, XML) <br/> 
+- a full REST based query language for advanced filtering of resources <br/> 
+- sorting and pagination in REST <br/>
+- Statelessness for REST with Spring <br/> 
 - full integration testing suites at every layer: unit tests, integration tests for the DAO and Service layers, integration tests against the REST service <br/>
 
 
@@ -19,7 +19,7 @@ most of the thorny problems in REST are addressed: <br/>
 
 # Technology Stack
 The project uses the following technologies: <br/>
-- **web/REST**: Spring 3.1 <br/>
+- **web/REST**: Spring 3.1.2 <br/>
 - **marshalling**: Jackson (for JSON) and XStream (for XML) <br/>
 - **persistence**: JPA, Spring Data JPA and Hibernate <br/>
 - **testing**: Junit, Hamcrest, Mockito, rest-assured <br/>
