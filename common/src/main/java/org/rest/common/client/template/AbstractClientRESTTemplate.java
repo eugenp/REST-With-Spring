@@ -44,7 +44,7 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
     @Override
     public final T findOne(final long id) {
         try {
-            final ResponseEntity<T> response = restTemplate.exchange(getURI() + WebConstants.PATH_SEP + id, HttpMethod.GET, new HttpEntity<String>(createAcceptHeaders()), clazz);
+            final ResponseEntity<T> response = restTemplate.exchange(getURI() + WebConstants.PATH_SEP + id, HttpMethod.GET, findRequestEntity(), clazz);
             return response.getBody();
         } catch (final HttpClientErrorException clientEx) {
             return null;
@@ -53,8 +53,8 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 
     @Override
     public final T findOneByURI(final String uri) {
-        final ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity<T>(createAcceptHeaders()), String.class);
-        return marshaller.decode(response.getBody(), clazz);
+        final ResponseEntity<T> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), clazz);
+        return response.getBody();
     }
 
     // find one - by attributes
@@ -66,7 +66,7 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 
     @Override
     public T findOneByAttributes(final String... attributes) {
-        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUESTIONMARK + "q=" + constructURI(attributes));
+        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + constructURI(attributes));
         if (resourcesByName.isEmpty()) {
             return null;
         }
@@ -76,31 +76,35 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 
     // find - all
 
+    protected HttpEntity<Void> findRequestEntity() {
+        return new HttpEntity<Void>(createGetHeaders());
+    }
+
     @Override
     public final List<T> findAll() {
-        final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI(), HttpMethod.GET, new HttpEntity<String>(createAcceptHeaders()), List.class);
+        final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI(), HttpMethod.GET, findRequestEntity(), List.class);
         return findAllResponse.getBody();
     }
 
     @Override
     public final List<T> findAll(final String sortBy, final String sortOrder) {
-        final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI() + QueryConstants.Q_SORT_BY + sortBy, HttpMethod.GET, new HttpEntity<String>(createAcceptHeaders()), List.class);
+        final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI() + QueryConstants.Q_SORT_BY + sortBy, HttpMethod.GET, findRequestEntity(), List.class);
         return findAllResponse.getBody();
     }
 
     public final ResponseEntity<List> findAllAsResponse() {
-        return restTemplate.exchange(getURI(), HttpMethod.GET, new HttpEntity<String>(createAcceptHeaders()), List.class);
-    }
-
-    public final List<T> findAllByURI(final String uri) {
-        final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity<T>(createAcceptHeaders()), List.class);
-        return response.getBody();
+        return restTemplate.exchange(getURI(), HttpMethod.GET, findRequestEntity(), List.class);
     }
 
     @Override
     public final List<T> findAllByAttributes(final String... attributes) {
-        final List<T> resourcesByAttributes = findAllByURI(getURI() + QueryConstants.QUESTIONMARK + "q=" + constructURI(attributes));
+        final List<T> resourcesByAttributes = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + constructURI(attributes));
         return resourcesByAttributes;
+    }
+
+    public final List<T> findAllByURI(final String uri) {
+        final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);
+        return response.getBody();
     }
 
     // create
@@ -164,7 +168,7 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
 
     // util
 
-    protected final HttpHeaders createAcceptHeaders() {
+    protected HttpHeaders createGetHeaders() {
         final HttpHeaders headers = new HttpHeaders() {
             {
                 set(com.google.common.net.HttpHeaders.ACCEPT, marshaller.getMime());
