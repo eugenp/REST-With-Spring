@@ -3,10 +3,11 @@ package org.rest.sec.client.template;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.rest.common.client.template.AbstractRESTTemplate;
+import org.rest.common.security.util.AuthenticationUtil;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.model.Role;
 import org.rest.sec.model.dto.User;
-import org.rest.testing.security.AuthenticationUtil;
+import org.rest.sec.util.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,7 @@ public final class UserRESTTemplateImpl extends AbstractRESTTemplate<User> {
 
     @Override
     public final RequestSpecification givenAuthenticated() {
-        return AuthenticationUtil.givenBasicAuthenticated();
+        return AuthenticationUtil.givenBasicAuthenticated(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD);
     }
 
     @Override

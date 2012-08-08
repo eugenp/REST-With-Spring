@@ -13,7 +13,7 @@ import org.rest.common.web.controller.AbstractController;
 import org.rest.common.web.controller.ISortingController;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.persistence.service.dto.IUserService;
-import org.rest.sec.util.SecurityConstants;
+import org.rest.sec.util.SecurityConstants.Privileges;
 import org.rest.sec.web.common.URIMappingConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -118,7 +118,7 @@ public class UserController extends AbstractController<User> implements ISorting
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    @Secured(SecurityConstants.CAN_USER_WRITE)
+    @Secured(Privileges.CAN_USER_WRITE)
     public void update(@RequestBody final User resource) {
         updateInternal(resource);
     }
@@ -127,7 +127,7 @@ public class UserController extends AbstractController<User> implements ISorting
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Secured(SecurityConstants.CAN_USER_WRITE)
+    @Secured(Privileges.CAN_USER_WRITE)
     public void delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
     }

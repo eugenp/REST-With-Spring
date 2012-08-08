@@ -10,6 +10,7 @@ import org.rest.sec.persistence.service.IPrincipalService;
 import org.rest.sec.persistence.service.IPrivilegeService;
 import org.rest.sec.persistence.service.IRoleService;
 import org.rest.sec.util.SecurityConstants;
+import org.rest.sec.util.SecurityConstants.Privileges;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,9 +71,9 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
     // Privilege
 
     private void createPrivileges() {
-        createPrivilegeIfNotExisting(SecurityConstants.CAN_USER_WRITE);
-        createPrivilegeIfNotExisting(SecurityConstants.CAN_ROLE_WRITE);
-        createPrivilegeIfNotExisting(SecurityConstants.CAN_PRIVILEGE_WRITE);
+        createPrivilegeIfNotExisting(Privileges.CAN_USER_WRITE);
+        createPrivilegeIfNotExisting(Privileges.CAN_ROLE_WRITE);
+        createPrivilegeIfNotExisting(Privileges.CAN_PRIVILEGE_WRITE);
     }
 
     final void createPrivilegeIfNotExisting(final String name) {
@@ -86,14 +87,14 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
     // Role
 
     private void createRoles() {
-        final Privilege canUserWrite = privilegeService.findByName(SecurityConstants.CAN_USER_WRITE);
-        final Privilege canRoleWrite = privilegeService.findByName(SecurityConstants.CAN_ROLE_WRITE);
-        final Privilege canPrivilegeWrite = privilegeService.findByName(SecurityConstants.CAN_PRIVILEGE_WRITE);
+        final Privilege canUserWrite = privilegeService.findByName(Privileges.CAN_USER_WRITE);
+        final Privilege canRoleWrite = privilegeService.findByName(Privileges.CAN_ROLE_WRITE);
+        final Privilege canPrivilegeWrite = privilegeService.findByName(Privileges.CAN_PRIVILEGE_WRITE);
         Preconditions.checkNotNull(canUserWrite);
         Preconditions.checkNotNull(canRoleWrite);
         Preconditions.checkNotNull(canPrivilegeWrite);
 
-        createRoleIfNotExisting(SecurityConstants.ROLE_ADMIN, Sets.<Privilege> newHashSet(canUserWrite, canRoleWrite, canPrivilegeWrite));
+        createRoleIfNotExisting(Privileges.ROLE_ADMIN, Sets.<Privilege> newHashSet(canUserWrite, canRoleWrite, canPrivilegeWrite));
     }
 
     final void createRoleIfNotExisting(final String name, final Set<Privilege> privileges) {
@@ -108,7 +109,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
     // Principal/User
 
     final void createPrincipals() {
-        final Role roleAdmin = roleService.findByName(SecurityConstants.ROLE_ADMIN);
+        final Role roleAdmin = roleService.findByName(Privileges.ROLE_ADMIN);
 
         createPrincipalIfNotExisting(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD, Sets.<Role> newHashSet(roleAdmin));
     }

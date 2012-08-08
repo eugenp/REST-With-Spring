@@ -13,7 +13,7 @@ import org.rest.common.web.controller.AbstractController;
 import org.rest.common.web.controller.ISortingController;
 import org.rest.sec.model.Role;
 import org.rest.sec.persistence.service.IRoleService;
-import org.rest.sec.util.SecurityConstants;
+import org.rest.sec.util.SecurityConstants.Privileges;
 import org.rest.sec.web.common.URIMappingConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -110,7 +110,7 @@ public class RoleController extends AbstractController<Role> implements ISorting
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    @Secured(SecurityConstants.CAN_ROLE_WRITE)
+    @Secured(Privileges.CAN_ROLE_WRITE)
     public void create(@RequestBody final Role resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         createInternal(resource, uriBuilder, response);
     }
@@ -119,7 +119,7 @@ public class RoleController extends AbstractController<Role> implements ISorting
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    @Secured(SecurityConstants.CAN_ROLE_WRITE)
+    @Secured(Privileges.CAN_ROLE_WRITE)
     public void update(@RequestBody final Role resource) {
         updateInternal(resource);
     }
@@ -128,7 +128,7 @@ public class RoleController extends AbstractController<Role> implements ISorting
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Secured(SecurityConstants.CAN_ROLE_WRITE)
+    @Secured(Privileges.CAN_ROLE_WRITE)
     public void delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
     }

@@ -2,9 +2,9 @@ package org.rest.test.suite;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.rest.sec.spring.context.ContextTestConfig;
 import org.rest.sec.spring.persistence.jpa.PersistenceJPAConfig;
 import org.rest.sec.spring.security.SecurityConfig;
-import org.rest.spring.context.ContextTestConfig;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;

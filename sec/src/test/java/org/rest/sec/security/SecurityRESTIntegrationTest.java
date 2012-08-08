@@ -1,4 +1,4 @@
-package org.rest.security;
+package org.rest.sec.security;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -7,8 +7,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.sec.client.template.UserRESTTemplateImpl;
-import org.rest.spring.client.ClientTestConfig;
-import org.rest.spring.context.ContextTestConfig;
+import org.rest.sec.spring.client.ClientTestConfig;
+import org.rest.sec.spring.context.ContextTestConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;

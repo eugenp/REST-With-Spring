@@ -8,10 +8,11 @@ import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.rest.common.security.util.AuthenticationUtil;
 import org.rest.common.web.util.HTTPLinkHeaderUtils;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.test.SecGeneralRESTIntegrationTest;
-import org.rest.testing.security.AuthenticationUtil;
+import org.rest.sec.util.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.net.HttpHeaders;
@@ -42,7 +43,7 @@ public class ScenarioRESTIntegrationTest extends SecGeneralRESTIntegrationTest {
     // util
 
     protected final RequestSpecification givenAuthenticated() {
-        return AuthenticationUtil.givenBasicAuthenticated();
+        return AuthenticationUtil.givenBasicAuthenticated(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD);
     }
 
 }
