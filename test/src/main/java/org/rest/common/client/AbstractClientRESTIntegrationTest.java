@@ -53,12 +53,12 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     }
 
     // find one - by name
-
+    // note: - the rest template encodes the URI wrong (q=key=val is seen as q=key - one param and val=null - another param)
     @Test
     @Ignore("not yet done")
     public final void givenResourceExists_whenResourceIsSearchedByName_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().givenAuthenticated().create(getEntityOps().createNewEntity());
 
         // When
         getAPI().findByName(existingResource.getName());

@@ -107,6 +107,11 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
         return response.getBody();
     }
 
+    public final List<T> findExperimental(final String uri) {
+        final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);
+        return response.getBody();
+    }
+
     // create
 
     @Override
@@ -196,7 +201,22 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
             queryParam.queryParam(attributes[i], attributes[i + 1]);
         }
 
-        final String query = queryParam.build().encode().getQuery();
+        String query = queryParam.build().encode().getQuery();
+        // query = query.replaceAll("=", "%3D");
+        return query.replaceAll("&", ",");
+    }
+
+    static final String constructURINew(final String... attributes) {
+        Preconditions.checkNotNull(attributes);
+        Preconditions.checkArgument(attributes.length > 0);
+        Preconditions.checkArgument(attributes.length % 2 == 0);
+
+        final UriComponentsBuilder queryParam = UriComponentsBuilder.newInstance();
+        for (int i = 0; i <= attributes.length / 2; i += 2) {
+            queryParam.queryParam("q", attributes[i] + "=" + attributes[i + 1]);
+        }
+
+        String query = queryParam.build().encode().getQuery();
         return query.replaceAll("&", ",");
     }
 
