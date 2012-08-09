@@ -2,7 +2,6 @@ package org.rest.sec.test;
 
 import org.junit.runner.RunWith;
 import org.rest.common.persistence.model.IEntity;
-import org.rest.common.security.util.AuthenticationUtil;
 import org.rest.common.web.base.AbstractSortRESTIntegrationTest;
 import org.rest.sec.spring.client.ClientTestConfig;
 import org.rest.sec.spring.context.ContextTestConfig;
@@ -21,7 +20,7 @@ public abstract class SecSortRESTIntegrationTest<T extends IEntity> extends Abst
 
     @Override
     protected final RequestSpecification givenAuthenticated() {
-        return AuthenticationUtil.givenBasicAuthenticated(SecurityConstants.ADMIN_EMAIL, SecurityConstants.ADMIN_PASSWORD);
+        return auth.givenBasicAuthenticated(SecurityConstants.ADMIN_EMAIL, SecurityConstants.ADMIN_PASSWORD);
     }
 
 }

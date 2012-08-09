@@ -9,13 +9,18 @@ import static org.junit.Assert.assertFalse;
 import java.util.List;
 
 import org.junit.Test;
+import org.rest.common.client.security.IClientAuthenticationComponent;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 public abstract class AbstractPaginationRESTIntegrationTest<T extends IEntity> {
+
+    @Autowired
+    protected IClientAuthenticationComponent auth;
 
     // tests
 

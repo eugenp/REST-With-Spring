@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Triple;
 import org.apache.http.HttpHeaders;
 import org.rest.common.client.marshall.IMarshaller;
+import org.rest.common.client.security.IClientAuthenticationComponent;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.search.SearchUriBuilder;
@@ -30,6 +31,9 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     @Autowired
     @Qualifier("jacksonMarshaller")
     protected IMarshaller marshaller;
+
+    @Autowired
+    protected IClientAuthenticationComponent auth;
 
     protected final Class<T> clazz;
 

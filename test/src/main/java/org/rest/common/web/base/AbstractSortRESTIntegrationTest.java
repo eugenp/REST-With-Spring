@@ -9,11 +9,13 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.rest.common.client.security.IClientAuthenticationComponent;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchField;
 import org.rest.common.util.order.OrderById;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
 import com.google.common.collect.Ordering;
@@ -22,6 +24,9 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
+
+    @Autowired
+    protected IClientAuthenticationComponent auth;
 
     // tests
 

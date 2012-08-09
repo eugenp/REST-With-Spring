@@ -8,7 +8,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.rest.common.security.util.AuthenticationUtil;
+import org.rest.common.client.security.IClientAuthenticationComponent;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.spring.client.ClientTestConfig;
@@ -28,6 +28,8 @@ public class AuthenticationRESTIntegrationTest {
 
     @Autowired
     private SecBusinessPaths paths;
+    @Autowired
+    private IClientAuthenticationComponent auth;
 
     // tests
 
@@ -70,7 +72,7 @@ public class AuthenticationRESTIntegrationTest {
     // util
 
     protected RequestSpecification givenAuthenticated() {
-        return AuthenticationUtil.givenBasicAuthenticated(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD);
+        return auth.givenBasicAuthenticated(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD);
     }
 
 }

@@ -3,7 +3,6 @@ package org.rest.sec.client.template;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.rest.common.client.template.AbstractRESTTemplate;
-import org.rest.common.security.util.AuthenticationUtil;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.util.SecurityConstants;
@@ -33,7 +32,7 @@ public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate<Privil
 
     @Override
     public final RequestSpecification givenAuthenticated() {
-        return AuthenticationUtil.givenBasicAuthenticated(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD);
+        return auth.givenBasicAuthenticated(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD);
     }
 
     @Override
