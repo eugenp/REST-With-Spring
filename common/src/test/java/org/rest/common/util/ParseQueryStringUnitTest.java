@@ -1,4 +1,4 @@
-package org.rest.util;
+package org.rest.common.util;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;

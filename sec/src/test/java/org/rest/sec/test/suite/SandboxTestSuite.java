@@ -1,4 +1,4 @@
-package org.rest.test.suite;
+package org.rest.sec.test.suite;
 
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
