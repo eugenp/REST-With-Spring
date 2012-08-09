@@ -1,7 +1,7 @@
 package org.rest.sec.client.template.newer;
 
+import org.apache.commons.codec.binary.Base64;
 import org.rest.common.client.marshall.IMarshaller;
-import org.rest.common.security.util.AuthenticationUtil;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.model.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class AuthenticationRESTTemplate {
             {
                 set(com.google.common.net.HttpHeaders.ACCEPT, marshaller.getMime());
 
-                final String basicAuthorizationHeader = AuthenticationUtil.createBasicAuthenticationAuthorizationHeader(username, password);
+                final String basicAuthorizationHeader = createBasicAuthenticationAuthorizationHeader(username, password);
                 set(com.google.common.net.HttpHeaders.AUTHORIZATION, basicAuthorizationHeader);
             }
         };
@@ -48,6 +48,13 @@ public class AuthenticationRESTTemplate {
 
     final String getURI() {
         return paths.getAuthenticationUri();
+    }
+
+    final String createBasicAuthenticationAuthorizationHeader(final String username, final String password) {
+        final String authorisation = username + ":" + password;
+        final byte[] encodedAuthorisation = Base64.encodeBase64(authorisation.getBytes());
+        final String basicAuthorizationHeader = "Basic " + new String(encodedAuthorisation);
+        return basicAuthorizationHeader;
     }
 
 }
