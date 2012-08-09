@@ -9,6 +9,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
 import org.hamcrest.core.AnyOf;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.client.template.IRESTTemplate;
@@ -104,6 +105,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
     }
 
     @Test
+    @Ignore
     public final void whenLastPageOfResourcesIsRetrieved_thenNoNextPageIsDiscoverable() {
         // When
         final Response response = getAPI().findOneAsResponse(getURI() + "?page=1&size=1");

@@ -54,6 +54,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
 
     // find one - by name
     // note: - the rest template encodes the URI wrong (q=key=val is seen as q=key - one param and val=null - another param)
+    // see: http://forum.springsource.org/showthread.php?129138-Possible-bug-in-RestTemplate-double-checking-before-opening-a-JIRA&p=421494#post421494
     @Test
     @Ignore("not yet done")
     public final void givenResourceExists_whenResourceIsSearchedByName_thenNoExceptions() {
