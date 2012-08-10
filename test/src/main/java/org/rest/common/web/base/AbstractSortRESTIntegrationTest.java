@@ -33,7 +33,7 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
     // GET (paged)
 
     @Test
-    public final void whenResourcesAreRetrievedSorted_thenNoExceptions() {
+    public final void whenResourcesAreRetrievedPagedAndSorted_thenNoExceptions() {
         givenAuthenticated().get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=41&sortBy=name");
     }
 
@@ -53,9 +53,21 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
 
     @SuppressWarnings("unchecked")
     @Test
-    // TODO
-    @Ignore("temporarily ignored - in progress")
     public final void whenResourcesAreRetrievedSorted_thenResourcesAreIndeedOrdered() {
+        getAPI().createAsResponse(getAPI().createNewEntity());
+        getAPI().createAsResponse(getAPI().createNewEntity());
+
+        // When
+        final Response response = RestAssured.get(getURI() + QueryConstants.QUESTIONMARK + "sortBy=name" + QueryConstants.S_ORDER_ASC);
+        final List<T> resourcesPagedAndSorted = getAPI().getMarshaller().decode(response.asString(), List.class);
+
+        // Then
+        assertTrue(getOrdering().isOrdered(resourcesPagedAndSorted));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public final void whenResourcesAreRetrievedPagedAndSorted_thenResourcesAreIndeedOrdered() {
         getAPI().createAsResponse(getAPI().createNewEntity());
         getAPI().createAsResponse(getAPI().createNewEntity());
 
@@ -70,7 +82,7 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
     @SuppressWarnings("unchecked")
     @Test
     @Ignore("not necessarily true")
-    public final void whenResourcesAreRetrievedNotSorted_thenResourcesAreNotOrdered() {
+    public final void whenResourcesAreRetrievedPagedAndNotSorted_thenResourcesAreNotOrdered() {
         getAPI().createAsResponse(getAPI().createNewEntity());
         getAPI().createAsResponse(getAPI().createNewEntity());
 
@@ -83,7 +95,7 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
     }
 
     @Test
-    public final void whenResourcesAreRetrievedByInvalidSorting_then400IsReceived() {
+    public final void whenResourcesAreRetrievedByPagedAndWithInvalidSorting_then400IsReceived() {
         // When
         final Response response = RestAssured.get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=4&sortBy=invalid");
 

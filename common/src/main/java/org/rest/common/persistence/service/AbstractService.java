@@ -162,9 +162,9 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
         throw new UnsupportedOperationException();
     }
 
-    // util
+    // template
 
-    final Sort constructSort(final String sortBy, final String sortOrder) {
+    protected final Sort constructSort(final String sortBy, final String sortOrder) {
         Sort sortInfo = null;
         if (sortBy != null) {
             sortInfo = new Sort(Direction.fromString(sortOrder), sortBy);
