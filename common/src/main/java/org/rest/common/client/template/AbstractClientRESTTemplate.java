@@ -206,20 +206,6 @@ public abstract class AbstractClientRESTTemplate<T extends IEntity> implements I
         return query.replaceAll("&", ",");
     }
 
-    static final String constructURINew(final String... attributes) {
-        Preconditions.checkNotNull(attributes);
-        Preconditions.checkArgument(attributes.length > 0);
-        Preconditions.checkArgument(attributes.length % 2 == 0);
-
-        final UriComponentsBuilder queryParam = UriComponentsBuilder.newInstance();
-        for (int i = 0; i <= attributes.length / 2; i += 2) {
-            queryParam.queryParam("q", attributes[i] + "=" + attributes[i + 1]);
-        }
-
-        String query = queryParam.build().encode().getQuery();
-        return query.replaceAll("&", ",");
-    }
-
     // template method
 
     public abstract String getURI();
