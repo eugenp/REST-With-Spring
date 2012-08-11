@@ -3,9 +3,10 @@ package org.rest.common.client.template;
 import java.util.List;
 
 import org.rest.common.IOperations;
-import org.rest.common.persistence.model.IEntity;
+import org.rest.common.persistence.model.INameableEntity;
+import org.rest.common.persistence.service.INameSupport;
 
-public interface IClientTemplate<T extends IEntity> extends IOperations<T> {
+public interface IClientTemplate<T extends INameableEntity> extends IOperations<T>, INameSupport<T>, ITemplateAsURI<T> {
 
     IClientTemplate<T> givenAuthenticated();
 
@@ -13,10 +14,6 @@ public interface IClientTemplate<T extends IEntity> extends IOperations<T> {
 
     List<T> findAllByAttributes(final String... attributes);
 
-    T findByName(final String name);
-
     T findOneByURI(final String uri);
-
-    String createAsURI(final T resource);
 
 }

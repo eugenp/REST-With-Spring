@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.client.marshall.IMarshaller;
-import org.rest.common.persistence.model.IEntity;
+import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.web.WebConstants;
@@ -21,7 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.google.common.base.Preconditions;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public abstract class AbstractClientRESTTemplate<T extends IEntity> implements IClientTemplate<T> {
+public abstract class AbstractClientRESTTemplate<T extends INameableEntity> implements IClientTemplate<T> {
 
     protected Class<T> clazz;
 
