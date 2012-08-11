@@ -16,6 +16,10 @@ import com.jayway.restassured.specification.RequestSpecification;
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public abstract class SecSortRESTIntegrationTest<T extends IEntity> extends AbstractSortRESTIntegrationTest<T> {
 
+    public SecSortRESTIntegrationTest(final Class<T> clazzToSet) {
+        super(clazzToSet);
+    }
+
     //
 
     @Override

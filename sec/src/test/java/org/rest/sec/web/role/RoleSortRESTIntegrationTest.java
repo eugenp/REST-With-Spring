@@ -13,6 +13,10 @@ public class RoleSortRESTIntegrationTest extends SecSortRESTIntegrationTest<Role
     @Autowired
     private RoleRESTTemplateImpl template;
 
+    public RoleSortRESTIntegrationTest() {
+        super(Role.class);
+    }
+
     // tests
 
     // template method (shortcuts)

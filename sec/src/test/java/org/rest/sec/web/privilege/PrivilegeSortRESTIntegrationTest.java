@@ -12,6 +12,10 @@ public class PrivilegeSortRESTIntegrationTest extends SecSortRESTIntegrationTest
     @Autowired
     private PrivilegeRESTTemplateImpl template;
 
+    public PrivilegeSortRESTIntegrationTest() {
+        super(Privilege.class);
+    }
+
     // tests
 
     // template method (shortcuts)

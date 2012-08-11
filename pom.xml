@@ -37,7 +37,7 @@
 	<properties>
 		<!-- VERSIONS -->
 		<spring.version>3.1.2.RELEASE</spring.version>
-		<spring-security.version>3.1.1.RELEASE</spring-security.version>
+		<spring-security.version>3.1.2.RELEASE</spring-security.version>
 		<javassist.version>3.16.1-GA</javassist.version>
 		<cglib.version>2.2.2</cglib.version>
 
@@ -51,7 +51,7 @@
 		<mysql-connector-java.version>5.1.21</mysql-connector-java.version> <!-- latest version on: 05.10.2011 - http://dev.mysql.com/downloads/connector/j/ -->
 		<hibernate.version>4.1.5.SP1</hibernate.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
-		<querydsl.version>2.7.1</querydsl.version>
+		<querydsl.version>2.7.2</querydsl.version>
 
 		<!-- VERSIONS - logging -->
 		<org.slf4j.version>1.6.4</org.slf4j.version>

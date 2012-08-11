@@ -28,6 +28,14 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
     @Autowired
     protected IClientAuthenticationComponent auth;
 
+    protected final Class<T> clazz;
+
+    public AbstractSortRESTIntegrationTest(final Class<T> clazzToSet) {
+        super();
+
+        this.clazz = clazzToSet;
+    }
+
     // tests
 
     // GET (paged)
@@ -51,7 +59,6 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
         assertThat(response.getStatusCode(), is(200));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public final void whenResourcesAreRetrievedSorted_thenResourcesAreIndeedOrdered() {
         getAPI().createAsResponse(getAPI().createNewEntity());
@@ -59,13 +66,12 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
 
         // When
         final Response response = RestAssured.get(getURI() + QueryConstants.QUESTIONMARK + "sortBy=name" + QueryConstants.S_ORDER_ASC);
-        final List<T> resourcesPagedAndSorted = getAPI().getMarshaller().decode(response.asString(), List.class);
+        final List<T> resourcesPagedAndSorted = getAPI().getMarshaller().decodeList(response.asString(), clazz);
 
         // Then
         assertTrue(getOrdering().isOrdered(resourcesPagedAndSorted));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public final void whenResourcesAreRetrievedPagedAndSorted_thenResourcesAreIndeedOrdered() {
         getAPI().createAsResponse(getAPI().createNewEntity());
@@ -73,7 +79,7 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
 
         // When
         final Response response = givenAuthenticated().get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=4&sortBy=name" + QueryConstants.S_ORDER_ASC);
-        final List<T> resourcesPagedAndSorted = getAPI().getMarshaller().decode(response.asString(), List.class);
+        final List<T> resourcesPagedAndSorted = getAPI().getMarshaller().decodeList(response.asString(), clazz);
 
         // Then
         assertTrue(getOrdering().isOrdered(resourcesPagedAndSorted));

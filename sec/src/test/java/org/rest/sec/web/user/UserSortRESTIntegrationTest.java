@@ -12,6 +12,10 @@ public class UserSortRESTIntegrationTest extends SecSortRESTIntegrationTest<User
     @Autowired
     private UserRESTTemplateImpl template;
 
+    public UserSortRESTIntegrationTest() {
+        super(User.class);
+    }
+
     // tests
 
     // template method (shortcuts)
