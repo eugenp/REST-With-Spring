@@ -1,5 +1,6 @@
 package org.rest.sec.web.privilege;
 
+import org.rest.common.util.order.OrderByName;
 import org.rest.sec.client.template.PrivilegeRESTTemplateImpl;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.test.SecSortRESTIntegrationTest;
@@ -37,12 +38,7 @@ public class PrivilegeSortRESTIntegrationTest extends SecSortRESTIntegrationTest
 
     @Override
     protected final Ordering<Privilege> getOrdering() {
-        return new Ordering<Privilege>() {
-            @Override
-            public final int compare(final Privilege left, final Privilege right) {
-                return left.getName().compareToIgnoreCase(right.getName());
-            }
-        };
+        return new OrderByName<Privilege>();
     }
 
 }

@@ -1,5 +1,6 @@
 package org.rest.sec.web.user;
 
+import org.rest.common.util.order.OrderByName;
 import org.rest.sec.client.template.UserRESTTemplateImpl;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.test.SecSortRESTIntegrationTest;
@@ -37,12 +38,7 @@ public class UserSortRESTIntegrationTest extends SecSortRESTIntegrationTest<User
 
     @Override
     protected final Ordering<User> getOrdering() {
-        return new Ordering<User>() {
-            @Override
-            public final int compare(final User left, final User right) {
-                return left.getName().compareToIgnoreCase(right.getName());
-            }
-        };
+        return new OrderByName<User>();
     }
 
 }
