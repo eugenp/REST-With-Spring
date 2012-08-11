@@ -11,6 +11,7 @@ import org.rest.common.search.ClientOperation;
 import org.rest.common.search.SearchUriBuilder;
 import org.rest.common.sec.util.SearchTestUtil;
 import org.rest.common.util.QueryConstants;
+import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,6 +82,60 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     @Override
     public Response findAllAsResponse() {
         return findOneAsResponse(getURI());
+    }
+
+    @Override
+    public Response findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder) {
+        final StringBuilder uri = new StringBuilder(getURI());
+        uri.append(QueryConstants.QUESTIONMARK);
+        uri.append("page=");
+        uri.append(page);
+        uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+        uri.append("size=");
+        uri.append(size);
+        Preconditions.checkState(!(sortBy == null && sortOrder != null));
+        if (sortBy != null) {
+            uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+            uri.append(QueryConstants.SORT_BY + "=");
+            uri.append(sortBy);
+        }
+        if (sortOrder != null) {
+            uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+            uri.append(QueryConstants.SORT_ORDER + "=");
+            uri.append(sortOrder);
+        }
+
+        return findOneAsResponse(uri.toString());
+    }
+
+    @Override
+    public Response findAllSortedAsResponse(final String sortBy, final String sortOrder) {
+        final StringBuilder uri = new StringBuilder(getURI());
+        uri.append(QueryConstants.QUESTIONMARK);
+        Preconditions.checkState(!(sortBy == null && sortOrder != null));
+        if (sortBy != null) {
+            uri.append(QueryConstants.SORT_BY + "=");
+            uri.append(sortBy);
+        }
+        if (sortOrder != null) {
+            uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+            uri.append(QueryConstants.SORT_ORDER + "=");
+            uri.append(sortOrder);
+        }
+
+        return findOneAsResponse(uri.toString());
+    }
+
+    @Override
+    public Response findAllPaginatedAsResponse(final int page, final int size) {
+        final StringBuilder uri = new StringBuilder(getURI());
+        uri.append(QueryConstants.QUESTIONMARK);
+        uri.append("page=");
+        uri.append(page);
+        uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+        uri.append("size=");
+        uri.append(size);
+        return findOneAsResponse(uri.toString());
     }
 
     // create

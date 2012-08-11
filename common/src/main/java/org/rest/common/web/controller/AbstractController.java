@@ -104,6 +104,14 @@ public abstract class AbstractController<T extends IEntity> {
     // find - one
 
     protected final T findOneInternal(final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+        T resource = findOneInternal(id);
+
+        eventPublisher.publishEvent(new SingleResourceRetrievedEvent<T>(clazz, uriBuilder, response));
+
+        return resource;
+    }
+
+    protected final T findOneInternal(final Long id) {
         T resource = null;
         try {
             resource = RestPreconditions.checkNotNull(getService().findOne(id));
@@ -112,9 +120,6 @@ public abstract class AbstractController<T extends IEntity> {
             logger.warn("InvalidDataAccessApiUsageException on find operation", ex);
             throw new ConflictException(ex);
         }
-
-        eventPublisher.publishEvent(new SingleResourceRetrievedEvent<T>(clazz, uriBuilder, response));
-
         return resource;
     }
 

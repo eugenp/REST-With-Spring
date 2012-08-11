@@ -13,7 +13,9 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 public interface IRESTTemplate<T extends IEntity> extends IOperations<T>, IEntityOperations<T>, ITemplateAsResponse<T>, ITemplateAsURI<T> {
 
-    String getURI();
+    // search
+
+    List<T> searchPaged(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size);
 
     // authentication
 
@@ -21,8 +23,8 @@ public interface IRESTTemplate<T extends IEntity> extends IOperations<T>, IEntit
 
     IMarshaller getMarshaller();
 
-    // search
+    // template
 
-    List<T> searchPaged(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size);
+    String getURI();
 
 }

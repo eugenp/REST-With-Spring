@@ -22,7 +22,6 @@ public abstract class SecSortRESTIntegrationTest<T extends IEntity> extends Abst
 
     //
 
-    @Override
     protected final RequestSpecification givenAuthenticated() {
         return auth.givenBasicAuthenticated(SecurityConstants.ADMIN_EMAIL, SecurityConstants.ADMIN_PASSWORD);
     }

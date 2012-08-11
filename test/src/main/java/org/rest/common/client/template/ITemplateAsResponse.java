@@ -16,6 +16,12 @@ public interface ITemplateAsResponse<T extends IEntity> {
 
     Response findAllAsResponse(); // 1
 
+    Response findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder);
+
+    Response findAllPaginatedAsResponse(final int page, final int size);
+
+    Response findAllSortedAsResponse(final String sortBy, final String sortOrder);
+
     // search
 
     Response searchAsResponse(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp);

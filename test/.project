@@ -11,12 +11,12 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<name>org.zeroturnaround.eclipse.rebelXmlBuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.zeroturnaround.eclipse.rebelXmlBuilder</name>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>

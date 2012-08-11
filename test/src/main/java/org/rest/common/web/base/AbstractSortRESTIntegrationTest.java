@@ -12,16 +12,13 @@ import org.junit.Test;
 import org.rest.common.client.security.IClientAuthenticationComponent;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
-import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchField;
 import org.rest.common.util.order.OrderById;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
 import com.google.common.collect.Ordering;
-import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
-import com.jayway.restassured.specification.RequestSpecification;
 
 public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
 
@@ -42,19 +39,19 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
 
     @Test
     public final void whenResourcesAreRetrievedPagedAndSorted_thenNoExceptions() {
-        givenAuthenticated().get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=41&sortBy=name");
+        getAPI().findAllPaginatedAndSortedAsResponse(0, 41, "name", null);
     }
 
     @Test
     public final void whenResourcesAreRetrievedPagedAndSorted_then200IsReceived() {
-        final Response response = RestAssured.get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=1&sortBy=name" + QueryConstants.S_ORDER_ASC);
+        final Response response = getAPI().findAllPaginatedAndSortedAsResponse(0, 1, "name", Sort.Direction.ASC.name());
 
         assertThat(response.getStatusCode(), is(200));
     }
 
     @Test
     public final void whenResourcesAreRetrievedSorted_then200IsReceived() {
-        final Response response = RestAssured.get(getURI() + QueryConstants.QUESTIONMARK + "sortBy=name" + QueryConstants.S_ORDER_ASC);
+        final Response response = getAPI().findAllSortedAsResponse("name", Sort.Direction.ASC.name());
 
         assertThat(response.getStatusCode(), is(200));
     }
@@ -65,7 +62,7 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
         getAPI().createAsResponse(getAPI().createNewEntity());
 
         // When
-        final Response response = RestAssured.get(getURI() + QueryConstants.QUESTIONMARK + "sortBy=name" + QueryConstants.S_ORDER_ASC);
+        final Response response = getAPI().findAllSortedAsResponse("name", Sort.Direction.ASC.name());
         final List<T> resourcesPagedAndSorted = getAPI().getMarshaller().decodeList(response.asString(), clazz);
 
         // Then
@@ -78,7 +75,7 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
         getAPI().createAsResponse(getAPI().createNewEntity());
 
         // When
-        final Response response = givenAuthenticated().get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=4&sortBy=name" + QueryConstants.S_ORDER_ASC);
+        final Response response = getAPI().findAllPaginatedAndSortedAsResponse(0, 4, "name", Sort.Direction.ASC.name());
         final List<T> resourcesPagedAndSorted = getAPI().getMarshaller().decodeList(response.asString(), clazz);
 
         // Then
@@ -93,7 +90,8 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
         getAPI().createAsResponse(getAPI().createNewEntity());
 
         // When
-        final Response response = givenAuthenticated().get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=6");
+        final Response response = getAPI().findAllPaginatedAsResponse(0, 6);
+
         final List<T> resourcesPagedAndSorted = getAPI().getMarshaller().decode(response.asString(), List.class);
 
         // Then
@@ -103,7 +101,7 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
     @Test
     public final void whenResourcesAreRetrievedByPagedAndWithInvalidSorting_then400IsReceived() {
         // When
-        final Response response = RestAssured.get(getURI() + QueryConstants.QUESTIONMARK + "page=0&size=4&sortBy=invalid");
+        final Response response = getAPI().findAllPaginatedAndSortedAsResponse(0, 4, "invalid", null);
 
         // Then
         assertThat(response.getStatusCode(), is(400));
@@ -131,8 +129,6 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
     }
 
     // template method
-
-    protected abstract RequestSpecification givenAuthenticated();
 
     protected abstract IRESTTemplate<T> getAPI();
 
