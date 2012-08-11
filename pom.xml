@@ -91,6 +91,8 @@
 	<modules>
 		<module>common</module>
 		<module>test</module>
+		
+		<module>api</module>
 
 		<module>sec</module>
 	</modules>

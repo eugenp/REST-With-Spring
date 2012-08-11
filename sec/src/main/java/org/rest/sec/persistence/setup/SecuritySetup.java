@@ -11,6 +11,7 @@ import org.rest.sec.persistence.service.IPrivilegeService;
 import org.rest.sec.persistence.service.IRoleService;
 import org.rest.sec.util.SecurityConstants;
 import org.rest.sec.util.SecurityConstants.Privileges;
+import org.rest.sec.util.SecurityConstants.Roles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +95,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
         Preconditions.checkNotNull(canRoleWrite);
         Preconditions.checkNotNull(canPrivilegeWrite);
 
-        createRoleIfNotExisting(Privileges.ROLE_ADMIN, Sets.<Privilege> newHashSet(canUserWrite, canRoleWrite, canPrivilegeWrite));
+        createRoleIfNotExisting(Roles.ROLE_ADMIN, Sets.<Privilege> newHashSet(canUserWrite, canRoleWrite, canPrivilegeWrite));
     }
 
     final void createRoleIfNotExisting(final String name, final Set<Privilege> privileges) {
@@ -109,7 +110,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
     // Principal/User
 
     final void createPrincipals() {
-        final Role roleAdmin = roleService.findByName(Privileges.ROLE_ADMIN);
+        final Role roleAdmin = roleService.findByName(Roles.ROLE_ADMIN);
 
         createPrincipalIfNotExisting(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD, Sets.<Role> newHashSet(roleAdmin));
     }

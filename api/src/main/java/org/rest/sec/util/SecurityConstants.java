@@ -18,11 +18,6 @@ public final class SecurityConstants {
 
     public static final class Privileges {
 
-        /** A placeholder role for administrator. */
-        public static final String ROLE_ADMIN = "ROLE_ADMIN";
-        /** A placeholder role for enduser. */
-        public static final String ROLE_ENDUSER = "ROLE_ENDUSER";
-
         // User
         public static final String CAN_USER_WRITE = "ROLE_USER_WRITE";
         public static final String CAN_USER_READ = "ROLE_USER_READ";
@@ -33,6 +28,15 @@ public final class SecurityConstants {
 
         // Privilege
         public static final String CAN_PRIVILEGE_WRITE = "ROLE_PRIVILEGE_WRITE";
+
+    }
+
+    public static final class Roles {
+
+        /** A placeholder role for administrator. */
+        public static final String ROLE_ADMIN = "ROLE_ADMIN";
+        /** A placeholder role for enduser. */
+        public static final String ROLE_ENDUSER = "ROLE_ENDUSER";
 
     }
 
