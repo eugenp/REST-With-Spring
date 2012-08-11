@@ -1,11 +1,11 @@
-package org.rest.sec.client.template.newer;
+package org.rest.sec.client.template;
 
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.rest.common.client.template.AbstractClientRESTTemplate;
 import org.rest.sec.client.SecBusinessPaths;
-import org.rest.sec.model.Privilege;
+import org.rest.sec.model.dto.User;
 import org.rest.sec.util.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Profile("client")
-public class PrivilegeClientRESTTemplate extends AbstractClientRESTTemplate<Privilege> {
+public class UserClientRESTTemplate extends AbstractClientRESTTemplate<User> {
 
     @Autowired
     private SecBusinessPaths paths;
@@ -25,8 +25,8 @@ public class PrivilegeClientRESTTemplate extends AbstractClientRESTTemplate<Priv
     @Value("${http.port}")
     private int port;
 
-    public PrivilegeClientRESTTemplate() {
-        super(Privilege.class);
+    public UserClientRESTTemplate() {
+        super(User.class);
     }
 
     // operations
@@ -35,7 +35,7 @@ public class PrivilegeClientRESTTemplate extends AbstractClientRESTTemplate<Priv
 
     @Override
     public final String getURI() {
-        return paths.getPrivilegeUri();
+        return paths.getUserUri();
     }
 
     @Override

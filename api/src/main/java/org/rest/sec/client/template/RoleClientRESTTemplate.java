@@ -1,4 +1,4 @@
-package org.rest.sec.client.template.newer;
+package org.rest.sec.client.template;
 
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;

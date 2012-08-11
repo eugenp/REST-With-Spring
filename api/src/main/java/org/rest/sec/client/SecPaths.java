@@ -1,4 +1,4 @@
-package org.rest.common.client;
+package org.rest.sec.client;
 
 import org.rest.common.client.template.CommonPaths;
 import org.springframework.beans.factory.annotation.Autowired;
