@@ -10,6 +10,7 @@ import org.rest.sec.persistence.service.IPrincipalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,15 @@ public class PrincipalServiceImpl extends AbstractService<Principal> implements 
     @Transactional(readOnly = true)
     public Principal findByName(final String name) {
         return dao.findByName(name);
+    }
+
+    // other
+
+    @Override
+    @Transactional(readOnly = true)
+    public Principal getCurrentPrincipal() {
+        final String principalName = SecurityContextHolder.getContext().getAuthentication().getName();
+        return getDao().findByName(principalName);
     }
 
     // Spring

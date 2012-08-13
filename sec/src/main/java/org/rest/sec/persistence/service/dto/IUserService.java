@@ -5,5 +5,7 @@ import org.rest.common.persistence.service.IService;
 import org.rest.sec.model.dto.User;
 
 public interface IUserService extends IService<User>, INameSupport<User> {
-    //
+
+    User getCurrentUser();
+
 }

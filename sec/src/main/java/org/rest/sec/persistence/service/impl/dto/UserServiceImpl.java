@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,7 @@ import com.google.common.collect.Lists;
 public class UserServiceImpl implements IUserService {
 
     @Autowired
-    IPrincipalService principalService;
+    private IPrincipalService principalService;
 
     public UserServiceImpl() {
         super();
@@ -87,15 +88,13 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<User> findAllPaginatedAndSortedRaw(final int page, final int size, final String sortBy, final String sortOrder) {
         final Page<Principal> principalsPaginatedAndSorted = principalService.findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder);
-        final List<User> usersPaginated = Lists.transform(principalsPaginatedAndSorted.getContent(), new PrincipalToUserFunction());
 
-        Sort sortInfo = null;
-        if (sortBy != null) {
-            sortInfo = new Sort(sortBy);
-        }
-        return new PageImpl<User>(usersPaginated, new PageRequest(page, size, sortInfo), principalsPaginatedAndSorted.getTotalElements());
+        final List<User> usersPaginatedAndSorted = Lists.transform(principalsPaginatedAndSorted.getContent(), new PrincipalToUserFunction());
+
+        return new PageImpl<User>(usersPaginatedAndSorted, new PageRequest(page, size, constructSort(sortBy, sortOrder)), principalsPaginatedAndSorted.getTotalElements());
     }
 
     @Override
@@ -142,6 +141,24 @@ public class UserServiceImpl implements IUserService {
     @Override
     public long count() {
         throw new UnsupportedOperationException();
+    }
+
+    // other
+
+    @Override
+    public User getCurrentUser() {
+        final Principal principal = principalService.getCurrentPrincipal();
+        return new User(principal);
+    }
+
+    // util
+
+    final Sort constructSort(final String sortBy, final String sortOrder) {
+        Sort sortInfo = null;
+        if (sortBy != null) {
+            sortInfo = new Sort(Direction.fromString(sortOrder), sortBy);
+        }
+        return sortInfo;
     }
 
 }
