@@ -101,7 +101,7 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
 
     @Override
     @Transactional(readOnly = true)
-    public List<T> findAll(final String sortBy, final String sortOrder) {
+    public List<T> findAllSorted(final String sortBy, final String sortOrder) {
         final Sort sortInfo = constructSort(sortBy, sortOrder);
         return Lists.newArrayList(getDao().findAll(sortInfo));
     }

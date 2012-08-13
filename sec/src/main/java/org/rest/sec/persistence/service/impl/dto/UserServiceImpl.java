@@ -69,7 +69,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public List<User> findAll(final String sortBy, final String sortOrder) {
-        final List<Principal> allPrincipalEntitiesSortedAndOrdered = principalService.findAll(sortBy, sortOrder);
+        final List<Principal> allPrincipalEntitiesSortedAndOrdered = principalService.findAllSorted(sortBy, sortOrder);
         final List<User> allUsers = Lists.transform(allPrincipalEntitiesSortedAndOrdered, new PrincipalToUserFunction());
 
         return allUsers;

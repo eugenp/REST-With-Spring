@@ -87,7 +87,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     }
 
     @Override
-    public final List<T> findAll(final String sortBy, final String sortOrder) {
+    public final List<T> findAllSorted(final String sortBy, final String sortOrder) {
         final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI() + QueryConstants.Q_SORT_BY + sortBy, HttpMethod.GET, findRequestEntity(), List.class);
         return findAllResponse.getBody();
     }

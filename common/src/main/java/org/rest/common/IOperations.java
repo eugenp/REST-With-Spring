@@ -14,7 +14,7 @@ public interface IOperations<T extends IEntity> {
 
     List<T> findAll();
 
-    List<T> findAll(final String sortBy, final String sortOrder);
+    List<T> findAllSorted(final String sortBy, final String sortOrder);
 
     // create
 

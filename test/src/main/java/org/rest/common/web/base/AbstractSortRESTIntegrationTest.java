@@ -110,19 +110,19 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
 
     @Test
     public final void whenResourcesAreRetrievedSortedDescById_thenNoExceptions() {
-        getAPI().findAll(SearchField.id.toString(), Sort.Direction.DESC.name());
+        getAPI().findAllSorted(SearchField.id.toString(), Sort.Direction.DESC.name());
     }
 
     @Test
     public final void whenResourcesAreRetrievedSortedAscById_thenResultsAreOrderedCorrectly() {
-        final List<T> resourcesOrderedById = getAPI().findAll(SearchField.id.toString(), Sort.Direction.ASC.name());
+        final List<T> resourcesOrderedById = getAPI().findAllSorted(SearchField.id.toString(), Sort.Direction.ASC.name());
 
         assertTrue(new OrderById<T>().isOrdered(resourcesOrderedById));
     }
 
     @Test
     public final void whenResourcesAreRetrievedSortedDescById_thenResultsAreOrderedCorrectly() {
-        final List<T> resourcesOrderedById = getAPI().findAll(SearchField.id.toString(), Sort.Direction.DESC.name());
+        final List<T> resourcesOrderedById = getAPI().findAllSorted(SearchField.id.toString(), Sort.Direction.DESC.name());
 
         assertTrue(new OrderById<T>().reverse().isOrdered(resourcesOrderedById));
     }

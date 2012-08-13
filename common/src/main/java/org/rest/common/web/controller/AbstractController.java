@@ -182,7 +182,7 @@ public abstract class AbstractController<T extends IEntity> {
     protected final List<T> findAllSortedInternal(final String sortBy, final String sortOrder) {
         List<T> resultPage = null;
         try {
-            resultPage = getService().findAll(sortBy, sortOrder);
+            resultPage = getService().findAllSorted(sortBy, sortOrder);
         } catch (final InvalidDataAccessApiUsageException apiEx) {
             logger.error("InvalidDataAccessApiUsageException on find operation");
             logger.warn("InvalidDataAccessApiUsageException on find operation", apiEx);
