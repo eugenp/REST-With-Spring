@@ -7,6 +7,7 @@ import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.util.QueryConstants;
+import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.web.WebConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.common.base.Preconditions;
 
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings("rawtypes")
 public abstract class AbstractClientRESTTemplate<T extends INameableEntity> implements IClientTemplate<T> {
 
     protected Class<T> clazz;
@@ -78,13 +79,14 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final List<T> findAll() {
-        final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI(), HttpMethod.GET, findRequestEntity(), List.class);
-        return findAllResponse.getBody();
+        final ResponseEntity<String> findAllResponse = restTemplate.exchange(getURI(), HttpMethod.GET, findRequestEntity(), String.class);
+        return marshaller.decodeList(findAllResponse.getBody(), clazz);
     }
 
     @Override
     public final List<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
-        throw new UnsupportedOperationException();
+        final ResponseEntity<String> allPaginatedAndSortedAsResponse = findAllPaginatedAndSortedAsResponse(page, size, sortBy, sortOrder);
+        return marshaller.decodeList(allPaginatedAndSortedAsResponse.getBody(), clazz);
     }
 
     @Override
@@ -104,14 +106,34 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         return resourcesByAttributes;
     }
 
+    public ResponseEntity<String> findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder) {
+        final StringBuilder uri = new StringBuilder(getURI());
+        uri.append(QueryConstants.QUESTIONMARK);
+        uri.append("page=");
+        uri.append(page);
+        uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+        uri.append("size=");
+        uri.append(size);
+        Preconditions.checkState(!(sortBy == null && sortOrder != null));
+        if (sortBy != null) {
+            uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+            uri.append(QueryConstants.SORT_BY + "=");
+            uri.append(sortBy);
+        }
+        if (sortOrder != null) {
+            uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+            uri.append(QueryConstants.SORT_ORDER + "=");
+            uri.append(sortOrder);
+        }
+
+        return restTemplate.exchange(uri.toString(), HttpMethod.GET, findRequestEntity(), String.class);
+    }
+
     // create
 
     @Override
     public T create(final T resource) {
-        final ResponseEntity responseEntity = restTemplate.exchange(getURI(), HttpMethod.POST, new HttpEntity<T>(resource, createContentTypeHeaders()), Void.class);
-
-        final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
-        Preconditions.checkNotNull(locationOfCreatedResource);
+        final String locationOfCreatedResource = createAsURI(resource);
 
         return findOneByURI(locationOfCreatedResource);
     }
@@ -131,6 +153,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final void update(final T resource) {
+        givenAuthenticated();
         final ResponseEntity responseEntity = restTemplate.exchange(getURI(), HttpMethod.PUT, new HttpEntity<T>(resource, createContentTypeHeaders()), clazz);
         Preconditions.checkState(responseEntity.getStatusCode().value() == 200);
     }
@@ -208,8 +231,6 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     }
 
     // template method
-
-    public abstract String getURI();
 
     @Override
     public final IClientTemplate<T> givenAuthenticated() {

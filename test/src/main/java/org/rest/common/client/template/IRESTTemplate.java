@@ -13,17 +13,15 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 public interface IRESTTemplate<T extends IEntity> extends IOperations<T>, IEntityOperations<T>, ITemplateAsResponse<T>, ITemplateAsURI<T> {
 
-    // search
+    // op - search
 
     List<T> searchPaginated(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size);
 
-    // authentication
+    // template
 
     RequestSpecification givenAuthenticated();
 
     IMarshaller getMarshaller();
-
-    // template
 
     String getURI();
 

@@ -57,7 +57,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     }
 
     @Override
-    public Response findOneAsResponse(final String uriOfResource) {
+    public Response findAsResponse(final String uriOfResource) {
         return findOneRequest().get(uriOfResource);
     }
 
@@ -69,13 +69,13 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public List<T> findAll() {
-        final Response findAllResponse = findOneAsResponse(getURI());
+        final Response findAllResponse = findAsResponse(getURI());
         return marshaller.<T> decodeList(findAllResponse.getBody().asString(), clazz);
     }
 
     @Override
     public final List<T> findAllSorted(final String sortBy, final String sortOrder) {
-        final Response findAllResponse = findOneAsResponse(getURI() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder);
+        final Response findAllResponse = findAsResponse(getURI() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder);
         return marshaller.<T> decodeList(findAllResponse.getBody().asString(), clazz);
     }
 
@@ -92,7 +92,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public Response findAllAsResponse() {
-        return findOneAsResponse(getURI());
+        return findAsResponse(getURI());
     }
 
     @Override
@@ -116,7 +116,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
             uri.append(sortOrder);
         }
 
-        return findOneAsResponse(uri.toString());
+        return findAsResponse(uri.toString());
     }
 
     @Override
@@ -134,7 +134,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
             uri.append(sortOrder);
         }
 
-        return findOneAsResponse(uri.toString());
+        return findAsResponse(uri.toString());
     }
 
     @Override
@@ -146,7 +146,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         uri.append(SearchCommonUtil.SEPARATOR_AMPER);
         uri.append("size=");
         uri.append(size);
-        return findOneAsResponse(uri.toString());
+        return findAsResponse(uri.toString());
     }
 
     // create

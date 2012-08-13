@@ -10,7 +10,7 @@ public interface ITemplateAsResponse<T extends IEntity> {
 
     // find - one
 
-    Response findOneAsResponse(final String uriOfResource);
+    Response findAsResponse(final String uriOfResource);
 
     // find - all
 

@@ -10,7 +10,6 @@ import static org.junit.Assert.assertThat;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.rest.common.web.WebConstants;
 import org.rest.sec.client.template.RoleRESTTemplateImpl;
 import org.rest.sec.client.template.UserRESTTemplateImpl;
 import org.rest.sec.model.Role;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Sets;
 import com.jayway.restassured.response.Response;
-import com.jayway.restassured.specification.RequestSpecification;
 
 public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<User> {
 
@@ -125,16 +123,6 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Us
     }
 
     // template method
-
-    @Override
-    protected final String getURI() {
-        return getAPI().getURI() + WebConstants.PATH_SEP;
-    }
-
-    @Override
-    protected final RequestSpecification givenAuthenticated() {
-        return getAPI().givenAuthenticated();
-    }
 
     @Override
     protected final UserRESTTemplateImpl getAPI() {

@@ -1,19 +1,21 @@
 package org.rest.common.client;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
+import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.client.template.IClientTemplate;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.util.IDUtils;
+import org.rest.common.web.WebConstants;
 
 public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntity> {
 
@@ -23,8 +25,6 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     public AbstractClientRESTIntegrationTest() {
         super();
     }
-
-    // @Rule public ExpectedException thrown = ExpectedException.none();
 
     // tests
 
@@ -59,7 +59,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Ignore("not yet done")
     public final void givenResourceExists_whenResourceIsSearchedByName_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().givenAuthenticated().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
 
         // When
         getAPI().findByName(existingResource.getName());
@@ -144,24 +144,57 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     // find all
 
     @Test
-    public final void whenAllResourcesAreRetrieved_thenResourcesExist() {
+    public void whenAllResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
+        // Given
+        getAPI().createAsURI(getEntityOps().createNewEntity());
+
+        // When
         final List<T> allResources = getAPI().findAll();
-        assertFalse(allResources.isEmpty());
+
+        // Then
+        assertThat(allResources, not(Matchers.<T> empty()));
     }
+
+    @Test
+    public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
+        // Given
+        this.getAPI().createAsURI(getEntityOps().createNewEntity());
+
+        // When
+        final List<T> allResources = getAPI().findAll();
+
+        // Then
+        for (final T resource : allResources) {
+            assertNotNull(resource.getId());
+        }
+    }
+
+    // create
 
     // update
 
     @Test
-    public final void whenResourceIsUpdated_thenTheChangesAreCorrectlyPersisted() {
-        final T existingResource = getAPI().givenAuthenticated().create(getEntityOps().createNewEntity());
+    public void givenResourceExists_whenResourceIsUpdated_thenNoExceptions() {
+        // Given
+        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+
+        // When
+        getAPI().update(existingResource);
+    }
+
+    @Test
+    public void givenResourceExists_whenResourceIsUpdated_thenUpdatesArePersisted() {
+        // Given
+        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
 
         // When
         getEntityOps().change(existingResource);
-        getAPI().givenAuthenticated().update(existingResource);
-        final T updatedResource = getAPI().findOne(existingResource.getId());
+        getAPI().update(existingResource);
+
+        final T updatedResourceFromServer = getAPI().findOne(existingResource.getId());
 
         // Then
-        assertThat(existingResource, equalTo(updatedResource));
+        assertEquals(existingResource, updatedResourceFromServer);
     }
 
     // delete
@@ -169,7 +202,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Test
     public final void givenResourceExists_whenResourceIsDeleted_thenResourceNoLongerExists() {
         // Given
-        final T existingResource = getAPI().givenAuthenticated().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
 
         // When
         getAPI().delete(existingResource.getId());
@@ -183,5 +216,9 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     protected abstract IClientTemplate<T> getAPI();
 
     protected abstract IEntityOperations<T> getEntityOps();
+
+    protected final String getURI() {
+        return getAPI().getURI() + WebConstants.PATH_SEP;
+    }
 
 }

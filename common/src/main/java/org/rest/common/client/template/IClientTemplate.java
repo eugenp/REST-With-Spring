@@ -16,4 +16,8 @@ public interface IClientTemplate<T extends INameableEntity> extends IOperations<
 
     T findOneByURI(final String uri);
 
+    //
+
+    String getURI();
+
 }

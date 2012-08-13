@@ -47,12 +47,12 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
         final String uriOfExistingResource = getAPI().createAsURI(getAPI().createNewEntity());
 
         // When
-        final Response getResponse = getAPI().findOneAsResponse(uriOfExistingResource);
+        final Response getResponse = getAPI().findAsResponse(uriOfExistingResource);
 
         // Then
         final String uriToAllResources = HTTPLinkHeaderUtils.extractURIByRel(getResponse.getHeader(HttpHeaders.LINK), LinkUtil.REL_COLLECTION);
 
-        final Response getAllResponse = getAPI().findOneAsResponse(uriToAllResources);
+        final Response getAllResponse = getAPI().findAsResponse(uriToAllResources);
         assertThat(getAllResponse.getStatusCode(), is(200));
     }
 
@@ -61,7 +61,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
     @Test
     public final void whenFirstPageOfResourcesIsRetrieved_thenSomethingIsDiscoverable() {
         // When
-        final Response response = getAPI().findOneAsResponse(getURI() + "?page=1&size=10");
+        final Response response = getAPI().findAsResponse(getURI() + "?page=1&size=10");
 
         // Then
         final String linkHeader = response.getHeader(HttpHeaders.LINK);
@@ -74,7 +74,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
         getAPI().createAsURI(getAPI().createNewEntity());
 
         // When
-        final Response response = getAPI().findOneAsResponse(getURI() + "?page=1&size=1");
+        final Response response = getAPI().findAsResponse(getURI() + "?page=1&size=1");
 
         // Then
         final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
@@ -84,7 +84,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
     @Test
     public final void whenFirstPageOfResourcesAreRetrieved_thenSecondPageIsDiscoverable() {
         // When
-        final Response response = getAPI().findOneAsResponse(getURI() + "?page=1&size=1");
+        final Response response = getAPI().findAsResponse(getURI() + "?page=1&size=1");
 
         // Then
         final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
@@ -97,7 +97,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
         getAPI().create(getAPI().createNewEntity());
 
         // When
-        final Response response = getAPI().findOneAsResponse(getURI() + "?page=0&size=1");
+        final Response response = getAPI().findAsResponse(getURI() + "?page=0&size=1");
 
         // Then
         final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_LAST);
@@ -108,11 +108,11 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
     @Ignore
     public final void whenLastPageOfResourcesIsRetrieved_thenNoNextPageIsDiscoverable() {
         // When
-        final Response response = getAPI().findOneAsResponse(getURI() + "?page=1&size=1");
+        final Response response = getAPI().findAsResponse(getURI() + "?page=1&size=1");
         final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_LAST);
 
         // Then
-        final Response responseForLastPage = getAPI().findOneAsResponse(uriToLastPage);
+        final Response responseForLastPage = getAPI().findAsResponse(uriToLastPage);
         final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel(responseForLastPage.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
         assertNull(uriToNextPage);
     }
@@ -139,7 +139,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
         final String uriOfNewlyCreatedResource = getAPI().createAsURI(unpersistedResource);
 
         // Then
-        final Response response = getAPI().findOneAsResponse(uriOfNewlyCreatedResource);
+        final Response response = getAPI().findAsResponse(uriOfNewlyCreatedResource);
         final T resourceFromServer = marshaller.decode(response.body().asString(), clazz);
         assertThat(unpersistedResource, equalTo(resourceFromServer));
     }
