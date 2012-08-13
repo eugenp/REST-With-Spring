@@ -92,6 +92,11 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         return findAllResponse.getBody();
     }
 
+    @Override
+    public List<T> findAllPaginated(final int page, final int size) {
+        throw new UnsupportedOperationException();
+    }
+
     public final ResponseEntity<List> findAllAsResponse() {
         return restTemplate.exchange(getURI(), HttpMethod.GET, findRequestEntity(), List.class);
     }

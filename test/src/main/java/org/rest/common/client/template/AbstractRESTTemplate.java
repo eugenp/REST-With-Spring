@@ -138,6 +138,12 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         return findOneAsResponse(uri.toString());
     }
 
+    @Override
+    public List<T> findAllPaginated(final int page, final int size) {
+        final Response allPaginatedAsResponse = findAllPaginatedAsResponse(page, size);
+        return getMarshaller().decodeList(allPaginatedAsResponse.asString(), clazz);
+    }
+
     // create
 
     @Override

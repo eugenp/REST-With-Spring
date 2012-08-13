@@ -40,6 +40,11 @@ public class UserServiceImpl implements IUserService {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Page<User> searchPaged(final int page, final int size, final Triple<String, ClientOperation, String>... constraints) {
+        throw new UnsupportedOperationException();
+    }
+
     // find - one
 
     @Override
@@ -68,7 +73,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<User> findAll(final String sortBy, final String sortOrder) {
+    public List<User> findAllSorted(final String sortBy, final String sortOrder) {
         final List<Principal> allPrincipalEntitiesSortedAndOrdered = principalService.findAllSorted(sortBy, sortOrder);
         final List<User> allUsers = Lists.transform(allPrincipalEntitiesSortedAndOrdered, new PrincipalToUserFunction());
 
@@ -77,19 +82,20 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Page<User> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
-        final Page<Principal> principalsPaginated = principalService.findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-        final List<User> usersPaginated = Lists.transform(principalsPaginated.getContent(), new PrincipalToUserFunction());
+        final Page<Principal> principalsPaginatedAndSorted = principalService.findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
+        final List<User> usersPaginated = Lists.transform(principalsPaginatedAndSorted.getContent(), new PrincipalToUserFunction());
 
         Sort sortInfo = null;
         if (sortBy != null) {
             sortInfo = new Sort(sortBy);
         }
-        return new PageImpl<User>(usersPaginated, new PageRequest(page, size, sortInfo), principalsPaginated.getTotalElements());
+        return new PageImpl<User>(usersPaginated, new PageRequest(page, size, sortInfo), principalsPaginatedAndSorted.getTotalElements());
     }
 
     @Override
-    public Page<User> searchPaged(final int page, final int size, final Triple<String, ClientOperation, String>... constraints) {
-        throw new UnsupportedOperationException();
+    public List<User> findAllPaginated(final int page, final int size) {
+        final List<Principal> principalsPaginated = principalService.findAllPaginated(page, size);
+        return Lists.transform(principalsPaginated, new PrincipalToUserFunction());
     }
 
     // create

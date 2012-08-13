@@ -89,9 +89,7 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
         getAPI().createAsResponse(getAPI().createNewEntity());
 
         // When
-        final Response response = getAPI().findAllPaginatedAsResponse(0, 6);
-
-        final List<T> resourcesPagedAndSorted = getAPI().getMarshaller().decodeList(response.asString(), clazz);
+        final List<T> resourcesPagedAndSorted = getAPI().findAllPaginated(0, 6);
 
         // Then
         assertFalse(getOrdering().isOrdered(resourcesPagedAndSorted));
