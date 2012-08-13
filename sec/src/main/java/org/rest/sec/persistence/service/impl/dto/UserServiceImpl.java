@@ -81,8 +81,14 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Page<User> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
-        final Page<Principal> principalsPaginatedAndSorted = principalService.findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
+    public List<User> findAllPaginated(final int page, final int size) {
+        final List<Principal> principalsPaginated = principalService.findAllPaginated(page, size);
+        return Lists.transform(principalsPaginated, new PrincipalToUserFunction());
+    }
+
+    @Override
+    public Page<User> findAllPaginatedAndSortedRaw(final int page, final int size, final String sortBy, final String sortOrder) {
+        final Page<Principal> principalsPaginatedAndSorted = principalService.findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder);
         final List<User> usersPaginated = Lists.transform(principalsPaginatedAndSorted.getContent(), new PrincipalToUserFunction());
 
         Sort sortInfo = null;
@@ -93,9 +99,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<User> findAllPaginated(final int page, final int size) {
-        final List<Principal> principalsPaginated = principalService.findAllPaginated(page, size);
-        return Lists.transform(principalsPaginated, new PrincipalToUserFunction());
+    public List<User> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
+        return findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder).getContent();
     }
 
     // create

@@ -74,13 +74,15 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
         return getSpecificationExecutor().findAll(specifications, new PageRequest(page, size, null));
     }
 
-    // find
+    // find - one
 
     @Override
     @Transactional(readOnly = true)
     public T findOne(final long id) {
         return getDao().findOne(id);
     }
+
+    // find - all
 
     @Override
     @Transactional(readOnly = true)
@@ -90,13 +92,24 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
 
     @Override
     @Transactional(readOnly = true)
-    public Page<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
+    public Page<T> findAllPaginatedAndSortedRaw(final int page, final int size, final String sortBy, final String sortOrder) {
         Sort sortInfo = null;
         if (sortBy != null) {
             sortInfo = new Sort(sortBy);
         }
 
         return getDao().findAll(new PageRequest(page, size, sortInfo));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
+        Sort sortInfo = null;
+        if (sortBy != null) {
+            sortInfo = new Sort(sortBy);
+        }
+
+        return getDao().findAll(new PageRequest(page, size, sortInfo)).getContent();
     }
 
     @Override

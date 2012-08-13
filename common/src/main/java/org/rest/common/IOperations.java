@@ -6,7 +6,7 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
 
-public interface IOperations<T extends IEntity> extends IPagingOperations<T> {
+public interface IOperations<T extends IEntity> {
 
     // get
 
@@ -15,6 +15,10 @@ public interface IOperations<T extends IEntity> extends IPagingOperations<T> {
     List<T> findAll();
 
     List<T> findAllSorted(final String sortBy, final String sortOrder);
+
+    List<T> findAllPaginated(final int page, final int size);
+
+    List<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder);
 
     // create
 

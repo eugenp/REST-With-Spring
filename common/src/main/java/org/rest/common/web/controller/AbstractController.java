@@ -142,7 +142,7 @@ public abstract class AbstractController<T extends IEntity> {
     protected final List<T> findPaginatedAndSortedInternal(final int page, final int size, final String sortBy, final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         Page<T> resultPage = null;
         try {
-            resultPage = getService().findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
+            resultPage = getService().findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder);
         } catch (final InvalidDataAccessApiUsageException apiEx) {
             logger.error("InvalidDataAccessApiUsageException on find operation");
             logger.warn("InvalidDataAccessApiUsageException on find operation", apiEx);
@@ -164,7 +164,7 @@ public abstract class AbstractController<T extends IEntity> {
     protected final List<T> findPaginatedInternal(final int page, final int size, final String sortBy, final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         Page<T> resultPage = null;
         try {
-            resultPage = getService().findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
+            resultPage = getService().findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder);
         } catch (final InvalidDataAccessApiUsageException apiEx) {
             logger.error("InvalidDataAccessApiUsageException on find operation");
             logger.warn("InvalidDataAccessApiUsageException on find operation", apiEx);

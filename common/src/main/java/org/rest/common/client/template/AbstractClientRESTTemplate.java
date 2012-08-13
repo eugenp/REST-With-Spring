@@ -76,14 +76,15 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     // find - all
 
-    protected HttpEntity<Void> findRequestEntity() {
-        return new HttpEntity<Void>(createGetHeaders());
-    }
-
     @Override
     public final List<T> findAll() {
         final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI(), HttpMethod.GET, findRequestEntity(), List.class);
         return findAllResponse.getBody();
+    }
+
+    @Override
+    public final List<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -93,28 +94,14 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     }
 
     @Override
-    public List<T> findAllPaginated(final int page, final int size) {
+    public final List<T> findAllPaginated(final int page, final int size) {
         throw new UnsupportedOperationException();
-    }
-
-    public final ResponseEntity<List> findAllAsResponse() {
-        return restTemplate.exchange(getURI(), HttpMethod.GET, findRequestEntity(), List.class);
     }
 
     @Override
     public final List<T> findAllByAttributes(final String... attributes) {
         final List<T> resourcesByAttributes = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + constructURI(attributes));
         return resourcesByAttributes;
-    }
-
-    public final List<T> findAllByURI(final String uri) {
-        final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);
-        return response.getBody();
-    }
-
-    public final List<T> findExperimental(final String uri) {
-        final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);
-        return response.getBody();
     }
 
     // create
@@ -178,6 +165,11 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     // util
 
+    final List<T> findAllByURI(final String uri) {
+        final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);
+        return response.getBody();
+    }
+
     protected HttpHeaders createGetHeaders() {
         final HttpHeaders headers = new HttpHeaders() {
             {
@@ -196,7 +188,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         return headers;
     }
 
-    static final String constructURI(final String... attributes) {
+    protected static String constructURI(final String... attributes) {
         Preconditions.checkNotNull(attributes);
         Preconditions.checkArgument(attributes.length > 0);
         Preconditions.checkArgument(attributes.length % 2 == 0);
@@ -209,6 +201,10 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         String query = queryParam.build().encode().getQuery();
         // query = query.replaceAll("=", "%3D");
         return query.replaceAll("&", ",");
+    }
+
+    protected HttpEntity<Void> findRequestEntity() {
+        return new HttpEntity<Void>(createGetHeaders());
     }
 
     // template method
