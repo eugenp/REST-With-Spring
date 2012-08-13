@@ -4,12 +4,14 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.rest.common.test.contract.IResourceWithAssociationsIntegrationTest;
 import org.rest.sec.client.template.PrivilegeRESTTemplateImpl;
 import org.rest.sec.client.template.RoleRESTTemplateImpl;
 import org.rest.sec.model.Privilege;
@@ -20,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.common.collect.Sets;
 import com.jayway.restassured.response.Response;
 
-public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Role> {
+public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Role> implements IResourceWithAssociationsIntegrationTest {
 
     @Autowired
     private RoleRESTTemplateImpl restTemplate;
@@ -32,6 +34,22 @@ public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Ro
     }
 
     // tests
+
+    @Override
+    @Test
+    public final void givenResourceHasAssociations_whenResourceIsRetrieved_thenAssociationsAreAlsoRetrieved() {
+        // Given
+        final Privilege existingAssociation = associationRestTemplate.create(associationRestTemplate.createNewEntity());
+        final Role newResource = getAPI().createNewEntity();
+        newResource.getPrivileges().add(existingAssociation);
+
+        // When
+        final Role existingResource = getAPI().create(newResource);
+
+        // Then
+        assertThat(existingResource.getPrivileges(), notNullValue());
+        assertThat(existingResource.getPrivileges(), not(Matchers.<Privilege> empty()));
+    }
 
     // escaping characters
 

@@ -9,6 +9,8 @@ import org.rest.common.search.ClientOperation;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.web.WebConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
@@ -17,28 +19,27 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.common.base.Preconditions;
 
 @SuppressWarnings("rawtypes")
 public abstract class AbstractClientRESTTemplate<T extends INameableEntity> implements IClientTemplate<T> {
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected Class<T> clazz;
 
     @Autowired
-    protected RestTemplate restTemplate;
-    @Autowired
     @Qualifier("jacksonMarshaller")
     protected IMarshaller marshaller;
+
+    @Autowired
+    protected RestTemplate restTemplate;
 
     public AbstractClientRESTTemplate(final Class<T> clazzToSet) {
         super();
 
         clazz = clazzToSet;
     }
-
-    // API
 
     // find - one
 
@@ -61,13 +62,13 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     // find one - by attributes
 
     @Override
-    public T findByName(final String name) {
+    public final T findByName(final String name) {
         return findOneByAttributes("name", name);
     }
 
     @Override
-    public T findOneByAttributes(final String... attributes) {
-        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + constructURI(attributes));
+    public final T findOneByAttributes(final String... attributes) {
+        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes));
         if (resourcesByName.isEmpty()) {
             return null;
         }
@@ -89,6 +90,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         return marshaller.decodeList(allPaginatedAndSortedAsResponse.getBody(), clazz);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final List<T> findAllSorted(final String sortBy, final String sortOrder) {
         final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI() + QueryConstants.Q_SORT_BY + sortBy, HttpMethod.GET, findRequestEntity(), List.class);
@@ -97,16 +99,24 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final List<T> findAllPaginated(final int page, final int size) {
-        throw new UnsupportedOperationException();
+        final StringBuilder uri = new StringBuilder(getURI());
+        uri.append(QueryConstants.QUESTIONMARK);
+        uri.append("page=");
+        uri.append(page);
+        uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+        uri.append("size=");
+        uri.append(size);
+        final ResponseEntity<String> findAllResponse = restTemplate.exchange(uri.toString(), HttpMethod.GET, findRequestEntity(), String.class);
+        return getMarshaller().decodeList(findAllResponse.getBody(), clazz);
     }
 
     @Override
     public final List<T> findAllByAttributes(final String... attributes) {
-        final List<T> resourcesByAttributes = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + constructURI(attributes));
+        final List<T> resourcesByAttributes = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes));
         return resourcesByAttributes;
     }
 
-    public ResponseEntity<String> findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder) {
+    final ResponseEntity<String> findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder) {
         final StringBuilder uri = new StringBuilder(getURI());
         uri.append(QueryConstants.QUESTIONMARK);
         uri.append("page=");
@@ -129,10 +139,17 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         return restTemplate.exchange(uri.toString(), HttpMethod.GET, findRequestEntity(), String.class);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public final List<T> findAllByURI(final String uri) {
+        final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);
+        return response.getBody();
+    }
+
     // create
 
     @Override
-    public T create(final T resource) {
+    public final T create(final T resource) {
         final String locationOfCreatedResource = createAsURI(resource);
 
         return findOneByURI(locationOfCreatedResource);
@@ -141,7 +158,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     @Override
     public final String createAsURI(final T resource) {
         givenAuthenticated();
-        final ResponseEntity responseEntity = restTemplate.exchange(getURI(), HttpMethod.POST, new HttpEntity<T>(resource, createContentTypeHeaders()), List.class);
+        final ResponseEntity<List> responseEntity = restTemplate.exchange(getURI(), HttpMethod.POST, new HttpEntity<T>(resource, createContentTypeHeaders()), List.class);
 
         final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
         Preconditions.checkNotNull(locationOfCreatedResource);
@@ -154,7 +171,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     @Override
     public final void update(final T resource) {
         givenAuthenticated();
-        final ResponseEntity responseEntity = restTemplate.exchange(getURI(), HttpMethod.PUT, new HttpEntity<T>(resource, createContentTypeHeaders()), clazz);
+        final ResponseEntity<T> responseEntity = restTemplate.exchange(getURI(), HttpMethod.PUT, new HttpEntity<T>(resource, createContentTypeHeaders()), clazz);
         Preconditions.checkState(responseEntity.getStatusCode().value() == 200);
     }
 
@@ -175,25 +192,20 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     // search
 
     @Override
-    public List<T> search(final Triple<String, ClientOperation, String>... constraints) {
+    public final List<T> search(final Triple<String, ClientOperation, String>... constraints) {
         throw new UnsupportedOperationException();
     }
 
     // count
 
     @Override
-    public long count() {
+    public final long count() {
         throw new UnsupportedOperationException();
     }
 
     // util
 
-    final List<T> findAllByURI(final String uri) {
-        final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);
-        return response.getBody();
-    }
-
-    protected HttpHeaders createGetHeaders() {
+    protected final HttpHeaders createGetHeaders() {
         final HttpHeaders headers = new HttpHeaders() {
             {
                 set(com.google.common.net.HttpHeaders.ACCEPT, marshaller.getMime());
@@ -211,22 +223,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         return headers;
     }
 
-    protected static String constructURI(final String... attributes) {
-        Preconditions.checkNotNull(attributes);
-        Preconditions.checkArgument(attributes.length > 0);
-        Preconditions.checkArgument(attributes.length % 2 == 0);
-
-        final UriComponentsBuilder queryParam = UriComponentsBuilder.newInstance();
-        for (int i = 0; i <= attributes.length / 2; i += 2) {
-            queryParam.queryParam(attributes[i], attributes[i + 1]);
-        }
-
-        String query = queryParam.build().encode().getQuery();
-        // query = query.replaceAll("=", "%3D");
-        return query.replaceAll("&", ",");
-    }
-
-    protected HttpEntity<Void> findRequestEntity() {
+    protected final HttpEntity<Void> findRequestEntity() {
         return new HttpEntity<Void>(createGetHeaders());
     }
 
@@ -251,6 +248,10 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     protected final void digestAuth() {
         throw new UnsupportedOperationException();
+    }
+
+    public final IMarshaller getMarshaller() {
+        return marshaller;
     }
 
 }

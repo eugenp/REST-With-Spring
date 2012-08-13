@@ -32,7 +32,7 @@ public abstract class AbstractMimeRESTIntegrationTest<T extends IEntity> {
         final String uriForResourceCreation = getAPI().createAsURI(getAPI().createNewEntity());
 
         // When
-        final Response res = getAPI().findAsResponse(uriForResourceCreation);
+        final Response res = getAPI().findByUriAsResponse(uriForResourceCreation);
 
         // Then
         assertThat(res.getContentType(), containsString(marshaller.getMime()));

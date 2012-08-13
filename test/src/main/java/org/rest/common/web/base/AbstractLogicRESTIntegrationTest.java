@@ -4,8 +4,10 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
@@ -16,15 +18,17 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.client.IEntityOperations;
 import org.rest.common.client.template.IRESTTemplate;
-import org.rest.common.persistence.model.IEntity;
+import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.util.IDUtils;
+import org.rest.common.util.QueryConstants;
+import org.rest.common.util.SearchField;
 import org.rest.common.web.WebConstants;
 
 import com.google.common.base.Preconditions;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
-public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
+public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity> {
 
     protected final Class<T> clazz;
 
@@ -40,13 +44,8 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
     // find - one
 
     @Test
-    public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenNoExceptions() {
-        getAPI().findAsResponse(getURI() + WebConstants.PATH_SEP + randomNumeric(4));
-    }
-
-    @Test
     public void givenResourceForIdDoesNotExist_whenResourceOfThatIdIsRetrieved_then404IsReceived() {
-        final Response response = getAPI().findAsResponse(getURI() + WebConstants.PATH_SEP + randomNumeric(6));
+        final Response response = getAPI().findByUriAsResponse(getURI() + WebConstants.PATH_SEP + randomNumeric(6));
 
         assertThat(response.getStatusCode(), is(404));
     }
@@ -57,19 +56,10 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
         final String uriForResourceCreation = getAPI().createAsURI(getEntityOps().createNewEntity());
 
         // When
-        final Response res = getAPI().findAsResponse(uriForResourceCreation);
+        final Response res = getAPI().findByUriAsResponse(uriForResourceCreation);
 
         // Then
         assertThat(res.getStatusCode(), is(200));
-    }
-
-    @Test
-    public void givenResourceForIdExists_whenResourceOfThatIdIsRetrieved_thenResourceIsCorrectlyRetrieved() {
-        final T resource = getEntityOps().createNewEntity();
-        final T existingResource = getAPI().create(resource);
-        final T retrievedResource = getAPI().findOne(existingResource.getId());
-
-        assertEquals(resource, retrievedResource);
     }
 
     @Test
@@ -78,7 +68,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
         final Long id = IDUtils.randomNegativeLong();
 
         // When
-        final Response res = getAPI().findAsResponse(getURI() + WebConstants.PATH_SEP + id);
+        final Response res = getAPI().findByUriAsResponse(getURI() + WebConstants.PATH_SEP + id);
 
         // Then
         assertThat(res.getStatusCode(), is(409));
@@ -90,18 +80,83 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
         final String id = randomAlphabetic(6);
 
         // When
-        final Response res = getAPI().findAsResponse(getURI() + WebConstants.PATH_SEP + id);
+        final Response res = getAPI().findByUriAsResponse(getURI() + WebConstants.PATH_SEP + id);
 
         // Then
         assertThat(res.getStatusCode(), is(400));
     }
 
-    // find - all
+    @Test(expected = IllegalStateException.class)
+    public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenExceptionIsThrown() {
+        getAPI().findOneByURI(getURI() + WebConstants.PATH_SEP + randomNumeric(4));
+    }
 
     @Test
-    public void whenAllResourcesAreRetrieved_thenNoExceptions() {
-        getAPI().findAllAsResponse();
+    /**/public final void givenResourceExists_whenResourceIsRetrieved_thenResourceIsCorrectlyRetrieved() {
+        // Given
+        final T newResource = getEntityOps().createNewEntity();
+        final String uriOfExistingResource = getAPI().createAsURI(newResource);
+
+        // When
+        final T existingResource = getAPI().findOneByURI(uriOfExistingResource);
+
+        // Then
+        assertEquals(existingResource, newResource);
     }
+
+    @Test(expected = IllegalStateException.class)
+    /**/public final void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoResourceIsReceived() {
+        // When
+        getAPI().findOne(IDUtils.randomPositiveLong());
+    }
+
+    // find one - by attributes
+
+    @Test
+    /**/public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenNoExceptions() {
+        // Given
+        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+
+        // When
+        getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
+    }
+
+    @Test
+    /**/public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenResourceIsFound() {
+        // Given
+        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+
+        // When
+        final T resourceByName = getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
+
+        // Then
+        assertNotNull(resourceByName);
+    }
+
+    @Test
+    /**/public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenFoundResourceIsCorrect() {
+        // Given
+        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+
+        // When
+        final T resourceByName = getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
+
+        // Then
+        assertThat(existingResource, equalTo(resourceByName));
+    }
+
+    @Test
+    /**/public final void givenResourceExists_whenResourceIsSearchedByNagatedNameAttribute_thenNoExceptions() {
+        // Given
+        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+
+        // When
+        getAPI().findAllByAttributes(QueryConstants.NAME_NEG, existingResource.getName());
+
+        // Then
+    }
+
+    // find - all
 
     @Test
     public void whenAllResourcesAreRetrieved_then200IsReceived() {
@@ -113,7 +168,12 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
     }
 
     @Test
-    public void whenAllResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
+    /**/public void whenAllResourcesAreRetrieved_thenNoExceptions() {
+        getAPI().findAll();
+    }
+
+    @Test
+    /**/public void whenAllResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
         // Given
         getAPI().createAsURI(getEntityOps().createNewEntity());
 
@@ -125,7 +185,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
     }
 
     @Test
-    public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
+    /**/public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
         // Given
         this.getAPI().createAsURI(getEntityOps().createNewEntity());
 
@@ -139,11 +199,6 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
     }
 
     // create
-
-    @Test
-    public void whenAResourceIsCreated_thenNoExceptions() {
-        getAPI().createAsResponse(getEntityOps().createNewEntity());
-    }
 
     @Test
     public void whenAResourceIsCreated_then201IsReceived() {
@@ -198,6 +253,11 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
         assertThat(response.getStatusCode(), is(409));
     }
 
+    @Test
+    /**/public void whenAResourceIsCreated_thenNoExceptions() {
+        getAPI().createAsURI(getEntityOps().createNewEntity());
+    }
+
     // update
 
     @Test
@@ -220,15 +280,6 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
 
         // Then
         assertThat(response.getStatusCode(), is(409));
-    }
-
-    @Test
-    public void givenResourceExists_whenResourceIsUpdated_thenNoExceptions() {
-        // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
-
-        // When
-        getAPI().update(existingResource);
     }
 
     @Test
@@ -267,7 +318,16 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
     }
 
     @Test
-    public void givenResourceExists_whenResourceIsUpdated_thenUpdatesArePersisted() {
+    /**/public void givenResourceExists_whenResourceIsUpdated_thenNoExceptions() {
+        // Given
+        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+
+        // When
+        getAPI().update(existingResource);
+    }
+
+    @Test
+    /**/public void givenResourceExists_whenResourceIsUpdated_thenUpdatesArePersisted() {
         // Given
         final T existingResource = getAPI().create(getEntityOps().createNewEntity());
 
@@ -302,7 +362,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
     }
 
     @Test
-    public void givenResourceExist_whenResourceIsDeleted_then204IsReceived() {
+    public void givenResourceExists_whenResourceIsDeleted_then204IsReceived() {
         // Given
         final String uriForResourceCreation = getAPI().createAsURI(getEntityOps().createNewEntity());
 
@@ -314,16 +374,28 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends IEntity> {
     }
 
     @Test
-    public void givenResourceExist_whenResourceIsDeleted_thenResourceIsNoLongerAvailable() {
+    public void givenResourceExists_whenResourceIsDeleted_thenRetrievingResourceShouldResultIn404() {
         // Given
         final String uriOfResource = getAPI().createAsURI(getEntityOps().createNewEntity());
         getAPI().deleteAsResponse(uriOfResource);
 
         // When
-        final Response getResponse = getAPI().findAsResponse(uriOfResource);
+        final Response getResponse = getAPI().findByUriAsResponse(uriOfResource);
 
         // Then
         assertThat(getResponse.getStatusCode(), is(404));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    /**/public void givenResourceExists_whenResourceIsDeleted_thenResourceNoLongerExists() {
+        // Given
+        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+
+        // When
+        getAPI().delete(existingResource.getId());
+
+        // Then
+        assertNull(getAPI().findOne(existingResource.getId()));
     }
 
     // template method

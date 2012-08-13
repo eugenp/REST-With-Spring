@@ -1,5 +1,6 @@
 package org.rest.common.client;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
@@ -15,12 +16,12 @@ import org.junit.Test;
 import org.rest.common.client.template.IClientTemplate;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.util.IDUtils;
+import org.rest.common.util.QueryConstants;
+import org.rest.common.util.SearchField;
 import org.rest.common.web.WebConstants;
+import org.springframework.web.client.RestClientException;
 
 public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntity> {
-
-    private static final String NAME_KEY = "name";
-    private static final String NAGATED_NAME_KEY = "name~";
 
     public AbstractClientRESTIntegrationTest() {
         super();
@@ -29,6 +30,11 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     // tests
 
     // find one
+
+    @Test(expected = RestClientException.class)
+    public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenExceptionIsThrown() {
+        getAPI().findOneByURI(getURI() + WebConstants.PATH_SEP + randomNumeric(4));
+    }
 
     @Test
     public final void givenResourceExists_whenResourceIsRetrieved_thenResourceIsCorrectlyRetrieved() {
@@ -53,10 +59,13 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     }
 
     // find one - by name
-    // note: - the rest template encodes the URI wrong (q=key=val is seen as q=key - one param and val=null - another param)
-    // see: http://forum.springsource.org/showthread.php?129138-Possible-bug-in-RestTemplate-double-checking-before-opening-a-JIRA&p=421494#post421494
+
+    /**
+     * note: - the rest template encodes the URI wrong (q=key=val is seen as q=key - one param and val=null - another param)
+     * see: http://forum.springsource.org/showthread.php?129138-Possible-bug-in-RestTemplate-double-checking-before-opening-a-JIRA&p=421494#post421494
+     */
     @Test
-    @Ignore("not yet done")
+    @Ignore("blocked")
     public final void givenResourceExists_whenResourceIsSearchedByName_thenNoExceptions() {
         // Given
         final T existingResource = getAPI().create(getEntityOps().createNewEntity());
@@ -91,7 +100,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
         assertThat(existingResource, equalTo(resourceByName));
     }
 
-    // find one by attributes
+    // find one - by attributes
 
     @Test
     @Ignore("not yet done")
@@ -100,7 +109,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(getEntityOps().createNewEntity());
 
         // When
-        getAPI().findOneByAttributes(NAME_KEY, existingResource.getName());
+        getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
     }
 
     @Test
@@ -110,7 +119,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(getEntityOps().createNewEntity());
 
         // When
-        final T resourceByName = getAPI().findOneByAttributes(NAME_KEY, existingResource.getName());
+        final T resourceByName = getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
 
         // Then
         assertNotNull(resourceByName);
@@ -123,7 +132,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(getEntityOps().createNewEntity());
 
         // When
-        final T resourceByName = getAPI().findOneByAttributes(NAME_KEY, existingResource.getName());
+        final T resourceByName = getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
 
         // Then
         assertThat(existingResource, equalTo(resourceByName));
@@ -136,12 +145,17 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(getEntityOps().createNewEntity());
 
         // When
-        getAPI().findAllByAttributes(NAGATED_NAME_KEY, existingResource.getName());
+        getAPI().findAllByAttributes(QueryConstants.NAME_NEG, existingResource.getName());
 
         // Then
     }
 
     // find all
+
+    @Test
+    public void whenAllResourcesAreRetrieved_thenNoExceptions() {
+        getAPI().findAll();
+    }
 
     @Test
     public void whenAllResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
@@ -170,6 +184,11 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     }
 
     // create
+
+    @Test
+    public void whenAResourceIsCreated_thenNoExceptions() {
+        getAPI().createAsURI(getEntityOps().createNewEntity());
+    }
 
     // update
 

@@ -3,6 +3,7 @@ package org.rest.sec.client.template;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.rest.common.client.template.AbstractRESTTemplate;
+import org.rest.common.util.SearchField;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
@@ -28,8 +29,13 @@ public final class RoleRESTTemplateImpl extends AbstractRESTTemplate<Role> {
     // API
 
     public final Role findByName(final String name) {
-        final String resourceAsXML = findOneAsMime(getURI() + "?name=" + name);
+        final String resourceAsXML = findOneByUriAsString(getURI() + "?name=" + name);
         return marshaller.decode(resourceAsXML, clazz);
+    }
+
+    // TODO: solve the marshalling issue and replace
+    public final Role findByNameNew(final String name) {
+        return findOneByAttributes(SearchField.name.name(), name);
     }
 
     // template method

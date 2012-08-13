@@ -38,12 +38,19 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public List<User> search(final Triple<String, ClientOperation, String>... constraints) {
-        throw new UnsupportedOperationException();
+        final List<Principal> principalsResultedFromSearch = principalService.search(constraints);
+        final List<User> usersResultedFromSearch = Lists.transform(principalsResultedFromSearch, new PrincipalToUserFunction());
+
+        return usersResultedFromSearch;
     }
 
     @Override
     public Page<User> searchPaginated(final int page, final int size, final Triple<String, ClientOperation, String>... constraints) {
-        throw new UnsupportedOperationException();
+        final Page<Principal> principalsPaginated = principalService.searchPaginated(page, size, constraints);
+
+        final List<User> usersPaginated = Lists.transform(principalsPaginated.getContent(), new PrincipalToUserFunction());
+
+        return new PageImpl<User>(usersPaginated, new PageRequest(page, size, null), principalsPaginated.getTotalElements());
     }
 
     // find - one
