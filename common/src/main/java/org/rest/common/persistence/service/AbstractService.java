@@ -63,7 +63,7 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
     }
 
     @Override
-    public Page<T> searchPaged(final int page, final int size, final Triple<String, ClientOperation, String>... constraints) {
+    public Page<T> searchPaginated(final int page, final int size, final Triple<String, ClientOperation, String>... constraints) {
         final Specification<T> firstSpec = resolveConstraint(constraints[0]);
         Preconditions.checkState(firstSpec != null);
         Specifications<T> specifications = Specifications.where(firstSpec);

@@ -41,7 +41,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Page<User> searchPaged(final int page, final int size, final Triple<String, ClientOperation, String>... constraints) {
+    public Page<User> searchPaginated(final int page, final int size, final Triple<String, ClientOperation, String>... constraints) {
         throw new UnsupportedOperationException();
     }
 

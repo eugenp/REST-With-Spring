@@ -77,7 +77,7 @@ public abstract class AbstractController<T extends IEntity> {
     }
 
     @SuppressWarnings("unchecked")
-    public List<T> searchInternalPaged(@RequestParam(SearchCommonUtil.Q_PARAM) final String queryString, final int page, final int size) {
+    public List<T> searchInternalPaginated(@RequestParam(SearchCommonUtil.Q_PARAM) final String queryString, final int page, final int size) {
         try {
             List<ImmutableTriple<String, ClientOperation, String>> parsedQuery = null;
             try {
@@ -88,7 +88,7 @@ public abstract class AbstractController<T extends IEntity> {
                 throw new ConflictException(illState);
             }
 
-            final Page<T> resultPage = getService().searchPaged(page, size, parsedQuery.toArray(new ImmutableTriple[parsedQuery.size()]));
+            final Page<T> resultPage = getService().searchPaginated(page, size, parsedQuery.toArray(new ImmutableTriple[parsedQuery.size()]));
             return Lists.newArrayList(resultPage.getContent());
         } catch (final IllegalStateException illEx) {
             logger.error("IllegalStateException on search operation");

@@ -33,12 +33,12 @@ final class PaginatedResultsRetrievedEventDiscoverabilityListener implements App
     public final void onApplicationEvent(final PaginatedResultsRetrievedEvent ev) {
         Preconditions.checkNotNull(ev);
 
-        addLinkHeaderOnPagedResourceRetrieval(ev.getUriBuilder(), ev.getResponse(), ev.getClazz(), ev.getPage(), ev.getTotalPages(), ev.getPageSize());
+        addLinkHeaderOnPaginatedResourceRetrieval(ev.getUriBuilder(), ev.getResponse(), ev.getClazz(), ev.getPage(), ev.getTotalPages(), ev.getPageSize());
     }
 
     //
 
-    final void addLinkHeaderOnPagedResourceRetrieval(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz, final int page, final int totalPages, final int pageSize) {
+    final void addLinkHeaderOnPaginatedResourceRetrieval(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz, final int page, final int totalPages, final int pageSize) {
         final String resourceName = clazz.getSimpleName().toString().toLowerCase();
         uriBuilder.path(PATH_SEP + resourceName);
 

@@ -420,7 +420,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
 
         // When
         final Triple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), NEG_EQ, existingResource1.getName());
-        final List<T> searchResults = getAPI().searchPaged(null, nameConstraint, 0, 2);
+        final List<T> searchResults = getAPI().searchPaginated(null, nameConstraint, 0, 2);
 
         // Then
         assertThat(searchResults.size(), is(2));

@@ -1,5 +1,6 @@
 package org.rest.common.web.base;
 
+import static com.jayway.restassured.RestAssured.get;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.CoreMatchers.is;
@@ -24,17 +25,17 @@ public abstract class AbstractPaginationRESTIntegrationTest<T extends IEntity> {
 
     // tests
 
-    // GET (paged)
+    // GET (paginated)
 
     @Test
-    public final void whenResourcesAreRetrievedPaged_thenNoExceptions() {
-        givenAuthenticated().get(getURI() + "?page=1&size=1");
+    public final void whenResourcesAreRetrievedPaginated_thenNoExceptions() {
+        getAPI().findAllPaginatedAsResponse(1, 1);
     }
 
     @Test
-    public final void whenResourcesAreRetrievedPaged_then200IsReceived() {
+    public final void whenResourcesAreRetrievedPaginated_then200IsReceived() {
         // When
-        final Response response = givenAuthenticated().get(getURI() + "?page=0&size=1");
+        final Response response = getAPI().findAllPaginatedAsResponse(0, 1);
 
         // Then
         assertThat(response.getStatusCode(), is(200));
@@ -45,7 +46,7 @@ public abstract class AbstractPaginationRESTIntegrationTest<T extends IEntity> {
         getAPI().createAsResponse(getAPI().createNewEntity());
 
         // When
-        final Response response = givenAuthenticated().get(getURI() + "?page=0&size=1");
+        final Response response = getAPI().findAllPaginatedAsResponse(0, 1);
 
         // Then
         assertFalse(getAPI().getMarshaller().decode(response.asString(), List.class).isEmpty());
@@ -54,7 +55,7 @@ public abstract class AbstractPaginationRESTIntegrationTest<T extends IEntity> {
     @Test
     public final void whenPageOfResourcesAreRetrievedOutOfBounds_then404IsReceived() {
         // When
-        final Response response = givenAuthenticated().get(getURI() + "?page=" + randomNumeric(5) + "&size=1");
+        final Response response = getAPI().findAllPaginatedAsResponse(Integer.parseInt(randomNumeric(5)), 1);
 
         // Then
         assertThat(response.getStatusCode(), is(404));
@@ -63,7 +64,7 @@ public abstract class AbstractPaginationRESTIntegrationTest<T extends IEntity> {
     @Test
     public final void whenResourcesAreRetrievedWithNonNumericPage_then400IsReceived() {
         // When
-        final Response response = givenAuthenticated().get(getURI() + "?page=" + randomAlphabetic(5).toLowerCase() + "&size=1");
+        final Response response = get(getURI() + "?page=" + randomAlphabetic(5).toLowerCase() + "&size=1");
 
         // Then
         assertThat(response.getStatusCode(), is(400));
@@ -72,7 +73,7 @@ public abstract class AbstractPaginationRESTIntegrationTest<T extends IEntity> {
     @Test
     public final void whenResourcesAreRetrievedWithNonNumericPageSize_then400IsReceived() {
         // When
-        final Response response = givenAuthenticated().get(getURI() + "?page=0" + "&size=" + randomAlphabetic(5));
+        final Response response = get(getURI() + "?page=0" + "&size=" + randomAlphabetic(5));
 
         // Then
         assertThat(response.getStatusCode(), is(400));

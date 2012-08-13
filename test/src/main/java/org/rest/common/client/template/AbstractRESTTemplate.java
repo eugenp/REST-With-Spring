@@ -253,7 +253,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     }
 
     @Override
-    public List<T> searchPaged(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size) {
+    public List<T> searchPaginated(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size) {
         final String queryURI = getURI() + QueryConstants.QUERY_PREFIX + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
         final Response searchResponse = findOneRequest().get(queryURI);
         Preconditions.checkState(searchResponse.getStatusCode() == 200);

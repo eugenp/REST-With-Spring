@@ -15,7 +15,7 @@ public interface IRESTTemplate<T extends IEntity> extends IOperations<T>, IEntit
 
     // search
 
-    List<T> searchPaged(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size);
+    List<T> searchPaginated(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size);
 
     // authentication
 
