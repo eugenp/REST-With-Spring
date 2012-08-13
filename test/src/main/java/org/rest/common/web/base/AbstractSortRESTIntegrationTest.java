@@ -82,7 +82,6 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
         assertTrue(getOrdering().isOrdered(resourcesPagedAndSorted));
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     @Ignore("not necessarily true")
     public final void whenResourcesAreRetrievedPagedAndNotSorted_thenResourcesAreNotOrdered() {
@@ -92,7 +91,7 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
         // When
         final Response response = getAPI().findAllPaginatedAsResponse(0, 6);
 
-        final List<T> resourcesPagedAndSorted = getAPI().getMarshaller().decode(response.asString(), List.class);
+        final List<T> resourcesPagedAndSorted = getAPI().getMarshaller().decodeList(response.asString(), clazz);
 
         // Then
         assertFalse(getOrdering().isOrdered(resourcesPagedAndSorted));

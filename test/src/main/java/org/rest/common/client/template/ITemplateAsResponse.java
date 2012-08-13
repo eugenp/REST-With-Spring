@@ -10,17 +10,17 @@ public interface ITemplateAsResponse<T extends IEntity> {
 
     // find - one
 
-    Response findOneAsResponse(final String uriOfResource); // 19
+    Response findOneAsResponse(final String uriOfResource);
 
     // find - all
 
-    Response findAllAsResponse(); // 1
-
-    Response findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder);
+    Response findAllAsResponse();
 
     Response findAllPaginatedAsResponse(final int page, final int size);
 
     Response findAllSortedAsResponse(final String sortBy, final String sortOrder);
+
+    Response findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder);
 
     // search
 
@@ -32,14 +32,14 @@ public interface ITemplateAsResponse<T extends IEntity> {
 
     // create
 
-    Response createAsResponse(final T resource); // 14
+    Response createAsResponse(final T resource);
 
     // update
 
-    Response updateAsResponse(final T resource); // 6
+    Response updateAsResponse(final T resource);
 
     // delete
 
-    Response deleteAsResponse(final String uriOfResource); // 5
+    Response deleteAsResponse(final String uriOfResource);
 
 }
