@@ -60,7 +60,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         return marshaller.decode(resourceAsMime, clazz);
     }
 
-    protected final String findOneByUriAsString(final String uriOfResource) {
+    public final String findOneByUriAsString(final String uriOfResource) {
         final Response response = findByUriAsResponse(uriOfResource);
         Preconditions.checkState(response.getStatusCode() == 200);
 
