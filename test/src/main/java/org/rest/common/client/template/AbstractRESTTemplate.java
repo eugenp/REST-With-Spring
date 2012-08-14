@@ -237,11 +237,6 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     // delete
 
     @Override
-    public final void deleteAll() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public final void delete(final long id) {
         final Response deleteResponse = deleteAsResponse(getURI() + WebConstants.PATH_SEP + id);
         Preconditions.checkState(deleteResponse.getStatusCode() == 204);
