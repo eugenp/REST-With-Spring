@@ -10,30 +10,31 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 public class ETagResponseWrapper extends HttpServletResponseWrapper {
-    private HttpServletResponse response = null;
-    private ServletOutputStream stream = null;
-    private PrintWriter writer = null;
-    private OutputStream buffer = null;
+    private ServletOutputStream stream;
+    private PrintWriter writer;
+    private OutputStream buffer;
 
     public ETagResponseWrapper(final HttpServletResponse responseToSet, final OutputStream bufferToSet) {
         super(responseToSet);
-        response = responseToSet;
+
         buffer = bufferToSet;
     }
 
+    // API
+
     @Override
     public ServletOutputStream getOutputStream() {
-        if (stream == null)
-            stream = new ETagResponseStream(response, buffer);
-
+        if (stream == null) {
+            stream = new ETagResponseStream(buffer);
+        }
         return stream;
     }
 
     @Override
     public PrintWriter getWriter() throws IOException {
-        if (writer == null)
+        if (writer == null) {
             writer = new PrintWriter(new OutputStreamWriter(getOutputStream(), "UTF-8"));
-
+        }
         return writer;
     }
 
@@ -41,4 +42,5 @@ public class ETagResponseWrapper extends HttpServletResponseWrapper {
     public void flushBuffer() throws IOException {
         stream.flush();
     }
+
 }

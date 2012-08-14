@@ -4,13 +4,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 
 public class ETagResponseStream extends ServletOutputStream {
     private boolean closed = false;
     private OutputStream stream = null;
 
-    public ETagResponseStream(final HttpServletResponse response, final OutputStream streamToSet) {
+    public ETagResponseStream(final OutputStream streamToSet) {
         super();
         stream = streamToSet;
     }
@@ -56,4 +55,5 @@ public class ETagResponseStream extends ServletOutputStream {
     public void reset() {
         // noop
     }
+
 }

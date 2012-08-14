@@ -7,7 +7,14 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public abstract class ETagComputeUtils {
+public final class ETagComputeUtils {
+
+    private ETagComputeUtils() {
+        throw new AssertionError();
+    }
+
+    // API
+
     public static byte[] serialize(final Object obj) throws IOException {
         byte[] byteArray = null;
         ByteArrayOutputStream baos = null;
@@ -27,7 +34,7 @@ public abstract class ETagComputeUtils {
     }
 
     public static String getMd5Digest(final byte[] bytes) {
-        MessageDigest md;
+        final MessageDigest md;
         try {
             md = MessageDigest.getInstance("MD5");
         } catch (final NoSuchAlgorithmException e) {

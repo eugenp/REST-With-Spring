@@ -15,22 +15,16 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ETagContentFilter implements Filter {
-    protected final Log logger = LogFactory.getLog(getClass());
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain) throws IOException, ServletException {
         final HttpServletRequest servletRequest = (HttpServletRequest) req;
         final HttpServletResponse servletResponse = (HttpServletResponse) res;
-
-        String id = servletRequest.getRequestURI();
-        final String queryString = servletRequest.getQueryString();
-        if (queryString != null)
-            id += queryString;
-        logger.debug(id);
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final ETagResponseWrapper wrappedResponse = new ETagResponseWrapper(servletResponse, baos);
