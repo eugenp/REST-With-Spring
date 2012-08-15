@@ -11,6 +11,7 @@ import static org.junit.matchers.JUnitMatchers.containsString;
 import org.hamcrest.core.AnyOf;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.rest.common.client.IEntityOperations;
 import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
@@ -44,7 +45,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
     @Test
     public final void whenResourceIsRetrieved_thenURIToGetAllResourcesIsDiscoverable() {
         // Given
-        final String uriOfExistingResource = getAPI().createAsURI(getAPI().createNewEntity());
+        final String uriOfExistingResource = getAPI().createAsURI(createNewEntity());
 
         // When
         final Response getResponse = getAPI().findByUriAsResponse(uriOfExistingResource);
@@ -70,8 +71,8 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
 
     @Test
     public final void whenFirstPageOfResourcesIsRetrieved_thenNextPageIsDiscoverable() {
-        getAPI().createAsURI(getAPI().createNewEntity());
-        getAPI().createAsURI(getAPI().createNewEntity());
+        getAPI().createAsURI(createNewEntity());
+        getAPI().createAsURI(createNewEntity());
 
         // When
         final Response response = getAPI().findByUriAsResponse(getURI() + "?page=1&size=1");
@@ -93,8 +94,8 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
 
     @Test
     public final void whenPageOfResourcesIsRetrieved_thenLastPageIsDiscoverable() {
-        getAPI().create(getAPI().createNewEntity());
-        getAPI().create(getAPI().createNewEntity());
+        getAPI().create(createNewEntity());
+        getAPI().create(createNewEntity());
 
         // When
         final Response response = getAPI().findByUriAsResponse(getURI() + "?page=0&size=1");
@@ -122,7 +123,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
     @Test
     public final void whenInvalidPOSTIsSentToValidURIOfResource_thenAllowHeaderListsTheAllowedActions() {
         // Given
-        final String uriOfExistingResource = getAPI().createAsURI(getAPI().createNewEntity());
+        final String uriOfExistingResource = getAPI().createAsURI(createNewEntity());
 
         // When
         final Response res = givenAuthenticated().post(uriOfExistingResource);
@@ -147,6 +148,8 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
     // template method
 
     protected abstract IRESTTemplate<T> getAPI();
+
+    protected abstract IEntityOperations<T> getEntityOps();
 
     protected abstract String getURI();
 

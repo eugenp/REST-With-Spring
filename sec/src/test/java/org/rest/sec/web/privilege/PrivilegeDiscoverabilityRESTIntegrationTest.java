@@ -2,6 +2,7 @@ package org.rest.sec.web.privilege;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
+import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.PrivilegeRESTTemplateImpl;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.test.SecDiscoverabilityRESTIntegrationTest;
@@ -44,6 +45,11 @@ public class PrivilegeDiscoverabilityRESTIntegrationTest extends SecDiscoverabil
 
     @Override
     protected final PrivilegeRESTTemplateImpl getAPI() {
+        return restTemplate;
+    }
+
+    @Override
+    protected final IEntityOperations<Privilege> getEntityOps() {
         return restTemplate;
     }
 

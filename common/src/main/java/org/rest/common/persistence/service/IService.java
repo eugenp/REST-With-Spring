@@ -14,8 +14,4 @@ public interface IService<T extends IEntity> extends IOperations<T> {
 
     Page<T> findAllPaginatedAndSortedRaw(final int page, final int size, final String sortBy, final String sortOrder);
 
-    // delete
-
-    void deleteAll();
-
 }

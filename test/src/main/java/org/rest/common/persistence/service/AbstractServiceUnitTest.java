@@ -15,7 +15,6 @@ import org.rest.common.persistence.event.BeforeEntityCreatedEvent;
 import org.rest.common.persistence.event.EntityCreatedEvent;
 import org.rest.common.persistence.event.EntityUpdatedEvent;
 import org.rest.common.persistence.model.IEntity;
-import org.rest.common.persistence.service.IService;
 import org.rest.common.util.IDUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -179,6 +178,27 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     // find - one
 
     @Test
+    public final void whenGetIsTriggered_thenNoException() {
+        configureGet(1l);
+
+        // When
+        getAPI().findOne(1l);
+
+        // Then
+    }
+
+    @Test
+    public final void whenGetIsTriggered_thenEntityIsRetrieved() {
+        configureGet(1l);
+
+        // When
+        getAPI().findOne(1l);
+
+        // Then
+        verify(getDAO()).findOne(1l);
+    }
+
+    @Test
     public void whenEntityByIdIsFound_thenItIsReturned() {
         // Given
         final T entity = createSimulatedExistingEntity();
@@ -244,16 +264,16 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         verify(getDAO()).deleteAll();
     }
 
-    // template method
+    // utils
 
-    protected T givenEntityExists(final long id) {
+    protected final T givenEntityExists(final long id) {
         final T entity = createNewEntity();
         entity.setId(id);
         when(getDAO().findOne(id)).thenReturn(entity);
         return entity;
     }
 
-    protected T givenEntityExists(final T entity) {
+    protected final T givenEntityExists(final T entity) {
         when(getDAO().findOne(entity.getId())).thenReturn(entity);
         return entity;
     }
@@ -268,11 +288,28 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
      * 
      * @return the created entity
      */
-    protected T createSimulatedExistingEntity() {
+    protected final T createSimulatedExistingEntity() {
         final T entity = createNewEntity();
         entity.setId(IDUtils.randomPositiveLong());
         return entity;
     }
+
+    /**
+     * Gets the application event publisher mock.
+     * 
+     * @return the event publisher mock.
+     */
+    protected final ApplicationEventPublisher getEventPublisher() {
+        return eventPublisher;
+    }
+
+    // template
+
+    protected abstract T createNewEntity();
+
+    protected abstract void changeEntity(final T entity);
+
+    protected abstract T configureGet(final long id);
 
     /**
      * Gets the service that is need to be tested.
@@ -287,20 +324,5 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
      * @return the DAO mock.
      */
     protected abstract PagingAndSortingRepository<T, Long> getDAO();
-
-    /**
-     * Gets the application event publisher mock.
-     * 
-     * @return the event publisher mock.
-     */
-    protected final ApplicationEventPublisher getEventPublisher() {
-        return eventPublisher;
-    }
-
-    //
-
-    protected abstract T createNewEntity();
-
-    protected abstract void changeEntity(final T entity);
 
 }

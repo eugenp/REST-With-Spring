@@ -33,7 +33,7 @@ public class PrivilegeSearchRESTIntegrationTest extends AbstractSearchRESTIntegr
     }
 
     @Override
-    protected final IEntityOperations<Privilege> getEntityOperations() {
+    protected final IEntityOperations<Privilege> getEntityOps() {
         return restTemplate;
     }
 

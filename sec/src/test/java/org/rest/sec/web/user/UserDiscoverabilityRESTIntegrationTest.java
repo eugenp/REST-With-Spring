@@ -2,6 +2,7 @@ package org.rest.sec.web.user;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
+import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.UserRESTTemplateImpl;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.test.SecDiscoverabilityRESTIntegrationTest;
@@ -44,6 +45,11 @@ public class UserDiscoverabilityRESTIntegrationTest extends SecDiscoverabilityRE
 
     @Override
     protected final UserRESTTemplateImpl getAPI() {
+        return restTemplate;
+    }
+
+    @Override
+    protected final IEntityOperations<User> getEntityOps() {
         return restTemplate;
     }
 

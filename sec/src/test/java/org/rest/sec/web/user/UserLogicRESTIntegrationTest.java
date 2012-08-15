@@ -10,9 +10,11 @@ import static org.junit.Assert.assertThat;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.RoleRESTTemplateImpl;
 import org.rest.sec.client.template.UserRESTTemplateImpl;
 import org.rest.sec.model.Role;
+import org.rest.sec.model.UserEntityOpsImpl;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.test.SecLogicRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,13 @@ import com.jayway.restassured.response.Response;
 public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<User> {
 
     @Autowired
-    private UserRESTTemplateImpl userRestTemplate;
+    private UserRESTTemplateImpl api;
 
     @Autowired
-    private RoleRESTTemplateImpl associationRestTemplate;
+    private RoleRESTTemplateImpl associationApi;
+
+    @Autowired
+    private UserEntityOpsImpl entityOps;
 
     public UserLogicRESTIntegrationTest() {
         super(User.class);
@@ -52,7 +57,7 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Us
     @Test
     public final void whenResourceIsCreatedWithNewAssociation_then409IsReceived() {
         final User newResource = getAPI().createNewEntity();
-        newResource.getRoles().add(associationRestTemplate.createNewEntity());
+        newResource.getRoles().add(associationApi.createNewEntity());
 
         // When
         final Response response = getAPI().createAsResponse(newResource);
@@ -64,7 +69,7 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Us
     @Test
     @Ignore("intermitent failures - temporarily ignored")
     public final void whenResourceIsCreatedWithInvalidAssociation_then409IsReceived() {
-        final Role invalidAssociation = associationRestTemplate.createNewEntity();
+        final Role invalidAssociation = associationApi.createNewEntity();
         invalidAssociation.setId(1001l);
         final User newResource = getAPI().createNewEntity();
         newResource.getRoles().add(invalidAssociation);
@@ -78,7 +83,7 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Us
 
     @Test
     public final void whenUserIsCreatedWithExistingRole_then201IsReceived() {
-        final Role existingAssociation = associationRestTemplate.create(associationRestTemplate.createNewEntity());
+        final Role existingAssociation = associationApi.create(associationApi.createNewEntity());
         final User newResource = getAPI().createNewEntity();
         newResource.getRoles().add(existingAssociation);
 
@@ -93,14 +98,14 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Us
 
     @Test
     public final void whenScenario_getResource_getAssociationsById() {
-        final Role existingAssociation = associationRestTemplate.create(associationRestTemplate.createNewEntity());
+        final Role existingAssociation = associationApi.create(associationApi.createNewEntity());
         final User resourceToCreate = getAPI().createNewEntity();
         resourceToCreate.getRoles().add(existingAssociation);
 
         // When
         final User existingResource = getAPI().create(resourceToCreate);
         for (final Role associationOfResourcePotential : existingResource.getRoles()) {
-            final Role existingAssociationOfResource = associationRestTemplate.findOne(associationOfResourcePotential.getId());
+            final Role existingAssociationOfResource = associationApi.findOne(associationOfResourcePotential.getId());
             assertThat(existingAssociationOfResource, notNullValue());
         }
     }
@@ -109,7 +114,7 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Us
 
     @Test
     public final void whenScenarioOfWorkingWithAssociations_thenTheChangesAreCorrectlyPersisted() {
-        final Role existingAssociation = associationRestTemplate.create(associationRestTemplate.createNewEntity());
+        final Role existingAssociation = associationApi.create(associationApi.createNewEntity());
         final User resource1 = new User(randomAlphabetic(6), randomAlphabetic(6), Sets.newHashSet(existingAssociation));
 
         final User resource1ViewOfServerBefore = getAPI().create(resource1);
@@ -126,7 +131,12 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Us
 
     @Override
     protected final UserRESTTemplateImpl getAPI() {
-        return userRestTemplate;
+        return api;
+    }
+
+    @Override
+    protected final IEntityOperations<User> getEntityOps() {
+        return entityOps;
     }
 
 }

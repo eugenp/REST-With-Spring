@@ -39,7 +39,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Test
     public final void givenResourceExists_whenResourceIsRetrieved_thenResourceIsCorrectlyRetrieved() {
         // Given
-        final T newResource = getEntityOps().createNewEntity();
+        final T newResource = createNewEntity();
         final String uriOfExistingResource = getAPI().createAsURI(newResource);
 
         // When
@@ -68,7 +68,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Ignore("blocked")
     public final void givenResourceExists_whenResourceIsSearchedByName_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         getAPI().findByName(existingResource.getName());
@@ -78,7 +78,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Ignore("not yet done")
     public final void givenResourceExists_whenResourceIsSearchedByName_thenResourceIsFound() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final T resourceByName = getAPI().findByName(existingResource.getName());
@@ -91,7 +91,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Ignore("not yet done")
     public final void givenResourceExists_whenResourceIsSearchedByName_thenFoundResourceIsCorrect() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final T resourceByName = getAPI().findByName(existingResource.getName());
@@ -106,7 +106,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Ignore("not yet done")
     public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
@@ -116,7 +116,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Ignore("not yet done")
     public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenResourceIsFound() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final T resourceByName = getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
@@ -129,7 +129,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Ignore("not yet done")
     public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenFoundResourceIsCorrect() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final T resourceByName = getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
@@ -142,7 +142,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Ignore("not yet done")
     public final void givenResourceExists_whenResourceIsSearchedByNagatedNameAttribute_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         getAPI().findAllByAttributes(QueryConstants.NAME_NEG, existingResource.getName());
@@ -160,7 +160,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Test
     public void whenAllResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
         // Given
-        getAPI().createAsURI(getEntityOps().createNewEntity());
+        getAPI().createAsURI(createNewEntity());
 
         // When
         final List<T> allResources = getAPI().findAll();
@@ -172,7 +172,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Test
     public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
         // Given
-        this.getAPI().createAsURI(getEntityOps().createNewEntity());
+        this.getAPI().createAsURI(createNewEntity());
 
         // When
         final List<T> allResources = getAPI().findAll();
@@ -187,7 +187,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
 
     @Test
     public void whenAResourceIsCreated_thenNoExceptions() {
-        getAPI().createAsURI(getEntityOps().createNewEntity());
+        getAPI().createAsURI(createNewEntity());
     }
 
     // update
@@ -195,7 +195,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Test
     public void givenResourceExists_whenResourceIsUpdated_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         getAPI().update(existingResource);
@@ -204,7 +204,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Test
     public void givenResourceExists_whenResourceIsUpdated_thenUpdatesArePersisted() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         getEntityOps().change(existingResource);
@@ -221,7 +221,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Test
     public final void givenResourceExists_whenResourceIsDeleted_thenResourceNoLongerExists() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         getAPI().delete(existingResource.getId());
@@ -231,6 +231,10 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     }
 
     // template method
+
+    protected T createNewEntity() {
+        return getEntityOps().createNewEntity();
+    }
 
     protected abstract IClientTemplate<T> getAPI();
 

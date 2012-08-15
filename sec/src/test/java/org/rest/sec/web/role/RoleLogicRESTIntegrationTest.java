@@ -11,11 +11,13 @@ import static org.junit.Assert.assertThat;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.rest.common.client.IEntityOperations;
 import org.rest.common.test.contract.IResourceWithAssociationsIntegrationTest;
 import org.rest.sec.client.template.PrivilegeRESTTemplateImpl;
 import org.rest.sec.client.template.RoleRESTTemplateImpl;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
+import org.rest.sec.model.RoleEntityOpsImpl;
 import org.rest.sec.test.SecLogicRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,9 +27,12 @@ import com.jayway.restassured.response.Response;
 public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Role> implements IResourceWithAssociationsIntegrationTest {
 
     @Autowired
-    private RoleRESTTemplateImpl restTemplate;
+    private RoleRESTTemplateImpl api;
     @Autowired
-    private PrivilegeRESTTemplateImpl associationRestTemplate;
+    private PrivilegeRESTTemplateImpl associationApi;
+
+    @Autowired
+    private RoleEntityOpsImpl entityOps;
 
     public RoleLogicRESTIntegrationTest() {
         super(Role.class);
@@ -39,7 +44,7 @@ public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Ro
     @Test
     public final void givenResourceHasAssociations_whenResourceIsRetrieved_thenAssociationsAreAlsoRetrieved() {
         // Given
-        final Privilege existingAssociation = associationRestTemplate.create(associationRestTemplate.createNewEntity());
+        final Privilege existingAssociation = associationApi.create(associationApi.createNewEntity());
         final Role newResource = getAPI().createNewEntity();
         newResource.getPrivileges().add(existingAssociation);
 
@@ -225,13 +230,18 @@ public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Ro
 
     @Override
     protected final RoleRESTTemplateImpl getAPI() {
-        return restTemplate;
+        return api;
+    }
+
+    @Override
+    protected final IEntityOperations<Role> getEntityOps() {
+        return entityOps;
     }
 
     // util
 
     final PrivilegeRESTTemplateImpl getAssociationAPI() {
-        return associationRestTemplate;
+        return associationApi;
     }
 
 }

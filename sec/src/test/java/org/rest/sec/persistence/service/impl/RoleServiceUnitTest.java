@@ -3,11 +3,9 @@ package org.rest.sec.persistence.service.impl;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
-import org.junit.Test;
 import org.rest.common.persistence.service.AbstractServiceUnitTest;
 import org.rest.sec.model.Role;
 import org.rest.sec.persistence.dao.IRoleJpaDAO;
@@ -38,29 +36,10 @@ public class RoleServiceUnitTest extends AbstractServiceUnitTest<Role> {
 
     // get
 
-    @Test
-    public final void whenGetIsTriggered_thenNoException() {
-        configureGet(1l);
-
-        // When
-        instance.findOne(1l);
-
-        // Then
-    }
-
-    @Test
-    public final void whenGetIsTriggered_thenEntityIsRetrieved() {
-        configureGet(1l);
-        // When
-        instance.findOne(1l);
-
-        // Then
-        verify(daoMock).findOne(1l);
-    }
-
     // mocking behavior
 
-    final Role configureGet(final long id) {
+    @Override
+    protected final Role configureGet(final long id) {
         final Role entity = createNewEntity();
         entity.setId(id);
         when(daoMock.findOne(id)).thenReturn(entity);

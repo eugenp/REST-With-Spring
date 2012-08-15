@@ -45,14 +45,14 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithIdExists_whenResourceIsSearchedById_thenNoExceptions() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
         getAPI().search(createIdConstraint(EQ, existingResource.getId()));
     }
 
     @Override
     @Test
     public final void givenResourceWithIdExists_whenResourceIsSearchedById_thenSearchOperationIsSuccessful() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), EQ, existingResource.getId().toString());
@@ -65,7 +65,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithIdExists_whenResourceIsSearchedById_thenResourceIsFound() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final List<T> found = getAPI().search(createIdConstraint(EQ, existingResource.getId()));
@@ -77,7 +77,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithIdDoesNotExist_whenResourceIsSearchedById_thenResourceIsNotFound() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), EQ, IDUtils.randomPositiveLongAsString());
@@ -92,7 +92,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithNameExists_whenResourceIsSearchedByName_thenNoExceptions() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
@@ -102,7 +102,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithNameExists_whenResourceIsSearchedByName_thenOperationIsSuccessful() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
@@ -115,7 +115,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithNameExists_whenResourceIsSearchedByName_thenResourceIsFound() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
@@ -128,7 +128,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithNameDoesNotExist_whenResourceIsSearchedByName_thenResourceIsNotFound() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, randomAlphabetic(8));
@@ -141,8 +141,8 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithNameExists_whenSearchByNegatedNameIsPerformed_thenResourcesAreCorrect() {
-        final T existingResource1 = getAPI().create(getEntityOperations().createNewEntity());
-        final T existingResource2 = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource1 = getAPI().create(createNewEntity());
+        final T existingResource2 = getAPI().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource1.getName());
@@ -156,7 +156,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithNameExists_whenResourceIsSearchedByNameLowerCase_thenResourceIsFound() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final List<T> found = getAPI().search(createNameConstraint(EQ, existingResource.getName().toLowerCase()));
@@ -170,7 +170,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithNameAndIdExists_whenResourceIsSearchedByCorrectIdAndCorrectName_thenOperationIsSuccessful() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
@@ -184,7 +184,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithNameAndIdExists_whenResourceIsSearchedByCorrectIdAndCorrectName_thenResourceIsFound() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
@@ -198,7 +198,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithNameAndIdExists_whenResourceIsSearchedByIncorrectIdAndCorrectName_thenResourceIsNotFound() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
@@ -212,7 +212,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithNameAndIdExists_whenResourceIsSearchedByCorrectIdAndIncorrectName_thenResourceIsNotFound() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, randomAlphabetic(8));
@@ -226,7 +226,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithNameAndIdExists_whenResourceIsSearchedByIncorrectIdAndIncorrectName_thenResourceIsNotFound() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final List<T> found = getAPI().search(createIdConstraint(EQ, IDUtils.randomPositiveLong()), createNameConstraint(EQ, randomAlphabetic(8)));
@@ -241,7 +241,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Test
     public final void givenResourceExists_whenResourceIsSearchedByNegatedId_thenOperationIsSuccessful() {
         // Given
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final Triple<String, ClientOperation, String> negatedIdConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), NEG_EQ, existingResource.getId().toString());
@@ -255,7 +255,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Test
     public final void givenResourceExists_whenResourceIsSearchedByNegatedName_thenOperationIsSuccessful() {
         // Given
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final Triple<String, ClientOperation, String> negatedIdConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), NEG_EQ, existingResource.getName());
@@ -268,8 +268,8 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceAndOtherResourcesExists_whenResourceIsSearchedByNegatedName_thenResourcesAreFound() {
-        final T existingResource1 = getAPI().create(getEntityOperations().createNewEntity());
-        final T existingResource2 = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource1 = getAPI().create(createNewEntity());
+        final T existingResource2 = getAPI().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), NEG_EQ, existingResource1.getName());
@@ -283,8 +283,8 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceAndOtherResourcesExists_whenResourceIsSearchedByNegatedId_thenResourcesAreFound() {
-        final T existingResource1 = getAPI().create(getEntityOperations().createNewEntity());
-        final T existingResource2 = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource1 = getAPI().create(createNewEntity());
+        final T existingResource2 = getAPI().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), NEG_EQ, existingResource1.getId().toString());
@@ -298,7 +298,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     public final void givenResourceExists_whenResourceIsSearchedByNegatedId_thenResourceIsNotFound() {
         // Given
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final Triple<String, ClientOperation, String> negatedIdConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), NEG_EQ, existingResource.getId().toString());
@@ -311,8 +311,8 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourcesExists_whenResourceIsSearchedByNegatedId_thenTheOtherResourcesAreFound() {
-        final T existingResource1 = getAPI().create(getEntityOperations().createNewEntity());
-        final T existingResource2 = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource1 = getAPI().create(createNewEntity());
+        final T existingResource2 = getAPI().create(createNewEntity());
 
         // When
         final List<T> found = getAPI().search(createIdConstraint(NEG_EQ, existingResource1.getId()));
@@ -327,7 +327,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Test
     public final void givenResourceWithNameExists_whenResourceIsSearchedByContainsExactName_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final Triple<String, ClientOperation, String> nameConstraint = createNameConstraint(ClientOperation.CONTAINS, existingResource.getName());
@@ -337,7 +337,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithNameExists_whenSearchByContainsEntireNameIsPerformed_thenResourceIsFound() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), ClientOperation.CONTAINS, existingResource.getName());
@@ -350,7 +350,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceWithNameExists_whenSearchByContainsPartOfNameIsPerformed_thenResourceIsFound() {
-        final T existingResource = getAPI().create(getEntityOperations().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
         final String name = existingResource.getName();
         final String partOfName = name.substring(2);
 
@@ -375,14 +375,14 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceExists_whenSearchByStartsWithEntireNameIsPerformed_thenResourceIsFound() {
-        final T newEntity = getEntityOperations().createNewEntity();
+        final T newEntity = createNewEntity();
         SearchIntegrationTestUtil.givenResourceExists_whenSearchByStartsWithEntireKeyIsPerformed_thenResourceIsFound(getAPI(), newEntity, SearchField.name, ClientOperation.STARTS_WITH, newEntity.getName());
     }
 
     @Override
     @Test
     public final void givenResourceExists_whenSearchByStartsWithPartOfNameIsPerformed_thenResourceIsFound() {
-        final T newEntity = getEntityOperations().createNewEntity();
+        final T newEntity = createNewEntity();
         SearchIntegrationTestUtil.givenResourceExists_whenSearchByStartsWithPartOfKeyIsPerformed_thenResourceIsFound(getAPI(), newEntity, SearchField.name, ClientOperation.STARTS_WITH, newEntity.getName());
     }
 
@@ -397,26 +397,26 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Override
     @Test
     public final void givenResourceExists_whenSearchByEndsWithEntireNameIsPerformed_thenResourceIsFound() {
-        final T newEntity = getEntityOperations().createNewEntity();
+        final T newEntity = createNewEntity();
         SearchIntegrationTestUtil.givenResourceExists_whenSearchByEndsWithEntireKeyIsPerformed_thenResourceIsFound(getAPI(), newEntity, SearchField.name, ClientOperation.ENDS_WITH, newEntity.getName());
     }
 
     @Override
     @Test
     public final void givenResourceExists_whenSearchByEndsWithPartOfNameIsPerformed_thenResourceIsFound() {
-        final T newEntity = getEntityOperations().createNewEntity();
+        final T newEntity = createNewEntity();
         SearchIntegrationTestUtil.givenResourceExists_whenSearchByEndsWithPartOfNameIsPerformed_thenResourceIsFound(getAPI(), newEntity, SearchField.name, ClientOperation.ENDS_WITH, newEntity.getName());
     }
 
     @Test
     public final void givenResourceExists_whenSearchByEndsWithIncorrectPartOfNameIsPerformed_thenResourceIsNotFound() {
-        final T newEntity = getEntityOperations().createNewEntity();
+        final T newEntity = createNewEntity();
         SearchIntegrationTestUtil.givenResourceExists_whenSearchByEndsWithIncorrectPartOfKeyIsPerformed_thenResourceIsNotFound(getAPI(), newEntity, SearchField.name, ClientOperation.ENDS_WITH, newEntity.getName());
     }
 
     @Test
     public final void givenResourceExists_whenSearchByStartsWithPartOfLowerCaseNameIsPerformed_thenResourceIsFound() {
-        final T newEntity = getEntityOperations().createNewEntity();
+        final T newEntity = createNewEntity();
         final T existingResource = getAPI().create(newEntity);
         final String partOfValue = newEntity.getName().substring(2);
 

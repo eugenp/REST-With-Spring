@@ -33,7 +33,7 @@ public class RoleSearchRESTIntegrationTest extends AbstractSearchRESTIntegration
     }
 
     @Override
-    protected final IEntityOperations<Role> getEntityOperations() {
+    protected final IEntityOperations<Role> getEntityOps() {
         return restTemplate;
     }
 

@@ -53,6 +53,7 @@ public abstract class AbstractPaginationRESTIntegrationTest<T extends IEntity> {
     }
 
     @Test
+    // - note: may fail intermittently - TODO: investigate
     public final void whenPageOfResourcesAreRetrievedOutOfBounds_then404IsReceived() {
         // When
         final Response response = getAPI().findAllPaginatedAsResponse(Integer.parseInt(randomNumeric(5)), 1);

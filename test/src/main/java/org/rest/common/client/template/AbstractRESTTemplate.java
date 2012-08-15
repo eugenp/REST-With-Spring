@@ -60,7 +60,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         return marshaller.decode(resourceAsMime, clazz);
     }
 
-    public final String findOneByUriAsString(final String uriOfResource) {
+    protected final String findOneByUriAsString(final String uriOfResource) {
         final Response response = findByUriAsResponse(uriOfResource);
         Preconditions.checkState(response.getStatusCode() == 200);
 
@@ -191,9 +191,9 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     @Override
     public final T create(final T resource) {
         final String uriForResourceCreation = createAsURI(resource);
-        final String resourceAsXML = findOneByUriAsString(uriForResourceCreation);
+        final String resourceAsMime = findOneByUriAsString(uriForResourceCreation);
 
-        return marshaller.decode(resourceAsXML, clazz);
+        return marshaller.decode(resourceAsMime, clazz);
     }
 
     @Override
@@ -235,6 +235,11 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     }
 
     // delete
+
+    @Override
+    public final void deleteAll() {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public final void delete(final long id) {

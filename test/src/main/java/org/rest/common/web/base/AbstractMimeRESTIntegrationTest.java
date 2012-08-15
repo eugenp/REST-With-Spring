@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.internal.matchers.StringContains.containsString;
 
 import org.junit.Test;
+import org.rest.common.client.IEntityOperations;
 import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
@@ -29,7 +30,7 @@ public abstract class AbstractMimeRESTIntegrationTest<T extends IEntity> {
     @Test
     public final void givenRequestAcceptsMime_whenResourceIsRetrievedById__thenResponseContentTypeIsMime() {
         // Given
-        final String uriForResourceCreation = getAPI().createAsURI(getAPI().createNewEntity());
+        final String uriForResourceCreation = getAPI().createAsURI(createNewEntity());
 
         // When
         final Response res = getAPI().findByUriAsResponse(uriForResourceCreation);
@@ -41,5 +42,11 @@ public abstract class AbstractMimeRESTIntegrationTest<T extends IEntity> {
     // template method
 
     protected abstract IRESTTemplate<T> getAPI();
+
+    protected abstract IEntityOperations<T> getEntityOps();
+
+    protected T createNewEntity() {
+        return getEntityOps().createNewEntity();
+    }
 
 }

@@ -53,7 +53,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     public void givenResourceForIdExists_whenResourceOfThatIdIsRetrieved_then200IsRetrieved() {
         // Given
-        final String uriForResourceCreation = getAPI().createAsURI(getEntityOps().createNewEntity());
+        final String uriForResourceCreation = getAPI().createAsURI(createNewEntity());
 
         // When
         final Response res = getAPI().findByUriAsResponse(uriForResourceCreation);
@@ -94,7 +94,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     /**/public final void givenResourceExists_whenResourceIsRetrieved_thenResourceIsCorrectlyRetrieved() {
         // Given
-        final T newResource = getEntityOps().createNewEntity();
+        final T newResource = createNewEntity();
         final String uriOfExistingResource = getAPI().createAsURI(newResource);
 
         // When
@@ -115,7 +115,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     /**/public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
@@ -124,7 +124,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     /**/public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenResourceIsFound() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final T resourceByName = getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
@@ -136,7 +136,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     /**/public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenFoundResourceIsCorrect() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final T resourceByName = getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
@@ -148,7 +148,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     /**/public final void givenResourceExists_whenResourceIsSearchedByNagatedNameAttribute_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         getAPI().findAllByAttributes(QueryConstants.NAME_NEG, existingResource.getName());
@@ -175,7 +175,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     /**/public void whenAllResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
         // Given
-        getAPI().createAsURI(getEntityOps().createNewEntity());
+        getAPI().createAsURI(createNewEntity());
 
         // When
         final List<T> allResources = getAPI().findAll();
@@ -187,7 +187,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     /**/public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
         // Given
-        this.getAPI().createAsURI(getEntityOps().createNewEntity());
+        this.getAPI().createAsURI(createNewEntity());
 
         // When
         final List<T> allResources = getAPI().findAll();
@@ -203,7 +203,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     public void whenAResourceIsCreated_then201IsReceived() {
         // When
-        final Response response = getAPI().createAsResponse(getEntityOps().createNewEntity());
+        final Response response = getAPI().createAsResponse(createNewEntity());
 
         // Then
         assertThat(response.getStatusCode(), is(201));
@@ -220,7 +220,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
 
     @Test
     public void whenAResourceIsCreatedWithNonNullId_then409IsReceived() {
-        final T resourceWithId = getEntityOps().createNewEntity();
+        final T resourceWithId = createNewEntity();
         resourceWithId.setId(5l);
 
         // When
@@ -233,7 +233,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     public void whenAResourceIsCreated_thenALocationIsReturnedToTheClient() {
         // When
-        final Response response = getAPI().createAsResponse(getEntityOps().createNewEntity());
+        final Response response = getAPI().createAsResponse(createNewEntity());
 
         // Then
         assertNotNull(response.getHeader(HttpHeaders.LOCATION));
@@ -243,7 +243,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Ignore("this will not always pass at this time")
     public void givenResourceExists_whenResourceWithSameAttributesIsCreated_then409IsReceived() {
         // Given
-        final T newEntity = getEntityOps().createNewEntity();
+        final T newEntity = createNewEntity();
         getAPI().createAsURI(newEntity);
 
         // When
@@ -255,7 +255,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
 
     @Test
     /**/public void whenAResourceIsCreated_thenNoExceptions() {
-        getAPI().createAsURI(getEntityOps().createNewEntity());
+        getAPI().createAsURI(createNewEntity());
     }
 
     // update
@@ -263,7 +263,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     public void givenInvalidResource_whenResourceIsUpdated_then409ConflictIsReceived() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
         getEntityOps().invalidate(existingResource);
 
         // When
@@ -276,7 +276,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     public void whenAResourceIsUpdatedWithNullId_then409IsReceived() {
         // When
-        final Response response = getAPI().updateAsResponse(getEntityOps().createNewEntity());
+        final Response response = getAPI().updateAsResponse(createNewEntity());
 
         // Then
         assertThat(response.getStatusCode(), is(409));
@@ -285,7 +285,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     public void givenResourceExists_whenResourceIsUpdated_then200IsReceived() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         final Response response = getAPI().updateAsResponse(existingResource);
@@ -307,7 +307,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     public void givenResourceDoesNotExist_whenResourceIsUpdated_then404IsReceived() {
         // Given
-        final T unpersistedEntity = getEntityOps().createNewEntity();
+        final T unpersistedEntity = createNewEntity();
         unpersistedEntity.setId(IDUtils.randomPositiveLong());
 
         // When
@@ -320,7 +320,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     /**/public void givenResourceExists_whenResourceIsUpdated_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         getAPI().update(existingResource);
@@ -329,7 +329,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     /**/public void givenResourceExists_whenResourceIsUpdated_thenUpdatesArePersisted() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         getEntityOps().change(existingResource);
@@ -364,7 +364,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     public void givenResourceExists_whenResourceIsDeleted_then204IsReceived() {
         // Given
-        final String uriForResourceCreation = getAPI().createAsURI(getEntityOps().createNewEntity());
+        final String uriForResourceCreation = getAPI().createAsURI(createNewEntity());
 
         // When
         final Response response = getAPI().deleteAsResponse(uriForResourceCreation);
@@ -376,7 +376,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     public void givenResourceExists_whenResourceIsDeleted_thenRetrievingResourceShouldResultIn404() {
         // Given
-        final String uriOfResource = getAPI().createAsURI(getEntityOps().createNewEntity());
+        final String uriOfResource = getAPI().createAsURI(createNewEntity());
         getAPI().deleteAsResponse(uriOfResource);
 
         // When
@@ -389,7 +389,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test(expected = IllegalStateException.class)
     /**/public void givenResourceExists_whenResourceIsDeleted_thenResourceNoLongerExists() {
         // Given
-        final T existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final T existingResource = getAPI().create(createNewEntity());
 
         // When
         getAPI().delete(existingResource.getId());
@@ -402,8 +402,10 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
 
     protected abstract IRESTTemplate<T> getAPI();
 
-    protected final IEntityOperations<T> getEntityOps() {
-        return getAPI();
+    protected abstract IEntityOperations<T> getEntityOps();
+
+    protected T createNewEntity() {
+        return getEntityOps().createNewEntity();
     }
 
     protected final String getURI() {
