@@ -32,8 +32,6 @@ public interface IOperations<T extends IEntity> {
 
     void delete(final long id);
 
-    void deleteAll();
-
     // count
 
     long count();

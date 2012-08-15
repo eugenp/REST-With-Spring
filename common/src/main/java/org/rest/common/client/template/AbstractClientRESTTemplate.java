@@ -184,11 +184,6 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         Preconditions.checkState(deleteResourceResponse.getStatusCode().value() == 204);
     }
 
-    @Override
-    public final void deleteAll() {
-        throw new UnsupportedOperationException();
-    }
-
     // search
 
     @Override
