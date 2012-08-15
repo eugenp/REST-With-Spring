@@ -10,6 +10,7 @@ import org.rest.sec.security.SecurityRESTIntegrationTest;
     IntegrationClientRESTTestSuite.class,
     IntegrationDiscoverabilityRESTTestSuite.class,
     IntegrationLogicRESTTestSuite.class,
+    IntegrationSearchRESTTestSuite.class,
     IntegrationPaginationRESTTestSuite.class,
     IntegrationSortRESTTestSuite.class,
     IntegrationMimeRESTTestSuite.class,
