@@ -3,7 +3,6 @@ package org.rest.sec.persistence.service;
 import org.rest.common.client.IEntityOperations;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.PrivilegeEntityOpsImpl;
-import org.rest.sec.persistence.util.FixtureFactory;
 import org.rest.sec.test.SecSearchPersistenceIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,7 +24,7 @@ public class PrivilegeSearchPersistenceIntegrationTest extends SecSearchPersiste
 
     @Override
     protected final Privilege createNewEntity() {
-        return FixtureFactory.createNewPrivilege();
+        return getEntityOperations().createNewEntity();
     }
 
     @Override
