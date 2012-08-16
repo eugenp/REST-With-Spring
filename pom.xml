@@ -68,7 +68,7 @@
 		
 		<aspectjweaver.version>1.7.0</aspectjweaver.version>
 
-		<jackson-mapper-asl.version>1.9.9</jackson-mapper-asl.version>
+		<jackson.version>2.0.5</jackson.version>
 		<jaxb-api.version>2.2.6</jaxb-api.version>
 		<xstream.version>1.4.3</xstream.version>
 
