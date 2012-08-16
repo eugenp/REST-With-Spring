@@ -9,14 +9,19 @@ import org.rest.sec.model.dto.User;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.oxm.xstream.XStreamMarshaller;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @ComponentScan({ "org.rest.common.web", "org.rest.sec.web" })
 @EnableWebMvc
+// WebMvcConfigurationSupport
+// WebMvcConfigurerAdapter
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     public WebConfig() {
@@ -46,10 +51,27 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     // template
 
     @Override
-    public void configureMessageConverters(final List<HttpMessageConverter<?>> converters) {
-        converters.add(marshallingHttpMessageConverter());
-        super.configureMessageConverters(converters);
+    public void configureMessageConverters(final List<HttpMessageConverter<?>> messageConverters) {
+        messageConverters.add(marshallingHttpMessageConverter());
 
+        /*
+        final StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
+        stringConverter.setWriteAcceptCharset(false);
+
+        messageConverters.add(new ByteArrayHttpMessageConverter());
+        messageConverters.add(stringConverter);
+        messageConverters.add(new ResourceHttpMessageConverter());
+        messageConverters.add(new SourceHttpMessageConverter<Source>());
+        messageConverters.add(new XmlAwareFormHttpMessageConverter());
+         */
+        final ClassLoader classLoader = getClass().getClassLoader();
+        if (ClassUtils.isPresent("com.fasterxml.jackson.databind.ObjectMapper", classLoader)) {
+            messageConverters.add(new MappingJackson2HttpMessageConverter());
+        } else if (ClassUtils.isPresent("org.codehaus.jackson.map.ObjectMapper", classLoader)) {
+            messageConverters.add(new MappingJacksonHttpMessageConverter());
+        }
+
+        super.configureMessageConverters(messageConverters);
     }
 
 }
