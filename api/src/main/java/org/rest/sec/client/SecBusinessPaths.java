@@ -15,15 +15,15 @@ public final class SecBusinessPaths {
     // API
 
     public final String getUserUri() {
-        return secPaths.getRootUri() + URIMappingConstants.USER;
+        return secPaths.getRootUri() + URIMappingConstants.USERS;
     }
 
     public final String getPrivilegeUri() {
-        return secPaths.getRootUri() + URIMappingConstants.PRIVILEGE;
+        return secPaths.getRootUri() + URIMappingConstants.PRIVILEGES;
     }
 
     public final String getRoleUri() {
-        return secPaths.getRootUri() + URIMappingConstants.ROLE;
+        return secPaths.getRootUri() + URIMappingConstants.ROLES;
     }
 
     public final String getAuthenticationUri() {

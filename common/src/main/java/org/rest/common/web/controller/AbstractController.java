@@ -225,6 +225,9 @@ public abstract class AbstractController<T extends IEntity> {
 
     // update
 
+    /**
+     * - note: the operation is IDEMPOTENT <br/>
+     */
     protected final void updateInternal(final T resource) {
         RestPreconditions.checkRequestElementNotNull(resource);
         RestPreconditions.checkRequestElementNotNull(resource.getId());

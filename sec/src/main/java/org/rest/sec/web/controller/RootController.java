@@ -30,11 +30,11 @@ public class RootController {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void root(final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        final String userUriNew = uriBuilder.path("/" + URIMappingConstants.USER).build().toUriString();
+        final String userUriNew = uriBuilder.path("/" + URIMappingConstants.USERS).build().toUriString();
 
-        final String userUri = LinkUtil.createLinkHeader(WebConstants.PATH_SEP + URIMappingConstants.USER, LinkUtil.REL_COLLECTION);
-        final String roleUri = LinkUtil.createLinkHeader(WebConstants.PATH_SEP + URIMappingConstants.ROLE, LinkUtil.REL_COLLECTION);
-        final String privilegeUri = LinkUtil.createLinkHeader(WebConstants.PATH_SEP + URIMappingConstants.PRIVILEGE, LinkUtil.REL_COLLECTION);
+        final String userUri = LinkUtil.createLinkHeader(WebConstants.PATH_SEP + URIMappingConstants.USERS, LinkUtil.REL_COLLECTION);
+        final String roleUri = LinkUtil.createLinkHeader(WebConstants.PATH_SEP + URIMappingConstants.ROLES, LinkUtil.REL_COLLECTION);
+        final String privilegeUri = LinkUtil.createLinkHeader(WebConstants.PATH_SEP + URIMappingConstants.PRIVILEGES, LinkUtil.REL_COLLECTION);
         final String discoveredOperations = LinkUtil.gatherLinkHeaders(userUri, roleUri, privilegeUri);
         response.addHeader(HttpHeaders.LINK, discoveredOperations);
     }
