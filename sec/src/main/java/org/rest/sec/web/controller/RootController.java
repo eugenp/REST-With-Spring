@@ -15,7 +15,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.google.common.net.HttpHeaders;
 
 @Controller
-@RequestMapping(value = WebConstants.PATH_SEP)
 public class RootController {
 
     public RootController() {
@@ -26,10 +25,20 @@ public class RootController {
 
     // search
 
-    @SuppressWarnings("unused")
+    @RequestMapping(value = WebConstants.PATH_SEP, method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void rootWithPathSeparator(final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+        rootInternal(uriBuilder, response);
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void root(final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+    public void rootBare(final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+        rootInternal(uriBuilder, response);
+    }
+
+    @SuppressWarnings("unused")
+    private void rootInternal(final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         final String userUriNew = uriBuilder.path("/" + URIMappingConstants.USERS).build().toUriString();
 
         final String userUri = LinkUtil.createLinkHeader(WebConstants.PATH_SEP + URIMappingConstants.USERS, LinkUtil.REL_COLLECTION);
