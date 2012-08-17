@@ -11,13 +11,14 @@ It also provides a reference implementation in the following connected areas:
 - full integration testing suites at every layer: unit tests, integration tests for the DAO and Service layers, integration tests against the REST service <br/>
 
 
+# REST API Documentation
+[Link to the **API Documentation**](https://github.com/eugenp/REST/wiki/API-documentation "REST Security - API docs")
+
+
 # Continuous Integration
 ![Built on Cloudbees](http://web-static-cloudfront.s3.amazonaws.com/images/badges/BuiltOnDEV.png "Built on Cloudbees")
 
 - **CI server**: https://rest-security.ci.cloudbees.com/
-
-
-# REST constraints and Notes
 
 
 # Technology Stack
