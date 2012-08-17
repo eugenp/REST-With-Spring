@@ -9,7 +9,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
 import org.hamcrest.core.AnyOf;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.client.IEntityOperations;
 import org.rest.common.client.marshall.IMarshaller;
@@ -31,7 +30,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
 
     @Autowired
     @Qualifier("jacksonMarshaller")
-    IMarshaller marshaller;
+    private IMarshaller marshaller;
 
     public AbstractDiscoverabilityRESTIntegrationTest(final Class<T> clazzToSet) {
         Preconditions.checkNotNull(clazzToSet);
@@ -109,7 +108,6 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
     }
 
     @Test
-    @Ignore
     public final void whenLastPageOfResourcesIsRetrieved_thenNoNextPageIsDiscoverable() {
         // When
         final Response response = getAPI().findAllPaginatedAsResponse(1, 1);

@@ -17,6 +17,9 @@ It also provides a reference implementation in the following connected areas:
 - **CI server**: https://rest-security.ci.cloudbees.com/
 
 
+# REST constraints and Notes
+
+
 # Technology Stack
 The project uses the following technologies: <br/>
 - **web/REST**: Spring 3.1.2 <br/>
