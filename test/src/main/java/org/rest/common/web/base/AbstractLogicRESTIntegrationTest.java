@@ -88,7 +88,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
 
     @Test(expected = IllegalStateException.class)
     public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenExceptionIsThrown() {
-        getAPI().findOneByURI(getURI() + WebConstants.PATH_SEP + randomNumeric(4));
+        getAPI().findOneByURI(getURI() + WebConstants.PATH_SEP + randomNumeric(8));
     }
 
     @Test
