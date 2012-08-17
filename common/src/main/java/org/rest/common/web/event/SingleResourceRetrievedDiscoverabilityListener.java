@@ -30,9 +30,12 @@ final class SingleResourceRetrievedDiscoverabilityListener implements Applicatio
         discoverGetAllURI(ev.getUriBuilder(), ev.getResponse(), ev.getClazz());
     }
 
+    /**
+     * - note: at this point, the URI is transformed into plural (added `s`) in a hardcoded way - this will change in the future
+     */
     final void discoverGetAllURI(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz) {
         final String resourceName = clazz.getSimpleName().toString().toLowerCase();
-        final String uriForResourceCreation = uriBuilder.path(PATH_SEP + resourceName).build().encode().toUriString();
+        final String uriForResourceCreation = uriBuilder.path(PATH_SEP + resourceName + "s").build().encode().toUriString();
 
         final String linkHeaderValue = LinkUtil.createLinkHeader(uriForResourceCreation, LinkUtil.REL_COLLECTION);
         response.addHeader(HttpHeaders.LINK, linkHeaderValue);
