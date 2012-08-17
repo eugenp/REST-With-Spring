@@ -38,9 +38,12 @@ final class PaginatedResultsRetrievedEventDiscoverabilityListener implements App
 
     //
 
+    /**
+     * - note: at this point, the URI is transformed into plural (added `s`) in a hardcoded way - this will change in the future
+     */
     final void addLinkHeaderOnPaginatedResourceRetrieval(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz, final int page, final int totalPages, final int pageSize) {
         final String resourceName = clazz.getSimpleName().toString().toLowerCase();
-        uriBuilder.path(PATH_SEP + resourceName);
+        uriBuilder.path(PATH_SEP + resourceName + "s");
 
         final StringBuilder linkHeader = new StringBuilder();
         if (hasNextPage(page, totalPages)) {

@@ -57,12 +57,12 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
         assertThat(getAllResponse.getStatusCode(), is(200));
     }
 
-    // GET (paged)
+    // GET (paginated)
 
     @Test
     public final void whenFirstPageOfResourcesIsRetrieved_thenSomethingIsDiscoverable() {
         // When
-        final Response response = getAPI().findByUriAsResponse(getURI() + "?page=1&size=10");
+        final Response response = getAPI().findAllPaginatedAsResponse(1, 10);
 
         // Then
         final String linkHeader = response.getHeader(HttpHeaders.LINK);
@@ -75,7 +75,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
         getAPI().createAsURI(createNewEntity());
 
         // When
-        final Response response = getAPI().findByUriAsResponse(getURI() + "?page=1&size=1");
+        final Response response = getAPI().findAllPaginatedAsResponse(1, 1);
 
         // Then
         final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
@@ -84,12 +84,15 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
 
     @Test
     public final void whenFirstPageOfResourcesAreRetrieved_thenSecondPageIsDiscoverable() {
+        getAPI().createAsURI(createNewEntity());
+        getAPI().createAsURI(createNewEntity());
+
         // When
-        final Response response = getAPI().findByUriAsResponse(getURI() + "?page=1&size=1");
+        final Response response = getAPI().findAllPaginatedAsResponse(0, 1);
 
         // Then
         final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
-        assertEquals(getURI() + "?page=2&size=1", uriToNextPage);
+        assertEquals(getURI() + "?page=1&size=1", uriToNextPage);
     }
 
     @Test
@@ -98,7 +101,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
         getAPI().create(createNewEntity());
 
         // When
-        final Response response = getAPI().findByUriAsResponse(getURI() + "?page=0&size=1");
+        final Response response = getAPI().findAllPaginatedAsResponse(0, 1);
 
         // Then
         final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_LAST);
@@ -109,7 +112,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
     @Ignore
     public final void whenLastPageOfResourcesIsRetrieved_thenNoNextPageIsDiscoverable() {
         // When
-        final Response response = getAPI().findByUriAsResponse(getURI() + "?page=1&size=1");
+        final Response response = getAPI().findAllPaginatedAsResponse(1, 1);
         final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_LAST);
 
         // Then
