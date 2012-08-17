@@ -23,10 +23,11 @@ It also provides a reference implementation in the following connected areas:
 
 # Technology Stack
 The project uses the following technologies: <br/>
-- **web/REST**: Spring 3.1.2 <br/>
-- **marshalling**: Jackson (for JSON) and XStream (for XML) <br/>
-- **persistence**: JPA, Spring Data JPA and Hibernate <br/>
-- **testing**: Junit, Hamcrest, Mockito, rest-assured <br/>
+- **web/REST**: [Spring](http://www.springsource.org/) 3.1.x <br/>
+- **marshalling**: [Jackson](https://github.com/FasterXML/jackson-databind) 2.x (for JSON) and [XStream](http://xstream.codehaus.org/) (for XML) <br/>
+- **persistence**: [Spring Data JPA](http://www.springsource.org/spring-data/jpa) and [Hibernate](http://www.hibernate.org/) 4.1.x <br/>
+- **persistence providers**: h2, MySQL
+- **testing**: [junit](http://www.junit.org/), [hamcrest](http://code.google.com/p/hamcrest/), [mockito](http://code.google.com/p/mockito/), [rest-assured](http://code.google.com/p/rest-assured/) <br/>
 
 
 # THE PERSISTENCE LAYER (technical notes)
