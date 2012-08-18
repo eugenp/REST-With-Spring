@@ -8,18 +8,18 @@ import com.google.common.base.Preconditions;
 /**
  * This event should be fired when entity is updated.
  */
-public final class EntityDeletedEvent<T extends IEntity> extends ApplicationEvent {
+public final class EntityBeforeDeletedEvent<T extends IEntity> extends ApplicationEvent {
 
     private final Class<T> clazz;
     private final T entity;
 
-    public EntityDeletedEvent(final Object sourceToSet, final Class<T> clazzToSet, final T entityToSet) {
+    public EntityBeforeDeletedEvent(final Object sourceToSet, final Class<T> clazzToSet, final T entityToSet) {
         super(sourceToSet);
 
-        Preconditions.checkNotNull(clazzToSet);
+        Preconditions.checkState(clazzToSet != null);
         clazz = clazzToSet;
 
-        Preconditions.checkNotNull(entityToSet);
+        Preconditions.checkState(entityToSet != null);
         entity = entityToSet;
     }
 
@@ -30,7 +30,7 @@ public final class EntityDeletedEvent<T extends IEntity> extends ApplicationEven
     }
 
     public final T getEntity() {
-        return Preconditions.checkNotNull(entity);
+        return entity;
     }
 
 }

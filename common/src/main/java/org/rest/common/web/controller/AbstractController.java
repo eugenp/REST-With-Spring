@@ -104,7 +104,7 @@ public abstract class AbstractController<T extends IEntity> {
     // find - one
 
     protected final T findOneInternal(final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        T resource = findOneInternal(id);
+        final T resource = findOneInternal(id);
 
         eventPublisher.publishEvent(new SingleResourceRetrievedEvent<T>(clazz, uriBuilder, response));
 
@@ -264,6 +264,10 @@ public abstract class AbstractController<T extends IEntity> {
         } catch (final DataAccessException dataEx) {
             logger.error("DataAccessException on delete operation");
             logger.warn("DataAccessException on delete operation", dataEx);
+        } catch (final IllegalStateException stateEx) {
+            logger.error("IllegalStateException on delete operation");
+            logger.warn("IllegalStateException on delete operation", stateEx);
+            throw new ResourceNotFoundException(stateEx);
         }
     }
 

@@ -291,6 +291,8 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     protected final T createSimulatedExistingEntity() {
         final T entity = createNewEntity();
         entity.setId(IDUtils.randomPositiveLong());
+
+        when(getDAO().findOne(entity.getId())).thenReturn(entity);
         return entity;
     }
 

@@ -19,7 +19,7 @@
 
 	<filter>
 		<filter-name>ETag Content Filter</filter-name>
-		<filter-class>org.rest.sec.caching.ETagContentFilter</filter-class>
+		<filter-class>org.rest.common.caching.ETagContentFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>ETag Content Filter</filter-name>

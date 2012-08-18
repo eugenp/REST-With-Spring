@@ -5,8 +5,9 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.persistence.event.BeforeEntityCreatedEvent;
 import org.rest.common.persistence.event.EntitiesDeletedEvent;
+import org.rest.common.persistence.event.EntityAfterDeletedEvent;
+import org.rest.common.persistence.event.EntityBeforeDeletedEvent;
 import org.rest.common.persistence.event.EntityCreatedEvent;
-import org.rest.common.persistence.event.EntityDeletedEvent;
 import org.rest.common.persistence.event.EntityUpdatedEvent;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
@@ -159,8 +160,13 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
     @Override
     public void delete(final long id) {
         final T entity = getDao().findOne(id);
+        eventPublisher.publishEvent(new EntityBeforeDeletedEvent<T>(this, clazz, entity));
         getDao().delete(entity);
-        eventPublisher.publishEvent(new EntityDeletedEvent<T>(this, clazz, entity));
+        eventPublisher.publishEvent(new EntityAfterDeletedEvent<T>(this, clazz, entity));
+    }
+
+    public void delete(final Iterable<T> list) {
+        getDao().delete(list);
     }
 
     // count

@@ -166,14 +166,14 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends IEntit
 
     // delete
 
-    @Test(expected = DataAccessException.class)
-    public void givenEntityDoesNotExists_whenEntityIsDeleted_thenDataAccessException() {
+    @Test(expected = RuntimeException.class)
+    public void givenEntityDoesNotExists_whenEntityIsDeleted_thenException() {
         // When
         getAPI().delete(IDUtils.randomPositiveLong());
     }
 
-    @Test(expected = DataAccessException.class)
-    public void whenEntityIsDeletedByNegativeId_thenDataAccessException() {
+    @Test(expected = RuntimeException.class)
+    public void whenEntityIsDeletedByNegativeId_thenException() {
         // When
         getAPI().delete(IDUtils.randomNegativeLong());
     }

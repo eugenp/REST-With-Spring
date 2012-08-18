@@ -1,4 +1,4 @@
-package org.rest.sec.caching;
+package org.rest.common.caching;
 
 import java.io.IOException;
 import java.io.OutputStream;
