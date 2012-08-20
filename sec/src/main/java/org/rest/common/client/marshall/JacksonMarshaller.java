@@ -69,6 +69,7 @@ public final class JacksonMarshaller implements IMarshaller {
         return entity;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final <T> List<T> decodeList(final String entitiesAsString, final Class<T> clazz) {
         Preconditions.checkNotNull(entitiesAsString);
