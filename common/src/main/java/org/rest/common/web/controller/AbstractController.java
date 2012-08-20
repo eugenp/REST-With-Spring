@@ -60,7 +60,7 @@ public abstract class AbstractController<T extends IEntity> {
             } catch (final IllegalStateException illState) {
                 logger.error("IllegalStateException on find operation");
                 logger.warn("IllegalStateException on find operation", illState);
-                throw new ConflictException(illState);
+                throw new BadRequestException(illState);
             }
 
             final List<T> results = getService().search(parsedQuery.toArray(new ImmutableTriple[parsedQuery.size()]));
