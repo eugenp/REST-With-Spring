@@ -6,14 +6,14 @@ import org.springframework.context.ApplicationEvent;
 import com.google.common.base.Preconditions;
 
 /**
- * This event should be fired when entity is updated.
+ * This event should be fired before entity is deleted.
  */
-public final class EntityBeforeDeletedEvent<T extends IEntity> extends ApplicationEvent {
+public final class EntityBeforeDeleteEvent<T extends IEntity> extends ApplicationEvent {
 
     private final Class<T> clazz;
     private final T entity;
 
-    public EntityBeforeDeletedEvent(final Object sourceToSet, final Class<T> clazzToSet, final T entityToSet) {
+    public EntityBeforeDeleteEvent(final Object sourceToSet, final Class<T> clazzToSet, final T entityToSet) {
         super(sourceToSet);
 
         Preconditions.checkState(clazzToSet != null);

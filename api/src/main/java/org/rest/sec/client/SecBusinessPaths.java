@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public final class SecBusinessPaths {
 
     @Value("${http.sec.path}")
-    private String secPaths;
+    private String secPath;
 
     @Autowired
     private CommonPaths commonPaths;
@@ -20,7 +20,7 @@ public final class SecBusinessPaths {
     // API
 
     public final String getContext() {
-        return commonPaths.getServerRoot() + secPaths;
+        return commonPaths.getServerRoot() + secPath;
     }
 
     public final String getRootUri() {
