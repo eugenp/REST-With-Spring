@@ -62,3 +62,9 @@ The project uses the following technologies: <br/>
 
 # Eclipse
 - see the [Eclipse wiki page](https://github.com/eugenp/REST/wiki/Eclipse:-Setup-and-Configuration) of this project
+
+
+# Roadmap
+- POC for dealing with the lost update problem (using ETAG) - see: http://www.w3.org/1999/04/Editing/
+- use the rel="edit" link relation (defined http://www.iana.org/assignments/link-relations/link-relations.xml) to return an edit form for a Resource
+- further invesitage form usage (see: http://codebetter.com/glennblock/2011/05/09/hypermedia-and-forms/)
