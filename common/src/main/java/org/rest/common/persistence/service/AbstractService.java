@@ -47,6 +47,7 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
 
     // search
 
+    @SuppressWarnings("null")
     @Override
     public List<T> search(final Triple<String, ClientOperation, String>... constraints) {
         Preconditions.checkState(constraints != null);
@@ -94,22 +95,14 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
     @Override
     @Transactional(readOnly = true)
     public Page<T> findAllPaginatedAndSortedRaw(final int page, final int size, final String sortBy, final String sortOrder) {
-        Sort sortInfo = null;
-        if (sortBy != null) {
-            sortInfo = new Sort(sortBy);
-        }
-
+        final Sort sortInfo = constructSort(sortBy, sortOrder);
         return getDao().findAll(new PageRequest(page, size, sortInfo));
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
-        Sort sortInfo = null;
-        if (sortBy != null) {
-            sortInfo = new Sort(sortBy);
-        }
-
+        final Sort sortInfo = constructSort(sortBy, sortOrder);
         return getDao().findAll(new PageRequest(page, size, sortInfo)).getContent();
     }
 
@@ -182,7 +175,7 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
 
     protected abstract JpaSpecificationExecutor<T> getSpecificationExecutor();
 
-    @SuppressWarnings("static-method")
+    @SuppressWarnings({ "static-method", "unused" })
     public Specification<T> resolveConstraint(final Triple<String, ClientOperation, String> constraint) {
         throw new UnsupportedOperationException();
     }
