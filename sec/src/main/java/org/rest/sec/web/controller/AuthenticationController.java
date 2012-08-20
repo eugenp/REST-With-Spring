@@ -2,13 +2,14 @@ package org.rest.sec.web.controller;
 
 import java.util.Collection;
 
+import org.rest.common.security.SpringSecurityUtil;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
 import org.rest.sec.model.dto.User;
+import org.rest.sec.web.common.URIMappingConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,12 +32,11 @@ public class AuthenticationController {
 
     // API
 
-    @RequestMapping(method = RequestMethod.POST, value = "/authentication")
-    // should be: URIMappingConstants.AUTHENTICATION
+    @RequestMapping(method = RequestMethod.POST, value = URIMappingConstants.AUTHENTICATION)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public User createAuthentication() {
-        final Authentication authenticationInSpring = SecurityContextHolder.getContext().getAuthentication();
+        final Authentication authenticationInSpring = SpringSecurityUtil.getCurrentAuthentication();
 
         final Function<GrantedAuthority, Privilege> springAuthorityToPrivilegeFunction = new Function<GrantedAuthority, Privilege>() {
             @Override
