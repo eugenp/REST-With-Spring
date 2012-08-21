@@ -21,6 +21,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 
 @SuppressWarnings("rawtypes")
 public abstract class AbstractClientRESTTemplate<T extends INameableEntity> implements IClientTemplate<T> {
@@ -81,20 +82,32 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     @Override
     public final List<T> findAll() {
         final ResponseEntity<String> findAllResponse = restTemplate.exchange(getURI(), HttpMethod.GET, findRequestEntity(), String.class);
-        return marshaller.decodeList(findAllResponse.getBody(), clazz);
+        final String bodyAsString = findAllResponse.getBody();
+        if (bodyAsString == null) {
+            return Lists.newArrayList();
+        }
+        return marshaller.decodeList(bodyAsString, clazz);
     }
 
     @Override
     public final List<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
         final ResponseEntity<String> allPaginatedAndSortedAsResponse = findAllPaginatedAndSortedAsResponse(page, size, sortBy, sortOrder);
-        return marshaller.decodeList(allPaginatedAndSortedAsResponse.getBody(), clazz);
+        final String bodyAsString = allPaginatedAndSortedAsResponse.getBody();
+        if (bodyAsString == null) {
+            return Lists.newArrayList();
+        }
+        return marshaller.decodeList(bodyAsString, clazz);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public final List<T> findAllSorted(final String sortBy, final String sortOrder) {
         final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI() + QueryConstants.Q_SORT_BY + sortBy, HttpMethod.GET, findRequestEntity(), List.class);
-        return findAllResponse.getBody();
+        final List body = findAllResponse.getBody();
+        if (body == null) {
+            return Lists.newArrayList();
+        }
+        return body;
     }
 
     @Override
@@ -107,13 +120,28 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         uri.append("size=");
         uri.append(size);
         final ResponseEntity<String> findAllResponse = restTemplate.exchange(uri.toString(), HttpMethod.GET, findRequestEntity(), String.class);
-        return getMarshaller().decodeList(findAllResponse.getBody(), clazz);
+        final String bodyAsString = findAllResponse.getBody();
+        if (bodyAsString == null) {
+            return Lists.newArrayList();
+        }
+        return getMarshaller().decodeList(bodyAsString, clazz);
     }
 
     @Override
     public final List<T> findAllByAttributes(final String... attributes) {
         final List<T> resourcesByAttributes = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes));
         return resourcesByAttributes;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final List<T> findAllByURI(final String uri) {
+        final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);
+        final List body = response.getBody();
+        if (body == null) {
+            return Lists.newArrayList();
+        }
+        return body;
     }
 
     final ResponseEntity<String> findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder) {
@@ -137,13 +165,6 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         }
 
         return restTemplate.exchange(uri.toString(), HttpMethod.GET, findRequestEntity(), String.class);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public final List<T> findAllByURI(final String uri) {
-        final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);
-        return response.getBody();
     }
 
     // create

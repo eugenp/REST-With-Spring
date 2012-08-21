@@ -103,13 +103,21 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
     @Transactional(readOnly = true)
     public List<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
         final Sort sortInfo = constructSort(sortBy, sortOrder);
-        return getDao().findAll(new PageRequest(page, size, sortInfo)).getContent();
+        List<T> content = getDao().findAll(new PageRequest(page, size, sortInfo)).getContent();
+        if (content == null) {
+            return Lists.newArrayList();
+        }
+        return content;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<T> findAllPaginated(final int page, final int size) {
-        return getDao().findAll(new PageRequest(page, size, null)).getContent();
+        final List<T> content = getDao().findAll(new PageRequest(page, size, null)).getContent();
+        if (content == null) {
+            return Lists.newArrayList();
+        }
+        return content;
     }
 
     @Override
