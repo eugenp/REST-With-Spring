@@ -16,7 +16,7 @@ import com.google.common.base.Preconditions;
 @Component
 @Profile("production")
 public final class SpringVerificationsBeforeSetupListener implements ApplicationListener<BeforeSetupEvent> {
-    // private static final Logger logger = LoggerFactory.getLogger(SpringVerificationsBeforeSetupListener.class);
+    // private final Logger logger = LoggerFactory.getLogger(SpringVerificationsBeforeSetupListener.class);
 
     @Autowired
     ApplicationContext context;

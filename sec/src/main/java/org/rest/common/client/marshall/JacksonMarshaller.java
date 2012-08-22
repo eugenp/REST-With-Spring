@@ -22,7 +22,7 @@ import com.google.common.base.Preconditions;
 @Component("jacksonMarshaller")
 @Profile("client")
 public final class JacksonMarshaller implements IMarshaller {
-    private static final Logger logger = LoggerFactory.getLogger(JacksonMarshaller.class);
+    private final Logger logger = LoggerFactory.getLogger(JacksonMarshaller.class);
 
     ObjectMapper objectMapper;
 

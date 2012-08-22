@@ -12,7 +12,7 @@ import org.springframework.core.io.support.ResourcePropertySource;
 import com.google.common.base.Preconditions;
 
 public class MyApplicationContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-    private static final Logger logger = LoggerFactory.getLogger(MyApplicationContextInitializer.class);
+    private final Logger logger = LoggerFactory.getLogger(MyApplicationContextInitializer.class);
 
     private static final String ENV_TARGET = "envTarget";
     private static final String PERSISTENCE_TARGET = "persistenceTarget";
