@@ -24,11 +24,11 @@ public class PrivilegeSearchPersistenceIntegrationTest extends SecSearchPersiste
 
     @Override
     protected final Privilege createNewEntity() {
-        return getEntityOperations().createNewEntity();
+        return getEntityOps().createNewEntity();
     }
 
     @Override
-    protected final IEntityOperations<Privilege> getEntityOperations() {
+    protected final IEntityOperations<Privilege> getEntityOps() {
         return entityOps;
     }
 

@@ -3,8 +3,10 @@ package org.rest.sec.persistence.service;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.junit.Test;
+import org.rest.common.client.IEntityOperations;
 import org.rest.common.persistence.service.IService;
 import org.rest.sec.model.Privilege;
+import org.rest.sec.model.PrivilegeEntityOpsImpl;
 import org.rest.sec.test.SecServicePersistenceIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -13,10 +15,9 @@ public class PrivilegeServicePersistenceIntegrationTest extends SecServicePersis
 
     @Autowired
     private IPrivilegeService privilegeService;
+
     @Autowired
-    IRoleService roleService;
-    @Autowired
-    IPrincipalService principalService;
+    private PrivilegeEntityOpsImpl entityOps;
 
     // create
 
@@ -46,13 +47,8 @@ public class PrivilegeServicePersistenceIntegrationTest extends SecServicePersis
     }
 
     @Override
-    protected final void invalidate(final Privilege entity) {
-        entity.setName(null);
-    }
-
-    @Override
-    protected final void changeEntity(final Privilege entity) {
-        entity.setName(randomAlphabetic(6));
+    protected final IEntityOperations<Privilege> getEntityOps() {
+        return entityOps;
     }
 
     // util

@@ -80,12 +80,12 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final List<T> findAll() {
-        final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI(), HttpMethod.GET, findRequestEntity(), List.class);
-        final List<T> body = findAllResponse.getBody();
+        final ResponseEntity<String> findAllResponse = restTemplate.exchange(getURI(), HttpMethod.GET, findRequestEntity(), String.class);
+        final String body = findAllResponse.getBody();
         if (body == null) {
             return Lists.newArrayList();
         }
-        return body;
+        return getMarshaller().decodeList(body, clazz);
     }
 
     @Override
@@ -100,12 +100,13 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final List<T> findAllSorted(final String sortBy, final String sortOrder) {
-        final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder, HttpMethod.GET, findRequestEntity(), List.class);
-        final List<T> body = findAllResponse.getBody();
+        final String uri = getURI() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder;
+        final ResponseEntity<String> findAllResponse = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), String.class);
+        final String body = findAllResponse.getBody();
         if (body == null) {
             return Lists.newArrayList();
         }
-        return body;
+        return getMarshaller().decodeList(body, clazz);
     }
 
     @Override
@@ -127,7 +128,8 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final List<T> findAllByAttributes(final String... attributes) {
-        final List<T> resourcesByAttributes = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes));
+        final String uri = getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes);
+        final List<T> resourcesByAttributes = findAllByURI(uri);
         return resourcesByAttributes;
     }
 

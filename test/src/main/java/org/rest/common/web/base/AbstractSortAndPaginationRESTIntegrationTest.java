@@ -10,7 +10,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.client.IEntityOperations;
 import org.rest.common.client.security.IClientAuthenticationComponent;
@@ -42,8 +41,8 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
     // find - all - pagination
 
     @Test
-    public final void whenResourcesAreRetrievedPaginated_thenNoExceptions() {
-        getAPI().findAllPaginatedAsResponse(1, 1);
+    /**/public final void whenResourcesAreRetrievedPaginated_thenNoExceptions() {
+        getAPI().findAllPaginated(1, 1);
     }
 
     @Test
@@ -53,17 +52,6 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
 
         // Then
         assertThat(response.getStatusCode(), is(200));
-    }
-
-    @Test
-    /**/public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned() {
-        getAPI().createAsURI(getEntityOps().createNewEntity());
-
-        // When
-        final List<T> allPaginated = getAPI().findAllPaginated(0, 1);
-
-        // Then
-        assertFalse(allPaginated.isEmpty());
     }
 
     @Test
@@ -95,16 +83,14 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
     }
 
     @Test
-    @Ignore("not necessarily true")
-    public final void whenResourcesAreRetrievedPaginatedAndNotSorted_thenResourcesAreNotOrdered() {
-        getAPI().createAsURI(getEntityOps().createNewEntity());
-        getAPI().createAsURI(getEntityOps().createNewEntity());
+    /**/public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned() {
+        getAPI().createAsURI(createNewEntity());
 
         // When
-        final List<T> resourcesPaginatedAndSorted = getAPI().findAllPaginated(0, 6);
+        final List<T> allPaginated = getAPI().findAllPaginated(0, 1);
 
         // Then
-        assertFalse(new OrderByName<T>().isOrdered(resourcesPaginatedAndSorted));
+        assertFalse(allPaginated.isEmpty());
     }
 
     // find - all - sorting
@@ -118,8 +104,8 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
 
     @Test
     /**/public final void whenResourcesAreRetrievedSorted_thenResourcesAreIndeedOrdered() {
-        getAPI().createAsURI(getEntityOps().createNewEntity());
-        getAPI().createAsURI(getEntityOps().createNewEntity());
+        getAPI().createAsURI(createNewEntity());
+        getAPI().createAsURI(createNewEntity());
 
         // When
         final List<T> resourcesSorted = getAPI().findAllSorted(SearchField.name.name(), Sort.Direction.ASC.name());
@@ -150,27 +136,15 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
     // find - all - pagination and sorting
 
     @Test
-    public final void whenResourcesAreRetrievedPaginatedAndSorted_thenNoExceptions() {
-        getAPI().findAllPaginatedAndSortedAsResponse(0, 41, "name", null);
+    /**/public final void whenResourcesAreRetrievedPaginatedAndSorted_thenNoExceptions() {
+        getAPI().findAllPaginatedAndSorted(0, 41, SearchField.name.name(), null);
     }
 
     @Test
     public final void whenResourcesAreRetrievedPaginatedAndSorted_then200IsReceived() {
-        final Response response = getAPI().findAllPaginatedAndSortedAsResponse(0, 1, "name", Sort.Direction.ASC.name());
+        final Response response = getAPI().findAllPaginatedAndSortedAsResponse(0, 1, SearchField.name.name(), Sort.Direction.ASC.name());
 
         assertThat(response.getStatusCode(), is(200));
-    }
-
-    @Test
-    public final void whenResourcesAreRetrievedPaginatedAndSorted_thenResourcesAreIndeedOrdered() {
-        getAPI().createAsURI(getEntityOps().createNewEntity());
-        getAPI().createAsURI(getEntityOps().createNewEntity());
-
-        // When
-        final List<T> resourcesPaginatedAndSorted = getAPI().findAllPaginatedAndSorted(0, 4, "name", Sort.Direction.ASC.name());
-
-        // Then
-        assertTrue(new OrderByName<T>().isOrdered(resourcesPaginatedAndSorted));
     }
 
     @Test
@@ -180,6 +154,18 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
 
         // Then
         assertThat(response.getStatusCode(), is(400));
+    }
+
+    @Test
+    /**/public final void whenResourcesAreRetrievedPaginatedAndSorted_thenResourcesAreIndeedOrdered() {
+        getAPI().createAsURI(createNewEntity());
+        getAPI().createAsURI(createNewEntity());
+
+        // When
+        final List<T> resourcesPaginatedAndSorted = getAPI().findAllPaginatedAndSorted(0, 4, SearchField.name.name(), Sort.Direction.ASC.name());
+
+        // Then
+        assertTrue(new OrderByName<T>().isOrdered(resourcesPaginatedAndSorted));
     }
 
     // template method

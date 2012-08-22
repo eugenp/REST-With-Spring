@@ -432,7 +432,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
     protected abstract IService<T> getAPI();
 
-    protected abstract IEntityOperations<T> getEntityOperations();
+    protected abstract IEntityOperations<T> getEntityOps();
 
     protected abstract T createNewEntity();
 

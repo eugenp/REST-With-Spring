@@ -24,11 +24,11 @@ public class PrincipalSearchPersistenceIntegrationTest extends SecSearchPersiste
 
     @Override
     protected final Principal createNewEntity() {
-        return getEntityOperations().createNewEntity();
+        return getEntityOps().createNewEntity();
     }
 
     @Override
-    protected final IEntityOperations<Principal> getEntityOperations() {
+    protected final IEntityOperations<Principal> getEntityOps() {
         return entityOps;
     }
 

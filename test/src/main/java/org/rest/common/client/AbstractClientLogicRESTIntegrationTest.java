@@ -22,15 +22,15 @@ import org.rest.common.util.SearchField;
 import org.rest.common.web.WebConstants;
 import org.springframework.web.client.RestClientException;
 
-public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntity> {
+public abstract class AbstractClientLogicRESTIntegrationTest<T extends INameableEntity> {
 
-    public AbstractClientRESTIntegrationTest() {
+    public AbstractClientLogicRESTIntegrationTest() {
         super();
     }
 
     // tests
 
-    // find one
+    // find - one
 
     @Test(expected = RestClientException.class)
     public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenExceptionIsThrown() {
@@ -64,7 +64,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     }
 
     @Test
-    public final void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoResourceIsReceived() {
+    /**/public final void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoResourceIsReceived() {
         // When
         final T createdResource = getAPI().findOne(IDUtils.randomPositiveLong());
 
@@ -79,7 +79,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
      * see: http://forum.springsource.org/showthread.php?129138-Possible-bug-in-RestTemplate-double-checking-before-opening-a-JIRA&p=421494#post421494
      */
     @Test
-    @Ignore("blocked")
+    @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByName_thenNoExceptions() {
         // Given
         final T existingResource = getAPI().create(createNewEntity());
@@ -89,7 +89,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     }
 
     @Test
-    @Ignore("not yet done")
+    @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByName_thenResourceIsFound() {
         // Given
         final T existingResource = getAPI().create(createNewEntity());
@@ -102,7 +102,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     }
 
     @Test
-    @Ignore("not yet done")
+    @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByName_thenFoundResourceIsCorrect() {
         // Given
         final T existingResource = getAPI().create(createNewEntity());
@@ -117,7 +117,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     // find one - by attributes
 
     @Test
-    @Ignore("not yet done")
+    @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenNoExceptions() {
         // Given
         final T existingResource = getAPI().create(createNewEntity());
@@ -127,7 +127,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     }
 
     @Test
-    @Ignore("not yet done")
+    @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenResourceIsFound() {
         // Given
         final T existingResource = getAPI().create(createNewEntity());
@@ -140,7 +140,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     }
 
     @Test
-    @Ignore("not yet done")
+    @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenFoundResourceIsCorrect() {
         // Given
         final T existingResource = getAPI().create(createNewEntity());
@@ -153,7 +153,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     }
 
     @Test
-    @Ignore("not yet done")
+    @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByNagatedNameAttribute_thenNoExceptions() {
         // Given
         final T existingResource = getAPI().create(createNewEntity());
@@ -164,7 +164,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
         // Then
     }
 
-    // find all
+    // find - all
 
     @Test
     public void whenAllResourcesAreRetrieved_thenNoExceptions() {
@@ -184,7 +184,6 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     }
 
     @Test
-    @Ignore
     public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
         // Given
         this.getAPI().createAsURI(createNewEntity());

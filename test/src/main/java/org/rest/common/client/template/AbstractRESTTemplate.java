@@ -84,7 +84,8 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public final List<T> findAllByAttributes(final String... attributes) {
-        final List<T> resourcesByAttributes = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes));
+        final String uri = getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes);
+        final List<T> resourcesByAttributes = findAllByURI(uri);
         return resourcesByAttributes;
     }
 

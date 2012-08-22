@@ -24,11 +24,11 @@ public class RoleSearchPersistenceIntegrationTest extends SecSearchPersistenceIn
 
     @Override
     protected final Role createNewEntity() {
-        return getEntityOperations().createNewEntity();
+        return getEntityOps().createNewEntity();
     }
 
     @Override
-    protected final IEntityOperations<Role> getEntityOperations() {
+    protected final IEntityOperations<Role> getEntityOps() {
         return entityOps;
     }
 

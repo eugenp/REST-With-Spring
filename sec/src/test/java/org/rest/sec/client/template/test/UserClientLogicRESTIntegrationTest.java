@@ -1,11 +1,11 @@
 package org.rest.sec.client.template.test;
 
 import org.junit.runner.RunWith;
-import org.rest.common.client.AbstractClientRESTIntegrationTest;
+import org.rest.common.client.AbstractClientLogicRESTIntegrationTest;
 import org.rest.common.client.IEntityOperations;
-import org.rest.sec.client.template.RoleClientRESTTemplate;
-import org.rest.sec.client.template.RoleRESTTemplateImpl;
-import org.rest.sec.model.Role;
+import org.rest.sec.client.template.UserClientRESTTemplate;
+import org.rest.sec.client.template.UserRESTTemplateImpl;
+import org.rest.sec.model.dto.User;
 import org.rest.sec.spring.client.ClientTestConfig;
 import org.rest.sec.spring.context.ContextTestConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +15,14 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ContextTestConfig.class, ClientTestConfig.class }, loader = AnnotationConfigContextLoader.class)
-public class RoleClientRESTIntegrationTest extends AbstractClientRESTIntegrationTest<Role> {
+public class UserClientLogicRESTIntegrationTest extends AbstractClientLogicRESTIntegrationTest<User> {
 
     @Autowired
-    private RoleClientRESTTemplate clientTemplate;
+    private UserClientRESTTemplate clientTemplate;
     @Autowired
-    private RoleRESTTemplateImpl entityOps;
+    private UserRESTTemplateImpl entityOps;
 
-    public RoleClientRESTIntegrationTest() {
+    public UserClientLogicRESTIntegrationTest() {
         super();
     }
 
@@ -31,12 +31,13 @@ public class RoleClientRESTIntegrationTest extends AbstractClientRESTIntegration
     // template method
 
     @Override
-    protected final RoleClientRESTTemplate getAPI() {
+    protected final UserClientRESTTemplate getAPI() {
         return clientTemplate;
     }
 
     @Override
-    protected final IEntityOperations<Role> getEntityOps() {
+    protected final IEntityOperations<User> getEntityOps() {
         return entityOps;
     }
+
 }

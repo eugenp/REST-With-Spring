@@ -1,6 +1,5 @@
 package org.rest.sec.client.template.test;
 
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.rest.common.client.AbstractClientSortAndPaginationRESTIntegrationTest;
 import org.rest.common.client.IEntityOperations;
@@ -16,7 +15,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ContextTestConfig.class, ClientTestConfig.class }, loader = AnnotationConfigContextLoader.class)
-@Ignore
 public class PrivilegeClientSortAndPaginationRESTIntegrationTest extends AbstractClientSortAndPaginationRESTIntegrationTest<Privilege> {
 
     @Autowired

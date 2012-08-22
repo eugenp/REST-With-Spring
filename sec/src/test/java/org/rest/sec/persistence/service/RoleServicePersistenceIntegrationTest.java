@@ -6,9 +6,11 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.rest.common.client.IEntityOperations;
 import org.rest.common.persistence.service.IService;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
+import org.rest.sec.model.RoleEntityOpsImpl;
 import org.rest.sec.test.SecServicePersistenceIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -23,6 +25,9 @@ public class RoleServicePersistenceIntegrationTest extends SecServicePersistence
     private IRoleService roleService;
     @Autowired
     private IPrincipalService principalService;
+
+    @Autowired
+    private RoleEntityOpsImpl entityOps;
 
     // create
 
@@ -95,13 +100,8 @@ public class RoleServicePersistenceIntegrationTest extends SecServicePersistence
     }
 
     @Override
-    protected final void invalidate(final Role entity) {
-        entity.setName(null);
-    }
-
-    @Override
-    protected final void changeEntity(final Role entity) {
-        entity.setName(randomAlphabetic(6));
+    protected final IEntityOperations<Role> getEntityOps() {
+        return entityOps;
     }
 
     // util

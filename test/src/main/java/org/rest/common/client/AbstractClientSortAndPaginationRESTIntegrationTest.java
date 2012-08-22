@@ -22,9 +22,16 @@ public abstract class AbstractClientSortAndPaginationRESTIntegrationTest<T exten
 
     // tests
 
+    // find - all - pagination
+
     @Test
-    public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned() {
-        getAPI().createAsURI(getEntityOps().createNewEntity());
+    /**/public final void whenResourcesAreRetrievedPaginated_thenNoExceptions() {
+        getAPI().findAllPaginated(1, 1);
+    }
+
+    @Test
+    /**/public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned() {
+        getAPI().createAsURI(createNewEntity());
 
         // When
         final List<T> allPaginated = getAPI().findAllPaginated(0, 1);
@@ -36,9 +43,9 @@ public abstract class AbstractClientSortAndPaginationRESTIntegrationTest<T exten
     // find - all - sorting
 
     @Test
-    public final void whenResourcesAreRetrievedSorted_thenResourcesAreIndeedOrdered() {
-        getAPI().createAsURI(getEntityOps().createNewEntity());
-        getAPI().createAsURI(getEntityOps().createNewEntity());
+    /**/public final void whenResourcesAreRetrievedSorted_thenResourcesAreIndeedOrdered() {
+        getAPI().createAsURI(createNewEntity());
+        getAPI().createAsURI(createNewEntity());
 
         // When
         final List<T> resourcesSorted = getAPI().findAllSorted(SearchField.name.name(), Sort.Direction.ASC.name());
@@ -48,20 +55,20 @@ public abstract class AbstractClientSortAndPaginationRESTIntegrationTest<T exten
     }
 
     @Test
-    public final void whenResourcesAreRetrievedSortedDescById_thenNoExceptions() {
+    /**/public final void whenResourcesAreRetrievedSortedDescById_thenNoExceptions() {
         getAPI().findAllSorted(SearchField.id.toString(), Sort.Direction.DESC.name());
     }
 
     @Test
-    public final void whenResourcesAreRetrievedSortedAscById_thenResultsAreOrderedCorrectly() {
+    /**/public final void whenResourcesAreRetrievedSortedAscById_thenResultsAreOrderedCorrectly() {
         final List<T> resourcesOrderedById = getAPI().findAllSorted(SearchField.id.toString(), Sort.Direction.ASC.name());
 
         assertTrue(new OrderById<T>().isOrdered(resourcesOrderedById));
     }
 
     @Test
-    public final void whenResourcesAreRetrievedSortedDescById_thenResultsAreOrderedCorrectly() {
-        final List<T> resourcesOrderedById = getAPI().findAllSorted(SearchField.id.toString(), Sort.Direction.DESC.name());
+    /**/public final void whenResourcesAreRetrievedSortedDescById_thenResultsAreOrderedCorrectly() {
+        final List<T> resourcesOrderedById = getAPI().findAllSorted(SearchField.id.name(), Sort.Direction.DESC.name());
 
         assertTrue(new OrderById<T>().reverse().isOrdered(resourcesOrderedById));
     }
@@ -69,14 +76,14 @@ public abstract class AbstractClientSortAndPaginationRESTIntegrationTest<T exten
     // find - all - pagination and sorting
 
     @Test
-    public final void whenResourcesAreRetrievedPaginatedAndSorted_thenNoExceptions() {
-        getAPI().findAllPaginatedAndSorted(0, 41, SearchField.name.name(), null);
+    /**/public final void whenResourcesAreRetrievedPaginatedAndSorted_thenNoExceptions() {
+        getAPI().findAllPaginatedAndSorted(0, 41, SearchField.name.name(), Sort.Direction.ASC.name());
     }
 
     @Test
-    public final void whenResourcesAreRetrievedPaginatedAndSorted_thenResourcesAreIndeedOrdered() {
-        getAPI().createAsURI(getEntityOps().createNewEntity());
-        getAPI().createAsURI(getEntityOps().createNewEntity());
+    /**/public final void whenResourcesAreRetrievedPaginatedAndSorted_thenResourcesAreIndeedOrdered() {
+        getAPI().createAsURI(createNewEntity());
+        getAPI().createAsURI(createNewEntity());
 
         // When
         final List<T> resourcesPaginatedAndSorted = getAPI().findAllPaginatedAndSorted(0, 4, SearchField.name.name(), Sort.Direction.ASC.name());
