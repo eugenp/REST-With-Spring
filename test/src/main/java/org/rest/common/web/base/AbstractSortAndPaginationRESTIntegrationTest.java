@@ -1,8 +1,11 @@
 package org.rest.common.web.base;
 
+import static com.jayway.restassured.RestAssured.get;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -20,14 +23,14 @@ import org.springframework.data.domain.Sort;
 import com.google.common.collect.Ordering;
 import com.jayway.restassured.response.Response;
 
-public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
+public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends IEntity> {
 
     @Autowired
     protected IClientAuthenticationComponent auth;
 
     protected final Class<T> clazz;
 
-    public AbstractSortRESTIntegrationTest(final Class<T> clazzToSet) {
+    public AbstractSortAndPaginationRESTIntegrationTest(final Class<T> clazzToSet) {
         super();
 
         this.clazz = clazzToSet;
@@ -35,7 +38,62 @@ public abstract class AbstractSortRESTIntegrationTest<T extends IEntity> {
 
     // tests
 
-    // GET (paged)
+    // TODO: sort
+
+    @Test
+    public final void whenResourcesAreRetrievedPaginated_thenNoExceptions() {
+        getAPI().findAllPaginatedAsResponse(1, 1);
+    }
+
+    @Test
+    public final void whenResourcesAreRetrievedPaginated_then200IsReceived() {
+        // When
+        final Response response = getAPI().findAllPaginatedAsResponse(0, 1);
+
+        // Then
+        assertThat(response.getStatusCode(), is(200));
+    }
+
+    @Test
+    public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned() {
+        getAPI().createAsResponse(getAPI().createNewEntity());
+
+        // When
+        final Response response = getAPI().findAllPaginatedAsResponse(0, 1);
+
+        // Then
+        assertFalse(getAPI().getMarshaller().decode(response.asString(), List.class).isEmpty());
+    }
+
+    @Test
+    // - note: may fail intermittently - TODO: investigate
+    public final void whenPageOfResourcesAreRetrievedOutOfBounds_then404IsReceived() {
+        // When
+        final Response response = getAPI().findAllPaginatedAsResponse(Integer.parseInt(randomNumeric(5)), 1);
+
+        // Then
+        assertThat(response.getStatusCode(), is(404));
+    }
+
+    @Test
+    public final void whenResourcesAreRetrievedWithNonNumericPage_then400IsReceived() {
+        // When
+        final Response response = get(getURI() + "?page=" + randomAlphabetic(5).toLowerCase() + "&size=1");
+
+        // Then
+        assertThat(response.getStatusCode(), is(400));
+    }
+
+    @Test
+    public final void whenResourcesAreRetrievedWithNonNumericPageSize_then400IsReceived() {
+        // When
+        final Response response = get(getURI() + "?page=0" + "&size=" + randomAlphabetic(5));
+
+        // Then
+        assertThat(response.getStatusCode(), is(400));
+    }
+
+    // find - all (paginated)
 
     @Test
     public final void whenResourcesAreRetrievedPaginatedAndSorted_thenNoExceptions() {

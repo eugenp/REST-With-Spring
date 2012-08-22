@@ -77,14 +77,15 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     // find - all
 
+    @SuppressWarnings("unchecked")
     @Override
     public final List<T> findAll() {
-        final ResponseEntity<String> findAllResponse = restTemplate.exchange(getURI(), HttpMethod.GET, findRequestEntity(), String.class);
-        final String bodyAsString = findAllResponse.getBody();
-        if (bodyAsString == null) {
+        final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI(), HttpMethod.GET, findRequestEntity(), List.class);
+        final List<T> body = findAllResponse.getBody();
+        if (body == null) {
             return Lists.newArrayList();
         }
-        return marshaller.decodeList(bodyAsString, clazz);
+        return body;
     }
 
     @Override
@@ -101,7 +102,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     @Override
     public final List<T> findAllSorted(final String sortBy, final String sortOrder) {
         final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI() + QueryConstants.Q_SORT_BY + sortBy, HttpMethod.GET, findRequestEntity(), List.class);
-        final List body = findAllResponse.getBody();
+        final List<T> body = findAllResponse.getBody();
         if (body == null) {
             return Lists.newArrayList();
         }
@@ -135,7 +136,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     @Override
     public final List<T> findAllByURI(final String uri) {
         final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);
-        final List body = response.getBody();
+        final List<T> body = response.getBody();
         if (body == null) {
             return Lists.newArrayList();
         }
@@ -177,7 +178,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     @Override
     public final String createAsURI(final T resource) {
         givenAuthenticated();
-        final ResponseEntity<List> responseEntity = restTemplate.exchange(getURI(), HttpMethod.POST, new HttpEntity<T>(resource, createContentTypeHeaders()), List.class);
+        final ResponseEntity<Void> responseEntity = restTemplate.exchange(getURI(), HttpMethod.POST, new HttpEntity<T>(resource, createContentTypeHeaders()), Void.class);
 
         final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
         Preconditions.checkNotNull(locationOfCreatedResource);

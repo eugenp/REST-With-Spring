@@ -5,6 +5,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -108,6 +109,19 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     /**/public final void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoResourceIsReceived() {
         // When
         getAPI().findOne(IDUtils.randomPositiveLong());
+    }
+
+    @Test
+    /**/public final void givenResourceExists_whenResourceIsRetrieved_thenResourceHasId() {
+        // Given
+        final T newResource = createNewEntity();
+        final String uriOfExistingResource = getAPI().createAsURI(newResource);
+
+        // When
+        final T createdResource = getAPI().findOneByURI(uriOfExistingResource);
+
+        // Then
+        assertThat(createdResource.getId(), notNullValue());
     }
 
     // find one - by attributes

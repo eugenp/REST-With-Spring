@@ -3,17 +3,17 @@ package org.rest.sec.web.user;
 import org.rest.common.util.order.OrderByName;
 import org.rest.sec.client.template.UserRESTTemplateImpl;
 import org.rest.sec.model.dto.User;
-import org.rest.sec.test.SecSortRESTIntegrationTest;
+import org.rest.sec.test.SecSortAndPaginationRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Ordering;
 
-public class UserSortRESTIntegrationTest extends SecSortRESTIntegrationTest<User> {
+public class UserSortAndPaginationRESTIntegrationTest extends SecSortAndPaginationRESTIntegrationTest<User> {
 
     @Autowired
     private UserRESTTemplateImpl template;
 
-    public UserSortRESTIntegrationTest() {
+    public UserSortAndPaginationRESTIntegrationTest() {
         super(User.class);
     }
 

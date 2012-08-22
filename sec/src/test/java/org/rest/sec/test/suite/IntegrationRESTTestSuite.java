@@ -11,8 +11,7 @@ import org.rest.sec.security.SecurityRESTIntegrationTest;
     IntegrationDiscoverabilityRESTTestSuite.class,
     IntegrationLogicRESTTestSuite.class,
     IntegrationSearchRESTTestSuite.class,
-    IntegrationPaginationRESTTestSuite.class,
-    IntegrationSortRESTTestSuite.class,
+    IntegrationSortAndPaginationRESTTestSuite.class,
     IntegrationMimeRESTTestSuite.class,
     SecurityRESTIntegrationTest.class
 })

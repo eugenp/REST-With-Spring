@@ -235,9 +235,8 @@ public abstract class AbstractController<T extends IEntity> {
 
         try {
             getService().update(resource);
-        }
-        // this is so that the service layer can MANUALLY throw exceptions that get handled by the exception translation mechanism
-        catch (final IllegalStateException illegalState) {
+        } catch (final IllegalStateException illegalState) {
+            // this is so that the service layer can MANUALLY throw exceptions that get handled by the exception translation mechanism
             logger.error("IllegalArgumentException on create operation for: {}", resource.getClass().getSimpleName());
             logger.warn("IllegalArgumentException on create operation for: {}", resource.getClass().getSimpleName(), illegalState);
             throw new ConflictException(illegalState);

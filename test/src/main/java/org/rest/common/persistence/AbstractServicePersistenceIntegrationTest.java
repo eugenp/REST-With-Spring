@@ -20,39 +20,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends IEntit
 
     // tests
 
-    // find - findAll
-
-    @Test
-    public void whenEntitiesAreRetrieved_thenNoExceptions() {
-        getAPI().findAll();
-    }
-
-    @Test
-    public void whenEntitiesAreRetrieved_thenTheResultIsNotNull() {
-        final List<T> entities = getAPI().findAll();
-
-        assertNotNull(entities);
-    }
-
-    @Test
-    public void givenAnEntityExists_whenEntitiesAreRetrieved_thenThereIsAtLeastOneEntity() {
-        getAPI().create(createNewEntity());
-
-        final List<T> owners = getAPI().findAll();
-
-        assertThat(owners, Matchers.not(Matchers.<T> empty()));
-    }
-
-    @Test
-    public void givenAnEntityExists_whenEntitiesAreRetrieved_thenTheExistingEntityIsIndeedAmongThem() {
-        final T existingEntity = getAPI().create(createNewEntity());
-
-        final List<T> owners = getAPI().findAll();
-
-        assertThat(owners, hasItem(existingEntity));
-    }
-
-    // find one
+    // find - one
 
     @Test
     public void givenEntityExists_whenEntityIsRetrieved_thenNoExceptions() {
@@ -83,6 +51,38 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends IEntit
         final T existingEntity = getAPI().create(createNewEntity());
         final T retrievedEntity = getAPI().findOne(existingEntity.getId());
         assertEquals(existingEntity, retrievedEntity);
+    }
+
+    // find - all
+
+    @Test
+    public void whenEntitiesAreRetrieved_thenNoExceptions() {
+        getAPI().findAll();
+    }
+
+    @Test
+    public void whenEntitiesAreRetrieved_thenTheResultIsNotNull() {
+        final List<T> entities = getAPI().findAll();
+
+        assertNotNull(entities);
+    }
+
+    @Test
+    public void givenAnEntityExists_whenEntitiesAreRetrieved_thenThereIsAtLeastOneEntity() {
+        getAPI().create(createNewEntity());
+
+        final List<T> owners = getAPI().findAll();
+
+        assertThat(owners, Matchers.not(Matchers.<T> empty()));
+    }
+
+    @Test
+    public void givenAnEntityExists_whenEntitiesAreRetrieved_thenTheExistingEntityIsIndeedAmongThem() {
+        final T existingEntity = getAPI().create(createNewEntity());
+
+        final List<T> owners = getAPI().findAll();
+
+        assertThat(owners, hasItem(existingEntity));
     }
 
     // save/create

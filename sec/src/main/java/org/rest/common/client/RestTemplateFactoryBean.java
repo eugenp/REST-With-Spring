@@ -64,6 +64,7 @@ public class RestTemplateFactoryBean implements FactoryBean<RestTemplate>, Initi
         }
         restTemplate = new RestTemplate(requestFactory);
 
+        restTemplate.getMessageConverters().clear();
         restTemplate.getMessageConverters().add(marshallingHttpMessageConverter());
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
     }

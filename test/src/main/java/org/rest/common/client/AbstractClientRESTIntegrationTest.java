@@ -3,6 +3,7 @@ package org.rest.common.client;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -34,6 +35,19 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     @Test(expected = RestClientException.class)
     public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenExceptionIsThrown() {
         getAPI().findOneByURI(getURI() + WebConstants.PATH_SEP + randomNumeric(4));
+    }
+
+    @Test
+    public final void givenResourceExists_whenResourceIsRetrieved_thenResourceHasId() {
+        // Given
+        final T newResource = createNewEntity();
+        final String uriOfExistingResource = getAPI().createAsURI(newResource);
+
+        // When
+        final T createdResource = getAPI().findOneByURI(uriOfExistingResource);
+
+        // Then
+        assertThat(createdResource.getId(), notNullValue());
     }
 
     @Test

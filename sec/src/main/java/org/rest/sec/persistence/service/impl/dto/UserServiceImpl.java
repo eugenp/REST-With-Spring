@@ -77,7 +77,7 @@ public class UserServiceImpl implements IUserService {
         final List<Principal> allPrincipalEntities = principalService.findAll();
         final List<User> allUsers = Lists.transform(allPrincipalEntities, new PrincipalToUserFunction());
 
-        return allUsers;
+        return Lists.newArrayList(allUsers);
     }
 
     @Override

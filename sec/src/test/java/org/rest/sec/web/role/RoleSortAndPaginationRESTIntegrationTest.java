@@ -1,14 +1,21 @@
 package org.rest.sec.web.role;
 
+import org.rest.common.util.order.OrderByName;
 import org.rest.sec.client.template.RoleRESTTemplateImpl;
 import org.rest.sec.model.Role;
-import org.rest.sec.test.SecPaginationRESTIntegrationTest;
+import org.rest.sec.test.SecSortAndPaginationRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class RolePaginationRESTIntegrationTest extends SecPaginationRESTIntegrationTest<Role> {
+import com.google.common.collect.Ordering;
+
+public class RoleSortAndPaginationRESTIntegrationTest extends SecSortAndPaginationRESTIntegrationTest<Role> {
 
     @Autowired
     private RoleRESTTemplateImpl template;
+
+    public RoleSortAndPaginationRESTIntegrationTest() {
+        super(Role.class);
+    }
 
     // tests
 
@@ -27,6 +34,11 @@ public class RolePaginationRESTIntegrationTest extends SecPaginationRESTIntegrat
     @Override
     protected final RoleRESTTemplateImpl getAPI() {
         return template;
+    }
+
+    @Override
+    protected final Ordering<Role> getOrdering() {
+        return new OrderByName<Role>();
     }
 
 }
