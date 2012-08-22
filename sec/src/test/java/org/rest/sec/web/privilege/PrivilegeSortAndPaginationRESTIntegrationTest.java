@@ -1,17 +1,18 @@
 package org.rest.sec.web.privilege;
 
-import org.rest.common.util.order.OrderByName;
+import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.PrivilegeRESTTemplateImpl;
 import org.rest.sec.model.Privilege;
+import org.rest.sec.model.PrivilegeEntityOpsImpl;
 import org.rest.sec.test.SecSortAndPaginationRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.google.common.collect.Ordering;
 
 public class PrivilegeSortAndPaginationRESTIntegrationTest extends SecSortAndPaginationRESTIntegrationTest<Privilege> {
 
     @Autowired
     private PrivilegeRESTTemplateImpl template;
+    @Autowired
+    private PrivilegeEntityOpsImpl entityOps;
 
     public PrivilegeSortAndPaginationRESTIntegrationTest() {
         super(Privilege.class);
@@ -19,7 +20,7 @@ public class PrivilegeSortAndPaginationRESTIntegrationTest extends SecSortAndPag
 
     // tests
 
-    // template method (shortcuts)
+    // template method
 
     @Override
     protected final Privilege createNewEntity() {
@@ -37,8 +38,8 @@ public class PrivilegeSortAndPaginationRESTIntegrationTest extends SecSortAndPag
     }
 
     @Override
-    protected final Ordering<Privilege> getOrdering() {
-        return new OrderByName<Privilege>();
+    protected IEntityOperations<Privilege> getEntityOps() {
+        return entityOps;
     }
 
 }

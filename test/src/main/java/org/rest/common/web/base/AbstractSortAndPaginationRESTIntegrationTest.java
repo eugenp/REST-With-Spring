@@ -12,18 +12,19 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.rest.common.client.IEntityOperations;
 import org.rest.common.client.security.IClientAuthenticationComponent;
 import org.rest.common.client.template.IRESTTemplate;
-import org.rest.common.persistence.model.IEntity;
+import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.util.SearchField;
 import org.rest.common.util.order.OrderById;
+import org.rest.common.util.order.OrderByName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
-import com.google.common.collect.Ordering;
 import com.jayway.restassured.response.Response;
 
-public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends IEntity> {
+public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INameableEntity> {
 
     @Autowired
     protected IClientAuthenticationComponent auth;
@@ -55,14 +56,14 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends IEn
     }
 
     @Test
-    public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned() {
-        getAPI().createAsResponse(getAPI().createNewEntity());
+    /**/public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned() {
+        getAPI().createAsURI(getEntityOps().createNewEntity());
 
         // When
-        final Response response = getAPI().findAllPaginatedAsResponse(0, 1);
+        final List<T> allPaginated = getAPI().findAllPaginated(0, 1);
 
         // Then
-        assertFalse(getAPI().getMarshaller().decode(response.asString(), List.class).isEmpty());
+        assertFalse(allPaginated.isEmpty());
     }
 
     @Test
@@ -96,14 +97,14 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends IEn
     @Test
     @Ignore("not necessarily true")
     public final void whenResourcesAreRetrievedPaginatedAndNotSorted_thenResourcesAreNotOrdered() {
-        getAPI().createAsResponse(getAPI().createNewEntity());
-        getAPI().createAsResponse(getAPI().createNewEntity());
+        getAPI().createAsURI(getEntityOps().createNewEntity());
+        getAPI().createAsURI(getEntityOps().createNewEntity());
 
         // When
         final List<T> resourcesPaginatedAndSorted = getAPI().findAllPaginated(0, 6);
 
         // Then
-        assertFalse(getOrdering().isOrdered(resourcesPaginatedAndSorted));
+        assertFalse(new OrderByName<T>().isOrdered(resourcesPaginatedAndSorted));
     }
 
     // find - all - sorting
@@ -116,32 +117,31 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends IEn
     }
 
     @Test
-    public final void whenResourcesAreRetrievedSorted_thenResourcesAreIndeedOrdered() {
-        getAPI().createAsResponse(getAPI().createNewEntity());
-        getAPI().createAsResponse(getAPI().createNewEntity());
+    /**/public final void whenResourcesAreRetrievedSorted_thenResourcesAreIndeedOrdered() {
+        getAPI().createAsURI(getEntityOps().createNewEntity());
+        getAPI().createAsURI(getEntityOps().createNewEntity());
 
         // When
-        final Response response = getAPI().findAllSortedAsResponse("name", Sort.Direction.ASC.name());
-        final List<T> resourcesPaginatedAndSorted = getAPI().getMarshaller().decodeList(response.asString(), clazz);
+        final List<T> resourcesSorted = getAPI().findAllSorted("name", Sort.Direction.ASC.name());
 
         // Then
-        assertTrue(getOrdering().isOrdered(resourcesPaginatedAndSorted));
+        assertTrue(new OrderByName<T>().isOrdered(resourcesSorted));
     }
 
     @Test
-    public final void whenResourcesAreRetrievedSortedDescById_thenNoExceptions() {
+    /**/public final void whenResourcesAreRetrievedSortedDescById_thenNoExceptions() {
         getAPI().findAllSorted(SearchField.id.toString(), Sort.Direction.DESC.name());
     }
 
     @Test
-    public final void whenResourcesAreRetrievedSortedAscById_thenResultsAreOrderedCorrectly() {
+    /**/public final void whenResourcesAreRetrievedSortedAscById_thenResultsAreOrderedCorrectly() {
         final List<T> resourcesOrderedById = getAPI().findAllSorted(SearchField.id.toString(), Sort.Direction.ASC.name());
 
         assertTrue(new OrderById<T>().isOrdered(resourcesOrderedById));
     }
 
     @Test
-    public final void whenResourcesAreRetrievedSortedDescById_thenResultsAreOrderedCorrectly() {
+    /**/public final void whenResourcesAreRetrievedSortedDescById_thenResultsAreOrderedCorrectly() {
         final List<T> resourcesOrderedById = getAPI().findAllSorted(SearchField.id.toString(), Sort.Direction.DESC.name());
 
         assertTrue(new OrderById<T>().reverse().isOrdered(resourcesOrderedById));
@@ -163,15 +163,14 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends IEn
 
     @Test
     public final void whenResourcesAreRetrievedPaginatedAndSorted_thenResourcesAreIndeedOrdered() {
-        getAPI().createAsResponse(getAPI().createNewEntity());
-        getAPI().createAsResponse(getAPI().createNewEntity());
+        getAPI().createAsURI(getEntityOps().createNewEntity());
+        getAPI().createAsURI(getEntityOps().createNewEntity());
 
         // When
-        final Response response = getAPI().findAllPaginatedAndSortedAsResponse(0, 4, "name", Sort.Direction.ASC.name());
-        final List<T> resourcesPaginatedAndSorted = getAPI().getMarshaller().decodeList(response.asString(), clazz);
+        final List<T> resourcesPaginatedAndSorted = getAPI().findAllPaginatedAndSorted(0, 4, "name", Sort.Direction.ASC.name());
 
         // Then
-        assertTrue(getOrdering().isOrdered(resourcesPaginatedAndSorted));
+        assertTrue(new OrderByName<T>().isOrdered(resourcesPaginatedAndSorted));
     }
 
     @Test
@@ -187,7 +186,7 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends IEn
 
     protected abstract IRESTTemplate<T> getAPI();
 
-    protected abstract Ordering<T> getOrdering();
+    protected abstract IEntityOperations<T> getEntityOps();
 
     protected abstract String getURI();
 

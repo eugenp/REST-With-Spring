@@ -1,17 +1,19 @@
 package org.rest.sec.web.role;
 
-import org.rest.common.util.order.OrderByName;
+import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.RoleRESTTemplateImpl;
 import org.rest.sec.model.Role;
+import org.rest.sec.model.RoleEntityOpsImpl;
 import org.rest.sec.test.SecSortAndPaginationRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.google.common.collect.Ordering;
 
 public class RoleSortAndPaginationRESTIntegrationTest extends SecSortAndPaginationRESTIntegrationTest<Role> {
 
     @Autowired
     private RoleRESTTemplateImpl template;
+
+    @Autowired
+    private RoleEntityOpsImpl entityOps;
 
     public RoleSortAndPaginationRESTIntegrationTest() {
         super(Role.class);
@@ -19,7 +21,7 @@ public class RoleSortAndPaginationRESTIntegrationTest extends SecSortAndPaginati
 
     // tests
 
-    // template method (shortcuts)
+    // template method
 
     @Override
     protected final Role createNewEntity() {
@@ -37,8 +39,8 @@ public class RoleSortAndPaginationRESTIntegrationTest extends SecSortAndPaginati
     }
 
     @Override
-    protected final Ordering<Role> getOrdering() {
-        return new OrderByName<Role>();
+    protected IEntityOperations<Role> getEntityOps() {
+        return entityOps;
     }
 
 }

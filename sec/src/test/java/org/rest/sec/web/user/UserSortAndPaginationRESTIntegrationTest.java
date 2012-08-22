@@ -1,17 +1,19 @@
 package org.rest.sec.web.user;
 
-import org.rest.common.util.order.OrderByName;
+import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.UserRESTTemplateImpl;
+import org.rest.sec.model.UserEntityOpsImpl;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.test.SecSortAndPaginationRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.google.common.collect.Ordering;
 
 public class UserSortAndPaginationRESTIntegrationTest extends SecSortAndPaginationRESTIntegrationTest<User> {
 
     @Autowired
     private UserRESTTemplateImpl template;
+
+    @Autowired
+    private UserEntityOpsImpl entityOps;
 
     public UserSortAndPaginationRESTIntegrationTest() {
         super(User.class);
@@ -19,7 +21,7 @@ public class UserSortAndPaginationRESTIntegrationTest extends SecSortAndPaginati
 
     // tests
 
-    // template method (shortcuts)
+    // template method
 
     @Override
     protected final User createNewEntity() {
@@ -37,8 +39,8 @@ public class UserSortAndPaginationRESTIntegrationTest extends SecSortAndPaginati
     }
 
     @Override
-    protected final Ordering<User> getOrdering() {
-        return new OrderByName<User>();
+    protected IEntityOperations<User> getEntityOps() {
+        return entityOps;
     }
 
 }

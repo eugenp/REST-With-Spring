@@ -22,7 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public abstract class AbstractClientRESTTemplate<T extends INameableEntity> implements IClientTemplate<T> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -77,7 +77,6 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     // find - all
 
-    @SuppressWarnings("unchecked")
     @Override
     public final List<T> findAll() {
         final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI(), HttpMethod.GET, findRequestEntity(), List.class);
@@ -98,7 +97,6 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         return marshaller.decodeList(bodyAsString, clazz);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final List<T> findAllSorted(final String sortBy, final String sortOrder) {
         final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI() + QueryConstants.Q_SORT_BY + sortBy, HttpMethod.GET, findRequestEntity(), List.class);
@@ -118,12 +116,12 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         uri.append(SearchCommonUtil.SEPARATOR_AMPER);
         uri.append("size=");
         uri.append(size);
-        final ResponseEntity<String> findAllResponse = restTemplate.exchange(uri.toString(), HttpMethod.GET, findRequestEntity(), String.class);
-        final String bodyAsString = findAllResponse.getBody();
-        if (bodyAsString == null) {
+        final ResponseEntity<List> findAllResponse = restTemplate.exchange(uri.toString(), HttpMethod.GET, findRequestEntity(), List.class);
+        final List<T> body = findAllResponse.getBody();
+        if (body == null) {
             return Lists.newArrayList();
         }
-        return getMarshaller().decodeList(bodyAsString, clazz);
+        return body;
     }
 
     @Override
@@ -132,7 +130,6 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         return resourcesByAttributes;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final List<T> findAllByURI(final String uri) {
         final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);

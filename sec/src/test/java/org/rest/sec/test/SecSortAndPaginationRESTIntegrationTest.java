@@ -1,7 +1,7 @@
 package org.rest.sec.test;
 
 import org.junit.runner.RunWith;
-import org.rest.common.persistence.model.IEntity;
+import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.web.base.AbstractSortAndPaginationRESTIntegrationTest;
 import org.rest.sec.spring.client.ClientTestConfig;
 import org.rest.sec.spring.context.ContextTestConfig;
@@ -14,7 +14,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
-public abstract class SecSortAndPaginationRESTIntegrationTest<T extends IEntity> extends AbstractSortAndPaginationRESTIntegrationTest<T> {
+public abstract class SecSortAndPaginationRESTIntegrationTest<T extends INameableEntity> extends AbstractSortAndPaginationRESTIntegrationTest<T> {
 
     public SecSortAndPaginationRESTIntegrationTest(final Class<T> clazzToSet) {
         super(clazzToSet);
