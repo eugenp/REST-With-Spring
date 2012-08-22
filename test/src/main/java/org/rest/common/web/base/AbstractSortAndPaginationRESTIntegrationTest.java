@@ -137,7 +137,7 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
 
     @Test
     /**/public final void whenResourcesAreRetrievedPaginatedAndSorted_thenNoExceptions() {
-        getAPI().findAllPaginatedAndSorted(0, 41, SearchField.name.name(), null);
+        getAPI().findAllPaginatedAndSorted(0, 41, SearchField.name.name(), Sort.Direction.ASC.name());
     }
 
     @Test

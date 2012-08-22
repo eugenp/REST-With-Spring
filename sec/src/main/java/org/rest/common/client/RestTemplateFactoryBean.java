@@ -28,6 +28,10 @@ public class RestTemplateFactoryBean implements FactoryBean<RestTemplate>, Initi
     @Value("${http.req.timeout}")
     int timeout;
 
+    public RestTemplateFactoryBean() {
+        super();
+    }
+
     // API
 
     @Override
@@ -64,7 +68,7 @@ public class RestTemplateFactoryBean implements FactoryBean<RestTemplate>, Initi
         }
         restTemplate = new RestTemplate(requestFactory);
 
-        restTemplate.getMessageConverters().clear();
+        restTemplate.getMessageConverters().remove(5); // removing the Jaxb2RootElementHttpMessageConverter
         restTemplate.getMessageConverters().add(marshallingHttpMessageConverter());
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
     }
@@ -82,7 +86,7 @@ public class RestTemplateFactoryBean implements FactoryBean<RestTemplate>, Initi
     final XStreamMarshaller xstreamMarshaller() {
         final XStreamMarshaller xStreamMarshaller = new XStreamMarshaller();
         xStreamMarshaller.setAutodetectAnnotations(true);
-        xStreamMarshaller.setAnnotatedClasses(new Class[] { Principal.class, User.class, Role.class, Privilege.class });
+        xStreamMarshaller.setAnnotatedClasses(new Class[] { User.class, Principal.class, Role.class, Privilege.class });
         xStreamMarshaller.getXStream().addDefaultImplementation(java.sql.Timestamp.class, java.util.Date.class);
 
         return xStreamMarshaller;
