@@ -184,6 +184,7 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
     }
 
     @Test
+    @Ignore
     public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
         // Given
         this.getAPI().createAsURI(createNewEntity());

@@ -367,7 +367,7 @@
 										<include>**/*RESTIntegrationTest.java</include>
 									</includes>
 									<systemPropertyVariables>
-										<spring.profiles.active>client</spring.profiles.active>
+										<spring.profiles.active>client,mime_json</spring.profiles.active>
 										<webTarget>cargo</webTarget>
 									</systemPropertyVariables>
 								</configuration>
