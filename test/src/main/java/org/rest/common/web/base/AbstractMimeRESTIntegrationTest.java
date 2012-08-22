@@ -9,14 +9,12 @@ import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.jayway.restassured.response.Response;
 
 public abstract class AbstractMimeRESTIntegrationTest<T extends IEntity> {
 
     @Autowired
-    @Qualifier("jacksonMarshaller")
     private IMarshaller marshaller;
 
     public AbstractMimeRESTIntegrationTest() {

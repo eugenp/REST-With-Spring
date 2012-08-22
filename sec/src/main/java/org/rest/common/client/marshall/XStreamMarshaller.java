@@ -14,7 +14,7 @@ import com.google.common.base.Preconditions;
 import com.thoughtworks.xstream.XStream;
 
 @Component("xStreamMarshaller")
-@Profile("client")
+@Profile("mime_xml")
 public final class XStreamMarshaller implements IMarshaller {
 
     private XStream xstream;

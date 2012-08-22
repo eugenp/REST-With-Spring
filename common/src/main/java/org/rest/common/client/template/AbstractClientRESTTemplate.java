@@ -12,7 +12,6 @@ import org.rest.common.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -30,7 +29,6 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     protected Class<T> clazz;
 
     @Autowired
-    @Qualifier("jacksonMarshaller")
     protected IMarshaller marshaller;
 
     @Autowired

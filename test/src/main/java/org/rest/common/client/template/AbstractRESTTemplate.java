@@ -16,7 +16,6 @@ import org.rest.common.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -33,7 +32,6 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     protected final Class<T> clazz;
 
     @Autowired
-    @Qualifier("jacksonMarshaller")
     protected IMarshaller marshaller;
 
     @Autowired

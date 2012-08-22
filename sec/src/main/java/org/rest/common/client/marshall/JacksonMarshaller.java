@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
 
 @Component("jacksonMarshaller")
-@Profile("client")
+@Profile("mime_json")
 public final class JacksonMarshaller implements IMarshaller {
     private final Logger logger = LoggerFactory.getLogger(JacksonMarshaller.class);
 

@@ -5,7 +5,6 @@ import org.rest.common.client.marshall.IMarshaller;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.model.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 public class AuthenticationRESTTemplate {
 
     @Autowired
-    @Qualifier("jacksonMarshaller")
     IMarshaller marshaller;
     @Autowired
     private RestTemplate restTemplate;

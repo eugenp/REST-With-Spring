@@ -8,7 +8,7 @@
 </listAttribute>
 <mapAttribute key="org.eclipse.debug.core.environmentVariables">
 <mapEntry key="persistenceTarget" value="test"/>
-<mapEntry key="spring.profiles.active" value="client"/>
+<mapEntry key="spring.profiles.active" value="client,mime_json"/>
 </mapAttribute>
 <stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value=""/>
 <booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>

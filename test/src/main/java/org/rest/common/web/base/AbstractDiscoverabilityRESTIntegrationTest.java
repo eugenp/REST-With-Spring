@@ -17,7 +17,6 @@ import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.LinkUtil;
 import org.rest.common.web.util.HTTPLinkHeaderUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.google.common.base.Preconditions;
 import com.google.common.net.HttpHeaders;
@@ -29,7 +28,6 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
     private Class<T> clazz;
 
     @Autowired
-    @Qualifier("jacksonMarshaller")
     private IMarshaller marshaller;
 
     public AbstractDiscoverabilityRESTIntegrationTest(final Class<T> clazzToSet) {
