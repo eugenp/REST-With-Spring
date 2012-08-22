@@ -144,12 +144,12 @@ public abstract class AbstractController<T extends IEntity> {
         try {
             resultPage = getService().findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder);
         } catch (final InvalidDataAccessApiUsageException apiEx) {
-            logger.error("InvalidDataAccessApiUsageException on find operation");
-            logger.warn("InvalidDataAccessApiUsageException on find operation", apiEx);
+            logger.error("InvalidDataAccessApiUsageException on find all operation");
+            logger.warn("InvalidDataAccessApiUsageException on find all operation", apiEx);
             throw new BadRequestException(apiEx);
         } catch (final IllegalArgumentException apiEx) { // thrown by PageRequest in case the page parameters are wrong
-            logger.error("IllegalArgumentException on find operation");
-            logger.warn("IllegalArgumentException on find operation", apiEx);
+            logger.error("IllegalArgumentException on find all operation");
+            logger.warn("IllegalArgumentException on find all operation", apiEx);
             throw new BadRequestException(apiEx);
         }
 
@@ -166,8 +166,8 @@ public abstract class AbstractController<T extends IEntity> {
         try {
             resultPage = getService().findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder);
         } catch (final InvalidDataAccessApiUsageException apiEx) {
-            logger.error("InvalidDataAccessApiUsageException on find operation");
-            logger.warn("InvalidDataAccessApiUsageException on find operation", apiEx);
+            logger.error("InvalidDataAccessApiUsageException on find all operation");
+            logger.warn("InvalidDataAccessApiUsageException on find all operation", apiEx);
             throw new BadRequestException(apiEx);
         }
 
@@ -184,8 +184,8 @@ public abstract class AbstractController<T extends IEntity> {
         try {
             resultPage = getService().findAllSorted(sortBy, sortOrder);
         } catch (final InvalidDataAccessApiUsageException apiEx) {
-            logger.error("InvalidDataAccessApiUsageException on find operation");
-            logger.warn("InvalidDataAccessApiUsageException on find operation", apiEx);
+            logger.error("InvalidDataAccessApiUsageException on find all operation");
+            logger.warn("InvalidDataAccessApiUsageException on find all operation", apiEx);
             throw new BadRequestException(apiEx);
         }
 
@@ -202,20 +202,20 @@ public abstract class AbstractController<T extends IEntity> {
         }
         // this is so that the service layer can MANUALLY throw exceptions that get handled by the exception translation mechanism
         catch (final IllegalStateException illegalState) {
-            logger.error("IllegalArgumentException on create operation for: " + resource.getClass().getSimpleName());
-            logger.warn("IllegalArgumentException on create operation for: " + resource.getClass().getSimpleName(), illegalState);
+            logger.error("IllegalArgumentException on create operation for: {}", resource.getClass().getSimpleName());
+            logger.warn("IllegalArgumentException on create operation for: {}", resource.getClass().getSimpleName(), illegalState);
             throw new ConflictException(illegalState);
         } catch (final DataIntegrityViolationException ex) { // on unique constraint
-            logger.error("DataIntegrityViolationException on create operation for: " + resource.getClass().getSimpleName());
-            logger.warn("DataIntegrityViolationException on create operation for: " + resource.getClass().getSimpleName(), ex);
+            logger.error("DataIntegrityViolationException on create operation for: {}", resource.getClass().getSimpleName());
+            logger.warn("DataIntegrityViolationException on create operation for: {}", resource.getClass().getSimpleName(), ex);
             throw new ConflictException(ex);
         } catch (final InvalidDataAccessApiUsageException dataEx) { // on saving a new Resource that also contains new/unsaved entities
-            logger.error("InvalidDataAccessApiUsageException on create operation for: " + resource.getClass().getSimpleName());
-            logger.warn("InvalidDataAccessApiUsageException on create operation for: " + resource.getClass().getSimpleName(), dataEx);
+            logger.error("InvalidDataAccessApiUsageException on create operation for: {}", resource.getClass().getSimpleName());
+            logger.warn("InvalidDataAccessApiUsageException on create operation for: {}", resource.getClass().getSimpleName(), dataEx);
             throw new ConflictException(dataEx);
         } catch (final DataAccessException dataEx) {
-            logger.error("Generic DataAccessException on create operation for: " + resource.getClass().getSimpleName());
-            logger.warn("Generic DataAccessException on create operation for: " + resource.getClass().getSimpleName(), dataEx);
+            logger.error("DataAccessException on create operation for: {}", resource.getClass().getSimpleName());
+            logger.warn("ataAccessException on create operation for: {}", resource.getClass().getSimpleName(), dataEx);
             throw new ConflictException(dataEx);
         }
 
@@ -238,16 +238,16 @@ public abstract class AbstractController<T extends IEntity> {
         }
         // this is so that the service layer can MANUALLY throw exceptions that get handled by the exception translation mechanism
         catch (final IllegalStateException illegalState) {
-            logger.error("IllegalArgumentException on create operation for: " + resource.getClass().getSimpleName());
-            logger.warn("IllegalArgumentException on create operation for: " + resource.getClass().getSimpleName(), illegalState);
+            logger.error("IllegalArgumentException on create operation for: {}", resource.getClass().getSimpleName());
+            logger.warn("IllegalArgumentException on create operation for: {}", resource.getClass().getSimpleName(), illegalState);
             throw new ConflictException(illegalState);
         } catch (final InvalidDataAccessApiUsageException dataEx) {
-            logger.error("InvalidDataAccessApiUsageException on update operation for: " + resource.getClass().getSimpleName());
-            logger.warn("InvalidDataAccessApiUsageException on update operation for: " + resource.getClass().getSimpleName(), dataEx);
+            logger.error("InvalidDataAccessApiUsageException on update operation for: {}", resource.getClass().getSimpleName());
+            logger.warn("InvalidDataAccessApiUsageException on update operation for: {}", resource.getClass().getSimpleName(), dataEx);
             throw new ConflictException(dataEx);
         } catch (final DataIntegrityViolationException dataEx) { // on unique constraint
-            logger.error("DataIntegrityViolationException on update operation for: " + resource.getClass().getSimpleName());
-            logger.warn("DataIntegrityViolationException on update operation for: " + resource.getClass().getSimpleName(), dataEx);
+            logger.error("DataIntegrityViolationException on update operation for: {}", resource.getClass().getSimpleName());
+            logger.warn("DataIntegrityViolationException on update operation for: {}", resource.getClass().getSimpleName(), dataEx);
             throw new ConflictException(dataEx);
         }
     }
