@@ -27,7 +27,7 @@ import com.google.common.collect.Sets;
 @Component
 @Profile("production")
 public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent> {
-    static final Logger logger = LoggerFactory.getLogger(SecuritySetup.class);
+    private final Logger logger = LoggerFactory.getLogger(SecuritySetup.class);
 
     private boolean setupDone;
 
