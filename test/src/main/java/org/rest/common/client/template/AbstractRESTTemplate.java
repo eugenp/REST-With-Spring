@@ -214,7 +214,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         Preconditions.checkNotNull(resource);
 
         final String resourceAsString = marshaller.encode(resource);
-        logger.debug("Creating Resource against URI: {}", getURI());
+        logger.debug("Creating Resource against URI: " + getURI());
         return givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).post(getURI());
     }
 

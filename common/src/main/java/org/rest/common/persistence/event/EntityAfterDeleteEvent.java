@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationEvent;
 import com.google.common.base.Preconditions;
 
 /**
- * This event should be fired after entity is deleted.
+ * This event should be fired when entity is updated.
  */
 public final class EntityAfterDeleteEvent<T extends IEntity> extends ApplicationEvent {
 

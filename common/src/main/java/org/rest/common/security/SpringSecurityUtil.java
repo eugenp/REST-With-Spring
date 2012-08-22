@@ -18,7 +18,7 @@ public final class SpringSecurityUtil {
      * 
      * @return the current user details or null if can't be retrieved.
      */
-    static UserDetails getCurrentUserDetails() {
+    public static UserDetails getCurrentUserDetails() {
         final Authentication authentication = getCurrentAuthentication();
         if (authentication == null) {
             return null;
