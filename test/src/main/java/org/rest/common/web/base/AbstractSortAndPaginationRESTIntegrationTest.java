@@ -111,7 +111,7 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
 
     @Test
     public final void whenResourcesAreRetrievedSorted_then200IsReceived() {
-        final Response response = getAPI().findAllSortedAsResponse("name", Sort.Direction.ASC.name());
+        final Response response = getAPI().findAllSortedAsResponse(SearchField.name.name(), Sort.Direction.ASC.name());
 
         assertThat(response.getStatusCode(), is(200));
     }
@@ -122,7 +122,7 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
         getAPI().createAsURI(getEntityOps().createNewEntity());
 
         // When
-        final List<T> resourcesSorted = getAPI().findAllSorted("name", Sort.Direction.ASC.name());
+        final List<T> resourcesSorted = getAPI().findAllSorted(SearchField.name.name(), Sort.Direction.ASC.name());
 
         // Then
         assertTrue(new OrderByName<T>().isOrdered(resourcesSorted));

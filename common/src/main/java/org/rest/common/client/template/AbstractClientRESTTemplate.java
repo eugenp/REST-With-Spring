@@ -8,6 +8,7 @@ import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchCommonUtil;
+import org.rest.common.util.SearchField;
 import org.rest.common.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +63,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final T findByName(final String name) {
-        return findOneByAttributes("name", name);
+        return findOneByAttributes(SearchField.name.name(), name);
     }
 
     @Override
@@ -99,7 +100,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final List<T> findAllSorted(final String sortBy, final String sortOrder) {
-        final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI() + QueryConstants.Q_SORT_BY + sortBy, HttpMethod.GET, findRequestEntity(), List.class);
+        final ResponseEntity<List> findAllResponse = restTemplate.exchange(getURI() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder, HttpMethod.GET, findRequestEntity(), List.class);
         final List<T> body = findAllResponse.getBody();
         if (body == null) {
             return Lists.newArrayList();

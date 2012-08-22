@@ -41,7 +41,7 @@ public abstract class AbstractClientSortAndPaginationRESTIntegrationTest<T exten
         getAPI().createAsURI(getEntityOps().createNewEntity());
 
         // When
-        final List<T> resourcesSorted = getAPI().findAllSorted("name", Sort.Direction.ASC.name());
+        final List<T> resourcesSorted = getAPI().findAllSorted(SearchField.name.name(), Sort.Direction.ASC.name());
 
         // Then
         assertTrue(new OrderByName<T>().isOrdered(resourcesSorted));
@@ -70,7 +70,7 @@ public abstract class AbstractClientSortAndPaginationRESTIntegrationTest<T exten
 
     @Test
     public final void whenResourcesAreRetrievedPaginatedAndSorted_thenNoExceptions() {
-        getAPI().findAllPaginatedAndSorted(0, 41, "name", null);
+        getAPI().findAllPaginatedAndSorted(0, 41, SearchField.name.name(), null);
     }
 
     @Test
@@ -79,7 +79,7 @@ public abstract class AbstractClientSortAndPaginationRESTIntegrationTest<T exten
         getAPI().createAsURI(getEntityOps().createNewEntity());
 
         // When
-        final List<T> resourcesPaginatedAndSorted = getAPI().findAllPaginatedAndSorted(0, 4, "name", Sort.Direction.ASC.name());
+        final List<T> resourcesPaginatedAndSorted = getAPI().findAllPaginatedAndSorted(0, 4, SearchField.name.name(), Sort.Direction.ASC.name());
 
         // Then
         assertTrue(new OrderByName<T>().isOrdered(resourcesPaginatedAndSorted));
