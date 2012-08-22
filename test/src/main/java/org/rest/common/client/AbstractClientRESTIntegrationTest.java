@@ -197,6 +197,8 @@ public abstract class AbstractClientRESTIntegrationTest<T extends INameableEntit
         }
     }
 
+    // find - all (+sorting + pagination)
+
     // create
 
     @Test
