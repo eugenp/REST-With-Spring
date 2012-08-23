@@ -3,6 +3,7 @@ package org.rest.common.client;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -167,8 +168,24 @@ public abstract class AbstractClientLogicRESTIntegrationTest<T extends INameable
     // find - all
 
     @Test
-    public void whenAllResourcesAreRetrieved_thenNoExceptions() {
+    /**/public void whenAllResourcesAreRetrieved_thenNoExceptions() {
         getAPI().findAll();
+    }
+
+    @Test
+    /**/public void whenAllResourcesAreRetrieved_thenTheResultIsNotNull() {
+        final List<T> resources = getAPI().findAll();
+
+        assertNotNull(resources);
+    }
+
+    @Test
+    /**/public void givenAnResourceExists_whenAllResourcesAreRetrieved_thenTheExistingResourceIsIndeedAmongThem() {
+        final T existingResource = getAPI().create(createNewEntity());
+
+        final List<T> resources = getAPI().findAll();
+
+        assertThat(resources, hasItem(existingResource));
     }
 
     @Test
@@ -201,12 +218,37 @@ public abstract class AbstractClientLogicRESTIntegrationTest<T extends INameable
 
     // create
 
+    @Test(expected = RuntimeException.class)
+    /**/public void whenNullResourceIsCreated_thenException() {
+        getAPI().create(null);
+    }
+
     @Test
-    public void whenAResourceIsCreated_thenNoExceptions() {
+    /**/public void whenResourceIsCreated_thenNoExceptions() {
         getAPI().createAsURI(createNewEntity());
     }
 
+    @Test
+    /**/public void whenResourceIsCreated_thenResourceIsRetrievable() {
+        final T existingResource = getAPI().create(createNewEntity());
+
+        assertNotNull(getAPI().findOne(existingResource.getId()));
+    }
+
+    @Test
+    /**/public void whenResourceIsCreated_thenSavedResourceIsEqualToOriginalResource() {
+        final T originalResource = createNewEntity();
+        final T savedResource = getAPI().create(originalResource);
+
+        assertEquals(originalResource, savedResource);
+    }
+
     // update
+
+    @Test(expected = RuntimeException.class)
+    /**/public void whenNullResourceIsUpdated_thenException() {
+        getAPI().update(null);
+    }
 
     @Test
     public void givenResourceExists_whenResourceIsUpdated_thenNoExceptions() {
@@ -248,13 +290,13 @@ public abstract class AbstractClientLogicRESTIntegrationTest<T extends INameable
 
     // template method
 
-    protected T createNewEntity() {
-        return getEntityOps().createNewEntity();
-    }
-
     protected abstract IClientTemplate<T> getAPI();
 
     protected abstract IEntityOperations<T> getEntityOps();
+
+    protected T createNewEntity() {
+        return getEntityOps().createNewEntity();
+    }
 
     protected final String getURI() {
         return getAPI().getURI() + WebConstants.PATH_SEP;

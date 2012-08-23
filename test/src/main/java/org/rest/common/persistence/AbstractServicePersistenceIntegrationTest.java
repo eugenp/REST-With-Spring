@@ -1,7 +1,7 @@
 package org.rest.common.persistence;
 
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -100,7 +100,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         assertTrue(new OrderByName<T>().isOrdered(resourcesPaginatedAndSorted));
     }
 
-    // AbstractClientLogicRESTIntegrationTest (TODO: continue including tests from there, here)
+    // the ORIGINAL
 
     // find - one
 
@@ -113,15 +113,47 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         assertNull(createdResource);
     }
 
+    @Test
+    public void givenResourceExists_whenResourceIsRetrieved_thenNoExceptions() {
+        final T existingResource = getAPI().create(createNewEntity());
+        getAPI().findOne(existingResource.getId());
+    }
+
+    @Test
+    public void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoExceptions() {
+        getAPI().findOne(IDUtils.randomPositiveLong());
+    }
+
+    @Test
+    public void givenResourceExists_whenResourceIsRetrieved_thenTheResultIsNotNull() {
+        final T existingResource = getAPI().create(createNewEntity());
+        final T retrievedResource = getAPI().findOne(existingResource.getId());
+        assertNotNull(retrievedResource);
+    }
+
+    @Test
+    public void givenResourceExists_whenResourceIsRetrieved_thenResourceIsRetrievedCorrectly() {
+        final T existingResource = getAPI().create(createNewEntity());
+        final T retrievedResource = getAPI().findOne(existingResource.getId());
+        assertEquals(existingResource, retrievedResource);
+    }
+
     // find - all
 
     @Test
-    public void whenAllResourcesAreRetrieved_thenNoExceptions() {
+    /**/public void whenAllResourcesAreRetrieved_thenNoExceptions() {
         getAPI().findAll();
     }
 
     @Test
-    public void whenAllResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
+    /**/public void whenAllResourcesAreRetrieved_thenTheResultIsNotNull() {
+        final List<T> resources = getAPI().findAll();
+
+        assertNotNull(resources);
+    }
+
+    @Test
+    /**/public void whenAllResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
         // Given
         getAPI().create(createNewEntity());
 
@@ -133,7 +165,16 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
     }
 
     @Test
-    public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
+    /**/public void givenAnResourceExists_whenAllResourcesAreRetrieved_thenTheExistingResourceIsIndeedAmongThem() {
+        final T existingResource = getAPI().create(createNewEntity());
+
+        final List<T> resources = getAPI().findAll();
+
+        assertThat(resources, hasItem(existingResource));
+    }
+
+    @Test
+    /**/public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
         // Given
         this.getAPI().create(createNewEntity());
 
@@ -148,15 +189,60 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
 
     // create
 
+    @Test(expected = RuntimeException.class)
+    /**/public void whenNullResourceIsCreated_thenException() {
+        getAPI().create(null);
+    }
+
     @Test
-    public void whenAResourceIsCreated_thenNoExceptions() {
+    /**/public void whenResourceIsCreated_thenNoExceptions() {
         getAPI().create(createNewEntity());
+    }
+
+    @Test
+    /**/public void whenResourceIsCreated_thenResourceIsRetrievable() {
+        final T existingResource = getAPI().create(createNewEntity());
+
+        assertNotNull(getAPI().findOne(existingResource.getId()));
+    }
+
+    @Test
+    /**/public void whenResourceIsCreated_thenSavedResourceIsEqualToOriginalResource() {
+        final T originalResource = createNewEntity();
+        final T savedResource = getAPI().create(originalResource);
+
+        assertEquals(originalResource, savedResource);
+    }
+
+    @Test(expected = DataAccessException.class)
+    public void whenResourceWithFailedConstraintsIsCreated_thenException() {
+        final T invalidResource = createNewEntity();
+        getEntityOps().invalidate(invalidResource);
+
+        getAPI().create(invalidResource);
+    }
+
+    /**
+     * -- specific to the persistence engine
+     */
+    @Test(expected = DataAccessException.class)
+    @Ignore("Hibernate simply ignores the id silently and still saved (tracking this)")
+    public void whenResourceWithIdIsCreated_thenDataAccessException() {
+        final T resourceWithId = createNewEntity();
+        resourceWithId.setId(IDUtils.randomPositiveLong());
+
+        getAPI().create(resourceWithId);
     }
 
     // update
 
+    @Test(expected = RuntimeException.class)
+    /**/public void whenNullResourceIsUpdated_thenException() {
+        getAPI().update(null);
+    }
+
     @Test
-    public void givenResourceExists_whenResourceIsUpdated_thenNoExceptions() {
+    /**/public void givenResourceExists_whenResourceIsUpdated_thenNoExceptions() {
         // Given
         final T existingResource = getAPI().create(createNewEntity());
 
@@ -164,8 +250,16 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         getAPI().update(existingResource);
     }
 
+    @Test(expected = DataAccessException.class)
+    public void whenResourceIsUpdatedWithFailedConstraints_thenException() {
+        final T existingResource = getAPI().create(createNewEntity());
+        getEntityOps().invalidate(existingResource);
+
+        getAPI().update(existingResource);
+    }
+
     @Test
-    public void givenResourceExists_whenResourceIsUpdated_thenUpdatesArePersisted() {
+    /**/public void givenResourceExists_whenResourceIsUpdated_thenUpdatesArePersisted() {
         // Given
         final T existingResource = getAPI().create(createNewEntity());
 
@@ -173,16 +267,37 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         getEntityOps().change(existingResource);
         getAPI().update(existingResource);
 
-        final T updatedResourceFromServer = getAPI().findOne(existingResource.getId());
+        final T updatedResource = getAPI().findOne(existingResource.getId());
 
         // Then
-        assertEquals(existingResource, updatedResourceFromServer);
+        assertEquals(existingResource, updatedResource);
     }
 
     // delete
 
+    @Test(expected = RuntimeException.class)
+    public void givenResourceDoesNotExists_whenResourceIsDeleted_thenException() {
+        // When
+        getAPI().delete(IDUtils.randomPositiveLong());
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void whenResourceIsDeletedByNegativeId_thenException() {
+        // When
+        getAPI().delete(IDUtils.randomNegativeLong());
+    }
+
     @Test
-    public final void givenResourceExists_whenResourceIsDeleted_thenResourceNoLongerExists() {
+    public void givenResourceExists_whenEntityIsDeleted_thenNoExceptions() {
+        // Given
+        final T existingResource = getAPI().create(createNewEntity());
+
+        // When
+        getAPI().delete(existingResource.getId());
+    }
+
+    @Test
+    /**/public final void givenResourceExists_whenResourceIsDeleted_thenResourceNoLongerExists() {
         // Given
         final T existingResource = getAPI().create(createNewEntity());
 
@@ -191,187 +306,6 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
 
         // Then
         assertNull(getAPI().findOne(existingResource.getId()));
-    }
-
-    // the ORIGINAL
-
-    // find - one
-
-    @Test
-    public void givenEntityExists_whenEntityIsRetrieved_thenNoExceptions() {
-        final T existingEntity = getAPI().create(createNewEntity());
-        getAPI().findOne(existingEntity.getId());
-    }
-
-    @Test
-    public void givenEntityDoesNotExist_whenEntityIsRetrieved_thenNoExceptions() {
-        getAPI().findOne(IDUtils.randomPositiveLong());
-    }
-
-    @Test
-    public void givenEntityExists_whenEntityIsRetrieved_thenTheResultIsNotNull() {
-        final T existingEntity = getAPI().create(createNewEntity());
-        final T retrievedEntity = getAPI().findOne(existingEntity.getId());
-        assertNotNull(retrievedEntity);
-    }
-
-    @Test
-    public void givenEntityDoesNotExist_whenEntityIsRetrieved_thenTheResultIsNull() {
-        final T retrievedEntity = getAPI().findOne(IDUtils.randomPositiveLong());
-        assertNull(retrievedEntity);
-    }
-
-    @Test
-    public void givenEntityExists_whenEntityIsRetrieved_thenEntityIsRetrievedCorrectly() {
-        final T existingEntity = getAPI().create(createNewEntity());
-        final T retrievedEntity = getAPI().findOne(existingEntity.getId());
-        assertEquals(existingEntity, retrievedEntity);
-    }
-
-    // find - all
-
-    @Test
-    public void whenEntitiesAreRetrieved_thenNoExceptions() {
-        getAPI().findAll();
-    }
-
-    @Test
-    public void whenEntitiesAreRetrieved_thenTheResultIsNotNull() {
-        final List<T> entities = getAPI().findAll();
-
-        assertNotNull(entities);
-    }
-
-    @Test
-    public void givenAnEntityExists_whenEntitiesAreRetrieved_thenThereIsAtLeastOneEntity() {
-        getAPI().create(createNewEntity());
-
-        final List<T> owners = getAPI().findAll();
-
-        assertThat(owners, Matchers.not(Matchers.<T> empty()));
-    }
-
-    @Test
-    public void givenAnEntityExists_whenEntitiesAreRetrieved_thenTheExistingEntityIsIndeedAmongThem() {
-        final T existingEntity = getAPI().create(createNewEntity());
-
-        final List<T> owners = getAPI().findAll();
-
-        assertThat(owners, hasItem(existingEntity));
-    }
-
-    // create
-
-    @Test(expected = RuntimeException.class)
-    public void whenNullEntityIsCreated_thenException() {
-        getAPI().create(null);
-    }
-
-    @Test
-    public void whenEntityIsCreated_thenNoExceptions() {
-        getAPI().create(createNewEntity());
-    }
-
-    @Test
-    public void whenEntityIsCreated_thenEntityIsRetrievable() {
-        final T existingEntity = getAPI().create(createNewEntity());
-
-        assertNotNull(getAPI().findOne(existingEntity.getId()));
-    }
-
-    @Test
-    public void whenEntityIsCreated_thenSavedEntityIsEqualToOriginalEntity() {
-        final T originalEntity = createNewEntity();
-        final T savedEntity = getAPI().create(originalEntity);
-
-        assertEquals(originalEntity, savedEntity);
-    }
-
-    @Test(expected = DataAccessException.class)
-    public void whenEntityWithFailedConstraintsIsCreated_thenException() {
-        final T invalidEntity = createNewEntity();
-        getEntityOps().invalidate(invalidEntity);
-
-        getAPI().create(invalidEntity);
-    }
-
-    // -- specific to the persistence engine
-
-    @Test(expected = DataAccessException.class)
-    @Ignore("Hibernate simply ignores the id silently and still saved (tracking this)")
-    public void whenEntityWithIdIsCreated_thenDataAccessException() {
-        final T entityWithId = createNewEntity();
-        entityWithId.setId(IDUtils.randomPositiveLong());
-
-        getAPI().create(entityWithId);
-    }
-
-    // update
-
-    @Test(expected = RuntimeException.class)
-    public void whenNullEntityIsUpdated_thenException() {
-        getAPI().update(null);
-    }
-
-    @Test
-    public void whenEntityIsUpdated_thenNoExceptions() {
-        final T existingEntity = getAPI().create(createNewEntity());
-
-        getAPI().update(existingEntity);
-    }
-
-    @Test(expected = DataAccessException.class)
-    public void whenEntityIsUpdatedWithFailedConstraints_thenException() {
-        final T existingEntity = getAPI().create(createNewEntity());
-        getEntityOps().invalidate(existingEntity);
-
-        getAPI().update(existingEntity);
-    }
-
-    @Test
-    public void whenEntityIsUpdated_thenTheUpdatedAreCorrectlyPersisted() {
-        final T existingEntity = getAPI().create(createNewEntity());
-        getEntityOps().change(existingEntity);
-
-        getAPI().update(existingEntity);
-
-        final T updatedEntity = getAPI().findOne(existingEntity.getId());
-        assertEquals(existingEntity, updatedEntity);
-    }
-
-    // delete
-
-    @Test(expected = RuntimeException.class)
-    public void givenEntityDoesNotExists_whenEntityIsDeleted_thenException() {
-        // When
-        getAPI().delete(IDUtils.randomPositiveLong());
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void whenEntityIsDeletedByNegativeId_thenException() {
-        // When
-        getAPI().delete(IDUtils.randomNegativeLong());
-    }
-
-    @Test
-    public void givenEntityExists_whenEntityIsDeleted_thenNoExceptions() {
-        // Given
-        final T existingLocation = getAPI().create(createNewEntity());
-
-        // When
-        getAPI().delete(existingLocation.getId());
-    }
-
-    @Test
-    public void givenEntityExists_whenEntityIsDeleted_thenEntityIsNoLongerRetrievable() {
-        // Given
-        final T existingEntity = getAPI().create(createNewEntity());
-
-        // When
-        getAPI().delete(existingEntity.getId());
-
-        // Then
-        assertNull(getAPI().findOne(existingEntity.getId()));
     }
 
     // template method

@@ -5,6 +5,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -187,6 +188,22 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     }
 
     @Test
+    /**/public void whenAllResourcesAreRetrieved_thenTheResultIsNotNull() {
+        final List<T> resources = getAPI().findAll();
+
+        assertNotNull(resources);
+    }
+
+    @Test
+    /**/public void givenAnResourceExists_whenAllResourcesAreRetrieved_thenTheExistingResourceIsIndeedAmongThem() {
+        final T existingResource = getAPI().create(createNewEntity());
+
+        final List<T> resources = getAPI().findAll();
+
+        assertThat(resources, hasItem(existingResource));
+    }
+
+    @Test
     /**/public void whenAllResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
         // Given
         getAPI().createAsURI(createNewEntity());
@@ -215,7 +232,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     // create
 
     @Test
-    public void whenAResourceIsCreated_then201IsReceived() {
+    public void whenResourceIsCreated_then201IsReceived() {
         // When
         final Response response = getAPI().createAsResponse(createNewEntity());
 
@@ -233,7 +250,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     }
 
     @Test
-    public void whenAResourceIsCreatedWithNonNullId_then409IsReceived() {
+    public void whenResourceIsCreatedWithNonNullId_then409IsReceived() {
         final T resourceWithId = createNewEntity();
         resourceWithId.setId(5l);
 
@@ -245,7 +262,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     }
 
     @Test
-    public void whenAResourceIsCreated_thenALocationIsReturnedToTheClient() {
+    public void whenResourceIsCreated_thenALocationIsReturnedToTheClient() {
         // When
         final Response response = getAPI().createAsResponse(createNewEntity());
 
@@ -267,12 +284,37 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         assertThat(response.getStatusCode(), is(409));
     }
 
+    @Test(expected = RuntimeException.class)
+    /**/public void whenNullResourceIsCreated_thenException() {
+        getAPI().create(null);
+    }
+
     @Test
-    /**/public void whenAResourceIsCreated_thenNoExceptions() {
+    /**/public void whenResourceIsCreated_thenNoExceptions() {
         getAPI().createAsURI(createNewEntity());
     }
 
+    @Test
+    /**/public void whenResourceIsCreated_thenResourceIsRetrievable() {
+        final T existingResource = getAPI().create(createNewEntity());
+
+        assertNotNull(getAPI().findOne(existingResource.getId()));
+    }
+
+    @Test
+    /**/public void whenResourceIsCreated_thenSavedResourceIsEqualToOriginalResource() {
+        final T originalResource = createNewEntity();
+        final T savedResource = getAPI().create(originalResource);
+
+        assertEquals(originalResource, savedResource);
+    }
+
     // update
+
+    @Test(expected = RuntimeException.class)
+    /**/public void whenNullResourceIsUpdated_thenException() {
+        getAPI().update(null);
+    }
 
     @Test
     public void givenInvalidResource_whenResourceIsUpdated_then409ConflictIsReceived() {
@@ -288,7 +330,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     }
 
     @Test
-    public void whenAResourceIsUpdatedWithNullId_then409IsReceived() {
+    public void whenResourceIsUpdatedWithNullId_then409IsReceived() {
         // When
         final Response response = getAPI().updateAsResponse(createNewEntity());
 
@@ -358,7 +400,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     // delete
 
     @Test
-    public void whenAResourceIsDeletedByIncorrectNonNumericId_then400IsReceived() {
+    public void whenResourceIsDeletedByIncorrectNonNumericId_then400IsReceived() {
         // When
         final Response response = getAPI().deleteAsResponse(getURI() + randomAlphabetic(6));
 
