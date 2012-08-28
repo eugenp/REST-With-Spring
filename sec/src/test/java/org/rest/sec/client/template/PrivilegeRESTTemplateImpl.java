@@ -31,7 +31,7 @@ public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate<Privil
     }
 
     @Override
-    public final RequestSpecification givenAuthenticated() {
+    public final RequestSpecification givenAuthenticated(final Privilege resource) {
         return auth.givenBasicAuthenticated(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD);
     }
 

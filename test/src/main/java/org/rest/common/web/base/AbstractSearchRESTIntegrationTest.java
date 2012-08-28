@@ -437,7 +437,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
     protected abstract IEntityOperations<T> getEntityOps();
 
     protected final RequestSpecification givenAuthenticated() {
-        return getAPI().givenAuthenticated();
+        return getAPI().givenAuthenticated(null);
     }
 
 }

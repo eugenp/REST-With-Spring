@@ -11,9 +11,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
-import org.rest.common.persistence.event.BeforeEntityCreatedEvent;
-import org.rest.common.persistence.event.EntityCreatedEvent;
-import org.rest.common.persistence.event.EntityUpdatedEvent;
+import org.rest.common.persistence.event.EntityAfterCreatedEvent;
+import org.rest.common.persistence.event.EntityAfterUpdateEvent;
+import org.rest.common.persistence.event.EntityBeforeCreatedEvent;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.IDUtils;
 import org.springframework.context.ApplicationEventPublisher;
@@ -86,7 +86,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         getAPI().create(entity);
 
         // Then
-        verify(getEventPublisher()).publishEvent(isA(BeforeEntityCreatedEvent.class));
+        verify(getEventPublisher()).publishEvent(isA(EntityBeforeCreatedEvent.class));
     }
 
     @Test
@@ -99,7 +99,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         getAPI().create(entity);
 
         // Then
-        verify(getEventPublisher()).publishEvent(isA(EntityCreatedEvent.class));
+        verify(getEventPublisher()).publishEvent(isA(EntityAfterCreatedEvent.class));
     }
 
     // update
@@ -137,7 +137,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         getAPI().update(entity);
 
         // Then
-        verify(getEventPublisher()).publishEvent(isA(EntityUpdatedEvent.class));
+        verify(getEventPublisher()).publishEvent(isA(EntityAfterUpdateEvent.class));
     }
 
     // find - paged
@@ -288,7 +288,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
      * 
      * @return the created entity
      */
-    protected final T createSimulatedExistingEntity() {
+    protected T createSimulatedExistingEntity() {
         final T entity = createNewEntity();
         entity.setId(IDUtils.randomPositiveLong());
 

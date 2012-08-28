@@ -35,7 +35,7 @@ public final class UserRESTTemplateImpl extends AbstractRESTTemplate<User> {
     }
 
     @Override
-    public final RequestSpecification givenAuthenticated() {
+    public final RequestSpecification givenAuthenticated(final User resource) {
         return auth.givenBasicAuthenticated(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD);
     }
 

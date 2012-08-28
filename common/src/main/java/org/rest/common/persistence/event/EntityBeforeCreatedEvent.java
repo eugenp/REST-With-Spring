@@ -1,16 +1,15 @@
 package org.rest.common.persistence.event;
 
-import java.io.Serializable;
-
+import org.rest.common.persistence.model.IEntity;
 import org.springframework.context.ApplicationEvent;
 
 import com.google.common.base.Preconditions;
 
-public final class EntityCreatedEvent<T extends Serializable> extends ApplicationEvent {
+public final class EntityBeforeCreatedEvent<T extends IEntity> extends ApplicationEvent {
     private final Class<T> clazz;
     private final T entity;
 
-    public EntityCreatedEvent(final Object sourceToSet, final Class<T> clazzToSet, final T entityToSet) {
+    public EntityBeforeCreatedEvent(final Object sourceToSet, final Class<T> clazzToSet, final T entityToSet) {
         super(sourceToSet);
 
         Preconditions.checkNotNull(clazzToSet);

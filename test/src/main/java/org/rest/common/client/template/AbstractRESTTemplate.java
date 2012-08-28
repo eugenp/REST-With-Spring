@@ -200,7 +200,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         Preconditions.checkNotNull(resource);
 
         final String resourceAsString = marshaller.encode(resource);
-        final Response response = givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).post(getURI());
+        final Response response = givenAuthenticated(resource).contentType(marshaller.getMime()).body(resourceAsString).post(getURI());
         Preconditions.checkState(response.getStatusCode() == 201, "create operation: " + response.getStatusCode());
 
         final String locationOfCreatedResource = response.getHeader(HttpHeaders.LOCATION);
@@ -214,7 +214,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
         final String resourceAsString = marshaller.encode(resource);
         logger.debug("Creating Resource against URI: " + getURI());
-        return givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).post(getURI());
+        return givenAuthenticated(null).contentType(marshaller.getMime()).body(resourceAsString).post(getURI());
     }
 
     // update
@@ -230,7 +230,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         Preconditions.checkNotNull(resource);
 
         final String resourceAsString = marshaller.encode(resource);
-        return givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).put(getURI());
+        return givenAuthenticated(null).contentType(marshaller.getMime()).body(resourceAsString).put(getURI());
     }
 
     // delete
@@ -248,7 +248,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public final Response deleteAsResponse(final String uriOfResource) {
-        return givenAuthenticated().delete(uriOfResource);
+        return givenAuthenticated(null).delete(uriOfResource);
     }
 
     // search - as response
@@ -314,7 +314,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     // util
 
     protected RequestSpecification findRequest() {
-        return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime());
+        return givenAuthenticated(null).header(HttpHeaders.ACCEPT, marshaller.getMime());
     }
 
     //

@@ -3,12 +3,13 @@ package org.rest.common.persistence.service;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
-import org.rest.common.persistence.event.BeforeEntityCreatedEvent;
 import org.rest.common.persistence.event.EntitiesDeletedEvent;
+import org.rest.common.persistence.event.EntityAfterCreatedEvent;
 import org.rest.common.persistence.event.EntityAfterDeleteEvent;
+import org.rest.common.persistence.event.EntityAfterUpdateEvent;
+import org.rest.common.persistence.event.EntityBeforeCreatedEvent;
 import org.rest.common.persistence.event.EntityBeforeDeleteEvent;
-import org.rest.common.persistence.event.EntityCreatedEvent;
-import org.rest.common.persistence.event.EntityUpdatedEvent;
+import org.rest.common.persistence.event.EntityBeforeUpdateEvent;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
 import org.slf4j.Logger;
@@ -132,11 +133,11 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
     @Override
     public T create(final T entity) {
         Preconditions.checkNotNull(entity);
-        eventPublisher.publishEvent(new BeforeEntityCreatedEvent<T>(this, clazz, entity));
 
+        eventPublisher.publishEvent(new EntityBeforeCreatedEvent<T>(this, clazz, entity));
         final T persistedEntity = getDao().save(entity);
+        eventPublisher.publishEvent(new EntityAfterCreatedEvent<T>(this, clazz, persistedEntity));
 
-        eventPublisher.publishEvent(new EntityCreatedEvent<T>(this, clazz, persistedEntity));
         return persistedEntity;
     }
 
@@ -146,8 +147,9 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
     public void update(final T entity) {
         Preconditions.checkNotNull(entity);
 
+        eventPublisher.publishEvent(new EntityBeforeUpdateEvent<T>(this, clazz, entity));
         getDao().save(entity);
-        eventPublisher.publishEvent(new EntityUpdatedEvent<T>(this, clazz, entity));
+        eventPublisher.publishEvent(new EntityAfterUpdateEvent<T>(this, clazz, entity));
     }
 
     // delete
@@ -161,13 +163,10 @@ public abstract class AbstractService<T extends IEntity> implements IService<T> 
     @Override
     public void delete(final long id) {
         final T entity = getDao().findOne(id);
+
         eventPublisher.publishEvent(new EntityBeforeDeleteEvent<T>(this, clazz, entity));
         getDao().delete(entity);
         eventPublisher.publishEvent(new EntityAfterDeleteEvent<T>(this, clazz, entity));
-    }
-
-    public void delete(final Iterable<T> list) {
-        getDao().delete(list);
     }
 
     // count
