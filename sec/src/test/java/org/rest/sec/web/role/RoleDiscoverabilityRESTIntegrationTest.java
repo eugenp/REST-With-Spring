@@ -40,7 +40,7 @@ public class RoleDiscoverabilityRESTIntegrationTest extends SecDiscoverabilityRE
 
     @Override
     protected RequestSpecification givenAuthenticated() {
-        return getAPI().givenAuthenticated(null);
+        return getAPI().givenAuthenticated();
     }
 
     @Override

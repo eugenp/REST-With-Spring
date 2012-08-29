@@ -19,10 +19,7 @@ public interface IRESTTemplate<T extends IEntity> extends IOperations<T>, IEntit
 
     // template
 
-    /**
-     * - note: in some cases, the resource itself is useful in the authentication process; in most cases however it can simply be null
-     */
-    RequestSpecification givenAuthenticated(final T resource);
+    RequestSpecification givenAuthenticated(final String username, final String password);
 
     IMarshaller getMarshaller();
 

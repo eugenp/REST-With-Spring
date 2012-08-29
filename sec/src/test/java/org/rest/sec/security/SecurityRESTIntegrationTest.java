@@ -47,7 +47,7 @@ public class SecurityRESTIntegrationTest {
     public final void givenAuthenticatedByBasicAuth_whenAResourceIsCreated_then201IsReceived() {
         // Given
         // When
-        final Response response = userTemplate.givenAuthenticated(null).contentType(userTemplate.getMime()).body(userTemplate.createNewEntity()).post(userTemplate.getURI());
+        final Response response = userTemplate.givenAuthenticated().contentType(userTemplate.getMime()).body(userTemplate.createNewEntity()).post(userTemplate.getURI());
 
         // Then7
         assertThat(response.getStatusCode(), is(201));
@@ -57,7 +57,7 @@ public class SecurityRESTIntegrationTest {
     public final void givenAuthenticatedByDigestAuth_whenAResourceIsCreated_then201IsReceived() {
         // Given
         // When
-        final Response response = userTemplate.givenAuthenticated(null).contentType(userTemplate.getMime()).body(userTemplate.createNewEntity()).post(userTemplate.getURI());
+        final Response response = userTemplate.givenAuthenticated().contentType(userTemplate.getMime()).body(userTemplate.createNewEntity()).post(userTemplate.getURI());
 
         // Then
         assertThat(response.getStatusCode(), is(201));

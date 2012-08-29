@@ -10,11 +10,11 @@ import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.util.SearchField;
 import org.rest.common.web.WebConstants;
+import org.rest.common.web.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -177,8 +177,8 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final String createAsURI(final T resource) {
-        givenAuthenticated();
-        final ResponseEntity<Void> responseEntity = restTemplate.exchange(getURI(), HttpMethod.POST, new HttpEntity<T>(resource, createContentTypeHeaders()), Void.class);
+        givenAuthenticated(null, null);
+        final ResponseEntity<Void> responseEntity = restTemplate.exchange(getURI(), HttpMethod.POST, new HttpEntity<T>(resource, HeaderUtil.createContentTypeHeaders(marshaller)), Void.class);
 
         final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
         Preconditions.checkNotNull(locationOfCreatedResource);
@@ -190,8 +190,8 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final void update(final T resource) {
-        givenAuthenticated();
-        final ResponseEntity<T> responseEntity = restTemplate.exchange(getURI(), HttpMethod.PUT, new HttpEntity<T>(resource, createContentTypeHeaders()), clazz);
+        givenAuthenticated(null, null);
+        final ResponseEntity<T> responseEntity = restTemplate.exchange(getURI(), HttpMethod.PUT, new HttpEntity<T>(resource, HeaderUtil.createContentTypeHeaders(marshaller)), clazz);
         Preconditions.checkState(responseEntity.getStatusCode().value() == 200);
     }
 
@@ -225,36 +225,18 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     // util
 
-    protected final HttpHeaders createGetHeaders() {
-        final HttpHeaders headers = new HttpHeaders() {
-            {
-                set(com.google.common.net.HttpHeaders.ACCEPT, marshaller.getMime());
-            }
-        };
-        return headers;
-    }
-
-    protected final HttpHeaders createContentTypeHeaders() {
-        final HttpHeaders headers = new HttpHeaders() {
-            {
-                set(com.google.common.net.HttpHeaders.CONTENT_TYPE, marshaller.getMime());
-            }
-        };
-        return headers;
-    }
-
     protected final HttpEntity<Void> findRequestEntity() {
-        return new HttpEntity<Void>(createGetHeaders());
+        return new HttpEntity<Void>(HeaderUtil.createAcceptHeaders(marshaller));
     }
 
     // template method
 
     @Override
-    public final IClientTemplate<T> givenAuthenticated() {
+    public final IClientTemplate<T> givenAuthenticated(final String username, final String password) {
         if (isBasicAuth()) {
-            basicAuth();
+            basicAuth(username, password);
         } else {
-            digestAuth();
+            digestAuth(username, password);
         }
 
         return this;
@@ -264,9 +246,10 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         return true;
     }
 
-    protected abstract void basicAuth();
+    protected abstract void basicAuth(final String username, final String password);
 
-    protected final void digestAuth() {
+    @SuppressWarnings("unused")
+    protected final void digestAuth(final String username, final String password) {
         throw new UnsupportedOperationException();
     }
 

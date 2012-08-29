@@ -1,8 +1,9 @@
 package org.rest.common.client;
 
+import org.apache.http.HttpHost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.rest.common.security.BasicHttpComponentsClientHttpRequestFactory;
 import org.rest.common.security.DigestHttpComponentsClientHttpRequestFactory;
+import org.rest.common.security.PreemptiveAuthHttpRequestFactory;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
@@ -27,6 +28,11 @@ public class RestTemplateFactoryBean implements FactoryBean<RestTemplate>, Initi
     boolean basicAuth;
     @Value("${http.req.timeout}")
     int timeout;
+
+    @Value("${http.host}")
+    private String host;
+    @Value("${http.port}")
+    private int port;
 
     public RestTemplateFactoryBean() {
         super();
@@ -54,11 +60,8 @@ public class RestTemplateFactoryBean implements FactoryBean<RestTemplate>, Initi
         final DefaultHttpClient httpClient = new DefaultHttpClient();
         final HttpComponentsClientHttpRequestFactory requestFactory;
         if (basicAuth) {
-            requestFactory = new BasicHttpComponentsClientHttpRequestFactory(httpClient) {
-                {
-                    setReadTimeout(timeout);
-                }
-            };
+            requestFactory = new PreemptiveAuthHttpRequestFactory(host, port, HttpHost.DEFAULT_SCHEME_NAME);
+            requestFactory.setReadTimeout(timeout);
         } else {
             requestFactory = new DigestHttpComponentsClientHttpRequestFactory(httpClient) {
                 {

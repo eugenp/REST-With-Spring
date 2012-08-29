@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 import com.jayway.restassured.specification.RequestSpecification;
 
@@ -35,8 +36,12 @@ public final class UserRESTTemplateImpl extends AbstractRESTTemplate<User> {
     }
 
     @Override
-    public final RequestSpecification givenAuthenticated(final User resource) {
-        return auth.givenBasicAuthenticated(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD);
+    public final RequestSpecification givenAuthenticated(final String username, final String password) {
+        Preconditions.checkState((username == null && password == null) || (username != null && password != null));
+        final String usernameToUse = (username != null) ? username : SecurityConstants.ADMIN_USERNAME;
+        final String passwordToUse = (username != null) ? password : SecurityConstants.ADMIN_PASSWORD;
+
+        return auth.givenBasicAuthenticated(usernameToUse, passwordToUse);
     }
 
     @Override

@@ -469,7 +469,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     }
 
     protected final RequestSpecification givenAuthenticated() {
-        return getAPI().givenAuthenticated(null);
+        return getAPI().givenAuthenticated(null, null);
     }
 
 }
