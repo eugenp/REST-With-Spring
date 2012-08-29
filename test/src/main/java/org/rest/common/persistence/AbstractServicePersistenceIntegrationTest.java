@@ -176,7 +176,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
     @Test
     /**/public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
         // Given
-        this.getAPI().create(createNewEntity());
+        getAPI().create(createNewEntity());
 
         // When
         final List<T> allResources = getAPI().findAll();

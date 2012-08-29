@@ -8,7 +8,6 @@ import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchCommonUtil;
-import org.rest.common.util.SearchField;
 import org.rest.common.web.WebConstants;
 import org.rest.common.web.util.HeaderUtil;
 import org.slf4j.Logger;
@@ -63,7 +62,8 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final T findByName(final String name) {
-        return findOneByAttributes(SearchField.name.name(), name);
+        // return findOneByAttributes(SearchField.name.name(), name); // TODO: fix
+        return findOneByURI(getURI() + "?name=" + name);
     }
 
     @Override
@@ -80,12 +80,13 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final List<T> findAll() {
+        beforeReadOperation();
         final ResponseEntity<String> findAllResponse = restTemplate.exchange(getURI(), HttpMethod.GET, findRequestEntity(), String.class);
         final String body = findAllResponse.getBody();
         if (body == null) {
             return Lists.newArrayList();
         }
-        return getMarshaller().decodeList(body, clazz);
+        return marshaller.decodeList(body, clazz);
     }
 
     @Override
@@ -100,17 +101,19 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final List<T> findAllSorted(final String sortBy, final String sortOrder) {
+        beforeReadOperation();
         final String uri = getURI() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder;
         final ResponseEntity<String> findAllResponse = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), String.class);
         final String body = findAllResponse.getBody();
         if (body == null) {
             return Lists.newArrayList();
         }
-        return getMarshaller().decodeList(body, clazz);
+        return marshaller.decodeList(body, clazz);
     }
 
     @Override
     public final List<T> findAllPaginated(final int page, final int size) {
+        beforeReadOperation();
         final StringBuilder uri = new StringBuilder(getURI());
         uri.append(QueryConstants.QUESTIONMARK);
         uri.append("page=");
@@ -144,6 +147,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     }
 
     final ResponseEntity<String> findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder) {
+        beforeReadOperation();
         final StringBuilder uri = new StringBuilder(getURI());
         uri.append(QueryConstants.QUESTIONMARK);
         uri.append("page=");
@@ -253,8 +257,11 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         throw new UnsupportedOperationException();
     }
 
-    public final IMarshaller getMarshaller() {
-        return marshaller;
+    /**
+     * - this is a hook that executes before read operations, in order to allow custom security work to happen for read operations; similar to: AbstractRESTTemplate.findRequest
+     */
+    protected void beforeReadOperation() {
+        //
     }
 
 }

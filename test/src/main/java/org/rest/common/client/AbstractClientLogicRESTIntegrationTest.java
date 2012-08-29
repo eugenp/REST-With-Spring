@@ -203,7 +203,7 @@ public abstract class AbstractClientLogicRESTIntegrationTest<T extends INameable
     @Test
     public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
         // Given
-        this.getAPI().createAsURI(createNewEntity());
+        getAPI().createAsURI(createNewEntity());
 
         // When
         final List<T> allResources = getAPI().findAll();

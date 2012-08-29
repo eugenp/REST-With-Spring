@@ -33,7 +33,7 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
     public AbstractSortAndPaginationRESTIntegrationTest(final Class<T> clazzToSet) {
         super();
 
-        this.clazz = clazzToSet;
+        clazz = clazzToSet;
     }
 
     // tests

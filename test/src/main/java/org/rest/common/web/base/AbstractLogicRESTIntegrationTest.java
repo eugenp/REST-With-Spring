@@ -47,7 +47,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
 
     @Test
     public void givenResourceForIdDoesNotExist_whenResourceOfThatIdIsRetrieved_then404IsReceived() {
-        final Response response = getAPI().findByUriAsResponse(getURI() + WebConstants.PATH_SEP + randomNumeric(6));
+        final Response response = getAPI().findOneByUriAsResponse(getURI() + WebConstants.PATH_SEP + randomNumeric(6));
 
         assertThat(response.getStatusCode(), is(404));
     }
@@ -58,7 +58,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         final String uriForResourceCreation = getAPI().createAsURI(createNewEntity());
 
         // When
-        final Response res = getAPI().findByUriAsResponse(uriForResourceCreation);
+        final Response res = getAPI().findOneByUriAsResponse(uriForResourceCreation);
 
         // Then
         assertThat(res.getStatusCode(), is(200));
@@ -70,7 +70,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         final Long id = IDUtils.randomNegativeLong();
 
         // When
-        final Response res = getAPI().findByUriAsResponse(getURI() + WebConstants.PATH_SEP + id);
+        final Response res = getAPI().findOneByUriAsResponse(getURI() + WebConstants.PATH_SEP + id);
 
         // Then
         assertThat(res.getStatusCode(), is(409));
@@ -82,7 +82,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         final String id = randomAlphabetic(6);
 
         // When
-        final Response res = getAPI().findByUriAsResponse(getURI() + WebConstants.PATH_SEP + id);
+        final Response res = getAPI().findOneByUriAsResponse(getURI() + WebConstants.PATH_SEP + id);
 
         // Then
         assertThat(res.getStatusCode(), is(400));
@@ -218,7 +218,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     /**/public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
         // Given
-        this.getAPI().createAsURI(createNewEntity());
+        getAPI().createAsURI(createNewEntity());
 
         // When
         final List<T> allResources = getAPI().findAll();
@@ -436,7 +436,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         getAPI().deleteAsResponse(uriOfResource);
 
         // When
-        final Response getResponse = getAPI().findByUriAsResponse(uriOfResource);
+        final Response getResponse = getAPI().findOneByUriAsResponse(uriOfResource);
 
         // Then
         assertThat(getResponse.getStatusCode(), is(404));

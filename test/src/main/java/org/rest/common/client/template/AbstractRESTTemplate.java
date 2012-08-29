@@ -59,15 +59,20 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     }
 
     protected final String findOneByUriAsString(final String uriOfResource) {
-        final Response response = findByUriAsResponse(uriOfResource);
+        final Response response = findOneByUriAsResponse(uriOfResource);
         Preconditions.checkState(response.getStatusCode() == 200);
 
         return response.asString();
     }
 
     @Override
-    public final Response findByUriAsResponse(final String uriOfResource) {
-        return findRequest().get(uriOfResource);
+    public final Response findOneByUriAsResponse(final String uriOfResource) {
+        return findOneRequest().get(uriOfResource);
+    }
+
+    @Override
+    public final Response findAllByUriAsResponse(final String uriOfResource) {
+        return findAllRequest().get(uriOfResource);
     }
 
     // find - by attributes
@@ -98,7 +103,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public final List<T> findAllByURI(final String uri) {
-        final Response allAsResponse = findByUriAsResponse(uri);
+        final Response allAsResponse = findAllRequest().get(uri);
         final List<T> listOfResources = marshaller.<T> decodeList(allAsResponse.getBody().asString(), clazz);
         if (listOfResources == null) {
             return Lists.newArrayList();
@@ -108,14 +113,14 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public final Response findAllAsResponse() {
-        return findByUriAsResponse(getURI());
+        return findAllByUriAsResponse(getURI());
     }
 
     // find - all (sorted, paginated)
 
     @Override
     public final List<T> findAllSorted(final String sortBy, final String sortOrder) {
-        final Response findAllResponse = findByUriAsResponse(getURI() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder);
+        final Response findAllResponse = findAllByUriAsResponse(getURI() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder);
         return marshaller.<T> decodeList(findAllResponse.getBody().asString(), clazz);
     }
 
@@ -152,7 +157,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
             uri.append(sortOrder);
         }
 
-        return findByUriAsResponse(uri.toString());
+        return findAllByUriAsResponse(uri.toString());
     }
 
     @Override
@@ -170,7 +175,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
             uri.append(sortOrder);
         }
 
-        return findByUriAsResponse(uri.toString());
+        return findAllByUriAsResponse(uri.toString());
     }
 
     @Override
@@ -182,7 +187,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         uri.append(SearchCommonUtil.SEPARATOR_AMPER);
         uri.append("size=");
         uri.append(size);
-        return findByUriAsResponse(uri.toString());
+        return findAllByUriAsResponse(uri.toString());
     }
 
     // create
@@ -256,13 +261,13 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     @Override
     public final Response searchAsResponse(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp) {
         final String queryURI = getURI() + QueryConstants.QUERY_PREFIX + SearchTestUtil.constructQueryString(idOp, nameOp);
-        return findRequest().get(queryURI);
+        return findAllRequest().get(queryURI);
     }
 
     @Override
     public final Response searchAsResponse(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size) {
         final String queryURI = getURI() + QueryConstants.QUERY_PREFIX + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
-        return findRequest().get(queryURI);
+        return findAllRequest().get(queryURI);
     }
 
     // search
@@ -282,7 +287,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         }
         final String queryURI = getURI() + QueryConstants.QUERY_PREFIX + builder.build();
 
-        final Response searchResponse = findRequest().get(queryURI);
+        final Response searchResponse = findAllRequest().get(queryURI);
         Preconditions.checkState(searchResponse.getStatusCode() == 200);
 
         return searchResponse;
@@ -291,7 +296,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     @Override
     public final List<T> searchPaginated(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size) {
         final String queryURI = getURI() + QueryConstants.QUERY_PREFIX + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
-        final Response searchResponse = findRequest().get(queryURI);
+        final Response searchResponse = findAllRequest().get(queryURI);
         Preconditions.checkState(searchResponse.getStatusCode() == 200);
 
         return getMarshaller().<List> decode(searchResponse.getBody().asString(), List.class);
@@ -313,7 +318,11 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     // util
 
-    protected RequestSpecification findRequest() {
+    protected RequestSpecification findAllRequest() {
+        return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime());
+    }
+
+    protected RequestSpecification findOneRequest() {
         return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime());
     }
 

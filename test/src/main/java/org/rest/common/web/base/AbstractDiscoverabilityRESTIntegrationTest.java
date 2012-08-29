@@ -45,12 +45,12 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
         final String uriOfExistingResource = getAPI().createAsURI(createNewEntity());
 
         // When
-        final Response getResponse = getAPI().findByUriAsResponse(uriOfExistingResource);
+        final Response getResponse = getAPI().findOneByUriAsResponse(uriOfExistingResource);
 
         // Then
         final String uriToAllResources = HTTPLinkHeaderUtils.extractURIByRel(getResponse.getHeader(HttpHeaders.LINK), LinkUtil.REL_COLLECTION);
 
-        final Response getAllResponse = getAPI().findByUriAsResponse(uriToAllResources);
+        final Response getAllResponse = getAPI().findAllByUriAsResponse(uriToAllResources);
         assertThat(getAllResponse.getStatusCode(), is(200));
     }
 
@@ -112,7 +112,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
         final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_LAST);
 
         // Then
-        final Response responseForLastPage = getAPI().findByUriAsResponse(uriToLastPage);
+        final Response responseForLastPage = getAPI().findAllByUriAsResponse(uriToLastPage);
         final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel(responseForLastPage.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
         assertNull(uriToNextPage);
     }
@@ -139,7 +139,7 @@ public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEnti
         final String uriOfNewlyCreatedResource = getAPI().createAsURI(unpersistedResource);
 
         // Then
-        final Response response = getAPI().findByUriAsResponse(uriOfNewlyCreatedResource);
+        final Response response = getAPI().findOneByUriAsResponse(uriOfNewlyCreatedResource);
         final T resourceFromServer = marshaller.decode(response.body().asString(), clazz);
         assertThat(unpersistedResource, equalTo(resourceFromServer));
     }
