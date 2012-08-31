@@ -185,7 +185,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     @Override
     public final String createAsURI(final T resource) {
         givenAuthenticated(null, null);
-        final ResponseEntity<Void> responseEntity = restTemplate.exchange(getURI(), HttpMethod.POST, new HttpEntity<T>(resource, HeaderUtil.createContentTypeHeaders(marshaller)), Void.class);
+        final ResponseEntity<Void> responseEntity = restTemplate.exchange(getURI(), HttpMethod.POST, new HttpEntity<T>(resource, writeHeaders()), Void.class);
 
         final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
         Preconditions.checkNotNull(locationOfCreatedResource);
@@ -198,7 +198,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     @Override
     public final void update(final T resource) {
         givenAuthenticated(null, null);
-        final ResponseEntity<T> responseEntity = restTemplate.exchange(getURI(), HttpMethod.PUT, new HttpEntity<T>(resource, HeaderUtil.createContentTypeHeaders(marshaller)), clazz);
+        final ResponseEntity<T> responseEntity = restTemplate.exchange(getURI(), HttpMethod.PUT, new HttpEntity<T>(resource, writeHeaders()), clazz);
         Preconditions.checkState(responseEntity.getStatusCode().value() == 200);
     }
 
@@ -272,6 +272,13 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
      */
     protected HttpHeaders findHeaders() {
         return HeaderUtil.createAcceptHeaders(marshaller);
+    }
+
+    /**
+     * - note: hook to be able to customize the write headers if needed
+     */
+    protected HttpHeaders writeHeaders() {
+        return HeaderUtil.createContentTypeHeaders(marshaller);
     }
 
 }

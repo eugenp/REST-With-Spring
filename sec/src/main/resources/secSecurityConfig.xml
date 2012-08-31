@@ -10,6 +10,7 @@
 
 		<custom-filter ref="digestFilter" after="BASIC_AUTH_FILTER" />
 	</http>
+	
 	<global-method-security secured-annotations="enabled" />
 
 	<beans:bean id="digestFilter" class="org.springframework.security.web.authentication.www.DigestAuthenticationFilter">

@@ -19,6 +19,8 @@ import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.thoughtworks.xstream.XStream;
+
 @Component
 @Profile("client")
 public class RestTemplateFactoryBean implements FactoryBean<RestTemplate>, InitializingBean {
@@ -89,6 +91,7 @@ public class RestTemplateFactoryBean implements FactoryBean<RestTemplate>, Initi
     final XStreamMarshaller xstreamMarshaller() {
         final XStreamMarshaller xStreamMarshaller = new XStreamMarshaller();
         xStreamMarshaller.setAutodetectAnnotations(true);
+        xStreamMarshaller.setMode(XStream.NO_REFERENCES);
         xStreamMarshaller.setAnnotatedClasses(new Class[] { User.class, Principal.class, Role.class, Privilege.class });
         xStreamMarshaller.getXStream().addDefaultImplementation(java.sql.Timestamp.class, java.util.Date.class);
 
