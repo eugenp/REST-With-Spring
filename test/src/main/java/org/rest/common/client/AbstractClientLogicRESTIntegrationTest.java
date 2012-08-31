@@ -294,12 +294,12 @@ public abstract class AbstractClientLogicRESTIntegrationTest<T extends INameable
 
     protected abstract IEntityOperations<T> getEntityOps();
 
-    protected T createNewEntity() {
-        return getEntityOps().createNewEntity();
-    }
-
     protected final String getURI() {
         return getAPI().getURI() + WebConstants.PATH_SEP;
+    }
+
+    protected T createNewEntity() {
+        return getEntityOps().createNewEntity();
     }
 
 }
