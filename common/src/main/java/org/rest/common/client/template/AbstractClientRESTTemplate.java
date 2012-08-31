@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
@@ -232,7 +233,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     // util
 
     protected final HttpEntity<Void> findRequestEntity() {
-        return new HttpEntity<Void>(HeaderUtil.createAcceptHeaders(marshaller));
+        return new HttpEntity<Void>(findHeaders());
     }
 
     // template method
@@ -264,6 +265,13 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
      */
     protected void beforeReadOperation() {
         //
+    }
+
+    /**
+     * - note: hook to be able to customize the find headers if needed
+     */
+    protected HttpHeaders findHeaders() {
+        return HeaderUtil.createAcceptHeaders(marshaller);
     }
 
 }
