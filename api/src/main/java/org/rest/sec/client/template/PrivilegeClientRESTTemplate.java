@@ -24,9 +24,9 @@ public class PrivilegeClientRESTTemplate extends AbstractClientRESTTemplate<Priv
         super(Privilege.class);
     }
 
-    // operations
+    // API
 
-    // template method
+    // template methods
 
     @Override
     public final String getURI() {

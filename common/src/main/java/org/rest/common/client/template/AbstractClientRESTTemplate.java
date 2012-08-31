@@ -1,5 +1,8 @@
 package org.rest.common.client.template;
 
+import static org.rest.common.util.SearchCommonUtil.SEPARATOR_AMPER;
+import static org.rest.common.util.SearchCommonUtil.constructURI;
+
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
@@ -7,7 +10,6 @@ import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.util.QueryConstants;
-import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.web.WebConstants;
 import org.rest.common.web.util.HeaderUtil;
 import org.slf4j.Logger;
@@ -68,7 +70,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final T findOneByAttributes(final String... attributes) {
-        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes));
+        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + constructURI(attributes));
         if (resourcesByName.isEmpty()) {
             return null;
         }
@@ -118,7 +120,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         uri.append(QueryConstants.QUESTIONMARK);
         uri.append("page=");
         uri.append(page);
-        uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+        uri.append(SEPARATOR_AMPER);
         uri.append("size=");
         uri.append(size);
         final ResponseEntity<List> findAllResponse = restTemplate.exchange(uri.toString(), HttpMethod.GET, findRequestEntity(), List.class);
@@ -131,7 +133,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final List<T> findAllByAttributes(final String... attributes) {
-        final String uri = getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes);
+        final String uri = getURI() + QueryConstants.QUERY_PREFIX + constructURI(attributes);
         final List<T> resourcesByAttributes = findAllByURI(uri);
         return resourcesByAttributes;
     }
@@ -152,17 +154,17 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         uri.append(QueryConstants.QUESTIONMARK);
         uri.append("page=");
         uri.append(page);
-        uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+        uri.append(SEPARATOR_AMPER);
         uri.append("size=");
         uri.append(size);
         Preconditions.checkState(!(sortBy == null && sortOrder != null));
         if (sortBy != null) {
-            uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+            uri.append(SEPARATOR_AMPER);
             uri.append(QueryConstants.SORT_BY + "=");
             uri.append(sortBy);
         }
         if (sortOrder != null) {
-            uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+            uri.append(SEPARATOR_AMPER);
             uri.append(QueryConstants.SORT_ORDER + "=");
             uri.append(sortOrder);
         }
