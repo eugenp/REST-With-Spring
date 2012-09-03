@@ -12,7 +12,7 @@ import org.rest.common.client.security.IClientAuthenticationComponent;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.spring.client.ClientTestConfig;
-import org.rest.sec.spring.context.ContextTestConfig;
+import org.rest.sec.spring.context.ContextConfig;
 import org.rest.sec.util.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,7 +23,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { ClientTestConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = { ClientTestConfig.class, ContextConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class AuthenticationRESTIntegrationTest {
 
     @Autowired

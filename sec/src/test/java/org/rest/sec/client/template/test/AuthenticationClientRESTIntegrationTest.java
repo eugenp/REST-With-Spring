@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import org.rest.sec.client.template.newer.AuthenticationRESTTemplate;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.spring.client.ClientTestConfig;
-import org.rest.sec.spring.context.ContextTestConfig;
+import org.rest.sec.spring.context.ContextConfig;
 import org.rest.sec.util.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { ClientTestConfig.class, ContextTestConfig.class }, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = { ClientTestConfig.class, ContextConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class AuthenticationClientRESTIntegrationTest {
 
     @Autowired
