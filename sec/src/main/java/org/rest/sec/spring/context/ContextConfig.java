@@ -21,19 +21,10 @@ public class ContextConfig {
 
     // beans
 
-    /**/@Bean
+    @Bean
     public PropertySourcesPlaceholderConfigurer properties() {
         final PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
-        // pspc.setIgnoreUnresolvablePlaceholders(true);
         return pspc;
     }
-
-    /*@Bean
-    public ReloadableResourceBundleMessageSource messageSource() {
-        final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("i18n/messages");
-        messageSource.setCacheSeconds(10);
-        return null;
-    }*/
 
 }
