@@ -59,20 +59,33 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     }
 
     protected final String findOneByUriAsString(final String uriOfResource) {
-        final Response response = findOneByUriAsResponse(uriOfResource);
+        final Response response = findOneByUriAsResponse(uriOfResource, null);
+        Preconditions.checkState(response.getStatusCode() == 200);
+
+        return response.asString();
+    }
+
+    protected final String findOneByUriAsString(final String uriOfResource, final RequestSpecification req) {
+        final Response response = findOneByUriAsResponse(uriOfResource, req);
         Preconditions.checkState(response.getStatusCode() == 200);
 
         return response.asString();
     }
 
     @Override
-    public final Response findOneByUriAsResponse(final String uriOfResource) {
-        return findOneRequest().get(uriOfResource);
+    public final Response findOneByUriAsResponse(final String uriOfResource, final RequestSpecification req) {
+        if (req == null) {
+            return findOneRequest().get(uriOfResource);
+        }
+        return findOneRequest(req).get(uriOfResource);
     }
 
     @Override
-    public final Response findAllByUriAsResponse(final String uriOfResource) {
-        return findAllRequest().get(uriOfResource);
+    public final Response findAllByUriAsResponse(final String uriOfResource, final RequestSpecification req) {
+        if (req == null) {
+            return findAllRequest().get(uriOfResource);
+        }
+        return findAllRequest(req).get(uriOfResource);
     }
 
     // find - by attributes
@@ -112,32 +125,32 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     }
 
     @Override
-    public final Response findAllAsResponse() {
-        return findAllByUriAsResponse(getURI());
+    public final Response findAllAsResponse(final RequestSpecification req) {
+        return findAllByUriAsResponse(getURI(), req);
     }
 
     // find - all (sorted, paginated)
 
     @Override
     public final List<T> findAllSorted(final String sortBy, final String sortOrder) {
-        final Response findAllResponse = findAllByUriAsResponse(getURI() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder);
+        final Response findAllResponse = findAllByUriAsResponse(getURI() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder, null);
         return marshaller.<T> decodeList(findAllResponse.getBody().asString(), clazz);
     }
 
     @Override
     public final List<T> findAllPaginated(final int page, final int size) {
-        final Response allPaginatedAsResponse = findAllPaginatedAsResponse(page, size);
+        final Response allPaginatedAsResponse = findAllPaginatedAsResponse(page, size, null);
         return getMarshaller().decodeList(allPaginatedAsResponse.asString(), clazz);
     }
 
     @Override
     public final List<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
-        final Response allPaginatedAndSortedAsResponse = findAllPaginatedAndSortedAsResponse(page, size, sortBy, sortOrder);
+        final Response allPaginatedAndSortedAsResponse = findAllPaginatedAndSortedAsResponse(page, size, sortBy, sortOrder, null);
         return getMarshaller().decodeList(allPaginatedAndSortedAsResponse.asString(), clazz);
     }
 
     @Override
-    public final Response findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder) {
+    public final Response findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder, final RequestSpecification req) {
         final StringBuilder uri = new StringBuilder(getURI());
         uri.append(QueryConstants.QUESTIONMARK);
         uri.append("page=");
@@ -157,11 +170,11 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
             uri.append(sortOrder);
         }
 
-        return findAllByUriAsResponse(uri.toString());
+        return findAllByUriAsResponse(uri.toString(), req);
     }
 
     @Override
-    public final Response findAllSortedAsResponse(final String sortBy, final String sortOrder) {
+    public final Response findAllSortedAsResponse(final String sortBy, final String sortOrder, final RequestSpecification req) {
         final StringBuilder uri = new StringBuilder(getURI());
         uri.append(QueryConstants.QUESTIONMARK);
         Preconditions.checkState(!(sortBy == null && sortOrder != null));
@@ -175,11 +188,11 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
             uri.append(sortOrder);
         }
 
-        return findAllByUriAsResponse(uri.toString());
+        return findAllByUriAsResponse(uri.toString(), req);
     }
 
     @Override
-    public final Response findAllPaginatedAsResponse(final int page, final int size) {
+    public final Response findAllPaginatedAsResponse(final int page, final int size, final RequestSpecification req) {
         final StringBuilder uri = new StringBuilder(getURI());
         uri.append(QueryConstants.QUESTIONMARK);
         uri.append("page=");
@@ -187,7 +200,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         uri.append(SearchCommonUtil.SEPARATOR_AMPER);
         uri.append("size=");
         uri.append(size);
-        return findAllByUriAsResponse(uri.toString());
+        return findAllByUriAsResponse(uri.toString(), req);
     }
 
     // create
@@ -322,8 +335,16 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime());
     }
 
+    protected RequestSpecification findAllRequest(final RequestSpecification req) {
+        return req.header(HttpHeaders.ACCEPT, marshaller.getMime());
+    }
+
     protected RequestSpecification findOneRequest() {
         return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime());
+    }
+
+    protected RequestSpecification findOneRequest(final RequestSpecification req) {
+        return req.header(HttpHeaders.ACCEPT, marshaller.getMime());
     }
 
     public RequestSpecification givenAuthenticated() {
@@ -331,10 +352,6 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     }
 
     //
-
-    public final String getMime() {
-        return marshaller.getMime();
-    }
 
     @Override
     public final IMarshaller getMarshaller() {

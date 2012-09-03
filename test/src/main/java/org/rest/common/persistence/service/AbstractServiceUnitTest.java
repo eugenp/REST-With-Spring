@@ -318,7 +318,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
      * 
      * @return the service.
      */
-    protected abstract IService<T> getAPI();
+    protected abstract IRawService<T> getAPI();
 
     /**
      * Gets the DAO mock.

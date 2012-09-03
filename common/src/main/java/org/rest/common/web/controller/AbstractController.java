@@ -12,8 +12,9 @@ import org.rest.common.event.ResourceCreatedEvent;
 import org.rest.common.event.SingleResourceRetrievedEvent;
 import org.rest.common.exceptions.BadRequestException;
 import org.rest.common.exceptions.ConflictException;
+import org.rest.common.exceptions.ForbiddenException;
 import org.rest.common.exceptions.ResourceNotFoundException;
-import org.rest.common.persistence.model.IEntity;
+import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.persistence.service.IService;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.util.QueryConstants;
@@ -34,7 +35,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
-public abstract class AbstractController<T extends IEntity> {
+public abstract class AbstractController<T extends INameableEntity> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     private Class<T> clazz;
@@ -119,7 +120,24 @@ public abstract class AbstractController<T extends IEntity> {
             logger.error("InvalidDataAccessApiUsageException on find operation");
             logger.warn("InvalidDataAccessApiUsageException on find operation", ex);
             throw new ConflictException(ex);
+        } catch (final NullPointerException npe) { // note: for now, a NPE from the service layer is related to the getCurrent... type operations - this may change
+            logger.error("NullPointerException on find operation");
+            logger.warn("NullPointerException on find operation", npe);
+            throw new ForbiddenException(npe);
         }
+        return resource;
+    }
+
+    protected final T findByNameInternal(final String name) {
+        T resource = null;
+        try {
+            resource = RestPreconditions.checkNotNull(getService().findByName(name));
+        } catch (final InvalidDataAccessApiUsageException ex) {
+            logger.error("InvalidDataAccessApiUsageException on find operation");
+            logger.warn("InvalidDataAccessApiUsageException on find operation", ex);
+            throw new ConflictException(ex);
+        }
+
         return resource;
     }
 

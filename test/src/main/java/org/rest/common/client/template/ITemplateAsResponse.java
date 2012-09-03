@@ -5,24 +5,25 @@ import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
 
 import com.jayway.restassured.response.Response;
+import com.jayway.restassured.specification.RequestSpecification;
 
 public interface ITemplateAsResponse<T extends IEntity> {
 
     // find - one
 
-    Response findOneByUriAsResponse(final String uriOfResource);
+    Response findOneByUriAsResponse(final String uriOfResource, final RequestSpecification req);
 
-    Response findAllByUriAsResponse(final String uriOfResource);
+    Response findAllByUriAsResponse(final String uriOfResource, final RequestSpecification req);
 
     // find - all
 
-    Response findAllAsResponse();
+    Response findAllAsResponse(final RequestSpecification req);
 
-    Response findAllPaginatedAsResponse(final int page, final int size);
+    Response findAllPaginatedAsResponse(final int page, final int size, final RequestSpecification req);
 
-    Response findAllSortedAsResponse(final String sortBy, final String sortOrder);
+    Response findAllSortedAsResponse(final String sortBy, final String sortOrder, final RequestSpecification req);
 
-    Response findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder);
+    Response findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder, final RequestSpecification req);
 
     // search
 

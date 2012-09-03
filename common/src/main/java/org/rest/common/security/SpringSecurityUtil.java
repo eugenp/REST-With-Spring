@@ -49,6 +49,19 @@ public final class SpringSecurityUtil {
         return securityContext.getAuthentication();
     }
 
+    public static SpringSecurityPrincipal getCurrentPrincipal() {
+        final Authentication currentAuthentication = getCurrentAuthentication();
+        if (currentAuthentication == null) {
+            return null;
+        }
+        final Object principal = currentAuthentication.getPrincipal();
+        if (principal == null) {
+            return null;
+        }
+
+        return (SpringSecurityPrincipal) principal;
+    }
+
     public static String getNameOfCurrentPrincipal() {
         final Authentication authentication = getCurrentAuthentication();
         if (authentication == null) {
@@ -56,6 +69,15 @@ public final class SpringSecurityUtil {
         }
 
         return authentication.getName();
+    }
+
+    public static String getUuidOfCurrentPrincipal() {
+        final SpringSecurityPrincipal currentPrincipal = getCurrentPrincipal();
+        if (currentPrincipal == null) {
+            return null;
+        }
+
+        return currentPrincipal.getUuid();
     }
 
     // is?
@@ -78,20 +100,24 @@ public final class SpringSecurityUtil {
         return SpringSecurityUtil.getCurrentUserDetails() == null;
     }
 
+    public static boolean isAdmin( final String nameOfAdminPrivilege ) {
+        return hasPrivilege(nameOfAdminPrivilege);
+    }
+
     // has?
 
     /**
      * Check if current user has specified role.
      * 
-     * @param role
+     * @param privilege
      *            the role to check if user has.
      * @return true if user has specified role, otherwise false.
      */
-    public static boolean hasRole(final String role) {
+    public static boolean hasPrivilege(final String privilege) {
         final UserDetails userDetails = SpringSecurityUtil.getCurrentUserDetails();
         if (userDetails != null) {
             for (final GrantedAuthority each : userDetails.getAuthorities()) {
-                if (each.getAuthority().equals(role)) {
+                if (each.getAuthority().equals(privilege)) {
                     return true;
                 }
             }
@@ -103,14 +129,14 @@ public final class SpringSecurityUtil {
     /**
      * Check if current user has any role of specified.
      * 
-     * @param roles
+     * @param privileges
      *            the array of roles.
      * @return true if has any role, otherwise false.
      */
-    public static boolean hasAnyRole(final String... roles) {
+    public static boolean hasAnyPrivilege(final String... privileges) {
         final UserDetails userDetails = SpringSecurityUtil.getCurrentUserDetails();
         if (userDetails != null) {
-            final Set<String> rolesSet = ImmutableSet.copyOf(roles);
+            final Set<String> rolesSet = ImmutableSet.copyOf(privileges);
             for (final GrantedAuthority each : userDetails.getAuthorities()) {
                 if (rolesSet.contains(each.getAuthority())) {
                     return true;

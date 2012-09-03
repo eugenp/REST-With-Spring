@@ -47,7 +47,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
 
     @Test
     public void givenResourceForIdDoesNotExist_whenResourceOfThatIdIsRetrieved_then404IsReceived() {
-        final Response response = getAPI().findOneByUriAsResponse(getURI() + WebConstants.PATH_SEP + randomNumeric(6));
+        final Response response = getAPI().findOneByUriAsResponse(getURI() + WebConstants.PATH_SEP + randomNumeric(6), null);
 
         assertThat(response.getStatusCode(), is(404));
     }
@@ -58,7 +58,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         final String uriForResourceCreation = getAPI().createAsURI(createNewEntity());
 
         // When
-        final Response res = getAPI().findOneByUriAsResponse(uriForResourceCreation);
+        final Response res = getAPI().findOneByUriAsResponse(uriForResourceCreation, null);
 
         // Then
         assertThat(res.getStatusCode(), is(200));
@@ -70,7 +70,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         final Long id = IDUtils.randomNegativeLong();
 
         // When
-        final Response res = getAPI().findOneByUriAsResponse(getURI() + WebConstants.PATH_SEP + id);
+        final Response res = getAPI().findOneByUriAsResponse(getURI() + WebConstants.PATH_SEP + id, null);
 
         // Then
         assertThat(res.getStatusCode(), is(409));
@@ -82,7 +82,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         final String id = randomAlphabetic(6);
 
         // When
-        final Response res = getAPI().findOneByUriAsResponse(getURI() + WebConstants.PATH_SEP + id);
+        final Response res = getAPI().findOneByUriAsResponse(getURI() + WebConstants.PATH_SEP + id, null);
 
         // Then
         assertThat(res.getStatusCode(), is(400));
@@ -176,7 +176,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
     @Test
     public void whenAllResourcesAreRetrieved_then200IsReceived() {
         // When
-        final Response response = getAPI().findAllAsResponse();
+        final Response response = getAPI().findAllAsResponse(null);
 
         // Then
         assertThat(response.getStatusCode(), is(200));
@@ -436,7 +436,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         getAPI().deleteAsResponse(uriOfResource);
 
         // When
-        final Response getResponse = getAPI().findOneByUriAsResponse(uriOfResource);
+        final Response getResponse = getAPI().findOneByUriAsResponse(uriOfResource, null);
 
         // Then
         assertThat(getResponse.getStatusCode(), is(404));

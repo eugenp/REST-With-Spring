@@ -48,7 +48,7 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
     @Test
     public final void whenResourcesAreRetrievedPaginated_then200IsReceived() {
         // When
-        final Response response = getAPI().findAllPaginatedAsResponse(0, 1);
+        final Response response = getAPI().findAllPaginatedAsResponse(0, 1, null);
 
         // Then
         assertThat(response.getStatusCode(), is(200));
@@ -58,7 +58,7 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
     // - note: may fail intermittently - TODO: investigate
     public final void whenPageOfResourcesIsRetrievedOutOfBounds_then404IsReceived() {
         // When
-        final Response response = getAPI().findAllPaginatedAsResponse(Integer.parseInt(randomNumeric(5)), 1);
+        final Response response = getAPI().findAllPaginatedAsResponse(Integer.parseInt(randomNumeric(5)), 1, null);
 
         // Then
         assertThat(response.getStatusCode(), is(404));
@@ -97,7 +97,7 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
 
     @Test
     public final void whenResourcesAreRetrievedSorted_then200IsReceived() {
-        final Response response = getAPI().findAllSortedAsResponse(SearchField.name.name(), Sort.Direction.ASC.name());
+        final Response response = getAPI().findAllSortedAsResponse(SearchField.name.name(), Sort.Direction.ASC.name(), null);
 
         assertThat(response.getStatusCode(), is(200));
     }
@@ -142,7 +142,7 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
 
     @Test
     public final void whenResourcesAreRetrievedPaginatedAndSorted_then200IsReceived() {
-        final Response response = getAPI().findAllPaginatedAndSortedAsResponse(0, 1, SearchField.name.name(), Sort.Direction.ASC.name());
+        final Response response = getAPI().findAllPaginatedAndSortedAsResponse(0, 1, SearchField.name.name(), Sort.Direction.ASC.name(), null);
 
         assertThat(response.getStatusCode(), is(200));
     }
@@ -150,7 +150,7 @@ public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INa
     @Test
     public final void whenResourcesAreRetrievedByPaginatedAndWithInvalidSorting_then400IsReceived() {
         // When
-        final Response response = getAPI().findAllPaginatedAndSortedAsResponse(0, 4, "invalid", null);
+        final Response response = getAPI().findAllPaginatedAndSortedAsResponse(0, 4, "invalid", null, null);
 
         // Then
         assertThat(response.getStatusCode(), is(400));

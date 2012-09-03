@@ -17,4 +17,8 @@ public class ForbiddenException extends RuntimeException {
         super(message);
     }
 
+    public ForbiddenException(final Throwable cause) {
+        super(cause);
+    }
+
 }

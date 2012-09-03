@@ -10,7 +10,6 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.rest.common.IOperations;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
-import org.rest.common.util.SearchField;
 
 @SuppressWarnings("unchecked")
 public final class SearchIntegrationTestUtil {
@@ -67,8 +66,8 @@ public final class SearchIntegrationTestUtil {
         assertThat(searchResults, hasItem(existingEntity));
     }
 
-    public static <T extends IEntity> void givenResourceExists_whenSearchByEndsWithIncorrectPartOfKeyIsPerformed_thenResourceIsNotFound(final IOperations<T> api, final T newEntity, final SearchField key, final ClientOperation op, final String value) {
-        final T existingResource = api.create(newEntity);
+    public static <T extends IEntity> void givenResourceExists_whenSearchByEndsWithIncorrectPartOfKeyIsPerformed_thenResourceIsNotFound(final IOperations<T> api, final T existingEntity, final SearchField key, final ClientOperation op,
+            final String value) {
         final String partOfValue = value.substring(2, 5);
 
         // When
@@ -76,10 +75,11 @@ public final class SearchIntegrationTestUtil {
         final List<T> searchResults = api.search(containsConstraint);
 
         // Then
-        assertThat(searchResults, not(hasItem(existingResource)));
+        assertThat(searchResults, not(hasItem(existingEntity)));
     }
 
-    public static <T extends IEntity> void givenResourceExists_whenSearchByStartsWithPartOfLowerCaseNameIsPerformed_thenResourceIsFound(final IOperations<T> api, final T newEntity, final SearchField key, final ClientOperation op, final String value) {
+    public static <T extends IEntity> void givenResourceExists_whenSearchByStartsWithPartOfLowerCaseNameIsPerformed_thenResourceIsFound(final IOperations<T> api, final T newEntity, final SearchField key, final ClientOperation op,
+            final String value) {
         final T existingResource = api.create(newEntity);
         final String partOfValue = value.substring(2);
 
