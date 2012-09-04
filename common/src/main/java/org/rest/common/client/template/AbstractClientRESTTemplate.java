@@ -1,7 +1,6 @@
 package org.rest.common.client.template;
 
 import static org.rest.common.util.SearchCommonUtil.SEPARATOR_AMPER;
-import static org.rest.common.util.SearchCommonUtil.constructURIWithEq;
 
 import java.util.List;
 
@@ -9,6 +8,7 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
+import org.rest.common.search.SearchUriBuilder;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.web.WebConstants;
 import org.rest.common.web.util.HeaderUtil;
@@ -69,16 +69,6 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         return findOneByURI(getURI() + "?name=" + name);
     }
 
-    @Override
-    public final T searchOneByAttributes(final String... attributes) {
-        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + constructURIWithEq(attributes));
-        if (resourcesByName.isEmpty()) {
-            return null;
-        }
-        Preconditions.checkState(resourcesByName.size() <= 1);
-        return resourcesByName.get(0);
-    }
-
     // find - all
 
     @Override
@@ -133,13 +123,6 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     }
 
     @Override
-    public final List<T> searchAllByAttributes(final String... attributes) {
-        final String uri = getURI() + QueryConstants.QUERY_PREFIX + constructURIWithEq(attributes);
-        final List<T> resourcesByAttributes = findAllByURI(uri);
-        return resourcesByAttributes;
-    }
-
-    @Override
     public final List<T> findAllByURI(final String uri) {
         final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);
         final List<T> body = response.getBody();
@@ -148,6 +131,8 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         }
         return body;
     }
+
+    // as response
 
     final ResponseEntity<String> findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder) {
         beforeReadOperation();
@@ -171,6 +156,10 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         }
 
         return restTemplate.exchange(uri.toString(), HttpMethod.GET, findRequestEntity(), String.class);
+    }
+
+    final ResponseEntity<List> findAllAsResponse(final String uri) {
+        return restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);
     }
 
     // create
@@ -220,7 +209,16 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final List<T> searchAll(final Triple<String, ClientOperation, String>... constraints) {
-        throw new UnsupportedOperationException();
+        final SearchUriBuilder builder = new SearchUriBuilder();
+        for (final Triple<String, ClientOperation, String> constraint : constraints) {
+            builder.consume(constraint);
+        }
+        final String queryURI = getURI() + QueryConstants.QUERY_PREFIX + builder.build();
+
+        final ResponseEntity<List> asResponse = findAllAsResponse(queryURI);
+        Preconditions.checkState(asResponse.getStatusCode().value() == 200);
+
+        return asResponse.getBody();
     }
 
     @Override

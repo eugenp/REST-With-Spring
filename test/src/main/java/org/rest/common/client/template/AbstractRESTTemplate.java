@@ -306,25 +306,6 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         return getMarshaller().<List> decode(searchResponse.getBody().asString(), List.class);
     }
 
-    // search - by attributes
-
-    @Override
-    public final T searchOneByAttributes(final String... attributes) {
-        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURIWithEq(attributes));
-        if (resourcesByName.isEmpty()) {
-            return null;
-        }
-        Preconditions.checkState(resourcesByName.size() <= 1);
-        return resourcesByName.get(0);
-    }
-
-    @Override
-    public final List<T> searchAllByAttributes(final String... attributes) {
-        final String uri = getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURIWithEq(attributes);
-        final List<T> resourcesByAttributes = findAllByURI(uri);
-        return resourcesByAttributes;
-    }
-
     // count
 
     @Override

@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.rest.common.search.ClientOperation;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -111,23 +110,6 @@ public final class SearchCommonUtil {
             op = negated ? ClientOperation.NEG_EQ : ClientOperation.EQ;
         }
         return op;
-    }
-
-    // template utils
-
-    public static String constructURIWithEq(final String... attributes) {
-        Preconditions.checkNotNull(attributes);
-        Preconditions.checkArgument(attributes.length > 0);
-        Preconditions.checkArgument(attributes.length % 2 == 0);
-
-        final UriComponentsBuilder queryParam = UriComponentsBuilder.newInstance();
-        for (int i = 0; i <= attributes.length / 2; i += 2) {
-            queryParam.queryParam(attributes[i], attributes[i + 1]);
-        }
-
-        String query = queryParam.build().encode().getQuery();
-        // query = query.replaceAll("=", "%3D");
-        return query.replaceAll("&", ",");
     }
 
 }

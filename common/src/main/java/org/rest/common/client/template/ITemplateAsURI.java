@@ -18,10 +18,4 @@ public interface ITemplateAsURI<T extends IEntity> {
 
     List<T> findAllByURI(final String uri);
 
-    // sandboxed
-
-    T searchOneByAttributes(final String... attributes);
-
-    List<T> searchAllByAttributes(final String... attributes);
-
 }

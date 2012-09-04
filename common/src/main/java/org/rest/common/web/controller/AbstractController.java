@@ -288,6 +288,22 @@ public abstract class AbstractController<T extends INameableEntity> {
         }
     }
 
+    // count
+
+    protected final long countInternal() {
+        try {
+            return getService().count();
+        } catch (final InvalidDataAccessApiUsageException dataEx) {
+            logger.error("InvalidDataAccessApiUsageException on count operation");
+            logger.warn("InvalidDataAccessApiUsageException on count operation", dataEx);
+            throw new ResourceNotFoundException(dataEx);
+        } catch (final DataAccessException dataEx) {
+            logger.error("DataAccessException on count operation");
+            logger.warn("DataAccessException on count operation", dataEx);
+            throw new ConflictException(dataEx);
+        }
+    }
+
     // template method
 
     protected abstract IService<T> getService();

@@ -133,6 +133,19 @@ public class RoleController extends AbstractController<Role> implements ISorting
         deleteByIdInternal(id);
     }
 
+    // count
+
+    /**
+     * Counts all {@link Role} resources in the system
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/count")
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.OK)
+    public long count() {
+        return countInternal();
+    }
+
     // Spring
 
     @Override

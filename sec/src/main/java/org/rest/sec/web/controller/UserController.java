@@ -132,6 +132,19 @@ public class UserController extends AbstractController<User> implements ISorting
         deleteByIdInternal(id);
     }
 
+    // count
+
+    /**
+     * Counts all {@link User} resources in the system
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/count")
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.OK)
+    public long count() {
+        return countInternal();
+    }
+
     // Spring
 
     @Override

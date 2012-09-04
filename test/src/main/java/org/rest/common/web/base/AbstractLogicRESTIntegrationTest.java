@@ -11,9 +11,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.rest.common.search.ClientOperation.EQ;
+import static org.rest.common.search.ClientOperation.NEG_EQ;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.http.HttpHeaders;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
@@ -21,8 +24,8 @@ import org.junit.Test;
 import org.rest.common.client.IEntityOperations;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.INameableEntity;
+import org.rest.common.search.ClientOperation;
 import org.rest.common.util.IDUtils;
-import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchField;
 import org.rest.common.web.WebConstants;
 
@@ -133,7 +136,8 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        getAPI().searchOneByAttributes(SearchField.name.name(), existingResource.getName());
+        final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), EQ, existingResource.getName());
+        getAPI().searchOne(nameConstraint);
     }
 
     @Test
@@ -142,7 +146,8 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        final T resourceByName = getAPI().searchOneByAttributes(SearchField.name.name(), existingResource.getName());
+        final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), EQ, existingResource.getName());
+        final T resourceByName = getAPI().searchOne(nameConstraint);
 
         // Then
         assertNotNull(resourceByName);
@@ -154,7 +159,8 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        final T resourceByName = getAPI().searchOneByAttributes(SearchField.name.name(), existingResource.getName());
+        final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), EQ, existingResource.getName());
+        final T resourceByName = getAPI().searchOne(nameConstraint);
 
         // Then
         assertThat(existingResource, equalTo(resourceByName));
@@ -166,7 +172,8 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        getAPI().searchAllByAttributes(QueryConstants.NAME_NEG, existingResource.getName());
+        final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), NEG_EQ, existingResource.getName());
+        getAPI().searchAll(nameConstraint);
 
         // Then
     }
