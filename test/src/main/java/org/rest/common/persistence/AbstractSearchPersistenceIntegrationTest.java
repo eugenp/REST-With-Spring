@@ -37,7 +37,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(NAME, EQ, existingEntity.getName());
-        getAPI().search(nameConstraint);
+        getAPI().searchAll(nameConstraint);
     }
 
     // by id
@@ -46,7 +46,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Test
     public final void givenResourceWithIdExists_whenResourceIsSearchedById_thenNoExceptions() {
         final T existingResource = persistNewEntity();
-        getAPI().search(createIdConstraint(EQ, existingResource.getId()));
+        getAPI().searchAll(createIdConstraint(EQ, existingResource.getId()));
     }
 
     @Override
@@ -56,7 +56,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), EQ, existingResource.getId().toString());
-        final List<T> searchResults = getAPI().search(idConstraint);
+        final List<T> searchResults = getAPI().searchAll(idConstraint);
 
         // Then
         assertThat(searchResults, Matchers.not(Matchers.<T> empty()));
@@ -68,7 +68,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
         final T existingResource = persistNewEntity();
 
         // When
-        final List<T> found = getAPI().search(createIdConstraint(EQ, existingResource.getId()));
+        final List<T> found = getAPI().searchAll(createIdConstraint(EQ, existingResource.getId()));
 
         // Then
         assertThat(found, hasItem(existingResource));
@@ -81,7 +81,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), EQ, IDUtils.randomPositiveLongAsString());
-        final List<T> searchResults = getAPI().search(idConstraint);
+        final List<T> searchResults = getAPI().searchAll(idConstraint);
 
         // Then
         assertThat(searchResults, not(hasItem(existingResource)));
@@ -96,7 +96,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
-        getAPI().search(nameConstraint);
+        getAPI().searchAll(nameConstraint);
     }
 
     @Override
@@ -106,7 +106,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
-        final List<T> searchResults = getAPI().search(nameConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameConstraint);
 
         // Then
         assertThat(searchResults, Matchers.not(Matchers.<T> empty()));
@@ -119,7 +119,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
-        final List<T> searchResults = getAPI().search(nameConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameConstraint);
 
         // Then
         assertThat(searchResults, hasItem(existingResource));
@@ -132,7 +132,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, randomAlphabetic(8));
-        final List<T> searchResults = getAPI().search(nameConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameConstraint);
 
         // Then
         assertThat(searchResults, not(hasItem(existingResource)));
@@ -146,7 +146,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource1.getName());
-        final List<T> searchResults = getAPI().search(nameConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameConstraint);
 
         // Then
         assertThat(searchResults, hasItem(existingResource1));
@@ -159,7 +159,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
         final T existingResource = persistNewEntity();
 
         // When
-        final List<T> found = getAPI().search(createNameConstraint(EQ, existingResource.getName().toLowerCase()));
+        final List<T> found = getAPI().searchAll(createNameConstraint(EQ, existingResource.getName().toLowerCase()));
 
         // Then
         assertThat(found, hasItem(existingResource));
@@ -175,7 +175,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
         final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), EQ, existingResource.getId().toString());
-        final List<T> searchResults = getAPI().search(nameConstraint, idConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameConstraint, idConstraint);
 
         // Then
         assertThat(searchResults, Matchers.not(Matchers.<T> empty()));
@@ -189,7 +189,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
         final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), EQ, existingResource.getId().toString());
-        final List<T> searchResults = getAPI().search(nameConstraint, idConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameConstraint, idConstraint);
 
         // Then
         assertThat(searchResults, hasItem(existingResource));
@@ -203,7 +203,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
         final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), EQ, IDUtils.randomPositiveLongAsString());
-        final List<T> searchResults = getAPI().search(nameConstraint, idConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameConstraint, idConstraint);
 
         // Then
         assertThat(searchResults, not(hasItem(existingResource)));
@@ -217,7 +217,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, randomAlphabetic(8));
         final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), EQ, existingResource.getId().toString());
-        final List<T> searchResults = getAPI().search(nameConstraint, idConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameConstraint, idConstraint);
 
         // Then
         assertThat(searchResults, not(hasItem(existingResource)));
@@ -229,7 +229,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
         final T existingResource = persistNewEntity();
 
         // When
-        final List<T> found = getAPI().search(createIdConstraint(EQ, IDUtils.randomPositiveLong()), createNameConstraint(EQ, randomAlphabetic(8)));
+        final List<T> found = getAPI().searchAll(createIdConstraint(EQ, IDUtils.randomPositiveLong()), createNameConstraint(EQ, randomAlphabetic(8)));
 
         // Then
         assertThat(found, not(hasItem(existingResource)));
@@ -245,7 +245,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final Triple<String, ClientOperation, String> negatedIdConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), NEG_EQ, existingResource.getId().toString());
-        final List<T> searchResults = getAPI().search(negatedIdConstraint);
+        final List<T> searchResults = getAPI().searchAll(negatedIdConstraint);
 
         // Then
         assertThat(searchResults, notNullValue());
@@ -259,7 +259,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final Triple<String, ClientOperation, String> negatedIdConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), NEG_EQ, existingResource.getName());
-        final List<T> searchResults = getAPI().search(negatedIdConstraint);
+        final List<T> searchResults = getAPI().searchAll(negatedIdConstraint);
 
         // Then
         assertThat(searchResults, notNullValue());
@@ -273,7 +273,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), NEG_EQ, existingResource1.getName());
-        final List<T> searchResults = getAPI().search(nameConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameConstraint);
 
         // Then
         assertThat(searchResults, not(hasItem(existingResource1)));
@@ -288,7 +288,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), NEG_EQ, existingResource1.getId().toString());
-        final List<T> searchResults = getAPI().search(idConstraint);
+        final List<T> searchResults = getAPI().searchAll(idConstraint);
 
         // Then
         assertThat(searchResults, not(hasItem(existingResource1)));
@@ -302,7 +302,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final Triple<String, ClientOperation, String> negatedIdConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), NEG_EQ, existingResource.getId().toString());
-        final List<T> searchResults = getAPI().search(negatedIdConstraint, null);
+        final List<T> searchResults = getAPI().searchAll(negatedIdConstraint, null);
 
         // Then
         assertThat(searchResults, not(hasItem(existingResource)));
@@ -315,7 +315,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
         final T existingResource2 = persistNewEntity();
 
         // When
-        final List<T> found = getAPI().search(createIdConstraint(NEG_EQ, existingResource1.getId()));
+        final List<T> found = getAPI().searchAll(createIdConstraint(NEG_EQ, existingResource1.getId()));
 
         // Then
         assertThat(found, hasItem(existingResource2));
@@ -331,7 +331,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final Triple<String, ClientOperation, String> nameConstraint = createNameConstraint(ClientOperation.CONTAINS, existingResource.getName());
-        getAPI().search(nameConstraint);
+        getAPI().searchAll(nameConstraint);
     }
 
     @Override
@@ -341,7 +341,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), ClientOperation.CONTAINS, existingResource.getName());
-        final List<T> searchResults = getAPI().search(nameConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameConstraint);
 
         // Then
         assertThat(searchResults, hasItem(existingResource));
@@ -356,7 +356,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameContainsConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), ClientOperation.CONTAINS, partOfName);
-        final List<T> searchResults = getAPI().search(nameContainsConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameContainsConstraint);
 
         // Then
         assertThat(searchResults, hasItem(existingResource));
@@ -369,7 +369,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     public final void whenSearchByStartsWithIsPerformed_thenNoExceptions() {
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), ClientOperation.STARTS_WITH, randomAlphabetic(8));
-        getAPI().search(nameConstraint);
+        getAPI().searchAll(nameConstraint);
     }
 
     @Override
@@ -391,7 +391,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     public final void whenSearchByEndsWithIsPerformed_thenNoExceptions() {
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), ClientOperation.ENDS_WITH, randomAlphabetic(8));
-        getAPI().search(nameConstraint);
+        getAPI().searchAll(nameConstraint);
     }
 
     @Override
@@ -422,7 +422,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final ImmutableTriple<String, ClientOperation, String> containsConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), ClientOperation.ENDS_WITH, partOfValue);
-        final List<T> searchResults = getAPI().search(containsConstraint);
+        final List<T> searchResults = getAPI().searchAll(containsConstraint);
 
         // Then
         assertThat(searchResults, hasItem(existingResource));

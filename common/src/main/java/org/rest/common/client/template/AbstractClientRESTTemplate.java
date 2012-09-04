@@ -1,7 +1,7 @@
 package org.rest.common.client.template;
 
 import static org.rest.common.util.SearchCommonUtil.SEPARATOR_AMPER;
-import static org.rest.common.util.SearchCommonUtil.constructURI;
+import static org.rest.common.util.SearchCommonUtil.constructURIWithEq;
 
 import java.util.List;
 
@@ -71,7 +71,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final T searchOneByAttributes(final String... attributes) {
-        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + constructURI(attributes));
+        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + constructURIWithEq(attributes));
         if (resourcesByName.isEmpty()) {
             return null;
         }
@@ -134,7 +134,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final List<T> searchAllByAttributes(final String... attributes) {
-        final String uri = getURI() + QueryConstants.QUERY_PREFIX + constructURI(attributes);
+        final String uri = getURI() + QueryConstants.QUERY_PREFIX + constructURIWithEq(attributes);
         final List<T> resourcesByAttributes = findAllByURI(uri);
         return resourcesByAttributes;
     }
@@ -219,7 +219,12 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     // search
 
     @Override
-    public final List<T> search(final Triple<String, ClientOperation, String>... constraints) {
+    public final List<T> searchAll(final Triple<String, ClientOperation, String>... constraints) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public final T searchOne(final Triple<String, ClientOperation, String>... constraints) {
         throw new UnsupportedOperationException();
     }
 

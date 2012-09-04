@@ -37,11 +37,19 @@ public class UserServiceImpl implements IUserService {
     // search
 
     @Override
-    public List<User> search(final Triple<String, ClientOperation, String>... constraints) {
-        final List<Principal> principalsResultedFromSearch = principalService.search(constraints);
+    public List<User> searchAll(final Triple<String, ClientOperation, String>... constraints) {
+        final List<Principal> principalsResultedFromSearch = principalService.searchAll(constraints);
         final List<User> usersResultedFromSearch = Lists.transform(principalsResultedFromSearch, new PrincipalToUserFunction());
 
         return usersResultedFromSearch;
+    }
+
+    @Override
+    public User searchOne(final Triple<String, ClientOperation, String>... constraints) {
+        final Principal principalResultedFromSearch = principalService.searchOne(constraints);
+        final User userResultedFromSearch = new PrincipalToUserFunction().apply(principalResultedFromSearch);
+
+        return userResultedFromSearch;
     }
 
     @Override

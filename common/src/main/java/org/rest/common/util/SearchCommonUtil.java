@@ -115,7 +115,7 @@ public final class SearchCommonUtil {
 
     // template utils
 
-    public static String constructURI(final String... attributes) {
+    public static String constructURIWithEq(final String... attributes) {
         Preconditions.checkNotNull(attributes);
         Preconditions.checkArgument(attributes.length > 0);
         Preconditions.checkArgument(attributes.length % 2 == 0);

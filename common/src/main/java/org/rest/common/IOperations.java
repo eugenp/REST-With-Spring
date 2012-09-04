@@ -52,6 +52,8 @@ public interface IOperations<T extends IEntity> {
 
     // search
 
-    List<T> search(final Triple<String, ClientOperation, String>... constraints);
+    List<T> searchAll(final Triple<String, ClientOperation, String>... constraints);
+
+    T searchOne(final Triple<String, ClientOperation, String>... constraints);
 
 }

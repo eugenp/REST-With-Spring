@@ -46,7 +46,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
 
         // When
         final Triple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
-        getAPI().search(nameConstraint);
+        getAPI().searchAll(nameConstraint);
     }
 
     // by id
@@ -76,7 +76,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        final List<T> found = getAPI().search(ClientConstraintsUtil.createIdConstraint(EQ, existingResource.getId()));
+        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createIdConstraint(EQ, existingResource.getId()));
 
         // Then
         assertThat(found, hasItem(existingResource));
@@ -85,7 +85,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
     @Override
     public final void givenResourceWithIdDoesNotExist_whenResourceIsSearchedById_thenResourceIsNotFound() {
         // When
-        final List<T> found = getAPI().search(ClientConstraintsUtil.createConstraint(EQ, SearchField.id.toString(), randomNumeric(8)));
+        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createConstraint(EQ, SearchField.id.toString(), randomNumeric(8)));
 
         // Then
         assertThat(found, Matchers.<T> empty());
@@ -118,7 +118,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        final List<T> found = getAPI().search(ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName()));
+        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName()));
 
         // Then
         assertThat(found, hasItem(existingResource));
@@ -128,7 +128,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
     @Test
     public final void givenResourceWithNameDoesNotExist_whenResourceIsSearchedByName_thenResourceIsNotFound() {
         // When
-        final List<T> found = getAPI().search(ClientConstraintsUtil.createNameConstraint(EQ, randomAlphabetic(8)));
+        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createNameConstraint(EQ, randomAlphabetic(8)));
 
         // Then
         assertThat(found, Matchers.<T> empty());
@@ -142,7 +142,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource1.getName());
-        final List<T> searchResults = getAPI().search(nameConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameConstraint);
 
         // Then
         assertThat(searchResults, hasItem(existingResource1));
@@ -155,7 +155,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        final List<T> found = getAPI().search(ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName().toLowerCase()));
+        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName().toLowerCase()));
 
         // Then
         assertThat(found, hasItem(existingResource));
@@ -177,7 +177,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), CONTAINS, existingEntity.getName());
-        final List<T> searchResults = getAPI().search(nameConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameConstraint);
 
         // Then
         assertThat(searchResults, hasItem(existingEntity));
@@ -192,7 +192,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameContainsConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), CONTAINS, partOfName);
-        final List<T> searchResults = getAPI().search(nameContainsConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameContainsConstraint);
 
         // Then
         assertThat(searchResults, hasItem(existingEntity));
@@ -205,7 +205,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
     public final void whenSearchByStartsWithIsPerformed_thenNoExceptions() {
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), ClientOperation.STARTS_WITH, randomAlphabetic(8));
-        getAPI().search(nameConstraint);
+        getAPI().searchAll(nameConstraint);
     }
 
     @Override
@@ -227,7 +227,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
     public final void whenSearchByEndsWithIsPerformed_thenNoExceptions() {
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), ENDS_WITH, randomAlphabetic(8));
-        getAPI().search(nameConstraint);
+        getAPI().searchAll(nameConstraint);
     }
 
     @Override
@@ -270,7 +270,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        final List<T> found = getAPI().search(ClientConstraintsUtil.createIdConstraint(EQ, existingResource.getId()), ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName()));
+        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createIdConstraint(EQ, existingResource.getId()), ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName()));
 
         // Then
         assertThat(found, hasItem(existingResource));
@@ -282,7 +282,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        final List<T> found = getAPI().search(ClientConstraintsUtil.createIdConstraint(EQ, existingResource.getId()), ClientConstraintsUtil.createNameConstraint(EQ, randomAlphabetic(8)));
+        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createIdConstraint(EQ, existingResource.getId()), ClientConstraintsUtil.createNameConstraint(EQ, randomAlphabetic(8)));
 
         // Then
         assertThat(found, not(hasItem(existingResource)));
@@ -294,7 +294,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        final List<T> found = getAPI().search(ClientConstraintsUtil.createIdConstraint(EQ, IDUtils.randomPositiveLong()), ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName()));
+        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createIdConstraint(EQ, IDUtils.randomPositiveLong()), ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName()));
 
         // Then
         assertThat(found, not(hasItem(existingResource)));
@@ -306,7 +306,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        final List<T> found = getAPI().search(ClientConstraintsUtil.createIdConstraint(EQ, IDUtils.randomPositiveLong()), ClientConstraintsUtil.createNameConstraint(EQ, randomAlphabetic(8)));
+        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createIdConstraint(EQ, IDUtils.randomPositiveLong()), ClientConstraintsUtil.createNameConstraint(EQ, randomAlphabetic(8)));
 
         // Then
         assertThat(found, not(hasItem(existingResource)));
@@ -348,7 +348,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        final List<T> found = getAPI().search(ClientConstraintsUtil.createIdConstraint(NEG_EQ, existingResource.getId()));
+        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createIdConstraint(NEG_EQ, existingResource.getId()));
 
         // Then
         assertThat(found, not(hasItem(existingResource)));
@@ -361,7 +361,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
         final T existingResource2 = getAPI().create(createNewEntity());
 
         // When
-        final List<T> found = getAPI().search(ClientConstraintsUtil.createIdConstraint(NEG_EQ, existingResource1.getId()));
+        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createIdConstraint(NEG_EQ, existingResource1.getId()));
 
         // Then
         assertThat(found, hasItem(existingResource2));
@@ -375,7 +375,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), NEG_EQ, existingResource1.getName());
-        final List<T> searchResults = getAPI().search(nameConstraint);
+        final List<T> searchResults = getAPI().searchAll(nameConstraint);
 
         // Then
         assertThat(searchResults, not(hasItem(existingResource1)));
@@ -390,7 +390,7 @@ public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntit
 
         // When
         final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), NEG_EQ, existingResource1.getId().toString());
-        final List<T> searchResults = getAPI().search(idConstraint);
+        final List<T> searchResults = getAPI().searchAll(idConstraint);
 
         // Then
         assertThat(searchResults, not(hasItem(existingResource1)));

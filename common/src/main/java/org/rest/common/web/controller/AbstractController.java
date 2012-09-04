@@ -64,7 +64,7 @@ public abstract class AbstractController<T extends INameableEntity> {
                 throw new BadRequestException(illState);
             }
 
-            final List<T> results = getService().search(parsedQuery.toArray(new ImmutableTriple[parsedQuery.size()]));
+            final List<T> results = getService().searchAll(parsedQuery.toArray(new ImmutableTriple[parsedQuery.size()]));
             return results;
         } catch (final IllegalStateException illEx) {
             logger.error("IllegalStateException on search operation");

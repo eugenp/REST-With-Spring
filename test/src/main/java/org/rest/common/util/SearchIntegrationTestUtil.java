@@ -25,7 +25,7 @@ public final class SearchIntegrationTestUtil {
 
         // When
         final ImmutableTriple<String, ClientOperation, String> constraint = new ImmutableTriple<String, ClientOperation, String>(key.toString(), op, value);
-        final List<T> searchResults = api.search(constraint);
+        final List<T> searchResults = api.searchAll(constraint);
 
         // Then
         assertThat(searchResults, hasItem(existingResource));
@@ -37,7 +37,7 @@ public final class SearchIntegrationTestUtil {
 
         // When
         final ImmutableTriple<String, ClientOperation, String> containsConstraint = new ImmutableTriple<String, ClientOperation, String>(key.toString(), op, partOfValue);
-        final List<T> searchResults = api.search(containsConstraint);
+        final List<T> searchResults = api.searchAll(containsConstraint);
 
         // Then
         assertThat(searchResults, hasItem(existingResource));
@@ -49,7 +49,7 @@ public final class SearchIntegrationTestUtil {
 
         // When
         final ImmutableTriple<String, ClientOperation, String> containsConstraint = new ImmutableTriple<String, ClientOperation, String>(key.toString(), op, partOfValue);
-        final List<T> searchResults = api.search(containsConstraint);
+        final List<T> searchResults = api.searchAll(containsConstraint);
 
         // Then
         assertThat(searchResults, hasItem(existingResource));
@@ -60,7 +60,7 @@ public final class SearchIntegrationTestUtil {
 
         // When
         final ImmutableTriple<String, ClientOperation, String> constraint = new ImmutableTriple<String, ClientOperation, String>(key.toString(), op, value);
-        final List<T> searchResults = api.search(constraint);
+        final List<T> searchResults = api.searchAll(constraint);
 
         // Then
         assertThat(searchResults, hasItem(existingEntity));
@@ -72,7 +72,7 @@ public final class SearchIntegrationTestUtil {
 
         // When
         final ImmutableTriple<String, ClientOperation, String> containsConstraint = new ImmutableTriple<String, ClientOperation, String>(key.toString(), op, partOfValue);
-        final List<T> searchResults = api.search(containsConstraint);
+        final List<T> searchResults = api.searchAll(containsConstraint);
 
         // Then
         assertThat(searchResults, not(hasItem(existingEntity)));
@@ -85,7 +85,7 @@ public final class SearchIntegrationTestUtil {
 
         // When
         final ImmutableTriple<String, ClientOperation, String> containsConstraint = new ImmutableTriple<String, ClientOperation, String>(key.toString(), op, partOfValue);
-        final List<T> searchResults = api.search(containsConstraint);
+        final List<T> searchResults = api.searchAll(containsConstraint);
 
         // Then
         assertThat(searchResults, hasItem(existingResource));

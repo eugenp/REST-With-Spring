@@ -21,33 +21,33 @@ public class URIUnitTest {
 
     @Test(expected = NullPointerException.class)
     public void givenNullArgumentArray_whenURIIsConstructed_thenException() {
-        SearchCommonUtil.constructURI((String[]) null);
+        SearchCommonUtil.constructURIWithEq((String[]) null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void givenSingleAttributeInArray_whenURIIsConstructed_thenException() {
-        SearchCommonUtil.constructURI(new String[] { "Single" });
+        SearchCommonUtil.constructURIWithEq(new String[] { "Single" });
     }
 
     @Test
     public void givenTwoAttributesInArray_whenURIIsConstructed_thenNoExceptions() {
-        SearchCommonUtil.constructURI(new String[] { "One", "Two" });
+        SearchCommonUtil.constructURIWithEq(new String[] { "One", "Two" });
     }
 
     @Test
     public void whenURIIsConstructed_thenResultIsNonNull() {
-        assertNotNull(SearchCommonUtil.constructURI(new String[] { "One", "Two" }));
+        assertNotNull(SearchCommonUtil.constructURIWithEq(new String[] { "One", "Two" }));
     }
 
     @Test
     public void whenURIIsConstructed_thenResultIsCorrect() {
-        final String uri = SearchCommonUtil.constructURI(new String[] { "key", "value" });
+        final String uri = SearchCommonUtil.constructURIWithEq(new String[] { "key", "value" });
         assertThat(uri, equalTo("key=value"));
     }
 
     @Test
     public void givenTwoParameters_whenURIIsConstructed_thenResultIsCorrect() {
-        final String uri = SearchCommonUtil.constructURI(new String[] { "key1", "value1", "key2", "value2" });
+        final String uri = SearchCommonUtil.constructURIWithEq(new String[] { "key1", "value1", "key2", "value2" });
         assertThat(uri, equalTo("key1=value1" + SearchCommonUtil.SEPARATOR + "key2=value2"));
     }
 

@@ -267,10 +267,20 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
     // search
 
     @Override
-    public final List<T> search(final Triple<String, ClientOperation, String>... constraints) {
+    public final List<T> searchAll(final Triple<String, ClientOperation, String>... constraints) {
         final Response searchResponse = searchAsResponse(constraints);
 
         return getMarshaller().<T> decodeList(searchResponse.getBody().asString(), clazz);
+    }
+
+    @Override
+    public final T searchOne(final Triple<String, ClientOperation, String>... constraints) {
+        List<T> all = searchAll(constraints);
+        if (all.isEmpty()) {
+            return null;
+        }
+        Preconditions.checkState(all.size() <= 1);
+        return all.get(0);
     }
 
     @Override
@@ -300,7 +310,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public final T searchOneByAttributes(final String... attributes) {
-        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes));
+        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURIWithEq(attributes));
         if (resourcesByName.isEmpty()) {
             return null;
         }
@@ -310,7 +320,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public final List<T> searchAllByAttributes(final String... attributes) {
-        final String uri = getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes);
+        final String uri = getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURIWithEq(attributes);
         final List<T> resourcesByAttributes = findAllByURI(uri);
         return resourcesByAttributes;
     }
