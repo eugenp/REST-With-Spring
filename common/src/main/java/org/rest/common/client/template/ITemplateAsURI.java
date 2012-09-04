@@ -6,10 +6,6 @@ import org.rest.common.persistence.model.IEntity;
 
 public interface ITemplateAsURI<T extends IEntity> {
 
-    // create
-
-    String createAsURI(final T resource);
-
     // find - one
 
     T findOneByURI(final String uri);
@@ -17,5 +13,9 @@ public interface ITemplateAsURI<T extends IEntity> {
     // find - all
 
     List<T> findAllByURI(final String uri);
+
+    // create
+
+    String createAsURI(final T resource);
 
 }

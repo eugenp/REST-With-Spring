@@ -223,7 +223,12 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final T searchOne(final Triple<String, ClientOperation, String>... constraints) {
-        throw new UnsupportedOperationException();
+        List<T> all = searchAll(constraints);
+        if (all.isEmpty()) {
+            return null;
+        }
+        Preconditions.checkState(all.size() <= 1);
+        return all.get(0);
     }
 
     // count
