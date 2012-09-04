@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @ImportResource("classpath*:*secPersistenceConfig.xml")
 @ComponentScan({ "org.rest.sec.persistence" })
+@PropertySource({ "classpath:persistence-${persistenceTarget:h2}.properties" })
 public class PersistenceJPAConfig {
 
     @Value("${jdbc.driverClassName}")

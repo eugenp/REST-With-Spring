@@ -4,7 +4,6 @@ import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.sec.client.template.UserRESTTemplateImpl;
@@ -19,7 +18,6 @@ import com.jayway.restassured.response.Response;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextConfig.class }, loader = AnnotationConfigContextLoader.class)
-@Ignore("temp")
 public class SecurityRESTIntegrationTest {
 
     @Autowired

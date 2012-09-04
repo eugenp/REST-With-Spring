@@ -133,7 +133,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
+        getAPI().searchOneByAttributes(SearchField.name.name(), existingResource.getName());
     }
 
     @Test
@@ -142,7 +142,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        final T resourceByName = getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
+        final T resourceByName = getAPI().searchOneByAttributes(SearchField.name.name(), existingResource.getName());
 
         // Then
         assertNotNull(resourceByName);
@@ -154,7 +154,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        final T resourceByName = getAPI().findOneByAttributes(SearchField.name.name(), existingResource.getName());
+        final T resourceByName = getAPI().searchOneByAttributes(SearchField.name.name(), existingResource.getName());
 
         // Then
         assertThat(existingResource, equalTo(resourceByName));
@@ -166,7 +166,7 @@ public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        getAPI().findAllByAttributes(QueryConstants.NAME_NEG, existingResource.getName());
+        getAPI().searchAllByAttributes(QueryConstants.NAME_NEG, existingResource.getName());
 
         // Then
     }

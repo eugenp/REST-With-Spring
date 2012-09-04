@@ -8,7 +8,7 @@ import org.rest.common.search.ClientOperation;
 
 public interface IOperations<T extends IEntity> {
 
-    // get
+    // find - one
 
     T findOne(final long id);
 

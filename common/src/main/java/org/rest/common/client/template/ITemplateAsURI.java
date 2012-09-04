@@ -20,8 +20,8 @@ public interface ITemplateAsURI<T extends IEntity> {
 
     // sandboxed
 
-    T findOneByAttributes(final String... attributes);
+    T searchOneByAttributes(final String... attributes);
 
-    List<T> findAllByAttributes(final String... attributes);
+    List<T> searchAllByAttributes(final String... attributes);
 
 }

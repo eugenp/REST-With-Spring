@@ -13,9 +13,9 @@ public interface ITemplateAsResponse<T extends IEntity> {
 
     Response findOneByUriAsResponse(final String uriOfResource, final RequestSpecification req);
 
-    Response findAllByUriAsResponse(final String uriOfResource, final RequestSpecification req);
-
     // find - all
+
+    Response findAllByUriAsResponse(final String uriOfResource, final RequestSpecification req);
 
     Response findAllAsResponse(final RequestSpecification req);
 

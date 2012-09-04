@@ -88,29 +88,10 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         return findAllRequest(req).get(uriOfResource);
     }
 
-    // find - by attributes
-
-    @Override
-    public final T findOneByAttributes(final String... attributes) {
-        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes));
-        if (resourcesByName.isEmpty()) {
-            return null;
-        }
-        Preconditions.checkState(resourcesByName.size() <= 1);
-        return resourcesByName.get(0);
-    }
-
-    @Override
-    public final List<T> findAllByAttributes(final String... attributes) {
-        final String uri = getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes);
-        final List<T> resourcesByAttributes = findAllByURI(uri);
-        return resourcesByAttributes;
-    }
-
     // find - all
 
     @Override
-    public final List<T> findAll() {
+    public List<T> findAll() {
         return findAllByURI(getURI());
     }
 
@@ -313,6 +294,25 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         Preconditions.checkState(searchResponse.getStatusCode() == 200);
 
         return getMarshaller().<List> decode(searchResponse.getBody().asString(), List.class);
+    }
+
+    // search - by attributes
+
+    @Override
+    public final T searchOneByAttributes(final String... attributes) {
+        final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes));
+        if (resourcesByName.isEmpty()) {
+            return null;
+        }
+        Preconditions.checkState(resourcesByName.size() <= 1);
+        return resourcesByName.get(0);
+    }
+
+    @Override
+    public final List<T> searchAllByAttributes(final String... attributes) {
+        final String uri = getURI() + QueryConstants.QUERY_PREFIX + SearchCommonUtil.constructURI(attributes);
+        final List<T> resourcesByAttributes = findAllByURI(uri);
+        return resourcesByAttributes;
     }
 
     // count

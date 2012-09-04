@@ -70,7 +70,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     }
 
     @Override
-    public final T findOneByAttributes(final String... attributes) {
+    public final T searchOneByAttributes(final String... attributes) {
         final List<T> resourcesByName = findAllByURI(getURI() + QueryConstants.QUERY_PREFIX + constructURI(attributes));
         if (resourcesByName.isEmpty()) {
             return null;
@@ -90,16 +90,6 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
             return Lists.newArrayList();
         }
         return marshaller.decodeList(body, clazz);
-    }
-
-    @Override
-    public final List<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
-        final ResponseEntity<String> allPaginatedAndSortedAsResponse = findAllPaginatedAndSortedAsResponse(page, size, sortBy, sortOrder);
-        final String bodyAsString = allPaginatedAndSortedAsResponse.getBody();
-        if (bodyAsString == null) {
-            return Lists.newArrayList();
-        }
-        return marshaller.decodeList(bodyAsString, clazz);
     }
 
     @Override
@@ -133,7 +123,17 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
     }
 
     @Override
-    public final List<T> findAllByAttributes(final String... attributes) {
+    public final List<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
+        final ResponseEntity<String> allPaginatedAndSortedAsResponse = findAllPaginatedAndSortedAsResponse(page, size, sortBy, sortOrder);
+        final String bodyAsString = allPaginatedAndSortedAsResponse.getBody();
+        if (bodyAsString == null) {
+            return Lists.newArrayList();
+        }
+        return marshaller.decodeList(bodyAsString, clazz);
+    }
+
+    @Override
+    public final List<T> searchAllByAttributes(final String... attributes) {
         final String uri = getURI() + QueryConstants.QUERY_PREFIX + constructURI(attributes);
         final List<T> resourcesByAttributes = findAllByURI(uri);
         return resourcesByAttributes;

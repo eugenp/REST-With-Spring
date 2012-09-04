@@ -12,7 +12,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @ImportResource("classpath*:secContextConfig.xml")
 @ComponentScan({ "org.rest.sec.model" })
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@PropertySource({ "classpath:persistence-${persistenceTarget:h2}.properties", "classpath:env-${envTarget:dev}.properties", "classpath:web-${webTarget:dev}.properties" })
+@PropertySource({ "classpath:env-${envTarget:dev}.properties", "classpath:web-${webTarget:dev}.properties" })
 public class ContextConfig {
 
     public ContextConfig() {

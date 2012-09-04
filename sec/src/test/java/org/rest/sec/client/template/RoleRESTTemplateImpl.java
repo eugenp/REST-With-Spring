@@ -36,7 +36,7 @@ public final class RoleRESTTemplateImpl extends AbstractRESTTemplate<Role> {
 
     // TODO: solve the marshalling issue and replace
     public final Role findByNameNew(final String name) {
-        return findOneByAttributes(SearchField.name.name(), name);
+        return searchOneByAttributes(SearchField.name.name(), name);
     }
 
     // template method
