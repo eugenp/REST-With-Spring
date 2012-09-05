@@ -1,4 +1,4 @@
-package org.rest.common.client;
+package org.rest.sec.client;
 
 import org.apache.http.HttpHost;
 import org.apache.http.impl.client.DefaultHttpClient;

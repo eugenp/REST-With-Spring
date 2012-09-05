@@ -1,7 +1,8 @@
-package org.rest.common.client.marshall;
+package org.rest.sec.client.marshall;
 
 import java.util.List;
 
+import org.rest.common.client.marshall.IMarshaller;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
