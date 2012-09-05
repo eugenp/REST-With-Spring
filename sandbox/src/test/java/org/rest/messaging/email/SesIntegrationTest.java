@@ -15,6 +15,8 @@ public class SesIntegrationTest {
     @Autowired
     private MailTemplate mailTemplate;
 
+    // tests
+
     @Test
     public final void whenTestEmailIsSent_thenNoExceptions() {
         final String sender = "baeldung@gmail.com"; // should be verified email
