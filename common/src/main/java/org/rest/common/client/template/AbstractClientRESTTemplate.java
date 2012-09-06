@@ -195,7 +195,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
 
     @Override
     public final void delete(final long id) {
-        final ResponseEntity<Object> deleteResourceResponse = restTemplate.exchange(getURI() + WebConstants.PATH_SEP + id, HttpMethod.DELETE, null, null);
+        final ResponseEntity<Object> deleteResourceResponse = restTemplate.exchange(getURI() + WebConstants.PATH_SEP + id, HttpMethod.DELETE, new HttpEntity<T>(writeHeaders()), null);
 
         Preconditions.checkState(deleteResourceResponse.getStatusCode().value() == 204);
     }
