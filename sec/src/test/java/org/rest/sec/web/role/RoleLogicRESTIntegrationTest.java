@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.Matchers;
@@ -106,7 +107,7 @@ public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Ro
     }
 
     @Test
-    public final void givenExistingResourceHasNameWithSpace_whtnResourcesIfRetrievedByName_thenResourceIsCorrectlyRetrieved() {
+    public final void givenExistingResourceHasNameWithSpace_whenResourcesIfRetrievedByName_thenResourceIsCorrectlyRetrieved() {
         final Role newResource = getEntityOps().createNewEntity();
         newResource.setName(randomAlphabetic(4) + " " + randomAlphabetic(4));
         getAPI().createAsResponse(newResource);
@@ -212,7 +213,25 @@ public class RoleLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Ro
         assertThat(updatedResource.getPrivileges(), hasItem(existingAssociation));
     }
 
-    // scenarios
+    // delete
+
+    @Test
+    @Ignore("TODO: fix")
+    public final void givenResourceWithAssociationsExists_thenResourceCanBeDeleted() {
+        // Given
+        final Privilege existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewEntity());
+        final Role newResource = getEntityOps().createNewEntity();
+        newResource.getPrivileges().add(existingAssociation);
+        final Role existingResource = getAPI().create(newResource);
+
+        // When
+        getAPI().delete(existingResource.getId());
+
+        // Then
+        assertNull(getAPI().findOne(existingAssociation.getId()));
+    }
+
+    // complex scenarios
 
     @Test
     public final void whenScenarioOfWorkingWithAssociations_thenTheChangesAreCorrectlyPersisted() {

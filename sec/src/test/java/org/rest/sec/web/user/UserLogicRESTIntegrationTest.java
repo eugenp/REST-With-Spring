@@ -27,7 +27,6 @@ public class UserLogicRESTIntegrationTest extends SecLogicRESTIntegrationTest<Us
 
     @Autowired
     private UserRESTTemplateImpl api;
-
     @Autowired
     private RoleRESTTemplateImpl associationApi;
 
