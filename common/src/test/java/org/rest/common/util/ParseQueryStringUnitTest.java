@@ -7,11 +7,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.rest.common.util.SearchCommonUtil.ID;
-import static org.rest.common.util.SearchCommonUtil.NAME;
-import static org.rest.common.util.SearchCommonUtil.NEGATION;
-import static org.rest.common.util.SearchCommonUtil.OP;
-import static org.rest.common.util.SearchCommonUtil.SEPARATOR;
 import static org.rest.common.util.SearchCommonUtil.parseQueryString;
 
 import java.util.List;
@@ -19,7 +14,6 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.junit.Test;
 import org.rest.common.search.ClientOperation;
-import org.rest.common.util.SearchField;
 
 public final class ParseQueryStringUnitTest {
 
@@ -39,17 +33,17 @@ public final class ParseQueryStringUnitTest {
 
     @Test(expected = IllegalStateException.class)
     public final void givenQueryContainIdConstraintFieldButNoValue_whenQueryIsParsed_thenException() {
-        parseQueryString(ID + OP);
+        parseQueryString(QueryConstants.ID + QueryConstants.OP);
     }
 
     @Test(expected = IllegalStateException.class)
     public final void givenQueryContainIdConstraintNonNumericalValueForId_whenQueryIsParsed_thenException() {
-        parseQueryString(ID + OP + "aa");
+        parseQueryString(QueryConstants.ID + QueryConstants.OP + "aa");
     }
 
     @Test(expected = IllegalStateException.class)
     public final void givenQueryContainSingleIdConstraintWithValidFieldValueAndAdditionalInvalidCharacter_whenQueryIsParsed_thenException() {
-        parseQueryString(ID + OP + "aa,");
+        parseQueryString(QueryConstants.ID + QueryConstants.OP + "aa,");
     }
 
     @Test(expected = IllegalStateException.class)
@@ -66,60 +60,60 @@ public final class ParseQueryStringUnitTest {
 
     @Test
     public final void givenQueryContainsValidIdConstraint_whenQueryIsParsed_thenNoExceptions() {
-        parseQueryString(ID + OP + randomNumeric(2));
+        parseQueryString(QueryConstants.ID + QueryConstants.OP + randomNumeric(2));
     }
 
     @Test
     public final void givenValidQueryWithIdConstraint_whenQueryIsParsed_thenResultIsNotNull() {
-        final List<ImmutableTriple<String, ClientOperation, String>> queryTyples = parseQueryString(ID + OP + "2");
+        final List<ImmutableTriple<String, ClientOperation, String>> queryTyples = parseQueryString(QueryConstants.ID + QueryConstants.OP + "2");
 
         assertFalse(queryTyples.isEmpty());
     }
 
     @Test
     public final void givenValidQueryWithIdConstraint_whenQueryIsParsed_thenResultKeyIsCorrect() {
-        final List<ImmutableTriple<String, ClientOperation, String>> queryTyples = parseQueryString(ID + OP + randomNumeric(2));
+        final List<ImmutableTriple<String, ClientOperation, String>> queryTyples = parseQueryString(QueryConstants.ID + QueryConstants.OP + randomNumeric(2));
         final ImmutableTriple<String, ClientOperation, String> pair = queryTyples.get(0);
-        assertEquals(ID, pair.getLeft());
+        assertEquals(QueryConstants.ID, pair.getLeft());
     }
 
     @Test
     public final void givenValidQueryWithIdConstraint_whenQueryIsParsed_thenResultValueIsCorrect() {
         final String id = randomNumeric(2);
-        final List<ImmutableTriple<String, ClientOperation, String>> queryTyples = parseQueryString(ID + OP + id);
+        final List<ImmutableTriple<String, ClientOperation, String>> queryTyples = parseQueryString(QueryConstants.ID + QueryConstants.OP + id);
         final ImmutableTriple<String, ClientOperation, String> pair = queryTyples.get(0);
         assertEquals(id, pair.getRight());
     }
 
     @Test
     public final void givenValidQueryWithNameConstraint_whenQueryIsParsed_thenNoExceptions() {
-        parseQueryString(NAME + OP + "some");
+        parseQueryString(QueryConstants.NAME + QueryConstants.OP + "some");
     }
 
     @Test
     public final void givenValidQueryWithNameConstraint_whenQueryIsParsed_thenResultIsNotNull() {
-        final List<ImmutableTriple<String, ClientOperation, String>> queryTyples = parseQueryString(NAME + OP + "some");
+        final List<ImmutableTriple<String, ClientOperation, String>> queryTyples = parseQueryString(QueryConstants.NAME + QueryConstants.OP + "some");
 
         assertFalse(queryTyples.isEmpty());
     }
 
     @Test
     public final void givenValidQueryWithNameConstraint_whenQueryIsParsed_thenResultKeyIsCorrect() {
-        final List<ImmutableTriple<String, ClientOperation, String>> queryTyples = parseQueryString(NAME + OP + "some");
+        final List<ImmutableTriple<String, ClientOperation, String>> queryTyples = parseQueryString(QueryConstants.NAME + QueryConstants.OP + "some");
         final ImmutableTriple<String, ClientOperation, String> pair = queryTyples.get(0);
-        assertEquals(NAME, pair.getLeft());
+        assertEquals(QueryConstants.NAME, pair.getLeft());
     }
 
     @Test
     public final void givenValidQueryWithNameConstraint_whenQueryIsParsed_thenResultValueIsCorrect() {
-        final List<ImmutableTriple<String, ClientOperation, String>> queryTyples = parseQueryString(NAME + OP + "some");
+        final List<ImmutableTriple<String, ClientOperation, String>> queryTyples = parseQueryString(QueryConstants.NAME + QueryConstants.OP + "some");
         final ImmutableTriple<String, ClientOperation, String> pair = queryTyples.get(0);
         assertEquals("some", pair.getRight());
     }
 
     @Test
     public final void givenValidQueryWithNameConstraint_whenQueryIsParsedForNameValueWithUppercase_thenResultValueIsCorrect() {
-        final List<ImmutableTriple<String, ClientOperation, String>> queryTyples = parseQueryString(NAME + OP + "Some");
+        final List<ImmutableTriple<String, ClientOperation, String>> queryTyples = parseQueryString(QueryConstants.NAME + QueryConstants.OP + "Some");
         final ImmutableTriple<String, ClientOperation, String> pair = queryTyples.get(0);
         assertEquals("Some", pair.getRight());
     }
@@ -128,29 +122,30 @@ public final class ParseQueryStringUnitTest {
 
     @Test
     public final void givenQueryContainsValidNegatedIdConstraint_whenQueryIsParsed_thenNoExceptions() {
-        parseQueryString(ID + NEGATION + OP + randomNumeric(2));
+        parseQueryString(QueryConstants.ID + QueryConstants.NEGATION + QueryConstants.OP + randomNumeric(2));
     }
 
     @Test
     public final void givenQueryContainsValidNegatedNameConstraint_whenQueryIsParsed_thenNoExceptions() {
-        parseQueryString(NAME + NEGATION + OP + randomAlphabetic(6));
+        parseQueryString(QueryConstants.NAME + QueryConstants.NEGATION + QueryConstants.OP + randomAlphabetic(6));
     }
 
     @Test
     public final void givenQueryContainsValidNegatedIdAndNegatedNameConstraint_whenQueryIsParsed_thenNoExceptions() {
-        parseQueryString(ID + NEGATION + OP + "3" + SEPARATOR + NAME + NEGATION + OP + "some");
+        parseQueryString(QueryConstants.ID + QueryConstants.NEGATION + QueryConstants.OP + "3" + QueryConstants.SEPARATOR + QueryConstants.NAME + QueryConstants.NEGATION + QueryConstants.OP + "some");
     }
 
     @Test
     public final void givenQueryContainsValidNegatedIdAndPositiveNameConstraint_whenQueryIsParsed_thenNoExceptions() {
-        parseQueryString(ID + NEGATION + OP + "3" + SEPARATOR + NAME + OP + "some");
+        parseQueryString(QueryConstants.ID + QueryConstants.NEGATION + QueryConstants.OP + "3" + QueryConstants.SEPARATOR + QueryConstants.NAME + QueryConstants.OP + "some");
     }
 
     @Test
     public final void givenQueryContainsValidNegatedIdAndPositiveNameConstraint_whenQueryIsParsed_thenResultsAreCorrect() {
         final String id = randomNumeric(2);
         final String name = randomAlphabetic(6);
-        final List<ImmutableTriple<String, ClientOperation, String>> parsedQueryString = parseQueryString(ID + NEGATION + OP + id + SEPARATOR + NAME + OP + name);
+        final List<ImmutableTriple<String, ClientOperation, String>> parsedQueryString = parseQueryString(QueryConstants.ID + QueryConstants.NEGATION + QueryConstants.OP + id + QueryConstants.SEPARATOR
+                + QueryConstants.NAME + QueryConstants.OP + name);
 
         assertEquals(id, parsedQueryString.get(0).getRight());
         assertEquals(name, parsedQueryString.get(1).getRight());
@@ -159,53 +154,53 @@ public final class ParseQueryStringUnitTest {
     @Test
     public final void givenQueryContainsValidNegatedNameConstraint_whenQueryIsParsed_thenResultTypesAreCorrect() {
         final String name = randomAlphabetic(8);
-        final List<ImmutableTriple<String, ClientOperation, String>> parseQueryString = parseQueryString(NAME + NEGATION + OP + name);
+        final List<ImmutableTriple<String, ClientOperation, String>> parseQueryString = parseQueryString(QueryConstants.NAME + QueryConstants.NEGATION + QueryConstants.OP + name);
         assertTrue(parseQueryString.get(0).getRight().getClass().equals(String.class));
         assertTrue(parseQueryString.get(0).getRight().equals(name));
-        assertTrue(parseQueryString.get(0).getLeft().equals(NAME));
+        assertTrue(parseQueryString.get(0).getLeft().equals(QueryConstants.NAME));
     }
 
     @Test
     public final void givenQueryContainsValidNegatedIdConstraint_whenQueryIsParsed_thenResultTypesAreCorrect() {
         final String id = randomNumeric(2);
-        final List<ImmutableTriple<String, ClientOperation, String>> parseQueryString = parseQueryString(ID + NEGATION + OP + id);
+        final List<ImmutableTriple<String, ClientOperation, String>> parseQueryString = parseQueryString(QueryConstants.ID + QueryConstants.NEGATION + QueryConstants.OP + id);
         assertTrue(parseQueryString.get(0).getRight().getClass().equals(String.class));
         assertTrue(parseQueryString.get(0).getRight().equals(id));
-        assertTrue(parseQueryString.get(0).getLeft().equals(ID));
+        assertTrue(parseQueryString.get(0).getLeft().equals(QueryConstants.ID));
     }
 
     // correct - with startsWith, endsWith, contains operations
 
     @Test
     public final void givenQueryContainsValidOpStartsWithNameConstraint_whenQueryIsParsed_thenNoExceptions() {
-        parseQueryString(SearchField.name.toString() + OP + randomAlphabetic(8) + "*");
+        parseQueryString(SearchField.name.toString() + QueryConstants.OP + randomAlphabetic(8) + "*");
     }
 
     // multiple key-value tuples
 
     @Test(expected = IllegalStateException.class)
     public final void givenQueryContainOneValidConstraintAndOneIncorrectOne_whenQueryIsParsed_thenException() {
-        parseQueryString(ID + OP + randomNumeric(2) + SEPARATOR + "name");
+        parseQueryString(QueryConstants.ID + QueryConstants.OP + randomNumeric(2) + QueryConstants.SEPARATOR + "name");
     }
 
     @Test
     public final void givenQueryContainANameConstraintWithNumbersInTheName_whenQueryIsParsed_thenNoExceptions() {
-        parseQueryString(ID + OP + randomNumeric(2) + SEPARATOR + NAME + OP + randomAlphabetic(6));
+        parseQueryString(QueryConstants.ID + QueryConstants.OP + randomNumeric(2) + QueryConstants.SEPARATOR + QueryConstants.NAME + QueryConstants.OP + randomAlphabetic(6));
     }
 
     @Test
     public final void givenQueryContainTwoValidConstraints_whenQueryIsParsed_thenNoExceptions() {
-        parseQueryString(ID + OP + "2" + SEPARATOR + NAME + OP + "eugen");
+        parseQueryString(QueryConstants.ID + QueryConstants.OP + "2" + QueryConstants.SEPARATOR + QueryConstants.NAME + QueryConstants.OP + "eugen");
     }
 
     @Test
     public final void givenQueryContainTwoValidConstraints_whenQueryIsParsed_thenConstraintsAreCorrect() {
         final String id = randomNumeric(2);
         final String name = randomAlphabetic(6);
-        final String queryString = ID + OP + id + SEPARATOR + NAME + OP + name;
+        final String queryString = QueryConstants.ID + QueryConstants.OP + id + QueryConstants.SEPARATOR + QueryConstants.NAME + QueryConstants.OP + name;
         final List<ImmutableTriple<String, ClientOperation, String>> parsedQueryConstraints = parseQueryString(queryString);
-        assertThat(parsedQueryConstraints, hasItem(createNewImmutableTriple(ID, ClientOperation.EQ, id)));
-        assertThat(parsedQueryConstraints, hasItem(createNewImmutableTriple(NAME, ClientOperation.EQ, name)));
+        assertThat(parsedQueryConstraints, hasItem(createNewImmutableTriple(QueryConstants.ID, ClientOperation.EQ, id)));
+        assertThat(parsedQueryConstraints, hasItem(createNewImmutableTriple(QueryConstants.NAME, ClientOperation.EQ, name)));
     }
 
     // multiple key-value tuples (for the same key): ex: id=2,id=3
@@ -214,18 +209,18 @@ public final class ParseQueryStringUnitTest {
     public final void givenQueryContainTwoValidConstraintsForTheIdKey_whenQueryIsParsed_thenConstraintsAreCorrect() {
         final String id1 = randomNumeric(2);
         final String id2 = randomNumeric(2);
-        final String queryString = ID + OP + id1 + SEPARATOR + ID + OP + id2;
+        final String queryString = QueryConstants.ID + QueryConstants.OP + id1 + QueryConstants.SEPARATOR + QueryConstants.ID + QueryConstants.OP + id2;
         final List<ImmutableTriple<String, ClientOperation, String>> parsedQueryString = parseQueryString(queryString);
-        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(ID, ClientOperation.EQ, id1)));
-        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(ID, ClientOperation.EQ, id2)));
+        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(QueryConstants.ID, ClientOperation.EQ, id1)));
+        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(QueryConstants.ID, ClientOperation.EQ, id2)));
     }
 
     @Test
     public final void givenQueryContainTwoValidConstraintsForTheNameKey_whenQueryIsParsed_thenConstraintsAreCorrect() {
-        final String queryString = NAME + OP + "me" + SEPARATOR + NAME + OP + "andyou";
+        final String queryString = QueryConstants.NAME + QueryConstants.OP + "me" + QueryConstants.SEPARATOR + QueryConstants.NAME + QueryConstants.OP + "andyou";
         final List<ImmutableTriple<String, ClientOperation, String>> parsedQueryString = parseQueryString(queryString);
-        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(NAME, ClientOperation.EQ, "me")));
-        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(NAME, ClientOperation.EQ, "andyou")));
+        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(QueryConstants.NAME, ClientOperation.EQ, "me")));
+        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(QueryConstants.NAME, ClientOperation.EQ, "andyou")));
     }
 
     /**
@@ -233,7 +228,8 @@ public final class ParseQueryStringUnitTest {
      */
     @Test(expected = IllegalStateException.class)
     public final void givenQueryContainTwoValidNameConstraintsAndTwoValidIdConstraintsInTheIncorrectOrder_whenQueryIsParsed_thenConstraintsAreCorrect() {
-        final String queryString = NAME + OP + "me" + SEPARATOR + NAME + OP + "andyou" + SEPARATOR + ID + OP + "2" + SEPARATOR + ID + OP + "3";
+        final String queryString = QueryConstants.NAME + QueryConstants.OP + "me" + QueryConstants.SEPARATOR + QueryConstants.NAME + QueryConstants.OP + "andyou" + QueryConstants.SEPARATOR + QueryConstants.ID
+                + QueryConstants.OP + "2" + QueryConstants.SEPARATOR + QueryConstants.ID + QueryConstants.OP + "3";
         parseQueryString(queryString);
     }
 
@@ -241,13 +237,14 @@ public final class ParseQueryStringUnitTest {
     public final void givenQueryContainTwoValidIdConstraintsAndTwoValidNameConstraints_whenQueryIsParsed_thenConstraintsAreCorrect() {
         final String id1 = randomNumeric(2);
         final String id2 = randomNumeric(2);
-        final String queryString = ID + OP + id1 + SEPARATOR + ID + OP + id2 + SEPARATOR + NAME + OP + "me" + SEPARATOR + NAME + OP + "andyou";
+        final String queryString = QueryConstants.ID + QueryConstants.OP + id1 + QueryConstants.SEPARATOR + QueryConstants.ID + QueryConstants.OP + id2 + QueryConstants.SEPARATOR + QueryConstants.NAME
+                + QueryConstants.OP + "me" + QueryConstants.SEPARATOR + QueryConstants.NAME + QueryConstants.OP + "andyou";
         final List<ImmutableTriple<String, ClientOperation, String>> parsedQueryString = parseQueryString(queryString);
 
-        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(ID, ClientOperation.EQ, id1)));
-        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(ID, ClientOperation.EQ, id2)));
-        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(NAME, ClientOperation.EQ, "me")));
-        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(NAME, ClientOperation.EQ, "andyou")));
+        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(QueryConstants.ID, ClientOperation.EQ, id1)));
+        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(QueryConstants.ID, ClientOperation.EQ, id2)));
+        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(QueryConstants.NAME, ClientOperation.EQ, "me")));
+        assertThat(parsedQueryString, hasItem(createNewImmutableTriple(QueryConstants.NAME, ClientOperation.EQ, "andyou")));
     }
 
     //

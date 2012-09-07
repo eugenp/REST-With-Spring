@@ -11,16 +11,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
 public final class SearchCommonUtil {
-    public static final String Q_PARAM = "q";
-
-    public static final String SEPARATOR = ",";
-    public static final String SEPARATOR_AMPER = "&";
-
-    public static final String OP = "=";
-    public static final String NEGATION = "~";
-
-    public static final String ID = "id";
-    public static final String NAME = "name";
 
     private SearchCommonUtil() {
         throw new UnsupportedOperationException();
@@ -33,9 +23,9 @@ public final class SearchCommonUtil {
         Preconditions.checkState(queryString.matches("((id~?=[0-9]+)?,?)*((name~?=[0-9a-zA-Z*]+),?)*"));
 
         final List<ImmutableTriple<String, ClientOperation, String>> tuplesList = Lists.newArrayList();
-        final String[] tuples = queryString.split(SEPARATOR);
+        final String[] tuples = queryString.split(QueryConstants.SEPARATOR);
         for (final String tuple : tuples) {
-            final String[] keyAndValue = tuple.split(OP);
+            final String[] keyAndValue = tuple.split(QueryConstants.OP);
             Preconditions.checkState(keyAndValue.length == 2);
             tuplesList.add(createConstraintFromUriParam(keyAndValue[0], keyAndValue[1]));
         }
@@ -75,7 +65,7 @@ public final class SearchCommonUtil {
 
     static ImmutableTriple<String, ClientOperation, String> createConstraintFromUriParam(final String key, final String value) {
         boolean negated = false;
-        if (key.endsWith(NEGATION)) {
+        if (key.endsWith(QueryConstants.NEGATION)) {
             negated = true;
         }
 

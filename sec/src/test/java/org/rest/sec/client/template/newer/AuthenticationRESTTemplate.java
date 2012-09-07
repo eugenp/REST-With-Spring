@@ -1,7 +1,7 @@
 package org.rest.sec.client.template.newer;
 
 import org.rest.common.client.marshall.IMarshaller;
-import org.rest.common.web.util.HeaderUtil;
+import org.rest.common.client.web.HeaderUtil;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.model.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;

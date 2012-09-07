@@ -8,6 +8,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rest.sec.client.template.UserRESTTemplateImpl;
+import org.rest.sec.model.UserEntityOpsImpl;
 import org.rest.sec.spring.client.ClientTestConfig;
 import org.rest.sec.spring.context.ContextConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class SecurityRESTIntegrationTest {
 
     @Autowired
     private UserRESTTemplateImpl userTemplate;
+    @Autowired
+    private UserEntityOpsImpl userOps;
 
     // tests
 
@@ -32,7 +35,7 @@ public class SecurityRESTIntegrationTest {
     @Test
     public final void givenUnauthenticated_whenAResourceIsDeleted_then401IsReceived() {
         // Given
-        final String uriOfExistingResource = userTemplate.createAsURI(userTemplate.createNewEntity());
+        final String uriOfExistingResource = userTemplate.createAsURI(userOps.createNewEntity());
 
         // When
         final Response response = given().delete(uriOfExistingResource);
@@ -47,7 +50,7 @@ public class SecurityRESTIntegrationTest {
     public final void givenAuthenticatedByBasicAuth_whenAResourceIsCreated_then201IsReceived() {
         // Given
         // When
-        final Response response = userTemplate.givenAuthenticated().contentType(userTemplate.getMarshaller().getMime()).body(userTemplate.createNewEntity()).post(userTemplate.getURI());
+        final Response response = userTemplate.givenAuthenticated().contentType(userTemplate.getMarshaller().getMime()).body(userOps.createNewEntity()).post(userTemplate.getURI());
 
         // Then7
         assertThat(response.getStatusCode(), is(201));
@@ -57,7 +60,7 @@ public class SecurityRESTIntegrationTest {
     public final void givenAuthenticatedByDigestAuth_whenAResourceIsCreated_then201IsReceived() {
         // Given
         // When
-        final Response response = userTemplate.givenAuthenticated().contentType(userTemplate.getMarshaller().getMime()).body(userTemplate.createNewEntity()).post(userTemplate.getURI());
+        final Response response = userTemplate.givenAuthenticated().contentType(userTemplate.getMarshaller().getMime()).body(userOps.createNewEntity()).post(userTemplate.getURI());
 
         // Then
         assertThat(response.getStatusCode(), is(201));

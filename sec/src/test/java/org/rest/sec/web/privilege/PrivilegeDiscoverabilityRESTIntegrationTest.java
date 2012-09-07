@@ -5,6 +5,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.PrivilegeRESTTemplateImpl;
 import org.rest.sec.model.Privilege;
+import org.rest.sec.model.PrivilegeEntityOpsImpl;
 import org.rest.sec.test.SecDiscoverabilityRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,6 +15,8 @@ public class PrivilegeDiscoverabilityRESTIntegrationTest extends SecDiscoverabil
 
     @Autowired
     private PrivilegeRESTTemplateImpl restTemplate;
+    @Autowired
+    private PrivilegeEntityOpsImpl entityOps;
 
     public PrivilegeDiscoverabilityRESTIntegrationTest() {
         super(Privilege.class);
@@ -25,7 +28,7 @@ public class PrivilegeDiscoverabilityRESTIntegrationTest extends SecDiscoverabil
 
     @Override
     protected final Privilege createNewEntity() {
-        return restTemplate.createNewEntity();
+        return getEntityOps().createNewEntity();
     }
 
     @Override
@@ -50,7 +53,7 @@ public class PrivilegeDiscoverabilityRESTIntegrationTest extends SecDiscoverabil
 
     @Override
     protected final IEntityOperations<Privilege> getEntityOps() {
-        return restTemplate;
+        return entityOps;
     }
 
 }

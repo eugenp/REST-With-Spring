@@ -2,7 +2,7 @@ package org.rest.sec.client.template.test;
 
 import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.UserClientRESTTemplate;
-import org.rest.sec.client.template.UserRESTTemplateImpl;
+import org.rest.sec.model.UserEntityOpsImpl;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.test.SecClientSortAndPaginationRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ public class UserClientSortAndPaginationRESTIntegrationTest extends SecClientSor
     @Autowired
     private UserClientRESTTemplate clientTemplate;
     @Autowired
-    private UserRESTTemplateImpl entityOps;
+    private UserEntityOpsImpl entityOps;
 
     public UserClientSortAndPaginationRESTIntegrationTest() {
         super();

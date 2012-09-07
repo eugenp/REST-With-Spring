@@ -2,7 +2,6 @@ package org.rest.common.search;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.util.QueryConstants;
-import org.rest.common.util.SearchCommonUtil;
 
 public final class SearchUriBuilder {
     private StringBuilder uri;
@@ -41,12 +40,12 @@ public final class SearchUriBuilder {
     }
 
     private String constructOperationString(final boolean negated) {
-        return (negated) ? SearchCommonUtil.NEGATION + SearchCommonUtil.OP : SearchCommonUtil.OP;
+        return (negated) ? QueryConstants.NEGATION + QueryConstants.OP : QueryConstants.OP;
     }
 
     private void addInterFragmentSeparatorIfNecessary() {
         if (uri.length() != 0) {
-            uri.append(SearchCommonUtil.SEPARATOR);
+            uri.append(QueryConstants.SEPARATOR);
         }
     }
 

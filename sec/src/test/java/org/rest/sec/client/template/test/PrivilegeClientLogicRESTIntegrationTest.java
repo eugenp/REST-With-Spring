@@ -2,8 +2,8 @@ package org.rest.sec.client.template.test;
 
 import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.PrivilegeClientRESTTemplate;
-import org.rest.sec.client.template.PrivilegeRESTTemplateImpl;
 import org.rest.sec.model.Privilege;
+import org.rest.sec.model.PrivilegeEntityOpsImpl;
 import org.rest.sec.test.SecClientLogicRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +12,7 @@ public class PrivilegeClientLogicRESTIntegrationTest extends SecClientLogicRESTI
     @Autowired
     private PrivilegeClientRESTTemplate clientTemplate;
     @Autowired
-    private PrivilegeRESTTemplateImpl entityOps;
+    private PrivilegeEntityOpsImpl entityOps;
 
     public PrivilegeClientLogicRESTIntegrationTest() {
         super();

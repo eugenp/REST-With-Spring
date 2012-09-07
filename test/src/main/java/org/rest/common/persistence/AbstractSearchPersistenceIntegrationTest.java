@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.rest.common.search.ClientOperation.EQ;
 import static org.rest.common.search.ClientOperation.NEG_EQ;
-import static org.rest.common.util.SearchCommonUtil.NAME;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ import org.rest.common.persistence.service.IService;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.test.contract.ISearchIntegrationTest;
 import org.rest.common.util.IDUtils;
-import org.rest.common.util.SearchCommonUtil;
+import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchField;
 import org.rest.common.util.SearchIntegrationTestUtil;
 
@@ -36,7 +35,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
         final T existingEntity = persistNewEntity();
 
         // When
-        final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(NAME, EQ, existingEntity.getName());
+        final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(QueryConstants.NAME, EQ, existingEntity.getName());
         getAPI().searchAll(nameConstraint);
     }
 
@@ -411,7 +410,8 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Test
     public final void givenResourceExists_whenSearchByEndsWithIncorrectPartOfNameIsPerformed_thenResourceIsNotFound() {
         final T existingResource = persistNewEntity();
-        SearchIntegrationTestUtil.givenResourceExists_whenSearchByEndsWithIncorrectPartOfKeyIsPerformed_thenResourceIsNotFound(getAPI(), existingResource, SearchField.name, ClientOperation.ENDS_WITH, existingResource.getName());
+        SearchIntegrationTestUtil.givenResourceExists_whenSearchByEndsWithIncorrectPartOfKeyIsPerformed_thenResourceIsNotFound(getAPI(), existingResource, SearchField.name, ClientOperation.ENDS_WITH,
+                existingResource.getName());
     }
 
     @Test
@@ -443,11 +443,11 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     // util
 
     final Triple<String, ClientOperation, String> createNameConstraint(final ClientOperation operation, final String nameValue) {
-        return new ImmutableTriple<String, ClientOperation, String>(SearchCommonUtil.NAME, operation, nameValue);
+        return new ImmutableTriple<String, ClientOperation, String>(QueryConstants.NAME, operation, nameValue);
     }
 
     final Triple<String, ClientOperation, String> createIdConstraint(final ClientOperation operation, final Long idValue) {
-        return new ImmutableTriple<String, ClientOperation, String>(SearchCommonUtil.ID, operation, idValue.toString());
+        return new ImmutableTriple<String, ClientOperation, String>(QueryConstants.ID, operation, idValue.toString());
     }
 
 }

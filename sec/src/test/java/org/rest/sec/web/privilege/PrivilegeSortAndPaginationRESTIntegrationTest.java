@@ -24,7 +24,7 @@ public class PrivilegeSortAndPaginationRESTIntegrationTest extends SecSortAndPag
 
     @Override
     protected final Privilege createNewEntity() {
-        return template.createNewEntity();
+        return getEntityOps().createNewEntity();
     }
 
     @Override

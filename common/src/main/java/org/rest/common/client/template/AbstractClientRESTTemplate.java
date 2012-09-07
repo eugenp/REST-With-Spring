@@ -1,17 +1,15 @@
 package org.rest.common.client.template;
 
-import static org.rest.common.util.SearchCommonUtil.SEPARATOR_AMPER;
-
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.client.marshall.IMarshaller;
+import org.rest.common.client.web.HeaderUtil;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.search.SearchUriBuilder;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.web.WebConstants;
-import org.rest.common.web.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +99,7 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         uri.append(QueryConstants.QUESTIONMARK);
         uri.append("page=");
         uri.append(page);
-        uri.append(SEPARATOR_AMPER);
+        uri.append(QueryConstants.SEPARATOR_AMPER);
         uri.append("size=");
         uri.append(size);
         final ResponseEntity<List> findAllResponse = restTemplate.exchange(uri.toString(), HttpMethod.GET, findRequestEntity(), List.class);
@@ -140,17 +138,17 @@ public abstract class AbstractClientRESTTemplate<T extends INameableEntity> impl
         uri.append(QueryConstants.QUESTIONMARK);
         uri.append("page=");
         uri.append(page);
-        uri.append(SEPARATOR_AMPER);
+        uri.append(QueryConstants.SEPARATOR_AMPER);
         uri.append("size=");
         uri.append(size);
         Preconditions.checkState(!(sortBy == null && sortOrder != null));
         if (sortBy != null) {
-            uri.append(SEPARATOR_AMPER);
+            uri.append(QueryConstants.SEPARATOR_AMPER);
             uri.append(QueryConstants.SORT_BY + "=");
             uri.append(sortBy);
         }
         if (sortOrder != null) {
-            uri.append(SEPARATOR_AMPER);
+            uri.append(QueryConstants.SEPARATOR_AMPER);
             uri.append(QueryConstants.SORT_ORDER + "=");
             uri.append(sortOrder);
         }

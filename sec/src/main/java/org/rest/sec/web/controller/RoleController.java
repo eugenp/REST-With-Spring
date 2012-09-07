@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.rest.common.exceptions.ConflictException;
 import org.rest.common.util.QueryConstants;
-import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.web.RestPreconditions;
 import org.rest.common.web.controller.AbstractController;
 import org.rest.common.web.controller.ISortingController;
@@ -44,9 +43,9 @@ public class RoleController extends AbstractController<Role> implements ISorting
 
     // search
 
-    @RequestMapping(params = { SearchCommonUtil.Q_PARAM }, method = RequestMethod.GET)
+    @RequestMapping(params = { QueryConstants.Q_PARAM }, method = RequestMethod.GET)
     @ResponseBody
-    public List<Role> search(@RequestParam(SearchCommonUtil.Q_PARAM) final String queryString) {
+    public List<Role> search(@RequestParam(QueryConstants.Q_PARAM) final String queryString) {
         return searchInternal(queryString);
     }
 

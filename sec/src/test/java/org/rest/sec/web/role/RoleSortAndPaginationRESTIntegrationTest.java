@@ -25,7 +25,7 @@ public class RoleSortAndPaginationRESTIntegrationTest extends SecSortAndPaginati
 
     @Override
     protected final Role createNewEntity() {
-        return template.createNewEntity();
+        return getEntityOps().createNewEntity();
     }
 
     @Override

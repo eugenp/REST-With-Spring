@@ -4,6 +4,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.UserRESTTemplateImpl;
+import org.rest.sec.model.UserEntityOpsImpl;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.test.SecDiscoverabilityRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ public class UserDiscoverabilityRESTIntegrationTest extends SecDiscoverabilityRE
 
     @Autowired
     private UserRESTTemplateImpl restTemplate;
+    @Autowired
+    private UserEntityOpsImpl entityOps;
 
     public UserDiscoverabilityRESTIntegrationTest() {
         super(User.class);
@@ -35,7 +38,7 @@ public class UserDiscoverabilityRESTIntegrationTest extends SecDiscoverabilityRE
 
     @Override
     protected final User createNewEntity() {
-        return restTemplate.createNewEntity();
+        return getEntityOps().createNewEntity();
     }
 
     @Override
@@ -50,7 +53,7 @@ public class UserDiscoverabilityRESTIntegrationTest extends SecDiscoverabilityRE
 
     @Override
     protected final IEntityOperations<User> getEntityOps() {
-        return restTemplate;
+        return entityOps;
     }
 
 }

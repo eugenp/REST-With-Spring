@@ -1,4 +1,4 @@
-package org.rest.common.web.util;
+package org.rest.common.client.web;
 
 import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.security.SpringSecurityUtil;

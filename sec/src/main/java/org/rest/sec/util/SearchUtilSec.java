@@ -3,7 +3,7 @@ package org.rest.sec.util;
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
-import org.rest.common.util.SearchCommonUtil;
+import org.rest.common.util.QueryConstants;
 import org.springframework.data.jpa.domain.Specification;
 
 public final class SearchUtilSec {
@@ -18,10 +18,10 @@ public final class SearchUtilSec {
         final String constraintName = constraint.getLeft();
         final boolean negated = isConstraintNegated(constraint);
 
-        if (constraintName.equals(SearchCommonUtil.NAME)) {
+        if (constraintName.equals(QueryConstants.NAME)) {
             return QuerySpecificationSec.getByNameSpecification(clazz, constraint.getMiddle(), constraint.getRight(), negated);
         }
-        if (constraintName.equals(SearchCommonUtil.ID)) {
+        if (constraintName.equals(QueryConstants.ID)) {
             return QuerySpecificationSec.getByIdSpecification(clazz, Long.parseLong(constraint.getRight()), negated);
         }
         return null;

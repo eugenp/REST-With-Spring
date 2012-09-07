@@ -1,7 +1,5 @@
 package org.rest.sec.client.template;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
-
 import org.rest.common.client.template.AbstractRESTTemplate;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.model.Privilege;
@@ -38,21 +36,6 @@ public final class PrivilegeRESTTemplateImpl extends AbstractRESTTemplate<Privil
         final String passwordToUse = (username != null) ? password : SecurityConstants.ADMIN_PASSWORD;
 
         return auth.givenBasicAuthenticated(usernameToUse, passwordToUse);
-    }
-
-    @Override
-    public final Privilege createNewEntity() {
-        return new Privilege(randomAlphabetic(8));
-    }
-
-    @Override
-    public final void invalidate(final Privilege entity) {
-        entity.setName(null);
-    }
-
-    @Override
-    public void change(final Privilege resource) {
-        resource.setName(randomAlphabetic(8));
     }
 
 }

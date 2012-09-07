@@ -11,7 +11,6 @@ import org.rest.common.search.ClientOperation;
 import org.rest.common.search.SearchUriBuilder;
 import org.rest.common.sec.util.SearchTestUtil;
 import org.rest.common.util.QueryConstants;
-import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.web.WebConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -136,17 +135,17 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         uri.append(QueryConstants.QUESTIONMARK);
         uri.append("page=");
         uri.append(page);
-        uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+        uri.append(QueryConstants.SEPARATOR_AMPER);
         uri.append("size=");
         uri.append(size);
         Preconditions.checkState(!(sortBy == null && sortOrder != null));
         if (sortBy != null) {
-            uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+            uri.append(QueryConstants.SEPARATOR_AMPER);
             uri.append(QueryConstants.SORT_BY + "=");
             uri.append(sortBy);
         }
         if (sortOrder != null) {
-            uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+            uri.append(QueryConstants.SEPARATOR_AMPER);
             uri.append(QueryConstants.SORT_ORDER + "=");
             uri.append(sortOrder);
         }
@@ -164,7 +163,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
             uri.append(sortBy);
         }
         if (sortOrder != null) {
-            uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+            uri.append(QueryConstants.SEPARATOR_AMPER);
             uri.append(QueryConstants.SORT_ORDER + "=");
             uri.append(sortOrder);
         }
@@ -178,7 +177,7 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
         uri.append(QueryConstants.QUESTIONMARK);
         uri.append("page=");
         uri.append(page);
-        uri.append(SearchCommonUtil.SEPARATOR_AMPER);
+        uri.append(QueryConstants.SEPARATOR_AMPER);
         uri.append("size=");
         uri.append(size);
         return findAllByUriAsResponse(uri.toString(), req);
@@ -310,13 +309,6 @@ public abstract class AbstractRESTTemplate<T extends IEntity> implements IRESTTe
 
     @Override
     public long count() {
-        throw new UnsupportedOperationException();
-    }
-
-    // entity (non REST)
-
-    @Override
-    public void invalidate(final T entity) {
         throw new UnsupportedOperationException();
     }
 

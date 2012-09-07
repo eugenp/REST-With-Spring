@@ -25,7 +25,7 @@ public class UserSortAndPaginationRESTIntegrationTest extends SecSortAndPaginati
 
     @Override
     protected final User createNewEntity() {
-        return template.createNewEntity();
+        return getEntityOps().createNewEntity();
     }
 
     @Override

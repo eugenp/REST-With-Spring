@@ -1,10 +1,7 @@
 package org.rest.sec.client.template;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
-
 import org.rest.common.client.template.AbstractRESTTemplate;
 import org.rest.sec.client.SecBusinessPaths;
-import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
 import org.rest.sec.util.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +9,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Sets;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @Component
@@ -47,21 +43,6 @@ public final class RoleRESTTemplateImpl extends AbstractRESTTemplate<Role> {
         final String passwordToUse = (username != null) ? password : SecurityConstants.ADMIN_PASSWORD;
 
         return auth.givenBasicAuthenticated(usernameToUse, passwordToUse);
-    }
-
-    @Override
-    public final Role createNewEntity() {
-        return new Role(randomAlphabetic(8), Sets.<Privilege> newHashSet());
-    }
-
-    @Override
-    public final void invalidate(final Role entity) {
-        entity.setName(null);
-    }
-
-    @Override
-    public final void change(final Role resource) {
-        resource.setName(randomAlphabetic(8));
     }
 
 }

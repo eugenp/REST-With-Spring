@@ -2,6 +2,7 @@ package org.rest.sec.web.user;
 
 import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.UserRESTTemplateImpl;
+import org.rest.sec.model.UserEntityOpsImpl;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.test.SecSearchRESTIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ public class UserSearchRESTIntegrationTest extends SecSearchRESTIntegrationTest<
 
     @Autowired
     private UserRESTTemplateImpl restTemplate;
+    @Autowired
+    private UserEntityOpsImpl entityOps;
 
     public UserSearchRESTIntegrationTest() {
         super();
@@ -26,7 +29,7 @@ public class UserSearchRESTIntegrationTest extends SecSearchRESTIntegrationTest<
 
     @Override
     protected final IEntityOperations<User> getEntityOps() {
-        return restTemplate;
+        return entityOps;
     }
 
 }

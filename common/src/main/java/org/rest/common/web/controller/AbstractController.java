@@ -53,7 +53,7 @@ public abstract class AbstractController<T extends INameableEntity> {
     // search
 
     @SuppressWarnings("unchecked")
-    public List<T> searchInternal(@RequestParam(SearchCommonUtil.Q_PARAM) final String queryString) {
+    public List<T> searchInternal(@RequestParam(QueryConstants.Q_PARAM) final String queryString) {
         try {
             List<ImmutableTriple<String, ClientOperation, String>> parsedQuery = null;
             try {
@@ -78,7 +78,7 @@ public abstract class AbstractController<T extends INameableEntity> {
     }
 
     @SuppressWarnings("unchecked")
-    public List<T> searchInternalPaginated(@RequestParam(SearchCommonUtil.Q_PARAM) final String queryString, final int page, final int size) {
+    public List<T> searchInternalPaginated(@RequestParam(QueryConstants.Q_PARAM) final String queryString, final int page, final int size) {
         try {
             List<ImmutableTriple<String, ClientOperation, String>> parsedQuery = null;
             try {
