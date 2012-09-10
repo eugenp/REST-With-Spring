@@ -34,7 +34,7 @@ import com.google.common.base.Preconditions;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
-@ActiveProfiles({ "client", "test" })
+@ActiveProfiles({ "client",  "mime_xml" })
 public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity> {
 
     protected final Class<T> clazz;

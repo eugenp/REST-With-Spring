@@ -24,7 +24,7 @@ import com.google.common.net.HttpHeaders;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
-@ActiveProfiles({ "client", "test" })
+@ActiveProfiles({ "client",  "mime_xml" })
 public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEntity> {
 
     private Class<T> clazz;

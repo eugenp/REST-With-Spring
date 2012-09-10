@@ -32,7 +32,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @SuppressWarnings("unchecked")
-@ActiveProfiles({ "client", "test" })
+@ActiveProfiles({ "client",  "mime_xml" })
 public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntity> implements ISearchIntegrationTest {
 
     public AbstractSearchRESTIntegrationTest() {

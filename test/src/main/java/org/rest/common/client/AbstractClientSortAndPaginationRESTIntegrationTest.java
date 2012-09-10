@@ -15,7 +15,7 @@ import org.rest.common.web.WebConstants;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles({ "client", "test" })
+@ActiveProfiles({ "client",  "mime_xml" })
 public abstract class AbstractClientSortAndPaginationRESTIntegrationTest<T extends INameableEntity> {
 
     public AbstractClientSortAndPaginationRESTIntegrationTest() {
