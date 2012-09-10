@@ -9,8 +9,8 @@ public final class SpringSecurityPrincipal extends User {
 
     private final String uuid;
 
-    public SpringSecurityPrincipal(final String username, final String password, final Collection<? extends GrantedAuthority> authorities, final String uuidToSet) {
-        super(username, password, authorities);
+    public SpringSecurityPrincipal(final String username, final String password, final boolean enabled, final Collection<? extends GrantedAuthority> authorities, final String uuidToSet) {
+        super(username, password, enabled, true, true, true, authorities);
 
         uuid = uuidToSet;
     }

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.http.HttpHeaders;
 import org.rest.common.event.PaginatedResultsRetrievedEvent;
 import org.rest.common.event.ResourceCreatedEvent;
@@ -16,9 +15,7 @@ import org.rest.common.exceptions.ForbiddenException;
 import org.rest.common.exceptions.ResourceNotFoundException;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.persistence.service.IService;
-import org.rest.common.search.ClientOperation;
 import org.rest.common.util.QueryConstants;
-import org.rest.common.util.SearchCommonUtil;
 import org.rest.common.web.RestPreconditions;
 import org.rest.common.web.WebConstants;
 import org.slf4j.Logger;
@@ -52,53 +49,23 @@ public abstract class AbstractController<T extends INameableEntity> {
 
     // search
 
-    @SuppressWarnings("unchecked")
     public List<T> searchInternal(@RequestParam(QueryConstants.Q_PARAM) final String queryString) {
         try {
-            List<ImmutableTriple<String, ClientOperation, String>> parsedQuery = null;
-            try {
-                parsedQuery = SearchCommonUtil.parseQueryString(queryString);
-            } catch (final IllegalStateException illState) {
-                logger.error("IllegalStateException on find operation");
-                logger.warn("IllegalStateException on find operation", illState);
-                throw new BadRequestException(illState);
-            }
-
-            final List<T> results = getService().searchAll(parsedQuery.toArray(new ImmutableTriple[parsedQuery.size()]));
-            return results;
+            return getService().searchAll(queryString);
         } catch (final IllegalStateException illEx) {
             logger.error("IllegalStateException on search operation");
             logger.warn("IllegalStateException on search operation", illEx);
             throw new BadRequestException(illEx);
-        } catch (final UnsupportedOperationException unsupEx) {
-            logger.error("UnsupportedOperationException on search operation");
-            logger.warn("UnsupportedOperationException on search operation", unsupEx);
-            throw new BadRequestException(unsupEx);
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<T> searchInternalPaginated(@RequestParam(QueryConstants.Q_PARAM) final String queryString, final int page, final int size) {
         try {
-            List<ImmutableTriple<String, ClientOperation, String>> parsedQuery = null;
-            try {
-                parsedQuery = SearchCommonUtil.parseQueryString(queryString);
-            } catch (final IllegalStateException illState) {
-                logger.error("IllegalStateException on find operation");
-                logger.warn("IllegalStateException on find operation", illState);
-                throw new ConflictException(illState);
-            }
-
-            final Page<T> resultPage = getService().searchPaginated(page, size, parsedQuery.toArray(new ImmutableTriple[parsedQuery.size()]));
-            return Lists.newArrayList(resultPage.getContent());
+            return getService().searchPaginated(queryString, page, size);
         } catch (final IllegalStateException illEx) {
             logger.error("IllegalStateException on search operation");
             logger.warn("IllegalStateException on search operation", illEx);
             throw new BadRequestException(illEx);
-        } catch (final UnsupportedOperationException unsupEx) {
-            logger.error("UnsupportedOperationException on search operation");
-            logger.warn("UnsupportedOperationException on search operation", unsupEx);
-            throw new BadRequestException(unsupEx);
         }
     }
 

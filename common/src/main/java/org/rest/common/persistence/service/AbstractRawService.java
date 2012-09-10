@@ -2,7 +2,10 @@ package org.rest.common.persistence.service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
+import org.rest.common.exceptions.BadRequestException;
+import org.rest.common.exceptions.ConflictException;
 import org.rest.common.persistence.event.EntitiesDeletedEvent;
 import org.rest.common.persistence.event.EntityAfterCreatedEvent;
 import org.rest.common.persistence.event.EntityAfterDeleteEvent;
@@ -12,6 +15,7 @@ import org.rest.common.persistence.event.EntityBeforeDeleteEvent;
 import org.rest.common.persistence.event.EntityBeforeUpdateEvent;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
+import org.rest.common.util.SearchCommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +51,38 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
     // API
 
     // search
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<T> searchAll(final String queryString) {
+        Preconditions.checkNotNull(queryString);
+        List<Triple<String, ClientOperation, String>> parsedQuery = null;
+        try {
+            parsedQuery = SearchCommonUtil.parseQueryString(queryString);
+        } catch (final IllegalStateException illState) {
+            logger.error("IllegalStateException on find operation");
+            logger.warn("IllegalStateException on find operation", illState);
+            throw new BadRequestException(illState);
+        }
+
+        final List<T> results = searchAll(parsedQuery.toArray(new ImmutableTriple[parsedQuery.size()]));
+        return results;
+    }
+
+    @Override
+    public List<T> searchPaginated(final String queryString, final int page, final int size) {
+        List<Triple<String, ClientOperation, String>> parsedQuery = null;
+        try {
+            parsedQuery = SearchCommonUtil.parseQueryString(queryString);
+        } catch (final IllegalStateException illState) {
+            logger.error("IllegalStateException on find operation");
+            logger.warn("IllegalStateException on find operation", illState);
+            throw new ConflictException(illState);
+        }
+
+        final Page<T> resultPage = searchPaginated(page, size, parsedQuery.toArray(new ImmutableTriple[parsedQuery.size()]));
+        return Lists.newArrayList(resultPage.getContent());
+    }
 
     @SuppressWarnings("null")
     @Override

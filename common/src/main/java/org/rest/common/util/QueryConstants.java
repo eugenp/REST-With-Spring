@@ -33,7 +33,8 @@ public final class QueryConstants {
     public static final String SEPARATOR_AMPER = "&";
     public static final String OP = "=";
     public static final String NEGATION = "~";
-    public static final String ID = SearchField.id.toString();
+
+    public static final String ID = "id"; // is constant because it's used for the controller mapping
     public static final String NAME = SearchField.name.toString();
 
     private QueryConstants() {

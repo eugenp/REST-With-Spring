@@ -13,7 +13,9 @@ import org.rest.common.util.order.OrderById;
 import org.rest.common.util.order.OrderByName;
 import org.rest.common.web.WebConstants;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles({ "client", "test" })
 public abstract class AbstractClientSortAndPaginationRESTIntegrationTest<T extends INameableEntity> {
 
     public AbstractClientSortAndPaginationRESTIntegrationTest() {

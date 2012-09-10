@@ -28,11 +28,13 @@ import org.rest.common.search.ClientOperation;
 import org.rest.common.util.IDUtils;
 import org.rest.common.util.SearchField;
 import org.rest.common.web.WebConstants;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.google.common.base.Preconditions;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
+@ActiveProfiles({ "client", "test" })
 public abstract class AbstractLogicRESTIntegrationTest<T extends INameableEntity> {
 
     protected final Class<T> clazz;

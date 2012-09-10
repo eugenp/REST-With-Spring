@@ -17,12 +17,14 @@ import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.LinkUtil;
 import org.rest.common.web.util.HTTPLinkHeaderUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.google.common.base.Preconditions;
 import com.google.common.net.HttpHeaders;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
+@ActiveProfiles({ "client", "test" })
 public abstract class AbstractDiscoverabilityRESTIntegrationTest<T extends IEntity> {
 
     private Class<T> clazz;

@@ -26,11 +26,13 @@ import org.rest.common.util.IDUtils;
 import org.rest.common.util.SearchField;
 import org.rest.common.util.SearchIntegrationTestUtil;
 import org.rest.common.web.util.ClientConstraintsUtil;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @SuppressWarnings("unchecked")
+@ActiveProfiles({ "client", "test" })
 public abstract class AbstractSearchRESTIntegrationTest<T extends INameableEntity> implements ISearchIntegrationTest {
 
     public AbstractSearchRESTIntegrationTest() {

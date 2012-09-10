@@ -61,6 +61,20 @@ public class UserServiceImpl implements IUserService {
         return new PageImpl<User>(usersPaginated, new PageRequest(page, size, null), principalsPaginated.getTotalElements());
     }
 
+    @Override
+    public List<User> searchAll(final String queryString) {
+        final List<Principal> principals = principalService.searchAll(queryString);
+        final List<User> users = Lists.transform(principals, new PrincipalToUserFunction());
+        return users;
+    }
+
+    @Override
+    public List<User> searchPaginated(final String queryString, final int page, final int size) {
+        final List<Principal> principals = principalService.searchPaginated(queryString, page, size);
+        final List<User> users = Lists.transform(principals, new PrincipalToUserFunction());
+        return users;
+    }
+
     // find - one
 
     @Override

@@ -9,9 +9,11 @@ import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.client.template.IRESTTemplate;
 import org.rest.common.persistence.model.IEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.jayway.restassured.response.Response;
 
+@ActiveProfiles({ "client", "test" })
 public abstract class AbstractMimeRESTIntegrationTest<T extends IEntity> {
 
     @Autowired

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.search.ClientOperation;
 
 import com.google.common.base.Preconditions;
@@ -18,11 +19,11 @@ public final class SearchCommonUtil {
 
     // API
 
-    public static List<ImmutableTriple<String, ClientOperation, String>> parseQueryString(final String queryString) {
+    public static List<Triple<String, ClientOperation, String>> parseQueryString(final String queryString) {
         Preconditions.checkNotNull(queryString);
         Preconditions.checkState(queryString.matches("((id~?=[0-9]+)?,?)*((name~?=[0-9a-zA-Z*]+),?)*"));
 
-        final List<ImmutableTriple<String, ClientOperation, String>> tuplesList = Lists.newArrayList();
+        final List<Triple<String, ClientOperation, String>> tuplesList = Lists.newArrayList();
         final String[] tuples = queryString.split(QueryConstants.SEPARATOR);
         for (final String tuple : tuples) {
             final String[] keyAndValue = tuple.split(QueryConstants.OP);

@@ -442,11 +442,11 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
     // util
 
-    final Triple<String, ClientOperation, String> createNameConstraint(final ClientOperation operation, final String nameValue) {
+    protected final Triple<String, ClientOperation, String> createNameConstraint(final ClientOperation operation, final String nameValue) {
         return new ImmutableTriple<String, ClientOperation, String>(QueryConstants.NAME, operation, nameValue);
     }
 
-    final Triple<String, ClientOperation, String> createIdConstraint(final ClientOperation operation, final Long idValue) {
+    protected final Triple<String, ClientOperation, String> createIdConstraint(final ClientOperation operation, final Long idValue) {
         return new ImmutableTriple<String, ClientOperation, String>(QueryConstants.ID, operation, idValue.toString());
     }
 

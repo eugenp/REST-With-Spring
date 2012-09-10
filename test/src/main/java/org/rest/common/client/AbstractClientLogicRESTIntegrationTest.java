@@ -24,8 +24,10 @@ import org.rest.common.search.ClientOperation;
 import org.rest.common.util.IDUtils;
 import org.rest.common.util.SearchField;
 import org.rest.common.web.WebConstants;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestClientException;
 
+@ActiveProfiles({ "client", "test" })
 public abstract class AbstractClientLogicRESTIntegrationTest<T extends INameableEntity> {
 
     public AbstractClientLogicRESTIntegrationTest() {

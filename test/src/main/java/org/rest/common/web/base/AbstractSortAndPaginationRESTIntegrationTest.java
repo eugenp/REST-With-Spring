@@ -20,9 +20,11 @@ import org.rest.common.util.order.OrderById;
 import org.rest.common.util.order.OrderByName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.jayway.restassured.response.Response;
 
+@ActiveProfiles({ "client", "test" })
 public abstract class AbstractSortAndPaginationRESTIntegrationTest<T extends INameableEntity> {
 
     @Autowired
