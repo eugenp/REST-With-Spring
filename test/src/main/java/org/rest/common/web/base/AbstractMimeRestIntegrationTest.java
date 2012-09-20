@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.jayway.restassured.response.Response;
 
-@ActiveProfiles({ "client", "test" })
+@ActiveProfiles({ "client", "test", "mime_json" })
 public abstract class AbstractMimeRestIntegrationTest<T extends IEntity> {
 
     @Autowired
