@@ -1,0 +1,73 @@
+package org.rest.sec.security;
+
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.rest.sec.client.template.UserTestRestTemplate;
+import org.rest.sec.model.UserEntityOpsImpl;
+import org.rest.sec.spring.client.ClientTestConfig;
+import org.rest.sec.spring.context.ContextConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+
+import com.jayway.restassured.response.Response;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { ClientTestConfig.class, ContextConfig.class }, loader = AnnotationConfigContextLoader.class)
+@Ignore("temporary (fails in Maven only)")
+public class SecurityRestIntegrationTest {
+
+    @Autowired
+    private UserTestRestTemplate userTemplate;
+    @Autowired
+    private UserEntityOpsImpl userOps;
+
+    // tests
+
+    // Unauthenticated
+
+    @Test
+    public final void givenUnauthenticated_whenAResourceIsDeleted_then401IsReceived() {
+        // Given
+        final String uriOfExistingResource = userTemplate.createAsURI(userOps.createNewEntity(), null);
+
+        // When
+        final Response response = given().delete(uriOfExistingResource);
+
+        // Then
+        assertThat(response.getStatusCode(), is(401));
+    }
+
+    // Authenticated
+
+    @Test
+    @Ignore("rest-assured 1.6.2 depends on Jackson 1.x; the new 1.6.3 depends on httpcore and httpclient 4.2.x (which is problematic with Spring)")
+    public final void givenAuthenticatedByBasicAuth_whenResourceIsCreated_then201IsReceived() {
+        // Given
+        // When
+        final Response response = userTemplate.givenAuthenticated().contentType(userTemplate.getMarshaller().getMime()).body(userOps.createNewEntity()).post(userTemplate.getURI());
+
+        // Then
+        assertThat(response.getStatusCode(), is(201));
+    }
+
+    @Test
+    @Ignore("rest-assured 1.6.2 depends on Jackson 1.x; the new 1.6.3 depends on httpcore and httpclient 4.2.x (which is problematic with Spring)")
+    public final void givenAuthenticatedByDigestAuth_whenResourceIsCreated_then201IsReceived() {
+        // Given
+        // When
+        final Response response = userTemplate.givenAuthenticated().contentType(userTemplate.getMarshaller().getMime()).body(userOps.createNewEntity()).post(userTemplate.getURI());
+
+        // Then
+        assertThat(response.getStatusCode(), is(201));
+    }
+
+    // current user
+
+}

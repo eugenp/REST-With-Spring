@@ -1,15 +1,20 @@
 package org.rest.common.security;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+
 import java.util.Set;
 
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.security.access.intercept.RunAsUserToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 
 public final class SpringSecurityUtil {
 
@@ -18,6 +23,15 @@ public final class SpringSecurityUtil {
     }
 
     // API
+
+    public static User authenticate(final String key, final String uuid) {
+        final SpringSecurityPrincipal principal = new SpringSecurityPrincipal(randomAlphabetic(6), randomAlphabetic(6), true, Lists.<GrantedAuthority> newArrayList(), uuid);
+        SecurityContextHolder.getContext().setAuthentication(new RunAsUserToken(key, principal, null, Lists.<GrantedAuthority> newArrayList(), null));
+
+        return principal;
+    }
+
+    //
 
     /**
      * Gets the current user details.
@@ -100,7 +114,7 @@ public final class SpringSecurityUtil {
         return SpringSecurityUtil.getCurrentUserDetails() == null;
     }
 
-    public static boolean isAdmin( final String nameOfAdminPrivilege ) {
+    public static boolean isAdmin(final String nameOfAdminPrivilege) {
         return hasPrivilege(nameOfAdminPrivilege);
     }
 

@@ -4,10 +4,10 @@ import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import org.rest.sec.web.role.RoleLogicRESTIntegrationTest;
+import org.rest.sec.web.role.RoleLogicRestIntegrationTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({ RoleLogicRESTIntegrationTest.class })
+@SuiteClasses({ RoleLogicRestIntegrationTest.class })
 @Ignore
 public final class SandboxTestSuite {
     //
