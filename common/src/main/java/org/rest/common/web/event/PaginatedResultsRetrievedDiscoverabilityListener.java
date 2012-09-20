@@ -19,11 +19,11 @@ import com.google.common.net.HttpHeaders;
 
 @SuppressWarnings("rawtypes")
 @Component
-final class PaginatedResultsRetrievedEventDiscoverabilityListener implements ApplicationListener<PaginatedResultsRetrievedEvent> {
+final class PaginatedResultsRetrievedDiscoverabilityListener implements ApplicationListener<PaginatedResultsRetrievedEvent> {
 
     private static final String PAGE = "page";
 
-    public PaginatedResultsRetrievedEventDiscoverabilityListener() {
+    public PaginatedResultsRetrievedDiscoverabilityListener() {
         super();
     }
 
@@ -33,15 +33,13 @@ final class PaginatedResultsRetrievedEventDiscoverabilityListener implements App
     public final void onApplicationEvent(final PaginatedResultsRetrievedEvent ev) {
         Preconditions.checkNotNull(ev);
 
-        addLinkHeaderOnPaginatedResourceRetrieval(ev.getUriBuilder(), ev.getResponse(), ev.getClazz(), ev.getPage(), ev.getTotalPages(), ev.getPageSize());
+        addLinkHeaderOnPagedResourceRetrieval(ev.getUriBuilder(), ev.getResponse(), ev.getClazz(), ev.getPage(), ev.getTotalPages(), ev.getPageSize());
     }
 
     //
 
-    /**
-     * - note: at this point, the URI is transformed into plural (added `s`) in a hardcoded way - this will change in the future
-     */
-    final void addLinkHeaderOnPaginatedResourceRetrieval(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz, final int page, final int totalPages, final int pageSize) {
+    // - note: at this point, the URI is transformed into plural (added `s`) in a hardcoded way - this will change in the future
+    final void addLinkHeaderOnPagedResourceRetrieval(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz, final int page, final int totalPages, final int pageSize) {
         final String resourceName = clazz.getSimpleName().toString().toLowerCase();
         uriBuilder.path(PATH_SEP + resourceName + "s");
 
@@ -66,7 +64,9 @@ final class PaginatedResultsRetrievedEventDiscoverabilityListener implements App
             linkHeader.append(createLinkHeader(uriForLastPage, REL_LAST));
         }
 
-        response.addHeader(HttpHeaders.LINK, linkHeader.toString());
+        if (linkHeader.length() > 0) {
+            response.addHeader(HttpHeaders.LINK, linkHeader.toString());
+        }
     }
 
     final String constructNextPageUri(final UriComponentsBuilder uriBuilder, final int page, final int size) {
