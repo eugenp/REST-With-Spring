@@ -19,7 +19,7 @@ import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.persistence.service.IService;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.test.contract.ISearchIntegrationTest;
-import org.rest.common.util.IDUtils;
+import org.rest.common.util.IDUtil;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchField;
 import org.rest.common.util.SearchIntegrationTestUtil;
@@ -79,7 +79,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
         final T existingResource = persistNewEntity();
 
         // When
-        final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), EQ, IDUtils.randomPositiveLongAsString());
+        final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), EQ, IDUtil.randomPositiveLongAsString());
         final List<T> searchResults = getAPI().searchAll(idConstraint);
 
         // Then
@@ -201,7 +201,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
-        final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), EQ, IDUtils.randomPositiveLongAsString());
+        final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), EQ, IDUtil.randomPositiveLongAsString());
         final List<T> searchResults = getAPI().searchAll(nameConstraint, idConstraint);
 
         // Then
@@ -228,7 +228,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
         final T existingResource = persistNewEntity();
 
         // When
-        final List<T> found = getAPI().searchAll(createIdConstraint(EQ, IDUtils.randomPositiveLong()), createNameConstraint(EQ, randomAlphabetic(8)));
+        final List<T> found = getAPI().searchAll(createIdConstraint(EQ, IDUtil.randomPositiveLong()), createNameConstraint(EQ, randomAlphabetic(8)));
 
         // Then
         assertThat(found, not(hasItem(existingResource)));

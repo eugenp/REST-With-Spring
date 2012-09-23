@@ -17,11 +17,12 @@ import org.junit.Test;
 import org.rest.common.client.IEntityOperations;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.persistence.service.IService;
-import org.rest.common.util.IDUtils;
+import org.rest.common.util.IDUtil;
 import org.rest.common.util.SearchField;
 import org.rest.common.util.order.OrderById;
 import org.rest.common.util.order.OrderByName;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 
 public abstract class AbstractServicePersistenceIntegrationTest<T extends INameableEntity> {
@@ -107,7 +108,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
     @Test
     /**/public final void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoResourceIsReceived() {
         // When
-        final T createdResource = getAPI().findOne(IDUtils.randomPositiveLong());
+        final T createdResource = getAPI().findOne(IDUtil.randomPositiveLong());
 
         // Then
         assertNull(createdResource);
@@ -121,7 +122,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
 
     @Test
     public void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoExceptions() {
-        getAPI().findOne(IDUtils.randomPositiveLong());
+        getAPI().findOne(IDUtil.randomPositiveLong());
     }
 
     @Test
@@ -212,7 +213,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         assertEquals(originalResource, savedResource);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expected = DataIntegrityViolationException.class)
     public void whenResourceWithFailedConstraintsIsCreated_thenException() {
         final T invalidResource = createNewEntity();
         getEntityOps().invalidate(invalidResource);
@@ -227,7 +228,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
     @Ignore("Hibernate simply ignores the id silently and still saved (tracking this)")
     public void whenResourceWithIdIsCreated_thenDataAccessException() {
         final T resourceWithId = createNewEntity();
-        resourceWithId.setId(IDUtils.randomPositiveLong());
+        resourceWithId.setId(IDUtil.randomPositiveLong());
 
         getAPI().create(resourceWithId);
     }
@@ -248,7 +249,10 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         getAPI().update(existingResource);
     }
 
-    @Test(expected = DataAccessException.class)
+    /**
+     * - can also be the ConstraintViolationException which now occurs on the update operation will not be translated; as a consequence, it will be a TransactionSystemException
+     */
+    @Test(expected = DataIntegrityViolationException.class)
     public void whenResourceIsUpdatedWithFailedConstraints_thenException() {
         final T existingResource = persistNewEntity();
         getEntityOps().invalidate(existingResource);
@@ -276,13 +280,13 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
     @Test(expected = RuntimeException.class)
     public void givenResourceDoesNotExists_whenResourceIsDeleted_thenException() {
         // When
-        getAPI().delete(IDUtils.randomPositiveLong());
+        getAPI().delete(IDUtil.randomPositiveLong());
     }
 
     @Test(expected = RuntimeException.class)
     public void whenResourceIsDeletedByNegativeId_thenException() {
         // When
-        getAPI().delete(IDUtils.randomNegativeLong());
+        getAPI().delete(IDUtil.randomNegativeLong());
     }
 
     @Test

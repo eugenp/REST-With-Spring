@@ -10,7 +10,7 @@ import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.client.security.IClientAuthenticationComponent;
-import org.rest.common.web.util.HTTPLinkHeaderUtils;
+import org.rest.common.web.util.HTTPLinkHeaderUtil;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.test.SecGeneralRestIntegrationTest;
 import org.rest.sec.util.SecurityConstants;
@@ -40,7 +40,7 @@ public class RootDiscoverabilityRestIntegrationTest extends SecGeneralRestIntegr
         final Response getOnRootResponse = givenAuthenticated().get(paths.getRootUri());
 
         // Then
-        final List<String> allURIsDiscoverableFromRoot = HTTPLinkHeaderUtils.extractAllURIs(getOnRootResponse.getHeader(HttpHeaders.LINK));
+        final List<String> allURIsDiscoverableFromRoot = HTTPLinkHeaderUtil.extractAllURIs(getOnRootResponse.getHeader(HttpHeaders.LINK));
 
         assertThat(allURIsDiscoverableFromRoot, not(Matchers.<String> empty()));
     }
@@ -51,7 +51,7 @@ public class RootDiscoverabilityRestIntegrationTest extends SecGeneralRestIntegr
         final Response getOnRootResponse = givenAuthenticated().get(paths.getRootUri());
 
         // Then
-        final List<String> allURIsDiscoverableFromRoot = HTTPLinkHeaderUtils.extractAllURIs(getOnRootResponse.getHeader(HttpHeaders.LINK));
+        final List<String> allURIsDiscoverableFromRoot = HTTPLinkHeaderUtil.extractAllURIs(getOnRootResponse.getHeader(HttpHeaders.LINK));
         final int indexOfEntityUri = Iterables.indexOf(allURIsDiscoverableFromRoot, Predicates.containsPattern(paths.getUserUri()));
         assertThat(indexOfEntityUri, greaterThanOrEqualTo(0));
     }

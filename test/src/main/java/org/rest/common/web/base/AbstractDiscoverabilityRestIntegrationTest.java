@@ -15,7 +15,7 @@ import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.client.template.IRestTemplate;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.LinkUtil;
-import org.rest.common.web.util.HTTPLinkHeaderUtils;
+import org.rest.common.web.util.HTTPLinkHeaderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -50,7 +50,7 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
         final Response getResponse = getAPI().findOneByUriAsResponse(uriOfExistingResource, null);
 
         // Then
-        final String uriToAllResources = HTTPLinkHeaderUtils.extractURIByRel(getResponse.getHeader(HttpHeaders.LINK), LinkUtil.REL_COLLECTION);
+        final String uriToAllResources = HTTPLinkHeaderUtil.extractURIByRel(getResponse.getHeader(HttpHeaders.LINK), LinkUtil.REL_COLLECTION);
 
         final Response getAllResponse = getAPI().findAllByUriAsResponse(uriToAllResources, null);
         assertThat(getAllResponse.getStatusCode(), is(200));
@@ -77,7 +77,7 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
         final Response response = getAPI().findAllPaginatedAsResponse(1, 1, null);
 
         // Then
-        final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
+        final String uriToNextPage = HTTPLinkHeaderUtil.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
         assertNotNull(uriToNextPage);
     }
 
@@ -90,7 +90,7 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
         final Response response = getAPI().findAllPaginatedAsResponse(0, 1, null);
 
         // Then
-        final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
+        final String uriToNextPage = HTTPLinkHeaderUtil.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
         assertEquals(getURI() + "?page=1&size=1", uriToNextPage);
     }
 
@@ -103,7 +103,7 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
         final Response response = getAPI().findAllPaginatedAsResponse(0, 1, null);
 
         // Then
-        final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_LAST);
+        final String uriToLastPage = HTTPLinkHeaderUtil.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_LAST);
         assertNotNull(uriToLastPage);
     }
 
@@ -111,11 +111,11 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
     public final void whenLastPageOfResourcesIsRetrieved_thenNoNextPageIsDiscoverable() {
         // When
         final Response response = getAPI().findAllPaginatedAsResponse(1, 1, null);
-        final String uriToLastPage = HTTPLinkHeaderUtils.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_LAST);
+        final String uriToLastPage = HTTPLinkHeaderUtil.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_LAST);
 
         // Then
         final Response responseForLastPage = getAPI().findAllByUriAsResponse(uriToLastPage, null);
-        final String uriToNextPage = HTTPLinkHeaderUtils.extractURIByRel(responseForLastPage.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
+        final String uriToNextPage = HTTPLinkHeaderUtil.extractURIByRel(responseForLastPage.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
         assertNull(uriToNextPage);
     }
 

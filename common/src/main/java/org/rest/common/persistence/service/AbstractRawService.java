@@ -6,13 +6,13 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.exceptions.BadRequestException;
 import org.rest.common.exceptions.ConflictException;
-import org.rest.common.persistence.event.EntitiesDeletedEvent;
-import org.rest.common.persistence.event.EntityAfterCreatedEvent;
-import org.rest.common.persistence.event.EntityAfterDeleteEvent;
-import org.rest.common.persistence.event.EntityAfterUpdateEvent;
-import org.rest.common.persistence.event.EntityBeforeCreatedEvent;
-import org.rest.common.persistence.event.EntityBeforeDeleteEvent;
-import org.rest.common.persistence.event.EntityBeforeUpdateEvent;
+import org.rest.common.persistence.event.AfterEntitiesDeletedEvent;
+import org.rest.common.persistence.event.AfterEntityCreatedEvent;
+import org.rest.common.persistence.event.AfterEntityDeleteEvent;
+import org.rest.common.persistence.event.AfterEntityUpdateEvent;
+import org.rest.common.persistence.event.BeforeEntityCreatedEvent;
+import org.rest.common.persistence.event.BeforeEntityDeleteEvent;
+import org.rest.common.persistence.event.BeforeEntityUpdateEvent;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.util.SearchCommonUtil;
@@ -187,9 +187,9 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
     public T create(final T entity) {
         Preconditions.checkNotNull(entity);
 
-        eventPublisher.publishEvent(new EntityBeforeCreatedEvent<T>(this, clazz, entity));
+        eventPublisher.publishEvent(new BeforeEntityCreatedEvent<T>(this, clazz, entity));
         final T persistedEntity = getDao().save(entity);
-        eventPublisher.publishEvent(new EntityAfterCreatedEvent<T>(this, clazz, persistedEntity));
+        eventPublisher.publishEvent(new AfterEntityCreatedEvent<T>(this, clazz, persistedEntity));
 
         return persistedEntity;
     }
@@ -200,9 +200,9 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
     public void update(final T entity) {
         Preconditions.checkNotNull(entity);
 
-        eventPublisher.publishEvent(new EntityBeforeUpdateEvent<T>(this, clazz, entity));
+        eventPublisher.publishEvent(new BeforeEntityUpdateEvent<T>(this, clazz, entity));
         getDao().save(entity);
-        eventPublisher.publishEvent(new EntityAfterUpdateEvent<T>(this, clazz, entity));
+        eventPublisher.publishEvent(new AfterEntityUpdateEvent<T>(this, clazz, entity));
     }
 
     // delete
@@ -210,16 +210,16 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
     @Override
     public void deleteAll() {
         getDao().deleteAll();
-        eventPublisher.publishEvent(new EntitiesDeletedEvent<T>(this, clazz));
+        eventPublisher.publishEvent(new AfterEntitiesDeletedEvent<T>(this, clazz));
     }
 
     @Override
     public void delete(final long id) {
         final T entity = getDao().findOne(id);
 
-        eventPublisher.publishEvent(new EntityBeforeDeleteEvent<T>(this, clazz, entity));
+        eventPublisher.publishEvent(new BeforeEntityDeleteEvent<T>(this, clazz, entity));
         getDao().delete(entity);
-        eventPublisher.publishEvent(new EntityAfterDeleteEvent<T>(this, clazz, entity));
+        eventPublisher.publishEvent(new AfterEntityDeleteEvent<T>(this, clazz, entity));
     }
 
     // count

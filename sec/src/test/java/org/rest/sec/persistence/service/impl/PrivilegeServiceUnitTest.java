@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.rest.common.persistence.service.AbstractServiceUnitTest;
-import org.rest.common.util.IDUtils;
+import org.rest.common.util.IDUtil;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.persistence.dao.IPrivilegeJpaDAO;
 import org.rest.sec.persistence.util.FixtureFactory;
@@ -62,7 +62,7 @@ public class PrivilegeServiceUnitTest extends AbstractServiceUnitTest<Privilege>
     @Override
     protected Privilege createNewEntity() {
         final Privilege newPrivilege = FixtureFactory.createNewPrivilege();
-        newPrivilege.setId(IDUtils.randomPositiveLong());
+        newPrivilege.setId(IDUtil.randomPositiveLong());
         return newPrivilege;
     }
 

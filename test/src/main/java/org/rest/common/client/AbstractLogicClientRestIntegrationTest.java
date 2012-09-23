@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.rest.common.client.template.IClientTemplate;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
-import org.rest.common.util.IDUtils;
+import org.rest.common.util.IDUtil;
 import org.rest.common.util.SearchField;
 import org.rest.common.web.WebConstants;
 import org.springframework.test.context.ActiveProfiles;
@@ -39,7 +39,7 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     // find - one
 
     @Test(expected = RestClientException.class)
-    public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenExceptionIsThrown() {
+    public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenException() {
         getAPI().findOneByURI(getURI() + WebConstants.PATH_SEP + randomNumeric(4), null);
     }
 
@@ -72,7 +72,7 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     @Test
     /**/public final void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoResourceIsReceived() {
         // When
-        final T createdResource = getAPI().findOne(IDUtils.randomPositiveLong());
+        final T createdResource = getAPI().findOne(IDUtil.randomPositiveLong());
 
         // Then
         assertNull(createdResource);

@@ -22,7 +22,7 @@ import org.rest.common.client.template.IRestTemplate;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.test.contract.ISearchIntegrationTest;
-import org.rest.common.util.IDUtils;
+import org.rest.common.util.IDUtil;
 import org.rest.common.util.SearchField;
 import org.rest.common.util.SearchIntegrationTestUtil;
 import org.rest.common.web.util.ClientConstraintsUtil;
@@ -296,7 +296,7 @@ public abstract class AbstractSearchRestIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createIdConstraint(EQ, IDUtils.randomPositiveLong()), ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName()));
+        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createIdConstraint(EQ, IDUtil.randomPositiveLong()), ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName()));
 
         // Then
         assertThat(found, not(hasItem(existingResource)));
@@ -308,7 +308,7 @@ public abstract class AbstractSearchRestIntegrationTest<T extends INameableEntit
         final T existingResource = getAPI().create(createNewEntity());
 
         // When
-        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createIdConstraint(EQ, IDUtils.randomPositiveLong()), ClientConstraintsUtil.createNameConstraint(EQ, randomAlphabetic(8)));
+        final List<T> found = getAPI().searchAll(ClientConstraintsUtil.createIdConstraint(EQ, IDUtil.randomPositiveLong()), ClientConstraintsUtil.createNameConstraint(EQ, randomAlphabetic(8)));
 
         // Then
         assertThat(found, not(hasItem(existingResource)));

@@ -25,7 +25,7 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.common.client.template.IRestTemplate;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
-import org.rest.common.util.IDUtils;
+import org.rest.common.util.IDUtil;
 import org.rest.common.util.SearchField;
 import org.rest.common.web.WebConstants;
 import org.springframework.test.context.ActiveProfiles;
@@ -72,7 +72,7 @@ public abstract class AbstractLogicRestIntegrationTest<T extends INameableEntity
     @Test
     @Ignore("this was written for a neo4j persistence engine, which treats null ids differently than Hibernate")
     public void whenResourceIsRetrievedByNegativeId_then409IsReceived() {
-        final Long id = IDUtils.randomNegativeLong();
+        final Long id = IDUtil.randomNegativeLong();
 
         // When
         final Response res = getAPI().findOneByUriAsResponse(getURI() + WebConstants.PATH_SEP + id, null);
@@ -94,7 +94,7 @@ public abstract class AbstractLogicRestIntegrationTest<T extends INameableEntity
     }
 
     @Test(expected = IllegalStateException.class)
-    public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenExceptionIsThrown() {
+    public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenException() {
         getAPI().findOneByURI(getURI() + WebConstants.PATH_SEP + randomNumeric(8), null);
     }
 
@@ -114,7 +114,7 @@ public abstract class AbstractLogicRestIntegrationTest<T extends INameableEntity
     @Test(expected = IllegalStateException.class)
     /**/public final void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoResourceIsReceived() {
         // When
-        getAPI().findOne(IDUtils.randomPositiveLong());
+        getAPI().findOne(IDUtil.randomPositiveLong());
     }
 
     @Test
@@ -373,7 +373,7 @@ public abstract class AbstractLogicRestIntegrationTest<T extends INameableEntity
     public void givenResourceDoesNotExist_whenResourceIsUpdated_then404IsReceived() {
         // Given
         final T unpersistedEntity = createNewEntity();
-        unpersistedEntity.setId(IDUtils.randomPositiveLong());
+        unpersistedEntity.setId(IDUtil.randomPositiveLong());
 
         // When
         final Response response = getAPI().updateAsResponse(unpersistedEntity);

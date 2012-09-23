@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolationException;
 
 import org.apache.http.HttpHeaders;
 import org.rest.common.event.PaginatedResultsRetrievedEvent;
@@ -202,6 +203,10 @@ public abstract class AbstractController<T extends INameableEntity> {
             logger.error("DataAccessException on create operation for: {}", resource.getClass().getSimpleName());
             logger.warn("ataAccessException on create operation for: {}", resource.getClass().getSimpleName(), dataEx);
             throw new ConflictException(dataEx);
+        } catch (final ConstraintViolationException validEx) { // bean validation
+            logger.error("ConstraintViolationException on create operation for: {}", resource.getClass().getSimpleName());
+            logger.warn("ConstraintViolationException on create operation for: {}", resource.getClass().getSimpleName(), validEx);
+            throw new BadRequestException(validEx);
         }
 
         // - note: mind the autoboxing and potential NPE when the resource has null id at this point (likely when working with DTOs)
@@ -233,7 +238,12 @@ public abstract class AbstractController<T extends INameableEntity> {
             logger.error("DataIntegrityViolationException on update operation for: {}", resource.getClass().getSimpleName());
             logger.warn("DataIntegrityViolationException on update operation for: {}", resource.getClass().getSimpleName(), dataEx);
             throw new ConflictException(dataEx);
+        } catch (final ConstraintViolationException validEx) { // bean validation
+            logger.error("ConstraintViolationException on create operation for: {}", resource.getClass().getSimpleName());
+            logger.warn("ConstraintViolationException on create operation for: {}", resource.getClass().getSimpleName(), validEx);
+            throw new BadRequestException(validEx);
         }
+
     }
 
     // delete/remove

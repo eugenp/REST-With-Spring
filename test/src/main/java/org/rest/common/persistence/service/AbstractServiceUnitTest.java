@@ -11,11 +11,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
-import org.rest.common.persistence.event.EntityAfterCreatedEvent;
-import org.rest.common.persistence.event.EntityAfterUpdateEvent;
-import org.rest.common.persistence.event.EntityBeforeCreatedEvent;
+import org.rest.common.persistence.event.AfterEntityCreatedEvent;
+import org.rest.common.persistence.event.AfterEntityUpdateEvent;
+import org.rest.common.persistence.event.BeforeEntityCreatedEvent;
 import org.rest.common.persistence.model.IEntity;
-import org.rest.common.util.IDUtils;
+import org.rest.common.util.IDUtil;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -86,7 +86,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         getAPI().create(entity);
 
         // Then
-        verify(getEventPublisher()).publishEvent(isA(EntityBeforeCreatedEvent.class));
+        verify(getEventPublisher()).publishEvent(isA(BeforeEntityCreatedEvent.class));
     }
 
     @Test
@@ -99,7 +99,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         getAPI().create(entity);
 
         // Then
-        verify(getEventPublisher()).publishEvent(isA(EntityAfterCreatedEvent.class));
+        verify(getEventPublisher()).publishEvent(isA(AfterEntityCreatedEvent.class));
     }
 
     // update
@@ -137,7 +137,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         getAPI().update(entity);
 
         // Then
-        verify(getEventPublisher()).publishEvent(isA(EntityAfterUpdateEvent.class));
+        verify(getEventPublisher()).publishEvent(isA(AfterEntityUpdateEvent.class));
     }
 
     // find - paged
@@ -218,7 +218,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
      */
     @Test
     public void givenResourceDoesNotExist_whenDeleteIsTriggered_thenNoExceptions() {
-        final long randomId = IDUtils.randomPositiveLong();
+        final long randomId = IDUtil.randomPositiveLong();
         givenEntityExists(randomId);
 
         // When
@@ -229,7 +229,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
 
     @Test
     public void givenResourceExists_whenDeleteIsTriggered_thenNoExceptions() {
-        final long id = IDUtils.randomPositiveLong();
+        final long id = IDUtil.randomPositiveLong();
 
         // Given
         givenEntityExists(id);
@@ -243,7 +243,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     @Test
     public void givenResourceExists_whenDeleteIsTriggered_thenEntityIsDeleted() {
         // Given
-        final long id = IDUtils.randomPositiveLong();
+        final long id = IDUtil.randomPositiveLong();
         final T entityToBeDeleted = givenEntityExists(id);
 
         // When
@@ -290,7 +290,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
      */
     protected T createSimulatedExistingEntity() {
         final T entity = createNewEntity();
-        entity.setId(IDUtils.randomPositiveLong());
+        entity.setId(IDUtil.randomPositiveLong());
 
         when(getDAO().findOne(entity.getId())).thenReturn(entity);
         return entity;
