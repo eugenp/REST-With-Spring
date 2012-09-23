@@ -10,7 +10,7 @@ import org.rest.common.client.template.IClientTemplate;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.util.SearchField;
 import org.rest.common.util.order.OrderById;
-import org.rest.common.util.order.OrderByNameIgnoreCase;
+import org.rest.common.util.order.OrderByName;
 import org.rest.common.web.WebConstants;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
@@ -53,7 +53,7 @@ public abstract class AbstractSortAndPaginationClientRestIntegrationTest<T exten
         final List<T> resourcesSorted = getAPI().findAllSorted(SearchField.name.name(), Sort.Direction.ASC.name());
 
         // Then
-        assertTrue(new OrderByNameIgnoreCase<T>().isOrdered(resourcesSorted));
+        assertTrue(new OrderByName<T>().isOrdered(resourcesSorted));
     }
 
     @Test
@@ -91,7 +91,7 @@ public abstract class AbstractSortAndPaginationClientRestIntegrationTest<T exten
         final List<T> resourcesPaginatedAndSorted = getAPI().findAllPaginatedAndSorted(0, 4, SearchField.name.name(), Sort.Direction.ASC.name());
 
         // Then
-        assertTrue(new OrderByNameIgnoreCase<T>().isOrdered(resourcesPaginatedAndSorted));
+        assertTrue(new OrderByName<T>().isOrdered(resourcesPaginatedAndSorted));
     }
 
     // template method
