@@ -28,9 +28,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestClientException;
 
 @ActiveProfiles({ "client", "test", "mime_json" })
-public abstract class AbstractClientLogicRestIntegrationTest<T extends INameableEntity> {
+public abstract class AbstractLogicClientRestIntegrationTest<T extends INameableEntity> {
 
-    public AbstractClientLogicRestIntegrationTest() {
+    public AbstractLogicClientRestIntegrationTest() {
         super();
     }
 

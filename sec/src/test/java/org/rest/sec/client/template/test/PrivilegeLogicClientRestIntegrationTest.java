@@ -4,17 +4,17 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.PrivilegeClientRestTemplate;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.PrivilegeEntityOpsImpl;
-import org.rest.sec.test.SecClientSortAndPaginationRestIntegrationTest;
+import org.rest.sec.test.SecLogicClientRestIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class PrivilegeClientSortAndPaginationRestIntegrationTest extends SecClientSortAndPaginationRestIntegrationTest<Privilege> {
+public class PrivilegeLogicClientRestIntegrationTest extends SecLogicClientRestIntegrationTest<Privilege> {
 
     @Autowired
     private PrivilegeClientRestTemplate clientTemplate;
     @Autowired
     private PrivilegeEntityOpsImpl entityOps;
 
-    public PrivilegeClientSortAndPaginationRestIntegrationTest() {
+    public PrivilegeLogicClientRestIntegrationTest() {
         super();
     }
 

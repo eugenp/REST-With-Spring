@@ -4,17 +4,17 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.UserClientRestTemplate;
 import org.rest.sec.model.UserEntityOpsImpl;
 import org.rest.sec.model.dto.User;
-import org.rest.sec.test.SecClientLogicRestIntegrationTest;
+import org.rest.sec.test.SecLogicClientRestIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class UserClientLogicRestIntegrationTest extends SecClientLogicRestIntegrationTest<User> {
+public class UserLogicClientRestIntegrationTest extends SecLogicClientRestIntegrationTest<User> {
 
     @Autowired
     private UserClientRestTemplate clientTemplate;
     @Autowired
     private UserEntityOpsImpl entityOps;
 
-    public UserClientLogicRestIntegrationTest() {
+    public UserLogicClientRestIntegrationTest() {
         super();
     }
 

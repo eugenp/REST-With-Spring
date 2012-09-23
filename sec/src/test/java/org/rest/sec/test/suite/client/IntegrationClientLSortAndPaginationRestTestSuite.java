@@ -3,15 +3,15 @@ package org.rest.sec.test.suite.client;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import org.rest.sec.client.template.test.PrivilegeClientSortAndPaginationRestIntegrationTest;
-import org.rest.sec.client.template.test.RoleClientSortAndPaginationRestIntegrationTest;
-import org.rest.sec.client.template.test.UserClientSortAndPaginationRestIntegrationTest;
+import org.rest.sec.client.template.test.PrivilegeSortAndPaginationClientRestIntegrationTest;
+import org.rest.sec.client.template.test.RoleSortAndPaginationClientRestIntegrationTest;
+import org.rest.sec.client.template.test.UserSortAndPaginationClientRestIntegrationTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({//@formatter:off
-    UserClientSortAndPaginationRestIntegrationTest.class,
-    RoleClientSortAndPaginationRestIntegrationTest.class,
-    PrivilegeClientSortAndPaginationRestIntegrationTest.class
+    UserSortAndPaginationClientRestIntegrationTest.class,
+    RoleSortAndPaginationClientRestIntegrationTest.class,
+    PrivilegeSortAndPaginationClientRestIntegrationTest.class
 })// @formatter:on
 public final class IntegrationClientLSortAndPaginationRestTestSuite {
     //
