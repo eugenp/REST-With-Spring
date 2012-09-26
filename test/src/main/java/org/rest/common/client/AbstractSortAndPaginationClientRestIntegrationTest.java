@@ -33,7 +33,7 @@ public abstract class AbstractSortAndPaginationClientRestIntegrationTest<T exten
 
     @Test
     /**/public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned() {
-        getAPI().createAsURI(createNewEntity(), null);
+        getAPI().createAsUri(createNewEntity(), null);
 
         // When
         final List<T> allPaginated = getAPI().findAllPaginated(0, 1);
@@ -46,8 +46,8 @@ public abstract class AbstractSortAndPaginationClientRestIntegrationTest<T exten
 
     @Test
     /**/public final void whenResourcesAreRetrievedSorted_thenResourcesAreIndeedOrdered() {
-        getAPI().createAsURI(createNewEntity(), null);
-        getAPI().createAsURI(createNewEntity(), null);
+        getAPI().createAsUri(createNewEntity(), null);
+        getAPI().createAsUri(createNewEntity(), null);
 
         // When
         final List<T> resourcesSorted = getAPI().findAllSorted(SearchField.name.name(), Sort.Direction.ASC.name());
@@ -84,8 +84,8 @@ public abstract class AbstractSortAndPaginationClientRestIntegrationTest<T exten
 
     @Test
     /**/public final void whenResourcesAreRetrievedPaginatedAndSorted_thenResourcesAreIndeedOrdered() {
-        getAPI().createAsURI(createNewEntity(), null);
-        getAPI().createAsURI(createNewEntity(), null);
+        getAPI().createAsUri(createNewEntity(), null);
+        getAPI().createAsUri(createNewEntity(), null);
 
         // When
         final List<T> resourcesPaginatedAndSorted = getAPI().findAllPaginatedAndSorted(0, 4, SearchField.name.name(), Sort.Direction.ASC.name());

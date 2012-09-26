@@ -40,17 +40,17 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
 
     @Test(expected = RestClientException.class)
     public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenException() {
-        getAPI().findOneByURI(getURI() + WebConstants.PATH_SEP + randomNumeric(4), null);
+        getAPI().findOneByUri(getURI() + WebConstants.PATH_SEP + randomNumeric(4), null);
     }
 
     @Test
     public final void givenResourceExists_whenResourceIsRetrieved_thenResourceHasId() {
         // Given
         final T newResource = createNewEntity();
-        final String uriOfExistingResource = getAPI().createAsURI(newResource, null);
+        final String uriOfExistingResource = getAPI().createAsUri(newResource, null);
 
         // When
-        final T createdResource = getAPI().findOneByURI(uriOfExistingResource, null);
+        final T createdResource = getAPI().findOneByUri(uriOfExistingResource, null);
 
         // Then
         assertThat(createdResource.getId(), notNullValue());
@@ -60,10 +60,10 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     public final void givenResourceExists_whenResourceIsRetrieved_thenResourceIsCorrectlyRetrieved() {
         // Given
         final T newResource = createNewEntity();
-        final String uriOfExistingResource = getAPI().createAsURI(newResource, null);
+        final String uriOfExistingResource = getAPI().createAsUri(newResource, null);
 
         // When
-        final T createdResource = getAPI().findOneByURI(uriOfExistingResource, null);
+        final T createdResource = getAPI().findOneByUri(uriOfExistingResource, null);
 
         // Then
         assertEquals(createdResource, newResource);
@@ -199,7 +199,7 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     @Test
     public void whenAllResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
         // Given
-        getAPI().createAsURI(createNewEntity(), null);
+        getAPI().createAsUri(createNewEntity(), null);
 
         // When
         final List<T> allResources = getAPI().findAll();
@@ -211,7 +211,7 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     @Test
     public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
         // Given
-        getAPI().createAsURI(createNewEntity(), null);
+        getAPI().createAsUri(createNewEntity(), null);
 
         // When
         final List<T> allResources = getAPI().findAll();
@@ -233,7 +233,7 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
 
     @Test
     /**/public void whenResourceIsCreated_thenNoExceptions() {
-        getAPI().createAsURI(createNewEntity(), null);
+        getAPI().createAsUri(createNewEntity(), null);
     }
 
     @Test

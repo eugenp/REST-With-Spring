@@ -44,7 +44,7 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
     @Test
     public final void whenResourceIsRetrieved_thenURIToGetAllResourcesIsDiscoverable() {
         // Given
-        final String uriOfExistingResource = getAPI().createAsURI(createNewEntity(), null);
+        final String uriOfExistingResource = getAPI().createAsUri(createNewEntity(), null);
 
         // When
         final Response getResponse = getAPI().findOneByUriAsResponse(uriOfExistingResource, null);
@@ -70,8 +70,8 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
 
     @Test
     public final void whenFirstPageOfResourcesIsRetrieved_thenNextPageIsDiscoverable() {
-        getAPI().createAsURI(createNewEntity(), null);
-        getAPI().createAsURI(createNewEntity(), null);
+        getAPI().createAsUri(createNewEntity(), null);
+        getAPI().createAsUri(createNewEntity(), null);
 
         // When
         final Response response = getAPI().findAllPaginatedAsResponse(1, 1, null);
@@ -83,8 +83,8 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
 
     @Test
     public final void whenFirstPageOfResourcesAreRetrieved_thenSecondPageIsDiscoverable() {
-        getAPI().createAsURI(createNewEntity(), null);
-        getAPI().createAsURI(createNewEntity(), null);
+        getAPI().createAsUri(createNewEntity(), null);
+        getAPI().createAsUri(createNewEntity(), null);
 
         // When
         final Response response = getAPI().findAllPaginatedAsResponse(0, 1, null);
@@ -124,7 +124,7 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
     @Test
     public final void whenInvalidPOSTIsSentToValidURIOfResource_thenAllowHeaderListsTheAllowedActions() {
         // Given
-        final String uriOfExistingResource = getAPI().createAsURI(createNewEntity(), null);
+        final String uriOfExistingResource = getAPI().createAsUri(createNewEntity(), null);
 
         // When
         final Response res = givenAuthenticated().post(uriOfExistingResource);
@@ -138,7 +138,7 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
     public final void whenResourceIsCreated_thenURIOfTheNewlyCreatedResourceIsDiscoverable() {
         // When
         final T unpersistedResource = createNewEntity();
-        final String uriOfNewlyCreatedResource = getAPI().createAsURI(unpersistedResource, null);
+        final String uriOfNewlyCreatedResource = getAPI().createAsUri(unpersistedResource, null);
 
         // Then
         final Response response = getAPI().findOneByUriAsResponse(uriOfNewlyCreatedResource, null);

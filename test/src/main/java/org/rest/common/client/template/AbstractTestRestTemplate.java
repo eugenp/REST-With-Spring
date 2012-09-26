@@ -49,11 +49,11 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
     @Override
     public final T findOne(final long id) {
         final String uriOfResource = getURI() + WebConstants.PATH_SEP + id;
-        return findOneByURI(uriOfResource, null);
+        return findOneByUri(uriOfResource, null);
     }
 
     @Override
-    public final T findOneByURI(final String uriOfResource, final Pair<String, String> credentials) {
+    public final T findOneByUri(final String uriOfResource, final Pair<String, String> credentials) {
         final String resourceAsMime = findOneByUriAsString(uriOfResource);
         return marshaller.decode(resourceAsMime, clazz);
     }
@@ -92,11 +92,11 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public List<T> findAll() {
-        return findAllByURI(getURI(), null);
+        return findAllByUri(getURI(), null);
     }
 
     @Override
-    public final List<T> findAllByURI(final String uri, final Pair<String, String> credentials) {
+    public final List<T> findAllByUri(final String uri, final Pair<String, String> credentials) {
         final Response allAsResponse = findAllRequest().get(uri);
         final List<T> listOfResources = marshaller.<T> decodeList(allAsResponse.getBody().asString(), clazz);
         if (listOfResources == null) {
@@ -188,14 +188,14 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public final T create(final T resource) {
-        final String uriForResourceCreation = createAsURI(resource, null);
+        final String uriForResourceCreation = createAsUri(resource, null);
         final String resourceAsMime = findOneByUriAsString(uriForResourceCreation);
 
         return marshaller.decode(resourceAsMime, clazz);
     }
 
     @Override
-    public final String createAsURI(final T resource, final Pair<String, String> credentials) {
+    public final String createAsUri(final T resource, final Pair<String, String> credentials) {
         Preconditions.checkNotNull(resource);
         RequestSpecification givenAuthenticated = null;
         if (credentials != null) {

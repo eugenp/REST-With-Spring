@@ -71,7 +71,7 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
     }
 
     @Override
-    public final T findOneByURI(final String uri, final Pair<String, String> credentials) {
+    public final T findOneByUri(final String uri, final Pair<String, String> credentials) {
         final ResponseEntity<T> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), clazz);
         return response.getBody();
     }
@@ -81,7 +81,7 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
     @Override
     public final T findByName(final String name) {
         // return findOneByAttributes(SearchField.name.name(), name); // TODO: fix
-        return findOneByURI(getURI() + "?name=" + name, null);
+        return findOneByUri(getURI() + "?name=" + name, null);
     }
 
     // find - all
@@ -138,7 +138,7 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
     }
 
     @Override
-    public final List<T> findAllByURI(final String uri, final Pair<String, String> credentials) {
+    public final List<T> findAllByUri(final String uri, final Pair<String, String> credentials) {
         final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);
         final List<T> body = response.getBody();
         if (body == null) {
@@ -181,20 +181,20 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
 
     @Override
     public final T create(final T resource, final Pair<String, String> credentials) {
-        final String locationOfCreatedResource = createAsURI(resource, credentials);
+        final String locationOfCreatedResource = createAsUri(resource, credentials);
 
-        return findOneByURI(locationOfCreatedResource, credentials);
+        return findOneByUri(locationOfCreatedResource, credentials);
     }
 
     @Override
     public final T create(final T resource) {
-        final String locationOfCreatedResource = createAsURI(resource, null);
+        final String locationOfCreatedResource = createAsUri(resource, null);
 
-        return findOneByURI(locationOfCreatedResource, null);
+        return findOneByUri(locationOfCreatedResource, null);
     }
 
     @Override
-    public final String createAsURI(final T resource, final Pair<String, String> credentials) {
+    public final String createAsUri(final T resource, final Pair<String, String> credentials) {
         if (credentials != null) {
             givenAuthenticated(credentials.getLeft(), credentials.getRight());
         } else {

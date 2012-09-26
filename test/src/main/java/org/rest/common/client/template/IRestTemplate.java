@@ -10,7 +10,7 @@ import org.rest.common.search.ClientOperation;
 
 import com.jayway.restassured.specification.RequestSpecification;
 
-public interface IRestTemplate<T extends IEntity> extends IOperations<T>, ITemplateAsResponse<T>, ITemplateAsURI<T> {
+public interface IRestTemplate<T extends IEntity> extends IOperations<T>, ITemplateAsResponse<T>, ITemplateWithUri<T> {
 
     // template
 

@@ -30,7 +30,7 @@ public abstract class AbstractMimeRestIntegrationTest<T extends IEntity> {
     @Test
     public final void givenRequestAcceptsMime_whenResourceIsRetrievedById__thenResponseContentTypeIsMime() {
         // Given
-        final String uriForResourceCreation = getAPI().createAsURI(createNewEntity(), null);
+        final String uriForResourceCreation = getAPI().createAsUri(createNewEntity(), null);
 
         // When
         final Response res = getAPI().findOneByUriAsResponse(uriForResourceCreation, null);
