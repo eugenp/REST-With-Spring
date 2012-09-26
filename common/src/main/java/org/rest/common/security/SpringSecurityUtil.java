@@ -2,6 +2,7 @@ package org.rest.common.security;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
+import java.nio.charset.Charset;
 import java.util.Set;
 
 import org.apache.commons.codec.binary.Base64;
@@ -176,7 +177,7 @@ public final class SpringSecurityUtil {
 
     public static String calculateAuthorizationKey(final String username, final String password) {
         final String authorizationString = username + ":" + password;
-        return new String(Base64.encodeBase64(authorizationString.getBytes()));
+        return new String(Base64.encodeBase64(authorizationString.getBytes(Charset.forName("US-ASCII"))));
     }
 
 }
