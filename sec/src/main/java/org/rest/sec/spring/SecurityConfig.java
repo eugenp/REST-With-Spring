@@ -1,4 +1,4 @@
-package org.rest.sec.spring.security;
+package org.rest.sec.spring;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

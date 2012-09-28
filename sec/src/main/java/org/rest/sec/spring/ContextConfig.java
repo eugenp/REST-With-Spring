@@ -1,4 +1,4 @@
-package org.rest.sec.spring.context;
+package org.rest.sec.spring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
