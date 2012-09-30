@@ -15,6 +15,7 @@ import org.rest.sec.spring.ClientTestConfig;
 import org.rest.sec.spring.ContextConfig;
 import org.rest.sec.util.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -24,6 +25,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextConfig.class }, loader = AnnotationConfigContextLoader.class)
+@ActiveProfiles({ "client", "mime_json" })
 public class AuthenticationRestIntegrationTest {
 
     @Autowired
