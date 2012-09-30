@@ -298,7 +298,7 @@
 						<configuration>
 							<wait>false</wait>
 							<container>
-								<containerId>jetty7x</containerId>
+								<containerId>jetty8x</containerId>
 								<type>embedded</type>
 								<systemProperties>
 									<envTarget>dev</envTarget>
