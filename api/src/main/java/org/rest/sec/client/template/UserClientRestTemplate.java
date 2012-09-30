@@ -29,7 +29,7 @@ public class UserClientRestTemplate extends AbstractClientRestTemplate<User> {
     // template method
 
     @Override
-    public final String getURI() {
+    public final String getUri() {
         return paths.getUserUri();
     }
 

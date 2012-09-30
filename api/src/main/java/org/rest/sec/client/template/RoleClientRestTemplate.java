@@ -29,7 +29,7 @@ public class RoleClientRestTemplate extends AbstractClientRestTemplate<Role> {
     // template method
 
     @Override
-    public final String getURI() {
+    public final String getUri() {
         return paths.getRoleUri();
     }
 

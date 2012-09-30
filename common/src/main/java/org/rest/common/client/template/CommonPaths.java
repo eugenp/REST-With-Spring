@@ -15,6 +15,10 @@ public final class CommonPaths {
     @Value("${http.port}")
     private String port;
 
+    public CommonPaths() {
+        super();
+    }
+
     // API
 
     public final String getServerRoot() {

@@ -29,7 +29,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
 
     // tests
 
-    // AbstractClientSortAndPaginationRESTIntegrationTest
+    // AbstractClientSortAndPaginationRestIntegrationTest
 
     // find - all - pagination
 

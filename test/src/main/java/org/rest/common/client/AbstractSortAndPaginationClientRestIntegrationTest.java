@@ -105,7 +105,7 @@ public abstract class AbstractSortAndPaginationClientRestIntegrationTest<T exten
     protected abstract IEntityOperations<T> getEntityOps();
 
     protected final String getURI() {
-        return getAPI().getURI() + WebConstants.PATH_SEP;
+        return getAPI().getUri() + WebConstants.PATH_SEP;
     }
 
 }

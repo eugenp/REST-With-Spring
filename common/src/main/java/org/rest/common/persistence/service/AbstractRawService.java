@@ -69,6 +69,7 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
         return results;
     }
 
+    @SuppressWarnings({ "unchecked" })
     @Override
     public List<T> searchPaginated(final String queryString, final int page, final int size) {
         List<Triple<String, ClientOperation, String>> parsedQuery = null;

@@ -28,6 +28,7 @@ public class PreemptiveAuthHttpRequestFactory extends HttpComponentsClientHttpRe
         targetHost = new HttpHost(host, port, scheme);
     }
 
+    @SuppressWarnings("unused")
     public PreemptiveAuthHttpRequestFactory(final String host, final int port, final String scheme, final ClientConnectionManager conman, final HttpParams params) {
         super();
         targetHost = new HttpHost(host, port, scheme);

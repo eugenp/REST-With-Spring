@@ -11,7 +11,7 @@ public interface IClientTemplate<T extends INameableEntity> extends IOperations<
 
     //
 
-    String getURI();
+    String getUri();
 
     // create
 

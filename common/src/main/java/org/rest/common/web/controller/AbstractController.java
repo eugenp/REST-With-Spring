@@ -210,7 +210,7 @@ public abstract class AbstractController<T extends INameableEntity> {
         }
 
         // - note: mind the autoboxing and potential NPE when the resource has null id at this point (likely when working with DTOs)
-        eventPublisher.publishEvent(new ResourceCreatedEvent<T>(clazz, uriBuilder, response, resource.getId()));
+        eventPublisher.publishEvent(new ResourceCreatedEvent<T>(clazz, uriBuilder, response, resource.getId().toString()));
     }
 
     // update

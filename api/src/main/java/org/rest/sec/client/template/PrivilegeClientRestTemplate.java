@@ -29,7 +29,7 @@ public class PrivilegeClientRestTemplate extends AbstractClientRestTemplate<Priv
     // template methods
 
     @Override
-    public final String getURI() {
+    public final String getUri() {
         return paths.getPrivilegeUri();
     }
 
