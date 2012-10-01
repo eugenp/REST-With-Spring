@@ -1,7 +1,7 @@
 package org.rest.sec.client;
 
 import org.rest.common.client.template.CommonPaths;
-import org.rest.sec.web.common.URIMappingConstants;
+import org.rest.sec.web.common.UriMappingConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -28,15 +28,15 @@ public final class SecBusinessPaths {
     }
 
     public final String getUserUri() {
-        return getRootUri() + URIMappingConstants.USERS;
+        return getRootUri() + UriMappingConstants.USERS;
     }
 
     public final String getPrivilegeUri() {
-        return getRootUri() + URIMappingConstants.PRIVILEGES;
+        return getRootUri() + UriMappingConstants.PRIVILEGES;
     }
 
     public final String getRoleUri() {
-        return getRootUri() + URIMappingConstants.ROLES;
+        return getRootUri() + UriMappingConstants.ROLES;
     }
 
     public final String getAuthenticationUri() {

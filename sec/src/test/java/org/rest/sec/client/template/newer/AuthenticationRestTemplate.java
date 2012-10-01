@@ -33,12 +33,12 @@ public class AuthenticationRestTemplate {
     // API
 
     public final ResponseEntity<User> authenticate(final String username, final String password) {
-        return restTemplate.exchange(getURI(), HttpMethod.POST, new HttpEntity<User>(createHeaders(username, password)), User.class);
+        return restTemplate.exchange(getUri(), HttpMethod.POST, new HttpEntity<User>(createHeaders(username, password)), User.class);
     }
 
     // util
 
-    final String getURI() {
+    final String getUri() {
         return paths.getAuthenticationUri();
     }
 

@@ -23,7 +23,7 @@ public class RoleLogicClientRestIntegrationTest extends SecLogicClientRestIntegr
     // template method
 
     @Override
-    protected final RoleClientRestTemplate getAPI() {
+    protected final RoleClientRestTemplate getApi() {
         return api;
     }
 

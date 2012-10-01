@@ -1,6 +1,6 @@
 package org.rest.sec.web.common;
 
-public final class URIMappingConstants {
+public final class UriMappingConstants {
 
     public static final String USERS = "users";
     public static final String PRIVILEGES = "privileges";
@@ -8,7 +8,7 @@ public final class URIMappingConstants {
 
     public static final String AUTHENTICATION = "authentication";
 
-    private URIMappingConstants() {
+    private UriMappingConstants() {
         throw new AssertionError();
     }
 

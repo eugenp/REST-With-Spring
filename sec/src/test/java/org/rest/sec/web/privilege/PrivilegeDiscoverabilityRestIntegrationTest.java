@@ -32,8 +32,8 @@ public class PrivilegeDiscoverabilityRestIntegrationTest extends SecDiscoverabil
     }
 
     @Override
-    protected final String getURI() {
-        return getAPI().getURI();
+    protected final String getUri() {
+        return getApi().getUri();
     }
 
     @Override
@@ -43,11 +43,11 @@ public class PrivilegeDiscoverabilityRestIntegrationTest extends SecDiscoverabil
 
     @Override
     protected RequestSpecification givenAuthenticated() {
-        return getAPI().givenAuthenticated();
+        return getApi().givenAuthenticated();
     }
 
     @Override
-    protected final PrivilegeTestRestTemplate getAPI() {
+    protected final PrivilegeTestRestTemplate getApi() {
         return restTemplate;
     }
 

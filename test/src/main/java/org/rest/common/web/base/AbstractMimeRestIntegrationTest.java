@@ -30,10 +30,10 @@ public abstract class AbstractMimeRestIntegrationTest<T extends IEntity> {
     @Test
     public final void givenRequestAcceptsMime_whenResourceIsRetrievedById__thenResponseContentTypeIsMime() {
         // Given
-        final String uriForResourceCreation = getAPI().createAsUri(createNewEntity(), null);
+        final String uriForResourceCreation = getApi().createAsUri(createNewEntity(), null);
 
         // When
-        final Response res = getAPI().findOneByUriAsResponse(uriForResourceCreation, null);
+        final Response res = getApi().findOneByUriAsResponse(uriForResourceCreation, null);
 
         // Then
         assertThat(res.getContentType(), containsString(marshaller.getMime()));
@@ -41,7 +41,7 @@ public abstract class AbstractMimeRestIntegrationTest<T extends IEntity> {
 
     // template method
 
-    protected abstract IRestTemplate<T> getAPI();
+    protected abstract IRestTemplate<T> getApi();
 
     protected abstract IEntityOperations<T> getEntityOps();
 

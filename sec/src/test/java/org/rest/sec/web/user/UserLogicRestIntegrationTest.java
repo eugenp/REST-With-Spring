@@ -46,7 +46,7 @@ public class UserLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Us
     @Test
     @Ignore("in progress - create association first")
     public final void whenResourceIsRetrieved_thenAssociationsAreAlsoRetrieved() {
-        final User existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final User existingResource = getApi().create(getEntityOps().createNewEntity());
         assertThat(existingResource.getRoles(), not(Matchers.<Role> empty()));
     }
 
@@ -62,7 +62,7 @@ public class UserLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Us
         newResource.getRoles().add(getAssociationEntityOps().createNewEntity());
 
         // When
-        final Response response = getAPI().createAsResponse(newResource);
+        final Response response = getApi().createAsResponse(newResource);
 
         // Then
         assertThat(response.getStatusCode(), is(409));
@@ -77,7 +77,7 @@ public class UserLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Us
         newResource.getRoles().add(invalidAssociation);
 
         // When
-        final Response response = getAPI().createAsResponse(newResource);
+        final Response response = getApi().createAsResponse(newResource);
 
         // Then
         assertThat(response.getStatusCode(), is(409));
@@ -90,7 +90,7 @@ public class UserLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Us
         newResource.getRoles().add(existingAssociation);
 
         // When
-        final Response response = getAPI().createAsResponse(newResource);
+        final Response response = getApi().createAsResponse(newResource);
 
         // Then
         assertThat(response.getStatusCode(), is(201));
@@ -105,7 +105,7 @@ public class UserLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Us
         resourceToCreate.getRoles().add(existingAssociation);
 
         // When
-        final User existingResource = getAPI().create(resourceToCreate);
+        final User existingResource = getApi().create(resourceToCreate);
         for (final Role associationOfResourcePotential : existingResource.getRoles()) {
             final Role existingAssociationOfResource = getAssociationAPI().findOne(associationOfResourcePotential.getId());
             assertThat(existingAssociationOfResource, notNullValue());
@@ -119,20 +119,20 @@ public class UserLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Us
         final Role existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewEntity());
         final User resource1 = new User(randomAlphabetic(6), randomAlphabetic(6), Sets.newHashSet(existingAssociation));
 
-        final User resource1ViewOfServerBefore = getAPI().create(resource1);
+        final User resource1ViewOfServerBefore = getApi().create(resource1);
         assertThat(resource1ViewOfServerBefore.getRoles(), hasItem(existingAssociation));
 
         final User resource2 = new User(randomAlphabetic(6), randomAlphabetic(6), Sets.newHashSet(existingAssociation));
-        getAPI().createAsResponse(resource2);
+        getApi().createAsResponse(resource2);
 
-        final User resource1ViewOfServerAfter = getAPI().findOne(resource1ViewOfServerBefore.getId());
+        final User resource1ViewOfServerAfter = getApi().findOne(resource1ViewOfServerBefore.getId());
         assertThat(resource1ViewOfServerAfter.getRoles(), hasItem(existingAssociation));
     }
 
     // template method
 
     @Override
-    protected final UserTestRestTemplate getAPI() {
+    protected final UserTestRestTemplate getApi() {
         return api;
     }
 

@@ -18,7 +18,7 @@ public class PrincipalSearchPersistenceIntegrationTest extends SecSearchPersiste
     // template method
 
     @Override
-    protected final IPrincipalService getAPI() {
+    protected final IPrincipalService getApi() {
         return principalService;
     }
 

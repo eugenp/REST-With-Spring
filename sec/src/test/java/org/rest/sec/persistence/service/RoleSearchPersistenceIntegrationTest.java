@@ -18,7 +18,7 @@ public class RoleSearchPersistenceIntegrationTest extends SecSearchPersistenceIn
     // template method
 
     @Override
-    protected final IRoleService getAPI() {
+    protected final IRoleService getApi() {
         return roleService;
     }
 

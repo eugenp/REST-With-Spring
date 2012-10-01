@@ -27,8 +27,8 @@ public class UserDiscoverabilityRestIntegrationTest extends SecDiscoverabilityRe
     // template method
 
     @Override
-    protected final String getURI() {
-        return getAPI().getURI();
+    protected final String getUri() {
+        return getApi().getUri();
     }
 
     @Override
@@ -43,11 +43,11 @@ public class UserDiscoverabilityRestIntegrationTest extends SecDiscoverabilityRe
 
     @Override
     protected final RequestSpecification givenAuthenticated() {
-        return getAPI().givenAuthenticated();
+        return getApi().givenAuthenticated();
     }
 
     @Override
-    protected final UserTestRestTemplate getAPI() {
+    protected final UserTestRestTemplate getApi() {
         return restTemplate;
     }
 

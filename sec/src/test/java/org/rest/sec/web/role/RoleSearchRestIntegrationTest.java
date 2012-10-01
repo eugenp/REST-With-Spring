@@ -23,7 +23,7 @@ public class RoleSearchRestIntegrationTest extends SecSearchRestIntegrationTest<
     // template
 
     @Override
-    protected final RoleTestRestTemplate getAPI() {
+    protected final RoleTestRestTemplate getApi() {
         return restTemplate;
     }
 

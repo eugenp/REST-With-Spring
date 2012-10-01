@@ -29,12 +29,12 @@ public class UserSortAndPaginationRestIntegrationTest extends SecSortAndPaginati
     }
 
     @Override
-    protected final String getURI() {
-        return template.getURI();
+    protected final String getUri() {
+        return template.getUri();
     }
 
     @Override
-    protected final UserTestRestTemplate getAPI() {
+    protected final UserTestRestTemplate getApi() {
         return template;
     }
 

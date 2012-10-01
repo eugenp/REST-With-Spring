@@ -41,17 +41,17 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
 
     @Test(expected = RestClientException.class)
     public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenException() {
-        getAPI().findOneByUri(getURI() + WebConstants.PATH_SEP + randomNumeric(4), null);
+        getApi().findOneByUri(getUri() + WebConstants.PATH_SEP + randomNumeric(4), null);
     }
 
     @Test
     public final void givenResourceExists_whenResourceIsRetrieved_thenResourceHasId() {
         // Given
         final T newResource = createNewEntity();
-        final String uriOfExistingResource = getAPI().createAsUri(newResource, null);
+        final String uriOfExistingResource = getApi().createAsUri(newResource, null);
 
         // When
-        final T createdResource = getAPI().findOneByUri(uriOfExistingResource, null);
+        final T createdResource = getApi().findOneByUri(uriOfExistingResource, null);
 
         // Then
         assertThat(createdResource.getId(), notNullValue());
@@ -61,10 +61,10 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     public final void givenResourceExists_whenResourceIsRetrieved_thenResourceIsCorrectlyRetrieved() {
         // Given
         final T newResource = createNewEntity();
-        final String uriOfExistingResource = getAPI().createAsUri(newResource, null);
+        final String uriOfExistingResource = getApi().createAsUri(newResource, null);
 
         // When
-        final T createdResource = getAPI().findOneByUri(uriOfExistingResource, null);
+        final T createdResource = getApi().findOneByUri(uriOfExistingResource, null);
 
         // Then
         assertEquals(createdResource, newResource);
@@ -73,7 +73,7 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     @Test
     /**/public final void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoResourceIsReceived() {
         // When
-        final T createdResource = getAPI().findOne(IDUtil.randomPositiveLong());
+        final T createdResource = getApi().findOne(IDUtil.randomPositiveLong());
 
         // Then
         assertNull(createdResource);
@@ -88,19 +88,19 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     @Test
     /**/public final void givenResourceExists_whenResourceIsRetrievedByName_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
 
         // When
-        getAPI().findByName(existingResource.getName());
+        getApi().findByName(existingResource.getName());
     }
 
     @Test
     /**/public final void givenResourceExists_whenResourceIsRetrievedByName_thenResourceIsFound() {
         // Given
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
 
         // When
-        final T resourceByName = getAPI().findByName(existingResource.getName());
+        final T resourceByName = getApi().findByName(existingResource.getName());
 
         // Then
         assertNotNull(resourceByName);
@@ -109,9 +109,9 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     @Test
     /**/public final void givenResourceExists_whenResourceIsRetrievedByName_thenFoundResourceIsCorrect() {
         // Given
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
         // When
-        final T resourceByName = getAPI().findByName(existingResource.getName());
+        final T resourceByName = getApi().findByName(existingResource.getName());
 
         // Then
         assertThat(existingResource, equalTo(resourceByName));
@@ -123,10 +123,10 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
         newEntity.setName(randomAlphabetic(4) + " " + randomAlphabetic(4));
 
         // Given
-        final T existingResource = getAPI().create(newEntity);
+        final T existingResource = getApi().create(newEntity);
 
         // When
-        final T resourceByName = getAPI().findByName(existingResource.getName());
+        final T resourceByName = getApi().findByName(existingResource.getName());
 
         // Then
         assertThat(existingResource, equalTo(resourceByName));
@@ -136,12 +136,12 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
 
     @Test
     /**/public void whenAllResourcesAreRetrieved_thenNoExceptions() {
-        getAPI().findAll();
+        getApi().findAll();
     }
 
     @Test
     /**/public void whenAllResourcesAreRetrieved_thenTheResultIsNotNull() {
-        final List<T> resources = getAPI().findAll();
+        final List<T> resources = getApi().findAll();
 
         assertNotNull(resources);
     }
@@ -149,10 +149,10 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     @Test
     /**/public void givenAtLeastOneResourceExists_whenAllResourcesAreRetrieved_thenRetrievedResourcesAreNotEmpty() {
         // Given
-        getAPI().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity(), null);
 
         // When
-        final List<T> allResources = getAPI().findAll();
+        final List<T> allResources = getApi().findAll();
 
         // Then
         assertThat(allResources, not(Matchers.<T> empty()));
@@ -160,9 +160,9 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
 
     @Test
     /**/public void givenAnResourceExists_whenAllResourcesAreRetrieved_thenTheExistingResourceIsIndeedAmongThem() {
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
 
-        final List<T> resources = getAPI().findAll();
+        final List<T> resources = getApi().findAll();
 
         assertThat(resources, hasItem(existingResource));
     }
@@ -170,10 +170,10 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     @Test
     /**/public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
         // Given
-        getAPI().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity(), null);
 
         // When
-        final List<T> allResources = getAPI().findAll();
+        final List<T> allResources = getApi().findAll();
 
         // Then
         for (final T resource : allResources) {
@@ -189,22 +189,22 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), EQ, existingResource.getName());
-        getAPI().searchOne(nameConstraint);
+        getApi().searchOne(nameConstraint);
     }
 
     @Test
     @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenResourceIsFound() {
         // Given
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), EQ, existingResource.getName());
-        final T resourceByName = getAPI().searchOne(nameConstraint);
+        final T resourceByName = getApi().searchOne(nameConstraint);
 
         // Then
         assertNotNull(resourceByName);
@@ -215,11 +215,11 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenFoundResourceIsCorrect() {
         // Given
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), EQ, existingResource.getName());
-        final T resourceByName = getAPI().searchOne(nameConstraint);
+        final T resourceByName = getApi().searchOne(nameConstraint);
 
         // Then
         assertThat(existingResource, equalTo(resourceByName));
@@ -230,11 +230,11 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByNagatedNameAttribute_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), NEG_EQ, existingResource.getName());
-        getAPI().searchAll(nameConstraint);
+        getApi().searchAll(nameConstraint);
 
         // Then
     }
@@ -243,25 +243,25 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
 
     @Test(expected = RuntimeException.class)
     /**/public void whenNullResourceIsCreated_thenException() {
-        getAPI().create(null);
+        getApi().create(null);
     }
 
     @Test
     /**/public void whenResourceIsCreated_thenNoExceptions() {
-        getAPI().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity(), null);
     }
 
     @Test
     /**/public void whenResourceIsCreated_thenResourceIsRetrievable() {
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
 
-        assertNotNull(getAPI().findOne(existingResource.getId()));
+        assertNotNull(getApi().findOne(existingResource.getId()));
     }
 
     @Test
     /**/public void whenResourceIsCreated_thenSavedResourceIsEqualToOriginalResource() {
         final T originalResource = createNewEntity();
-        final T savedResource = getAPI().create(originalResource);
+        final T savedResource = getApi().create(originalResource);
 
         assertEquals(originalResource, savedResource);
     }
@@ -270,28 +270,28 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
 
     @Test(expected = RuntimeException.class)
     /**/public void whenNullResourceIsUpdated_thenException() {
-        getAPI().update(null);
+        getApi().update(null);
     }
 
     @Test
     public void givenResourceExists_whenResourceIsUpdated_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
 
         // When
-        getAPI().update(existingResource);
+        getApi().update(existingResource);
     }
 
     @Test
     public void givenResourceExists_whenResourceIsUpdated_thenUpdatesArePersisted() {
         // Given
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
 
         // When
         getEntityOps().change(existingResource);
-        getAPI().update(existingResource);
+        getApi().update(existingResource);
 
-        final T updatedResourceFromServer = getAPI().findOne(existingResource.getId());
+        final T updatedResourceFromServer = getApi().findOne(existingResource.getId());
 
         // Then
         assertEquals(existingResource, updatedResourceFromServer);
@@ -302,23 +302,23 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     @Test
     public final void givenResourceExists_whenResourceIsDeleted_thenResourceNoLongerExists() {
         // Given
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
 
         // When
-        getAPI().delete(existingResource.getId());
+        getApi().delete(existingResource.getId());
 
         // Then
-        assertNull(getAPI().findOne(existingResource.getId()));
+        assertNull(getApi().findOne(existingResource.getId()));
     }
 
     // template method
 
-    protected abstract IClientTemplate<T> getAPI();
+    protected abstract IClientTemplate<T> getApi();
 
     protected abstract IEntityOperations<T> getEntityOps();
 
-    protected final String getURI() {
-        return getAPI().getUri() + WebConstants.PATH_SEP;
+    protected final String getUri() {
+        return getApi().getUri() + WebConstants.PATH_SEP;
     }
 
     protected T createNewEntity() {

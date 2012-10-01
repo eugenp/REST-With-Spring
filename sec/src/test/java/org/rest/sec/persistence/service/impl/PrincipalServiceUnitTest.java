@@ -49,7 +49,7 @@ public class PrincipalServiceUnitTest extends AbstractServiceUnitTest<Principal>
     // template method
 
     @Override
-    protected final PrincipalServiceImpl getAPI() {
+    protected final PrincipalServiceImpl getApi() {
         return instance;
     }
 

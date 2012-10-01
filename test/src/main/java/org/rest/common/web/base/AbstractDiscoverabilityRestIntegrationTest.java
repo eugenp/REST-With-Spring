@@ -44,15 +44,15 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
     @Test
     public final void whenResourceIsRetrieved_thenURIToGetAllResourcesIsDiscoverable() {
         // Given
-        final String uriOfExistingResource = getAPI().createAsUri(createNewEntity(), null);
+        final String uriOfExistingResource = getApi().createAsUri(createNewEntity(), null);
 
         // When
-        final Response getResponse = getAPI().findOneByUriAsResponse(uriOfExistingResource, null);
+        final Response getResponse = getApi().findOneByUriAsResponse(uriOfExistingResource, null);
 
         // Then
         final String uriToAllResources = HTTPLinkHeaderUtil.extractURIByRel(getResponse.getHeader(HttpHeaders.LINK), LinkUtil.REL_COLLECTION);
 
-        final Response getAllResponse = getAPI().findAllByUriAsResponse(uriToAllResources, null);
+        final Response getAllResponse = getApi().findAllByUriAsResponse(uriToAllResources, null);
         assertThat(getAllResponse.getStatusCode(), is(200));
     }
 
@@ -61,7 +61,7 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
     @Test
     public final void whenFirstPageOfResourcesIsRetrieved_thenSomethingIsDiscoverable() {
         // When
-        final Response response = getAPI().findAllPaginatedAsResponse(1, 10, null);
+        final Response response = getApi().findAllPaginatedAsResponse(1, 10, null);
 
         // Then
         final String linkHeader = response.getHeader(HttpHeaders.LINK);
@@ -70,11 +70,11 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
 
     @Test
     public final void whenFirstPageOfResourcesIsRetrieved_thenNextPageIsDiscoverable() {
-        getAPI().createAsUri(createNewEntity(), null);
-        getAPI().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity(), null);
 
         // When
-        final Response response = getAPI().findAllPaginatedAsResponse(1, 1, null);
+        final Response response = getApi().findAllPaginatedAsResponse(1, 1, null);
 
         // Then
         final String uriToNextPage = HTTPLinkHeaderUtil.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
@@ -83,24 +83,24 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
 
     @Test
     public final void whenFirstPageOfResourcesAreRetrieved_thenSecondPageIsDiscoverable() {
-        getAPI().createAsUri(createNewEntity(), null);
-        getAPI().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity(), null);
 
         // When
-        final Response response = getAPI().findAllPaginatedAsResponse(0, 1, null);
+        final Response response = getApi().findAllPaginatedAsResponse(0, 1, null);
 
         // Then
         final String uriToNextPage = HTTPLinkHeaderUtil.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
-        assertEquals(getURI() + "?page=1&size=1", uriToNextPage);
+        assertEquals(getUri() + "?page=1&size=1", uriToNextPage);
     }
 
     @Test
     public final void whenPageOfResourcesIsRetrieved_thenLastPageIsDiscoverable() {
-        getAPI().create(createNewEntity());
-        getAPI().create(createNewEntity());
+        getApi().create(createNewEntity());
+        getApi().create(createNewEntity());
 
         // When
-        final Response response = getAPI().findAllPaginatedAsResponse(0, 1, null);
+        final Response response = getApi().findAllPaginatedAsResponse(0, 1, null);
 
         // Then
         final String uriToLastPage = HTTPLinkHeaderUtil.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_LAST);
@@ -110,11 +110,11 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
     @Test
     public final void whenLastPageOfResourcesIsRetrieved_thenNoNextPageIsDiscoverable() {
         // When
-        final Response response = getAPI().findAllPaginatedAsResponse(1, 1, null);
+        final Response response = getApi().findAllPaginatedAsResponse(1, 1, null);
         final String uriToLastPage = HTTPLinkHeaderUtil.extractURIByRel(response.getHeader(HttpHeaders.LINK), LinkUtil.REL_LAST);
 
         // Then
-        final Response responseForLastPage = getAPI().findAllByUriAsResponse(uriToLastPage, null);
+        final Response responseForLastPage = getApi().findAllByUriAsResponse(uriToLastPage, null);
         final String uriToNextPage = HTTPLinkHeaderUtil.extractURIByRel(responseForLastPage.getHeader(HttpHeaders.LINK), LinkUtil.REL_NEXT);
         assertNull(uriToNextPage);
     }
@@ -124,7 +124,7 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
     @Test
     public final void whenInvalidPOSTIsSentToValidURIOfResource_thenAllowHeaderListsTheAllowedActions() {
         // Given
-        final String uriOfExistingResource = getAPI().createAsUri(createNewEntity(), null);
+        final String uriOfExistingResource = getApi().createAsUri(createNewEntity(), null);
 
         // When
         final Response res = givenAuthenticated().post(uriOfExistingResource);
@@ -138,21 +138,21 @@ public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEnti
     public final void whenResourceIsCreated_thenURIOfTheNewlyCreatedResourceIsDiscoverable() {
         // When
         final T unpersistedResource = createNewEntity();
-        final String uriOfNewlyCreatedResource = getAPI().createAsUri(unpersistedResource, null);
+        final String uriOfNewlyCreatedResource = getApi().createAsUri(unpersistedResource, null);
 
         // Then
-        final Response response = getAPI().findOneByUriAsResponse(uriOfNewlyCreatedResource, null);
+        final Response response = getApi().findOneByUriAsResponse(uriOfNewlyCreatedResource, null);
         final T resourceFromServer = marshaller.decode(response.body().asString(), clazz);
         assertThat(unpersistedResource, equalTo(resourceFromServer));
     }
 
     // template method
 
-    protected abstract IRestTemplate<T> getAPI();
+    protected abstract IRestTemplate<T> getApi();
 
     protected abstract IEntityOperations<T> getEntityOps();
 
-    protected abstract String getURI();
+    protected abstract String getUri();
 
     protected abstract void change(final T resource);
 

@@ -23,7 +23,7 @@ public class UserSortAndPaginationClientRestIntegrationTest extends SecSortAndPa
     // template method
 
     @Override
-    protected final UserClientRestTemplate getAPI() {
+    protected final UserClientRestTemplate getApi() {
         return api;
     }
 

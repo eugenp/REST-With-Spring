@@ -25,21 +25,21 @@ public class PrincipalServicePersistenceIntegrationTest extends SecServicePersis
 
     @Test
     public void whenSaveIsPerformed_thenNoException() {
-        getAPI().create(createNewEntity());
+        getApi().create(createNewEntity());
     }
 
     @Test(expected = DataAccessException.class)
     public void whenAUniqueConstraintIsBroken_thenSpringSpecificExceptionIsThrown() {
         final String name = randomAlphabetic(8);
 
-        getAPI().create(createNewEntity(name));
-        getAPI().create(createNewEntity(name));
+        getApi().create(createNewEntity(name));
+        getApi().create(createNewEntity(name));
     }
 
     // template method
 
     @Override
-    protected final IService<Principal> getAPI() {
+    protected final IService<Principal> getApi() {
         return principalService;
     }
 

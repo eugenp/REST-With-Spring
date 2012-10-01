@@ -23,7 +23,7 @@ public class UserSearchRestIntegrationTest extends SecSearchRestIntegrationTest<
     // template
 
     @Override
-    protected final UserTestRestTemplate getAPI() {
+    protected final UserTestRestTemplate getApi() {
         return restTemplate;
     }
 

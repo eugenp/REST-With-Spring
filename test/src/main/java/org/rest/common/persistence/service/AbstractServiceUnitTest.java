@@ -37,7 +37,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     public void before() {
         when(getDAO().findAll()).thenReturn(Lists.<T> newArrayList());
         eventPublisher = mock(ApplicationEventPublisher.class);
-        ReflectionTestUtils.setField(getAPI(), "eventPublisher", eventPublisher);
+        ReflectionTestUtils.setField(getApi(), "eventPublisher", eventPublisher);
     }
 
     @Test
@@ -51,7 +51,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     @Test(expected = NullPointerException.class)
     public void whenCreateIsTriggeredForNullEntity_thenException() {
         // When
-        getAPI().create(null);
+        getApi().create(null);
 
         // Then
     }
@@ -59,7 +59,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     @Test
     public void whenCreateIsTriggered_thenNoException() {
         // When
-        getAPI().create(stubDaoSave(createNewEntity()));
+        getApi().create(stubDaoSave(createNewEntity()));
 
         // Then
     }
@@ -70,7 +70,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         final T entity = stubDaoSave(createNewEntity());
 
         // When
-        getAPI().create(entity);
+        getApi().create(entity);
 
         // Then
         verify(getDAO()).save(entity);
@@ -83,7 +83,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         stubDaoSave(entity);
 
         // When
-        getAPI().create(entity);
+        getApi().create(entity);
 
         // Then
         verify(getEventPublisher()).publishEvent(isA(BeforeEntityCreatedEvent.class));
@@ -96,7 +96,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         stubDaoSave(entity);
 
         // When
-        getAPI().create(entity);
+        getApi().create(entity);
 
         // Then
         verify(getEventPublisher()).publishEvent(isA(AfterEntityCreatedEvent.class));
@@ -107,21 +107,21 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     @Test
     public void whenUpdateIsTriggered_thenNoException() {
         // When
-        getAPI().update(givenEntityExists(stubDaoSave(createSimulatedExistingEntity())));
+        getApi().update(givenEntityExists(stubDaoSave(createSimulatedExistingEntity())));
 
         // Then
     }
 
     @Test(expected = NullPointerException.class)
     public void givenNullEntity_whenUpdate_thenException() {
-        getAPI().update(null);
+        getApi().update(null);
     }
 
     @Test
     public void whenUpdateIsTriggered_thenEntityIsUpdated() {
         // When
         final T entity = createSimulatedExistingEntity();
-        getAPI().update(entity);
+        getApi().update(entity);
 
         // Then
         verify(getDAO()).save(entity);
@@ -134,7 +134,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         stubDaoSave(entity);
 
         // When
-        getAPI().update(entity);
+        getApi().update(entity);
 
         // Then
         verify(getEventPublisher()).publishEvent(isA(AfterEntityUpdateEvent.class));
@@ -150,7 +150,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         when(getDAO().findAll(eq(pageRequest))).thenReturn(page);
 
         // When
-        final Page<T> found = getAPI().findAllPaginatedAndSortedRaw(1, 10, null, null);
+        final Page<T> found = getApi().findAllPaginatedAndSortedRaw(1, 10, null, null);
 
         // Then
         assertSame(page, found);
@@ -161,7 +161,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     @Test
     public void whenGetAllIsTriggered_thenNoException() {
         // When
-        getAPI().findAll();
+        getApi().findAll();
 
         // Then
     }
@@ -169,7 +169,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     @Test
     public void whenGetAllIsTriggered_thenAllEntitiesAreRetrieved() {
         // When
-        getAPI().findAll();
+        getApi().findAll();
 
         // Then
         verify(getDAO()).findAll();
@@ -182,7 +182,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         configureGet(1l);
 
         // When
-        getAPI().findOne(1l);
+        getApi().findOne(1l);
 
         // Then
     }
@@ -192,7 +192,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         configureGet(1l);
 
         // When
-        getAPI().findOne(1l);
+        getApi().findOne(1l);
 
         // Then
         verify(getDAO()).findOne(1l);
@@ -205,7 +205,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         givenEntityExists(entity);
 
         // When
-        final T found = getAPI().findOne(entity.getId());
+        final T found = getApi().findOne(entity.getId());
 
         // Then
         assertThat(found, is(equalTo(entity)));
@@ -222,7 +222,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         givenEntityExists(randomId);
 
         // When
-        getAPI().delete(randomId);
+        getApi().delete(randomId);
 
         // Then
     }
@@ -235,7 +235,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         givenEntityExists(id);
 
         // When
-        getAPI().delete(id);
+        getApi().delete(id);
 
         // Then
     }
@@ -247,7 +247,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         final T entityToBeDeleted = givenEntityExists(id);
 
         // When
-        getAPI().delete(id);
+        getApi().delete(id);
 
         // Then
         verify(getDAO()).delete(entityToBeDeleted);
@@ -258,7 +258,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
     @Test
     public void whenDeleteAllEntities_thenEntitiesAreDeleted() {
         // When
-        getAPI().deleteAll();
+        getApi().deleteAll();
 
         // Then
         verify(getDAO()).deleteAll();
@@ -318,7 +318,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
      * 
      * @return the service.
      */
-    protected abstract IRawService<T> getAPI();
+    protected abstract IRawService<T> getApi();
 
     /**
      * Gets the DAO mock.

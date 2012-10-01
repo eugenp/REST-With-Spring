@@ -48,7 +48,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public final T findOne(final long id) {
-        final String uriOfResource = getURI() + WebConstants.PATH_SEP + id;
+        final String uriOfResource = getUri() + WebConstants.PATH_SEP + id;
         return findOneByUri(uriOfResource, null);
     }
 
@@ -92,7 +92,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public List<T> findAll() {
-        return findAllByUri(getURI(), null);
+        return findAllByUri(getUri(), null);
     }
 
     @Override
@@ -107,14 +107,14 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public final Response findAllAsResponse(final RequestSpecification req) {
-        return findAllByUriAsResponse(getURI(), req);
+        return findAllByUriAsResponse(getUri(), req);
     }
 
     // find - all (sorted, paginated)
 
     @Override
     public final List<T> findAllSorted(final String sortBy, final String sortOrder) {
-        final Response findAllResponse = findAllByUriAsResponse(getURI() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder, null);
+        final Response findAllResponse = findAllByUriAsResponse(getUri() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder, null);
         return marshaller.<T> decodeList(findAllResponse.getBody().asString(), clazz);
     }
 
@@ -132,7 +132,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public final Response findAllPaginatedAndSortedAsResponse(final int page, final int size, final String sortBy, final String sortOrder, final RequestSpecification req) {
-        final StringBuilder uri = new StringBuilder(getURI());
+        final StringBuilder uri = new StringBuilder(getUri());
         uri.append(QueryConstants.QUESTIONMARK);
         uri.append("page=");
         uri.append(page);
@@ -156,7 +156,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public final Response findAllSortedAsResponse(final String sortBy, final String sortOrder, final RequestSpecification req) {
-        final StringBuilder uri = new StringBuilder(getURI());
+        final StringBuilder uri = new StringBuilder(getUri());
         uri.append(QueryConstants.QUESTIONMARK);
         Preconditions.checkState(!(sortBy == null && sortOrder != null));
         if (sortBy != null) {
@@ -174,7 +174,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public final Response findAllPaginatedAsResponse(final int page, final int size, final RequestSpecification req) {
-        final StringBuilder uri = new StringBuilder(getURI());
+        final StringBuilder uri = new StringBuilder(getUri());
         uri.append(QueryConstants.QUESTIONMARK);
         uri.append("page=");
         uri.append(page);
@@ -205,7 +205,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
         }
 
         final String resourceAsString = marshaller.encode(resource);
-        final Response response = givenAuthenticated.contentType(marshaller.getMime()).body(resourceAsString).post(getURI());
+        final Response response = givenAuthenticated.contentType(marshaller.getMime()).body(resourceAsString).post(getUri());
         Preconditions.checkState(response.getStatusCode() == 201, "create operation: " + response.getStatusCode());
 
         final String locationOfCreatedResource = response.getHeader(HttpHeaders.LOCATION);
@@ -218,8 +218,8 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
         Preconditions.checkNotNull(resource);
 
         final String resourceAsString = marshaller.encode(resource);
-        logger.debug("Creating Resource against URI: " + getURI());
-        return givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).post(getURI());
+        logger.debug("Creating Resource against URI: " + getUri());
+        return givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).post(getUri());
     }
 
     // update
@@ -235,7 +235,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
         Preconditions.checkNotNull(resource);
 
         final String resourceAsString = marshaller.encode(resource);
-        return givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).put(getURI());
+        return givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).put(getUri());
     }
 
     // delete
@@ -247,7 +247,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public final void delete(final long id) {
-        final Response deleteResponse = deleteAsResponse(getURI() + WebConstants.PATH_SEP + id);
+        final Response deleteResponse = deleteAsResponse(getUri() + WebConstants.PATH_SEP + id);
         Preconditions.checkState(deleteResponse.getStatusCode() == 204);
     }
 
@@ -260,13 +260,13 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public final Response searchAsResponse(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp) {
-        final String queryURI = getURI() + QueryConstants.QUERY_PREFIX + SearchTestUtil.constructQueryString(idOp, nameOp);
+        final String queryURI = getUri() + QueryConstants.QUERY_PREFIX + SearchTestUtil.constructQueryString(idOp, nameOp);
         return findAllRequest().get(queryURI);
     }
 
     @Override
     public final Response searchAsResponse(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size) {
-        final String queryURI = getURI() + QueryConstants.QUERY_PREFIX + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
+        final String queryURI = getUri() + QueryConstants.QUERY_PREFIX + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
         return findAllRequest().get(queryURI);
     }
 
@@ -295,7 +295,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
         for (final Triple<String, ClientOperation, String> constraint : constraints) {
             builder.consume(constraint);
         }
-        final String queryURI = getURI() + QueryConstants.QUERY_PREFIX + builder.build();
+        final String queryURI = getUri() + QueryConstants.QUERY_PREFIX + builder.build();
 
         final Response searchResponse = findAllRequest().get(queryURI);
         Preconditions.checkState(searchResponse.getStatusCode() == 200);
@@ -305,7 +305,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public final List<T> searchPaginated(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size) {
-        final String queryURI = getURI() + QueryConstants.QUERY_PREFIX + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
+        final String queryURI = getUri() + QueryConstants.QUERY_PREFIX + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
         final Response searchResponse = findAllRequest().get(queryURI);
         Preconditions.checkState(searchResponse.getStatusCode() == 200);
 

@@ -20,7 +20,7 @@ public final class ConstructQueryStringUnitTest {
     // not considering negation
 
     @Test
-    public final void whenQueryURIConstructedFromNull_thenNoException() {
+    public final void whenQueryUriConstructedFromNull_thenNoException() {
         SearchTestUtil.constructQueryString((String) null, null);
     }
 

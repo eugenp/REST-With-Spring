@@ -53,7 +53,7 @@ public class RoleServicePersistenceIntegrationTest extends SecServicePersistence
         final Privilege existingAssociation = getAssociationService().create(new Privilege(randomAlphabetic(6)));
         final Role newResource = createNewEntity();
         newResource.getPrivileges().add(existingAssociation);
-        getAPI().create(newResource);
+        getApi().create(newResource);
 
         principalService.deleteAll();
         roleService.deleteAll();
@@ -65,11 +65,11 @@ public class RoleServicePersistenceIntegrationTest extends SecServicePersistence
         final Privilege existingAssociation = getAssociationService().create(new Privilege(randomAlphabetic(6)));
         final Role newResource = createNewEntity();
         newResource.getPrivileges().add(existingAssociation);
-        getAPI().create(newResource);
+        getApi().create(newResource);
 
         final Role newResource2 = createNewEntity();
         newResource2.getPrivileges().add(existingAssociation);
-        getAPI().create(newResource2);
+        getApi().create(newResource2);
     }
 
     @Test
@@ -77,20 +77,20 @@ public class RoleServicePersistenceIntegrationTest extends SecServicePersistence
         final Privilege existingAssociation = getAssociationService().create(new Privilege(randomAlphabetic(6)));
         final Role resource1 = new Role(randomAlphabetic(6), Sets.newHashSet(existingAssociation));
 
-        final Role resource1ViewOfServerBefore = getAPI().create(resource1);
+        final Role resource1ViewOfServerBefore = getApi().create(resource1);
         assertThat(resource1ViewOfServerBefore.getPrivileges(), hasItem(existingAssociation));
 
         final Role resource2 = new Role(randomAlphabetic(6), Sets.newHashSet(existingAssociation));
-        getAPI().create(resource2);
+        getApi().create(resource2);
 
-        final Role resource1ViewOfServerAfter = getAPI().findOne(resource1ViewOfServerBefore.getId());
+        final Role resource1ViewOfServerAfter = getApi().findOne(resource1ViewOfServerBefore.getId());
         assertThat(resource1ViewOfServerAfter.getPrivileges(), hasItem(existingAssociation));
     }
 
     // template method
 
     @Override
-    protected final IService<Role> getAPI() {
+    protected final IService<Role> getApi() {
         return roleService;
     }
 

@@ -53,7 +53,7 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
         newResource.getPrivileges().add(existingAssociation);
 
         // When
-        final Role existingResource = getAPI().create(newResource);
+        final Role existingResource = getApi().create(newResource);
 
         // Then
         assertThat(existingResource.getPrivileges(), notNullValue());
@@ -66,10 +66,10 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
     public final void givenWorkingWithSpecialCharacters_whtnResourcesIfRetrievedByName_thenResourceIsCorrectlyRetrieved() {
         final Role newResource = getEntityOps().createNewEntity();
         newResource.setName("Macy's,Dell, Inc.");
-        getAPI().createAsResponse(newResource);
+        getApi().createAsResponse(newResource);
 
         // When
-        final Role retrievedResource = getAPI().findByName(newResource.getName());
+        final Role retrievedResource = getApi().findByName(newResource.getName());
         assertEquals(newResource, retrievedResource);
     }
 
@@ -78,8 +78,8 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
     @Test
     public final void givenResourceExists_whenResourceIsRetrievedByName_thenResourceIsCorrectlyRetrieved() {
         final Role newResource = getEntityOps().createNewEntity();
-        getAPI().create(newResource);
-        final Role existingResourceByName = getAPI().findByName(newResource.getName());
+        getApi().create(newResource);
+        final Role existingResourceByName = getApi().findByName(newResource.getName());
         assertEquals(newResource, existingResourceByName);
     }
 
@@ -88,7 +88,7 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
     @Test
     @Ignore("in progress - create association first")
     public final void whenResourceIsRetrieved_thenAssociationsAreAlsoRetrieved() {
-        final Role existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final Role existingResource = getApi().create(getEntityOps().createNewEntity());
         assertThat(existingResource.getPrivileges(), not(Matchers.<Privilege> empty()));
     }
 
@@ -100,7 +100,7 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
         newResource.setName(randomAlphabetic(4) + " " + randomAlphabetic(4));
 
         // When
-        final Response createAsResponse = getAPI().createAsResponse(newResource);
+        final Response createAsResponse = getApi().createAsResponse(newResource);
 
         // Then
         assertThat(createAsResponse.getStatusCode(), is(201));
@@ -110,10 +110,10 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
     public final void givenExistingResourceHasNameWithSpace_whenResourcesIfRetrievedByName_thenResourceIsCorrectlyRetrieved() {
         final Role newResource = getEntityOps().createNewEntity();
         newResource.setName(randomAlphabetic(4) + " " + randomAlphabetic(4));
-        getAPI().createAsResponse(newResource);
+        getApi().createAsResponse(newResource);
 
         // When
-        final Role retrievedResource = getAPI().findByName(newResource.getName());
+        final Role retrievedResource = getApi().findByName(newResource.getName());
         assertEquals(newResource, retrievedResource);
     }
 
@@ -122,11 +122,11 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
         final Privilege existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewEntity());
         final Role newResource = getEntityOps().createNewEntity();
         newResource.getPrivileges().add(existingAssociation);
-        getAPI().create(newResource);
+        getApi().create(newResource);
 
         final Role newResource2 = getEntityOps().createNewEntity();
         newResource2.getPrivileges().add(existingAssociation);
-        getAPI().create(newResource2);
+        getApi().create(newResource2);
     }
 
     /**
@@ -139,7 +139,7 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
         newResource.getPrivileges().add(getAssociationEntityOps().createNewEntity());
 
         // When
-        final Response response = getAPI().createAsResponse(newResource);
+        final Response response = getApi().createAsResponse(newResource);
 
         // Then
         assertThat(response.getStatusCode(), is(409));
@@ -153,7 +153,7 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
         newResource.getPrivileges().add(invalidAssociation);
 
         // When
-        final Response response = getAPI().createAsResponse(newResource);
+        final Response response = getApi().createAsResponse(newResource);
 
         // Then
         assertThat(response.getStatusCode(), is(409));
@@ -166,7 +166,7 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
         newResource.getPrivileges().add(existingAssociation);
 
         // When
-        final Response response = getAPI().createAsResponse(newResource);
+        final Response response = getApi().createAsResponse(newResource);
 
         // Then
         assertThat(response.getStatusCode(), is(201));
@@ -179,7 +179,7 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
 
         // When
         resourceToCreate.getPrivileges().add(existingAssociation);
-        final Role existingResource = getAPI().create(resourceToCreate);
+        final Role existingResource = getApi().create(resourceToCreate);
 
         // Then
         assertThat(existingResource.getPrivileges(), hasItem(existingAssociation));
@@ -190,26 +190,26 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
     @Test
     public final void givenResourceExists_whenResourceIsUpdatedWithExistingAssociation_thenAssociationIsCorrectlyUpdated() {
         // Given
-        final Role existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final Role existingResource = getApi().create(getEntityOps().createNewEntity());
         final Privilege existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewEntity());
         existingResource.setPrivileges(Sets.newHashSet(existingAssociation));
 
         // When
-        getAPI().update(existingResource);
+        getApi().update(existingResource);
 
         // Given
-        final Role updatedResource = getAPI().findOne(existingResource.getId());
+        final Role updatedResource = getApi().findOne(existingResource.getId());
         assertThat(updatedResource.getPrivileges(), hasItem(existingAssociation));
     }
 
     @Test
     public final void givenExistingResourceAndExistingAssociation_whenUpdatingResourceWithTheAssociation_thanAssociationCorrectlyDone() {
-        final Role existingResource = getAPI().create(getEntityOps().createNewEntity());
+        final Role existingResource = getApi().create(getEntityOps().createNewEntity());
         final Privilege existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewEntity());
         existingResource.setPrivileges(Sets.newHashSet(existingAssociation));
 
-        getAPI().update(existingResource);
-        final Role updatedResource = getAPI().findOne(existingResource.getId());
+        getApi().update(existingResource);
+        final Role updatedResource = getApi().findOne(existingResource.getId());
         assertThat(updatedResource.getPrivileges(), hasItem(existingAssociation));
     }
 
@@ -222,13 +222,13 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
         final Privilege existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewEntity());
         final Role newResource = getEntityOps().createNewEntity();
         newResource.getPrivileges().add(existingAssociation);
-        final Role existingResource = getAPI().create(newResource);
+        final Role existingResource = getApi().create(newResource);
 
         // When
-        getAPI().delete(existingResource.getId());
+        getApi().delete(existingResource.getId());
 
         // Then
-        assertNull(getAPI().findOne(existingAssociation.getId()));
+        assertNull(getApi().findOne(existingAssociation.getId()));
     }
 
     // complex scenarios
@@ -238,20 +238,20 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
         final Privilege existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewEntity());
         final Role resource1 = new Role(randomAlphabetic(6), Sets.newHashSet(existingAssociation));
 
-        final Role resource1ViewOfServerBefore = getAPI().create(resource1);
+        final Role resource1ViewOfServerBefore = getApi().create(resource1);
         assertThat(resource1ViewOfServerBefore.getPrivileges(), hasItem(existingAssociation));
 
         final Role resource2 = new Role(randomAlphabetic(6), Sets.newHashSet(existingAssociation));
-        getAPI().create(resource2);
+        getApi().create(resource2);
 
-        final Role resource1ViewOfServerAfter = getAPI().findOne(resource1ViewOfServerBefore.getId());
+        final Role resource1ViewOfServerAfter = getApi().findOne(resource1ViewOfServerBefore.getId());
         assertThat(resource1ViewOfServerAfter.getPrivileges(), hasItem(existingAssociation));
     }
 
     // template
 
     @Override
-    protected final RoleTestRestTemplate getAPI() {
+    protected final RoleTestRestTemplate getApi() {
         return api;
     }
 

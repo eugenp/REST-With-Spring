@@ -27,7 +27,7 @@ public final class UserTestRestTemplate extends AbstractTestRestTemplate<User> {
     // template method
 
     @Override
-    public final String getURI() {
+    public final String getUri() {
         return paths.getUserUri();
     }
 

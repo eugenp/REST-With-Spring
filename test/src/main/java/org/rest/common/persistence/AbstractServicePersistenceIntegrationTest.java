@@ -36,7 +36,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
     @Test
     /**/public final void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoResourceIsReceived() {
         // When
-        final T createdResource = getAPI().findOne(IDUtil.randomPositiveLong());
+        final T createdResource = getApi().findOne(IDUtil.randomPositiveLong());
 
         // Then
         assertNull(createdResource);
@@ -45,25 +45,25 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
     @Test
     public void givenResourceExists_whenResourceIsRetrieved_thenNoExceptions() {
         final T existingResource = persistNewEntity();
-        getAPI().findOne(existingResource.getId());
+        getApi().findOne(existingResource.getId());
     }
 
     @Test
     public void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoExceptions() {
-        getAPI().findOne(IDUtil.randomPositiveLong());
+        getApi().findOne(IDUtil.randomPositiveLong());
     }
 
     @Test
     public void givenResourceExists_whenResourceIsRetrieved_thenTheResultIsNotNull() {
         final T existingResource = persistNewEntity();
-        final T retrievedResource = getAPI().findOne(existingResource.getId());
+        final T retrievedResource = getApi().findOne(existingResource.getId());
         assertNotNull(retrievedResource);
     }
 
     @Test
     public void givenResourceExists_whenResourceIsRetrieved_thenResourceIsRetrievedCorrectly() {
         final T existingResource = persistNewEntity();
-        final T retrievedResource = getAPI().findOne(existingResource.getId());
+        final T retrievedResource = getApi().findOne(existingResource.getId());
         assertEquals(existingResource, retrievedResource);
     }
 
@@ -72,19 +72,19 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
     @Test
     /**/public final void givenResourceExists_whenResourceIsRetrievedByName_thenNoExceptions() {
         // Given
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
 
         // When
-        getAPI().findByName(existingResource.getName());
+        getApi().findByName(existingResource.getName());
     }
 
     @Test
     /**/public final void givenResourceExists_whenResourceIsRetrievedByName_thenResourceIsFound() {
         // Given
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
 
         // When
-        final T resourceByName = getAPI().findByName(existingResource.getName());
+        final T resourceByName = getApi().findByName(existingResource.getName());
 
         // Then
         assertNotNull(resourceByName);
@@ -93,9 +93,9 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
     @Test
     /**/public final void givenResourceExists_whenResourceIsRetrievedByName_thenFoundResourceIsCorrect() {
         // Given
-        final T existingResource = getAPI().create(createNewEntity());
+        final T existingResource = getApi().create(createNewEntity());
         // When
-        final T resourceByName = getAPI().findByName(existingResource.getName());
+        final T resourceByName = getApi().findByName(existingResource.getName());
 
         // Then
         assertThat(existingResource, equalTo(resourceByName));
@@ -107,10 +107,10 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         newEntity.setName(randomAlphabetic(4) + " " + randomAlphabetic(4));
 
         // Given
-        final T existingResource = getAPI().create(newEntity);
+        final T existingResource = getApi().create(newEntity);
 
         // When
-        final T resourceByName = getAPI().findByName(existingResource.getName());
+        final T resourceByName = getApi().findByName(existingResource.getName());
 
         // Then
         assertThat(existingResource, equalTo(resourceByName));
@@ -120,12 +120,12 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
 
     @Test
     /**/public void whenAllResourcesAreRetrieved_thenNoExceptions() {
-        getAPI().findAll();
+        getApi().findAll();
     }
 
     @Test
     /**/public void whenAllResourcesAreRetrieved_thenTheResultIsNotNull() {
-        final List<T> resources = getAPI().findAll();
+        final List<T> resources = getApi().findAll();
 
         assertNotNull(resources);
     }
@@ -135,7 +135,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         persistNewEntity();
 
         // When
-        final List<T> allResources = getAPI().findAll();
+        final List<T> allResources = getApi().findAll();
 
         // Then
         assertThat(allResources, not(Matchers.<T> empty()));
@@ -145,7 +145,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
     /**/public void givenAnResourceExists_whenAllResourcesAreRetrieved_thenTheExistingResourceIsIndeedAmongThem() {
         final T existingResource = persistNewEntity();
 
-        final List<T> resources = getAPI().findAll();
+        final List<T> resources = getApi().findAll();
 
         assertThat(resources, hasItem(existingResource));
     }
@@ -155,7 +155,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         persistNewEntity();
 
         // When
-        final List<T> allResources = getAPI().findAll();
+        final List<T> allResources = getApi().findAll();
 
         // Then
         for (final T resource : allResources) {
@@ -167,7 +167,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
 
     @Test
     /**/public final void whenResourcesAreRetrievedPaginated_thenNoExceptions() {
-        getAPI().findAllPaginated(1, 1);
+        getApi().findAllPaginated(1, 1);
     }
 
     @Test
@@ -175,7 +175,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         persistNewEntity();
 
         // When
-        final List<T> allPaginated = getAPI().findAllPaginated(0, 1);
+        final List<T> allPaginated = getApi().findAllPaginated(0, 1);
 
         // Then
         assertFalse(allPaginated.isEmpty());
@@ -189,7 +189,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         persistNewEntity();
 
         // When
-        final List<T> resourcesSorted = getAPI().findAllSorted(SearchField.name.name(), Sort.Direction.ASC.name());
+        final List<T> resourcesSorted = getApi().findAllSorted(SearchField.name.name(), Sort.Direction.ASC.name());
 
         // Then
         assertTrue(new OrderByName<T>().isOrdered(resourcesSorted));
@@ -197,19 +197,19 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
 
     @Test
     /**/public final void whenResourcesAreRetrievedSortedDescById_thenNoExceptions() {
-        getAPI().findAllSorted(SearchField.id.toString(), Sort.Direction.DESC.name());
+        getApi().findAllSorted(SearchField.id.toString(), Sort.Direction.DESC.name());
     }
 
     @Test
     /**/public final void whenResourcesAreRetrievedSortedAscById_thenResultsAreOrderedCorrectly() {
-        final List<T> resourcesOrderedById = getAPI().findAllSorted(SearchField.id.toString(), Sort.Direction.ASC.name());
+        final List<T> resourcesOrderedById = getApi().findAllSorted(SearchField.id.toString(), Sort.Direction.ASC.name());
 
         assertTrue(new OrderById<T>().isOrdered(resourcesOrderedById));
     }
 
     @Test
     /**/public final void whenResourcesAreRetrievedSortedDescById_thenResultsAreOrderedCorrectly() {
-        final List<T> resourcesOrderedById = getAPI().findAllSorted(SearchField.id.toString(), Sort.Direction.DESC.name());
+        final List<T> resourcesOrderedById = getApi().findAllSorted(SearchField.id.toString(), Sort.Direction.DESC.name());
 
         assertTrue(new OrderById<T>().reverse().isOrdered(resourcesOrderedById));
     }
@@ -218,7 +218,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
 
     @Test
     /**/public final void whenResourcesAreRetrievedPaginatedAndSorted_thenNoExceptions() {
-        getAPI().findAllPaginatedAndSorted(0, 41, SearchField.name.name(), Sort.Direction.DESC.name());
+        getApi().findAllPaginatedAndSorted(0, 41, SearchField.name.name(), Sort.Direction.DESC.name());
     }
 
     @Test
@@ -227,7 +227,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         persistNewEntity();
 
         // When
-        final List<T> resourcesPaginatedAndSorted = getAPI().findAllPaginatedAndSorted(0, 4, SearchField.name.name(), Sort.Direction.ASC.name());
+        final List<T> resourcesPaginatedAndSorted = getApi().findAllPaginatedAndSorted(0, 4, SearchField.name.name(), Sort.Direction.ASC.name());
 
         // Then
         assertTrue(new OrderByName<T>().isOrdered(resourcesPaginatedAndSorted));
@@ -237,7 +237,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
 
     @Test(expected = RuntimeException.class)
     /**/public void whenNullResourceIsCreated_thenException() {
-        getAPI().create(null);
+        getApi().create(null);
     }
 
     @Test
@@ -249,13 +249,13 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
     /**/public void whenResourceIsCreated_thenResourceIsRetrievable() {
         final T existingResource = persistNewEntity();
 
-        assertNotNull(getAPI().findOne(existingResource.getId()));
+        assertNotNull(getApi().findOne(existingResource.getId()));
     }
 
     @Test
     /**/public void whenResourceIsCreated_thenSavedResourceIsEqualToOriginalResource() {
         final T originalResource = createNewEntity();
-        final T savedResource = getAPI().create(originalResource);
+        final T savedResource = getApi().create(originalResource);
 
         assertEquals(originalResource, savedResource);
     }
@@ -265,7 +265,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         final T invalidResource = createNewEntity();
         getEntityOps().invalidate(invalidResource);
 
-        getAPI().create(invalidResource);
+        getApi().create(invalidResource);
     }
 
     /**
@@ -277,14 +277,14 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         final T resourceWithId = createNewEntity();
         resourceWithId.setId(IDUtil.randomPositiveLong());
 
-        getAPI().create(resourceWithId);
+        getApi().create(resourceWithId);
     }
 
     // update
 
     @Test(expected = RuntimeException.class)
     /**/public void whenNullResourceIsUpdated_thenException() {
-        getAPI().update(null);
+        getApi().update(null);
     }
 
     @Test
@@ -293,7 +293,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         final T existingResource = persistNewEntity();
 
         // When
-        getAPI().update(existingResource);
+        getApi().update(existingResource);
     }
 
     /**
@@ -304,7 +304,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         final T existingResource = persistNewEntity();
         getEntityOps().invalidate(existingResource);
 
-        getAPI().update(existingResource);
+        getApi().update(existingResource);
     }
 
     @Test
@@ -314,9 +314,9 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
 
         // When
         getEntityOps().change(existingResource);
-        getAPI().update(existingResource);
+        getApi().update(existingResource);
 
-        final T updatedResource = getAPI().findOne(existingResource.getId());
+        final T updatedResource = getApi().findOne(existingResource.getId());
 
         // Then
         assertEquals(existingResource, updatedResource);
@@ -327,13 +327,13 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
     @Test(expected = RuntimeException.class)
     public void givenResourceDoesNotExists_whenResourceIsDeleted_thenException() {
         // When
-        getAPI().delete(IDUtil.randomPositiveLong());
+        getApi().delete(IDUtil.randomPositiveLong());
     }
 
     @Test(expected = RuntimeException.class)
     public void whenResourceIsDeletedByNegativeId_thenException() {
         // When
-        getAPI().delete(IDUtil.randomNegativeLong());
+        getApi().delete(IDUtil.randomNegativeLong());
     }
 
     @Test
@@ -342,7 +342,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         final T existingResource = persistNewEntity();
 
         // When
-        getAPI().delete(existingResource.getId());
+        getApi().delete(existingResource.getId());
     }
 
     @Test
@@ -351,22 +351,22 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
         final T existingResource = persistNewEntity();
 
         // When
-        getAPI().delete(existingResource.getId());
+        getApi().delete(existingResource.getId());
 
         // Then
-        assertNull(getAPI().findOne(existingResource.getId()));
+        assertNull(getApi().findOne(existingResource.getId()));
     }
 
     // template method
 
-    protected abstract IService<T> getAPI();
+    protected abstract IService<T> getApi();
 
     protected abstract IEntityOperations<T> getEntityOps();
 
     protected abstract T createNewEntity();
 
     protected T persistNewEntity() {
-        return getAPI().create(createNewEntity());
+        return getApi().create(createNewEntity());
     }
 
 }

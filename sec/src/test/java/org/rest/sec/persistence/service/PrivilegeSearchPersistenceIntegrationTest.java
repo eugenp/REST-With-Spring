@@ -18,7 +18,7 @@ public class PrivilegeSearchPersistenceIntegrationTest extends SecSearchPersiste
     // template method
 
     @Override
-    protected final IPrivilegeService getAPI() {
+    protected final IPrivilegeService getApi() {
         return privilegeService;
     }
 

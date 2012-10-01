@@ -23,7 +23,7 @@ public class RoleMimeRestIntegrationTest extends SecMimeRestIntegrationTest<Role
     // template method
 
     @Override
-    protected final RoleTestRestTemplate getAPI() {
+    protected final RoleTestRestTemplate getApi() {
         return api;
     }
 

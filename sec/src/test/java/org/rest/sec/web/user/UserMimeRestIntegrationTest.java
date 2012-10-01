@@ -23,7 +23,7 @@ public class UserMimeRestIntegrationTest extends SecMimeRestIntegrationTest<User
     // template method
 
     @Override
-    protected final UserTestRestTemplate getAPI() {
+    protected final UserTestRestTemplate getApi() {
         return api;
     }
 

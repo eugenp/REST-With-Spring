@@ -28,12 +28,12 @@ public class PrivilegeSortAndPaginationRestIntegrationTest extends SecSortAndPag
     }
 
     @Override
-    protected final String getURI() {
-        return template.getURI();
+    protected final String getUri() {
+        return template.getUri();
     }
 
     @Override
-    protected final PrivilegeTestRestTemplate getAPI() {
+    protected final PrivilegeTestRestTemplate getApi() {
         return template;
     }
 

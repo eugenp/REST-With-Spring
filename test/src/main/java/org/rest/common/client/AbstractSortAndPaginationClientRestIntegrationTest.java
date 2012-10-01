@@ -28,15 +28,15 @@ public abstract class AbstractSortAndPaginationClientRestIntegrationTest<T exten
 
     @Test
     /**/public final void whenResourcesAreRetrievedPaginated_thenNoExceptions() {
-        getAPI().findAllPaginated(1, 1);
+        getApi().findAllPaginated(1, 1);
     }
 
     @Test
     /**/public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned() {
-        getAPI().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity(), null);
 
         // When
-        final List<T> allPaginated = getAPI().findAllPaginated(0, 1);
+        final List<T> allPaginated = getApi().findAllPaginated(0, 1);
 
         // Then
         assertFalse(allPaginated.isEmpty());
@@ -46,11 +46,11 @@ public abstract class AbstractSortAndPaginationClientRestIntegrationTest<T exten
 
     @Test
     /**/public final void whenResourcesAreRetrievedSorted_thenResourcesAreIndeedOrdered() {
-        getAPI().createAsUri(createNewEntity(), null);
-        getAPI().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity(), null);
 
         // When
-        final List<T> resourcesSorted = getAPI().findAllSorted(SearchField.name.name(), Sort.Direction.ASC.name());
+        final List<T> resourcesSorted = getApi().findAllSorted(SearchField.name.name(), Sort.Direction.ASC.name());
 
         // Then
         assertTrue(new OrderByName<T>().isOrdered(resourcesSorted));
@@ -58,19 +58,19 @@ public abstract class AbstractSortAndPaginationClientRestIntegrationTest<T exten
 
     @Test
     /**/public final void whenResourcesAreRetrievedSortedDescById_thenNoExceptions() {
-        getAPI().findAllSorted(SearchField.id.toString(), Sort.Direction.DESC.name());
+        getApi().findAllSorted(SearchField.id.toString(), Sort.Direction.DESC.name());
     }
 
     @Test
     /**/public final void whenResourcesAreRetrievedSortedAscById_thenResultsAreOrderedCorrectly() {
-        final List<T> resourcesOrderedById = getAPI().findAllSorted(SearchField.id.toString(), Sort.Direction.ASC.name());
+        final List<T> resourcesOrderedById = getApi().findAllSorted(SearchField.id.toString(), Sort.Direction.ASC.name());
 
         assertTrue(new OrderById<T>().isOrdered(resourcesOrderedById));
     }
 
     @Test
     /**/public final void whenResourcesAreRetrievedSortedDescById_thenResultsAreOrderedCorrectly() {
-        final List<T> resourcesOrderedById = getAPI().findAllSorted(SearchField.id.name(), Sort.Direction.DESC.name());
+        final List<T> resourcesOrderedById = getApi().findAllSorted(SearchField.id.name(), Sort.Direction.DESC.name());
 
         assertTrue(new OrderById<T>().reverse().isOrdered(resourcesOrderedById));
     }
@@ -79,16 +79,16 @@ public abstract class AbstractSortAndPaginationClientRestIntegrationTest<T exten
 
     @Test
     /**/public final void whenResourcesAreRetrievedPaginatedAndSorted_thenNoExceptions() {
-        getAPI().findAllPaginatedAndSorted(0, 41, SearchField.name.name(), Sort.Direction.ASC.name());
+        getApi().findAllPaginatedAndSorted(0, 41, SearchField.name.name(), Sort.Direction.ASC.name());
     }
 
     @Test
     /**/public final void whenResourcesAreRetrievedPaginatedAndSorted_thenResourcesAreIndeedOrdered() {
-        getAPI().createAsUri(createNewEntity(), null);
-        getAPI().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity(), null);
 
         // When
-        final List<T> resourcesPaginatedAndSorted = getAPI().findAllPaginatedAndSorted(0, 4, SearchField.name.name(), Sort.Direction.ASC.name());
+        final List<T> resourcesPaginatedAndSorted = getApi().findAllPaginatedAndSorted(0, 4, SearchField.name.name(), Sort.Direction.ASC.name());
 
         // Then
         assertTrue(new OrderByName<T>().isOrdered(resourcesPaginatedAndSorted));
@@ -100,12 +100,12 @@ public abstract class AbstractSortAndPaginationClientRestIntegrationTest<T exten
         return getEntityOps().createNewEntity();
     }
 
-    protected abstract IClientTemplate<T> getAPI();
+    protected abstract IClientTemplate<T> getApi();
 
     protected abstract IEntityOperations<T> getEntityOps();
 
-    protected final String getURI() {
-        return getAPI().getUri() + WebConstants.PATH_SEP;
+    protected final String getUri() {
+        return getApi().getUri() + WebConstants.PATH_SEP;
     }
 
 }

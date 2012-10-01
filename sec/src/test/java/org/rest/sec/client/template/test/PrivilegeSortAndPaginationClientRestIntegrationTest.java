@@ -23,7 +23,7 @@ public class PrivilegeSortAndPaginationClientRestIntegrationTest extends SecSort
     // template method
 
     @Override
-    protected final PrivilegeClientRestTemplate getAPI() {
+    protected final PrivilegeClientRestTemplate getApi() {
         return api;
     }
 

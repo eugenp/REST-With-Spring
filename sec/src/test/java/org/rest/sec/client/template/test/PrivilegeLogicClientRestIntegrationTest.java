@@ -23,7 +23,7 @@ public class PrivilegeLogicClientRestIntegrationTest extends SecLogicClientRestI
     // template method
 
     @Override
-    protected final PrivilegeClientRestTemplate getAPI() {
+    protected final PrivilegeClientRestTemplate getApi() {
         return api;
     }
 

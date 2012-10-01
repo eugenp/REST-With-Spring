@@ -6,7 +6,7 @@ import org.rest.common.security.SpringSecurityUtil;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
 import org.rest.sec.model.dto.User;
-import org.rest.sec.web.common.URIMappingConstants;
+import org.rest.sec.web.common.UriMappingConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,7 +32,7 @@ public class AuthenticationController {
 
     // API
 
-    @RequestMapping(method = RequestMethod.POST, value = URIMappingConstants.AUTHENTICATION)
+    @RequestMapping(method = RequestMethod.POST, value = UriMappingConstants.AUTHENTICATION)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public User createAuthentication() {

@@ -18,7 +18,7 @@ public interface IRestTemplate<T extends IEntity> extends IOperations<T>, ITempl
 
     IMarshaller getMarshaller();
 
-    String getURI();
+    String getUri();
 
     // search
 

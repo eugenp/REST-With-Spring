@@ -23,7 +23,7 @@ public class UserLogicClientRestIntegrationTest extends SecLogicClientRestIntegr
     // template method
 
     @Override
-    protected final UserClientRestTemplate getAPI() {
+    protected final UserClientRestTemplate getApi() {
         return api;
     }
 

@@ -23,7 +23,7 @@ public class PrivilegeSearchRestIntegrationTest extends SecSearchRestIntegration
     // template
 
     @Override
-    protected final PrivilegeTestRestTemplate getAPI() {
+    protected final PrivilegeTestRestTemplate getApi() {
         return restTemplate;
     }
 

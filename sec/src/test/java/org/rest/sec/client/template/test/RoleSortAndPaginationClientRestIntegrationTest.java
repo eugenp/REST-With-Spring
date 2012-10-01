@@ -23,7 +23,7 @@ public class RoleSortAndPaginationClientRestIntegrationTest extends SecSortAndPa
     // template method
 
     @Override
-    protected final RoleClientRestTemplate getAPI() {
+    protected final RoleClientRestTemplate getApi() {
         return api;
     }
 

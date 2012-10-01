@@ -29,12 +29,12 @@ public class RoleSortAndPaginationRestIntegrationTest extends SecSortAndPaginati
     }
 
     @Override
-    protected final String getURI() {
-        return template.getURI();
+    protected final String getUri() {
+        return template.getUri();
     }
 
     @Override
-    protected final RoleTestRestTemplate getAPI() {
+    protected final RoleTestRestTemplate getApi() {
         return template;
     }
 

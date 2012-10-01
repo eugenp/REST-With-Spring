@@ -49,7 +49,7 @@ public class RoleServiceUnitTest extends AbstractServiceUnitTest<Role> {
     // template method
 
     @Override
-    protected final RoleServiceImpl getAPI() {
+    protected final RoleServiceImpl getApi() {
         return instance;
     }
 

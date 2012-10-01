@@ -25,7 +25,7 @@ public final class PrivilegeTestRestTemplate extends AbstractTestRestTemplate<Pr
     // template method
 
     @Override
-    public final String getURI() {
+    public final String getUri() {
         return paths.getPrivilegeUri();
     }
 

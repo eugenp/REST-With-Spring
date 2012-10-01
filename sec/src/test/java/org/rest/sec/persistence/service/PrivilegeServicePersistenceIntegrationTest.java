@@ -37,7 +37,7 @@ public class PrivilegeServicePersistenceIntegrationTest extends SecServicePersis
     // template method
 
     @Override
-    protected final IService<Privilege> getAPI() {
+    protected final IService<Privilege> getApi() {
         return privilegeService;
     }
 

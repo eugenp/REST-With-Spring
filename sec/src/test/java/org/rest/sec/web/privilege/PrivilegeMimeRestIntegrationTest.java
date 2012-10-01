@@ -23,7 +23,7 @@ public class PrivilegeMimeRestIntegrationTest extends SecMimeRestIntegrationTest
     // template method
 
     @Override
-    protected final PrivilegeTestRestTemplate getAPI() {
+    protected final PrivilegeTestRestTemplate getApi() {
         return api;
     }
 

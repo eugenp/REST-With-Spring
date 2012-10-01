@@ -25,14 +25,14 @@ public final class RoleTestRestTemplate extends AbstractTestRestTemplate<Role> {
     // API
 
     public final Role findByName(final String name) {
-        final String resourceAsXML = findOneByUriAsString(getURI() + "?name=" + name);
+        final String resourceAsXML = findOneByUriAsString(getUri() + "?name=" + name);
         return marshaller.decode(resourceAsXML, clazz);
     }
 
     // template method
 
     @Override
-    public final String getURI() {
+    public final String getUri() {
         return paths.getRoleUri();
     }
 
