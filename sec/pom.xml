@@ -165,6 +165,7 @@
 				<configuration>
 					<excludes>
 						<exclude>**/*RestIntegrationTest.java</exclude>
+						<exclude>**/*RestLiveTest.java</exclude>
 					</excludes>
 					<systemPropertyVariables>
 						<persistenceTarget>h2</persistenceTarget>
@@ -344,6 +345,7 @@
 									</excludes>
 									<includes>
 										<include>**/*RestIntegrationTest.java</include>
+										<include>**/*RestLiveTest.java</include>
 									</includes>
 									<systemPropertyVariables>
 										<spring.profiles.active>client,mime_json</spring.profiles.active> <!-- should be removed -->

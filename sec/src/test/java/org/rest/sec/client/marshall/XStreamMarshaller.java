@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Preconditions;
 import com.thoughtworks.xstream.XStream;
 
-@Component("xStreamMarshaller")
+@Component
 @Profile("mime_xml")
 public final class XStreamMarshaller implements IMarshaller {
 

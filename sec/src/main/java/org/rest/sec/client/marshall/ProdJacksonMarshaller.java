@@ -20,14 +20,14 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
 
-@Component("jacksonMarshaller")
-@Profile("mime_json")
-public final class JacksonMarshaller implements IMarshaller {
-    private final Logger logger = LoggerFactory.getLogger(JacksonMarshaller.class);
+@Component
+@Profile("production")
+public final class ProdJacksonMarshaller implements IMarshaller {
+    private final Logger logger = LoggerFactory.getLogger(ProdJacksonMarshaller.class);
 
     private final ObjectMapper objectMapper;
 
-    public JacksonMarshaller() {
+    public ProdJacksonMarshaller() {
         super();
 
         objectMapper = new ObjectMapper();
