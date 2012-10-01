@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UserSortAndPaginationClientRestIntegrationTest extends SecSortAndPaginationClientRestIntegrationTest<User> {
 
     @Autowired
-    private UserClientRestTemplate clientTemplate;
+    private UserClientRestTemplate api;
     @Autowired
     private UserEntityOpsImpl entityOps;
 
@@ -24,7 +24,7 @@ public class UserSortAndPaginationClientRestIntegrationTest extends SecSortAndPa
 
     @Override
     protected final UserClientRestTemplate getAPI() {
-        return clientTemplate;
+        return api;
     }
 
     @Override

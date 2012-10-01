@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class PrivilegeLogicClientRestIntegrationTest extends SecLogicClientRestIntegrationTest<Privilege> {
 
     @Autowired
-    private PrivilegeClientRestTemplate clientTemplate;
+    private PrivilegeClientRestTemplate api;
     @Autowired
     private PrivilegeEntityOpsImpl entityOps;
 
@@ -24,7 +24,7 @@ public class PrivilegeLogicClientRestIntegrationTest extends SecLogicClientRestI
 
     @Override
     protected final PrivilegeClientRestTemplate getAPI() {
-        return clientTemplate;
+        return api;
     }
 
     @Override

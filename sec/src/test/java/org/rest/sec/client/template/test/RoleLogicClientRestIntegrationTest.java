@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class RoleLogicClientRestIntegrationTest extends SecLogicClientRestIntegrationTest<Role> {
 
     @Autowired
-    private RoleClientRestTemplate clientTemplate;
+    private RoleClientRestTemplate api;
     @Autowired
     private RoleEntityOpsImpl entityOps;
 
@@ -24,7 +24,7 @@ public class RoleLogicClientRestIntegrationTest extends SecLogicClientRestIntegr
 
     @Override
     protected final RoleClientRestTemplate getAPI() {
-        return clientTemplate;
+        return api;
     }
 
     @Override
