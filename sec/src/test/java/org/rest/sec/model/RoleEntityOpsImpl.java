@@ -3,8 +3,6 @@ package org.rest.sec.model;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.rest.common.client.IEntityOperations;
-import org.rest.sec.model.Privilege;
-import org.rest.sec.model.Role;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
@@ -17,6 +15,12 @@ public final class RoleEntityOpsImpl implements IEntityOperations<Role> {
     }
 
     // API
+
+    public final Role createNewEntity(final String name) {
+        return new Role(name, Sets.<Privilege> newHashSet());
+    }
+
+    // template
 
     @Override
     public final Role createNewEntity() {

@@ -3,7 +3,6 @@ package org.rest.sec.model;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.rest.common.client.IEntityOperations;
-import org.rest.sec.model.Role;
 import org.rest.sec.model.dto.User;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +16,10 @@ public final class UserEntityOpsImpl implements IEntityOperations<User> {
     }
 
     // API
+
+    public final User createNewEntity(final String name) {
+        return new User(name, randomAlphabetic(8), Sets.<Role> newHashSet());
+    }
 
     // template method
 
