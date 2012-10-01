@@ -12,4 +12,6 @@ public final class UriMappingConstants {
         throw new AssertionError();
     }
 
+    // API
+
 }
