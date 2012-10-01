@@ -16,6 +16,6 @@ public interface ISortingController<T extends IEntity> {
 
     public List<T> findAllSorted(final String sortBy, final String sortOrder);
 
-    public List<T> findAll(final HttpServletRequest request);
+    public List<T> findAll(final HttpServletRequest request, final UriComponentsBuilder uriBuilder, final HttpServletResponse response);
 
 }

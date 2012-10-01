@@ -78,8 +78,8 @@ public class RoleController extends AbstractController<Role> implements ISorting
     @Override
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<Role> findAll(final HttpServletRequest request) {
-        return findAllInternal(request);
+    public List<Role> findAll(final HttpServletRequest request, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+        return findAllInternal(request, uriBuilder, response);
     }
 
     // find - one

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 
 import org.apache.http.HttpHeaders;
+import org.rest.common.event.MultipleResourcesRetrievedEvent;
 import org.rest.common.event.PaginatedResultsRetrievedEvent;
 import org.rest.common.event.ResourceCreatedEvent;
 import org.rest.common.event.SingleResourceRetrievedEvent;
@@ -111,10 +112,12 @@ public abstract class AbstractController<T extends INameableEntity> {
 
     // find - all
 
-    protected final List<T> findAllInternal(final HttpServletRequest request) {
+    protected final List<T> findAllInternal(final HttpServletRequest request, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         if (request.getParameterNames().hasMoreElements()) {
             throw new ResourceNotFoundException();
         }
+
+        eventPublisher.publishEvent(new MultipleResourcesRetrievedEvent<T>(clazz, uriBuilder, response));
         return getService().findAll();
     }
 

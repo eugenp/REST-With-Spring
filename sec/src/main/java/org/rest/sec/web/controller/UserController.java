@@ -78,8 +78,8 @@ public class UserController extends AbstractController<User> implements ISorting
     @Override
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<User> findAll(final HttpServletRequest request) {
-        return findAllInternal(request);
+    public List<User> findAll(final HttpServletRequest request, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+        return findAllInternal(request, uriBuilder, response);
     }
 
     // find - one

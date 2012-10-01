@@ -78,8 +78,8 @@ public class PrivilegeController extends AbstractController<Privilege> implement
     @Override
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<Privilege> findAll(final HttpServletRequest request) {
-        return findAllInternal(request);
+    public List<Privilege> findAll(final HttpServletRequest request, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+        return findAllInternal(request, uriBuilder, response);
     }
 
     // find - one
