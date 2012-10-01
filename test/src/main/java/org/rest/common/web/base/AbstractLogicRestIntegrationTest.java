@@ -204,16 +204,7 @@ public abstract class AbstractLogicRestIntegrationTest<T extends INameableEntity
     }
 
     @Test
-    /**/public void givenAnResourceExists_whenAllResourcesAreRetrieved_thenTheExistingResourceIsIndeedAmongThem() {
-        final T existingResource = getAPI().create(createNewEntity());
-
-        final List<T> resources = getAPI().findAll();
-
-        assertThat(resources, hasItem(existingResource));
-    }
-
-    @Test
-    /**/public void whenAllResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
+    /**/public void givenAtLeastOneResourceExists_whenAllResourcesAreRetrieved_thenRetrievedResourcesAreNotEmpty() {
         // Given
         getAPI().createAsUri(createNewEntity(), null);
 
@@ -222,6 +213,15 @@ public abstract class AbstractLogicRestIntegrationTest<T extends INameableEntity
 
         // Then
         assertThat(allResources, not(Matchers.<T> empty()));
+    }
+
+    @Test
+    /**/public void givenAnResourceExists_whenAllResourcesAreRetrieved_thenTheExistingResourceIsIndeedAmongThem() {
+        final T existingResource = getAPI().create(createNewEntity());
+
+        final List<T> resources = getAPI().findAll();
+
+        assertThat(resources, hasItem(existingResource));
     }
 
     @Test

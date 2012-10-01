@@ -145,8 +145,8 @@ public final class ParseQueryStringUnitTest {
     public final void givenQueryContainsValidNegatedIdAndPositiveNameConstraint_whenQueryIsParsed_thenResultsAreCorrect() {
         final String id = randomNumeric(2);
         final String name = randomAlphabetic(6);
-        final List<Triple<String, ClientOperation, String>> parsedQueryString = parseQueryString(QueryConstants.ID + QueryConstants.NEGATION + QueryConstants.OP + id + QueryConstants.SEPARATOR
-                + QueryConstants.NAME + QueryConstants.OP + name);
+        final List<Triple<String, ClientOperation, String>> parsedQueryString = parseQueryString(QueryConstants.ID + QueryConstants.NEGATION + QueryConstants.OP + id + QueryConstants.SEPARATOR + QueryConstants.NAME
+                + QueryConstants.OP + name);
 
         assertEquals(id, parsedQueryString.get(0).getRight());
         assertEquals(name, parsedQueryString.get(1).getRight());

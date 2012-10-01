@@ -1,5 +1,6 @@
 package org.rest.common.client;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.equalTo;
@@ -85,7 +86,7 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
      * http://forum.springsource.org/showthread.php?129138-Possible-bug-in-RestTemplate-double-checking-before-opening-a-JIRA&p=421494#post421494
      */
     @Test
-    public final void givenResourceExists_whenResourceIsSearchedByName_thenNoExceptions() {
+    /**/public final void givenResourceExists_whenResourceIsRetrievedByName_thenNoExceptions() {
         // Given
         final T existingResource = getAPI().create(createNewEntity());
 
@@ -94,7 +95,7 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     }
 
     @Test
-    public final void givenResourceExists_whenResourceIsSearchedByName_thenResourceIsFound() {
+    /**/public final void givenResourceExists_whenResourceIsRetrievedByName_thenResourceIsFound() {
         // Given
         final T existingResource = getAPI().create(createNewEntity());
 
@@ -106,9 +107,23 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     }
 
     @Test
-    public final void givenResourceExists_whenResourceIsSearchedByName_thenFoundResourceIsCorrect() {
+    /**/public final void givenResourceExists_whenResourceIsRetrievedByName_thenFoundResourceIsCorrect() {
         // Given
         final T existingResource = getAPI().create(createNewEntity());
+        // When
+        final T resourceByName = getAPI().findByName(existingResource.getName());
+
+        // Then
+        assertThat(existingResource, equalTo(resourceByName));
+    }
+
+    @Test
+    /**/public final void givenExistingResourceHasSpaceInName_whenResourceIsRetrievedByName_thenFoundResourceIsCorrect() {
+        final T newEntity = createNewEntity();
+        newEntity.setName(randomAlphabetic(4) + " " + randomAlphabetic(4));
+
+        // Given
+        final T existingResource = getAPI().create(newEntity);
 
         // When
         final T resourceByName = getAPI().findByName(existingResource.getName());
@@ -117,7 +132,58 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
         assertThat(existingResource, equalTo(resourceByName));
     }
 
-    // find one - by attributes
+    // find - all
+
+    @Test
+    /**/public void whenAllResourcesAreRetrieved_thenNoExceptions() {
+        getAPI().findAll();
+    }
+
+    @Test
+    /**/public void whenAllResourcesAreRetrieved_thenTheResultIsNotNull() {
+        final List<T> resources = getAPI().findAll();
+
+        assertNotNull(resources);
+    }
+
+    @Test
+    /**/public void givenAtLeastOneResourceExists_whenAllResourcesAreRetrieved_thenRetrievedResourcesAreNotEmpty() {
+        // Given
+        getAPI().createAsUri(createNewEntity(), null);
+
+        // When
+        final List<T> allResources = getAPI().findAll();
+
+        // Then
+        assertThat(allResources, not(Matchers.<T> empty()));
+    }
+
+    @Test
+    /**/public void givenAnResourceExists_whenAllResourcesAreRetrieved_thenTheExistingResourceIsIndeedAmongThem() {
+        final T existingResource = getAPI().create(createNewEntity());
+
+        final List<T> resources = getAPI().findAll();
+
+        assertThat(resources, hasItem(existingResource));
+    }
+
+    @Test
+    /**/public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
+        // Given
+        getAPI().createAsUri(createNewEntity(), null);
+
+        // When
+        final List<T> allResources = getAPI().findAll();
+
+        // Then
+        for (final T resource : allResources) {
+            assertNotNull(resource.getId());
+        }
+    }
+
+    // find - all (+sorting + pagination)
+
+    // search one - by attributes
 
     @Test
     @Ignore("bug in RestTemplate")
@@ -172,57 +238,6 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
 
         // Then
     }
-
-    // find - all
-
-    @Test
-    /**/public void whenAllResourcesAreRetrieved_thenNoExceptions() {
-        getAPI().findAll();
-    }
-
-    @Test
-    /**/public void whenAllResourcesAreRetrieved_thenTheResultIsNotNull() {
-        final List<T> resources = getAPI().findAll();
-
-        assertNotNull(resources);
-    }
-
-    @Test
-    /**/public void givenAnResourceExists_whenAllResourcesAreRetrieved_thenTheExistingResourceIsIndeedAmongThem() {
-        final T existingResource = getAPI().create(createNewEntity());
-
-        final List<T> resources = getAPI().findAll();
-
-        assertThat(resources, hasItem(existingResource));
-    }
-
-    @Test
-    public void whenAllResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
-        // Given
-        getAPI().createAsUri(createNewEntity(), null);
-
-        // When
-        final List<T> allResources = getAPI().findAll();
-
-        // Then
-        assertThat(allResources, not(Matchers.<T> empty()));
-    }
-
-    @Test
-    public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
-        // Given
-        getAPI().createAsUri(createNewEntity(), null);
-
-        // When
-        final List<T> allResources = getAPI().findAll();
-
-        // Then
-        for (final T resource : allResources) {
-            assertNotNull(resource.getId());
-        }
-    }
-
-    // find - all (+sorting + pagination)
 
     // create
 

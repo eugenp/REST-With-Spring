@@ -1,5 +1,7 @@
 package org.rest.common.persistence;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
@@ -29,7 +31,137 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
 
     // tests
 
-    // AbstractClientSortAndPaginationRestIntegrationTest
+    // find - one
+
+    @Test
+    /**/public final void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoResourceIsReceived() {
+        // When
+        final T createdResource = getAPI().findOne(IDUtil.randomPositiveLong());
+
+        // Then
+        assertNull(createdResource);
+    }
+
+    @Test
+    public void givenResourceExists_whenResourceIsRetrieved_thenNoExceptions() {
+        final T existingResource = persistNewEntity();
+        getAPI().findOne(existingResource.getId());
+    }
+
+    @Test
+    public void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoExceptions() {
+        getAPI().findOne(IDUtil.randomPositiveLong());
+    }
+
+    @Test
+    public void givenResourceExists_whenResourceIsRetrieved_thenTheResultIsNotNull() {
+        final T existingResource = persistNewEntity();
+        final T retrievedResource = getAPI().findOne(existingResource.getId());
+        assertNotNull(retrievedResource);
+    }
+
+    @Test
+    public void givenResourceExists_whenResourceIsRetrieved_thenResourceIsRetrievedCorrectly() {
+        final T existingResource = persistNewEntity();
+        final T retrievedResource = getAPI().findOne(existingResource.getId());
+        assertEquals(existingResource, retrievedResource);
+    }
+
+    // find - one - by name
+
+    @Test
+    /**/public final void givenResourceExists_whenResourceIsRetrievedByName_thenNoExceptions() {
+        // Given
+        final T existingResource = getAPI().create(createNewEntity());
+
+        // When
+        getAPI().findByName(existingResource.getName());
+    }
+
+    @Test
+    /**/public final void givenResourceExists_whenResourceIsRetrievedByName_thenResourceIsFound() {
+        // Given
+        final T existingResource = getAPI().create(createNewEntity());
+
+        // When
+        final T resourceByName = getAPI().findByName(existingResource.getName());
+
+        // Then
+        assertNotNull(resourceByName);
+    }
+
+    @Test
+    /**/public final void givenResourceExists_whenResourceIsRetrievedByName_thenFoundResourceIsCorrect() {
+        // Given
+        final T existingResource = getAPI().create(createNewEntity());
+        // When
+        final T resourceByName = getAPI().findByName(existingResource.getName());
+
+        // Then
+        assertThat(existingResource, equalTo(resourceByName));
+    }
+
+    @Test
+    /**/public final void givenExistingResourceHasSpaceInName_whenResourceIsRetrievedByName_thenFoundResourceIsCorrect() {
+        final T newEntity = createNewEntity();
+        newEntity.setName(randomAlphabetic(4) + " " + randomAlphabetic(4));
+
+        // Given
+        final T existingResource = getAPI().create(newEntity);
+
+        // When
+        final T resourceByName = getAPI().findByName(existingResource.getName());
+
+        // Then
+        assertThat(existingResource, equalTo(resourceByName));
+    }
+
+    // find - all
+
+    @Test
+    /**/public void whenAllResourcesAreRetrieved_thenNoExceptions() {
+        getAPI().findAll();
+    }
+
+    @Test
+    /**/public void whenAllResourcesAreRetrieved_thenTheResultIsNotNull() {
+        final List<T> resources = getAPI().findAll();
+
+        assertNotNull(resources);
+    }
+
+    @Test
+    /**/public void givenAtLeastOneResourceExists_whenAllResourcesAreRetrieved_thenRetrievedResourcesAreNotEmpty() {
+        persistNewEntity();
+
+        // When
+        final List<T> allResources = getAPI().findAll();
+
+        // Then
+        assertThat(allResources, not(Matchers.<T> empty()));
+    }
+
+    @Test
+    /**/public void givenAnResourceExists_whenAllResourcesAreRetrieved_thenTheExistingResourceIsIndeedAmongThem() {
+        final T existingResource = persistNewEntity();
+
+        final List<T> resources = getAPI().findAll();
+
+        assertThat(resources, hasItem(existingResource));
+    }
+
+    @Test
+    /**/public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
+        persistNewEntity();
+
+        // When
+        final List<T> allResources = getAPI().findAll();
+
+        // Then
+        for (final T resource : allResources) {
+            assertNotNull(resource.getId());
+        }
+    }
 
     // find - all - pagination
 
@@ -99,91 +231,6 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
 
         // Then
         assertTrue(new OrderByName<T>().isOrdered(resourcesPaginatedAndSorted));
-    }
-
-    // the ORIGINAL
-
-    // find - one
-
-    @Test
-    /**/public final void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoResourceIsReceived() {
-        // When
-        final T createdResource = getAPI().findOne(IDUtil.randomPositiveLong());
-
-        // Then
-        assertNull(createdResource);
-    }
-
-    @Test
-    public void givenResourceExists_whenResourceIsRetrieved_thenNoExceptions() {
-        final T existingResource = persistNewEntity();
-        getAPI().findOne(existingResource.getId());
-    }
-
-    @Test
-    public void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoExceptions() {
-        getAPI().findOne(IDUtil.randomPositiveLong());
-    }
-
-    @Test
-    public void givenResourceExists_whenResourceIsRetrieved_thenTheResultIsNotNull() {
-        final T existingResource = persistNewEntity();
-        final T retrievedResource = getAPI().findOne(existingResource.getId());
-        assertNotNull(retrievedResource);
-    }
-
-    @Test
-    public void givenResourceExists_whenResourceIsRetrieved_thenResourceIsRetrievedCorrectly() {
-        final T existingResource = persistNewEntity();
-        final T retrievedResource = getAPI().findOne(existingResource.getId());
-        assertEquals(existingResource, retrievedResource);
-    }
-
-    // find - all
-
-    @Test
-    /**/public void whenAllResourcesAreRetrieved_thenNoExceptions() {
-        getAPI().findAll();
-    }
-
-    @Test
-    /**/public void whenAllResourcesAreRetrieved_thenTheResultIsNotNull() {
-        final List<T> resources = getAPI().findAll();
-
-        assertNotNull(resources);
-    }
-
-    @Test
-    /**/public void whenAllResourcesAreRetrieved_thenResourcesAreCorrectlyRetrieved() {
-        persistNewEntity();
-
-        // When
-        final List<T> allResources = getAPI().findAll();
-
-        // Then
-        assertThat(allResources, not(Matchers.<T> empty()));
-    }
-
-    @Test
-    /**/public void givenAnResourceExists_whenAllResourcesAreRetrieved_thenTheExistingResourceIsIndeedAmongThem() {
-        final T existingResource = persistNewEntity();
-
-        final List<T> resources = getAPI().findAll();
-
-        assertThat(resources, hasItem(existingResource));
-    }
-
-    @Test
-    /**/public void whenAllResourcesAreRetrieved_thenResourcesHaveIds() {
-        persistNewEntity();
-
-        // When
-        final List<T> allResources = getAPI().findAll();
-
-        // Then
-        for (final T resource : allResources) {
-            assertNotNull(resource.getId());
-        }
     }
 
     // create
@@ -290,7 +337,7 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
     }
 
     @Test
-    public void givenResourceExists_whenEntityIsDeleted_thenNoExceptions() {
+    public void givenResourceExists_whenResourceIsDeleted_thenNoExceptions() {
         // Given
         final T existingResource = persistNewEntity();
 
