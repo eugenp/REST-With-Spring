@@ -20,8 +20,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @ComponentScan({ "org.rest.common.web", "org.rest.sec.web" })
 @EnableWebMvc
-// WebMvcConfigurationSupport
-// WebMvcConfigurerAdapter
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     public WebConfig() {
@@ -54,16 +52,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public void configureMessageConverters(final List<HttpMessageConverter<?>> messageConverters) {
         messageConverters.add(marshallingHttpMessageConverter());
 
-        /*
-        final StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
-        stringConverter.setWriteAcceptCharset(false);
-
-        messageConverters.add(new ByteArrayHttpMessageConverter());
-        messageConverters.add(stringConverter);
-        messageConverters.add(new ResourceHttpMessageConverter());
-        messageConverters.add(new SourceHttpMessageConverter<Source>());
-        messageConverters.add(new XmlAwareFormHttpMessageConverter());
-         */
         final ClassLoader classLoader = getClass().getClassLoader();
         if (ClassUtils.isPresent("com.fasterxml.jackson.databind.ObjectMapper", classLoader)) {
             messageConverters.add(new MappingJackson2HttpMessageConverter());

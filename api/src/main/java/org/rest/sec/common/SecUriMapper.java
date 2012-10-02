@@ -1,4 +1,4 @@
-package org.rest.sec.web.common;
+package org.rest.sec.common;
 
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.web.IUriMapper;
