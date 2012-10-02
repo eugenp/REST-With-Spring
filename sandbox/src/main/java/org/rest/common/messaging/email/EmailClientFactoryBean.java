@@ -1,4 +1,4 @@
-package org.rest.messaging.email;
+package org.rest.common.messaging.email;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;

@@ -1,4 +1,4 @@
-package org.rest.messaging.email;
+package org.rest.common.messaging.email;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,12 +13,12 @@ import com.amazonaws.services.simpleemail.model.SendEmailResult;
 import com.google.common.collect.Lists;
 
 @Component
-public final class MailTemplate {
+public final class SesMailTemplate {
 
     @Autowired
     private AmazonSimpleEmailServiceClient sesClient;
 
-    public MailTemplate() {
+    public SesMailTemplate() {
         super();
     }
 

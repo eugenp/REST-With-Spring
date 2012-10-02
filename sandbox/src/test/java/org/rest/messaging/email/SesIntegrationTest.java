@@ -2,7 +2,8 @@ package org.rest.messaging.email;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.rest.messaging.email.spring.EmailConfig;
+import org.rest.common.messaging.email.SesMailTemplate;
+import org.rest.common.messaging.email.spring.EmailConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -13,7 +14,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 public class SesIntegrationTest {
 
     @Autowired
-    private MailTemplate mailTemplate;
+    private SesMailTemplate mailTemplate;
 
     // tests
 
