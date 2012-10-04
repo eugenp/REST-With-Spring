@@ -28,7 +28,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.common.base.Preconditions;
@@ -51,7 +50,7 @@ public abstract class AbstractController<T extends INameableEntity> {
 
     // search
 
-    public List<T> searchInternal(@RequestParam(QueryConstants.Q_PARAM) final String queryString) {
+    public List<T> searchInternal(final String queryString) {
         try {
             return getService().searchAll(queryString);
         } catch (final IllegalStateException illEx) {
@@ -61,7 +60,7 @@ public abstract class AbstractController<T extends INameableEntity> {
         }
     }
 
-    public List<T> searchInternalPaginated(@RequestParam(QueryConstants.Q_PARAM) final String queryString, final int page, final int size) {
+    public List<T> searchInternalPaginated(final String queryString, final int page, final int size) {
         try {
             return getService().searchPaginated(queryString, page, size);
         } catch (final IllegalStateException illEx) {

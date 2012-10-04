@@ -55,6 +55,13 @@ public class PrivilegeController extends AbstractController<Privilege> implement
         return searchInternal(queryString);
     }
 
+    @RequestMapping(params = { QueryConstants.Q_PARAM, QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
+    @ResponseBody
+    public List<Privilege> searchPaginated(@RequestParam(QueryConstants.Q_PARAM) final String queryString, @RequestParam(value = QueryConstants.PAGE) final int page,
+            @RequestParam(value = QueryConstants.SIZE) final int size) {
+        return searchInternalPaginated(queryString, page, size);
+    }
+
     // find - all/paginated
 
     @Override
