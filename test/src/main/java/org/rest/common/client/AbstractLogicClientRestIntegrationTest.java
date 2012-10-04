@@ -41,7 +41,7 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
 
     @Test(expected = RestClientException.class)
     public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenException() {
-        getApi().findOneByUri(getUri() + WebConstants.PATH_SEP + randomNumeric(4), null);
+        getApi().findOneByUri(getUri() + WebConstants.PATH_SEP + randomNumeric(6), null);
     }
 
     @Test

@@ -119,6 +119,13 @@ public final class ParseQueryStringUnitTest {
         assertEquals("Some", pair.getRight());
     }
 
+    @Test
+    public final void givenValidQueryWithNameConstraint_whenQueryIsParsedForNameValueWithUnderline_thenResultValueIsCorrect() {
+        final List<Triple<String, ClientOperation, String>> queryTyples = parseQueryString(QueryConstants.NAME + QueryConstants.OP + "Some_Apples");
+        final Triple<String, ClientOperation, String> pair = queryTyples.get(0);
+        assertEquals("Some_Apples", pair.getRight());
+    }
+
     // -- correct - with negation
 
     @Test
@@ -204,6 +211,16 @@ public final class ParseQueryStringUnitTest {
         assertThat(parsedQueryConstraints, hasItem(createNewImmutableTriple(QueryConstants.NAME, ClientOperation.EQ, name)));
     }
 
+    @Test
+    public final void givenQueryContainTwoValidConstraintsInANonStandardOrder_whenQueryIsParsed_thenConstraintsAreCorrect() {
+        final String id = randomNumeric(2);
+        final String name = randomAlphabetic(6);
+        final String queryString = QueryConstants.NAME + QueryConstants.OP + name + QueryConstants.SEPARATOR + QueryConstants.ID + QueryConstants.OP + id;
+        final List<Triple<String, ClientOperation, String>> parsedQueryConstraints = parseQueryString(queryString);
+        assertThat(parsedQueryConstraints, hasItem(createNewImmutableTriple(QueryConstants.ID, ClientOperation.EQ, id)));
+        assertThat(parsedQueryConstraints, hasItem(createNewImmutableTriple(QueryConstants.NAME, ClientOperation.EQ, name)));
+    }
+
     // multiple key-value tuples (for the same key): ex: id=2,id=3
 
     @Test
@@ -222,16 +239,6 @@ public final class ParseQueryStringUnitTest {
         final List<Triple<String, ClientOperation, String>> parsedQueryString = parseQueryString(queryString);
         assertThat(parsedQueryString, hasItem(createNewImmutableTriple(QueryConstants.NAME, ClientOperation.EQ, "me")));
         assertThat(parsedQueryString, hasItem(createNewImmutableTriple(QueryConstants.NAME, ClientOperation.EQ, "andyou")));
-    }
-
-    /**
-     * - note: the order of constraints in the query language should be alphabetic (id then name)
-     */
-    @Test(expected = IllegalStateException.class)
-    public final void givenQueryContainTwoValidNameConstraintsAndTwoValidIdConstraintsInTheIncorrectOrder_whenQueryIsParsed_thenConstraintsAreCorrect() {
-        final String queryString = QueryConstants.NAME + QueryConstants.OP + "me" + QueryConstants.SEPARATOR + QueryConstants.NAME + QueryConstants.OP + "andyou" + QueryConstants.SEPARATOR + QueryConstants.ID
-                + QueryConstants.OP + "2" + QueryConstants.SEPARATOR + QueryConstants.ID + QueryConstants.OP + "3";
-        parseQueryString(queryString);
     }
 
     @Test
