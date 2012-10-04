@@ -20,6 +20,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriTemplate;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -239,7 +240,8 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
         for (final Triple<String, ClientOperation, String> constraint : constraints) {
             builder.consume(constraint);
         }
-        final String queryURI = getUri() + QueryConstants.QUERY_PREFIX + builder.build();
+
+        final String queryURI = new UriTemplate(getUri() + QueryConstants.QUERY_PREFIX + "{qu}").expand(builder.build()).toASCIIString();
 
         final ResponseEntity<List> asResponse = findAllAsResponse(queryURI);
         Preconditions.checkState(asResponse.getStatusCode().value() == 200);

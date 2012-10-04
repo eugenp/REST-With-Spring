@@ -186,7 +186,6 @@ public abstract class AbstractLogicClientRestIntegrationTest<T extends INameable
     // search one - by attributes
 
     @Test
-    @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenNoExceptions() {
         // Given
         final T existingResource = getApi().create(createNewEntity());
