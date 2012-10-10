@@ -18,7 +18,8 @@ cd REST
 mvn install
 mvn -Pintegration cargo:run -f sec/pom.xml
 ```
-- **next**: start consuming the service like so: [[REST API: Consuming Examples with `curl`]]
+
+- **next**: start consuming the service like so: [REST API: Consuming Examples with `curl`](https://github.com/eugenp/REST/wiki/REST-API%3A-Consuming-Examples-with-%60curl%60)
 
 
 # Technology Stack
