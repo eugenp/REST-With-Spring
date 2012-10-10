@@ -308,7 +308,7 @@
 							</container>
 							<configuration>
 								<properties>
-									<cargo.servlet.port>8083</cargo.servlet.port>
+									<cargo.servlet.port>8080</cargo.servlet.port>
 								</properties>
 							</configuration>
 						</configuration>
