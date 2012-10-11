@@ -22,7 +22,7 @@ public class ContextConfig {
     // beans
 
     @Bean
-    public PropertySourcesPlaceholderConfigurer properties() {
+    public static PropertySourcesPlaceholderConfigurer properties() {
         final PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
         return pspc;
     }

@@ -19,14 +19,14 @@
 
 	<logger name="org.springframework" level="WARN" />
 	<logger name="org.springframework.transaction" level="WARN" />
-	<logger name="org.springframework.security" level="INFO" /> <!-- to debug security related issues (DEBUG) -->
+	<logger name="org.springframework.security" level="WARN" /> <!-- to debug security related issues (DEBUG) -->
 	<logger name="org.springframework.web.servlet.mvc" level="WARN" /> <!-- some serialization issues are at trace level here: org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod -->
 
 	<!-- our service -->
-	<logger name="org.rest" level="WARN" />
-	<logger name="org.rest.sec.persistence.setup" level="INFO" /> <!-- to follow if setup is being executed -->
+	<logger name="org.rest" level="INFO" />
+	<logger name="org.rest.sec.persistence.setup" level="DEBUG" /> <!-- to follow if setup is being executed -->
 
-	<root level="INFO">
+	<root level="WARN">
 		<appender-ref ref="FILE" />
 	</root>
 

@@ -13,5 +13,6 @@ public abstract class Principal_ {
     public static volatile SetAttribute<Principal, Role> roles;
     public static volatile SingularAttribute<Principal, String> name;
     public static volatile SingularAttribute<Principal, String> password;
+    public static volatile SingularAttribute<Principal, Boolean> locked;
 
 }
