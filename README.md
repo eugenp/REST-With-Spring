@@ -16,10 +16,12 @@ The project also provides a reference implementation for:
 git clone git://github.com/eugenp/REST.git
 cd REST
 mvn install
-mvn -Pintegration cargo:run -f sec/pom.xml
+mvn cargo:run -f sec/pom.xml
 ```
 
 - **next**: start consuming the service like so: [REST API: Consuming Examples with `curl`](https://github.com/eugenp/REST/wiki/REST-API%3A-Consuming-Examples-with-%60curl%60)
+
+- for **more advanced Build/Run Scenarios**: [[Building and Running REST Security]]
 
 
 # Technology Stack
