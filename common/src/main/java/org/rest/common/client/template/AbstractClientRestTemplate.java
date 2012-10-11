@@ -1,5 +1,6 @@
 package org.rest.common.client.template;
 
+import java.net.URI;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -11,6 +12,7 @@ import org.rest.common.search.ClientOperation;
 import org.rest.common.search.SearchUriBuilder;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.web.WebConstants;
+import org.rest.common.web.util.UriUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriTemplate;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -241,12 +242,20 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
             builder.consume(constraint);
         }
 
-        final String queryURI = new UriTemplate(getUri() + QueryConstants.QUERY_PREFIX + "{qu}").expand(builder.build()).toASCIIString();
+        // var 1
+        // final String queryURI = new UriTemplate(getUri() + QueryConstants.QUERY_PREFIX + "{qu}").expand(builder.build()).toASCIIString();
+        // final ResponseEntity<List> asResponse = findAllAsResponse(queryURI);
 
-        final ResponseEntity<List> asResponse = findAllAsResponse(queryURI);
-        Preconditions.checkState(asResponse.getStatusCode().value() == 200);
+        // var 1
+        // final Map<Object, Object> params = Maps.newHashMap();
+        // params.put("qu", builder.build());
+        // final ResponseEntity<List> asResponse = restTemplate.exchange(getUri() + QueryConstants.QUERY_PREFIX + "{qu}", HttpMethod.GET, findRequestEntity(), List.class, params);
 
-        return asResponse.getBody();
+        final URI uri = UriUtil.createSearchUri(getUri() + QueryConstants.QUERY_PREFIX + "{qu}", builder.build());
+        final ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), String.class);
+        Preconditions.checkState(response.getStatusCode().value() == 200);
+
+        return marshaller.decodeList(response.getBody(), clazz);
     }
 
     @Override
