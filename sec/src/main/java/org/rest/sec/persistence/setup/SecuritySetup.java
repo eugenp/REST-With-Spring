@@ -112,7 +112,8 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
     final void createPrincipals() {
         final Role roleAdmin = roleService.findByName(Roles.ROLE_ADMIN);
 
-        createPrincipalIfNotExisting(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASS, Sets.<Role> newHashSet(roleAdmin));
+        // createPrincipalIfNotExisting(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASS, Sets.<Role> newHashSet(roleAdmin));
+        createPrincipalIfNotExisting(SecurityConstants.ADMIN_EMAIL, SecurityConstants.ADMIN_PASS, Sets.<Role> newHashSet(roleAdmin));
     }
 
     final void createPrincipalIfNotExisting(final String loginName, final String pass, final Set<Role> roles) {

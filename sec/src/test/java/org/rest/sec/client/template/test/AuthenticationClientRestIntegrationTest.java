@@ -33,7 +33,7 @@ public class AuthenticationClientRestIntegrationTest {
     @Test
     public final void whenAuthenticating_then201IsReceived() {
         // When
-        final ResponseEntity<User> response = authenticationRestTemplate.authenticate(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASS);
+        final ResponseEntity<User> response = authenticationRestTemplate.authenticate(SecurityConstants.ADMIN_EMAIL, SecurityConstants.ADMIN_PASS);
 
         // Then
         assertThat(response.getStatusCode().value(), is(201));

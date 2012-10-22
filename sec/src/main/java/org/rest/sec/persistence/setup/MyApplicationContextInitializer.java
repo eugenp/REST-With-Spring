@@ -53,22 +53,28 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
      * @return The env target variable.
      */
     private String getEnvTarget(final ConfigurableEnvironment environment) {
+        String envTarget;
+
         final String targetOverride = getTargetFromOverride();
-        final String envTarget;
         if (targetOverride == null) {
             envTarget = environment.getProperty(ENV_TARGET);
         } else {
             envTarget = targetOverride;
         }
-
         if (envTarget == null) {
             logger.warn("Didn't find a value for {} in the current Environment!", ENV_TARGET);
         }
+
+        if (envTarget == null) {
+            logger.info("Didn't find a value for {} in the current Environment!, using the default `dev`", ENV_TARGET);
+            envTarget = "dev";
+        }
+
         return Preconditions.checkNotNull(envTarget);
     }
 
     /**
-     * This enables overriding the env-${target}.properties location, which is by default resolved internally from the classpath. The entire purpose of overriding this specific properties file is to be able to control
+     * This enables overriding the env-${envTarget}.properties location, which is by default resolved internally from the classpath. The entire purpose of overriding this specific properties file is to be able to control
      * the active Spring profile without defining system wide variables on the OS that runs staging
      */
     private final String getTargetFromOverride() {

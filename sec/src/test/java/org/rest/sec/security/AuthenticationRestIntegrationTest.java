@@ -69,13 +69,13 @@ public class AuthenticationRestIntegrationTest {
         final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).post(paths.getAuthenticationUri());
 
         // Then
-        assertEquals(new User(SecurityConstants.NAME, SecurityConstants.PASS, null), response.as(User.class));
+        assertEquals(new User(SecurityConstants.EMAIL, SecurityConstants.PASS, null), response.as(User.class));
     }
 
     // util
 
     protected RequestSpecification givenAuthenticated() {
-        return auth.givenBasicAuthenticated(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASS);
+        return auth.givenBasicAuthenticated(SecurityConstants.ADMIN_EMAIL, SecurityConstants.ADMIN_PASS);
     }
 
 }
