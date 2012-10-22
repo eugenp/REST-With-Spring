@@ -21,9 +21,11 @@ public final class LinkUtil {
 
     /**
      * Creates a Link Header to be stored in the {@link HttpServletResponse} to provide Discoverability features to the user
-     *  
-     * @param uri the base uri
-     * @param rel the relative path
+     * 
+     * @param uri
+     *            the base uri
+     * @param rel
+     *            the relative path
      * 
      * @return the complete url
      */

@@ -24,7 +24,7 @@ public abstract class SecSortAndPaginationRestIntegrationTest<T extends INameabl
     //
 
     protected final RequestSpecification givenAuthenticated() {
-        return auth.givenBasicAuthenticated(SecurityConstants.ADMIN_EMAIL, SecurityConstants.ADMIN_PASSWORD);
+        return auth.givenBasicAuthenticated(SecurityConstants.ADMIN_EMAIL, SecurityConstants.ADMIN_PASS);
     }
 
 }

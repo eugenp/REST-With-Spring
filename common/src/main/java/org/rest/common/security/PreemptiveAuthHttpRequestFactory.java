@@ -17,7 +17,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
 /**
  * Factory for DefaultContextHttpClient, with preemptive BASIC authentication.
- *
+ * 
  * @see DefaultContextHttpClient
  */
 public class PreemptiveAuthHttpRequestFactory extends HttpComponentsClientHttpRequestFactory {

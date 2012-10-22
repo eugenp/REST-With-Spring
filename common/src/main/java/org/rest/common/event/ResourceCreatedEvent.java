@@ -14,7 +14,8 @@ import com.google.common.base.Preconditions;
  * <p/>
  * This event object contains all the information needed to create the URL for access the new resource created
  * 
- * @param <T> Type of the result that is being handled (commonly Entities).
+ * @param <T>
+ *            Type of the result that is being handled (commonly Entities).
  */
 public final class ResourceCreatedEvent<T extends Serializable> extends ApplicationEvent {
     private final String idOfNewResource;

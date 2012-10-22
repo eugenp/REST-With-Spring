@@ -410,8 +410,7 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
     @Test
     public final void givenResourceExists_whenSearchByEndsWithIncorrectPartOfNameIsPerformed_thenResourceIsNotFound() {
         final T existingResource = persistNewEntity();
-        SearchIntegrationTestUtil.givenResourceExists_whenSearchByEndsWithIncorrectPartOfKeyIsPerformed_thenResourceIsNotFound(getApi(), existingResource, SearchField.name, ClientOperation.ENDS_WITH,
-                existingResource.getName());
+        SearchIntegrationTestUtil.givenResourceExists_whenSearchByEndsWithIncorrectPartOfKeyIsPerformed_thenResourceIsNotFound(getApi(), existingResource, SearchField.name, ClientOperation.ENDS_WITH, existingResource.getName());
     }
 
     @Test

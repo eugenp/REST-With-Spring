@@ -7,11 +7,11 @@ public final class SecurityConstants {
      * - note: the fact that these Privileges are prefixed with `ROLES` is a Spring convention (which can be overriden if needed)
      */
     public static final String ADMIN_USERNAME = "admin";
-    public static final String ADMIN_PASSWORD = "adminpass";
+    public static final String ADMIN_PASS = "adminpass";
     public static final String ADMIN_EMAIL = "admin@fake.com";
 
     public static final String NAME = ADMIN_USERNAME;
-    public static final String PASS = ADMIN_PASSWORD;
+    public static final String PASS = ADMIN_PASS;
     public static final String EMAIL = ADMIN_EMAIL;
 
     // privileges

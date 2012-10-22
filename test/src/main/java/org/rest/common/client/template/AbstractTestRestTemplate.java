@@ -6,7 +6,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.apache.http.HttpHeaders;
 import org.rest.common.client.marshall.IMarshaller;
-import org.rest.common.client.security.IClientAuthenticationComponent;
+import org.rest.common.client.security.ITestAuthenticator;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.search.SearchUriBuilder;
@@ -35,7 +35,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
     protected IMarshaller marshaller;
 
     @Autowired
-    protected IClientAuthenticationComponent auth;
+    protected ITestAuthenticator auth;
 
     public AbstractTestRestTemplate(final Class<T> clazzToSet) {
         super();
@@ -199,9 +199,9 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
         Preconditions.checkNotNull(resource);
         RequestSpecification givenAuthenticated = null;
         if (credentials != null) {
-            givenAuthenticated = givenAuthenticated(credentials.getLeft(), credentials.getRight());
+            givenAuthenticated = auth.givenBasicAuthenticated(credentials.getLeft(), credentials.getRight());
         } else {
-            givenAuthenticated = givenAuthenticated(null, null);
+            givenAuthenticated = givenAuthenticated();
         }
 
         final String resourceAsString = marshaller.encode(resource);
@@ -337,9 +337,15 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
         return req.header(HttpHeaders.ACCEPT, marshaller.getMime());
     }
 
+    // security
+
+    @Override
     public RequestSpecification givenAuthenticated() {
-        return givenAuthenticated(null, null);
+        final Pair<String, String> defaultCredentials = getDefaultCredentials();
+        return auth.givenBasicAuthenticated(defaultCredentials.getLeft(), defaultCredentials.getRight());
     }
+
+    public abstract Pair<String, String> getDefaultCredentials();
 
     //
 

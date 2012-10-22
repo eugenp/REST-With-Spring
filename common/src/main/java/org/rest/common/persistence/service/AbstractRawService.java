@@ -7,10 +7,10 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.exceptions.BadRequestException;
 import org.rest.common.exceptions.ConflictException;
 import org.rest.common.persistence.event.AfterEntitiesDeletedEvent;
-import org.rest.common.persistence.event.AfterEntityCreatedEvent;
+import org.rest.common.persistence.event.AfterEntityCreateEvent;
 import org.rest.common.persistence.event.AfterEntityDeleteEvent;
 import org.rest.common.persistence.event.AfterEntityUpdateEvent;
-import org.rest.common.persistence.event.BeforeEntityCreatedEvent;
+import org.rest.common.persistence.event.BeforeEntityCreateEvent;
 import org.rest.common.persistence.event.BeforeEntityDeleteEvent;
 import org.rest.common.persistence.event.BeforeEntityUpdateEvent;
 import org.rest.common.persistence.model.IEntity;
@@ -188,9 +188,9 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
     public T create(final T entity) {
         Preconditions.checkNotNull(entity);
 
-        eventPublisher.publishEvent(new BeforeEntityCreatedEvent<T>(this, clazz, entity));
+        eventPublisher.publishEvent(new BeforeEntityCreateEvent<T>(this, clazz, entity));
         final T persistedEntity = getDao().save(entity);
-        eventPublisher.publishEvent(new AfterEntityCreatedEvent<T>(this, clazz, persistedEntity));
+        eventPublisher.publishEvent(new AfterEntityCreateEvent<T>(this, clazz, persistedEntity));
 
         return persistedEntity;
     }

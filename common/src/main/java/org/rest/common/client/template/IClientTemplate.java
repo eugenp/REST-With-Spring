@@ -7,8 +7,6 @@ import org.rest.common.persistence.service.INameSupport;
 
 public interface IClientTemplate<T extends INameableEntity> extends IOperations<T>, INameSupport<T>, ITemplateWithUri<T> {
 
-    IClientTemplate<T> givenAuthenticated(final String username, final String password);
-
     //
 
     String getUri();

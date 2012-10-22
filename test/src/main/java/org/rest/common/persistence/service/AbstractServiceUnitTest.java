@@ -11,9 +11,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
-import org.rest.common.persistence.event.AfterEntityCreatedEvent;
+import org.rest.common.persistence.event.AfterEntityCreateEvent;
 import org.rest.common.persistence.event.AfterEntityUpdateEvent;
-import org.rest.common.persistence.event.BeforeEntityCreatedEvent;
+import org.rest.common.persistence.event.BeforeEntityCreateEvent;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.IDUtil;
 import org.springframework.context.ApplicationEventPublisher;
@@ -86,7 +86,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         getApi().create(entity);
 
         // Then
-        verify(getEventPublisher()).publishEvent(isA(BeforeEntityCreatedEvent.class));
+        verify(getEventPublisher()).publishEvent(isA(BeforeEntityCreateEvent.class));
     }
 
     @Test
@@ -99,7 +99,7 @@ public abstract class AbstractServiceUnitTest<T extends IEntity> {
         getApi().create(entity);
 
         // Then
-        verify(getEventPublisher()).publishEvent(isA(AfterEntityCreatedEvent.class));
+        verify(getEventPublisher()).publishEvent(isA(AfterEntityCreateEvent.class));
     }
 
     // update

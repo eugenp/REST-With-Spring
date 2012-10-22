@@ -20,8 +20,7 @@ public final class SearchIntegrationTestUtil {
 
     // API
 
-    public static <T extends IEntity> void givenResourceExists_whenSearchByStartsWithEntireKeyIsPerformed_thenResourceIsFound(final IOperations<T> api, final T newEntity, final SearchField key, final ClientOperation op,
-            final String value) {
+    public static <T extends IEntity> void givenResourceExists_whenSearchByStartsWithEntireKeyIsPerformed_thenResourceIsFound(final IOperations<T> api, final T newEntity, final SearchField key, final ClientOperation op, final String value) {
         final T existingResource = api.create(newEntity);
 
         // When
@@ -32,8 +31,7 @@ public final class SearchIntegrationTestUtil {
         assertThat(searchResults, hasItem(existingResource));
     }
 
-    public static <T extends IEntity> void givenResourceExists_whenSearchByStartsWithPartOfKeyIsPerformed_thenResourceIsFound(final IOperations<T> api, final T newEntity, final SearchField key, final ClientOperation op,
-            final String value) {
+    public static <T extends IEntity> void givenResourceExists_whenSearchByStartsWithPartOfKeyIsPerformed_thenResourceIsFound(final IOperations<T> api, final T newEntity, final SearchField key, final ClientOperation op, final String value) {
         final T existingResource = api.create(newEntity);
         final String partOfValue = value.substring(0, 2);
 
@@ -45,8 +43,7 @@ public final class SearchIntegrationTestUtil {
         assertThat(searchResults, hasItem(existingResource));
     }
 
-    public static <T extends IEntity> void givenResourceExists_whenSearchByEndsWithPartOfNameIsPerformed_thenResourceIsFound(final IOperations<T> api, final T newEntity, final SearchField key, final ClientOperation op,
-            final String value) {
+    public static <T extends IEntity> void givenResourceExists_whenSearchByEndsWithPartOfNameIsPerformed_thenResourceIsFound(final IOperations<T> api, final T newEntity, final SearchField key, final ClientOperation op, final String value) {
         final T existingResource = api.create(newEntity);
         final String partOfValue = value.substring(2);
 
@@ -58,8 +55,7 @@ public final class SearchIntegrationTestUtil {
         assertThat(searchResults, hasItem(existingResource));
     }
 
-    public static <T extends IEntity> void givenResourceExists_whenSearchByEndsWithEntireKeyIsPerformed_thenResourceIsFound(final IOperations<T> api, final T newEntity, final SearchField key, final ClientOperation op,
-            final String value) {
+    public static <T extends IEntity> void givenResourceExists_whenSearchByEndsWithEntireKeyIsPerformed_thenResourceIsFound(final IOperations<T> api, final T newEntity, final SearchField key, final ClientOperation op, final String value) {
         final T existingEntity = api.create(newEntity);
 
         // When
@@ -70,8 +66,7 @@ public final class SearchIntegrationTestUtil {
         assertThat(searchResults, hasItem(existingEntity));
     }
 
-    public static <T extends IEntity> void givenResourceExists_whenSearchByEndsWithIncorrectPartOfKeyIsPerformed_thenResourceIsNotFound(final IOperations<T> api, final T existingEntity, final SearchField key,
-            final ClientOperation op, final String value) {
+    public static <T extends IEntity> void givenResourceExists_whenSearchByEndsWithIncorrectPartOfKeyIsPerformed_thenResourceIsNotFound(final IOperations<T> api, final T existingEntity, final SearchField key, final ClientOperation op, final String value) {
         final String partOfValue = value.substring(2, 5);
 
         // When
@@ -82,8 +77,7 @@ public final class SearchIntegrationTestUtil {
         assertThat(searchResults, not(hasItem(existingEntity)));
     }
 
-    public static <T extends IEntity> void givenResourceExists_whenSearchByStartsWithPartOfLowerCaseNameIsPerformed_thenResourceIsFound(final IOperations<T> api, final T newEntity, final SearchField key,
-            final ClientOperation op, final String value) {
+    public static <T extends IEntity> void givenResourceExists_whenSearchByStartsWithPartOfLowerCaseNameIsPerformed_thenResourceIsFound(final IOperations<T> api, final T newEntity, final SearchField key, final ClientOperation op, final String value) {
         final T existingResource = api.create(newEntity);
         final String partOfValue = value.substring(2);
 

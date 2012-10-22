@@ -1,18 +1,17 @@
 package org.rest.common.client.template;
 
-import java.net.URI;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.client.marshall.IMarshaller;
+import org.rest.common.client.security.ClientAuthenticator;
 import org.rest.common.client.web.HeaderUtil;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.search.SearchUriBuilder;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.web.WebConstants;
-import org.rest.common.web.util.UriUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +37,9 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
     @Autowired
     protected RestTemplate restTemplate;
 
+    @Autowired
+    protected ClientAuthenticator auth;
+
     public AbstractClientRestTemplate(final Class<T> clazzToSet) {
         super();
 
@@ -49,9 +51,9 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
     @Override
     public final T findOne(final long id, final Pair<String, String> credentials) {
         if (credentials != null) {
-            givenAuthenticated(credentials.getLeft(), credentials.getRight());
+            auth.givenAuthenticated(restTemplate, credentials.getLeft(), credentials.getRight());
         } else {
-            givenAuthenticated(null, null);
+            givenAuthenticated();
         }
 
         try {
@@ -198,9 +200,9 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
     @Override
     public final String createAsUri(final T resource, final Pair<String, String> credentials) {
         if (credentials != null) {
-            givenAuthenticated(credentials.getLeft(), credentials.getRight());
+            auth.givenAuthenticated(restTemplate, credentials.getLeft(), credentials.getRight());
         } else {
-            givenAuthenticated(null, null);
+            givenAuthenticated();
         }
         final ResponseEntity<Void> responseEntity = restTemplate.exchange(getUri(), HttpMethod.POST, new HttpEntity<T>(resource, writeHeaders()), Void.class);
 
@@ -214,7 +216,7 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
 
     @Override
     public final void update(final T resource) {
-        givenAuthenticated(null, null);
+        givenAuthenticated();
         final ResponseEntity<T> responseEntity = restTemplate.exchange(getUri(), HttpMethod.PUT, new HttpEntity<T>(resource, writeHeaders()), clazz);
         Preconditions.checkState(responseEntity.getStatusCode().value() == 200);
     }
@@ -241,21 +243,12 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
         for (final Triple<String, ClientOperation, String> constraint : constraints) {
             builder.consume(constraint);
         }
+        final String queryURI = getUri() + QueryConstants.QUERY_PREFIX + builder.build();
 
-        // var 1
-        // final String queryURI = new UriTemplate(getUri() + QueryConstants.QUERY_PREFIX + "{qu}").expand(builder.build()).toASCIIString();
-        // final ResponseEntity<List> asResponse = findAllAsResponse(queryURI);
+        final ResponseEntity<List> asResponse = findAllAsResponse(queryURI);
+        Preconditions.checkState(asResponse.getStatusCode().value() == 200);
 
-        // var 1
-        // final Map<Object, Object> params = Maps.newHashMap();
-        // params.put("qu", builder.build());
-        // final ResponseEntity<List> asResponse = restTemplate.exchange(getUri() + QueryConstants.QUERY_PREFIX + "{qu}", HttpMethod.GET, findRequestEntity(), List.class, params);
-
-        final URI uri = UriUtil.createSearchUri(getUri() + QueryConstants.QUERY_PREFIX + "{qu}", builder.build());
-        final ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), String.class);
-        Preconditions.checkState(response.getStatusCode().value() == 200);
-
-        return marshaller.decodeList(response.getBody(), clazz);
+        return asResponse.getBody();
     }
 
     @Override
@@ -283,26 +276,11 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
 
     // template method
 
-    @Override
-    public final IClientTemplate<T> givenAuthenticated(final String username, final String password) {
-        if (isBasicAuth()) {
-            basicAuth(username, password);
-        } else {
-            digestAuth(username, password);
-        }
+    public abstract Pair<String, String> getDefaultCredentials();
 
-        return this;
-    }
-
-    protected boolean isBasicAuth() {
-        return true;
-    }
-
-    protected abstract void basicAuth(final String username, final String password);
-
-    @SuppressWarnings("unused")
-    protected final void digestAuth(final String username, final String password) {
-        throw new UnsupportedOperationException();
+    public final void givenAuthenticated() {
+        final Pair<String, String> defaultCredentials = getDefaultCredentials();
+        auth.givenAuthenticated(restTemplate, defaultCredentials.getLeft(), defaultCredentials.getRight());
     }
 
     /**

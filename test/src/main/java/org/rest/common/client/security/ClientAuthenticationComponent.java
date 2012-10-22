@@ -7,7 +7,7 @@ import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @Component
-public class ClientAuthenticationComponent implements IClientAuthenticationComponent {
+public class ClientAuthenticationComponent implements ITestAuthenticator {
 
     public ClientAuthenticationComponent() {
         super();

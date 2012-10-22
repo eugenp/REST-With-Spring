@@ -6,11 +6,11 @@ import org.springframework.context.ApplicationEvent;
 
 import com.google.common.base.Preconditions;
 
-public final class AfterEntityCreatedEvent<T extends Serializable> extends ApplicationEvent {
+public final class AfterEntityCreateEvent<T extends Serializable> extends ApplicationEvent {
     private final Class<T> clazz;
     private final T entity;
 
-    public AfterEntityCreatedEvent(final Object sourceToSet, final Class<T> clazzToSet, final T entityToSet) {
+    public AfterEntityCreateEvent(final Object sourceToSet, final Class<T> clazzToSet, final T entityToSet) {
         super(sourceToSet);
 
         Preconditions.checkNotNull(clazzToSet);

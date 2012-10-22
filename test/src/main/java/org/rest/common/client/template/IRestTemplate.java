@@ -14,7 +14,7 @@ public interface IRestTemplate<T extends IEntity> extends IOperations<T>, ITempl
 
     // template
 
-    RequestSpecification givenAuthenticated(final String username, final String password);
+    RequestSpecification givenAuthenticated();
 
     IMarshaller getMarshaller();
 

@@ -9,7 +9,7 @@ import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.rest.common.client.security.IClientAuthenticationComponent;
+import org.rest.common.client.security.ITestAuthenticator;
 import org.rest.common.web.util.HTTPLinkHeaderUtil;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.test.SecGeneralRestIntegrationTest;
@@ -28,7 +28,7 @@ public class RootDiscoverabilityRestIntegrationTest extends SecGeneralRestIntegr
     @Autowired
     private SecBusinessPaths paths;
     @Autowired
-    private IClientAuthenticationComponent auth;
+    private ITestAuthenticator auth;
 
     // tests
 
@@ -59,7 +59,7 @@ public class RootDiscoverabilityRestIntegrationTest extends SecGeneralRestIntegr
     // util
 
     protected final RequestSpecification givenAuthenticated() {
-        return auth.givenBasicAuthenticated(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASSWORD);
+        return auth.givenBasicAuthenticated(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASS);
     }
 
 }

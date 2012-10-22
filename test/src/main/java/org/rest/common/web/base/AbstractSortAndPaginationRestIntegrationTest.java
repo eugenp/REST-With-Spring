@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.rest.common.client.IEntityOperations;
-import org.rest.common.client.security.IClientAuthenticationComponent;
+import org.rest.common.client.security.ITestAuthenticator;
 import org.rest.common.client.template.IRestTemplate;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.util.SearchField;
@@ -28,7 +28,7 @@ import com.jayway.restassured.response.Response;
 public abstract class AbstractSortAndPaginationRestIntegrationTest<T extends INameableEntity> {
 
     @Autowired
-    protected IClientAuthenticationComponent auth;
+    protected ITestAuthenticator auth;
 
     protected final Class<T> clazz;
 

@@ -8,12 +8,13 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
-* Event that is fired when a single resource was retrieved. 
-* <p/>
-* This event object contains all the information needed to create the URL for direct access to the resource
-* 
-* @param <T> Type of the result that is being handled (commonly Entities).
-*/
+ * Event that is fired when a single resource was retrieved.
+ * <p/>
+ * This event object contains all the information needed to create the URL for direct access to the resource
+ * 
+ * @param <T>
+ *            Type of the result that is being handled (commonly Entities).
+ */
 public final class SingleResourceRetrievedEvent<T extends Serializable> extends ApplicationEvent {
     private final UriComponentsBuilder uriBuilder;
     private final HttpServletResponse response;
@@ -38,7 +39,7 @@ public final class SingleResourceRetrievedEvent<T extends Serializable> extends 
     /**
      * The object on which the Event initially occurred.
      * 
-     * @return The object on which the Event initially occurred. 
+     * @return The object on which the Event initially occurred.
      */
     @SuppressWarnings("unchecked")
     public final Class<T> getClazz() {
