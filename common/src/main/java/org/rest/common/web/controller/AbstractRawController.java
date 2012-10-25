@@ -28,6 +28,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -163,6 +164,10 @@ public abstract class AbstractRawController<T extends IEntity> {
             logger.error("InvalidDataAccessApiUsageException on find all operation");
             logger.warn("InvalidDataAccessApiUsageException on find all operation", apiEx);
             throw new BadRequestException(apiEx);
+        } catch (final PropertyReferenceException springDataEx) {
+            logger.info("PropertyReferenceException on find all operation");
+            logger.debug("PropertyReferenceException on find all operation", springDataEx);
+            throw new BadRequestException(springDataEx);
         }
 
         return resultPage;
