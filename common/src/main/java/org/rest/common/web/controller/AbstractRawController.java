@@ -266,6 +266,7 @@ public abstract class AbstractRawController<T extends IEntity> {
         try {
             return getService().count();
         } catch (final InvalidDataAccessApiUsageException dataEx) {
+            // TODO: document this (remove it - see if anything fails)
             logger.error("InvalidDataAccessApiUsageException on count operation");
             logger.warn("InvalidDataAccessApiUsageException on count operation", dataEx);
             throw new ResourceNotFoundException(dataEx);
