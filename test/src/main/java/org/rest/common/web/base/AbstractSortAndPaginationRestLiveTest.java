@@ -25,14 +25,14 @@ import org.springframework.test.context.ActiveProfiles;
 import com.jayway.restassured.response.Response;
 
 @ActiveProfiles({ "client", "test", "mime_json" })
-public abstract class AbstractSortAndPaginationRestIntegrationTest<T extends INameableEntity> {
+public abstract class AbstractSortAndPaginationRestLiveTest<T extends INameableEntity> {
 
     @Autowired
     protected ITestAuthenticator auth;
 
     protected final Class<T> clazz;
 
-    public AbstractSortAndPaginationRestIntegrationTest(final Class<T> clazzToSet) {
+    public AbstractSortAndPaginationRestLiveTest(final Class<T> clazzToSet) {
         super();
 
         clazz = clazzToSet;

@@ -4,10 +4,10 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.UserTestRestTemplate;
 import org.rest.sec.model.UserEntityOpsImpl;
 import org.rest.sec.model.dto.User;
-import org.rest.sec.test.SecSortAndPaginationRestIntegrationTest;
+import org.rest.sec.test.SecSortAndPaginationRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class UserSortAndPaginationRestIntegrationTest extends SecSortAndPaginationRestIntegrationTest<User> {
+public class UserSortAndPaginationRestLiveTest extends SecSortAndPaginationRestLiveTest<User> {
 
     @Autowired
     private UserTestRestTemplate template;
@@ -15,7 +15,7 @@ public class UserSortAndPaginationRestIntegrationTest extends SecSortAndPaginati
     @Autowired
     private UserEntityOpsImpl entityOps;
 
-    public UserSortAndPaginationRestIntegrationTest() {
+    public UserSortAndPaginationRestLiveTest() {
         super(User.class);
     }
 

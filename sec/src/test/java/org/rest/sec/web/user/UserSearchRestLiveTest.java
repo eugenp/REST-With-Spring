@@ -4,17 +4,17 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.UserTestRestTemplate;
 import org.rest.sec.model.UserEntityOpsImpl;
 import org.rest.sec.model.dto.User;
-import org.rest.sec.test.SecSearchRestIntegrationTest;
+import org.rest.sec.test.SecSearchRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class UserSearchRestIntegrationTest extends SecSearchRestIntegrationTest<User> {
+public class UserSearchRestLiveTest extends SecSearchRestLiveTest<User> {
 
     @Autowired
     private UserTestRestTemplate restTemplate;
     @Autowired
     private UserEntityOpsImpl entityOps;
 
-    public UserSearchRestIntegrationTest() {
+    public UserSearchRestLiveTest() {
         super();
     }
 

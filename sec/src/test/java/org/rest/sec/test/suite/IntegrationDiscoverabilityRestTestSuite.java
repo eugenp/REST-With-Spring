@@ -4,12 +4,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.rest.common.web.root.RootDiscoverabilityRestIntegrationTest;
-import org.rest.sec.web.privilege.PrivilegeDiscoverabilityRestIntegrationTest;
-import org.rest.sec.web.role.RoleDiscoverabilityRestIntegrationTest;
-import org.rest.sec.web.user.UserDiscoverabilityRestIntegrationTest;
+import org.rest.sec.web.privilege.PrivilegeDiscoverabilityRestLiveTest;
+import org.rest.sec.web.role.RoleDiscoverabilityRestLiveTest;
+import org.rest.sec.web.user.UserDiscoverabilityRestLiveTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({ UserDiscoverabilityRestIntegrationTest.class, RoleDiscoverabilityRestIntegrationTest.class, PrivilegeDiscoverabilityRestIntegrationTest.class, RootDiscoverabilityRestIntegrationTest.class })
+@SuiteClasses({ UserDiscoverabilityRestLiveTest.class, RoleDiscoverabilityRestLiveTest.class, PrivilegeDiscoverabilityRestLiveTest.class, RootDiscoverabilityRestIntegrationTest.class })
 public final class IntegrationDiscoverabilityRestTestSuite {
     //
 }

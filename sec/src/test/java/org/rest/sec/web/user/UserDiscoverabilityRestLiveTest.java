@@ -6,19 +6,19 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.UserTestRestTemplate;
 import org.rest.sec.model.UserEntityOpsImpl;
 import org.rest.sec.model.dto.User;
-import org.rest.sec.test.SecDiscoverabilityRestIntegrationTest;
+import org.rest.sec.test.SecDiscoverabilityRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jayway.restassured.specification.RequestSpecification;
 
-public class UserDiscoverabilityRestIntegrationTest extends SecDiscoverabilityRestIntegrationTest<User> {
+public class UserDiscoverabilityRestLiveTest extends SecDiscoverabilityRestLiveTest<User> {
 
     @Autowired
     private UserTestRestTemplate restTemplate;
     @Autowired
     private UserEntityOpsImpl entityOps;
 
-    public UserDiscoverabilityRestIntegrationTest() {
+    public UserDiscoverabilityRestLiveTest() {
         super(User.class);
     }
 

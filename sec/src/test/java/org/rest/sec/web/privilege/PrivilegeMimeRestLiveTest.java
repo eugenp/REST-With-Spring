@@ -4,27 +4,27 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.PrivilegeTestRestTemplate;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.PrivilegeEntityOpsImpl;
-import org.rest.sec.test.SecSearchRestIntegrationTest;
+import org.rest.sec.test.SecMimeRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class PrivilegeSearchRestIntegrationTest extends SecSearchRestIntegrationTest<Privilege> {
+public class PrivilegeMimeRestLiveTest extends SecMimeRestLiveTest<Privilege> {
 
     @Autowired
-    private PrivilegeTestRestTemplate restTemplate;
+    private PrivilegeTestRestTemplate api;
     @Autowired
     private PrivilegeEntityOpsImpl entityOps;
 
-    public PrivilegeSearchRestIntegrationTest() {
+    public PrivilegeMimeRestLiveTest() {
         super();
     }
 
     // tests
 
-    // template
+    // template method
 
     @Override
     protected final PrivilegeTestRestTemplate getApi() {
-        return restTemplate;
+        return api;
     }
 
     @Override

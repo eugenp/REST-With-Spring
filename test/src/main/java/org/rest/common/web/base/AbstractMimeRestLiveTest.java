@@ -14,12 +14,12 @@ import org.springframework.test.context.ActiveProfiles;
 import com.jayway.restassured.response.Response;
 
 @ActiveProfiles({ "client", "test", "mime_json" })
-public abstract class AbstractMimeRestIntegrationTest<T extends IEntity> {
+public abstract class AbstractMimeRestLiveTest<T extends IEntity> {
 
     @Autowired
     private IMarshaller marshaller;
 
-    public AbstractMimeRestIntegrationTest() {
+    public AbstractMimeRestLiveTest() {
         super();
     }
 

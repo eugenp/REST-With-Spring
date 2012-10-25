@@ -3,12 +3,12 @@ package org.rest.sec.test.suite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import org.rest.sec.web.privilege.PrivilegeMimeRestIntegrationTest;
-import org.rest.sec.web.role.RoleMimeRestIntegrationTest;
-import org.rest.sec.web.user.UserMimeRestIntegrationTest;
+import org.rest.sec.web.privilege.PrivilegeMimeRestLiveTest;
+import org.rest.sec.web.role.RoleMimeRestLiveTest;
+import org.rest.sec.web.user.UserMimeRestLiveTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({ PrivilegeMimeRestIntegrationTest.class, RoleMimeRestIntegrationTest.class, UserMimeRestIntegrationTest.class })
+@SuiteClasses({ PrivilegeMimeRestLiveTest.class, RoleMimeRestLiveTest.class, UserMimeRestLiveTest.class })
 public final class IntegrationMimeRestTestSuite {
     //
 }

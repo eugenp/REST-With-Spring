@@ -33,9 +33,9 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 @SuppressWarnings("unchecked")
 @ActiveProfiles({ "client", "test", "mime_json" })
-public abstract class AbstractSearchRestIntegrationTest<T extends INameableEntity> implements ISearchIntegrationTest {
+public abstract class AbstractSearchRestLiveTest<T extends INameableEntity> implements ISearchIntegrationTest {
 
-    public AbstractSearchRestIntegrationTest() {
+    public AbstractSearchRestLiveTest() {
         super();
     }
 

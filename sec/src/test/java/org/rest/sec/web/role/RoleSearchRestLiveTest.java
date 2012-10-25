@@ -4,17 +4,17 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.RoleTestRestTemplate;
 import org.rest.sec.model.Role;
 import org.rest.sec.model.RoleEntityOpsImpl;
-import org.rest.sec.test.SecSearchRestIntegrationTest;
+import org.rest.sec.test.SecSearchRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class RoleSearchRestIntegrationTest extends SecSearchRestIntegrationTest<Role> {
+public class RoleSearchRestLiveTest extends SecSearchRestLiveTest<Role> {
 
     @Autowired
     private RoleTestRestTemplate restTemplate;
     @Autowired
     private RoleEntityOpsImpl entityOps;
 
-    public RoleSearchRestIntegrationTest() {
+    public RoleSearchRestLiveTest() {
         super();
     }
 

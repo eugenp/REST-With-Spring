@@ -6,19 +6,19 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.PrivilegeTestRestTemplate;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.PrivilegeEntityOpsImpl;
-import org.rest.sec.test.SecDiscoverabilityRestIntegrationTest;
+import org.rest.sec.test.SecDiscoverabilityRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jayway.restassured.specification.RequestSpecification;
 
-public class PrivilegeDiscoverabilityRestIntegrationTest extends SecDiscoverabilityRestIntegrationTest<Privilege> {
+public class PrivilegeDiscoverabilityRestLiveTest extends SecDiscoverabilityRestLiveTest<Privilege> {
 
     @Autowired
     private PrivilegeTestRestTemplate restTemplate;
     @Autowired
     private PrivilegeEntityOpsImpl entityOps;
 
-    public PrivilegeDiscoverabilityRestIntegrationTest() {
+    public PrivilegeDiscoverabilityRestLiveTest() {
         super(Privilege.class);
     }
 

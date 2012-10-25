@@ -6,19 +6,19 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.RoleTestRestTemplate;
 import org.rest.sec.model.Role;
 import org.rest.sec.model.RoleEntityOpsImpl;
-import org.rest.sec.test.SecDiscoverabilityRestIntegrationTest;
+import org.rest.sec.test.SecDiscoverabilityRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jayway.restassured.specification.RequestSpecification;
 
-public class RoleDiscoverabilityRestIntegrationTest extends SecDiscoverabilityRestIntegrationTest<Role> {
+public class RoleDiscoverabilityRestLiveTest extends SecDiscoverabilityRestLiveTest<Role> {
 
     @Autowired
     private RoleTestRestTemplate restTemplate;
     @Autowired
     private RoleEntityOpsImpl entityOps;
 
-    public RoleDiscoverabilityRestIntegrationTest() {
+    public RoleDiscoverabilityRestLiveTest() {
         super(Role.class);
     }
 

@@ -25,14 +25,14 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @ActiveProfiles({ "client", "test", "mime_json" })
-public abstract class AbstractDiscoverabilityRestIntegrationTest<T extends IEntity> {
+public abstract class AbstractDiscoverabilityRestLiveTest<T extends IEntity> {
 
     private Class<T> clazz;
 
     @Autowired
     private IMarshaller marshaller;
 
-    public AbstractDiscoverabilityRestIntegrationTest(final Class<T> clazzToSet) {
+    public AbstractDiscoverabilityRestLiveTest(final Class<T> clazzToSet) {
         Preconditions.checkNotNull(clazzToSet);
         clazz = clazzToSet;
     }
