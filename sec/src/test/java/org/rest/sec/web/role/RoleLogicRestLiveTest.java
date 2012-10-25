@@ -20,13 +20,13 @@ import org.rest.sec.model.Privilege;
 import org.rest.sec.model.PrivilegeEntityOpsImpl;
 import org.rest.sec.model.Role;
 import org.rest.sec.model.RoleEntityOpsImpl;
-import org.rest.sec.test.SecLogicRestIntegrationTest;
+import org.rest.sec.test.SecLogicRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Sets;
 import com.jayway.restassured.response.Response;
 
-public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Role> implements IResourceWithAssociationsIntegrationTest {
+public class RoleLogicRestLiveTest extends SecLogicRestLiveTest<Role> implements IResourceWithAssociationsIntegrationTest {
 
     @Autowired
     private RoleTestRestTemplate api;
@@ -38,7 +38,7 @@ public class RoleLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Ro
     @Autowired
     private PrivilegeEntityOpsImpl associationEntityOps;
 
-    public RoleLogicRestIntegrationTest() {
+    public RoleLogicRestLiveTest() {
         super(Role.class);
     }
 

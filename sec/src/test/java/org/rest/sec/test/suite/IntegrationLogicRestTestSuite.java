@@ -4,15 +4,15 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.rest.sec.security.AuthenticationRestIntegrationTest;
-import org.rest.sec.web.privilege.PrivilegeLogicRestIntegrationTest;
-import org.rest.sec.web.role.RoleLogicRestIntegrationTest;
-import org.rest.sec.web.user.UserLogicRestIntegrationTest;
+import org.rest.sec.web.privilege.PrivilegeLogicRestLiveTest;
+import org.rest.sec.web.role.RoleLogicRestLiveTest;
+import org.rest.sec.web.user.UserLogicRestLiveTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({// @formatter:off
-    UserLogicRestIntegrationTest.class,
-    RoleLogicRestIntegrationTest.class,
-    PrivilegeLogicRestIntegrationTest.class,
+    UserLogicRestLiveTest.class,
+    RoleLogicRestLiveTest.class,
+    PrivilegeLogicRestLiveTest.class,
 
     AuthenticationRestIntegrationTest.class
 })

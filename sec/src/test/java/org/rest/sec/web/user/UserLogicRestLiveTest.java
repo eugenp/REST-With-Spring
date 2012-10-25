@@ -17,13 +17,13 @@ import org.rest.sec.model.Role;
 import org.rest.sec.model.RoleEntityOpsImpl;
 import org.rest.sec.model.UserEntityOpsImpl;
 import org.rest.sec.model.dto.User;
-import org.rest.sec.test.SecLogicRestIntegrationTest;
+import org.rest.sec.test.SecLogicRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.Sets;
 import com.jayway.restassured.response.Response;
 
-public class UserLogicRestIntegrationTest extends SecLogicRestIntegrationTest<User> {
+public class UserLogicRestLiveTest extends SecLogicRestLiveTest<User> {
 
     @Autowired
     private UserTestRestTemplate api;
@@ -35,7 +35,7 @@ public class UserLogicRestIntegrationTest extends SecLogicRestIntegrationTest<Us
     @Autowired
     private RoleEntityOpsImpl associationOps;
 
-    public UserLogicRestIntegrationTest() {
+    public UserLogicRestLiveTest() {
         super(User.class);
     }
 

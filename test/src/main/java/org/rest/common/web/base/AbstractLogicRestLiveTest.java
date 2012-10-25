@@ -35,11 +35,11 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @ActiveProfiles({ "client", "test", "mime_json" })
-public abstract class AbstractLogicRestIntegrationTest<T extends INameableEntity> {
+public abstract class AbstractLogicRestLiveTest<T extends INameableEntity> {
 
     protected final Class<T> clazz;
 
-    public AbstractLogicRestIntegrationTest(final Class<T> clazzToSet) {
+    public AbstractLogicRestLiveTest(final Class<T> clazzToSet) {
         super();
 
         Preconditions.checkNotNull(clazzToSet);
