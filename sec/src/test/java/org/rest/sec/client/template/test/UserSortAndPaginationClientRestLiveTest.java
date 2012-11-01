@@ -4,17 +4,17 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.UserClientRestTemplate;
 import org.rest.sec.model.UserEntityOpsImpl;
 import org.rest.sec.model.dto.User;
-import org.rest.sec.test.SecSortAndPaginationClientRestIntegrationTest;
+import org.rest.sec.test.SecSortAndPaginationClientRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class UserSortAndPaginationClientRestIntegrationTest extends SecSortAndPaginationClientRestIntegrationTest<User> {
+public class UserSortAndPaginationClientRestLiveTest extends SecSortAndPaginationClientRestLiveTest<User> {
 
     @Autowired
     private UserClientRestTemplate api;
     @Autowired
     private UserEntityOpsImpl entityOps;
 
-    public UserSortAndPaginationClientRestIntegrationTest() {
+    public UserSortAndPaginationClientRestLiveTest() {
         super();
     }
 

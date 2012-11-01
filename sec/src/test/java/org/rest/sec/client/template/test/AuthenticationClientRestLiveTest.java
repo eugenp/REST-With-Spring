@@ -21,7 +21,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextConfig.class, SecCommonApiConfig.class }, loader = AnnotationConfigContextLoader.class)
 @ActiveProfiles({ "client", "mime_json" })
-public class AuthenticationClientRestIntegrationTest {
+public class AuthenticationClientRestLiveTest {
 
     @Autowired
     private AuthenticationRestTemplate authenticationRestTemplate;

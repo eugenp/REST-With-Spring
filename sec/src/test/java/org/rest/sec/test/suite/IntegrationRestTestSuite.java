@@ -3,7 +3,7 @@ package org.rest.sec.test.suite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import org.rest.sec.security.SecurityRestIntegrationTest;
+import org.rest.sec.security.SecurityRestLiveTest;
 import org.rest.sec.test.suite.client.IntegrationClientRestTestSuite;
 
 @RunWith(Suite.class)
@@ -13,7 +13,7 @@ import org.rest.sec.test.suite.client.IntegrationClientRestTestSuite;
     IntegrationSearchRestTestSuite.class,
     IntegrationSortAndPaginationRestTestSuite.class,
     IntegrationMimeRestTestSuite.class,
-    SecurityRestIntegrationTest.class,
+    SecurityRestLiveTest.class,
 
     IntegrationClientRestTestSuite.class
 })

@@ -10,6 +10,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextConfig.class, SecCommonApiConfig.class }, loader = AnnotationConfigContextLoader.class)
-public abstract class SecGeneralRestIntegrationTest {
+public abstract class SecGeneralRestLiveTest {
     //
 }

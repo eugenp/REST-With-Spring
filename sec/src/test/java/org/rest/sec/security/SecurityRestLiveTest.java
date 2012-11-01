@@ -21,7 +21,7 @@ import com.jayway.restassured.response.Response;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextConfig.class }, loader = AnnotationConfigContextLoader.class)
 @Ignore("temporary (fails in Maven only)")
-public class SecurityRestIntegrationTest {
+public class SecurityRestLiveTest {
 
     @Autowired
     private UserTestRestTemplate userTemplate;

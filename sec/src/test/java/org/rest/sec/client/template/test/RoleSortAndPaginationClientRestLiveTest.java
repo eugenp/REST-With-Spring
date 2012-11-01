@@ -4,17 +4,17 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.RoleClientRestTemplate;
 import org.rest.sec.model.Role;
 import org.rest.sec.model.RoleEntityOpsImpl;
-import org.rest.sec.test.SecSortAndPaginationClientRestIntegrationTest;
+import org.rest.sec.test.SecSortAndPaginationClientRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class RoleSortAndPaginationClientRestIntegrationTest extends SecSortAndPaginationClientRestIntegrationTest<Role> {
+public class RoleSortAndPaginationClientRestLiveTest extends SecSortAndPaginationClientRestLiveTest<Role> {
 
     @Autowired
     private RoleClientRestTemplate api;
     @Autowired
     private RoleEntityOpsImpl entityOps;
 
-    public RoleSortAndPaginationClientRestIntegrationTest() {
+    public RoleSortAndPaginationClientRestLiveTest() {
         super();
     }
 

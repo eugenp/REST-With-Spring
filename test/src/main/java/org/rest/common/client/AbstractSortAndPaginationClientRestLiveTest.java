@@ -16,9 +16,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles({ "client", "test", "mime_json" })
-public abstract class AbstractSortAndPaginationClientRestIntegrationTest<T extends INameableEntity> {
+public abstract class AbstractSortAndPaginationClientRestLiveTest<T extends INameableEntity> {
 
-    public AbstractSortAndPaginationClientRestIntegrationTest() {
+    public AbstractSortAndPaginationClientRestLiveTest() {
         super();
     }
 

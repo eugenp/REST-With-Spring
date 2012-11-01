@@ -1,6 +1,6 @@
 package org.rest.common.test.contract;
 
-public interface ISearchIntegrationTest {
+public interface ISearchTest {
 
     void whenSearchByNameIsPerformed_thenNoExceptions();
 

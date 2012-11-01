@@ -27,7 +27,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextConfig.class, SecCommonApiConfig.class }, loader = AnnotationConfigContextLoader.class)
 @ActiveProfiles({ "client", "mime_json" })
-public class AuthenticationRestIntegrationTest {
+public class AuthenticationRestLiveTest {
 
     @Autowired
     private SecBusinessPaths paths;

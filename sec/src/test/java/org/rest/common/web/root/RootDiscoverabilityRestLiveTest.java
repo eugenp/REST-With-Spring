@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.rest.common.client.security.ITestAuthenticator;
 import org.rest.common.web.util.HTTPLinkHeaderUtil;
 import org.rest.sec.client.SecBusinessPaths;
-import org.rest.sec.test.SecGeneralRestIntegrationTest;
+import org.rest.sec.test.SecGeneralRestLiveTest;
 import org.rest.sec.util.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,7 +23,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @Ignore("temp")
-public class RootDiscoverabilityRestIntegrationTest extends SecGeneralRestIntegrationTest {
+public class RootDiscoverabilityRestLiveTest extends SecGeneralRestLiveTest {
 
     @Autowired
     private SecBusinessPaths paths;

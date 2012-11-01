@@ -18,14 +18,14 @@ import org.rest.common.client.IEntityOperations;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.persistence.service.IService;
 import org.rest.common.search.ClientOperation;
-import org.rest.common.test.contract.ISearchIntegrationTest;
+import org.rest.common.test.contract.ISearchTest;
 import org.rest.common.util.IDUtil;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.util.SearchField;
 import org.rest.common.util.SearchIntegrationTestUtil;
 
 @SuppressWarnings("unchecked")
-public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameableEntity> implements ISearchIntegrationTest {
+public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameableEntity> implements ISearchTest {
 
     // search/filter
 
