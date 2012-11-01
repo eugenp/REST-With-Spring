@@ -217,7 +217,7 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
     @Override
     public final void update(final T resource) {
         givenAuthenticated();
-        final ResponseEntity<T> responseEntity = restTemplate.exchange(getUri(), HttpMethod.PUT, new HttpEntity<T>(resource, writeHeaders()), clazz);
+        final ResponseEntity<T> responseEntity = restTemplate.exchange(getUri() + "/" + resource.getId(), HttpMethod.PUT, new HttpEntity<T>(resource, writeHeaders()), clazz);
         Preconditions.checkState(responseEntity.getStatusCode().value() == 200);
     }
 

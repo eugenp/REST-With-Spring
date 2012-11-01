@@ -129,11 +129,11 @@ public class PrivilegeController extends AbstractController<Privilege> implement
 
     // update
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Secured(Privileges.CAN_PRIVILEGE_WRITE)
-    public void update(@RequestBody final Privilege resource) {
-        updateInternal(resource);
+    public void update(@PathVariable("id") final Long id, @RequestBody final Privilege resource) {
+        updateInternal(id, resource);
     }
 
     // delete

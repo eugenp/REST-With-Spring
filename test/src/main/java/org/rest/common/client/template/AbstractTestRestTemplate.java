@@ -235,7 +235,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
         Preconditions.checkNotNull(resource);
 
         final String resourceAsString = marshaller.encode(resource);
-        return givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).put(getUri());
+        return givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).put(getUri() + "/" + resource.getId());
     }
 
     // delete

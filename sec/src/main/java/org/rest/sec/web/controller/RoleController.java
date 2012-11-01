@@ -122,11 +122,11 @@ public class RoleController extends AbstractController<Role> implements ISorting
 
     // update
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Secured(Privileges.CAN_ROLE_WRITE)
-    public void update(@RequestBody final Role resource) {
-        updateInternal(resource);
+    public void update(@PathVariable("id") final Long id, @RequestBody final Role resource) {
+        updateInternal(id, resource);
     }
 
     // delete

@@ -28,7 +28,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -164,10 +163,6 @@ public abstract class AbstractRawController<T extends IEntity> {
             logger.error("InvalidDataAccessApiUsageException on find all operation");
             logger.warn("InvalidDataAccessApiUsageException on find all operation", apiEx);
             throw new BadRequestException(apiEx);
-        } catch (final PropertyReferenceException springDataEx) {
-            logger.info("PropertyReferenceException on find all operation");
-            logger.debug("PropertyReferenceException on find all operation", springDataEx);
-            throw new BadRequestException(springDataEx);
         }
 
         return resultPage;
@@ -213,7 +208,7 @@ public abstract class AbstractRawController<T extends IEntity> {
     /**
      * - note: the operation is IDEMPOTENT <br/>
      */
-    protected final void updateInternal(final T resource) {
+    protected final void updateInternalOld(final T resource) {
         RestPreconditions.checkRequestElementNotNull(resource);
         RestPreconditions.checkRequestElementNotNull(resource.getId());
         RestPreconditions.checkNotNull(getService().findOne(resource.getId()));
@@ -238,7 +233,37 @@ public abstract class AbstractRawController<T extends IEntity> {
             logger.warn("ConstraintViolationException on create operation for: {}", resource.getClass().getSimpleName(), validEx);
             throw new BadRequestException(validEx);
         }
+    }
 
+    /**
+     * - note: the operation is IDEMPOTENT <br/>
+     */
+    protected final void updateInternal(final long id, final T resource) {
+        RestPreconditions.checkRequestElementNotNull(resource);
+        RestPreconditions.checkRequestElementNotNull(resource.getId());
+        RestPreconditions.checkRequestState(resource.getId() == id);
+        RestPreconditions.checkNotNull(getService().findOne(resource.getId()));
+
+        try {
+            getService().update(resource);
+        } catch (final IllegalStateException illegalState) {
+            // this is so that the service layer can MANUALLY throw exceptions that get handled by the exception translation mechanism
+            logger.error("IllegalArgumentException on create operation for: {}", resource.getClass().getSimpleName());
+            logger.warn("IllegalArgumentException on create operation for: {}", resource.getClass().getSimpleName(), illegalState);
+            throw new ConflictException(illegalState);
+        } catch (final InvalidDataAccessApiUsageException dataEx) {
+            logger.error("InvalidDataAccessApiUsageException on update operation for: {}", resource.getClass().getSimpleName());
+            logger.warn("InvalidDataAccessApiUsageException on update operation for: {}", resource.getClass().getSimpleName(), dataEx);
+            throw new ConflictException(dataEx);
+        } catch (final DataIntegrityViolationException dataEx) { // on unique constraint
+            logger.error("DataIntegrityViolationException on update operation for: {}", resource.getClass().getSimpleName());
+            logger.warn("DataIntegrityViolationException on update operation for: {}", resource.getClass().getSimpleName(), dataEx);
+            throw new ConflictException(dataEx);
+        } catch (final ConstraintViolationException validEx) { // bean validation
+            logger.error("ConstraintViolationException on create operation for: {}", resource.getClass().getSimpleName());
+            logger.warn("ConstraintViolationException on create operation for: {}", resource.getClass().getSimpleName(), validEx);
+            throw new BadRequestException(validEx);
+        }
     }
 
     // delete/remove
@@ -266,7 +291,6 @@ public abstract class AbstractRawController<T extends IEntity> {
         try {
             return getService().count();
         } catch (final InvalidDataAccessApiUsageException dataEx) {
-            // TODO: document this (remove it - see if anything fails)
             logger.error("InvalidDataAccessApiUsageException on count operation");
             logger.warn("InvalidDataAccessApiUsageException on count operation", dataEx);
             throw new ResourceNotFoundException(dataEx);

@@ -121,11 +121,11 @@ public class UserController extends AbstractController<User> implements ISorting
 
     // update
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Secured(Privileges.CAN_USER_WRITE)
-    public void update(@RequestBody final User resource) {
-        updateInternal(resource);
+    public void update(@PathVariable("id") final Long id, @RequestBody final User resource) {
+        updateInternal(id, resource);
     }
 
     // delete
