@@ -5,9 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.rest.common.exceptions.ConflictException;
 import org.rest.common.util.QueryConstants;
-import org.rest.common.web.RestPreconditions;
 import org.rest.common.web.controller.AbstractController;
 import org.rest.common.web.controller.ISortingController;
 import org.rest.sec.model.Role;
@@ -15,7 +13,6 @@ import org.rest.sec.persistence.service.IRoleService;
 import org.rest.sec.util.SecurityConstants.Privileges;
 import org.rest.sec.web.common.UriMappingConstants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -94,21 +91,6 @@ public class RoleController extends AbstractController<Role> implements ISorting
     @ResponseBody
     public Role findOne(@PathVariable("id") final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         return findOneInternal(id, uriBuilder, response);
-    }
-
-    @RequestMapping(params = "name", method = RequestMethod.GET)
-    @ResponseBody
-    public Role findByName(@RequestParam("name") final String name) {
-        Role resource = null;
-        try {
-            resource = RestPreconditions.checkNotNull(getService().findByName(name));
-        } catch (final InvalidDataAccessApiUsageException ex) {
-            logger.error("InvalidDataAccessApiUsageException on find operation");
-            logger.warn("InvalidDataAccessApiUsageException on find operation", ex);
-            throw new ConflictException(ex);
-        }
-
-        return resource;
     }
 
     // create
