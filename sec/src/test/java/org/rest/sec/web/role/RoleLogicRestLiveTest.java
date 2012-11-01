@@ -63,6 +63,7 @@ public class RoleLogicRestLiveTest extends SecLogicRestLiveTest<Role> implements
     // escaping characters
 
     @Test
+    @Ignore("temp + move in parent")
     public final void givenWorkingWithSpecialCharacters_whtnResourcesIfRetrievedByName_thenResourceIsCorrectlyRetrieved() {
         final Role newResource = getEntityOps().createNewEntity();
         newResource.setName("Macy's,Dell, Inc.");
