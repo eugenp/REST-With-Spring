@@ -1,7 +1,11 @@
 package org.rest.common.client.template;
 
+import static org.rest.common.search.ClientOperation.EQ;
+
+import java.net.URI;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.client.marshall.IMarshaller;
@@ -11,7 +15,9 @@ import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.search.SearchUriBuilder;
 import org.rest.common.util.QueryConstants;
+import org.rest.common.util.SearchField;
 import org.rest.common.web.WebConstants;
+import org.rest.common.web.util.UriUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,8 +90,7 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
 
     @Override
     public final T findByName(final String name) {
-        // return findOneByAttributes(SearchField.name.name(), name); // TODO: fix
-        return findOneByUri(getUri() + "?name=" + name, null);
+        return searchOne(new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), EQ, name));
     }
 
     // find - all
@@ -243,12 +248,12 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
         for (final Triple<String, ClientOperation, String> constraint : constraints) {
             builder.consume(constraint);
         }
-        final String queryURI = getUri() + QueryConstants.QUERY_PREFIX + builder.build();
 
-        final ResponseEntity<List> asResponse = findAllAsResponse(queryURI);
-        Preconditions.checkState(asResponse.getStatusCode().value() == 200);
+        final URI uri = UriUtil.createSearchUri(getUri() + QueryConstants.QUERY_PREFIX + "{qu}", builder.build());
+        final ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), String.class);
+        Preconditions.checkState(response.getStatusCode().value() == 200);
 
-        return asResponse.getBody();
+        return marshaller.decodeList(response.getBody(), clazz);
     }
 
     @Override

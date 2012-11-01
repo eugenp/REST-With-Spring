@@ -41,12 +41,6 @@ public class PrivilegeController extends AbstractController<Privilege> implement
 
     // API
 
-    /*@RequestMapping(value = "/*", method = RequestMethod.OPTIONS)
-    @ResponseBody
-    public void options() {
-        System.out.println();
-    }*/
-
     // search
 
     @RequestMapping(params = { QueryConstants.Q_PARAM }, method = RequestMethod.GET)

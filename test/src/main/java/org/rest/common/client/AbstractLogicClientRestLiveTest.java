@@ -118,6 +118,7 @@ public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity>
     }
 
     @Test
+    @Ignore("temp")
     /**/public final void givenExistingResourceHasSpaceInName_whenResourceIsRetrievedByName_thenFoundResourceIsCorrect() {
         final T newEntity = createNewEntity();
         newEntity.setName(randomAlphabetic(4) + " " + randomAlphabetic(4));
