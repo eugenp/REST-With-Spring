@@ -1,7 +1,7 @@
 package org.rest.common.web.util;
 
-import org.rest.common.exceptions.ConflictException;
 import org.rest.common.exceptions.ValidationException;
+import org.rest.common.web.exception.ConflictException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpStatusCodeException;
 

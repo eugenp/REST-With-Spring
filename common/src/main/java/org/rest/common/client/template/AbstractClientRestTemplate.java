@@ -89,7 +89,8 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> impl
     // find one - by attributes
 
     @Override
-    public final T findByName(final String name) {
+    public T findByName(final String name) {
+        beforeReadOperation();
         return searchOne(new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), EQ, name));
     }
 

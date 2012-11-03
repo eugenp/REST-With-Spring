@@ -1,8 +1,8 @@
 package org.rest.common.web;
 
-import org.rest.common.exceptions.ConflictException;
-import org.rest.common.exceptions.ForbiddenException;
-import org.rest.common.exceptions.ResourceNotFoundException;
+import org.rest.common.web.exception.ConflictException;
+import org.rest.common.web.exception.ForbiddenException;
+import org.rest.common.web.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 
 /**

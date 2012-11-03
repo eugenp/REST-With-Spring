@@ -81,10 +81,6 @@ public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity>
 
     // find one - by name
 
-    /**
-     * note: - the rest template encodes the URI wrong (q=key=val is seen as q=key - one param and val=null - another param) see:
-     * http://forum.springsource.org/showthread.php?129138-Possible-bug-in-RestTemplate-double-checking-before-opening-a-JIRA&p=421494#post421494
-     */
     @Test
     /**/public final void givenResourceExists_whenResourceIsRetrievedByName_thenNoExceptions() {
         // Given

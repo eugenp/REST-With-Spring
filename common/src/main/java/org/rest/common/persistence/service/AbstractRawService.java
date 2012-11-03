@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
-import org.rest.common.exceptions.BadRequestException;
-import org.rest.common.exceptions.ConflictException;
+import org.rest.common.persistence.ServicePreconditions;
 import org.rest.common.persistence.event.AfterEntitiesDeletedEvent;
 import org.rest.common.persistence.event.AfterEntityCreateEvent;
 import org.rest.common.persistence.event.AfterEntityDeleteEvent;
@@ -16,6 +15,8 @@ import org.rest.common.persistence.event.BeforeEntityUpdateEvent;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.util.SearchCommonUtil;
+import org.rest.common.web.exception.BadRequestException;
+import org.rest.common.web.exception.ConflictException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -217,6 +218,7 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
     @Override
     public void delete(final long id) {
         final T entity = getDao().findOne(id);
+        ServicePreconditions.checkEntityExists(entity);
 
         eventPublisher.publishEvent(new BeforeEntityDeleteEvent<T>(this, clazz, entity));
         getDao().delete(entity);

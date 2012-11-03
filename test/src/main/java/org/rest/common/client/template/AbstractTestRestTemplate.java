@@ -347,6 +347,13 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     public abstract Pair<String, String> getDefaultCredentials();
 
+    /**
+     * - this is a hook that executes before read operations, in order to allow custom security work to happen for read operations; similar to: AbstractRestTemplate.findRequest
+     */
+    protected void beforeReadOperation() {
+        //
+    }
+
     //
 
     @Override
