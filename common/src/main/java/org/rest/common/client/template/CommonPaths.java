@@ -1,18 +1,20 @@
 package org.rest.common.client.template;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
 @Profile("client")
-public final class CommonPaths {
+public final class CommonPaths implements InitializingBean {
 
-    @Value("${http.protocol}")
+    @Autowired
+    private Environment env;
+
     private String protocol;
-    @Value("${http.host}")
     private String host;
-    @Value("${http.port}")
     private String port;
 
     public CommonPaths() {
@@ -23,6 +25,13 @@ public final class CommonPaths {
 
     public final String getServerRoot() {
         return protocol + "://" + host + ":" + port;
+    }
+
+    @Override
+    public void afterPropertiesSet() {
+        protocol = env.getProperty("http.protocol");
+        host = env.getProperty("http.host");
+        port = env.getProperty("http.port");
     }
 
 }
