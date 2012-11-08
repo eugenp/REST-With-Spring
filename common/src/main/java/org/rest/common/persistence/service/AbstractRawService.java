@@ -55,6 +55,7 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
 
     @SuppressWarnings("unchecked")
     @Override
+    @Transactional(readOnly = true)
     public List<T> searchAll(final String queryString) {
         Preconditions.checkNotNull(queryString);
         List<Triple<String, ClientOperation, String>> parsedQuery = null;
@@ -72,6 +73,7 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
 
     @SuppressWarnings({ "unchecked" })
     @Override
+    @Transactional(readOnly = true)
     public List<T> searchPaginated(final String queryString, final int page, final int size) {
         List<Triple<String, ClientOperation, String>> parsedQuery = null;
         try {
@@ -88,6 +90,7 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
 
     @SuppressWarnings("null")
     @Override
+    @Transactional(readOnly = true)
     public List<T> searchAll(final Triple<String, ClientOperation, String>... constraints) {
         Preconditions.checkState(constraints != null);
         Preconditions.checkState(constraints.length > 0);
@@ -105,6 +108,7 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
 
     @SuppressWarnings("null")
     @Override
+    @Transactional(readOnly = true)
     public T searchOne(final Triple<String, ClientOperation, String>... constraints) {
         Preconditions.checkState(constraints != null);
         Preconditions.checkState(constraints.length > 0);
@@ -121,6 +125,7 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<T> searchPaginated(final int page, final int size, final Triple<String, ClientOperation, String>... constraints) {
         final Specification<T> firstSpec = resolveConstraint(constraints[0]);
         Preconditions.checkState(firstSpec != null);
