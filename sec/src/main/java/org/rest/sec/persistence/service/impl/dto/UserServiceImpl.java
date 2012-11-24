@@ -180,7 +180,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public long count() {
-        throw new UnsupportedOperationException();
+        return principalService.count();
     }
 
     // other
