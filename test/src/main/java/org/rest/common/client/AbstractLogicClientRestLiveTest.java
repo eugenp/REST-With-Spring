@@ -4,8 +4,11 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.rest.common.search.ClientOperation.EQ;
 import static org.rest.common.search.ClientOperation.NEG_EQ;
+
+import java.util.List;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.junit.Ignore;
@@ -14,6 +17,8 @@ import org.rest.common.client.template.IClientTemplate;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.util.SearchField;
+import org.rest.common.util.order.OrderByName;
+import org.springframework.data.domain.Sort;
 
 public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity> extends AbstractRawLogicClientRestLiveTest<T> {
 
@@ -73,7 +78,33 @@ public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity>
         assertThat(existingResource, equalTo(resourceByName));
     }
 
-    // find - all (+sorting + pagination)
+    // find - all - pagination and sorting
+
+    @Test
+    /**/public final void whenResourcesAreRetrievedPaginatedAndSorted_thenResourcesAreIndeedOrdered() {
+        getApi().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity(), null);
+
+        // When
+        final List<T> resourcesPaginatedAndSorted = getApi().findAllPaginatedAndSorted(0, 4, SearchField.name.name(), Sort.Direction.ASC.name());
+
+        // Then
+        assertTrue(new OrderByName<T>().isOrdered(resourcesPaginatedAndSorted));
+    }
+
+    // find - all - sorting
+
+    @Test
+    /**/public final void whenResourcesAreRetrievedSorted_thenResourcesAreIndeedOrdered() {
+        getApi().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity(), null);
+
+        // When
+        final List<T> resourcesSorted = getApi().findAllSorted(SearchField.name.name(), Sort.Direction.ASC.name());
+
+        // Then
+        assertTrue(new OrderByName<T>().isOrdered(resourcesSorted));
+    }
 
     // search one - by attributes
 

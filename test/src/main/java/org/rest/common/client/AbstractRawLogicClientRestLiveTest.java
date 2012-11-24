@@ -1,27 +1,24 @@
 package org.rest.common.client;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.rest.common.client.template.IRawClientTemplate;
 import org.rest.common.persistence.model.IEntity;
-import org.rest.common.util.IDUtil;
-import org.rest.common.web.WebConstants;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.web.client.RestClientException;
 
 @ActiveProfiles({ "client", "test", "mime_json" })
-public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> {
+public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> extends AbstractReadOnlyLogicClientLiveTest<T> {
 
     public AbstractRawLogicClientRestLiveTest() {
         super();
@@ -30,11 +27,6 @@ public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> {
     // tests
 
     // find - one
-
-    @Test(expected = RestClientException.class)
-    public void givenResourceForIdDoesNotExist_whenResourceIsRetrieved_thenException() {
-        getApi().findOneByUri(getUri() + WebConstants.PATH_SEP + randomNumeric(4), null);
-    }
 
     @Test
     public final void givenResourceExists_whenResourceIsRetrieved_thenResourceHasId() {
@@ -62,28 +54,7 @@ public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> {
         assertEquals(createdResource, newResource);
     }
 
-    @Test
-    /**/public final void givenResourceDoesNotExist_whenResourceIsRetrieved_thenNoResourceIsReceived() {
-        // When
-        final T createdResource = getApi().findOne(IDUtil.randomPositiveLong());
-
-        // Then
-        assertNull(createdResource);
-    }
-
     // find - all
-
-    @Test
-    /**/public void whenAllResourcesAreRetrieved_thenNoExceptions() {
-        getApi().findAll();
-    }
-
-    @Test
-    /**/public void whenAllResourcesAreRetrieved_thenTheResultIsNotNull() {
-        final List<T> resources = getApi().findAll();
-
-        assertNotNull(resources);
-    }
 
     @Test
     /**/public void givenAtLeastOneResourceExists_whenAllResourcesAreRetrieved_thenRetrievedResourcesAreNotEmpty() {
@@ -117,6 +88,19 @@ public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> {
         for (final T resource : allResources) {
             assertNotNull(resource.getId());
         }
+    }
+
+    // find - all - pagination
+
+    @Test
+    /**/public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned() {
+        getApi().createAsUri(createNewEntity(), null);
+
+        // When
+        final List<T> allPaginated = getApi().findAllPaginated(0, 1);
+
+        // Then
+        assertFalse(allPaginated.isEmpty());
     }
 
     // create
@@ -191,15 +175,18 @@ public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> {
         assertNull(getApi().findOne(existingResource.getId()));
     }
 
+    // count
+
+    @Test
+    public final void givenAtLeastOneResourceExists_whenCountIsPerformed_thenCountIsNotZero() {
+        ensureOneResourceExists();
+
+        assertTrue(getApi().count() > 0);
+    }
+
     // template method
 
-    protected abstract IRawClientTemplate<T> getApi();
-
     protected abstract IEntityOperations<T> getEntityOps();
-
-    protected final String getUri() {
-        return getApi().getUri() + WebConstants.PATH_SEP;
-    }
 
     protected T createNewEntity() {
         return getEntityOps().createNewEntity();

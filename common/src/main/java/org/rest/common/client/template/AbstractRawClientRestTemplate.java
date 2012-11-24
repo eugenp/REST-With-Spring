@@ -259,7 +259,9 @@ public abstract class AbstractRawClientRestTemplate<T extends IEntity> implement
 
     @Override
     public final long count() {
-        throw new UnsupportedOperationException();
+        final ResponseEntity<Long> countResourceResponse = restTemplate.exchange(getUri() + "/count", HttpMethod.GET, null, Long.class);
+        Preconditions.checkState(countResourceResponse.getStatusCode().value() == 200);
+        return countResourceResponse.getBody();
     }
 
     // util

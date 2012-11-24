@@ -1,13 +1,11 @@
 package org.rest.common.web.base;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
-import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 import static org.rest.common.search.ClientOperation.CONTAINS;
-import static org.rest.common.search.ClientOperation.ENDS_WITH;
 import static org.rest.common.search.ClientOperation.EQ;
 import static org.rest.common.search.ClientOperation.NEG_EQ;
 
@@ -15,7 +13,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.commons.lang3.tuple.Triple;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.rest.common.client.IEntityOperations;
 import org.rest.common.client.template.IRestTemplate;
@@ -33,7 +30,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 @SuppressWarnings("unchecked")
 @ActiveProfiles({ "client", "test", "mime_json" })
-public abstract class AbstractSearchRestLiveTest<T extends INameableEntity> implements ISearchTest {
+public abstract class AbstractSearchRestLiveTest<T extends INameableEntity> extends AbstractSearchReadOnlyRestLiveTest<T> implements ISearchTest {
 
     public AbstractSearchRestLiveTest() {
         super();
@@ -84,15 +81,6 @@ public abstract class AbstractSearchRestLiveTest<T extends INameableEntity> impl
         assertThat(found, hasItem(existingResource));
     }
 
-    @Override
-    public final void givenResourceWithIdDoesNotExist_whenResourceIsSearchedById_thenResourceIsNotFound() {
-        // When
-        final List<T> found = getApi().searchAll(ClientConstraintsUtil.createConstraint(EQ, SearchField.id.toString(), randomNumeric(8)));
-
-        // Then
-        assertThat(found, Matchers.<T> empty());
-    }
-
     // by name
 
     @Override
@@ -124,16 +112,6 @@ public abstract class AbstractSearchRestLiveTest<T extends INameableEntity> impl
 
         // Then
         assertThat(found, hasItem(existingResource));
-    }
-
-    @Override
-    @Test
-    public final void givenResourceWithNameDoesNotExist_whenResourceIsSearchedByName_thenResourceIsNotFound() {
-        // When
-        final List<T> found = getApi().searchAll(ClientConstraintsUtil.createNameConstraint(EQ, randomAlphabetic(8)));
-
-        // Then
-        assertThat(found, Matchers.<T> empty());
     }
 
     @Override
@@ -204,14 +182,6 @@ public abstract class AbstractSearchRestLiveTest<T extends INameableEntity> impl
 
     @Override
     @Test
-    public final void whenSearchByStartsWithIsPerformed_thenNoExceptions() {
-        // When
-        final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), ClientOperation.STARTS_WITH, randomAlphabetic(8));
-        getApi().searchAll(nameConstraint);
-    }
-
-    @Override
-    @Test
     public final void givenResourceExists_whenSearchByStartsWithEntireNameIsPerformed_thenResourceIsFound() {
         final T newEntity = createNewEntity();
         SearchIntegrationTestUtil.givenResourceExists_whenSearchByStartsWithEntireKeyIsPerformed_thenResourceIsFound(getApi(), newEntity, SearchField.name, ClientOperation.STARTS_WITH, newEntity.getName());
@@ -222,14 +192,6 @@ public abstract class AbstractSearchRestLiveTest<T extends INameableEntity> impl
     public final void givenResourceExists_whenSearchByStartsWithPartOfNameIsPerformed_thenResourceIsFound() {
         final T newEntity = createNewEntity();
         SearchIntegrationTestUtil.givenResourceExists_whenSearchByStartsWithPartOfKeyIsPerformed_thenResourceIsFound(getApi(), newEntity, SearchField.name, ClientOperation.STARTS_WITH, newEntity.getName());
-    }
-
-    @Override
-    @Test
-    public final void whenSearchByEndsWithIsPerformed_thenNoExceptions() {
-        // When
-        final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), ENDS_WITH, randomAlphabetic(8));
-        getApi().searchAll(nameConstraint);
     }
 
     @Override
@@ -434,6 +396,7 @@ public abstract class AbstractSearchRestLiveTest<T extends INameableEntity> impl
         return getEntityOps().createNewEntity();
     }
 
+    @Override
     protected abstract IRestTemplate<T> getApi();
 
     protected abstract IEntityOperations<T> getEntityOps();

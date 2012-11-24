@@ -26,4 +26,10 @@ public final class ServicePreconditions {
         return entity;
     }
 
+    public static void checkEntityExists(final boolean entityExists) {
+        if (!entityExists) {
+            throw new EntityNotFoundException();
+        }
+    }
+
 }

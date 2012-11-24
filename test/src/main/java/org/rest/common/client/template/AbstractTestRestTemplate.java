@@ -1,5 +1,7 @@
 package org.rest.common.client.template;
 
+import static com.jayway.restassured.RestAssured.given;
+
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -316,7 +318,12 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public long count() {
-        throw new UnsupportedOperationException();
+        return Long.valueOf(countAsResponse().asString());
+    }
+
+    @Override
+    public final Response countAsResponse() {
+        return given().get(getUri() + "/count");
     }
 
     // util

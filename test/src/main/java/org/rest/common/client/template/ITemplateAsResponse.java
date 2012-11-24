@@ -45,4 +45,8 @@ public interface ITemplateAsResponse<T extends IEntity> {
 
     Response deleteAsResponse(final String uriOfResource);
 
+    // count
+
+    Response countAsResponse();
+
 }

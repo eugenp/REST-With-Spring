@@ -19,6 +19,8 @@ import com.google.common.collect.Lists;
 
 public final class SpringSecurityUtil {
 
+    public static final String ANONYMOUS_USER = "anonymousUser";
+
     private SpringSecurityUtil() {
         throw new AssertionError();
     }

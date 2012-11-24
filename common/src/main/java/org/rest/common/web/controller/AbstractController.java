@@ -28,6 +28,8 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -133,17 +135,6 @@ public abstract class AbstractController<T extends IEntity> {
     /**
      * - note: the operation is IDEMPOTENT <br/>
      */
-    protected final void updateInternalOld(final T resource) {
-        RestPreconditions.checkRequestElementNotNull(resource);
-        RestPreconditions.checkRequestElementNotNull(resource.getId());
-        RestPreconditions.checkNotNull(getService().findOne(resource.getId()));
-
-        getService().update(resource);
-    }
-
-    /**
-     * - note: the operation is IDEMPOTENT <br/>
-     */
     protected final void updateInternal(final long id, final T resource) {
         RestPreconditions.checkRequestElementNotNull(resource);
         RestPreconditions.checkRequestElementNotNull(resource.getId());
@@ -222,6 +213,21 @@ public abstract class AbstractController<T extends IEntity> {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public void handleEntityNotFoundException(final EntityNotFoundException ex) {
         logger.warn("EntityNotFoundException on for", ex);
+    }
+
+    // generic REST operations
+
+    // count
+
+    /**
+     * Counts all {@link Privilege} resources in the system
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/count")
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.OK)
+    public long count() {
+        return countInternal();
     }
 
     // template method

@@ -11,8 +11,6 @@ import org.rest.sec.test.suite.client.IntegrationClientRestTestSuite;
     IntegrationDiscoverabilityRestTestSuite.class,
     IntegrationLogicRestTestSuite.class,
     IntegrationSearchRestTestSuite.class,
-    IntegrationSortAndPaginationRestTestSuite.class,
-    IntegrationMimeRestTestSuite.class,
     SecurityRestLiveTest.class,
 
     IntegrationClientRestTestSuite.class

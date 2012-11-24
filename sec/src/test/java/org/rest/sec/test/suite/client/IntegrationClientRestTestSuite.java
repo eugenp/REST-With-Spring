@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ IntegrationClientLogicRestTestSuite.class, IntegrationClientLSortAndPaginationRestTestSuite.class })
+@SuiteClasses({ IntegrationClientLogicRestTestSuite.class })
 public final class IntegrationClientRestTestSuite {
     //
 }
