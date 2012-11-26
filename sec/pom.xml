@@ -347,6 +347,44 @@
 			</build>
 		</profile>
 
+		<profile>
+			<id>smoke-read-only</id>
+			<build>
+				<plugins>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<excludes>
+								<exclude>**/*Test.java</exclude>
+							</excludes>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+								<configuration>
+									<excludes>
+										<exclude>**/*ProductionRestLiveTest.java</exclude>
+									</excludes>
+									<includes>
+										<include>**/*ReadOnly*LiveTest.java</include>
+									</includes>
+									<!-- <systemPropertyVariables>
+									<secWebTarget>smoke_staging</secWebTarget>
+									</systemPropertyVariables> -->
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+
 	</profiles>
 
 </project>
