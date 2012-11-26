@@ -1,13 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project-modules id="moduleCoreId" project-version="1.5.0">
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="rest">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="rest-common-0.5-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rest-common/rest-common">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="rest-api-0.5-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rest-api/rest-api">
             <dependency-type>uses</dependency-type>
         </dependent-module>

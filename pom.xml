@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org</groupId>
 	<artifactId>rest-parent</artifactId>
-	<version>0.5-SNAPSHOT</version>
+	<version>0.9-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>rest-parent</name>
 
