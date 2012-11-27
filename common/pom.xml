@@ -139,12 +139,12 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>1.0.0.GA</version>
+			<version>${validation-api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>4.3.0.Final</version>
+			<version>${hibernate-validator.version}</version>
 		</dependency>
 
 		<!-- security -->
@@ -287,7 +287,7 @@
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy</artifactId>
-			<version>1.8.6</version>
+			<version>${groovy.version}</version>
 		</dependency>
 
 	</dependencies>
@@ -318,7 +318,7 @@
 			<plugin>
 				<groupId>org.zeroturnaround</groupId>
 				<artifactId>jrebel-maven-plugin</artifactId>
-				<version>1.1.3</version>
+				<version>${jrebel-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>generate-rebel-xml</id>
