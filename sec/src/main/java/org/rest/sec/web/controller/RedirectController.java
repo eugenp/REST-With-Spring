@@ -28,4 +28,24 @@ public class RedirectController {
         return redirectResponse;
     }
 
+    @RequestMapping(value = "role")
+    public ResponseEntity<Void> rolesToRole() {
+        final HttpHeaders responseHeaders = new org.springframework.http.HttpHeaders();
+        responseHeaders.add(org.apache.http.HttpHeaders.LOCATION, UriMappingConstants.ROLES);
+
+        final ResponseEntity<Void> redirectResponse = new ResponseEntity<Void>(responseHeaders, HttpStatus.MOVED_PERMANENTLY);
+
+        return redirectResponse;
+    }
+
+    @RequestMapping(value = "user")
+    public ResponseEntity<Void> usersToUser() {
+        final HttpHeaders responseHeaders = new org.springframework.http.HttpHeaders();
+        responseHeaders.add(org.apache.http.HttpHeaders.LOCATION, UriMappingConstants.USERS);
+
+        final ResponseEntity<Void> redirectResponse = new ResponseEntity<Void>(responseHeaders, HttpStatus.MOVED_PERMANENTLY);
+
+        return redirectResponse;
+    }
+
 }

@@ -21,6 +21,8 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.google.common.base.Preconditions;
 import com.google.common.net.HttpHeaders;
+import com.jayway.restassured.config.RedirectConfig;
+import com.jayway.restassured.config.RestAssuredConfig;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
@@ -38,6 +40,16 @@ public abstract class AbstractDiscoverabilityRestLiveTest<T extends IEntity> {
     }
 
     // tests
+
+    // redirects
+
+    @Test
+    public final void whenConsumingSimillarResourceName_thenRedirectedToCorrectResourceName() {
+        final String simillarUriOfResource = getUri().substring(0, getUri().length() - 1);
+        final RequestSpecification customRequest = getApi().readRequest().config(new RestAssuredConfig().redirect(new RedirectConfig().followRedirects(false)));
+        final Response responseOfSimillarUri = getApi().findOneByUriAsResponse(simillarUriOfResource, customRequest);
+        assertThat(responseOfSimillarUri.getStatusCode(), is(301));
+    }
 
     // GET (single)
 
