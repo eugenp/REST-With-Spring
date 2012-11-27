@@ -72,9 +72,13 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
     // Privilege
 
     private void createPrivileges() {
-        createPrivilegeIfNotExisting(Privileges.CAN_USER_WRITE);
-        createPrivilegeIfNotExisting(Privileges.CAN_ROLE_WRITE);
+        createPrivilegeIfNotExisting(Privileges.CAN_PRIVILEGE_READ);
         createPrivilegeIfNotExisting(Privileges.CAN_PRIVILEGE_WRITE);
+
+        createPrivilegeIfNotExisting(Privileges.CAN_ROLE_READ);
+        createPrivilegeIfNotExisting(Privileges.CAN_ROLE_WRITE);
+
+        createPrivilegeIfNotExisting(Privileges.CAN_USER_WRITE);
     }
 
     final void createPrivilegeIfNotExisting(final String name) {
@@ -88,14 +92,19 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
     // Role
 
     private void createRoles() {
-        final Privilege canUserWrite = privilegeService.findByName(Privileges.CAN_USER_WRITE);
-        final Privilege canRoleWrite = privilegeService.findByName(Privileges.CAN_ROLE_WRITE);
+        final Privilege canPrivilegeRead = privilegeService.findByName(Privileges.CAN_PRIVILEGE_READ);
         final Privilege canPrivilegeWrite = privilegeService.findByName(Privileges.CAN_PRIVILEGE_WRITE);
-        Preconditions.checkNotNull(canUserWrite);
-        Preconditions.checkNotNull(canRoleWrite);
-        Preconditions.checkNotNull(canPrivilegeWrite);
+        final Privilege canRoleRead = privilegeService.findByName(Privileges.CAN_ROLE_READ);
+        final Privilege canRoleWrite = privilegeService.findByName(Privileges.CAN_ROLE_WRITE);
+        final Privilege canUserWrite = privilegeService.findByName(Privileges.CAN_USER_WRITE);
 
-        createRoleIfNotExisting(Roles.ROLE_ADMIN, Sets.<Privilege> newHashSet(canUserWrite, canRoleWrite, canPrivilegeWrite));
+        Preconditions.checkNotNull(canPrivilegeRead);
+        Preconditions.checkNotNull(canPrivilegeWrite);
+        Preconditions.checkNotNull(canRoleRead);
+        Preconditions.checkNotNull(canRoleWrite);
+        Preconditions.checkNotNull(canUserWrite);
+
+        createRoleIfNotExisting(Roles.ROLE_ADMIN, Sets.<Privilege> newHashSet(canUserWrite, canRoleRead, canRoleWrite, canPrivilegeRead, canPrivilegeWrite));
     }
 
     final void createRoleIfNotExisting(final String name, final Set<Privilege> privileges) {

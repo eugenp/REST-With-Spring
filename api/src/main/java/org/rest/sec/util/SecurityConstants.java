@@ -19,14 +19,16 @@ public final class SecurityConstants {
     public static final class Privileges {
 
         // User
-        public static final String CAN_USER_WRITE = "ROLE_USER_WRITE";
         public static final String CAN_USER_READ = "ROLE_USER_READ";
+        public static final String CAN_USER_WRITE = "ROLE_USER_WRITE";
         public static final String CAN_PRINCIPAL_WRITE = "ROLE_PRIVILEGE_WRITE";
 
         // Role
+        public static final String CAN_ROLE_READ = "ROLE_ROLE_READ";
         public static final String CAN_ROLE_WRITE = "ROLE_ROLE_WRITE";
 
         // Privilege
+        public static final String CAN_PRIVILEGE_READ = "ROLE_PRIVILEGE_READ";
         public static final String CAN_PRIVILEGE_WRITE = "ROLE_PRIVILEGE_WRITE";
 
     }
