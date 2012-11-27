@@ -109,7 +109,6 @@ public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity>
     // search one - by attributes
 
     @Test
-    @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenNoExceptions() {
         // Given
         final T existingResource = getApi().create(createNewEntity());
@@ -120,7 +119,6 @@ public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity>
     }
 
     @Test
-    @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenResourceIsFound() {
         // Given
         final T existingResource = getApi().create(createNewEntity());
@@ -135,7 +133,6 @@ public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity>
 
     @Test
     @SuppressWarnings("unchecked")
-    @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenFoundResourceIsCorrect() {
         // Given
         final T existingResource = getApi().create(createNewEntity());
@@ -150,7 +147,6 @@ public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity>
 
     @Test
     @SuppressWarnings("unchecked")
-    @Ignore("bug in RestTemplate")
     public final void givenResourceExists_whenResourceIsSearchedByNagatedNameAttribute_thenNoExceptions() {
         // Given
         final T existingResource = getApi().create(createNewEntity());
