@@ -40,6 +40,11 @@ public class PersistenceJPAConfig {
     @Value("${hibernate.hbm2ddl.auto}")
     String hibernateHbm2ddlAuto;
 
+    @Value("${jdbc.username}")
+    private String jdbcUsername;
+    @Value("${jdbc.password}")
+    private String jdbcPassword;
+
     public PersistenceJPAConfig() {
         super();
     }
@@ -72,8 +77,8 @@ public class PersistenceJPAConfig {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(driverClassName);
         dataSource.setUrl(url);
-        dataSource.setUsername("restUser");
-        dataSource.setPassword("restmy5ql");
+        dataSource.setUsername(jdbcUsername);
+        dataSource.setPassword(jdbcPassword);
         return dataSource;
     }
 
@@ -96,6 +101,7 @@ public class PersistenceJPAConfig {
             {
                 // use this to inject additional properties in the EntityManager
                 setProperty("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
+                setProperty("hibernate.ejb.naming_strategy", org.hibernate.cfg.ImprovedNamingStrategy.class.getName());
             }
         };
     }
