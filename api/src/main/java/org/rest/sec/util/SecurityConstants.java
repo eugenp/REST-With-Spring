@@ -21,7 +21,6 @@ public final class SecurityConstants {
         // User
         public static final String CAN_USER_READ = "ROLE_USER_READ";
         public static final String CAN_USER_WRITE = "ROLE_USER_WRITE";
-        public static final String CAN_PRINCIPAL_WRITE = "ROLE_PRIVILEGE_WRITE";
 
         // Role
         public static final String CAN_ROLE_READ = "ROLE_ROLE_READ";

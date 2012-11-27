@@ -42,12 +42,14 @@ public class UserController extends AbstractController<User> implements ISorting
 
     @RequestMapping(params = { QueryConstants.Q_PARAM }, method = RequestMethod.GET)
     @ResponseBody
+    @Secured(Privileges.CAN_USER_READ)
     public List<User> search(@RequestParam(QueryConstants.Q_PARAM) final String queryString) {
         return searchInternal(queryString);
     }
 
     @RequestMapping(params = { QueryConstants.Q_PARAM, QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
+    @Secured(Privileges.CAN_USER_READ)
     public List<User> searchPaginated(@RequestParam(QueryConstants.Q_PARAM) final String queryString, @RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
         return searchInternalPaginated(queryString, page, size);
     }
@@ -57,6 +59,7 @@ public class UserController extends AbstractController<User> implements ISorting
     @Override
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
+    @Secured(Privileges.CAN_USER_READ)
     public List<User> findAllPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size,
             @RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder, final UriComponentsBuilder uriBuilder,
             final HttpServletResponse response) {
@@ -66,6 +69,7 @@ public class UserController extends AbstractController<User> implements ISorting
     @Override
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
+    @Secured(Privileges.CAN_USER_READ)
     public List<User> findAllPaginated(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, final UriComponentsBuilder uriBuilder,
             final HttpServletResponse response) {
         return findPaginatedAndSortedInternal(page, size, null, null, uriBuilder, response);
@@ -74,6 +78,7 @@ public class UserController extends AbstractController<User> implements ISorting
     @Override
     @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
+    @Secured(Privileges.CAN_USER_READ)
     public List<User> findAllSorted(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         return findAllSortedInternal(sortBy, sortOrder);
     }
@@ -81,6 +86,7 @@ public class UserController extends AbstractController<User> implements ISorting
     @Override
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
+    @Secured(Privileges.CAN_USER_READ)
     public List<User> findAll(final HttpServletRequest request, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         return findAllInternal(request, uriBuilder, response);
     }
@@ -89,6 +95,7 @@ public class UserController extends AbstractController<User> implements ISorting
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
+    @Secured(Privileges.CAN_USER_READ)
     public User findOne(@PathVariable("id") final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         return findOneInternal(id, uriBuilder, response);
     }
