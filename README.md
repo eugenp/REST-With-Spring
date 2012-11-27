@@ -1,3 +1,16 @@
+# Resources
+- Technical forum: [rest-security google group](https://groups.google.com/forum/#!forum/restsec)
+- Docs: [Main wiki](https://github.com/eugenp/REST/wiki)
+
+# Quick Start
+```
+git clone git://github.com/eugenp/REST.git
+cd REST
+mvn install
+mvn cargo:run -f sec/pom.xml
+```
+- **next**: start consuming the service like so: [REST API: Consuming Examples with `curl`](https://github.com/eugenp/REST/wiki/REST-API%3A-Consuming-Examples-with-%60curl%60)
+
 # Goals
 **REST Security** is a Proof of Concept implementation of a RESTful Service. <br/>
 The project also provides a reference implementation for: 
@@ -9,19 +22,6 @@ The project also provides a reference implementation for:
 - Sorting and Pagination in REST <br/>
 - Statelessness for REST with Spring <br/> 
 - full integration testing suites at every layer: unit tests, integration tests for the DAO and Service layers, integration tests against the REST service <br/>
-
-
-# Hit the ground running
-```
-git clone git://github.com/eugenp/REST.git
-cd REST
-mvn install
-mvn cargo:run -f sec/pom.xml
-```
-
-- **next**: start consuming the service like so: [REST API: Consuming Examples with `curl`](https://github.com/eugenp/REST/wiki/REST-API%3A-Consuming-Examples-with-%60curl%60)
-
-- for **more advanced Build/Run Scenarios**: [[Building and Running REST Security]]
 
 
 # Technology Stack
@@ -49,4 +49,3 @@ The project uses the following technologies: <br/>
 
 # Eclipse
 - see the [Eclipse wiki page](https://github.com/eugenp/REST/wiki/Eclipse:-Setup-and-Configuration) of this project
-

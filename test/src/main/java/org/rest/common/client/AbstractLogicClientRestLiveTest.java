@@ -20,6 +20,7 @@ import org.rest.common.util.SearchField;
 import org.rest.common.util.order.OrderByName;
 import org.springframework.data.domain.Sort;
 
+@SuppressWarnings("unchecked")
 public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity> extends AbstractRawLogicClientRestLiveTest<T> {
 
     public AbstractLogicClientRestLiveTest() {
@@ -132,7 +133,6 @@ public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity>
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenFoundResourceIsCorrect() {
         // Given
         final T existingResource = getApi().create(createNewEntity());
@@ -146,7 +146,6 @@ public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity>
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public final void givenResourceExists_whenResourceIsSearchedByNagatedNameAttribute_thenNoExceptions() {
         // Given
         final T existingResource = getApi().create(createNewEntity());
