@@ -1,6 +1,7 @@
 # Resources
 - Technical forum: [rest-security google group](https://groups.google.com/forum/#!forum/restsec)
 - Docs: [Main wiki](https://github.com/eugenp/REST/wiki)
+- Continuous Integration: [CI on Cloudbees](https://rest-security.ci.cloudbees.com)
 
 # Quick Start
 ```
