@@ -329,19 +329,27 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
     // util
 
     protected RequestSpecification findAllRequest() {
-        return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime());
+        return readRequest();
     }
 
     protected RequestSpecification findAllRequest(final RequestSpecification req) {
-        return req.header(HttpHeaders.ACCEPT, marshaller.getMime());
+        return readRequest(req);
     }
 
     protected RequestSpecification findOneRequest() {
-        return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime());
+        return readRequest();
     }
 
     protected RequestSpecification findOneRequest(final RequestSpecification req) {
+        return readRequest(req);
+    }
+
+    private final RequestSpecification readRequest(final RequestSpecification req) {
         return req.header(HttpHeaders.ACCEPT, marshaller.getMime());
+    }
+
+    public final RequestSpecification readRequest() {
+        return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime());
     }
 
     // security

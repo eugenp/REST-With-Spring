@@ -67,22 +67,22 @@
 
 		<aspectjweaver.version>1.7.0</aspectjweaver.version>
 
-		<jackson.version>2.0.6</jackson.version>
+		<jackson.version>2.1.1</jackson.version>
 		<jaxb-api.version>2.2.7</jaxb-api.version>
 		<xstream.version>1.4.3</xstream.version>
 
 		<!-- VERSIONS - persistence -->
-		<mysql-connector-java.version>5.1.21</mysql-connector-java.version> <!-- latest version on: 05.10.2011 - http://dev.mysql.com/downloads/connector/j/ -->
+		<mysql-connector-java.version>5.1.22</mysql-connector-java.version> <!-- latest version on: 05.10.2011 - http://dev.mysql.com/downloads/connector/j/ -->
 		<hibernate.version>4.1.8.Final</hibernate.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
-		<querydsl.version>2.8.0</querydsl.version>
+		<querydsl.version>2.9.0</querydsl.version>
 		<spring-data-jpa.version>1.2.0.RELEASE</spring-data-jpa.version>
 
 		<h2.version>1.3.168</h2.version>
 		<hsqldb.version>2.2.9</hsqldb.version>
 
 		<!-- VERSIONS - logging -->
-		<org.slf4j.version>1.7.1</org.slf4j.version>
+		<org.slf4j.version>1.7.2</org.slf4j.version>
 		<logback.version>1.0.7</logback.version>
 
 		<!-- VERSIONS - testing -->
@@ -90,8 +90,8 @@
 		<junit.version>4.11</junit.version>
 		<mockito.version>1.9.5</mockito.version>
 
-		<httpcore.version>4.1.4</httpcore.version>
-		<httpclient.version>4.1.3</httpclient.version>
+		<httpcore.version>4.2.2</httpcore.version>
+		<httpclient.version>4.2.2</httpclient.version>
 
 		<rest-assured.version>1.7.1</rest-assured.version>
 

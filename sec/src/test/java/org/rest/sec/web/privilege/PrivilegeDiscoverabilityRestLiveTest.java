@@ -1,7 +1,10 @@
 package org.rest.sec.web.privilege;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
+import org.junit.Test;
 import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.PrivilegeTestRestTemplate;
 import org.rest.sec.model.Privilege;
@@ -9,6 +12,9 @@ import org.rest.sec.model.PrivilegeEntityOpsImpl;
 import org.rest.sec.test.SecDiscoverabilityRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.jayway.restassured.config.RedirectConfig;
+import com.jayway.restassured.config.RestAssuredConfig;
+import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 public class PrivilegeDiscoverabilityRestLiveTest extends SecDiscoverabilityRestLiveTest<Privilege> {
@@ -23,6 +29,14 @@ public class PrivilegeDiscoverabilityRestLiveTest extends SecDiscoverabilityRest
     }
 
     // tests
+
+    @Test
+    public final void whenConsumingSimillarResourceName_thenRedirectedToCorrectResourceName() {
+        final String simillarUriOfResource = getUri().substring(0, getUri().length() - 1);
+        final RequestSpecification customRequest = getApi().readRequest().config(new RestAssuredConfig().redirect(new RedirectConfig().followRedirects(false)));
+        final Response responseOfSimillarUri = getApi().findOneByUriAsResponse(simillarUriOfResource, customRequest);
+        assertThat(responseOfSimillarUri.getStatusCode(), is(301));
+    }
 
     // template method
 

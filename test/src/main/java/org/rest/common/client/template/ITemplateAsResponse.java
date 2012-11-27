@@ -49,4 +49,8 @@ public interface ITemplateAsResponse<T extends IEntity> {
 
     Response countAsResponse();
 
+    // requests
+
+    RequestSpecification readRequest();
+
 }
