@@ -18,7 +18,7 @@ public class RedirectController {
 
     // API
 
-    @RequestMapping(value = "privilege")
+    @RequestMapping(value = UriMappingConstants.Singural.PRIVILEGE)
     public ResponseEntity<Void> privilegesToPrivilege() {
         final HttpHeaders responseHeaders = new org.springframework.http.HttpHeaders();
         responseHeaders.add(org.apache.http.HttpHeaders.LOCATION, UriMappingConstants.PRIVILEGES);
@@ -28,7 +28,7 @@ public class RedirectController {
         return redirectResponse;
     }
 
-    @RequestMapping(value = "role")
+    @RequestMapping(value = UriMappingConstants.Singural.ROLE)
     public ResponseEntity<Void> rolesToRole() {
         final HttpHeaders responseHeaders = new org.springframework.http.HttpHeaders();
         responseHeaders.add(org.apache.http.HttpHeaders.LOCATION, UriMappingConstants.ROLES);
@@ -38,7 +38,7 @@ public class RedirectController {
         return redirectResponse;
     }
 
-    @RequestMapping(value = "user")
+    @RequestMapping(value = UriMappingConstants.Singural.USER)
     public ResponseEntity<Void> usersToUser() {
         final HttpHeaders responseHeaders = new org.springframework.http.HttpHeaders();
         responseHeaders.add(org.apache.http.HttpHeaders.LOCATION, UriMappingConstants.USERS);
