@@ -30,13 +30,13 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.12.4</version>
+					<version>${maven-surefire-plugin.version}</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.0</version>
+					<version>${maven-compiler-plugin.version}</version>
 					<configuration>
 						<source>1.6</source>
 						<target>1.6</target>
@@ -47,7 +47,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
-					<version>2.6</version>
+					<version>${maven-resources-plugin.version}</version>
 				</plugin>
 
 			</plugins>
@@ -56,26 +56,30 @@
 	</build>
 
 	<properties>
+		
 		<!-- Spring related -->
-		<!-- 3.1.3.RELEASE -->
-		<!-- 3.2.0.RC2 -->
-		<spring.version>3.2.0.RC2</spring.version>
+		<spring.version>3.2.0.RC2</spring.version> <!-- 3.1.3.RELEASE -->
 		<spring-security.version>3.1.3.RELEASE</spring-security.version>
 		<javassist.version>3.16.1-GA</javassist.version>
 		<cglib.version>2.2.2</cglib.version>
-
-		<!-- UNSORTED -->
-
-		<commons-lang3.version>3.2-SNAPSHOT</commons-lang3.version>
-		<guava.version>13.0.1</guava.version>
-
 		<aspectjweaver.version>1.7.0</aspectjweaver.version>
-
+		
+		<!-- web -->
+		<javax.servlet-api.version>3.0.1</javax.servlet-api.version>
+		
+		<!-- marshalling -->
 		<jackson.version>2.1.1</jackson.version>
 		<jaxb-api.version>2.2.7</jaxb-api.version>
 		<xstream.version>1.4.3</xstream.version>
+			
+		<!-- commons and utils -->
+		<commons-lang3.version>3.2-SNAPSHOT</commons-lang3.version>
+		<guava.version>13.0.1</guava.version>
+		
+		<!-- UNSORTED -->
+		<commons-codec.version>1.6</commons-codec.version>
 
-		<!-- VERSIONS - persistence -->
+		<!-- persistence -->
 		<mysql-connector-java.version>5.1.22</mysql-connector-java.version> <!-- latest version on: 05.10.2011 - http://dev.mysql.com/downloads/connector/j/ -->
 		<hibernate.version>4.1.8.Final</hibernate.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
@@ -85,11 +89,11 @@
 		<h2.version>1.3.168</h2.version>
 		<hsqldb.version>2.2.9</hsqldb.version>
 
-		<!-- VERSIONS - logging -->
+		<!-- logging -->
 		<org.slf4j.version>1.7.2</org.slf4j.version>
 		<logback.version>1.0.7</logback.version>
 
-		<!-- VERSIONS - testing -->
+		<!-- testing -->
 		<org.hamcrest.version>1.3</org.hamcrest.version>
 		<junit.version>4.11</junit.version>
 		<mockito.version>1.9.5</mockito.version>
@@ -98,6 +102,14 @@
 		<httpclient.version>4.2.2</httpclient.version>
 
 		<rest-assured.version>1.7.1</rest-assured.version>
+
+		<groovy.version>1.8.6</groovy.version>
+		
+		<!-- maven plugins -->
+		<maven-surefire-plugin.version>2.12.4</maven-surefire-plugin.version>
+		<maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
+		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
+		<jrebel-maven-plugin.version>1.1.3</jrebel-maven-plugin.version>
 
 	</properties>
 
@@ -128,7 +140,7 @@
 
 		<module>sec</module>
 	</modules>
-	
+
 	<issueManagement>
 		<url>https://github.com/eugenp/REST/issues</url>
 		<system>GitHub Issues</system>
@@ -150,12 +162,12 @@
 			<id>eugenp</id>
 		</developer>
 	</developers>
-	
+
 	<ciManagement>
 		<system>Jenkins</system>
 		<url>https://rest-security.ci.cloudbees.com/</url>
 	</ciManagement>
-	
+
 	<scm>
 		<connection>scm:git:git://github.com/eugenp/REST.git</connection>
 		<url>scm:git:git://github.com/eugenp/REST.git</url>
