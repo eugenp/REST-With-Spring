@@ -219,7 +219,8 @@ public abstract class AbstractRawClientRestTemplate<T extends IEntity> implement
 
     @Override
     public final void delete(final long id) {
-        final ResponseEntity<Object> deleteResourceResponse = restTemplate.exchange(getUri() + WebConstants.PATH_SEP + id, HttpMethod.DELETE, new HttpEntity<T>(writeHeaders()), null);
+        // final ResponseEntity<Object> deleteResourceResponse = restTemplate.exchange(getUri() + WebConstants.PATH_SEP + id, HttpMethod.DELETE, new HttpEntity<T>(writeHeaders()), null);
+        final ResponseEntity<Void> deleteResourceResponse = restTemplate.exchange(getUri() + WebConstants.PATH_SEP + id, HttpMethod.DELETE, new HttpEntity<Void>(writeHeaders()), Void.class);
 
         Preconditions.checkState(deleteResourceResponse.getStatusCode().value() == 204);
     }
