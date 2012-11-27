@@ -167,7 +167,7 @@
 			<plugin>
 				<groupId>org.zeroturnaround</groupId>
 				<artifactId>jrebel-maven-plugin</artifactId>
-				<version>{jrebel-maven-plugin.version}</version>
+				<version>${jrebel-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>generate-rebel-xml</id>
