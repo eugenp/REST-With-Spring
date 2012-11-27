@@ -1,5 +1,6 @@
 package org.rest.common.client.template;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
@@ -36,6 +37,8 @@ public interface ITemplateAsResponse<T extends IEntity> {
     // create
 
     Response createAsResponse(final T resource);
+
+    Response createAsResponse(final T resource, final Pair<String, String> credentials);
 
     // update
 

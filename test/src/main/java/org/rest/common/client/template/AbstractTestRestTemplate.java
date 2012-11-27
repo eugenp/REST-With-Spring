@@ -198,16 +198,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public final String createAsUri(final T resource, final Pair<String, String> credentials) {
-        Preconditions.checkNotNull(resource);
-        RequestSpecification givenAuthenticated = null;
-        if (credentials != null) {
-            givenAuthenticated = auth.givenBasicAuthenticated(credentials.getLeft(), credentials.getRight());
-        } else {
-            givenAuthenticated = givenAuthenticated();
-        }
-
-        final String resourceAsString = marshaller.encode(resource);
-        final Response response = givenAuthenticated.contentType(marshaller.getMime()).body(resourceAsString).post(getUri());
+        final Response response = createAsResponse(resource, credentials);
         Preconditions.checkState(response.getStatusCode() == 201, "create operation: " + response.getStatusCode());
 
         final String locationOfCreatedResource = response.getHeader(HttpHeaders.LOCATION);
@@ -217,11 +208,22 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public final Response createAsResponse(final T resource) {
+        return createAsResponse(resource, null);
+    }
+
+    @Override
+    public final Response createAsResponse(final T resource, final Pair<String, String> credentials) {
         Preconditions.checkNotNull(resource);
+        RequestSpecification givenAuthenticated = null;
+        if (credentials != null) {
+            givenAuthenticated = auth.givenBasicAuthenticated(credentials.getLeft(), credentials.getRight());
+        } else {
+            givenAuthenticated = givenAuthenticated();
+        }
 
         final String resourceAsString = marshaller.encode(resource);
         logger.debug("Creating Resource against URI: " + getUri());
-        return givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).post(getUri());
+        return givenAuthenticated.contentType(marshaller.getMime()).body(resourceAsString).post(getUri());
     }
 
     // update
@@ -348,6 +350,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
         return req.header(HttpHeaders.ACCEPT, marshaller.getMime());
     }
 
+    @Override
     public final RequestSpecification readRequest() {
         return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime());
     }
