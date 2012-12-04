@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<name>rest-ui</name>
+	<artifactId>rest-ui</artifactId>
+
+	<parent>
+		<groupId>org</groupId>
+		<artifactId>rest-parent</artifactId>
+		<version>0.9-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+
+	<dependencies>
+
+		<!-- internal -->
+
+		<dependency>
+			<groupId>org</groupId>
+			<artifactId>rest-common</artifactId>
+			<version>0.9-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org</groupId>
+			<artifactId>rest-test</artifactId>
+			<version>0.9-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		
+	</dependencies>
+
+	<build>
+		<finalName>rest-ui</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+
+		<plugins>
+			
+			<!-- placeholder -->
+			
+		</plugins>
+
+	</build>
+	
+	<properties>
+		<!-- <aws-java-sdk.version>1.3.18</aws-java-sdk.version> -->
+	</properties>
+
+</project>
