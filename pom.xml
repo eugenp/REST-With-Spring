@@ -71,7 +71,7 @@
 		<jackson.version>2.1.2</jackson.version>
 		<jaxb-api.version>2.2.7</jaxb-api.version>
 		<xstream.version>1.4.3</xstream.version>
-			
+		
 		<!-- commons and utils -->
 		<commons-lang3.version>3.2-SNAPSHOT</commons-lang3.version>
 		<guava.version>13.0.1</guava.version>
@@ -80,7 +80,7 @@
 		<commons-codec.version>1.7</commons-codec.version>
 
 		<!-- persistence -->
-		<mysql-connector-java.version>5.1.22</mysql-connector-java.version> <!-- latest version on: 05.10.2011 - http://dev.mysql.com/downloads/connector/j/ -->
+		<mysql-connector-java.version>5.1.22</mysql-connector-java.version> <!-- latest version on: 06.12.2011 - http://dev.mysql.com/downloads/connector/j/ -->
 		<hibernate.version>4.1.8.Final</hibernate.version>
 		<hibernate-jpamodelgen.version>1.2.0.Final</hibernate-jpamodelgen.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
@@ -89,10 +89,10 @@
 
 		<h2.version>1.3.168</h2.version>
 		<hsqldb.version>2.2.9</hsqldb.version>
-		
+
 		<validation-api.version>1.0.0.GA</validation-api.version>
 		<hibernate-validator.version>4.3.1.Final</hibernate-validator.version>
-			
+		
 		<!-- logging -->
 		<org.slf4j.version>1.7.2</org.slf4j.version>
 		<logback.version>1.0.7</logback.version>
@@ -106,7 +106,6 @@
 		<httpclient.version>4.2.2</httpclient.version>
 
 		<rest-assured.version>1.7.1</rest-assured.version>
-
 		<groovy.version>1.8.8</groovy.version>
 		
 		<!-- maven plugins -->
@@ -115,8 +114,7 @@
 		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
 		<jrebel-maven-plugin.version>1.1.3</jrebel-maven-plugin.version>
 		<cargo-maven2-plugin.version>1.3.1</cargo-maven2-plugin.version>
-		
-		
+
 	</properties>
 
 	<repositories>
@@ -145,7 +143,7 @@
 		<module>api</module>
 
 		<module>sec</module>
-		
+
 		<module>ui</module>
 	</modules>
 
