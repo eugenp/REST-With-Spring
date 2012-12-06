@@ -1,4 +1,4 @@
-package org.resthub.todo;
+package org.rest.ui;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -8,7 +8,7 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-public class TodoInitializer implements WebApplicationInitializer {
+public class SecUIInitializer implements WebApplicationInitializer {
    
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {

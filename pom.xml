@@ -144,7 +144,6 @@
 
 		<module>sec</module>
 
-		<module>ui</module>
 	</modules>
 
 	<issueManagement>
