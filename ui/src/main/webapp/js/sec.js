@@ -1,13 +1,6 @@
 // Load the application once the DOM is ready, using `jQuery.ready`:
 $(function() {
 
-	var Item = Backbone.Model.extend({
-		defaults : {
-			price : 35,
-			photo : "http://www.placedog.com/100/100"
-		}
-	});
-
 	// Todo Model
 	// ----------
 

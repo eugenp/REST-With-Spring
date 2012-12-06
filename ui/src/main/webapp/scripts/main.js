@@ -1,6 +1,6 @@
-require(["jquery", "jquery.alpha", "jquery.beta"], function($) {
-    //the jquery.alpha.js and jquery.beta.js plugins have been loaded.
-    $(function() {
-        $('body').alpha().beta();
-    });
-});
+require([ "jquery", "scripts/jquery.alpha.js", "scripts/jquery.beta.js" ],
+		function($) {
+			$(function() {
+				$('body').alpha().beta();
+			});
+		});
