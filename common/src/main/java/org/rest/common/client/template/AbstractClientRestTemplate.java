@@ -3,6 +3,7 @@ package org.rest.common.client.template;
 import static org.rest.common.search.ClientOperation.EQ;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.commons.lang3.tuple.Pair;
 import org.rest.common.persistence.model.INameableEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.util.SearchField;
@@ -20,6 +21,16 @@ public abstract class AbstractClientRestTemplate<T extends INameableEntity> exte
     public T findByName(final String name) {
         beforeReadOperation();
         return searchOne(new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), EQ, name));
+    }
+
+    // util
+
+    protected void auth(final Pair<String, String> credentials) {
+        if (credentials != null) {
+            auth.givenAuthenticated(restTemplate, credentials.getLeft(), credentials.getRight());
+        } else {
+            givenAuthenticated();
+        }
     }
 
 }

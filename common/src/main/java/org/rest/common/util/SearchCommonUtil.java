@@ -21,7 +21,7 @@ public final class SearchCommonUtil {
 
     public static List<Triple<String, ClientOperation, String>> parseQueryString(final String queryString) {
         Preconditions.checkNotNull(queryString);
-        Preconditions.checkState(queryString.matches("((id~?=[0-9]+)?,?)*((name~?=[0-9a-zA-Z*]+),?)*"));
+        Preconditions.checkState(queryString.matches("((id~?=[0-9]+)?,?)*((name~?=[0-9a-zA-Z\\-/*]+),?)*"));
 
         final List<Triple<String, ClientOperation, String>> tuplesList = Lists.newArrayList();
         final String[] tuples = queryString.split(QueryConstants.SEPARATOR);

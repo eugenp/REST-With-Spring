@@ -36,6 +36,7 @@ public final class QueryConstants {
 
     public static final String ID = "id"; // is constant because it's used for the controller mapping
     public static final String NAME = SearchField.name.toString();
+    public static final String UUID = "uuid";
 
     private QueryConstants() {
         throw new AssertionError();

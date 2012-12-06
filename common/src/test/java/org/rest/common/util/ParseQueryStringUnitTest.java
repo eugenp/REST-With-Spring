@@ -119,6 +119,22 @@ public final class ParseQueryStringUnitTest {
         assertEquals("Some", pair.getRight());
     }
 
+    // correct - with uncommon characters
+
+    @Test
+    public final void givenValidQueryWithUncommonCharacters_whenQueryIsParsedForNameValueWithUppercase_thenResultValueIsCorrect() {
+        final List<Triple<String, ClientOperation, String>> queryTyples = parseQueryString(QueryConstants.NAME + QueryConstants.OP + "i-98d522e6");
+        final Triple<String, ClientOperation, String> pair = queryTyples.get(0);
+        assertEquals("i-98d522e6", pair.getRight());
+    }
+
+    @Test
+    public final void givenValidQueryWithMoreUncommonCharacters_whenQueryIsParsedForNameValueWithUppercase_thenResultValueIsCorrect() {
+        final List<Triple<String, ClientOperation, String>> queryTyples = parseQueryString(QueryConstants.NAME + QueryConstants.OP + "us-east-1/i-98d522e6");
+        final Triple<String, ClientOperation, String> pair = queryTyples.get(0);
+        assertEquals("us-east-1/i-98d522e6", pair.getRight());
+    }
+
     // -- correct - with negation
 
     @Test

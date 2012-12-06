@@ -123,11 +123,10 @@ public abstract class AbstractController<T extends IEntity> {
     protected final void createInternal(final T resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         RestPreconditions.checkRequestElementNotNull(resource);
         RestPreconditions.checkRequestState(resource.getId() == null);
-        getService().create(resource);
-        // InvalidDataAccessApiUsageException- on saving a new Resource that also contains new/unsaved entities
+        final T existingResource = getService().create(resource);
 
         // - note: mind the autoboxing and potential NPE when the resource has null id at this point (likely when working with DTOs)
-        eventPublisher.publishEvent(new ResourceCreatedEvent<T>(clazz, uriBuilder, response, resource.getId().toString()));
+        eventPublisher.publishEvent(new ResourceCreatedEvent<T>(clazz, uriBuilder, response, existingResource.getId().toString()));
     }
 
     // update

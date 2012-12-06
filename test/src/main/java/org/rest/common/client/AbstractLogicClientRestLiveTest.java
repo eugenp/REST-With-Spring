@@ -1,6 +1,5 @@
 package org.rest.common.client;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -67,7 +66,7 @@ public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity>
     @Ignore("temp")
     /**/public final void givenExistingResourceHasSpaceInName_whenResourceIsRetrievedByName_thenFoundResourceIsCorrect() {
         final T newEntity = createNewEntity();
-        newEntity.setName(randomAlphabetic(4) + " " + randomAlphabetic(4));
+        // newEntity.setName(randomAlphabetic(4) + " " + randomAlphabetic(4));
 
         // Given
         final T existingResource = getApi().create(newEntity);

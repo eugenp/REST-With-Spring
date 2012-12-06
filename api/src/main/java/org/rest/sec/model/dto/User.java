@@ -67,7 +67,6 @@ public class User implements INameableEntity {
         return name;
     }
 
-    @Override
     public void setName(final String nameToSet) {
         name = nameToSet;
     }

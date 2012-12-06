@@ -234,6 +234,7 @@ public abstract class AbstractRawClientRestTemplate<T extends IEntity> implement
 
     @Override
     public final List<T> searchAll(final Triple<String, ClientOperation, String>... constraints) {
+        beforeReadOperation();
         final SearchUriBuilder builder = new SearchUriBuilder();
         for (final Triple<String, ClientOperation, String> constraint : constraints) {
             builder.consume(constraint);
