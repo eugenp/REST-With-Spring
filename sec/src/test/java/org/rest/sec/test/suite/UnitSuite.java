@@ -10,6 +10,6 @@ import org.rest.sec.persistence.service.impl.RoleServiceUnitTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({ PrincipalServiceUnitTest.class, RoleServiceUnitTest.class, PrivilegeServiceUnitTest.class, ConstructQueryStringUnitTest.class })
-public final class UnitTestSuite {
+public final class UnitSuite {
     //
 }

@@ -14,6 +14,6 @@ import org.rest.sec.web.user.UserSearchRestLiveTest;
     PrivilegeSearchRestLiveTest.class
 })
 // @formatter:off
-public final class IntegrationSearchRestTestSuite {
+public final class LiveSearchSuite {
     //
 }

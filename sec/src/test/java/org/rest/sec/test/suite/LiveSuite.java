@@ -4,18 +4,18 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.rest.sec.security.SecurityRestLiveTest;
-import org.rest.sec.test.suite.client.IntegrationClientRestTestSuite;
+import org.rest.sec.test.suite.client.LiveClientSuite;
 
 @RunWith(Suite.class)
 @SuiteClasses({// @formatter:off
-    IntegrationDiscoverabilityRestTestSuite.class,
-    IntegrationLogicRestTestSuite.class,
-    IntegrationSearchRestTestSuite.class,
+    LiveDiscoverabilitySuite.class,
+    LiveLogicSuite.class,
+    LiveSearchSuite.class,
     SecurityRestLiveTest.class,
 
-    IntegrationClientRestTestSuite.class
+    LiveClientSuite.class
 })
 // @formatter:on
-public final class IntegrationRestTestSuite {
+public final class LiveSuite {
     //
 }

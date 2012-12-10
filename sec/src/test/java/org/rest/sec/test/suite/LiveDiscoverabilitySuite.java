@@ -10,6 +10,6 @@ import org.rest.sec.web.user.UserDiscoverabilityRestLiveTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({ UserDiscoverabilityRestLiveTest.class, RoleDiscoverabilityRestLiveTest.class, PrivilegeDiscoverabilityRestLiveTest.class, RootDiscoverabilityRestLiveTest.class })
-public final class IntegrationDiscoverabilityRestTestSuite {
+public final class LiveDiscoverabilitySuite {
     //
 }

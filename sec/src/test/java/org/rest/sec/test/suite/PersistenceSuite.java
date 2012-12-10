@@ -17,6 +17,6 @@ import org.rest.sec.persistence.service.RoleServicePersistenceIntegrationTest;
     RoleSearchPersistenceIntegrationTest.class, RoleServicePersistenceIntegrationTest.class
 })
 // @formatter:on
-public final class IntegrationPersistenceTestSuite {
+public final class PersistenceSuite {
     //
 }

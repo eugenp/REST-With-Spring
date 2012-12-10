@@ -17,6 +17,6 @@ import org.rest.sec.web.user.UserLogicRestLiveTest;
     AuthenticationRestLiveTest.class
 })
 // @formatter:off
-public final class IntegrationLogicRestTestSuite {
+public final class LiveLogicSuite {
     //
 }

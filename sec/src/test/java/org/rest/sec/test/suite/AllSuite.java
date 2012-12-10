@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ IntegrationRestTestSuite.class, IntegrationPersistenceTestSuite.class, UnitTestSuite.class })
-public final class AllTestSuite {
+@SuiteClasses({ LiveSuite.class, PersistenceSuite.class, UnitSuite.class })
+public final class AllSuite {
     //
 }
