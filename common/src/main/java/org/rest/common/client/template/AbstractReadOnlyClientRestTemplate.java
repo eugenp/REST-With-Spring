@@ -28,7 +28,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public abstract class AbstractRawClientRestTemplate<T extends IEntity> implements IRawClientTemplate<T> {
+public abstract class AbstractReadOnlyClientRestTemplate<T extends IEntity> implements IRawClientTemplate<T> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected Class<T> clazz;
@@ -42,7 +42,7 @@ public abstract class AbstractRawClientRestTemplate<T extends IEntity> implement
     @Autowired
     protected ClientAuthenticator auth;
 
-    public AbstractRawClientRestTemplate(final Class<T> clazzToSet) {
+    public AbstractReadOnlyClientRestTemplate(final Class<T> clazzToSet) {
         super();
 
         clazz = clazzToSet;
@@ -175,61 +175,6 @@ public abstract class AbstractRawClientRestTemplate<T extends IEntity> implement
         return restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(), List.class);
     }
 
-    // create
-
-    @Override
-    public final T create(final T resource, final Pair<String, String> credentials) {
-        final String locationOfCreatedResource = createAsUri(resource, credentials);
-
-        return findOneByUri(locationOfCreatedResource, credentials);
-    }
-
-    @Override
-    public final T create(final T resource) {
-        final String locationOfCreatedResource = createAsUri(resource, null);
-
-        return findOneByUri(locationOfCreatedResource, null);
-    }
-
-    @Override
-    public final String createAsUri(final T resource, final Pair<String, String> credentials) {
-        if (credentials != null) {
-            auth.givenAuthenticated(restTemplate, credentials.getLeft(), credentials.getRight());
-        } else {
-            givenAuthenticated();
-        }
-        final ResponseEntity<Void> responseEntity = restTemplate.exchange(getUri(), HttpMethod.POST, new HttpEntity<T>(resource, writeHeaders()), Void.class);
-
-        final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
-        Preconditions.checkNotNull(locationOfCreatedResource);
-
-        return locationOfCreatedResource;
-    }
-
-    // update
-
-    @Override
-    public final void update(final T resource) {
-        givenAuthenticated();
-        final ResponseEntity<T> responseEntity = restTemplate.exchange(getUri() + "/" + resource.getId(), HttpMethod.PUT, new HttpEntity<T>(resource, writeHeaders()), clazz);
-        Preconditions.checkState(responseEntity.getStatusCode().value() == 200);
-    }
-
-    // delete
-
-    @Override
-    public final void delete(final long id) {
-        // final ResponseEntity<Object> deleteResourceResponse = restTemplate.exchange(getUri() + WebConstants.PATH_SEP + id, HttpMethod.DELETE, new HttpEntity<T>(writeHeaders()), null);
-        final ResponseEntity<Void> deleteResourceResponse = restTemplate.exchange(getUri() + WebConstants.PATH_SEP + id, HttpMethod.DELETE, new HttpEntity<Void>(writeHeaders()), Void.class);
-
-        Preconditions.checkState(deleteResourceResponse.getStatusCode().value() == 204);
-    }
-
-    @Override
-    public final void deleteAll() {
-        throw new UnsupportedOperationException();
-    }
-
     // search
 
     @Override
@@ -293,13 +238,6 @@ public abstract class AbstractRawClientRestTemplate<T extends IEntity> implement
      */
     protected HttpHeaders findHeaders() {
         return HeaderUtil.createAcceptHeaders(marshaller);
-    }
-
-    /**
-     * - note: hook to be able to customize the write headers if needed
-     */
-    protected HttpHeaders writeHeaders() {
-        return HeaderUtil.createContentTypeHeaders(marshaller);
     }
 
 }

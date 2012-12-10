@@ -14,11 +14,13 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.rest.common.client.template.IRawClientTemplate;
 import org.rest.common.persistence.model.IEntity;
+import org.rest.common.web.WebConstants;
 import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles({ "client", "test", "mime_json" })
-public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> extends AbstractReadOnlyLogicClientLiveTest<T> {
+public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> {
 
     public AbstractRawLogicClientRestLiveTest() {
         super();
@@ -194,6 +196,12 @@ public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> exte
 
     protected void ensureOneResourceExists() {
         getApi().createAsUri(createNewEntity(), null);
+    }
+
+    protected abstract IRawClientTemplate<T> getApi();
+
+    protected final String getUri() {
+        return getApi().getUri() + WebConstants.PATH_SEP;
     }
 
 }

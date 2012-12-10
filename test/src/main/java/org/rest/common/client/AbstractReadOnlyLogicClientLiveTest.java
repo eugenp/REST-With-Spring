@@ -61,7 +61,7 @@ public abstract class AbstractReadOnlyLogicClientLiveTest<T extends IEntity> {
 
     @Test
     /**/public final void whenResourcesAreRetrievedPaginated_thenNoExceptions() {
-        getApi().findAllPaginated(1, 1);
+        getApi().findAllPaginated(0, 1);
     }
 
     // find - all - sorting
