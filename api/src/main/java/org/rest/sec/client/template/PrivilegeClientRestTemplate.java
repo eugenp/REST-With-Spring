@@ -2,7 +2,7 @@ package org.rest.sec.client.template;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.rest.common.client.template.AbstractClientRestTemplate;
+import org.rest.common.client.template.AbstractNamedClientRestTemplate;
 import org.rest.sec.client.SecBusinessPaths;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.util.SecurityConstants;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Profile("client")
-public class PrivilegeClientRestTemplate extends AbstractClientRestTemplate<Privilege> {
+public class PrivilegeClientRestTemplate extends AbstractNamedClientRestTemplate<Privilege> {
 
     @Autowired
     private SecBusinessPaths paths;
