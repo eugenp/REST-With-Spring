@@ -43,10 +43,16 @@
 
 		<!-- web -->
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${javax.servlet-api.version}</version>
+			<scope>provided</scope>
+		</dependency> -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+			<version>7.0.33</version>
 			<scope>provided</scope>
 		</dependency>
 
