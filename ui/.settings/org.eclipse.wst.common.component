@@ -4,6 +4,9 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="rest-common-0.10-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rest-common/rest-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="rest-ui"/>
         <property name="java-output-path" value="/rest-ui/target/classes"/>
     </wb-module>
