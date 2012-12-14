@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org</groupId>
 	<artifactId>rest-parent</artifactId>
-	<version>0.9-SNAPSHOT</version>
+	<version>0.10-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>rest-security</name>
 	<url>https://github.com/eugenp/REST</url>
@@ -58,7 +58,7 @@
 	<properties>
 		
 		<!-- Spring related -->
-		<spring.version>3.2.0.RC2</spring.version> <!-- 3.1.3.RELEASE -->
+		<spring.version>3.2.0</spring.version>
 		<spring-security.version>3.1.3.RELEASE</spring-security.version>
 		<javassist.version>3.17.1-GA</javassist.version>
 		<cglib.version>2.2.2</cglib.version>
