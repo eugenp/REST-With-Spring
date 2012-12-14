@@ -35,4 +35,10 @@ public class PrivilegeClientRestTemplate extends AbstractNamedClientRestTemplate
         return new ImmutablePair<String, String>(SecurityConstants.ADMIN_EMAIL, SecurityConstants.ADMIN_PASS);
     }
 
+    @Override
+    protected void beforeReadOperation() {
+        givenAuthenticated();
+        super.beforeReadOperation();
+    }
+
 }
