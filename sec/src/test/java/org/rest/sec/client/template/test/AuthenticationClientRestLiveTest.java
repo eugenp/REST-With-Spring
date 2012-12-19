@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.rest.sec.client.template.newer.AuthenticationRestTemplate;
+import org.rest.sec.client.template.auth.AuthenticationRestTemplate;
 import org.rest.sec.model.dto.User;
 import org.rest.sec.spring.ClientTestConfig;
 import org.rest.sec.spring.ContextConfig;

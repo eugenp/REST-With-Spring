@@ -1,4 +1,4 @@
-package org.rest.sec.client.template.newer;
+package org.rest.sec.client.template.auth;
 
 import org.rest.common.client.marshall.IMarshaller;
 import org.rest.common.client.web.HeaderUtil;

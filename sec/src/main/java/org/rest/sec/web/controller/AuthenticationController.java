@@ -32,8 +32,8 @@ public class AuthenticationController {
 
     // API
 
-    @RequestMapping(method = RequestMethod.POST, value = UriMappingConstants.AUTHENTICATION)
-    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(method = RequestMethod.GET, value = UriMappingConstants.AUTHENTICATION)
+    @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public User createAuthentication() {
         final Authentication authenticationInSpring = SpringSecurityUtil.getCurrentAuthentication();
