@@ -31,22 +31,23 @@ public class AuthenticationRestLiveTest {
 
     @Autowired
     private SecBusinessPaths paths;
+
     @Autowired
     private ITestAuthenticator auth;
 
     // tests
 
     @Test
-    public final void whenAuthenticationIsCreated_then201IsReceived() {
+    public final void whenAuthenticationIsPerformed_then200IsReceived() {
         // When
-        final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).post(paths.getAuthenticationUri());
+        final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).get(paths.getAuthenticationUri());
 
         // Then
-        assertThat(response.getStatusCode(), is(201));
+        assertThat(response.getStatusCode(), is(200));
     }
 
     @Test
-    public final void whenAuthenticationIsCreated_thenResponseHasContent() {
+    public final void whenAuthenticationIsPerformed_thenResponseHasContent() {
         // When
         final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).post(paths.getAuthenticationUri());
 
@@ -55,18 +56,18 @@ public class AuthenticationRestLiveTest {
     }
 
     @Test
-    public final void whenAuthenticationIsCreated_thenResponseIsPrincipal() {
+    public final void whenAuthenticationIsPerformed_thenResponseIsPrincipal() {
         // When
-        final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).post(paths.getAuthenticationUri());
+        final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).get(paths.getAuthenticationUri());
 
         // Then
         response.as(User.class);
     }
 
     @Test
-    public final void whenAuthenticationIsCreated_thenPrincipalResponseIsCorrect() {
+    public final void whenAuthenticationIsPerformed_thenPrincipalResponseIsCorrect() {
         // When
-        final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).post(paths.getAuthenticationUri());
+        final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).get(paths.getAuthenticationUri());
 
         // Then
         assertEquals(new User(SecurityConstants.EMAIL, SecurityConstants.PASS, null), response.as(User.class));

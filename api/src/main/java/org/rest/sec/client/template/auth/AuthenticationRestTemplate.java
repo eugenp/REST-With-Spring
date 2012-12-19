@@ -33,7 +33,7 @@ public class AuthenticationRestTemplate {
     // API
 
     public final ResponseEntity<User> authenticate(final String username, final String password) {
-        return restTemplate.exchange(getUri(), HttpMethod.POST, new HttpEntity<User>(createHeaders(username, password)), User.class);
+        return restTemplate.exchange(getUri(), HttpMethod.GET, new HttpEntity<User>(createHeaders(username, password)), User.class);
     }
 
     // util

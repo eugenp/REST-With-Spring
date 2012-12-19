@@ -31,12 +31,12 @@ public class AuthenticationClientRestLiveTest {
     // GET
 
     @Test
-    public final void whenAuthenticating_then201IsReceived() {
+    public final void whenAuthenticating_then200IsReceived() {
         // When
         final ResponseEntity<User> response = authenticationRestTemplate.authenticate(SecurityConstants.ADMIN_EMAIL, SecurityConstants.ADMIN_PASS);
 
         // Then
-        assertThat(response.getStatusCode().value(), is(201));
+        assertThat(response.getStatusCode().value(), is(200));
     }
 
 }
