@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="rest-sec" version="3.0">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="rest-sec" version="3.0">
 
 	<display-name>rest</display-name>
 
@@ -19,11 +22,11 @@
 	</filter-mapping>
 
 	<filter>
-		<filter-name>ETag Content Filter</filter-name>
-		<filter-class>org.rest.common.caching.ETagContentFilter</filter-class>
+		<filter-name>etagFilter</filter-name>
+		<filter-class>org.springframework.web.filter.ShallowEtagHeaderFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>ETag Content Filter</filter-name>
+		<filter-name>etagFilter</filter-name>
 		<url-pattern>/api/*</url-pattern>
 	</filter-mapping>
 
