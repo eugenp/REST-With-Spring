@@ -10,9 +10,7 @@ import org.rest.sec.model.Role;
 import org.rest.sec.model.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -20,8 +18,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
 
-@Component
-@Profile("mime_json")
 public final class JacksonMarshaller implements IMarshaller {
     private final Logger logger = LoggerFactory.getLogger(JacksonMarshaller.class);
 

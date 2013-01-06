@@ -9,21 +9,39 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
+import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
 
 import java.util.List;
 
 import org.hamcrest.Matchers;
+import org.junit.Before;
 import org.junit.Test;
 import org.rest.common.client.template.IRawClientTemplate;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.web.WebConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles({ "client", "test", "mime_json" })
+@ActiveProfiles({ CLIENT, TEST })
 public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> {
+    protected Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    protected Environment env;
 
     public AbstractRawLogicClientRestLiveTest() {
         super();
+    }
+
+    // fixtures
+
+    @Before
+    public void before() {
+        logger.info("Active Profiles are: " + env.getActiveProfiles());
     }
 
     // tests

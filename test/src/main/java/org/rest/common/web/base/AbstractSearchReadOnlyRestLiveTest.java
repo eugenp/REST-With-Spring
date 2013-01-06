@@ -5,6 +5,8 @@ import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.junit.Assert.assertThat;
 import static org.rest.common.search.ClientOperation.ENDS_WITH;
 import static org.rest.common.search.ClientOperation.EQ;
+import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
+import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ import org.rest.common.web.util.ClientConstraintsUtil;
 import org.springframework.test.context.ActiveProfiles;
 
 @SuppressWarnings("unchecked")
-@ActiveProfiles({ "client", "test", "mime_json" })
+@ActiveProfiles({ CLIENT, TEST })
 public abstract class AbstractSearchReadOnlyRestLiveTest<T extends INameableEntity> {
 
     public AbstractSearchReadOnlyRestLiveTest() {

@@ -4,9 +4,12 @@ import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
+import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.rest.common.client.template.IRawClientTemplate;
 import org.rest.common.persistence.model.IEntity;
@@ -14,15 +17,30 @@ import org.rest.common.util.IDUtil;
 import org.rest.common.util.SearchField;
 import org.rest.common.util.order.OrderById;
 import org.rest.common.web.WebConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestClientException;
 
-@ActiveProfiles({ "client", "test", "mime_json" })
+@ActiveProfiles({ CLIENT, TEST })
 public abstract class AbstractReadOnlyLogicClientLiveTest<T extends IEntity> {
+    protected Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    protected Environment env;
 
     public AbstractReadOnlyLogicClientLiveTest() {
         super();
+    }
+
+    // fixtures
+
+    @Before
+    public void before() {
+        logger.info("Active Profiles are: " + env.getActiveProfiles());
     }
 
     // tests

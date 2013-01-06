@@ -7,15 +7,11 @@ import org.rest.sec.model.Principal;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;
 import org.rest.sec.model.dto.User;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 
 import com.google.common.base.Preconditions;
 import com.thoughtworks.xstream.XStream;
 
-@Component
-@Profile("mime_xml")
 public final class XStreamMarshaller implements IMarshaller {
 
     private XStream xstream;

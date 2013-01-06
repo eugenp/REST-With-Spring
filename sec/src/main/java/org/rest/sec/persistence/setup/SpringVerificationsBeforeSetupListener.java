@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Preconditions;
 
 @Component
-@Profile("production")
+@Profile("dev")
 public final class SpringVerificationsBeforeSetupListener implements ApplicationListener<BeforeSetupEvent> {
     // private final Logger logger = LoggerFactory.getLogger(SpringVerificationsBeforeSetupListener.class);
 

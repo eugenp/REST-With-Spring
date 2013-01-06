@@ -21,7 +21,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ContextConfig.class, ClientTestConfig.class, SecCommonApiConfig.class }, loader = AnnotationConfigContextLoader.class)
-@ActiveProfiles({ "client", "mime_json" })
+@ActiveProfiles({ "client" })
 public class SecurityScenariosOverRestLiveTest {
 
     @Autowired

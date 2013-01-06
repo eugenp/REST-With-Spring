@@ -9,6 +9,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.rest.common.search.ClientOperation.EQ;
 import static org.rest.common.search.ClientOperation.NEG_EQ;
+import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
+import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.http.HttpHeaders;
@@ -30,7 +32,7 @@ import com.google.common.base.Preconditions;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
-@ActiveProfiles({ "client", "test", "mime_json" })
+@ActiveProfiles({ CLIENT, TEST })
 public abstract class AbstractLogicRestLiveTest<T extends INameableEntity> {
 
     @Autowired

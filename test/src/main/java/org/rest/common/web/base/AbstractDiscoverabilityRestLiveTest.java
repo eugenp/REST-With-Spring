@@ -7,6 +7,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.matchers.JUnitMatchers.containsString;
+import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
+import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
 
 import org.hamcrest.core.AnyOf;
 import org.junit.Test;
@@ -26,7 +28,7 @@ import com.jayway.restassured.config.RestAssuredConfig;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
-@ActiveProfiles({ "client", "test", "mime_json" })
+@ActiveProfiles({ CLIENT, TEST })
 public abstract class AbstractDiscoverabilityRestLiveTest<T extends IEntity> {
 
     private Class<T> clazz;

@@ -2,6 +2,8 @@ package org.rest.sec.client.template.test;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
+import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +22,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextConfig.class, SecCommonApiConfig.class }, loader = AnnotationConfigContextLoader.class)
-@ActiveProfiles({ "client", "mime_json" })
+@ActiveProfiles({ CLIENT, TEST })
 public class AuthenticationClientRestLiveTest {
 
     @Autowired

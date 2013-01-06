@@ -4,6 +4,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
+import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
+import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import org.junit.Test;
@@ -26,7 +28,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ClientTestConfig.class, ContextConfig.class, SecCommonApiConfig.class }, loader = AnnotationConfigContextLoader.class)
-@ActiveProfiles({ "client", "mime_json" })
+@ActiveProfiles({ CLIENT, TEST })
 public class AuthenticationRestLiveTest {
 
     @Autowired

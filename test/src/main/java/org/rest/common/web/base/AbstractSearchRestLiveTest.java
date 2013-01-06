@@ -8,6 +8,8 @@ import static org.junit.Assert.assertThat;
 import static org.rest.common.search.ClientOperation.CONTAINS;
 import static org.rest.common.search.ClientOperation.EQ;
 import static org.rest.common.search.ClientOperation.NEG_EQ;
+import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
+import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
 
 import java.util.List;
 
@@ -29,7 +31,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @SuppressWarnings("unchecked")
-@ActiveProfiles({ "client", "test", "mime_json" })
+@ActiveProfiles({ CLIENT, TEST })
 public abstract class AbstractSearchRestLiveTest<T extends INameableEntity> extends AbstractSearchReadOnlyRestLiveTest<T> implements ISearchTest {
 
     public AbstractSearchRestLiveTest() {

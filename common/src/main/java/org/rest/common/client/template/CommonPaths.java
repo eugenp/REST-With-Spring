@@ -1,5 +1,6 @@
 package org.rest.common.client.template;
 
+import org.rest.common.spring.CommonSpringProfileUtil;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -7,7 +8,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("client")
+@Profile(CommonSpringProfileUtil.CLIENT)
 public final class CommonPaths implements InitializingBean {
 
     @Autowired
