@@ -1,6 +1,8 @@
 package org.rest.sec.client.template.test.scenario;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
+import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +23,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { ContextConfig.class, ClientTestConfig.class, SecCommonApiConfig.class }, loader = AnnotationConfigContextLoader.class)
-@ActiveProfiles({ "client" })
+@ActiveProfiles({ CLIENT, TEST })
 public class SecurityScenariosOverRestLiveTest {
 
     @Autowired
