@@ -43,15 +43,15 @@ public class UserController extends AbstractController<User> implements ISorting
     @RequestMapping(params = { QueryConstants.Q_PARAM }, method = RequestMethod.GET)
     @ResponseBody
     @Secured(Privileges.CAN_USER_READ)
-    public List<User> search(@RequestParam(QueryConstants.Q_PARAM) final String queryString) {
-        return searchInternal(queryString);
+    public List<User> searchAll(@RequestParam(QueryConstants.Q_PARAM) final String queryString) {
+        return searchAllInternal(queryString);
     }
 
     @RequestMapping(params = { QueryConstants.Q_PARAM, QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
     @Secured(Privileges.CAN_USER_READ)
-    public List<User> searchPaginated(@RequestParam(QueryConstants.Q_PARAM) final String queryString, @RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
-        return searchInternalPaginated(queryString, page, size);
+    public List<User> searchAllPaginated(@RequestParam(QueryConstants.Q_PARAM) final String queryString, @RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
+        return searchAllInternalPaginated(queryString, page, size);
     }
 
     // find - all/paginated

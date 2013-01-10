@@ -43,16 +43,16 @@ public class PrivilegeController extends AbstractController<Privilege> implement
     @RequestMapping(params = { QueryConstants.Q_PARAM }, method = RequestMethod.GET)
     @ResponseBody
     @Secured(Privileges.CAN_PRIVILEGE_READ)
-    public List<Privilege> search(@RequestParam(QueryConstants.Q_PARAM) final String queryString) {
-        return searchInternal(queryString);
+    public List<Privilege> searchAll(@RequestParam(QueryConstants.Q_PARAM) final String queryString) {
+        return searchAllInternal(queryString);
     }
 
     @RequestMapping(params = { QueryConstants.Q_PARAM, QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
     @Secured(Privileges.CAN_PRIVILEGE_READ)
-    public List<Privilege> searchPaginated(@RequestParam(QueryConstants.Q_PARAM) final String queryString, @RequestParam(value = QueryConstants.PAGE) final int page,
+    public List<Privilege> searchAllPaginated(@RequestParam(QueryConstants.Q_PARAM) final String queryString, @RequestParam(value = QueryConstants.PAGE) final int page,
             @RequestParam(value = QueryConstants.SIZE) final int size) {
-        return searchInternalPaginated(queryString, page, size);
+        return searchAllInternalPaginated(queryString, page, size);
     }
 
     // find - all/paginated

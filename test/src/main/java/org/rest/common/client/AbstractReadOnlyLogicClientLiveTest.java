@@ -40,7 +40,7 @@ public abstract class AbstractReadOnlyLogicClientLiveTest<T extends IEntity> {
 
     @Before
     public void before() {
-        logger.info("Active Profiles are: " + env.getActiveProfiles());
+        // logger.info("Active Profiles are: " + env.getActiveProfiles());
     }
 
     // tests

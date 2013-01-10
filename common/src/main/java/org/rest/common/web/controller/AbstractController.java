@@ -55,11 +55,11 @@ public abstract class AbstractController<T extends IEntity> {
 
     // search
 
-    public List<T> searchInternal(@RequestParam(QueryConstants.Q_PARAM) final String queryString) {
+    public List<T> searchAllInternal(@RequestParam(QueryConstants.Q_PARAM) final String queryString) {
         return getService().searchAll(queryString);
     }
 
-    public List<T> searchInternalPaginated(@RequestParam(QueryConstants.Q_PARAM) final String queryString, final int page, final int size) {
+    public List<T> searchAllInternalPaginated(@RequestParam(QueryConstants.Q_PARAM) final String queryString, final int page, final int size) {
         return getService().searchPaginated(queryString, page, size);
     }
 

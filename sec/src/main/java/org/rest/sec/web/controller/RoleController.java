@@ -43,15 +43,15 @@ public class RoleController extends AbstractController<Role> implements ISorting
     @RequestMapping(params = { QueryConstants.Q_PARAM }, method = RequestMethod.GET)
     @ResponseBody
     @Secured(Privileges.CAN_ROLE_READ)
-    public List<Role> search(@RequestParam(QueryConstants.Q_PARAM) final String queryString) {
-        return searchInternal(queryString);
+    public List<Role> searchAll(@RequestParam(QueryConstants.Q_PARAM) final String queryString) {
+        return searchAllInternal(queryString);
     }
 
     @RequestMapping(params = { QueryConstants.Q_PARAM, QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
     @Secured(Privileges.CAN_ROLE_READ)
-    public List<Role> searchPaginated(@RequestParam(QueryConstants.Q_PARAM) final String queryString, @RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
-        return searchInternalPaginated(queryString, page, size);
+    public List<Role> searchAllPaginated(@RequestParam(QueryConstants.Q_PARAM) final String queryString, @RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
+        return searchAllInternalPaginated(queryString, page, size);
     }
 
     // find - all/paginated
