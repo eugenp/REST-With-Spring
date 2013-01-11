@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.rest.common.search.ClientOperation.EQ;
 import static org.rest.common.search.ClientOperation.NEG_EQ;
 import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
@@ -48,6 +49,78 @@ public abstract class AbstractLogicRestLiveTest<T extends INameableEntity> {
     }
 
     // tests
+
+    // etags
+
+    @Test
+    public final void givenResourceExists_whenRetrievingResource_thenEtagIsAlsoReturned() {
+        // Given
+        final T existingResource = getApi().create(createNewEntity());
+
+        // When
+        final Response findOneResponse = getApi().findOneAsResponse(existingResource.getId(), null);
+
+        // Then
+        assertNotNull(findOneResponse.getHeader(HttpHeaders.ETAG));
+    }
+
+    @Test
+    public final void givenResourceWasRetrieved_whenRetrievingAgainWithEtag_thenNotModifiedReturned() {
+        // Given
+        final T existingResource = getApi().create(createNewEntity());
+        final Response findOneResponse = getApi().findOneAsResponse(existingResource.getId(), null);
+        final String etagValue = findOneResponse.getHeader(HttpHeaders.ETAG);
+
+        // When
+        final Response secondFindOneResponse = getApi().findOneAsResponse(existingResource.getId(), givenAuthenticated().headers(HttpHeaders.IF_NONE_MATCH, etagValue));
+
+        // Then
+        assertTrue(secondFindOneResponse.getStatusCode() == 304);
+    }
+
+    @Test
+    public final void givenResourceWasRetrievedThenChanged_whenRetrievingAgainWithEtag_thenFullResourceIsReturned() {
+        // Given
+        final T existingResource = getApi().create(createNewEntity());
+        final Response findOneResponse = getApi().findOneAsResponse(existingResource.getId(), null);
+        final String etagValue = findOneResponse.getHeader(HttpHeaders.ETAG);
+
+        getEntityOps().change(existingResource);
+        getApi().update(existingResource);
+
+        // When
+        final Response secondFindOneResponse = getApi().findOneAsResponse(existingResource.getId(), givenAuthenticated().headers(HttpHeaders.IF_NONE_MATCH, etagValue));
+
+        // Then
+        assertTrue(secondFindOneResponse.getStatusCode() == 200);
+    }
+
+    @Test
+    public final void givenResourceWasRetrieved_whenRetrievingAgainWithIfMatchCorrectEtag_thenFullResourceIsReturned() {
+        // Given
+        final T existingResource = getApi().create(createNewEntity());
+        final Response findOneResponse = getApi().findOneAsResponse(existingResource.getId(), null);
+        final String etagValue = findOneResponse.getHeader(HttpHeaders.ETAG);
+
+        // When
+        final Response secondFindOneResponse = getApi().findOneAsResponse(existingResource.getId(), givenAuthenticated().headers(HttpHeaders.IF_MATCH, etagValue));
+
+        // Then
+        assertTrue(secondFindOneResponse.getStatusCode() == 200);
+    }
+
+    @Test
+    @Ignore("https://jira.springsource.org/browse/SPR-10164")
+    public final void givenResourceExists_whenResourceIsRetrievedWithIfMatchIncorrectEtag_then412IsReceived() {
+        // Given
+        final T existingResource = getApi().create(createNewEntity());
+
+        // When
+        final Response findOneResponse = getApi().findOneAsResponse(existingResource.getId(), givenAuthenticated().headers(HttpHeaders.IF_MATCH, randomAlphabetic(8)));
+
+        // Then
+        assertTrue(findOneResponse.getStatusCode() == 412);
+    }
 
     // find - one
 

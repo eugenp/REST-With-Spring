@@ -12,6 +12,8 @@ public interface ITemplateAsResponse<T extends IEntity> {
 
     // find - one
 
+    Response findOneAsResponse(final long id, final RequestSpecification req);
+
     Response findOneByUriAsResponse(final String uriOfResource, final RequestSpecification req);
 
     // find - all
