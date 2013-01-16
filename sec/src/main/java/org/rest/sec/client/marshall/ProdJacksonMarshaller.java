@@ -32,11 +32,11 @@ public final class ProdJacksonMarshaller implements IMarshaller {
     // API
 
     @Override
-    public final <T> String encode(final T entity) {
-        Preconditions.checkNotNull(entity);
+    public final <T> String encode(final T resource) {
+        Preconditions.checkNotNull(resource);
         String entityAsJSON = null;
         try {
-            entityAsJSON = objectMapper.writeValueAsString(entity);
+            entityAsJSON = objectMapper.writeValueAsString(resource);
         } catch (final JsonParseException parseEx) {
             logger.error("", parseEx);
         } catch (final JsonMappingException mappingEx) {
@@ -49,12 +49,12 @@ public final class ProdJacksonMarshaller implements IMarshaller {
     }
 
     @Override
-    public final <T> T decode(final String entityAsString, final Class<T> clazz) {
-        Preconditions.checkNotNull(entityAsString);
+    public final <T> T decode(final String resourceAsString, final Class<T> clazz) {
+        Preconditions.checkNotNull(resourceAsString);
 
         T entity = null;
         try {
-            entity = objectMapper.readValue(entityAsString, clazz);
+            entity = objectMapper.readValue(resourceAsString, clazz);
         } catch (final JsonParseException parseEx) {
             logger.error("", parseEx);
         } catch (final JsonMappingException mappingEx) {
@@ -68,29 +68,29 @@ public final class ProdJacksonMarshaller implements IMarshaller {
 
     @SuppressWarnings("unchecked")
     @Override
-    public final <T> List<T> decodeList(final String entitiesAsString, final Class<T> clazz) {
-        Preconditions.checkNotNull(entitiesAsString);
+    public final <T> List<T> decodeList(final String resourcesAsString, final Class<T> clazz) {
+        Preconditions.checkNotNull(resourcesAsString);
 
         List<T> entities = null;
         try {
             if (clazz.equals(Role.class)) {
-                entities = objectMapper.readValue(entitiesAsString, new TypeReference<List<Role>>() {
+                entities = objectMapper.readValue(resourcesAsString, new TypeReference<List<Role>>() {
                     // ...
                 });
             } else if (clazz.equals(Privilege.class)) {
-                entities = objectMapper.readValue(entitiesAsString, new TypeReference<List<Privilege>>() {
+                entities = objectMapper.readValue(resourcesAsString, new TypeReference<List<Privilege>>() {
                     // ...
                 });
             } else if (clazz.equals(User.class)) {
-                entities = objectMapper.readValue(entitiesAsString, new TypeReference<List<User>>() {
+                entities = objectMapper.readValue(resourcesAsString, new TypeReference<List<User>>() {
                     // ...
                 });
             } else if (clazz.equals(Principal.class)) {
-                entities = objectMapper.readValue(entitiesAsString, new TypeReference<List<Principal>>() {
+                entities = objectMapper.readValue(resourcesAsString, new TypeReference<List<Principal>>() {
                     // ...
                 });
             } else {
-                entities = objectMapper.readValue(entitiesAsString, List.class);
+                entities = objectMapper.readValue(resourcesAsString, List.class);
             }
         } catch (final JsonParseException parseEx) {
             logger.error("", parseEx);

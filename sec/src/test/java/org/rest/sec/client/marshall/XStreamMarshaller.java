@@ -30,22 +30,22 @@ public final class XStreamMarshaller implements IMarshaller {
     // API
 
     @Override
-    public final <T> String encode(final T entity) {
-        Preconditions.checkNotNull(entity);
-        return xstream.toXML(entity);
+    public final <T> String encode(final T resource) {
+        Preconditions.checkNotNull(resource);
+        return xstream.toXML(resource);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final <T> T decode(final String entityAsXML, final Class<T> clazz) {
-        Preconditions.checkNotNull(entityAsXML);
-        return (T) xstream.fromXML(entityAsXML);
+    public final <T> T decode(final String resourceAsString, final Class<T> clazz) {
+        Preconditions.checkNotNull(resourceAsString);
+        return (T) xstream.fromXML(resourceAsString);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> List<T> decodeList(final String entityAsXML, final Class<T> clazz) {
-        return this.decode(entityAsXML, List.class);
+    public <T> List<T> decodeList(final String resourcesAsString, final Class<T> clazz) {
+        return this.decode(resourcesAsString, List.class);
     }
 
     @Override
