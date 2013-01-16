@@ -75,15 +75,6 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
     }
 
     @Override
-    public final Response findOneAsResponse(final long id, final RequestSpecification req) {
-        final String uriOfResource = getUri() + WebConstants.PATH_SEP + id;
-        if (req == null) {
-            return findOneRequest().get(uriOfResource);
-        }
-        return findOneRequest(req).get(uriOfResource);
-    }
-
-    @Override
     public final Response findOneByUriAsResponse(final String uriOfResource, final RequestSpecification req) {
         if (req == null) {
             return findOneRequest().get(uriOfResource);
