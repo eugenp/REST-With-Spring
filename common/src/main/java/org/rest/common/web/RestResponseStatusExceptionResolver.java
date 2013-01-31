@@ -9,17 +9,16 @@ import org.rest.common.persistence.exception.EntityNotFoundException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
 
-@Component
+// @Component
 public class RestResponseStatusExceptionResolver extends AbstractHandlerExceptionResolver {
 
     // TODO: Order should be set in a @Configuration rather then hard-coded. It is done here due to POC style of implementation.
     public RestResponseStatusExceptionResolver() {
-        setOrder(-99);
+        // setOrder(-99);
     }
 
     // API
