@@ -4,14 +4,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolationException;
 
 import org.apache.http.HttpHeaders;
 import org.rest.common.event.MultipleResourcesRetrievedEvent;
 import org.rest.common.event.PaginatedResultsRetrievedEvent;
 import org.rest.common.event.ResourceCreatedEvent;
 import org.rest.common.event.SingleResourceRetrievedEvent;
-import org.rest.common.persistence.exception.EntityNotFoundException;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.persistence.service.IRawService;
 import org.rest.common.util.QueryConstants;
@@ -22,12 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -157,61 +151,6 @@ public abstract class AbstractController<T extends IEntity> {
     protected final long countInternal() {
         // InvalidDataAccessApiUsageException dataEx - ResourceNotFoundException
         return getService().count();
-    }
-
-    // dealing with exceptions
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public void handleConstraintViolationException(final ConstraintViolationException ex) {
-        logger.warn("ConstraintViolationException on for", ex);
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public void handleIllegalArgumentException(final IllegalArgumentException ex) {
-        logger.warn("IllegalArgumentException on for", ex);
-    }
-
-    @ExceptionHandler(IllegalStateException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public void handleIllegalStateException(final IllegalStateException ex) {
-        logger.warn("IllegalStateException on for", ex);
-    }
-
-    // data exception variations
-
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public void handleDataIntegrityViolationException(final DataIntegrityViolationException ex) {
-        logger.warn("DataIntegrityViolationException on for", ex);
-    }
-
-    @ExceptionHandler(InvalidDataAccessApiUsageException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public void handleInvalidDataAccessApiUsageException(final InvalidDataAccessApiUsageException ex) {
-        logger.warn("InvalidDataAccessApiUsageException on for", ex);
-    }
-
-    @ExceptionHandler(DataAccessException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public void handleDataAccessException(final DataAccessException ex) {
-        logger.warn("DataAccessException on for", ex);
-    }
-
-    // service specific
-
-    @ExceptionHandler(EntityNotFoundException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public void handleEntityNotFoundException(final EntityNotFoundException ex) {
-        logger.warn("EntityNotFoundException on for", ex);
     }
 
     // generic REST operations

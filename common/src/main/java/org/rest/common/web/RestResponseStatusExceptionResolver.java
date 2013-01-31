@@ -8,16 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
 
-// @Component
-/**
- * Implementation of the {@link org.springframework.web.servlet.HandlerExceptionResolver HandlerExceptionResolver}
- * interface that that resolves exceptions commonly used in Geogrep and translates them to corresponding HTTP status codes
- * that are commonly used in a RESTful API.
- */
+@Component
 public class RestResponseStatusExceptionResolver extends AbstractHandlerExceptionResolver {
 
     // TODO: Order should be set in a @Configuration rather then hard-coded. It is done here due to POC style of implementation.

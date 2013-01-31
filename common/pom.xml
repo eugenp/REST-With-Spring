@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org</groupId>
 		<artifactId>rest-parent</artifactId>
-		<version>0.11-SNAPSHOT</version>
+		<version>0.12-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
@@ -78,7 +78,6 @@
 			<artifactId>spring-expression</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>

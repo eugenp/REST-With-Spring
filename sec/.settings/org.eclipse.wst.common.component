@@ -4,10 +4,10 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="rest-common-0.11-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rest-common/rest-common">
+        <dependent-module archiveName="rest-common-0.12-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rest-common/rest-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="rest-api-0.11-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rest-api/rest-api">
+        <dependent-module archiveName="rest-api-0.12-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rest-api/rest-api">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/rest/target/classes"/>

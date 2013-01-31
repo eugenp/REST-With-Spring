@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org</groupId>
 		<artifactId>rest-parent</artifactId>
-		<version>0.10-SNAPSHOT</version>
+		<version>0.12-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
@@ -18,13 +18,13 @@
 		<dependency>
 			<groupId>org</groupId>
 			<artifactId>rest-common</artifactId>
-			<version>0.10-SNAPSHOT</version>
+			<version>0.12-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org</groupId>
 			<artifactId>rest-test</artifactId>
-			<version>0.10-SNAPSHOT</version>
+			<version>0.12-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		
