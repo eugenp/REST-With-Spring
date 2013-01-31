@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.rest.common.persistence.exception.EntityNotFoundException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -36,11 +37,19 @@ public class RestResponseStatusExceptionResolver extends AbstractHandlerExceptio
                 return handleDataIntegrityViolation((DataIntegrityViolationException) ex, response, handler);
             } else if (ex instanceof DataAccessException) {
                 return handleDataAccessException((DataAccessException) ex, response, handler);
+            } else if (ex instanceof EntityNotFoundException) {
+                return handleEntityNotFoundException((EntityNotFoundException) ex, response, handler);
             }
         } catch (final Exception handlerException) {
             logger.warn("Handling of [" + ex.getClass().getName() + "] resulted in Exception", handlerException);
         }
         return null;
+    }
+
+    private ModelAndView handleEntityNotFoundException(final EntityNotFoundException ex, final HttpServletResponse response, final Object handler) throws IOException {
+        logException(handler, ex);
+        response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        return new ModelAndView();
     }
 
     private ModelAndView handleIllegalArgument(final IllegalArgumentException ex, final HttpServletResponse response, final Object handler) throws IOException {
