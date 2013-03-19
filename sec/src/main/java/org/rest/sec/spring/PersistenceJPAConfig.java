@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @ImportResource("classpath*:*secPersistenceConfig.xml")
 @ComponentScan({ "org.rest.sec.persistence" })
-@PropertySource({ "classpath:persistence-${persistenceTarget:h2}.properties" })
+@PropertySource({ "classpath:persistence-${persistenceTarget:mysql}.properties" })
 public class PersistenceJPAConfig {
 
     @Value("${jdbc.driverClassName}")
