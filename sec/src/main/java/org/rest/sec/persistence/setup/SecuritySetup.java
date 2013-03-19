@@ -3,7 +3,7 @@ package org.rest.sec.persistence.setup;
 import java.util.Set;
 
 import org.rest.common.event.BeforeSetupEvent;
-import org.rest.common.spring.CommonSpringProfileUtil;
+import org.rest.common.spring.util.CommonSpringProfileUtil;
 import org.rest.sec.model.Principal;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.Role;

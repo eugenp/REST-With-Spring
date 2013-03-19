@@ -9,8 +9,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNotNull;
 import static org.rest.common.search.ClientOperation.EQ;
 import static org.rest.common.search.ClientOperation.NEG_EQ;
-import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
-import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
+import static org.rest.common.spring.util.CommonSpringProfileUtil.CLIENT;
+import static org.rest.common.spring.util.CommonSpringProfileUtil.TEST;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.http.HttpHeaders;
@@ -33,14 +33,14 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @ActiveProfiles({ CLIENT, TEST })
-public abstract class AbstractLogicRestLiveTest<T extends INameableEntity> {
+public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
 
     @Autowired
     private IMarshaller marshaller;
 
     protected final Class<T> clazz;
 
-    public AbstractLogicRestLiveTest(final Class<T> clazzToSet) {
+    public AbstractLogicLiveTest(final Class<T> clazzToSet) {
         super();
 
         Preconditions.checkNotNull(clazzToSet);
@@ -54,7 +54,7 @@ public abstract class AbstractLogicRestLiveTest<T extends INameableEntity> {
     @Test
     /*code*/public void givenResourceForIdExists_whenResourceOfThatIdIsRetrieved_then200IsRetrieved() {
         // Given
-        final String uriForResourceCreation = getApi().createAsUri(createNewEntity(), null);
+        final String uriForResourceCreation = getApi().createAsUri(createNewEntity());
 
         // When
         final Response res = getApi().findOneByUriAsResponse(uriForResourceCreation, null);
@@ -172,7 +172,7 @@ public abstract class AbstractLogicRestLiveTest<T extends INameableEntity> {
     /*code*/public void givenResourceExists_whenResourceWithSameAttributesIsCreated_then409IsReceived() {
         // Given
         final T newEntity = createNewEntity();
-        getApi().createAsUri(newEntity, null);
+        getApi().createAsUri(newEntity);
 
         // When
         final Response response = getApi().createAsResponse(newEntity);
@@ -263,7 +263,7 @@ public abstract class AbstractLogicRestLiveTest<T extends INameableEntity> {
     @Test
     /*code*/public void givenResourceExists_whenResourceIsDeleted_then204IsReceived() {
         // Given
-        final String uriForResourceCreation = getApi().createAsUri(createNewEntity(), null);
+        final String uriForResourceCreation = getApi().createAsUri(createNewEntity());
 
         // When
         final Response response = getApi().deleteAsResponse(uriForResourceCreation);
@@ -275,7 +275,7 @@ public abstract class AbstractLogicRestLiveTest<T extends INameableEntity> {
     @Test
     /*code*/public void givenResourceExistedAndWasDeleted_whenRetrievingResource_then404IsReceived() {
         // Given
-        final String uriOfResource = getApi().createAsUri(createNewEntity(), null);
+        final String uriOfResource = getApi().createAsUri(createNewEntity());
         getApi().deleteAsResponse(uriOfResource);
 
         // When
@@ -290,7 +290,7 @@ public abstract class AbstractLogicRestLiveTest<T extends INameableEntity> {
     @Test
     public final void givenRequestAcceptsMime_whenResourceIsRetrievedById__thenResponseContentTypeIsMime() {
         // Given
-        final String uriForResourceCreation = getApi().createAsUri(createNewEntity(), null);
+        final String uriForResourceCreation = getApi().createAsUri(createNewEntity());
 
         // When
         final Response res = getApi().findOneByUriAsResponse(uriForResourceCreation, null);

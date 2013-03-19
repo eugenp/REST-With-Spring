@@ -9,8 +9,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
-import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
+import static org.rest.common.spring.util.CommonSpringProfileUtil.CLIENT;
+import static org.rest.common.spring.util.CommonSpringProfileUtil.TEST;
 
 import java.util.List;
 
@@ -27,13 +27,13 @@ import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles({ CLIENT, TEST })
-public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> {
+public abstract class AbstractRawLogicClientLiveTest<T extends IEntity> {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     protected Environment env;
 
-    public AbstractRawLogicClientRestLiveTest() {
+    public AbstractRawLogicClientLiveTest() {
         super();
     }
 
@@ -52,7 +52,7 @@ public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> {
     public final void givenResourceExists_whenResourceIsRetrieved_thenResourceHasId() {
         // Given
         final T newResource = createNewEntity();
-        final String uriOfExistingResource = getApi().createAsUri(newResource, null);
+        final String uriOfExistingResource = getApi().createAsUri(newResource);
 
         // When
         final T createdResource = getApi().findOneByUri(uriOfExistingResource, null);
@@ -65,7 +65,7 @@ public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> {
     public final void givenResourceExists_whenResourceIsRetrieved_thenResourceIsCorrectlyRetrieved() {
         // Given
         final T newResource = createNewEntity();
-        final String uriOfExistingResource = getApi().createAsUri(newResource, null);
+        final String uriOfExistingResource = getApi().createAsUri(newResource);
 
         // When
         final T createdResource = getApi().findOneByUri(uriOfExistingResource, null);
@@ -114,7 +114,7 @@ public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> {
 
     @Test
     /**/public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned() {
-        getApi().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity());
 
         // When
         final List<T> allPaginated = getApi().findAllPaginated(0, 1);
@@ -132,7 +132,7 @@ public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> {
 
     @Test
     /**/public void whenResourceIsCreated_thenNoExceptions() {
-        getApi().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity());
     }
 
     @Test
@@ -213,7 +213,7 @@ public abstract class AbstractRawLogicClientRestLiveTest<T extends IEntity> {
     }
 
     protected void ensureOneResourceExists() {
-        getApi().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity());
     }
 
     protected abstract IRawClientTemplate<T> getApi();

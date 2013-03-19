@@ -37,7 +37,6 @@ public class PrivilegeClientRestTemplate extends AbstractNamedClientRestTemplate
 
     @Override
     protected void beforeReadOperation() {
-        givenAuthenticated();
         super.beforeReadOperation();
     }
 

@@ -1,6 +1,6 @@
 package org.rest.sec.client.marshall;
 
-import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
+import static org.rest.common.spring.util.CommonSpringProfileUtil.TEST;
 
 import org.rest.common.client.marshall.IMarshaller;
 import org.slf4j.Logger;

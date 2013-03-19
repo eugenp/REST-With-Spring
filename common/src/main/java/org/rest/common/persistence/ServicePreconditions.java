@@ -1,6 +1,6 @@
 package org.rest.common.persistence;
 
-import org.rest.common.persistence.exception.EntityNotFoundException;
+import org.rest.common.persistence.exception.MyEntityNotFoundException;
 
 public final class ServicePreconditions {
 
@@ -16,19 +16,19 @@ public final class ServicePreconditions {
      * @param entity
      *            an object reference
      * @return the non-null reference that was validated
-     * @throws EntityNotFoundException
+     * @throws MyEntityNotFoundException
      *             if {@code entity} is null
      */
     public static <T> T checkEntityExists(final T entity) {
         if (entity == null) {
-            throw new EntityNotFoundException();
+            throw new MyEntityNotFoundException();
         }
         return entity;
     }
 
     public static void checkEntityExists(final boolean entityExists) {
         if (!entityExists) {
-            throw new EntityNotFoundException();
+            throw new MyEntityNotFoundException();
         }
     }
 

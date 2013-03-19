@@ -1,6 +1,6 @@
 package org.rest.sec.client.marshall;
 
-import static org.rest.common.spring.CommonSpringProfileUtil.DEPLOYED;
+import static org.rest.common.spring.util.CommonSpringProfileUtil.DEPLOYED;
 
 import org.rest.common.client.marshall.IMarshaller;
 import org.springframework.beans.factory.FactoryBean;

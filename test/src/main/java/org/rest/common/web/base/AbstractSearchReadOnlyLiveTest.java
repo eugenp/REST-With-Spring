@@ -5,8 +5,8 @@ import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.junit.Assert.assertThat;
 import static org.rest.common.search.ClientOperation.ENDS_WITH;
 import static org.rest.common.search.ClientOperation.EQ;
-import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
-import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
+import static org.rest.common.spring.util.CommonSpringProfileUtil.CLIENT;
+import static org.rest.common.spring.util.CommonSpringProfileUtil.TEST;
 
 import java.util.List;
 
@@ -22,9 +22,9 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SuppressWarnings("unchecked")
 @ActiveProfiles({ CLIENT, TEST })
-public abstract class AbstractSearchReadOnlyRestLiveTest<T extends INameableEntity> {
+public abstract class AbstractSearchReadOnlyLiveTest<T extends INameableEntity> {
 
-    public AbstractSearchReadOnlyRestLiveTest() {
+    public AbstractSearchReadOnlyLiveTest() {
         super();
     }
 

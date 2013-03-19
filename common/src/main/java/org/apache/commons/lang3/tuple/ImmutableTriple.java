@@ -85,4 +85,3 @@ public final class ImmutableTriple<L, M, R> extends Triple<L, M, R> {
         return right;
     }
 }
-

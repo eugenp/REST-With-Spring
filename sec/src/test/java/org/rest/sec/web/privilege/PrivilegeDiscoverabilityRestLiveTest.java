@@ -1,15 +1,11 @@
 package org.rest.sec.web.privilege;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
-
 import org.rest.common.client.IEntityOperations;
 import org.rest.sec.client.template.PrivilegeTestRestTemplate;
 import org.rest.sec.model.Privilege;
 import org.rest.sec.model.PrivilegeEntityOpsImpl;
 import org.rest.sec.test.SecDiscoverabilityRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.jayway.restassured.specification.RequestSpecification;
 
 public class PrivilegeDiscoverabilityRestLiveTest extends SecDiscoverabilityRestLiveTest<Privilege> {
 
@@ -34,16 +30,6 @@ public class PrivilegeDiscoverabilityRestLiveTest extends SecDiscoverabilityRest
     @Override
     protected final String getUri() {
         return getApi().getUri();
-    }
-
-    @Override
-    protected void change(final Privilege resource) {
-        resource.setName(randomAlphabetic(6));
-    }
-
-    @Override
-    protected RequestSpecification givenAuthenticated() {
-        return getApi().givenAuthenticated();
     }
 
     @Override

@@ -7,8 +7,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.matchers.JUnitMatchers.containsString;
-import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
-import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
+import static org.rest.common.spring.util.CommonSpringProfileUtil.CLIENT;
+import static org.rest.common.spring.util.CommonSpringProfileUtil.TEST;
 
 import org.hamcrest.core.AnyOf;
 import org.junit.Test;
@@ -29,14 +29,14 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @ActiveProfiles({ CLIENT, TEST })
-public abstract class AbstractDiscoverabilityRestLiveTest<T extends IEntity> {
+public abstract class AbstractDiscoverabilityLiveTest<T extends IEntity> {
 
     private Class<T> clazz;
 
     @Autowired
     private IMarshaller marshaller;
 
-    public AbstractDiscoverabilityRestLiveTest(final Class<T> clazzToSet) {
+    public AbstractDiscoverabilityLiveTest(final Class<T> clazzToSet) {
         Preconditions.checkNotNull(clazzToSet);
         clazz = clazzToSet;
     }
@@ -58,7 +58,7 @@ public abstract class AbstractDiscoverabilityRestLiveTest<T extends IEntity> {
     @Test
     public final void whenResourceIsRetrieved_thenURIToGetAllResourcesIsDiscoverable() {
         // Given
-        final String uriOfExistingResource = getApi().createAsUri(createNewEntity(), null);
+        final String uriOfExistingResource = getApi().createAsUri(createNewEntity());
 
         // When
         final Response getResponse = getApi().findOneByUriAsResponse(uriOfExistingResource, null);
@@ -84,8 +84,8 @@ public abstract class AbstractDiscoverabilityRestLiveTest<T extends IEntity> {
 
     @Test
     public final void whenFirstPageOfResourcesIsRetrieved_thenNextPageIsDiscoverable() {
-        getApi().createAsUri(createNewEntity(), null);
-        getApi().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity());
+        getApi().createAsUri(createNewEntity());
 
         // When
         final Response response = getApi().findAllPaginatedAsResponse(1, 1, null);
@@ -97,8 +97,8 @@ public abstract class AbstractDiscoverabilityRestLiveTest<T extends IEntity> {
 
     @Test
     public final void whenFirstPageOfResourcesAreRetrieved_thenSecondPageIsDiscoverable() {
-        getApi().createAsUri(createNewEntity(), null);
-        getApi().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity());
+        getApi().createAsUri(createNewEntity());
 
         // When
         final Response response = getApi().findAllPaginatedAsResponse(0, 1, null);
@@ -138,10 +138,10 @@ public abstract class AbstractDiscoverabilityRestLiveTest<T extends IEntity> {
     @Test
     public final void whenInvalidPOSTIsSentToValidURIOfResource_thenAllowHeaderListsTheAllowedActions() {
         // Given
-        final String uriOfExistingResource = getApi().createAsUri(createNewEntity(), null);
+        final String uriOfExistingResource = getApi().createAsUri(createNewEntity());
 
         // When
-        final Response res = givenAuthenticated().post(uriOfExistingResource);
+        final Response res = getApi().givenAuthenticated().post(uriOfExistingResource);
 
         // Then
         final String allowHeader = res.getHeader(HttpHeaders.ALLOW);
@@ -152,7 +152,7 @@ public abstract class AbstractDiscoverabilityRestLiveTest<T extends IEntity> {
     public final void whenResourceIsCreated_thenURIOfTheNewlyCreatedResourceIsDiscoverable() {
         // When
         final T unpersistedResource = createNewEntity();
-        final String uriOfNewlyCreatedResource = getApi().createAsUri(unpersistedResource, null);
+        final String uriOfNewlyCreatedResource = getApi().createAsUri(unpersistedResource);
 
         // Then
         final Response response = getApi().findOneByUriAsResponse(uriOfNewlyCreatedResource, null);
@@ -168,10 +168,6 @@ public abstract class AbstractDiscoverabilityRestLiveTest<T extends IEntity> {
 
     protected abstract String getUri();
 
-    protected abstract void change(final T resource);
-
     protected abstract T createNewEntity();
-
-    protected abstract RequestSpecification givenAuthenticated();
 
 }

@@ -9,4 +9,6 @@ public interface ITemplateWithUri<T extends IEntity> extends IReadOnlyTemplateWi
 
     String createAsUri(final T resource, final Pair<String, String> credentials);
 
+    String createAsUri(final T resource);
+
 }

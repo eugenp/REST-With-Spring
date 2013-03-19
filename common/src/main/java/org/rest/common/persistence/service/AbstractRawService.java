@@ -15,8 +15,8 @@ import org.rest.common.persistence.event.BeforeEntityUpdateEvent;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.search.ClientOperation;
 import org.rest.common.util.SearchCommonUtil;
-import org.rest.common.web.exception.BadRequestException;
-import org.rest.common.web.exception.ConflictException;
+import org.rest.common.web.exception.MyBadRequestException;
+import org.rest.common.web.exception.MyConflictException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +63,7 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
         } catch (final IllegalStateException illState) {
             logger.error("IllegalStateException on find operation");
             logger.warn("IllegalStateException on find operation", illState);
-            throw new BadRequestException(illState);
+            throw new MyBadRequestException(illState);
         }
 
         final List<T> results = searchAll(parsedQuery.toArray(new ImmutableTriple[parsedQuery.size()]));
@@ -79,7 +79,7 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
         } catch (final IllegalStateException illState) {
             logger.error("IllegalStateException on find operation");
             logger.warn("IllegalStateException on find operation", illState);
-            throw new ConflictException(illState);
+            throw new MyConflictException(illState);
         }
 
         final Page<T> resultPage = searchPaginated(page, size, parsedQuery.toArray(new ImmutableTriple[parsedQuery.size()]));

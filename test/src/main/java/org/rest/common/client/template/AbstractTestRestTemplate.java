@@ -55,6 +55,12 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
     }
 
     @Override
+    public final Response findOneAsResponse(final long id, final RequestSpecification req) {
+        final String uriOfResource = getUri() + WebConstants.PATH_SEP + id;
+        return findOneByUriAsResponse(uriOfResource, req);
+    }
+
+    @Override
     public final T findOneByUri(final String uriOfResource, final Pair<String, String> credentials) {
         final String resourceAsMime = findOneByUriAsString(uriOfResource);
         return marshaller.decode(resourceAsMime, clazz);
@@ -197,6 +203,11 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
     }
 
     @Override
+    public final String createAsUri(final T resource) {
+        return createAsUri(resource, null);
+    }
+
+    @Override
     public final String createAsUri(final T resource, final Pair<String, String> credentials) {
         final Response response = createAsResponse(resource, credentials);
         Preconditions.checkState(response.getStatusCode() == 201, "create operation: " + response.getStatusCode());
@@ -218,7 +229,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
         if (credentials != null) {
             givenAuthenticated = auth.givenBasicAuthenticated(credentials.getLeft(), credentials.getRight());
         } else {
-            givenAuthenticated = givenAuthenticated();
+            givenAuthenticated = givenWriteAuthenticated();
         }
 
         final String resourceAsString = marshaller.encode(resource);
@@ -231,7 +242,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
     @Override
     public final void update(final T resource) {
         final Response updateResponse = updateAsResponse(resource);
-        Preconditions.checkState(updateResponse.getStatusCode() == 200, "update operation: " + updateResponse.getStatusCode());
+        Preconditions.checkState(updateResponse.getStatusCode() == 200, "Update Operation: " + updateResponse.getStatusCode());
     }
 
     @Override
@@ -239,7 +250,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
         Preconditions.checkNotNull(resource);
 
         final String resourceAsString = marshaller.encode(resource);
-        return givenAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).put(getUri() + "/" + resource.getId());
+        return givenWriteAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).put(getUri() + "/" + resource.getId());
     }
 
     // delete
@@ -257,7 +268,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public final Response deleteAsResponse(final String uriOfResource) {
-        return givenAuthenticated().delete(uriOfResource);
+        return givenWriteAuthenticated().delete(uriOfResource);
     }
 
     // search - as response
@@ -302,7 +313,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
         final String queryURI = getUri() + QueryConstants.QUERY_PREFIX + builder.build();
 
         final Response searchResponse = findAllRequest().get(queryURI);
-        Preconditions.checkState(searchResponse.getStatusCode() == 200);
+        Preconditions.checkState(searchResponse.getStatusCode() == 200, "Search is = " + searchResponse.getStatusCode());
 
         return searchResponse;
     }
@@ -311,7 +322,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
     public final List<T> searchPaginated(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size) {
         final String queryURI = getUri() + QueryConstants.QUERY_PREFIX + SearchTestUtil.constructQueryString(idOp, nameOp) + "&page=" + page + "&size=" + size;
         final Response searchResponse = findAllRequest().get(queryURI);
-        Preconditions.checkState(searchResponse.getStatusCode() == 200);
+        Preconditions.checkState(searchResponse.getStatusCode() == 200, "Search is = " + searchResponse.getStatusCode());
 
         return getMarshaller().<List> decode(searchResponse.getBody().asString(), List.class);
     }
@@ -363,7 +374,16 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
         return auth.givenBasicAuthenticated(defaultCredentials.getLeft(), defaultCredentials.getRight());
     }
 
+    public final RequestSpecification givenWriteAuthenticated() {
+        final Pair<String, String> defaultCredentials = getWriteCredentials();
+        return auth.givenBasicAuthenticated(defaultCredentials.getLeft(), defaultCredentials.getRight());
+    }
+
     public abstract Pair<String, String> getDefaultCredentials();
+
+    public Pair<String, String> getWriteCredentials() {
+        return getDefaultCredentials();
+    }
 
     /**
      * - this is a hook that executes before read operations, in order to allow custom security work to happen for read operations; similar to: AbstractRestTemplate.findRequest

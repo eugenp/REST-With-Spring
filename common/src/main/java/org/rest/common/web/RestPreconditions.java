@@ -1,8 +1,8 @@
 package org.rest.common.web;
 
-import org.rest.common.web.exception.ConflictException;
-import org.rest.common.web.exception.ForbiddenException;
-import org.rest.common.web.exception.ResourceNotFoundException;
+import org.rest.common.web.exception.MyConflictException;
+import org.rest.common.web.exception.MyForbiddenException;
+import org.rest.common.web.exception.MyResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 
 /**
@@ -22,12 +22,12 @@ public final class RestPreconditions {
      * @param reference
      *            an object reference
      * @return the non-null reference that was validated
-     * @throws ResourceNotFoundException
+     * @throws MyResourceNotFoundException
      *             if {@code reference} is null
      */
     public static <T> T checkNotNull(final T reference) {
         if (reference == null) {
-            throw new ResourceNotFoundException();
+            throw new MyResourceNotFoundException();
         }
         return reference;
     }
@@ -38,12 +38,12 @@ public final class RestPreconditions {
      * @param reference
      *            an object reference
      * @return the non-null reference that was validated
-     * @throws ConflictException
+     * @throws MyConflictException
      *             if {@code reference} is null
      */
     public static <T> T checkRequestElementNotNull(final T reference) {
         if (reference == null) {
-            throw new ConflictException();
+            throw new MyConflictException();
         }
         return reference;
     }
@@ -56,7 +56,7 @@ public final class RestPreconditions {
      */
     public static void checkRequestState(final boolean expression) {
         if (!expression) {
-            throw new ConflictException();
+            throw new MyConflictException();
         }
     }
 
@@ -65,12 +65,12 @@ public final class RestPreconditions {
      * 
      * @param expression
      *            has value true if found, otherwise false
-     * @throws ResourceNotFoundException
+     * @throws MyResourceNotFoundException
      *             if expression is false, means value not found.
      */
     public static void checkFound(final boolean expression) {
         if (!expression) {
-            throw new ResourceNotFoundException();
+            throw new MyResourceNotFoundException();
         }
     }
 
@@ -79,12 +79,12 @@ public final class RestPreconditions {
      * 
      * @param expression
      *            has value true if found, otherwise false
-     * @throws ForbiddenException
+     * @throws MyForbiddenException
      *             if expression is false, means operation not allowed.
      */
     public static void checkAllowed(final boolean expression) {
         if (!expression) {
-            throw new ForbiddenException();
+            throw new MyForbiddenException();
         }
     }
 

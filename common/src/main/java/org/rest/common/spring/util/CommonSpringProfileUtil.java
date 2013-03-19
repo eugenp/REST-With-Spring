@@ -1,4 +1,4 @@
-package org.rest.common.spring;
+package org.rest.common.spring.util;
 
 public final class CommonSpringProfileUtil {
 

@@ -112,9 +112,6 @@ public abstract class AbstractServicePersistenceIntegrationTest<T extends INamea
     protected abstract IEntityOperations<T> getEntityOps();
 
     @Override
-    protected abstract T createNewEntity();
-
-    @Override
     protected T persistNewEntity() {
         return getApi().create(createNewEntity());
     }

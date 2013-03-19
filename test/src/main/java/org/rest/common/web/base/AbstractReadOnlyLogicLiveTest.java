@@ -5,12 +5,13 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.rest.common.spring.CommonSpringProfileUtil.CLIENT;
-import static org.rest.common.spring.CommonSpringProfileUtil.TEST;
+import static org.rest.common.spring.util.CommonSpringProfileUtil.CLIENT;
+import static org.rest.common.spring.util.CommonSpringProfileUtil.TEST;
 
 import org.junit.Test;
 import org.rest.common.client.template.IRestTemplate;
 import org.rest.common.persistence.model.INameableEntity;
+import org.rest.common.util.IDUtil;
 import org.rest.common.util.SearchField;
 import org.rest.common.web.WebConstants;
 import org.springframework.data.domain.Sort;
@@ -37,14 +38,14 @@ public abstract class AbstractReadOnlyLogicLiveTest<T extends INameableEntity> {
     // find - one
 
     @Test
-    /*code*/public final void givenResourceForIdDoesNotExist_whenResourceOfThatIdIsRetrieved_then404IsReceived() {
-        final Response response = getApi().findOneByUriAsResponse(getUri() + WebConstants.PATH_SEP + randomNumeric(6), null);
+    /*code*/public void givenResourceForIdDoesNotExist_whenResourceOfThatIdIsRetrieved_then404IsReceived() {
+        final Response response = getApi().findOneAsResponse(IDUtil.randomPositiveLong(), null);
 
         assertThat(response.getStatusCode(), is(404));
     }
 
     @Test
-    /*code*/public final void whenResourceIsRetrievedByNonNumericId_then400IsReceived() {
+    /*code*/public void whenResourceIsRetrievedByNonNumericId_then400IsReceived() {
         // Given id is non numeric
         final String id = randomAlphabetic(6);
 

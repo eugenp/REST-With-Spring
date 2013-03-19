@@ -277,11 +277,13 @@ public abstract class AbstractRawServicePersistenceIntegrationTest<T extends IEn
 
     // template method
 
+    protected T createNewEntity() {
+        return getEntityOps().createNewEntity();
+    }
+
     protected abstract IRawService<T> getApi();
 
     protected abstract IEntityOperations<T> getEntityOps();
-
-    protected abstract T createNewEntity();
 
     protected T persistNewEntity() {
         return getApi().create(createNewEntity());

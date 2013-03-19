@@ -1,11 +1,9 @@
 package org.rest.common.client.template;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.rest.common.client.web.HeaderUtil;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.web.WebConstants;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
@@ -20,6 +18,11 @@ public abstract class AbstractClientRestTemplate<T extends IEntity> extends Abst
     // create
 
     @Override
+    public final T create(final T resource) {
+        return create(resource, null);
+    }
+
+    @Override
     public final T create(final T resource, final Pair<String, String> credentials) {
         final String locationOfCreatedResource = createAsUri(resource, credentials);
 
@@ -27,20 +30,13 @@ public abstract class AbstractClientRestTemplate<T extends IEntity> extends Abst
     }
 
     @Override
-    public final T create(final T resource) {
-        final String locationOfCreatedResource = createAsUri(resource, null);
-
-        return findOneByUri(locationOfCreatedResource, null);
+    public final String createAsUri(final T resource) {
+        return createAsUri(resource, null);
     }
 
     @Override
     public final String createAsUri(final T resource, final Pair<String, String> credentials) {
-        if (credentials != null) {
-            auth.givenAuthenticated(restTemplate, credentials.getLeft(), credentials.getRight());
-        } else {
-            givenAuthenticated();
-        }
-        final ResponseEntity<Void> responseEntity = restTemplate.exchange(getUri(), HttpMethod.POST, new HttpEntity<T>(resource, writeHeaders()), Void.class);
+        final ResponseEntity<Void> responseEntity = restTemplate.exchange(getUri(), HttpMethod.POST, new HttpEntity<T>(resource, writeHeadersWithAuth(credentials)), Void.class);
 
         final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
         Preconditions.checkNotNull(locationOfCreatedResource);
@@ -51,9 +47,12 @@ public abstract class AbstractClientRestTemplate<T extends IEntity> extends Abst
     // update
 
     @Override
-    public final void update(final T resource) {
-        givenAuthenticated();
-        final ResponseEntity<T> responseEntity = restTemplate.exchange(getUri() + "/" + resource.getId(), HttpMethod.PUT, new HttpEntity<T>(resource, writeHeaders()), clazz);
+    public void update(final T resource) {
+        updateInternal(resource, getWriteDefaultCredentials());
+    }
+
+    protected final void updateInternal(final T resource, final Pair<String, String> credentials) {
+        final ResponseEntity<T> responseEntity = restTemplate.exchange(getUri() + "/" + resource.getId(), HttpMethod.PUT, new HttpEntity<T>(resource, writeHeadersWithAuth(credentials)), clazz);
         Preconditions.checkState(responseEntity.getStatusCode().value() == 200);
     }
 
@@ -61,8 +60,7 @@ public abstract class AbstractClientRestTemplate<T extends IEntity> extends Abst
 
     @Override
     public final void delete(final long id) {
-        // final ResponseEntity<Object> deleteResourceResponse = restTemplate.exchange(getUri() + WebConstants.PATH_SEP + id, HttpMethod.DELETE, new HttpEntity<T>(writeHeaders()), null);
-        final ResponseEntity<Void> deleteResourceResponse = restTemplate.exchange(getUri() + WebConstants.PATH_SEP + id, HttpMethod.DELETE, new HttpEntity<Void>(writeHeaders()), Void.class);
+        final ResponseEntity<Void> deleteResourceResponse = restTemplate.exchange(getUri() + WebConstants.PATH_SEP + id, HttpMethod.DELETE, new HttpEntity<Void>(writeHeadersWithAuth()), Void.class);
 
         Preconditions.checkState(deleteResourceResponse.getStatusCode().value() == 204);
     }
@@ -74,30 +72,12 @@ public abstract class AbstractClientRestTemplate<T extends IEntity> extends Abst
 
     // template method
 
-    @Override
-    public abstract Pair<String, String> getDefaultCredentials();
-
     /**
      * - this is a hook that executes before read operations, in order to allow custom security work to happen for read operations; similar to: AbstractRestTemplate.findRequest
      */
     @Override
     protected void beforeReadOperation() {
         //
-    }
-
-    /**
-     * - note: hook to be able to customize the find headers if needed
-     */
-    @Override
-    protected HttpHeaders findHeaders() {
-        return HeaderUtil.createAcceptHeaders(marshaller);
-    }
-
-    /**
-     * - note: hook to be able to customize the write headers if needed
-     */
-    protected HttpHeaders writeHeaders() {
-        return HeaderUtil.createContentTypeHeaders(marshaller);
     }
 
 }

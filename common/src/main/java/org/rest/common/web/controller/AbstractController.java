@@ -15,7 +15,7 @@ import org.rest.common.persistence.service.IRawService;
 import org.rest.common.util.QueryConstants;
 import org.rest.common.web.RestPreconditions;
 import org.rest.common.web.WebConstants;
-import org.rest.common.web.exception.ResourceNotFoundException;
+import org.rest.common.web.exception.MyResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +73,7 @@ public abstract class AbstractController<T extends IEntity> {
 
     protected final List<T> findAllInternal(final HttpServletRequest request, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         if (request.getParameterNames().hasMoreElements()) {
-            throw new ResourceNotFoundException();
+            throw new MyResourceNotFoundException();
         }
 
         eventPublisher.publishEvent(new MultipleResourcesRetrievedEvent<T>(clazz, uriBuilder, response));
@@ -90,7 +90,7 @@ public abstract class AbstractController<T extends IEntity> {
     protected final List<T> findPaginatedAndSortedInternal(final int page, final int size, final String sortBy, final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         final Page<T> resultPage = getService().findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder);
         if (page > resultPage.getTotalPages()) {
-            throw new ResourceNotFoundException();
+            throw new MyResourceNotFoundException();
         }
         eventPublisher.publishEvent(new PaginatedResultsRetrievedEvent<T>(clazz, uriBuilder, response, page, resultPage.getTotalPages(), size));
 
@@ -100,7 +100,7 @@ public abstract class AbstractController<T extends IEntity> {
     protected final List<T> findPaginatedInternal(final int page, final int size, final String sortBy, final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         final Page<T> resultPage = getService().findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder);
         if (page > resultPage.getTotalPages()) {
-            throw new ResourceNotFoundException();
+            throw new MyResourceNotFoundException();
         }
         eventPublisher.publishEvent(new PaginatedResultsRetrievedEvent<T>(clazz, uriBuilder, response, page, resultPage.getTotalPages(), size));
 

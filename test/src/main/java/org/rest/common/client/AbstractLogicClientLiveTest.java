@@ -20,9 +20,9 @@ import org.rest.common.util.order.OrderByName;
 import org.springframework.data.domain.Sort;
 
 @SuppressWarnings("unchecked")
-public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity> extends AbstractRawLogicClientRestLiveTest<T> {
+public abstract class AbstractLogicClientLiveTest<T extends INameableEntity> extends AbstractRawLogicClientLiveTest<T> {
 
-    public AbstractLogicClientRestLiveTest() {
+    public AbstractLogicClientLiveTest() {
         super();
     }
 
@@ -55,6 +55,7 @@ public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity>
     /**/public final void givenResourceExists_whenResourceIsRetrievedByName_thenFoundResourceIsCorrect() {
         // Given
         final T existingResource = getApi().create(createNewEntity());
+
         // When
         final T resourceByName = getApi().findByName(existingResource.getName());
 
@@ -82,8 +83,8 @@ public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity>
 
     @Test
     /**/public final void whenResourcesAreRetrievedPaginatedAndSorted_thenResourcesAreIndeedOrdered() {
-        getApi().createAsUri(createNewEntity(), null);
-        getApi().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity());
+        getApi().createAsUri(createNewEntity());
 
         // When
         final List<T> resourcesPaginatedAndSorted = getApi().findAllPaginatedAndSorted(0, 4, SearchField.name.name(), Sort.Direction.ASC.name());
@@ -96,8 +97,8 @@ public abstract class AbstractLogicClientRestLiveTest<T extends INameableEntity>
 
     @Test
     /**/public final void whenResourcesAreRetrievedSorted_thenResourcesAreIndeedOrdered() {
-        getApi().createAsUri(createNewEntity(), null);
-        getApi().createAsUri(createNewEntity(), null);
+        getApi().createAsUri(createNewEntity());
+        getApi().createAsUri(createNewEntity());
 
         // When
         final List<T> resourcesSorted = getApi().findAllSorted(SearchField.name.name(), Sort.Direction.ASC.name());

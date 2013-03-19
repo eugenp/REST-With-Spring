@@ -433,7 +433,9 @@ public abstract class AbstractSearchPersistenceIntegrationTest<T extends INameab
 
     protected abstract IEntityOperations<T> getEntityOps();
 
-    protected abstract T createNewEntity();
+    protected T createNewEntity() {
+        return getEntityOps().createNewEntity();
+    }
 
     protected T persistNewEntity() {
         return getApi().create(createNewEntity());

@@ -1,11 +1,13 @@
 package org.rest.common.client.template;
 
-import org.rest.common.spring.CommonSpringProfileUtil;
+import org.rest.common.spring.util.CommonSpringProfileUtil;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+
+import com.google.common.base.Preconditions;
 
 @Component
 @Profile(CommonSpringProfileUtil.CLIENT)
@@ -30,9 +32,9 @@ public final class CommonPaths implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
-        protocol = env.getProperty("http.protocol");
-        host = env.getProperty("http.host");
-        port = env.getProperty("http.port");
+        protocol = Preconditions.checkNotNull(env.getProperty("http.protocol"));
+        host = Preconditions.checkNotNull(env.getProperty("http.host"));
+        port = Preconditions.checkNotNull(env.getProperty("http.port"));
     }
 
 }

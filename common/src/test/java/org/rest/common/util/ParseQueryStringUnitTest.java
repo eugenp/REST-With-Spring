@@ -135,6 +135,13 @@ public final class ParseQueryStringUnitTest {
         assertEquals("us-east-1/i-98d522e6", pair.getRight());
     }
 
+    @Test
+    public final void givenValidQueryWithMoreUncommonCharacters2_whenQueryIsParsedForNameValueWithUppercase_thenResultValueIsCorrect() {
+        final List<Triple<String, ClientOperation, String>> queryTyples = parseQueryString(QueryConstants.NAME + QueryConstants.OP + "ROLE_ORGANIZATION");
+        final Triple<String, ClientOperation, String> pair = queryTyples.get(0);
+        assertEquals("ROLE_ORGANIZATION", pair.getRight());
+    }
+
     // -- correct - with negation
 
     @Test
