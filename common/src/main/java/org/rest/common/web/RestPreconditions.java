@@ -79,6 +79,22 @@ public final class RestPreconditions {
      * 
      * @param expression
      *            has value true if found, otherwise false
+     * @throws MyResourceNotFoundException
+     *             if expression is false, means value not found.
+     */
+    public static <T> T checkFound(final T resource) {
+        if (resource == null) {
+            throw new MyResourceNotFoundException();
+        }
+
+        return resource;
+    }
+
+    /**
+     * Check if some value was found, otherwise throw exception.
+     * 
+     * @param expression
+     *            has value true if found, otherwise false
      * @throws MyForbiddenException
      *             if expression is false, means operation not allowed.
      */

@@ -10,7 +10,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
-import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.web.client.RestTemplate;
 
 public abstract class AbstractRestTemplateFactoryBean implements FactoryBean<RestTemplate>, InitializingBean {
@@ -45,8 +44,8 @@ public abstract class AbstractRestTemplateFactoryBean implements FactoryBean<Res
         final HttpComponentsClientHttpRequestFactory requestFactory;
         final int timeout = env.getProperty("http.req.timeout", Integer.class);
         if (env.getProperty("sec.auth.basic", Boolean.class)) {
-            final int port = env.getProperty("http.port", Integer.class);
-            final String host = env.getProperty("http.host");
+            final int port = env.getProperty(getPortPropertyName(), Integer.class);
+            final String host = env.getProperty(getHostPropertyName());
             requestFactory = new PreemptiveAuthHttpRequestFactory(host, port, HttpHost.DEFAULT_SCHEME_NAME);
             requestFactory.setReadTimeout(timeout);
         } else {
@@ -59,20 +58,24 @@ public abstract class AbstractRestTemplateFactoryBean implements FactoryBean<Res
         restTemplate = new RestTemplate(requestFactory);
 
         restTemplate.getMessageConverters().remove(5); // removing the Jaxb2RootElementHttpMessageConverter
-        restTemplate.getMessageConverters().add(marshallingHttpMessageConverter());
+
+        final MarshallingHttpMessageConverter marshallingHttpMessageConverter = marshallingHttpMessageConverter();
+        if (marshallingHttpMessageConverter != null) {
+            restTemplate.getMessageConverters().add(marshallingHttpMessageConverter);
+        }
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
     }
 
     //
 
-    protected final MarshallingHttpMessageConverter marshallingHttpMessageConverter() {
-        final MarshallingHttpMessageConverter marshallingHttpMessageConverter = new MarshallingHttpMessageConverter();
-        marshallingHttpMessageConverter.setMarshaller(xstreamMarshaller());
-        marshallingHttpMessageConverter.setUnmarshaller(xstreamMarshaller());
+    protected abstract MarshallingHttpMessageConverter marshallingHttpMessageConverter();
 
-        return marshallingHttpMessageConverter;
+    protected String getHostPropertyName() {
+        return "http.host";
     }
 
-    protected abstract XStreamMarshaller xstreamMarshaller();
+    protected String getPortPropertyName() {
+        return "http.port";
+    }
 
 }

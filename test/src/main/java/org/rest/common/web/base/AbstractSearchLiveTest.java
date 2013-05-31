@@ -403,8 +403,8 @@ public abstract class AbstractSearchLiveTest<T extends INameableEntity> extends 
 
     protected abstract IEntityOperations<T> getEntityOps();
 
-    protected final RequestSpecification givenAuthenticated() {
-        return getApi().givenAuthenticated();
+    protected final RequestSpecification givenReadAuthenticated() {
+        return getApi().givenReadAuthenticated();
     }
 
 }

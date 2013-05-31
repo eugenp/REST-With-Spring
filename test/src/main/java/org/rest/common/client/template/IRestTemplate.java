@@ -2,6 +2,7 @@ package org.rest.common.client.template;
 
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.rest.common.IOperations;
 import org.rest.common.client.marshall.IMarshaller;
@@ -14,7 +15,7 @@ public interface IRestTemplate<T extends IEntity> extends IOperations<T>, ITempl
 
     // template
 
-    RequestSpecification givenAuthenticated();
+    RequestSpecification givenReadAuthenticated();
 
     IMarshaller getMarshaller();
 
@@ -23,5 +24,9 @@ public interface IRestTemplate<T extends IEntity> extends IOperations<T>, ITempl
     // search
 
     List<T> searchPaginated(final Triple<String, ClientOperation, String> idOp, final Triple<String, ClientOperation, String> nameOp, final int page, final int size);
+
+    // util
+
+    Pair<String, String> getReadCredentials();
 
 }

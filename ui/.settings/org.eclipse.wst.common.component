@@ -7,6 +7,9 @@
         <dependent-module archiveName="rest-common-0.12-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rest-common/rest-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="rest-common-client-0.12-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rest-common-client/rest-common-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="rest-ui"/>
         <property name="java-output-path" value="/rest-ui/target/classes"/>
     </wb-module>

@@ -17,12 +17,12 @@ import com.google.common.base.Preconditions;
  * @param <T>
  *            Type of the result that is being handled (commonly Entities).
  */
-public final class ResourceCreatedEvent<T extends Serializable> extends ApplicationEvent {
+public final class AfterResourceCreatedEvent<T extends Serializable> extends ApplicationEvent {
     private final String idOfNewResource;
     private final HttpServletResponse response;
     private final UriComponentsBuilder uriBuilder;
 
-    public ResourceCreatedEvent(final Class<T> clazz, final UriComponentsBuilder uriBuilderToSet, final HttpServletResponse responseToSet, final String idOfNewResourceToSet) {
+    public AfterResourceCreatedEvent(final Class<T> clazz, final UriComponentsBuilder uriBuilderToSet, final HttpServletResponse responseToSet, final String idOfNewResourceToSet) {
         super(clazz);
 
         Preconditions.checkNotNull(uriBuilderToSet);

@@ -18,24 +18,24 @@ public abstract class AbstractClientRestTemplate<T extends IEntity> extends Abst
     // create
 
     @Override
-    public final T create(final T resource) {
-        return create(resource, null);
+    public T create(final T resource) {
+        return create(resource, getWriteCredentials());
     }
 
     @Override
-    public final T create(final T resource, final Pair<String, String> credentials) {
+    public T create(final T resource, final Pair<String, String> credentials) {
         final String locationOfCreatedResource = createAsUri(resource, credentials);
 
         return findOneByUri(locationOfCreatedResource, credentials);
     }
 
     @Override
-    public final String createAsUri(final T resource) {
+    public String createAsUri(final T resource) {
         return createAsUri(resource, null);
     }
 
     @Override
-    public final String createAsUri(final T resource, final Pair<String, String> credentials) {
+    public String createAsUri(final T resource, final Pair<String, String> credentials) {
         final ResponseEntity<Void> responseEntity = restTemplate.exchange(getUri(), HttpMethod.POST, new HttpEntity<T>(resource, writeHeadersWithAuth(credentials)), Void.class);
 
         final String locationOfCreatedResource = responseEntity.getHeaders().getLocation().toString();
@@ -48,7 +48,7 @@ public abstract class AbstractClientRestTemplate<T extends IEntity> extends Abst
 
     @Override
     public void update(final T resource) {
-        updateInternal(resource, getWriteDefaultCredentials());
+        updateInternal(resource, getWriteCredentials());
     }
 
     protected final void updateInternal(final T resource, final Pair<String, String> credentials) {
@@ -59,7 +59,7 @@ public abstract class AbstractClientRestTemplate<T extends IEntity> extends Abst
     // delete
 
     @Override
-    public final void delete(final long id) {
+    public void delete(final long id) {
         final ResponseEntity<Void> deleteResourceResponse = restTemplate.exchange(getUri() + WebConstants.PATH_SEP + id, HttpMethod.DELETE, new HttpEntity<Void>(writeHeadersWithAuth()), Void.class);
 
         Preconditions.checkState(deleteResourceResponse.getStatusCode().value() == 204);

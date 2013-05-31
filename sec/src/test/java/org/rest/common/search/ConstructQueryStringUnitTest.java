@@ -220,8 +220,7 @@ public final class ConstructQueryStringUnitTest {
         final String name = randomAlphabetic(6);
         final String id = randomNumeric(2);
         final String queryString = SearchTestUtil.constructQueryString(id, true, name, true);
-        assertEquals(SearchField.id.toString() + QueryConstants.NEGATION + QueryConstants.OP + id + QueryConstants.SEPARATOR + SearchField.name.toString() + QueryConstants.NEGATION + QueryConstants.OP + name,
-                queryString);
+        assertEquals(SearchField.id.toString() + QueryConstants.NEGATION + QueryConstants.OP + id + QueryConstants.SEPARATOR + SearchField.name.toString() + QueryConstants.NEGATION + QueryConstants.OP + name, queryString);
     }
 
 }

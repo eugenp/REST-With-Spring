@@ -10,6 +10,8 @@ import static org.rest.common.web.WebConstants.PATH_SEP;
 import javax.servlet.http.HttpServletResponse;
 
 import org.rest.common.event.PaginatedResultsRetrievedEvent;
+import org.rest.common.web.IUriMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,11 +19,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.google.common.base.Preconditions;
 import com.google.common.net.HttpHeaders;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 @Component
-final class PaginatedResultsRetrievedDiscoverabilityListener implements ApplicationListener<PaginatedResultsRetrievedEvent> {
+class PaginatedResultsRetrievedDiscoverabilityListener implements ApplicationListener<PaginatedResultsRetrievedEvent> {
 
     private static final String PAGE = "page";
+
+    @Autowired
+    private IUriMapper uriMapper;
 
     public PaginatedResultsRetrievedDiscoverabilityListener() {
         super();
@@ -40,8 +45,7 @@ final class PaginatedResultsRetrievedDiscoverabilityListener implements Applicat
 
     // - note: at this point, the URI is transformed into plural (added `s`) in a hardcoded way - this will change in the future
     final void addLinkHeaderOnPagedResourceRetrieval(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz, final int page, final int totalPages, final int pageSize) {
-        final String resourceName = clazz.getSimpleName().toString().toLowerCase();
-        uriBuilder.path(PATH_SEP + resourceName + "s");
+        plural(uriBuilder, clazz);
 
         final StringBuilder linkHeader = new StringBuilder();
         if (hasNextPage(page, totalPages)) {
@@ -105,6 +109,13 @@ final class PaginatedResultsRetrievedDiscoverabilityListener implements Applicat
         if (linkHeader.length() > 0) {
             linkHeader.append(", ");
         }
+    }
+
+    // template
+
+    protected void plural(final UriComponentsBuilder uriBuilder, final Class clazz) {
+        final String resourceName = uriMapper.getUriBase(clazz);
+        uriBuilder.path(PATH_SEP + resourceName);
     }
 
 }

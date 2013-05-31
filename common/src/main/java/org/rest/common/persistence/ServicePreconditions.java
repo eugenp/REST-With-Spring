@@ -1,6 +1,7 @@
 package org.rest.common.persistence;
 
 import org.rest.common.persistence.exception.MyEntityNotFoundException;
+import org.rest.common.web.exception.MyBadRequestException;
 
 public final class ServicePreconditions {
 
@@ -29,6 +30,12 @@ public final class ServicePreconditions {
     public static void checkEntityExists(final boolean entityExists) {
         if (!entityExists) {
             throw new MyEntityNotFoundException();
+        }
+    }
+
+    public static void checkOKArgument(final boolean okArgument) {
+        if (!okArgument) {
+            throw new MyBadRequestException();
         }
     }
 

@@ -138,6 +138,8 @@
 	</repositories>
 
 	<modules>
+		<module>common-client</module>
+		
 		<module>common</module>
 		<module>test</module>
 

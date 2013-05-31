@@ -5,16 +5,19 @@ import static org.rest.common.web.WebConstants.PATH_SEP;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpHeaders;
-import org.rest.common.event.ResourceCreatedEvent;
+import org.rest.common.event.AfterResourceCreatedEvent;
+import org.rest.common.web.IUriMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.common.base.Preconditions;
 
-@Component
-@SuppressWarnings("rawtypes")
-final class ResourceCreatedDiscoverabilityListener implements ApplicationListener<ResourceCreatedEvent> {
+@SuppressWarnings({ "rawtypes", "unchecked" })
+public abstract class ResourceCreatedDiscoverabilityListener implements ApplicationListener<AfterResourceCreatedEvent> {
+
+    @Autowired
+    private IUriMapper uriMapper;
 
     public ResourceCreatedDiscoverabilityListener() {
         super();
@@ -23,7 +26,7 @@ final class ResourceCreatedDiscoverabilityListener implements ApplicationListene
     //
 
     @Override
-    public final void onApplicationEvent(final ResourceCreatedEvent ev) {
+    public final void onApplicationEvent(final AfterResourceCreatedEvent ev) {
         Preconditions.checkNotNull(ev);
 
         final String idOfNewResource = ev.getIdOfNewResource();
@@ -33,11 +36,17 @@ final class ResourceCreatedDiscoverabilityListener implements ApplicationListene
     /**
      * - note: at this point, the URI is transformed into plural (added `s`) in a hardcoded way - this will change in the future
      */
-    final void addLinkHeaderOnEntityCreation(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final String idOfNewEntity, final Class clazz) {
-        final String resourceName = clazz.getSimpleName().toString().toLowerCase();
-        final String locationValue = uriBuilder.path(PATH_SEP + resourceName + "s/{id}").build().expand(idOfNewEntity).encode().toUriString();
+    protected void addLinkHeaderOnEntityCreation(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final String idOfNewEntity, final Class clazz) {
+        final String path = calculatePathToResource(clazz);
+        final String locationValue = uriBuilder.path(path).build().expand(idOfNewEntity).encode().toUriString();
 
         response.setHeader(HttpHeaders.LOCATION, locationValue);
+    }
+
+    protected String calculatePathToResource(final Class clazz) {
+        final String resourceName = uriMapper.getUriBase(clazz);
+        final String path = PATH_SEP + resourceName + "/{id}";
+        return path;
     }
 
 }

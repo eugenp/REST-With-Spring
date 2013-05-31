@@ -17,7 +17,7 @@ import com.google.common.net.HttpHeaders;
 
 @SuppressWarnings("rawtypes")
 @Component
-final class SingleResourceRetrievedDiscoverabilityListener implements ApplicationListener<SingleResourceRetrievedEvent> {
+class SingleResourceRetrievedDiscoverabilityListener implements ApplicationListener<SingleResourceRetrievedEvent> {
 
     @Autowired
     private IUriMapper uriMapper;

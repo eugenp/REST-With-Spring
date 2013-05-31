@@ -10,10 +10,12 @@ import static org.junit.matchers.JUnitMatchers.containsString;
 import static org.rest.common.spring.util.CommonSpringProfileUtil.CLIENT;
 import static org.rest.common.spring.util.CommonSpringProfileUtil.TEST;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.hamcrest.core.AnyOf;
 import org.junit.Test;
 import org.rest.common.client.IEntityOperations;
 import org.rest.common.client.marshall.IMarshaller;
+import org.rest.common.client.security.ITestAuthenticator;
 import org.rest.common.client.template.IRestTemplate;
 import org.rest.common.persistence.model.IEntity;
 import org.rest.common.util.LinkUtil;
@@ -36,6 +38,9 @@ public abstract class AbstractDiscoverabilityLiveTest<T extends IEntity> {
     @Autowired
     private IMarshaller marshaller;
 
+    @Autowired
+    protected ITestAuthenticator auth;
+
     public AbstractDiscoverabilityLiveTest(final Class<T> clazzToSet) {
         Preconditions.checkNotNull(clazzToSet);
         clazz = clazzToSet;
@@ -46,9 +51,12 @@ public abstract class AbstractDiscoverabilityLiveTest<T extends IEntity> {
     // redirects
 
     @Test
-    public final void whenConsumingSimillarResourceName_thenRedirectedToCorrectResourceName() {
+    public void whenConsumingSimillarResourceName_thenRedirectedToCorrectResourceName() {
         final String simillarUriOfResource = getUri().substring(0, getUri().length() - 1);
-        final RequestSpecification customRequest = getApi().readRequest().config(new RestAssuredConfig().redirect(new RedirectConfig().followRedirects(false)));
+        final Pair<String, String> readCredentials = getApi().getReadCredentials();
+        final RequestSpecification givenAuthenticated = auth.givenBasicAuthenticated(readCredentials.getLeft(), readCredentials.getRight());
+        final RequestSpecification readReq = givenAuthenticated.header(HttpHeaders.ACCEPT, marshaller.getMime());
+        final RequestSpecification customRequest = readReq.config(new RestAssuredConfig().redirect(new RedirectConfig().followRedirects(false)));
         final Response responseOfSimillarUri = getApi().findOneByUriAsResponse(simillarUriOfResource, customRequest);
         assertThat(responseOfSimillarUri.getStatusCode(), is(301));
     }
@@ -141,7 +149,7 @@ public abstract class AbstractDiscoverabilityLiveTest<T extends IEntity> {
         final String uriOfExistingResource = getApi().createAsUri(createNewEntity());
 
         // When
-        final Response res = getApi().givenAuthenticated().post(uriOfExistingResource);
+        final Response res = getApi().givenReadAuthenticated().post(uriOfExistingResource);
 
         // Then
         final String allowHeader = res.getHeader(HttpHeaders.ALLOW);

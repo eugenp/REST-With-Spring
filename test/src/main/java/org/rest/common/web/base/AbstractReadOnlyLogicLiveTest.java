@@ -152,8 +152,8 @@ public abstract class AbstractReadOnlyLogicLiveTest<T extends INameableEntity> {
         return getApi().getUri() + WebConstants.PATH_SEP;
     }
 
-    protected final RequestSpecification givenAuthenticated() {
-        return getApi().givenAuthenticated();
+    protected final RequestSpecification givenReadAuthenticated() {
+        return getApi().givenReadAuthenticated();
     }
 
 }

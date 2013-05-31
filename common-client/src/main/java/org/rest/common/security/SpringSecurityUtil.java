@@ -2,10 +2,13 @@ package org.rest.common.security;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Set;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.security.access.intercept.RunAsUserToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -118,10 +121,6 @@ public final class SpringSecurityUtil {
         return SpringSecurityUtil.getCurrentUserDetails() == null;
     }
 
-    public static boolean isAdmin(final String nameOfAdminPrivilege) {
-        return hasPrivilege(nameOfAdminPrivilege);
-    }
-
     // has?
 
     /**
@@ -174,13 +173,30 @@ public final class SpringSecurityUtil {
      *            the user details.
      * @return the calculated authorization key.
      */
-    public static String calculateAuthorizationKey(final UserDetails userDetails) {
-        return calculateAuthorizationKey(userDetails.getUsername(), userDetails.getPassword());
+    public static String encodeAuthorizationKey(final UserDetails userDetails) {
+        return encodeAuthorizationKey(userDetails.getUsername(), userDetails.getPassword());
     }
 
-    public static String calculateAuthorizationKey(final String username, final String password) {
+    public static String encodeAuthorizationKey(final String username, final String password) {
         final String authorizationString = username + ":" + password;
         return new String(Base64.encodeBase64(authorizationString.getBytes(Charset.forName("US-ASCII"))));
+    }
+
+    public static Pair<String, String> decodeAuthorizationKey(final String basicAuthValue) {
+        if (basicAuthValue == null) {
+            return null;
+        }
+        final byte[] decodeBytes = Base64.decodeBase64(basicAuthValue.substring(basicAuthValue.indexOf(' ') + 1));
+        String decoded = null;
+        try {
+            decoded = new String(decodeBytes, "UTF-8");
+        } catch (final UnsupportedEncodingException e) {
+            return null;
+        }
+        final int indexOfDelimiter = decoded.indexOf(':');
+        final String username = decoded.substring(0, indexOfDelimiter);
+        final String password = decoded.substring(indexOfDelimiter + 1);
+        return new ImmutablePair<String, String>(username, password);
     }
 
 }

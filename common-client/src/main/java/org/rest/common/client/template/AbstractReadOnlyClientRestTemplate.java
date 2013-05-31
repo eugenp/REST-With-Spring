@@ -43,7 +43,7 @@ public abstract class AbstractReadOnlyClientRestTemplate<T extends IEntity> exte
     @Override
     public final T findOne(final long id, final Pair<String, String> credentials) {
         try {
-            final ResponseEntity<T> response = restTemplate.exchange(getUri() + WebConstants.PATH_SEP + id, HttpMethod.GET, findRequestEntity(credentials), clazz);
+            final ResponseEntity<T> response = restTemplate.exchange(getUri() + WebConstants.PATH_SEP + id, HttpMethod.GET, readRequestEntity(credentials), clazz);
             return response.getBody();
         } catch (final HttpClientErrorException clientEx) {
             return null;
@@ -54,7 +54,7 @@ public abstract class AbstractReadOnlyClientRestTemplate<T extends IEntity> exte
     public final T findOne(final long id) {
         beforeReadOperation();
         try {
-            final ResponseEntity<T> response = restTemplate.exchange(getUri() + WebConstants.PATH_SEP + id, HttpMethod.GET, findRequestEntity(getReadDefaultCredentials()), clazz);
+            final ResponseEntity<T> response = restTemplate.exchange(getUri() + WebConstants.PATH_SEP + id, HttpMethod.GET, readRequestEntity(getReadCredentials()), clazz);
             return response.getBody();
         } catch (final HttpClientErrorException clientEx) {
             return null;
@@ -64,7 +64,7 @@ public abstract class AbstractReadOnlyClientRestTemplate<T extends IEntity> exte
     @Override
     public final T findOneByUri(final String uri, final Pair<String, String> credentials) {
         beforeReadOperation();
-        final ResponseEntity<T> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(getReadDefaultCredentials()), clazz);
+        final ResponseEntity<T> response = restTemplate.exchange(uri, HttpMethod.GET, readRequestEntity(credentials), clazz);
         return response.getBody();
     }
 
@@ -73,7 +73,7 @@ public abstract class AbstractReadOnlyClientRestTemplate<T extends IEntity> exte
     @Override
     public final List<T> findAll() {
         beforeReadOperation();
-        final ResponseEntity<String> findAllResponse = restTemplate.exchange(getUri(), HttpMethod.GET, findRequestEntity(getReadDefaultCredentials()), String.class);
+        final ResponseEntity<String> findAllResponse = restTemplate.exchange(getUri(), HttpMethod.GET, readRequestEntity(getReadCredentials()), String.class);
         final String body = findAllResponse.getBody();
         if (body == null) {
             return Lists.newArrayList();
@@ -85,7 +85,7 @@ public abstract class AbstractReadOnlyClientRestTemplate<T extends IEntity> exte
     public final List<T> findAllSorted(final String sortBy, final String sortOrder) {
         beforeReadOperation();
         final String uri = getUri() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder;
-        final ResponseEntity<String> findAllResponse = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(getReadDefaultCredentials()), String.class);
+        final ResponseEntity<String> findAllResponse = restTemplate.exchange(uri, HttpMethod.GET, readRequestEntity(getReadCredentials()), String.class);
         final String body = findAllResponse.getBody();
         if (body == null) {
             return Lists.newArrayList();
@@ -103,7 +103,7 @@ public abstract class AbstractReadOnlyClientRestTemplate<T extends IEntity> exte
         uri.append(QueryConstants.SEPARATOR_AMPER);
         uri.append("size=");
         uri.append(size);
-        final ResponseEntity<List> findAllResponse = restTemplate.exchange(uri.toString(), HttpMethod.GET, findRequestEntity(getReadDefaultCredentials()), List.class);
+        final ResponseEntity<List> findAllResponse = restTemplate.exchange(uri.toString(), HttpMethod.GET, readRequestEntity(getReadCredentials()), List.class);
         final List<T> body = findAllResponse.getBody();
         if (body == null) {
             return Lists.newArrayList();
@@ -123,7 +123,7 @@ public abstract class AbstractReadOnlyClientRestTemplate<T extends IEntity> exte
 
     @Override
     public final List<T> findAllByUri(final String uri, final Pair<String, String> credentials) {
-        final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(credentials), List.class);
+        final ResponseEntity<List> response = restTemplate.exchange(uri, HttpMethod.GET, readRequestEntity(credentials), List.class);
         final List<T> body = response.getBody();
         if (body == null) {
             return Lists.newArrayList();
@@ -154,11 +154,11 @@ public abstract class AbstractReadOnlyClientRestTemplate<T extends IEntity> exte
             uri.append(sortOrder);
         }
 
-        return restTemplate.exchange(uri.toString(), HttpMethod.GET, findRequestEntity(getReadDefaultCredentials()), String.class);
+        return restTemplate.exchange(uri.toString(), HttpMethod.GET, readRequestEntity(getReadCredentials()), String.class);
     }
 
     protected final ResponseEntity<List> findAllAsResponse(final String uri, final Pair<String, String> credentials) {
-        return restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(credentials), List.class);
+        return restTemplate.exchange(uri, HttpMethod.GET, readRequestEntity(credentials), List.class);
     }
 
     // search
@@ -172,7 +172,7 @@ public abstract class AbstractReadOnlyClientRestTemplate<T extends IEntity> exte
         }
 
         final URI uri = UriUtil.createSearchUri(getUri() + QueryConstants.QUERY_PREFIX + "{qu}", builder.build());
-        final ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, findRequestEntity(getReadDefaultCredentials()), String.class);
+        final ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, readRequestEntity(getReadCredentials()), String.class);
         Preconditions.checkState(response.getStatusCode().value() == 200);
 
         return marshaller.decodeList(response.getBody(), clazz);
@@ -199,12 +199,16 @@ public abstract class AbstractReadOnlyClientRestTemplate<T extends IEntity> exte
 
     // util
 
-    protected final HttpEntity<Void> findRequestEntity() {
-        return new HttpEntity<Void>(findHeadersWithAuth(getReadDefaultCredentials()));
+    protected final HttpEntity<Void> readRequestEntity() {
+        return new HttpEntity<Void>(readHeadersWithAuth(getReadCredentials()));
     }
 
-    protected final HttpEntity<Void> findRequestEntity(final Pair<String, String> credentials) {
-        return new HttpEntity<Void>(findHeadersWithAuth(credentials));
+    protected final HttpEntity<Void> readExtendedRequestEntity() {
+        return new HttpEntity<Void>(readHeadersWithAuth(getReadExtendedCredentials()));
+    }
+
+    protected final HttpEntity<Void> readRequestEntity(final Pair<String, String> credentials) {
+        return new HttpEntity<Void>(readHeadersWithAuth(credentials));
     }
 
     // template method

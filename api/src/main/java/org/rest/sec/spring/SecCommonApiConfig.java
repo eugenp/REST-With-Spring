@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan({ "org.rest.sec.common" })
 public class SecCommonApiConfig {
 
-    public SecCommonApiConfig(){
+    public SecCommonApiConfig() {
         super();
     }
 

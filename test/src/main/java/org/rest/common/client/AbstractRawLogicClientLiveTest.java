@@ -2,7 +2,6 @@ package org.rest.common.client;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -16,6 +15,7 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.rest.common.client.template.IRawClientTemplate;
 import org.rest.common.persistence.model.IEntity;
@@ -45,34 +45,6 @@ public abstract class AbstractRawLogicClientLiveTest<T extends IEntity> {
     }
 
     // tests
-
-    // find - one
-
-    @Test
-    public final void givenResourceExists_whenResourceIsRetrieved_thenResourceHasId() {
-        // Given
-        final T newResource = createNewEntity();
-        final String uriOfExistingResource = getApi().createAsUri(newResource);
-
-        // When
-        final T createdResource = getApi().findOneByUri(uriOfExistingResource, null);
-
-        // Then
-        assertThat(createdResource.getId(), notNullValue());
-    }
-
-    @Test
-    public final void givenResourceExists_whenResourceIsRetrieved_thenResourceIsCorrectlyRetrieved() {
-        // Given
-        final T newResource = createNewEntity();
-        final String uriOfExistingResource = getApi().createAsUri(newResource);
-
-        // When
-        final T createdResource = getApi().findOneByUri(uriOfExistingResource, null);
-
-        // Then
-        assertEquals(createdResource, newResource);
-    }
 
     // find - all
 
@@ -126,6 +98,7 @@ public abstract class AbstractRawLogicClientLiveTest<T extends IEntity> {
     // create
 
     @Test(expected = RuntimeException.class)
+    @Ignore
     /**/public void whenNullResourceIsCreated_thenException() {
         getApi().create(null);
     }

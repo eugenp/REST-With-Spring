@@ -268,7 +268,7 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     @Override
     public final Response deleteAsResponse(final String uriOfResource) {
-        return givenWriteAuthenticated().delete(uriOfResource);
+        return givenDeleteAuthenticated().delete(uriOfResource);
     }
 
     // search - as response
@@ -341,16 +341,16 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
 
     // util
 
-    protected RequestSpecification findAllRequest() {
+    protected RequestSpecification findOneRequest() {
         return readRequest();
+    }
+
+    protected RequestSpecification findAllRequest() {
+        return readExtendedRequest();
     }
 
     protected RequestSpecification findAllRequest(final RequestSpecification req) {
         return readRequest(req);
-    }
-
-    protected RequestSpecification findOneRequest() {
-        return readRequest();
     }
 
     protected RequestSpecification findOneRequest(final RequestSpecification req) {
@@ -361,29 +361,55 @@ public abstract class AbstractTestRestTemplate<T extends IEntity> implements IRe
         return req.header(HttpHeaders.ACCEPT, marshaller.getMime());
     }
 
-    @Override
-    public final RequestSpecification readRequest() {
-        return givenAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime());
+    protected final RequestSpecification readRequest() {
+        return givenReadAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime());
+    }
+
+    protected final RequestSpecification readExtendedRequest() {
+        return givenReadExtendedAuthenticated().header(HttpHeaders.ACCEPT, marshaller.getMime());
     }
 
     // security
 
     @Override
-    public RequestSpecification givenAuthenticated() {
-        final Pair<String, String> defaultCredentials = getDefaultCredentials();
-        return auth.givenBasicAuthenticated(defaultCredentials.getLeft(), defaultCredentials.getRight());
+    public final RequestSpecification givenReadAuthenticated() {
+        final Pair<String, String> credentials = getReadCredentials();
+        return auth.givenBasicAuthenticated(credentials.getLeft(), credentials.getRight());
     }
 
-    public final RequestSpecification givenWriteAuthenticated() {
-        final Pair<String, String> defaultCredentials = getWriteCredentials();
-        return auth.givenBasicAuthenticated(defaultCredentials.getLeft(), defaultCredentials.getRight());
+    final RequestSpecification givenReadExtendedAuthenticated() {
+        final Pair<String, String> credentials = getReadExtendedCredentials();
+        return auth.givenBasicAuthenticated(credentials.getLeft(), credentials.getRight());
     }
 
-    public abstract Pair<String, String> getDefaultCredentials();
+    final RequestSpecification givenWriteAuthenticated() {
+        final Pair<String, String> credentials = getWriteCredentials();
+        return auth.givenBasicAuthenticated(credentials.getLeft(), credentials.getRight());
+    }
 
-    public Pair<String, String> getWriteCredentials() {
+    final RequestSpecification givenDeleteAuthenticated() {
+        final Pair<String, String> credentials = getWriteCredentials();
+        return auth.givenBasicAuthenticated(credentials.getLeft(), credentials.getRight());
+    }
+
+    protected Pair<String, String> getWriteCredentials() {
         return getDefaultCredentials();
     }
+
+    protected Pair<String, String> getDeleteCredentials() {
+        return getWriteCredentials();
+    }
+
+    @Override
+    public Pair<String, String> getReadCredentials() {
+        return getDefaultCredentials();
+    }
+
+    protected Pair<String, String> getReadExtendedCredentials() {
+        return getReadCredentials();
+    }
+
+    protected abstract Pair<String, String> getDefaultCredentials();
 
     /**
      * - this is a hook that executes before read operations, in order to allow custom security work to happen for read operations; similar to: AbstractRestTemplate.findRequest

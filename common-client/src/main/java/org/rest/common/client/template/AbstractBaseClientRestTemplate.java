@@ -25,11 +25,15 @@ public abstract class AbstractBaseClientRestTemplate {
 
     protected abstract Pair<String, String> getDefaultCredentials();
 
-    protected Pair<String, String> getReadDefaultCredentials() {
+    protected Pair<String, String> getReadCredentials() {
         return getDefaultCredentials();
     }
 
-    protected Pair<String, String> getWriteDefaultCredentials() {
+    protected Pair<String, String> getReadExtendedCredentials() {
+        return getReadCredentials();
+    }
+
+    protected Pair<String, String> getWriteCredentials() {
         return getDefaultCredentials();
     }
 
@@ -40,57 +44,52 @@ public abstract class AbstractBaseClientRestTemplate {
         //
     }
 
+    // read
+
     /**
      * - note: hook to be able to customize the find headers if needed
      */
-    protected HttpHeaders findHeaders() {
+    protected HttpHeaders readHeaders() {
         return HeaderUtil.createAcceptHeaders(marshaller);
     }
 
-    protected HttpHeaders findHeadersWithAuth() {
-        final Pair<String, String> defaultCredentials = getReadDefaultCredentials();
-        return findHeadersWithAuth(defaultCredentials.getLeft(), defaultCredentials.getRight());
+    protected HttpHeaders readHeadersWithAuth() {
+        final Pair<String, String> defaultCredentials = getReadCredentials();
+        return readHeadersWithAuth(defaultCredentials.getLeft(), defaultCredentials.getRight());
     }
 
-    protected HttpHeaders findHeadersWithAuth(final Pair<String, String> credentials) {
+    protected HttpHeaders readHeadersWithAuth(final Pair<String, String> credentials) {
         if (credentials == null) {
-            return findHeadersWithAuth(null, null);
+            final Pair<String, String> readCredentials = getReadCredentials();
+            return readHeadersWithAuth(readCredentials.getLeft(), readCredentials.getRight());
         }
-        return findHeadersWithAuth(credentials.getLeft(), credentials.getRight());
+        return readHeadersWithAuth(credentials.getLeft(), credentials.getRight());
     }
 
-    /**
-     * - note: hook to be able to customize the find headers if needed
-     */
-    protected HttpHeaders findHeadersWithAuth(final String username, final String password) {
-        if (username == null || password == null) {
-            Preconditions.checkState(username == null && password == null);
-            final Pair<String, String> defaultCredentials = getReadDefaultCredentials();
-            return HeaderUtil.createAcceptAndBasicAuthHeaders(marshaller, defaultCredentials.getLeft(), defaultCredentials.getRight());
-        }
+    private final HttpHeaders readHeadersWithAuth(final String username, final String password) {
+        Preconditions.checkNotNull(username);
+        Preconditions.checkNotNull(password);
         return HeaderUtil.createAcceptAndBasicAuthHeaders(marshaller, username, password);
     }
 
     // write
 
     protected HttpHeaders writeHeadersWithAuth() {
-        final Pair<String, String> defaultCredentials = getWriteDefaultCredentials();
+        final Pair<String, String> defaultCredentials = getWriteCredentials();
         return writeHeadersWithAuth(defaultCredentials.getLeft(), defaultCredentials.getRight());
     }
 
     protected HttpHeaders writeHeadersWithAuth(final Pair<String, String> credentials) {
         if (credentials == null) {
-            return writeHeadersWithAuth(null, null);
+            final Pair<String, String> writeCredentials = getWriteCredentials();
+            return writeHeadersWithAuth(writeCredentials.getLeft(), writeCredentials.getRight());
         }
         return writeHeadersWithAuth(credentials.getLeft(), credentials.getRight());
     }
 
-    private HttpHeaders writeHeadersWithAuth(final String username, final String password) {
-        if (username == null || password == null) {
-            Preconditions.checkState(username == null && password == null);
-            final Pair<String, String> defaultCredentials = getWriteDefaultCredentials();
-            return HeaderUtil.createContentTypeAndBasicAuthHeaders(marshaller, defaultCredentials.getLeft(), defaultCredentials.getRight());
-        }
+    private final HttpHeaders writeHeadersWithAuth(final String username, final String password) {
+        Preconditions.checkNotNull(username);
+        Preconditions.checkNotNull(password);
         return HeaderUtil.createContentTypeAndBasicAuthHeaders(marshaller, username, password);
     }
 

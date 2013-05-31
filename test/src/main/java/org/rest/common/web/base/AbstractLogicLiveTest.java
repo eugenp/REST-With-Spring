@@ -6,6 +6,8 @@ import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.rest.common.search.ClientOperation.EQ;
 import static org.rest.common.search.ClientOperation.NEG_EQ;
@@ -50,6 +52,32 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     // tests
 
     // find - one
+
+    @Test
+    public final void givenResourceExists_whenResourceIsRetrieved_thenResourceHasId() {
+        // Given
+        final T newResource = createNewEntity();
+        final String uriOfExistingResource = getApi().createAsUri(newResource);
+
+        // When
+        final T createdResource = getApi().findOneByUri(uriOfExistingResource, null);
+
+        // Then
+        assertThat(createdResource.getId(), notNullValue());
+    }
+
+    @Test
+    public final void givenResourceExists_whenResourceIsRetrieved_thenResourceIsCorrectlyRetrieved() {
+        // Given
+        final T newResource = createNewEntity();
+        final String uriOfExistingResource = getApi().createAsUri(newResource);
+
+        // When
+        final T createdResource = getApi().findOneByUri(uriOfExistingResource, null);
+
+        // Then
+        assertEquals(createdResource, newResource);
+    }
 
     @Test
     /*code*/public void givenResourceForIdExists_whenResourceOfThatIdIsRetrieved_then200IsRetrieved() {
@@ -140,7 +168,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     @Test
     /*code*/public void whenNullResourceIsCreated_then415IsReceived() {
         // When
-        final Response response = givenAuthenticated().contentType(getApi().getMarshaller().getMime()).post(getUri());
+        final Response response = givenReadAuthenticated().contentType(getApi().getMarshaller().getMime()).post(getUri());
 
         // Then
         assertThat(response.getStatusCode(), is(415));
@@ -184,7 +212,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     // update
 
     @Test
-    /*code*/public void givenInvalidResource_whenResourceIsUpdated_then409ConflictIsReceived() {
+    /*code*/public void givenInvalidResource_whenResourceIsUpdated_then400BadRequestIsReceived() {
         // Given
         final T existingResource = getApi().create(createNewEntity());
         getEntityOps().invalidate(existingResource);
@@ -193,7 +221,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
         final Response response = getApi().updateAsResponse(existingResource);
 
         // Then
-        assertThat(response.getStatusCode(), is(409));
+        assertThat(response.getStatusCode(), is(400));
     }
 
     @Test
@@ -221,7 +249,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     /*code*/public void whenNullResourceIsUpdated_then400IsReceived() {
         // Given
         // When
-        final Response response = givenAuthenticated().contentType(getApi().getMarshaller().getMime()).put(getUri() + "/" + randomAlphanumeric(4));
+        final Response response = givenReadAuthenticated().contentType(getApi().getMarshaller().getMime()).put(getUri() + "/" + randomAlphanumeric(4));
 
         // Then
         assertThat(response.getStatusCode(), is(400));
@@ -313,8 +341,8 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
         return getApi().getUri() + WebConstants.PATH_SEP;
     }
 
-    protected final RequestSpecification givenAuthenticated() {
-        return getApi().givenAuthenticated();
+    protected final RequestSpecification givenReadAuthenticated() {
+        return getApi().givenReadAuthenticated();
     }
 
 }
