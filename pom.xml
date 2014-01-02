@@ -59,62 +59,60 @@
 	<properties>
 
 		<!-- Spring related -->
-		<spring.version>3.2.3.RELEASE</spring.version>
-		<spring-security.version>3.2.0.M1</spring-security.version> <!-- 3.2.0.M1 -->
-		<javassist.version>3.17.1-GA</javassist.version>
-		<cglib.version>2.2.2</cglib.version>
-		<aspectjweaver.version>1.7.1</aspectjweaver.version>
+		<spring.version>4.0.0.RELEASE</spring.version>
+		<spring-security.version>3.2.0.RELEASE</spring-security.version> <!--  -->
+		<javassist.version>3.18.1-GA</javassist.version>
+		<aspectjweaver.version>1.7.4</aspectjweaver.version>
 
 		<!-- web -->
 		<javax.servlet-api.version>3.0.1</javax.servlet-api.version>
 
 		<!-- marshalling -->
-		<jackson.version>2.2.2</jackson.version>
-		<jaxb-api.version>2.2.7</jaxb-api.version>
-		<xstream.version>1.4.4</xstream.version>
+		<jackson.version>2.2.3</jackson.version>
+		<jaxb-api.version>2.2.11</jaxb-api.version>
+		<xstream.version>1.4.6</xstream.version>
 
 		<!-- commons and utils -->
 		<commons-lang3.version>3.2-SNAPSHOT</commons-lang3.version>
-		<guava.version>14.0.1</guava.version>
+		<guava.version>16.0-rc1</guava.version>
 
 		<!-- UNSORTED -->
-		<commons-codec.version>1.7</commons-codec.version>
+		<commons-codec.version>1.9</commons-codec.version>
 
 		<!-- persistence -->
-		<mysql-connector-java.version>5.1.25</mysql-connector-java.version> <!-- latest version on: 03.19.2013 - http://dev.mysql.com/downloads/connector/j/ -->
-		<hibernate.version>4.2.2.Final</hibernate.version>
-		<hibernate-jpamodelgen.version>1.2.0.Final</hibernate-jpamodelgen.version>
+		<mysql-connector-java.version>5.1.28</mysql-connector-java.version> <!-- latest version on: 02.01.2014 - http://dev.mysql.com/downloads/connector/j/ -->
+		<hibernate.version>4.3.0.Final</hibernate.version>
+		<hibernate-jpamodelgen.version>4.3.0.Final</hibernate-jpamodelgen.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
-		<querydsl.version>2.9.0</querydsl.version>
-		<spring-data-jpa.version>1.3.2.RELEASE</spring-data-jpa.version>
+		<querydsl.version>3.3.0</querydsl.version>
+		<spring-data-jpa.version>1.4.3.RELEASE</spring-data-jpa.version>
 
-		<h2.version>1.3.170</h2.version>
-		<hsqldb.version>2.2.9</hsqldb.version>
+		<h2.version>1.3.174</h2.version>
+		<hsqldb.version>2.3.1</hsqldb.version>
 
-		<validation-api.version>1.0.0.GA</validation-api.version>
-		<hibernate-validator.version>4.3.1.Final</hibernate-validator.version>
+		<validation-api.version>1.1.0.Final</validation-api.version>
+		<hibernate-validator.version>5.0.2.Final</hibernate-validator.version>
 
 		<!-- logging -->
 		<org.slf4j.version>1.7.3</org.slf4j.version>
-		<logback.version>1.0.10</logback.version>
+		<logback.version>1.0.11</logback.version>
 
 		<!-- testing -->
 		<org.hamcrest.version>1.3</org.hamcrest.version>
 		<junit.version>4.11</junit.version>
 		<mockito.version>1.9.5</mockito.version>
 
-		<httpcore.version>4.2.4</httpcore.version>
-		<httpclient.version>4.2.5</httpclient.version>
+		<httpcore.version>4.3.1</httpcore.version>
+		<httpclient.version>4.3.1</httpclient.version>
 
-		<rest-assured.version>1.8.0</rest-assured.version>
-		<groovy.version>1.8.9</groovy.version>
+		<rest-assured.version>2.1.0</rest-assured.version>
 
 		<!-- maven plugins -->
-		<maven-surefire-plugin.version>2.14.1</maven-surefire-plugin.version>
+		<maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
 		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
 		<maven-resources-plugin.version>2.6</maven-resources-plugin.version>
-		<jrebel-maven-plugin.version>1.1.3</jrebel-maven-plugin.version>
-		<cargo-maven2-plugin.version>1.4.2</cargo-maven2-plugin.version>
+		<jrebel-maven-plugin.version>1.1.5</jrebel-maven-plugin.version>
+		<cargo-maven2-plugin.version>1.4.6</cargo-maven2-plugin.version>
 
 	</properties>
 
