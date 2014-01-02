@@ -73,7 +73,7 @@
 		<xstream.version>1.4.6</xstream.version>
 
 		<!-- commons and utils -->
-		<commons-lang3.version>3.2-SNAPSHOT</commons-lang3.version>
+		<commons-lang3.version>3.2</commons-lang3.version>
 		<guava.version>16.0-rc1</guava.version>
 
 		<!-- UNSORTED -->
