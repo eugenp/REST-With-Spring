@@ -144,8 +144,6 @@
 
 		<!-- proxying -->
 
-		<!-- <dependency> <groupId>cglib</groupId> <artifactId>cglib-nodep</artifactId> 
-			<version>${cglib.version}</version> <scope>runtime</scope> </dependency> -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
@@ -223,10 +221,6 @@
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
 					<groupId>commons-logging</groupId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.codehaus.groovy</groupId>
-					<artifactId>groovy</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
