@@ -9,7 +9,7 @@ import org.rest.sec.web.role.RoleLogicRestLiveTest;
 import org.rest.sec.web.user.UserLogicRestLiveTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({// @formatter:off
+@SuiteClasses({ // @formatter:off
     UserLogicRestLiveTest.class,
     RoleLogicRestLiveTest.class,
     PrivilegeLogicRestLiveTest.class,

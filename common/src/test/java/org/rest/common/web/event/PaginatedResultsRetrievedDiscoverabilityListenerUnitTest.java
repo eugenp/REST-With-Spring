@@ -67,10 +67,8 @@ public class PaginatedResultsRetrievedDiscoverabilityListenerUnitTest {
         listener.onApplicationEvent(new PaginatedResultsRetrievedEvent<Integer>(RESOURCE_CLASS, uriComponentsBuilder, httpServletResponse, pageToSet, totalPagesToSet, PAGE_SIZE_TO_SET));
 
         // then
-        verify(httpServletResponse).addHeader(
-                eq(HttpHeaders.LINK),
-                eq(LinkUtil.createLinkHeader(RESOURCE_HTTP_LOCATION + "/" + RESOURCE_CLASS.getSimpleName().toLowerCase() + "?page=" + (pageToSet + 1) + "&size=" + PAGE_SIZE_TO_SET, "next") + ", "
-                        + LinkUtil.createLinkHeader(RESOURCE_HTTP_LOCATION + "/" + RESOURCE_CLASS.getSimpleName().toLowerCase() + "?page=" + (totalPagesToSet - 1) + "&size=" + PAGE_SIZE_TO_SET, "last")));
+        verify(httpServletResponse).addHeader(eq(HttpHeaders.LINK), eq(LinkUtil.createLinkHeader(RESOURCE_HTTP_LOCATION + "/" + RESOURCE_CLASS.getSimpleName().toLowerCase() + "?page=" + (pageToSet + 1) + "&size=" + PAGE_SIZE_TO_SET, "next") + ", "
+                + LinkUtil.createLinkHeader(RESOURCE_HTTP_LOCATION + "/" + RESOURCE_CLASS.getSimpleName().toLowerCase() + "?page=" + (totalPagesToSet - 1) + "&size=" + PAGE_SIZE_TO_SET, "last")));
     }
 
     @Test
@@ -83,10 +81,8 @@ public class PaginatedResultsRetrievedDiscoverabilityListenerUnitTest {
         listener.onApplicationEvent(new PaginatedResultsRetrievedEvent<Integer>(RESOURCE_CLASS, uriComponentsBuilder, httpServletResponse, pageToSet, totalPagesToSet, PAGE_SIZE_TO_SET));
 
         // then
-        verify(httpServletResponse).addHeader(
-                eq(HttpHeaders.LINK),
-                eq(LinkUtil.createLinkHeader(RESOURCE_HTTP_LOCATION + "/" + RESOURCE_CLASS.getSimpleName().toLowerCase() + "?page=" + (pageToSet - 1) + "&size=" + PAGE_SIZE_TO_SET, "prev") + ", "
-                        + LinkUtil.createLinkHeader(RESOURCE_HTTP_LOCATION + "/" + RESOURCE_CLASS.getSimpleName().toLowerCase() + "?page=0&size=" + PAGE_SIZE_TO_SET, "first")));
+        verify(httpServletResponse).addHeader(eq(HttpHeaders.LINK), eq(LinkUtil.createLinkHeader(RESOURCE_HTTP_LOCATION + "/" + RESOURCE_CLASS.getSimpleName().toLowerCase() + "?page=" + (pageToSet - 1) + "&size=" + PAGE_SIZE_TO_SET, "prev") + ", "
+                + LinkUtil.createLinkHeader(RESOURCE_HTTP_LOCATION + "/" + RESOURCE_CLASS.getSimpleName().toLowerCase() + "?page=0&size=" + PAGE_SIZE_TO_SET, "first")));
     }
 
     @Test
@@ -99,8 +95,7 @@ public class PaginatedResultsRetrievedDiscoverabilityListenerUnitTest {
         listener.onApplicationEvent(new PaginatedResultsRetrievedEvent<Integer>(RESOURCE_CLASS, uriComponentsBuilder, httpServletResponse, pageToSet, totalPagesToSet, PAGE_SIZE_TO_SET));
 
         // then
-        verify(httpServletResponse).addHeader(
-                eq(HttpHeaders.LINK),
+        verify(httpServletResponse).addHeader(eq(HttpHeaders.LINK),
                 eq(LinkUtil.createLinkHeader(RESOURCE_HTTP_LOCATION + "/" + RESOURCE_CLASS.getSimpleName().toLowerCase() + "?page=" + (pageToSet + 1) + "&size=" + PAGE_SIZE_TO_SET, "next") + ", "
                         + LinkUtil.createLinkHeader(RESOURCE_HTTP_LOCATION + "/" + RESOURCE_CLASS.getSimpleName().toLowerCase() + "?page=" + (pageToSet - 1) + "&size=" + PAGE_SIZE_TO_SET, "prev") + ", "
                         + LinkUtil.createLinkHeader(RESOURCE_HTTP_LOCATION + "/" + RESOURCE_CLASS.getSimpleName().toLowerCase() + "?page=0&size=" + PAGE_SIZE_TO_SET, "first") + ", "

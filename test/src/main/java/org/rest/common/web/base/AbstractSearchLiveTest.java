@@ -32,7 +32,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 @SuppressWarnings("unchecked")
 @ActiveProfiles({ CLIENT, TEST })
-public abstract class AbstractSearchLiveTest<T extends INameableEntity> extends AbstractSearchReadOnlyLiveTest<T> implements ISearchTest {
+public abstract class AbstractSearchLiveTest<T extends INameableEntity> extends AbstractSearchReadOnlyLiveTest<T>implements ISearchTest {
 
     public AbstractSearchLiveTest() {
         super();

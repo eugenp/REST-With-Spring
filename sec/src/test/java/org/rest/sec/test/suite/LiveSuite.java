@@ -7,7 +7,7 @@ import org.rest.sec.security.SecurityRestLiveTest;
 import org.rest.sec.test.suite.client.LiveClientSuite;
 
 @RunWith(Suite.class)
-@SuiteClasses({// @formatter:off
+@SuiteClasses({ // @formatter:off
     LiveDiscoverabilitySuite.class,
     LiveLogicSuite.class,
     LiveSearchSuite.class,

@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.common.collect.Sets;
 import com.jayway.restassured.response.Response;
 
-public class RoleLogicRestLiveTest extends SecLogicRestLiveTest<Role> implements IResourceWithAssociationsIntegrationTest {
+public class RoleLogicRestLiveTest extends SecLogicRestLiveTest<Role>implements IResourceWithAssociationsIntegrationTest {
 
     @Autowired
     private RoleTestRestTemplate api;

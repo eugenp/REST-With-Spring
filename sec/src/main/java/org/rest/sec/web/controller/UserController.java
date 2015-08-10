@@ -27,7 +27,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping(value = UriMappingConstants.USERS)
-public class UserController extends AbstractController<User> implements ISortingController<User> {
+public class UserController extends AbstractController<User>implements ISortingController<User> {
 
     @Autowired
     private IUserService service;

@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class PrincipalServiceImpl extends AbstractService<Principal> implements IPrincipalService {
+public class PrincipalServiceImpl extends AbstractService<Principal>implements IPrincipalService {
 
     @Autowired
     IPrincipalJpaDAO dao;

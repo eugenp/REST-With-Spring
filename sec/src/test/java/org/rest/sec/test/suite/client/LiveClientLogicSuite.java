@@ -12,7 +12,7 @@ import org.rest.sec.client.template.test.UserLogicClientRestLiveTest;
 import org.rest.sec.client.template.test.UserReadOnlyLogicClientRestLiveTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({//@formatter:off
+@SuiteClasses({ //@formatter:off
     UserLogicClientRestLiveTest.class,
     RoleLogicClientRestLiveTest.class,
     PrivilegeLogicClientRestLiveTest.class,

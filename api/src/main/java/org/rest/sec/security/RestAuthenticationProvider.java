@@ -34,7 +34,8 @@ import com.google.common.collect.Sets;
 
 /**
  * - note: the original is DaoAuthenticationProvider <br/>
- * An {@link AuthenticationProvider} implementation that retrieves user details from a {@link UserDetailsService}.
+ * An {@link AuthenticationProvider} implementation that retrieves user details
+ * from a {@link UserDetailsService}.
  */
 @Component
 @Profile("client")
@@ -44,7 +45,8 @@ public class RestAuthenticationProvider extends AbstractUserDetailsAuthenticatio
     @Qualifier("authenticationRestTemplate")
     private AuthenticationRestTemplate authenticationApi;
 
-    // ~ Instance fields ================================================================================================
+    // ~ Instance fields
+    // ================================================================================================
 
     private PasswordEncoder passwordEncoder = new PlaintextPasswordEncoder();
 
@@ -54,7 +56,8 @@ public class RestAuthenticationProvider extends AbstractUserDetailsAuthenticatio
         super();
     }
 
-    // ~ Methods ========================================================================================================
+    // ~ Methods
+    // ========================================================================================================
 
     @Override
     @SuppressWarnings("deprecation")
@@ -68,7 +71,7 @@ public class RestAuthenticationProvider extends AbstractUserDetailsAuthenticatio
         if (authentication.getCredentials() == null) {
             logger.debug("Authentication failed: no credentials provided");
 
-            throw new BadCredentialsException(messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"), userDetails);
+            throw new BadCredentialsException(messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
         }
 
         final String presentedPassword = authentication.getCredentials().toString();
@@ -76,7 +79,7 @@ public class RestAuthenticationProvider extends AbstractUserDetailsAuthenticatio
         if (!passwordEncoder.isPasswordValid(userDetails.getPassword(), presentedPassword, salt)) {
             logger.debug("Authentication failed: password does not match stored value");
 
-            throw new BadCredentialsException(messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"), userDetails);
+            throw new BadCredentialsException(messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
         }
     }
 
@@ -88,7 +91,9 @@ public class RestAuthenticationProvider extends AbstractUserDetailsAuthenticatio
         try {
             final ResponseEntity<User> authenticationResponse = authenticationApi.authenticate(name, password);
             if (authenticationResponse.getStatusCode().value() == 401) {
-                // temporary - the idea here is to generate the not authorized exception - not by hand, but by returning wrong credentials which in turn will be refused later
+                // temporary - the idea here is to generate the not authorized
+                // exception - not by hand, but by returning wrong credentials
+                // which in turn will be refused later
                 return new org.springframework.security.core.userdetails.User("wrongUsername", "wrongPass", Lists.<GrantedAuthority> newArrayList());
             }
 
@@ -111,13 +116,18 @@ public class RestAuthenticationProvider extends AbstractUserDetailsAuthenticatio
     }
 
     /**
-     * Sets the PasswordEncoder instance to be used to encode and validate passwords. If not set, the password will be compared as plain text.
+     * Sets the PasswordEncoder instance to be used to encode and validate
+     * passwords. If not set, the password will be compared as plain text.
      * <p/>
-     * For systems which are already using salted password which are encoded with a previous release, the encoder should be of type {@code org.springframework.security.authentication.encoding.PasswordEncoder}. Otherwise, the recommended
-     * approach is to use {@code org.springframework.security.crypto.password.PasswordEncoder}.
-     * 
+     * For systems which are already using salted password which are encoded
+     * with a previous release, the encoder should be of type
+     * {@code org.springframework.security.authentication.encoding.PasswordEncoder}
+     * . Otherwise, the recommended approach is to use
+     * {@code org.springframework.security.crypto.password.PasswordEncoder}.
+     *
      * @param passwordEncoderToSet
-     *            must be an instance of one of the {@code PasswordEncoder} types.
+     *            must be an instance of one of the {@code PasswordEncoder}
+     *            types.
      */
     public void setPasswordEncoder(final Object passwordEncoderToSet) {
         Assert.notNull(passwordEncoderToSet, "passwordEncoder cannot be null");
@@ -158,12 +168,18 @@ public class RestAuthenticationProvider extends AbstractUserDetailsAuthenticatio
     }
 
     /**
-     * The source of salts to use when decoding passwords. <code>null</code> is a valid value, meaning the <code>DaoAuthenticationProvider</code> will present <code>null</code> to the relevant <code>PasswordEncoder</code>.
+     * The source of salts to use when decoding passwords. <code>null</code> is
+     * a valid value, meaning the <code>DaoAuthenticationProvider</code> will
+     * present <code>null</code> to the relevant <code>PasswordEncoder</code>.
      * <p/>
-     * Instead, it is recommended that you use an encoder which uses a random salt and combines it with the password field. This is the default approach taken in the {@code org.springframework.security.crypto.password} package.
-     * 
+     * Instead, it is recommended that you use an encoder which uses a random
+     * salt and combines it with the password field. This is the default
+     * approach taken in the
+     * {@code org.springframework.security.crypto.password} package.
+     *
      * @param saltSourceToSet
-     *            to use when attempting to decode passwords via the <code>PasswordEncoder</code>
+     *            to use when attempting to decode passwords via the
+     *            <code>PasswordEncoder</code>
      */
     public void setSaltSource(final SaltSource saltSourceToSet) {
         saltSource = saltSourceToSet;

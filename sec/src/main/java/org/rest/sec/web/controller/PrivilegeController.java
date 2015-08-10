@@ -27,7 +27,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping(value = UriMappingConstants.PRIVILEGES)
-public class PrivilegeController extends AbstractController<Privilege> implements ISortingController<Privilege> {
+public class PrivilegeController extends AbstractController<Privilege>implements ISortingController<Privilege> {
 
     @Autowired
     private IPrivilegeService service;

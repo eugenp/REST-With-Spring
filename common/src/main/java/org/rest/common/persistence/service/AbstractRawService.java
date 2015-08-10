@@ -86,7 +86,6 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
         return Lists.newArrayList(resultPage.getContent());
     }
 
-    @SuppressWarnings("null")
     @Override
     public List<T> searchAll(final Triple<String, ClientOperation, String>... constraints) {
         Preconditions.checkState(constraints != null);
@@ -103,7 +102,6 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
         return getSpecificationExecutor().findAll(specifications);
     }
 
-    @SuppressWarnings("null")
     @Override
     public T searchOne(final Triple<String, ClientOperation, String>... constraints) {
         Preconditions.checkState(constraints != null);

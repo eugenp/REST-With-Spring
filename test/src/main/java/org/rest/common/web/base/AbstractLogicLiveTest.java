@@ -80,7 +80,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     }
 
     @Test
-    /*code*/public void givenResourceForIdExists_whenResourceOfThatIdIsRetrieved_then200IsRetrieved() {
+    /* code */public void givenResourceForIdExists_whenResourceOfThatIdIsRetrieved_then200IsRetrieved() {
         // Given
         final String uriForResourceCreation = getApi().createAsUri(createNewEntity());
 
@@ -93,7 +93,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
 
     @Test
     @Ignore("this was written for a neo4j persistence engine, which treats null ids differently than Hibernate")
-    /*code*/public void whenResourceIsRetrievedByNegativeId_then409IsReceived() {
+    /* code */public void whenResourceIsRetrievedByNegativeId_then409IsReceived() {
         final Long id = IDUtil.randomNegativeLong();
 
         // When
@@ -104,7 +104,8 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     }
 
     // find one - by attributes
-    // note: kept as the same tests from AbstractLogicClientRestLiveTest are still ignored (bug in RestTemplate)
+    // note: kept as the same tests from AbstractLogicClientRestLiveTest are
+    // still ignored (bug in RestTemplate)
 
     @Test
     /**/public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenNoExceptions() {
@@ -157,7 +158,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     // create
 
     @Test
-    /*code*/public void whenResourceIsCreated_then201IsReceived() {
+    /* code */public void whenResourceIsCreated_then201IsReceived() {
         // When
         final Response response = getApi().createAsResponse(createNewEntity());
 
@@ -166,7 +167,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     }
 
     @Test
-    /*code*/public void whenNullResourceIsCreated_then415IsReceived() {
+    /* code */public void whenNullResourceIsCreated_then415IsReceived() {
         // When
         final Response response = givenReadAuthenticated().contentType(getApi().getMarshaller().getMime()).post(getUri());
 
@@ -175,7 +176,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     }
 
     @Test
-    /*code*/public void whenResourceIsCreatedWithNonNullId_then409IsReceived() {
+    /* code */public void whenResourceIsCreatedWithNonNullId_then409IsReceived() {
         final T resourceWithId = createNewEntity();
         resourceWithId.setId(5l);
 
@@ -187,7 +188,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     }
 
     @Test
-    /*low level*/public void whenResourceIsCreated_thenALocationIsReturnedToTheClient() {
+    /* low level */public void whenResourceIsCreated_thenALocationIsReturnedToTheClient() {
         // When
         final Response response = getApi().createAsResponse(createNewEntity());
 
@@ -197,7 +198,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
 
     @Test
     @Ignore("this will not always pass at this time")
-    /*code*/public void givenResourceExists_whenResourceWithSameAttributesIsCreated_then409IsReceived() {
+    /* code */public void givenResourceExists_whenResourceWithSameAttributesIsCreated_then409IsReceived() {
         // Given
         final T newEntity = createNewEntity();
         getApi().createAsUri(newEntity);
@@ -212,7 +213,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     // update
 
     @Test
-    /*code*/public void givenInvalidResource_whenResourceIsUpdated_then400BadRequestIsReceived() {
+    /* code */public void givenInvalidResource_whenResourceIsUpdated_then400BadRequestIsReceived() {
         // Given
         final T existingResource = getApi().create(createNewEntity());
         getEntityOps().invalidate(existingResource);
@@ -225,7 +226,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     }
 
     @Test
-    /*code*/public void whenResourceIsUpdatedWithNullId_then400IsReceived() {
+    /* code */public void whenResourceIsUpdatedWithNullId_then400IsReceived() {
         // When
         final Response response = getApi().updateAsResponse(createNewEntity());
 
@@ -234,7 +235,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     }
 
     @Test
-    /*code*/public void givenResourceExists_whenResourceIsUpdated_then200IsReceived() {
+    /* code */public void givenResourceExists_whenResourceIsUpdated_then200IsReceived() {
         // Given
         final T existingResource = getApi().create(createNewEntity());
 
@@ -246,7 +247,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     }
 
     @Test
-    /*code*/public void whenNullResourceIsUpdated_then400IsReceived() {
+    /* code */public void whenNullResourceIsUpdated_then400IsReceived() {
         // Given
         // When
         final Response response = givenReadAuthenticated().contentType(getApi().getMarshaller().getMime()).put(getUri() + "/" + randomAlphanumeric(4));
@@ -256,7 +257,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     }
 
     @Test
-    /*code*/public void givenResourceDoesNotExist_whenResourceIsUpdated_then404IsReceived() {
+    /* code */public void givenResourceDoesNotExist_whenResourceIsUpdated_then404IsReceived() {
         // Given
         final T unpersistedEntity = createNewEntity();
         unpersistedEntity.setId(IDUtil.randomPositiveLong());
@@ -271,7 +272,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     // delete
 
     @Test
-    /*code*/public void whenResourceIsDeletedByIncorrectNonNumericId_then400IsReceived() {
+    /* code */public void whenResourceIsDeletedByIncorrectNonNumericId_then400IsReceived() {
         // When
         final Response response = getApi().deleteAsResponse(getUri() + randomAlphabetic(6));
 
@@ -280,7 +281,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     }
 
     @Test
-    /*code*/public void givenResourceDoesNotExist_whenResourceIsDeleted_then404IsReceived() {
+    /* code */public void givenResourceDoesNotExist_whenResourceIsDeleted_then404IsReceived() {
         // When
         final Response response = getApi().deleteAsResponse(getUri() + randomNumeric(6));
 
@@ -289,7 +290,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     }
 
     @Test
-    /*code*/public void givenResourceExists_whenResourceIsDeleted_then204IsReceived() {
+    /* code */public void givenResourceExists_whenResourceIsDeleted_then204IsReceived() {
         // Given
         final String uriForResourceCreation = getApi().createAsUri(createNewEntity());
 
@@ -301,7 +302,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableEntity> {
     }
 
     @Test
-    /*code*/public void givenResourceExistedAndWasDeleted_whenRetrievingResource_then404IsReceived() {
+    /* code */public void givenResourceExistedAndWasDeleted_whenRetrievingResource_then404IsReceived() {
         // Given
         final String uriOfResource = getApi().createAsUri(createNewEntity());
         getApi().deleteAsResponse(uriOfResource);

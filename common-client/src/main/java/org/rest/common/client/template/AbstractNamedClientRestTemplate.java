@@ -8,7 +8,7 @@ import org.rest.common.search.ClientOperation;
 import org.rest.common.util.SearchField;
 
 @SuppressWarnings({ "unchecked" })
-public abstract class AbstractNamedClientRestTemplate<T extends INameableEntity> extends AbstractClientRestTemplate<T> implements IClientTemplate<T> {
+public abstract class AbstractNamedClientRestTemplate<T extends INameableEntity> extends AbstractClientRestTemplate<T>implements IClientTemplate<T> {
 
     public AbstractNamedClientRestTemplate(final Class<T> clazzToSet) {
         super(clazzToSet);

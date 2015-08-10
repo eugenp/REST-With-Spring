@@ -8,7 +8,7 @@ import org.rest.sec.web.role.RoleSearchRestLiveTest;
 import org.rest.sec.web.user.UserSearchRestLiveTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({// @formatter:off
+@SuiteClasses({ // @formatter:off
     UserSearchRestLiveTest.class,
     RoleSearchRestLiveTest.class,
     PrivilegeSearchRestLiveTest.class

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class RoleServiceImpl extends AbstractService<Role> implements IRoleService {
+public class RoleServiceImpl extends AbstractService<Role>implements IRoleService {
 
     @Autowired
     IRoleJpaDAO dao;
