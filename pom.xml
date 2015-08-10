@@ -5,10 +5,17 @@
 	<artifactId>rest-parent</artifactId>
 	<version>0.12-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	
 	<name>rest-security</name>
 	<url>https://github.com/eugenp/REST</url>
 	<description>REST Security is a Proof of Concept implementation of a RESTful Service with Spring</description>
-
+	
+	<parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.2.5.RELEASE</version>
+    </parent>
+    
 	<build>
 
 		<plugins>
@@ -32,6 +39,16 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>${maven-surefire-plugin.version}</version>
+					<configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <excludes>
+                        <exclude>**/*IntegrationTest.java</exclude>
+                        <exclude>**/*LiveTest.java</exclude>
+                    </excludes>
+                    <systemPropertyVariables>
+                        <!-- <provPersistenceTarget>h2</provPersistenceTarget> -->
+                    </systemPropertyVariables>
+                </configuration>
 				</plugin>
 
 				<plugin>
@@ -39,8 +56,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>${maven-compiler-plugin.version}</version>
 					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
+						<source>1.8</source>
+						<target>1.8</target>
 						<compilerArgument>-proc:none</compilerArgument>
 					</configuration>
 				</plugin>
@@ -92,6 +109,9 @@
 
 		<validation-api.version>1.1.0.Final</validation-api.version>
 		<hibernate-validator.version>5.2.1.Final</hibernate-validator.version>
+		
+		<!-- ops related -->
+		<tomcat.version>8.0.24</tomcat.version>
 
 		<!-- logging -->
 		<org.slf4j.version>1.7.12</org.slf4j.version>

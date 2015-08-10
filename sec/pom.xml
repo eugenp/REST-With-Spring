@@ -52,7 +52,7 @@
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-servlet-api</artifactId>
-			<version>7.0.53</version>
+			<version>${tomcat.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -61,34 +61,29 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-core</artifactId>
-			<version>${org.hamcrest.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-library</artifactId>
-			<version>${org.hamcrest.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>${mockito.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -118,19 +113,19 @@
 
 		<plugins>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>**/*RestIntegrationTest.java</exclude>
-						<exclude>**/*RestLiveTest.java</exclude>
-					</excludes>
-					<systemPropertyVariables>
-						<persistenceTarget>h2</persistenceTarget>
-					</systemPropertyVariables>
-				</configuration>
-			</plugin>
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
+<!-- 				<artifactId>maven-surefire-plugin</artifactId> -->
+<!-- 				<configuration> -->
+<!-- 					<excludes> -->
+<!-- 						<exclude>**/*RestIntegrationTest.java</exclude> -->
+<!-- 						<exclude>**/*RestLiveTest.java</exclude> -->
+<!-- 					</excludes> -->
+<!-- 					<systemPropertyVariables> -->
+<!-- 						<persistenceTarget>h2</persistenceTarget> -->
+<!-- 					</systemPropertyVariables> -->
+<!-- 				</configuration> -->
+<!-- 			</plugin> -->
 
 			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
@@ -139,7 +134,7 @@
 				<configuration>
 					<wait>false</wait>
 					<container>
-						<containerId>jetty8x</containerId>
+						<containerId>tomcat8x</containerId>
 						<type>embedded</type>
 						<systemProperties>
 							<envTarget>dev</envTarget>
@@ -148,7 +143,7 @@
 					</container>
 					<configuration>
 						<properties>
-							<cargo.servlet.port>8080</cargo.servlet.port>
+							<cargo.servlet.port>8081</cargo.servlet.port>
 						</properties>
 					</configuration>
 				</configuration>
