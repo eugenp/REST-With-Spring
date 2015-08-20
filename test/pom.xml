@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>rest-test</artifactId>
-	<name>rest-test</name>
+	<artifactId>rest-security-test</artifactId>
+	<name>rest-security-test</name>
 
 	<parent>
 		<groupId>org</groupId>
-		<artifactId>rest-parent</artifactId>
-		<version>0.12-SNAPSHOT</version>
+		<artifactId>restwithspring-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
@@ -16,18 +16,11 @@
 
 		<dependency>
 			<groupId>org</groupId>
-			<artifactId>rest-common</artifactId>
-			<version>0.12-SNAPSHOT</version>
+			<artifactId>rest-common-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<!-- web -->
-
-		<!-- <dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>${javax.servlet-api.version}</version>
-			<scope>provided</scope>
-		</dependency> -->
 
 		<!-- test scoped -->
 

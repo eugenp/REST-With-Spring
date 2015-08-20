@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>rest-sec</artifactId>
+	<artifactId>rest-security</artifactId>
 	<packaging>war</packaging>
-	<name>rest-sec</name>
+	<name>rest-security</name>
 
 	<parent>
 		<groupId>org</groupId>
-		<artifactId>rest-parent</artifactId>
-		<version>0.12-SNAPSHOT</version>
+		<artifactId>restwithspring-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
@@ -17,20 +17,42 @@
 		<dependency>
 			<groupId>org</groupId>
 			<artifactId>rest-common</artifactId>
-			<version>0.12-SNAPSHOT</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org</groupId>
-			<artifactId>rest-test</artifactId>
-			<version>0.12-SNAPSHOT</version>
+			<artifactId>rest-common-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org</groupId>
+			<artifactId>rest-common-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<classifier>tests</classifier>
+		</dependency>
+
+		<dependency>
+			<groupId>org</groupId>
+			<artifactId>rest-security-test</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org</groupId>
-			<artifactId>rest-api</artifactId>
-			<version>0.12-SNAPSHOT</version>
+			<artifactId>rest-security-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org</groupId>
+			<artifactId>rest-security-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<classifier>tests</classifier>
 		</dependency>
 
 		<!-- util -->
@@ -97,7 +119,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>rest-sec</finalName>
+		<finalName>rest-security</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -107,19 +129,19 @@
 
 		<plugins>
 
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
-<!-- 				<artifactId>maven-surefire-plugin</artifactId> -->
-<!-- 				<configuration> -->
-<!-- 					<excludes> -->
-<!-- 						<exclude>**/*RestIntegrationTest.java</exclude> -->
-<!-- 						<exclude>**/*RestLiveTest.java</exclude> -->
-<!-- 					</excludes> -->
-<!-- 					<systemPropertyVariables> -->
-<!-- 						<persistenceTarget>h2</persistenceTarget> -->
-<!-- 					</systemPropertyVariables> -->
-<!-- 				</configuration> -->
-<!-- 			</plugin> -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-surefire-plugin</artifactId> -->
+			<!-- <configuration> -->
+			<!-- <excludes> -->
+			<!-- <exclude>**/*RestIntegrationTest.java</exclude> -->
+			<!-- <exclude>**/*RestLiveTest.java</exclude> -->
+			<!-- </excludes> -->
+			<!-- <systemPropertyVariables> -->
+			<!-- <persistenceTarget>h2</persistenceTarget> -->
+			<!-- </systemPropertyVariables> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
 
 			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
@@ -137,7 +159,7 @@
 					</container>
 					<configuration>
 						<properties>
-							<cargo.servlet.port>8081</cargo.servlet.port>
+							<cargo.servlet.port>8082</cargo.servlet.port>
 						</properties>
 					</configuration>
 				</configuration>
