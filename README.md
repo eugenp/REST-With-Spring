@@ -1,5 +1,6 @@
 # Resources
-- Technical forum: [rest-security google group](https://groups.google.com/forum/#!forum/restsec)
+- [The Upcoming "REST With Spring" Classes](http://restwithspring.com)
+- 
 - Docs: [Main wiki](https://github.com/eugenp/REST/wiki)
 - Continuous Integration: [CI on Cloudbees](https://rest-security.ci.cloudbees.com)
 
