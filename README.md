@@ -1,5 +1,5 @@
 # Resources
-- [The Upcoming "REST With Spring" Classes](http://restwithspring.com)
+- [The Upcoming "REST With Spring" Classes](http://www.baeldung.com/rest-with-spring-course?utm_source=github&utm_medium=social&utm_content=rest&utm_campaign=50off)
 - 
 - Docs: [Main wiki](https://github.com/eugenp/REST/wiki)
 - Continuous Integration: [CI on Cloudbees](https://rest-security.ci.cloudbees.com)
