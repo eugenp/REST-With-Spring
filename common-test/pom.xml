@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>rest-security-test</artifactId>
-	<name>rest-security-test</name>
+	<artifactId>common-test</artifactId>
+	<name>common-test</name>
 
 	<parent>
-		<groupId>org</groupId>
-		<artifactId>restwithspring-parent</artifactId>
+		<groupId>org.baeldung</groupId>
+		<artifactId>user-management-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
@@ -15,8 +15,8 @@
 		<!-- internal -->
 
 		<dependency>
-			<groupId>org</groupId>
-			<artifactId>rest-common-client</artifactId>
+			<groupId>org.baeldung</groupId>
+			<artifactId>common-client</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
@@ -63,7 +63,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>rest</finalName>
+		<finalName>common-test</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
