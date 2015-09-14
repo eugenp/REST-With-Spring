@@ -23,11 +23,12 @@
 	<logger name="org.springframework.web.servlet.mvc" level="WARN" /> <!-- some serialization issues are at trace level here: org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod -->
 
 	<!-- our service -->
-	<logger name="org.baeldung.rest" level="INFO" />
-	<logger name="org.baeldung.rest.persistence.setup" level="DEBUG" /> <!-- to follow if setup is being executed -->
+	<logger name="org.baeldung.um" level="INFO" />
+	<logger name="org.baeldung.um.persistence.setup" level="DEBUG" /> <!-- to follow if setup is being executed -->
 
-	<root level="WARN">
+	<root level="INFO">
 		<appender-ref ref="FILE" />
+		<appender-ref ref="STDOUT" />
 	</root>
 
 </configuration>
