@@ -1,7 +1,7 @@
 package org.baeldung.um.service.search;
 
 import org.baeldung.um.common.FixtureEntityFactory;
-import org.baeldung.um.model.Principal;
+import org.baeldung.um.persistence.model.Principal;
 import org.baeldung.um.service.IPrincipalService;
 import org.springframework.beans.factory.annotation.Autowired;
 

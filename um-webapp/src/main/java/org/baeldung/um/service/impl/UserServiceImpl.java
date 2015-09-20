@@ -1,15 +1,15 @@
 package org.baeldung.um.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.baeldung.common.search.ClientOperation;
 import org.baeldung.common.web.RestPreconditions;
-import org.baeldung.um.model.Principal;
-import org.baeldung.um.model.User;
+import org.baeldung.um.persistence.model.Principal;
 import org.baeldung.um.service.IPrincipalService;
 import org.baeldung.um.service.IUserService;
-import org.baeldung.um.web.dto.PrincipalToUserFunction;
+import org.baeldung.um.web.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -38,128 +38,123 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> searchAll(final Triple<String, ClientOperation, String>... constraints) {
-        final List<Principal> principalsResultedFromSearch = principalService.searchAll(constraints);
-        final List<User> usersResultedFromSearch = Lists.transform(principalsResultedFromSearch, new PrincipalToUserFunction());
-
-        return usersResultedFromSearch;
+    public List<UserDto> searchAll(final Triple<String, ClientOperation, String>... constraints) {
+        final List<Principal> principals = principalService.searchAll(constraints);
+        final List<UserDto> userDtos = principals.stream().map(this::convert).collect(Collectors.toList());
+        return Lists.newArrayList(userDtos);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public User searchOne(final Triple<String, ClientOperation, String>... constraints) {
+    public UserDto searchOne(final Triple<String, ClientOperation, String>... constraints) {
         final Principal principalResultedFromSearch = principalService.searchOne(constraints);
-        final User userResultedFromSearch = new PrincipalToUserFunction().apply(principalResultedFromSearch);
-
+        final UserDto userResultedFromSearch = convert(principalResultedFromSearch);
         return userResultedFromSearch;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<User> searchPaginated(final int page, final int size, final Triple<String, ClientOperation, String>... constraints) {
-        final Page<Principal> principalsPaginated = principalService.searchPaginated(page, size, constraints);
+    public Page<UserDto> searchPaginated(final int page, final int size, final Triple<String, ClientOperation, String>... constraints) {
+        final Page<Principal> principals = principalService.searchPaginated(page, size, constraints);
 
-        final List<User> usersPaginated = Lists.transform(principalsPaginated.getContent(), new PrincipalToUserFunction());
-
-        return new PageImpl<User>(usersPaginated, new PageRequest(page, size, null), principalsPaginated.getTotalElements());
+        final List<UserDto> userDtos = principals.getContent().stream().map(this::convert).collect(Collectors.toList());
+        return new PageImpl<UserDto>(userDtos, new PageRequest(page, size, null), principals.getTotalElements());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> searchAll(final String queryString) {
+    public List<UserDto> searchAll(final String queryString) {
         final List<Principal> principals = principalService.searchAll(queryString);
-        final List<User> users = Lists.transform(principals, new PrincipalToUserFunction());
-        return users;
+        final List<UserDto> userDtos = principals.stream().map(this::convert).collect(Collectors.toList());
+        return Lists.newArrayList(userDtos);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> searchPaginated(final String queryString, final int page, final int size) {
+    public List<UserDto> searchPaginated(final String queryString, final int page, final int size) {
         final List<Principal> principals = principalService.searchPaginated(queryString, page, size);
-        final List<User> users = Lists.transform(principals, new PrincipalToUserFunction());
-        return users;
+        final List<UserDto> userDtos = principals.stream().map(this::convert).collect(Collectors.toList());
+        return Lists.newArrayList(userDtos);
     }
 
     // find - one
 
     @Override
     @Transactional(readOnly = true)
-    public User findByName(final String name) {
+    public UserDto findByName(final String name) {
         final Principal principal = principalService.findByName(name);
-        return new User(principal);
+        return new UserDto(principal);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public User findOne(final long id) {
+    public UserDto findOne(final long id) {
         final Principal principal = principalService.findOne(id);
         if (principal == null) {
             return null;
         }
-        return new User(principal);
+        return new UserDto(principal);
     }
 
     // find - many
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> findAll() {
-        final List<Principal> allPrincipalEntities = principalService.findAll();
-        final List<User> allUsers = Lists.transform(allPrincipalEntities, new PrincipalToUserFunction());
-
-        return Lists.newArrayList(allUsers);
+    public List<UserDto> findAll() {
+        final List<Principal> principals = principalService.findAll();
+        final List<UserDto> userDtos = principals.stream().map(this::convert).collect(Collectors.toList());
+        return Lists.newArrayList(userDtos);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> findAllSorted(final String sortBy, final String sortOrder) {
-        final List<Principal> allPrincipalEntitiesSortedAndOrdered = principalService.findAllSorted(sortBy, sortOrder);
-        final List<User> allUsers = Lists.transform(allPrincipalEntitiesSortedAndOrdered, new PrincipalToUserFunction());
-
-        return allUsers;
+    public List<UserDto> findAllSorted(final String sortBy, final String sortOrder) {
+        final List<Principal> principals = principalService.findAllSorted(sortBy, sortOrder);
+        final List<UserDto> userDtos = principals.stream().map(this::convert).collect(Collectors.toList());
+        return Lists.newArrayList(userDtos);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> findAllPaginated(final int page, final int size) {
-        final List<Principal> principalsPaginated = principalService.findAllPaginated(page, size);
-        return Lists.transform(principalsPaginated, new PrincipalToUserFunction());
+    public List<UserDto> findAllPaginated(final int page, final int size) {
+        final List<Principal> principals = principalService.findAllPaginated(page, size);
+        final List<UserDto> userDtos = principals.stream().map(this::convert).collect(Collectors.toList());
+        return Lists.newArrayList(userDtos);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<User> findAllPaginatedAndSortedRaw(final int page, final int size, final String sortBy, final String sortOrder) {
-        final Page<Principal> principalsPaginatedAndSorted = principalService.findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder);
-
-        final List<User> usersPaginatedAndSorted = Lists.transform(principalsPaginatedAndSorted.getContent(), new PrincipalToUserFunction());
-
-        return new PageImpl<User>(usersPaginatedAndSorted, new PageRequest(page, size, constructSort(sortBy, sortOrder)), principalsPaginatedAndSorted.getTotalElements());
+    public Page<UserDto> findAllPaginatedAndSortedRaw(final int page, final int size, final String sortBy, final String sortOrder) {
+        final Page<Principal> principals = principalService.findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder);
+        final List<UserDto> userDtos = principals.getContent().stream().map(this::convert).collect(Collectors.toList());
+        return new PageImpl<UserDto>(userDtos, new PageRequest(page, size, constructSort(sortBy, sortOrder)), principals.getTotalElements());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<User> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
+    public List<UserDto> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder) {
         return findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder).getContent();
     }
 
     // create
 
     @Override
-    public User create(final User entity) {
-        final Principal newPrincipalEntity = new Principal(entity.getName(), entity.getPassword(), entity.getRoles());
+    public UserDto create(final UserDto dto) {
+        final Principal newPrincipalEntity = new Principal(dto);
         principalService.create(newPrincipalEntity);
-        entity.setId(newPrincipalEntity.getId());
-        return entity;
+        dto.setId(newPrincipalEntity.getId());
+        return dto;
     }
 
     // update
 
     @Override
-    public void update(final User entity) {
-        final Principal principalToUpdate = RestPreconditions.checkNotNull(principalService.findOne(entity.getId()));
+    public void update(final UserDto dto) {
+        final Principal principalToUpdate = RestPreconditions.checkNotNull(principalService.findOne(dto.getId()));
 
-        principalToUpdate.setName(entity.getName());
-        principalToUpdate.setRoles(entity.getRoles());
+        principalToUpdate.setName(dto.getName());
+        principalToUpdate.setEmail(dto.getEmail());
+        principalToUpdate.setRoles(dto.getRoles());
 
         principalService.update(principalToUpdate);
     }
@@ -186,14 +181,18 @@ public class UserServiceImpl implements IUserService {
     // other
 
     @Override
-    public User getCurrentUser() {
+    public UserDto getCurrentUser() {
         final Principal principal = principalService.getCurrentPrincipal();
-        return new User(principal);
+        return new UserDto(principal);
     }
 
-    // util
+    // UTIL
 
-    final Sort constructSort(final String sortBy, final String sortOrder) {
+    private final UserDto convert(final Principal principal) {
+        return new UserDto(principal);
+    }
+
+    private final Sort constructSort(final String sortBy, final String sortOrder) {
         Sort sortInfo = null;
         if (sortBy != null) {
             sortInfo = new Sort(Direction.fromString(sortOrder), sortBy);

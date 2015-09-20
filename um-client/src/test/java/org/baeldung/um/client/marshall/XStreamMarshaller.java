@@ -3,10 +3,10 @@ package org.baeldung.um.client.marshall;
 import java.util.List;
 
 import org.baeldung.client.marshall.IMarshaller;
-import org.baeldung.um.model.Principal;
-import org.baeldung.um.model.Privilege;
-import org.baeldung.um.model.Role;
-import org.baeldung.um.model.User;
+import org.baeldung.um.persistence.model.Principal;
+import org.baeldung.um.persistence.model.Privilege;
+import org.baeldung.um.persistence.model.Role;
+import org.baeldung.um.web.dto.UserDto;
 import org.springframework.http.MediaType;
 
 import com.google.common.base.Preconditions;
@@ -21,7 +21,7 @@ public final class XStreamMarshaller implements IMarshaller {
 
         xstream = new XStream();
         xstream.autodetectAnnotations(true);
-        xstream.processAnnotations(User.class);
+        xstream.processAnnotations(UserDto.class);
         xstream.processAnnotations(Principal.class);
         xstream.processAnnotations(Role.class);
         xstream.processAnnotations(Privilege.class);

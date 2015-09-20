@@ -4,14 +4,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.baeldung.common.util.QueryConstants;
 import org.baeldung.common.web.controller.AbstractController;
 import org.baeldung.common.web.controller.ISortingController;
-import org.baeldung.um.model.Privilege;
+import org.baeldung.um.persistence.model.Privilege;
 import org.baeldung.um.service.IPrivilegeService;
-import org.baeldung.um.util.UmMappings;
 import org.baeldung.um.util.Um.Privileges;
+import org.baeldung.um.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
@@ -103,7 +104,7 @@ public class PrivilegeController extends AbstractController<Privilege>implements
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @Secured(Privileges.CAN_PRIVILEGE_WRITE)
-    public void create(@RequestBody final Privilege resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+    public void create(@RequestBody @Valid final Privilege resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         createInternal(resource, uriBuilder, response);
     }
 
@@ -112,7 +113,7 @@ public class PrivilegeController extends AbstractController<Privilege>implements
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     @Secured(Privileges.CAN_PRIVILEGE_WRITE)
-    public void update(@PathVariable("id") final Long id, @RequestBody final Privilege resource) {
+    public void update(@PathVariable("id") final Long id, @RequestBody @Valid final Privilege resource) {
         updateInternal(id, resource);
     }
 

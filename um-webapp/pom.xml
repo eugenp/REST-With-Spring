@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.baeldung</groupId>
 		<artifactId>user-management-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.1.2-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
@@ -19,13 +19,13 @@
 		<dependency>
 			<groupId>org.baeldung</groupId>
 			<artifactId>common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.1.2-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.baeldung</groupId>
 			<artifactId>common-client</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.1.2-SNAPSHOT</version>
 			<scope>test</scope>
 			<classifier>tests</classifier>
 		</dependency>
@@ -33,20 +33,20 @@
 		<dependency>
 			<groupId>org.baeldung</groupId>
 			<artifactId>common-test</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.1.2-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.baeldung</groupId>
 			<artifactId>user-management-client</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.1.2-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.baeldung</groupId>
 			<artifactId>user-management-client</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.1.2-SNAPSHOT</version>
 			<scope>test</scope>
 			<classifier>tests</classifier>
 		</dependency>

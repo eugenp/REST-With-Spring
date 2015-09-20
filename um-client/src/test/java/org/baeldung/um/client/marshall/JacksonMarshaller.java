@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.List;
 
 import org.baeldung.client.marshall.IMarshaller;
-import org.baeldung.um.model.Principal;
-import org.baeldung.um.model.Privilege;
-import org.baeldung.um.model.Role;
-import org.baeldung.um.model.User;
+import org.baeldung.um.persistence.model.Principal;
+import org.baeldung.um.persistence.model.Privilege;
+import org.baeldung.um.persistence.model.Role;
+import org.baeldung.um.web.dto.UserDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -81,8 +81,8 @@ public final class JacksonMarshaller implements IMarshaller {
                 entities = objectMapper.readValue(resourcesAsString, new TypeReference<List<Privilege>>() {
                     // ...
                 });
-            } else if (clazz.equals(User.class)) {
-                entities = objectMapper.readValue(resourcesAsString, new TypeReference<List<User>>() {
+            } else if (clazz.equals(UserDto.class)) {
+                entities = objectMapper.readValue(resourcesAsString, new TypeReference<List<UserDto>>() {
                     // ...
                 });
             } else if (clazz.equals(Principal.class)) {

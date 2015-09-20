@@ -3,8 +3,8 @@ package org.baeldung.um.util;
 import java.util.Collection;
 import java.util.Set;
 
-import org.baeldung.um.model.Privilege;
-import org.baeldung.um.model.Role;
+import org.baeldung.um.persistence.model.Privilege;
+import org.baeldung.um.persistence.model.Role;
 
 import com.google.common.base.Function;
 import com.google.common.base.Functions;

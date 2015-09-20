@@ -7,8 +7,8 @@ import static org.mockito.Mockito.when;
 
 import org.baeldung.test.common.service.AbstractServiceUnitTest;
 import org.baeldung.um.common.FixtureEntityFactory;
-import org.baeldung.um.model.Principal;
 import org.baeldung.um.persistence.dao.IPrincipalJpaDao;
+import org.baeldung.um.persistence.model.Principal;
 import org.baeldung.um.service.impl.PrincipalServiceImpl;
 import org.junit.Before;
 import org.springframework.data.jpa.repository.JpaRepository;

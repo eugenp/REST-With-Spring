@@ -3,8 +3,8 @@ package org.baeldung.um.service.main;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.baeldung.common.persistence.service.IService;
-import org.baeldung.um.model.Principal;
-import org.baeldung.um.model.Role;
+import org.baeldung.um.persistence.model.Principal;
+import org.baeldung.um.persistence.model.Role;
 import org.baeldung.um.service.IPrincipalService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

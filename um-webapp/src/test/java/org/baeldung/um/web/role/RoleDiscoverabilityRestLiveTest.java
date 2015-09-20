@@ -2,8 +2,8 @@ package org.baeldung.um.web.role;
 
 import org.baeldung.client.IDtoOperations;
 import org.baeldung.um.client.template.RoleTestRestTemplate;
-import org.baeldung.um.model.Role;
 import org.baeldung.um.model.RoleDtoOpsImpl;
+import org.baeldung.um.persistence.model.Role;
 import org.baeldung.um.test.live.UmDiscoverabilityRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 

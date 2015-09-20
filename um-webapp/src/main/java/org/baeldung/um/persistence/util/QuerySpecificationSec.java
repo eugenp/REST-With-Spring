@@ -9,12 +9,12 @@ import javax.persistence.metamodel.SingularAttribute;
 import org.baeldung.common.persistence.model.IEntity;
 import org.baeldung.common.search.ClientOperation;
 import org.baeldung.common.util.QueryConstants;
-import org.baeldung.um.model.Principal;
-import org.baeldung.um.model.Privilege;
-import org.baeldung.um.model.Role;
-import org.baeldung.um.persistence.model.Principal_;
-import org.baeldung.um.persistence.model.Privilege_;
-import org.baeldung.um.persistence.model.Role_;
+import org.baeldung.um.persistence.model.Principal;
+import org.baeldung.um.persistence.model.Privilege;
+import org.baeldung.um.persistence.model.Role;
+import org.baeldung.um.persistence.model.meta.Principal_;
+import org.baeldung.um.persistence.model.meta.Privilege_;
+import org.baeldung.um.persistence.model.meta.Role_;
 import org.springframework.data.jpa.domain.Specification;
 
 /**

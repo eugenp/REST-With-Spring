@@ -1,7 +1,7 @@
 package org.baeldung.um.service.search;
 
 import org.baeldung.um.common.FixtureEntityFactory;
-import org.baeldung.um.model.Privilege;
+import org.baeldung.um.persistence.model.Privilege;
 import org.baeldung.um.service.IPrivilegeService;
 import org.springframework.beans.factory.annotation.Autowired;
 

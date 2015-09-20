@@ -3,7 +3,7 @@ package org.baeldung.um.service.main;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.baeldung.common.persistence.service.IService;
-import org.baeldung.um.model.Privilege;
+import org.baeldung.um.persistence.model.Privilege;
 import org.baeldung.um.service.IPrivilegeService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

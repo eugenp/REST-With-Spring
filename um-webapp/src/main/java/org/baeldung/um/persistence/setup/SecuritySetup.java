@@ -4,9 +4,9 @@ import java.util.Set;
 
 import org.baeldung.common.persistence.event.BeforeSetupEvent;
 import org.baeldung.common.spring.util.Profiles;
-import org.baeldung.um.model.Principal;
-import org.baeldung.um.model.Privilege;
-import org.baeldung.um.model.Role;
+import org.baeldung.um.persistence.model.Principal;
+import org.baeldung.um.persistence.model.Privilege;
+import org.baeldung.um.persistence.model.Role;
 import org.baeldung.um.service.IPrincipalService;
 import org.baeldung.um.service.IPrivilegeService;
 import org.baeldung.um.service.IRoleService;

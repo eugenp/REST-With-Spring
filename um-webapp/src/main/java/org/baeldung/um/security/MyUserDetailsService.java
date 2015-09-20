@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.baeldung.um.model.Principal;
-import org.baeldung.um.model.Privilege;
-import org.baeldung.um.model.Role;
+import org.baeldung.um.persistence.model.Principal;
+import org.baeldung.um.persistence.model.Privilege;
+import org.baeldung.um.persistence.model.Role;
 import org.baeldung.um.service.IPrincipalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

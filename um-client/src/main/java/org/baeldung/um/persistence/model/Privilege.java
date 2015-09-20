@@ -1,4 +1,4 @@
-package org.baeldung.um.model;
+package org.baeldung.um.persistence.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,8 +21,10 @@ public class Privilege implements INameableEntity, INameableDto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "PRIV_ID")
     private Long id;
+
     @Column(unique = true, nullable = false)
     private String name;
+
     @Column(unique = false, nullable = true)
     private String description;
 

@@ -2,10 +2,10 @@ package org.baeldung.um.client;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
-import org.baeldung.um.model.Principal;
-import org.baeldung.um.model.Privilege;
-import org.baeldung.um.model.Role;
-import org.baeldung.um.model.User;
+import org.baeldung.um.persistence.model.Principal;
+import org.baeldung.um.persistence.model.Privilege;
+import org.baeldung.um.persistence.model.Role;
+import org.baeldung.um.web.dto.UserDto;
 
 import com.google.common.collect.Sets;
 
@@ -17,12 +17,12 @@ public class FixtureResourceFactory {
 
     // user DTO
 
-    public static User createNewUser() {
+    public static UserDto createNewUser() {
         return createNewUser(randomAlphabetic(8), randomAlphabetic(8));
     }
 
-    public static User createNewUser(final String name, final String pass) {
-        return new User(name, pass, Sets.<Role> newHashSet());
+    public static UserDto createNewUser(final String name, final String pass) {
+        return new UserDto(name, pass, Sets.<Role> newHashSet());
     }
 
     // principal

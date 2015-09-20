@@ -2,9 +2,9 @@ package org.baeldung.um.client;
 
 import org.baeldung.common.client.CommonPaths;
 import org.baeldung.common.web.IUriMapper;
-import org.baeldung.um.model.Privilege;
-import org.baeldung.um.model.Role;
-import org.baeldung.um.model.User;
+import org.baeldung.um.persistence.model.Privilege;
+import org.baeldung.um.persistence.model.Role;
+import org.baeldung.um.web.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -34,7 +34,7 @@ public final class UmPaths {
     }
 
     public final String getUserUri() {
-        return getRootUri() + uriMapper.getUriBase(User.class);
+        return getRootUri() + uriMapper.getUriBase(UserDto.class);
     }
 
     public final String getRoleUri() {

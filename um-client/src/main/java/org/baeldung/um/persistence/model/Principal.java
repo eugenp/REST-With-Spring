@@ -1,39 +1,60 @@
-package org.baeldung.um.model;
+package org.baeldung.um.persistence.model;
 
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.baeldung.common.interfaces.INameableDto;
 import org.baeldung.common.persistence.model.INameableEntity;
+import org.baeldung.um.web.dto.UserDto;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
+@Entity
 @XmlRootElement
-@XStreamAlias("user")
-public class User implements INameableEntity, INameableDto {
+public class Principal implements INameableEntity, INameableDto {
 
-    @XStreamAsAttribute
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "PRINCIPAL_ID")
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String name;
+
+    @Column(unique = true, nullable = true)
+    private String email;
+
+    @Column(nullable = false)
     private String password;
 
-    /* Marshalling */
-    // - note: this gets rid of the collection entirely
-    @XStreamImplicit
-    // - note: this requires: xstream.addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
-    // @XStreamConverter( value = HibernateCollectionConverter.class )
-    private Set<Role> roles;
+    @Column( /* nullable = false */)
+    private Boolean locked;
 
-    public User() {
+    // @formatter:off
+    @ManyToMany( /* cascade = { CascadeType.REMOVE }, */fetch = FetchType.EAGER)
+    @JoinTable(joinColumns = { @JoinColumn(name = "PRINCIPAL_ID", referencedColumnName = "PRINCIPAL_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID") })
+    @XStreamImplicit
+    private Set<Role> roles;
+    // @formatter:on
+
+    public Principal() {
         super();
+
+        locked = false;
     }
 
-    public User(final String nameToSet, final String passwordToSet, final Set<Role> rolesToSet) {
+    public Principal(final String nameToSet, final String passwordToSet, final Set<Role> rolesToSet) {
         super();
 
         name = nameToSet;
@@ -41,12 +62,13 @@ public class User implements INameableEntity, INameableDto {
         roles = rolesToSet;
     }
 
-    public User(final Principal principal) {
+    public Principal(final UserDto userDto) {
         super();
 
-        name = principal.getName();
-        roles = principal.getRoles();
-        id = principal.getId();
+        name = userDto.getName();
+        email = userDto.getEmail();
+        password = userDto.getPassword();
+        roles = userDto.getRoles();
     }
 
     // API
@@ -70,6 +92,14 @@ public class User implements INameableEntity, INameableDto {
         name = nameToSet;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -84,6 +114,14 @@ public class User implements INameableEntity, INameableDto {
 
     public void setRoles(final Set<Role> rolesToSet) {
         roles = rolesToSet;
+    }
+
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(final Boolean lockedToSet) {
+        locked = lockedToSet;
     }
 
     //
@@ -104,7 +142,7 @@ public class User implements INameableEntity, INameableDto {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        final User other = (User) obj;
+        final Principal other = (Principal) obj;
         if (name == null) {
             if (other.name != null)
                 return false;

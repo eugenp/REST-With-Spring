@@ -4,7 +4,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.baeldung.test.common.client.template.AbstractTestRestTemplate;
 import org.baeldung.um.client.UmPaths;
-import org.baeldung.um.model.Privilege;
+import org.baeldung.um.persistence.model.Privilege;
 import org.baeldung.um.util.Um;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;

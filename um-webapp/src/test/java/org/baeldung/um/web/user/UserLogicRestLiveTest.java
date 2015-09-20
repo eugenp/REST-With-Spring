@@ -10,11 +10,11 @@ import static org.junit.Assert.assertThat;
 import org.baeldung.client.IDtoOperations;
 import org.baeldung.um.client.template.RoleTestRestTemplate;
 import org.baeldung.um.client.template.UserTestRestTemplate;
-import org.baeldung.um.model.Role;
 import org.baeldung.um.model.RoleDtoOpsImpl;
-import org.baeldung.um.model.User;
 import org.baeldung.um.model.UserDtoOpsImpl;
+import org.baeldung.um.persistence.model.Role;
 import org.baeldung.um.test.live.UmLogicRestLiveTest;
+import org.baeldung.um.web.dto.UserDto;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.common.collect.Sets;
 import com.jayway.restassured.response.Response;
 
-public class UserLogicRestLiveTest extends UmLogicRestLiveTest<User> {
+public class UserLogicRestLiveTest extends UmLogicRestLiveTest<UserDto> {
 
     @Autowired
     private UserTestRestTemplate api;
@@ -36,7 +36,7 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<User> {
     private RoleDtoOpsImpl associationOps;
 
     public UserLogicRestLiveTest() {
-        super(User.class);
+        super(UserDto.class);
     }
 
     // tests
@@ -46,7 +46,7 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<User> {
     @Test
     @Ignore("in progress - create association first")
     public final void whenResourceIsRetrieved_thenAssociationsAreAlsoRetrieved() {
-        final User existingResource = getApi().create(getEntityOps().createNewResource());
+        final UserDto existingResource = getApi().create(getEntityOps().createNewResource());
         assertThat(existingResource.getRoles(), not(Matchers.<Role> empty()));
     }
 
@@ -58,7 +58,7 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<User> {
      */
     @Test
     public final void whenResourceIsCreatedWithNewAssociation_then409IsReceived() {
-        final User newResource = getEntityOps().createNewResource();
+        final UserDto newResource = getEntityOps().createNewResource();
         newResource.getRoles().add(getAssociationEntityOps().createNewResource());
 
         // When
@@ -73,7 +73,7 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<User> {
     public final void whenResourceIsCreatedWithInvalidAssociation_then409IsReceived() {
         final Role invalidAssociation = getAssociationEntityOps().createNewResource();
         invalidAssociation.setId(1001l);
-        final User newResource = getEntityOps().createNewResource();
+        final UserDto newResource = getEntityOps().createNewResource();
         newResource.getRoles().add(invalidAssociation);
 
         // When
@@ -86,7 +86,7 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<User> {
     @Test
     public final void whenUserIsCreatedWithExistingRole_then201IsReceived() {
         final Role existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewResource());
-        final User newResource = getEntityOps().createNewResource();
+        final UserDto newResource = getEntityOps().createNewResource();
         newResource.getRoles().add(existingAssociation);
 
         // When
@@ -101,11 +101,11 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<User> {
     @Test
     public final void whenScenario_getResource_getAssociationsById() {
         final Role existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewResource());
-        final User resourceToCreate = getEntityOps().createNewResource();
+        final UserDto resourceToCreate = getEntityOps().createNewResource();
         resourceToCreate.getRoles().add(existingAssociation);
 
         // When
-        final User existingResource = getApi().create(resourceToCreate);
+        final UserDto existingResource = getApi().create(resourceToCreate);
         for (final Role associationOfResourcePotential : existingResource.getRoles()) {
             final Role existingAssociationOfResource = getAssociationAPI().findOne(associationOfResourcePotential.getId());
             assertThat(existingAssociationOfResource, notNullValue());
@@ -117,15 +117,15 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<User> {
     @Test
     public final void whenScenarioOfWorkingWithAssociations_thenTheChangesAreCorrectlyPersisted() {
         final Role existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewResource());
-        final User resource1 = new User(randomAlphabetic(6), randomAlphabetic(6), Sets.newHashSet(existingAssociation));
+        final UserDto resource1 = new UserDto(randomAlphabetic(6), randomAlphabetic(6), Sets.newHashSet(existingAssociation));
 
-        final User resource1ViewOfServerBefore = getApi().create(resource1);
+        final UserDto resource1ViewOfServerBefore = getApi().create(resource1);
         assertThat(resource1ViewOfServerBefore.getRoles(), hasItem(existingAssociation));
 
-        final User resource2 = new User(randomAlphabetic(6), randomAlphabetic(6), Sets.newHashSet(existingAssociation));
+        final UserDto resource2 = new UserDto(randomAlphabetic(6), randomAlphabetic(6), Sets.newHashSet(existingAssociation));
         getApi().createAsResponse(resource2);
 
-        final User resource1ViewOfServerAfter = getApi().findOne(resource1ViewOfServerBefore.getId());
+        final UserDto resource1ViewOfServerAfter = getApi().findOne(resource1ViewOfServerBefore.getId());
         assertThat(resource1ViewOfServerAfter.getRoles(), hasItem(existingAssociation));
     }
 
@@ -137,7 +137,7 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<User> {
     }
 
     @Override
-    protected final IDtoOperations<User> getEntityOps() {
+    protected final IDtoOperations<UserDto> getEntityOps() {
         return entityOps;
     }
 

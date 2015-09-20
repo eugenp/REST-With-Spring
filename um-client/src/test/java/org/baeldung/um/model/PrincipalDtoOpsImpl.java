@@ -4,7 +4,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import org.baeldung.client.IDtoOperations;
 import org.baeldung.um.client.FixtureResourceFactory;
-import org.baeldung.um.model.Principal;
+import org.baeldung.um.persistence.model.Principal;
 import org.springframework.stereotype.Component;
 
 @Component

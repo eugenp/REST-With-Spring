@@ -1,12 +1,12 @@
-package org.baeldung.um.persistence.model;
+package org.baeldung.um.persistence.model.meta;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-import org.baeldung.um.model.Privilege;
-import org.baeldung.um.model.Role;
+import org.baeldung.um.persistence.model.Privilege;
+import org.baeldung.um.persistence.model.Role;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(Role.class)

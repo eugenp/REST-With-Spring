@@ -10,10 +10,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import org.baeldung.test.common.client.security.ITestAuthenticator;
 import org.baeldung.um.client.UmPaths;
-import org.baeldung.um.model.User;
 import org.baeldung.um.spring.UmContextConfig;
 import org.baeldung.um.spring.UmClientConfig;
 import org.baeldung.um.util.Um;
+import org.baeldung.um.web.dto.UserDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +62,7 @@ public class AuthenticationRestLiveTest {
         final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).get(paths.getAuthenticationUri());
 
         // Then
-        response.as(User.class);
+        response.as(UserDto.class);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class AuthenticationRestLiveTest {
         final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).get(paths.getAuthenticationUri());
 
         // Then
-        assertEquals(new User(Um.EMAIL, Um.PASS, null), response.as(User.class));
+        assertEquals(new UserDto(Um.EMAIL, Um.PASS, null), response.as(UserDto.class));
     }
 
     // util

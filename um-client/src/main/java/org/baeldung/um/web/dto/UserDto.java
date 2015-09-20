@@ -1,60 +1,61 @@
-package org.baeldung.um.model;
+package org.baeldung.um.web.dto;
 
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.baeldung.common.interfaces.INameableDto;
 import org.baeldung.common.persistence.model.INameableEntity;
+import org.baeldung.um.persistence.model.Principal;
+import org.baeldung.um.persistence.model.Role;
+import org.hibernate.validator.constraints.Email;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
-@Entity
 @XmlRootElement
-@XStreamAlias("role")
-public class Role implements INameableEntity, INameableDto {
+@XStreamAlias("user")
+public class UserDto implements INameableEntity, INameableDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ROLE_ID")
     @XStreamAsAttribute
     private Long id;
-    @Column(unique = true, nullable = false)
+
     private String name;
 
-    // @formatter:off
-    @ManyToMany( /* cascade = { CascadeType.REMOVE }, */fetch = FetchType.EAGER)
-    @JoinTable(joinColumns = { @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID") }, inverseJoinColumns = { @JoinColumn(name = "PRIV_ID", referencedColumnName = "PRIV_ID") })
+    @NotNull
+    @Email
+    private String email;
+
+    private String password;
+
+    /* Marshalling */
+    // - note: this gets rid of the collection entirely
     @XStreamImplicit
-    private Set<Privilege> privileges;
+    // - note: this requires: xstream.addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
+    // @XStreamConverter( value = HibernateCollectionConverter.class )
+    private Set<Role> roles;
 
-    // @formatter:on
-
-    public Role() {
+    public UserDto() {
         super();
     }
 
-    public Role(final String nameToSet) {
+    public UserDto(final String nameToSet, final String passwordToSet, final Set<Role> rolesToSet) {
         super();
+
         name = nameToSet;
+        password = passwordToSet;
+        roles = rolesToSet;
     }
 
-    public Role(final String nameToSet, final Set<Privilege> privilegesToSet) {
+    public UserDto(final Principal principal) {
         super();
-        name = nameToSet;
-        privileges = privilegesToSet;
+
+        name = principal.getName();
+        roles = principal.getRoles();
+        id = principal.getId();
     }
 
     // API
@@ -78,12 +79,28 @@ public class Role implements INameableEntity, INameableDto {
         name = nameToSet;
     }
 
-    public Set<Privilege> getPrivileges() {
-        return privileges;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPrivileges(final Set<Privilege> privilegesToSet) {
-        privileges = privilegesToSet;
+    public void setEmail(final String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(final String passwordToSet) {
+        password = passwordToSet;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(final Set<Role> rolesToSet) {
+        roles = rolesToSet;
     }
 
     //
@@ -104,7 +121,7 @@ public class Role implements INameableEntity, INameableDto {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        final Role other = (Role) obj;
+        final UserDto other = (UserDto) obj;
         if (name == null) {
             if (other.name != null)
                 return false;

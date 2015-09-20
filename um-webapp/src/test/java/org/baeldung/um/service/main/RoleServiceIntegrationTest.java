@@ -5,8 +5,8 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertThat;
 
 import org.baeldung.common.persistence.service.IService;
-import org.baeldung.um.model.Privilege;
-import org.baeldung.um.model.Role;
+import org.baeldung.um.persistence.model.Privilege;
+import org.baeldung.um.persistence.model.Role;
 import org.baeldung.um.service.IPrincipalService;
 import org.baeldung.um.service.IPrivilegeService;
 import org.baeldung.um.service.IRoleService;

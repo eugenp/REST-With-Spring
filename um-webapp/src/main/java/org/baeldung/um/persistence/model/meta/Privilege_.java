@@ -1,10 +1,10 @@
-package org.baeldung.um.persistence.model;
+package org.baeldung.um.persistence.model.meta;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-import org.baeldung.um.model.Privilege;
+import org.baeldung.um.persistence.model.Privilege;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(Privilege.class)

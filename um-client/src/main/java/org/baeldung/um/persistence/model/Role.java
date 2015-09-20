@@ -1,4 +1,4 @@
-package org.baeldung.um.model;
+package org.baeldung.um.persistence.model;
 
 import java.util.Set;
 
@@ -17,43 +17,44 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.baeldung.common.interfaces.INameableDto;
 import org.baeldung.common.persistence.model.INameableEntity;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 @Entity
 @XmlRootElement
-public class Principal implements INameableEntity, INameableDto {
+@XStreamAlias("role")
+public class Role implements INameableEntity, INameableDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "PRINCIPAL_ID")
+    @Column(name = "ROLE_ID")
+    @XStreamAsAttribute
     private Long id;
+
     @Column(unique = true, nullable = false)
     private String name;
-    @Column(nullable = false)
-    private String password;
-    @Column( /* nullable = false */)
-    private Boolean locked;
 
     // @formatter:off
     @ManyToMany( /* cascade = { CascadeType.REMOVE }, */fetch = FetchType.EAGER)
-    @JoinTable(joinColumns = { @JoinColumn(name = "PRINCIPAL_ID", referencedColumnName = "PRINCIPAL_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID") })
+    @JoinTable(joinColumns = { @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID") }, inverseJoinColumns = { @JoinColumn(name = "PRIV_ID", referencedColumnName = "PRIV_ID") })
     @XStreamImplicit
-    private Set<Role> roles;
-
+    private Set<Privilege> privileges;
     // @formatter:on
 
-    public Principal() {
+    public Role() {
         super();
-
-        locked = false;
     }
 
-    public Principal(final String nameToSet, final String passwordToSet, final Set<Role> rolesToSet) {
+    public Role(final String nameToSet) {
         super();
-
         name = nameToSet;
-        password = passwordToSet;
-        roles = rolesToSet;
+    }
+
+    public Role(final String nameToSet, final Set<Privilege> privilegesToSet) {
+        super();
+        name = nameToSet;
+        privileges = privilegesToSet;
     }
 
     // API
@@ -77,28 +78,12 @@ public class Principal implements INameableEntity, INameableDto {
         name = nameToSet;
     }
 
-    public String getPassword() {
-        return password;
+    public Set<Privilege> getPrivileges() {
+        return privileges;
     }
 
-    public void setPassword(final String passwordToSet) {
-        password = passwordToSet;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(final Set<Role> rolesToSet) {
-        roles = rolesToSet;
-    }
-
-    public Boolean getLocked() {
-        return locked;
-    }
-
-    public void setLocked(final Boolean lockedToSet) {
-        locked = lockedToSet;
+    public void setPrivileges(final Set<Privilege> privilegesToSet) {
+        privileges = privilegesToSet;
     }
 
     //
@@ -119,7 +104,7 @@ public class Principal implements INameableEntity, INameableDto {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        final Principal other = (Principal) obj;
+        final Role other = (Role) obj;
         if (name == null) {
             if (other.name != null)
                 return false;

@@ -2,7 +2,7 @@ package org.baeldung.um.web.role;
 
 import org.baeldung.um.client.template.PrivilegeTestRestTemplate;
 import org.baeldung.um.client.template.RoleTestRestTemplate;
-import org.baeldung.um.model.Role;
+import org.baeldung.um.persistence.model.Role;
 import org.baeldung.um.test.live.UmReadOnlyLogicRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
