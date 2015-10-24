@@ -1,7 +1,7 @@
 package org.baeldung.um.web.privilege;
 
 import org.baeldung.client.IDtoOperations;
-import org.baeldung.um.client.template.PrivilegeTestRestTemplate;
+import org.baeldung.um.client.template.PrivilegeRestClient;
 import org.baeldung.um.model.PrivilegeDtoOpsImpl;
 import org.baeldung.um.persistence.model.Privilege;
 import org.baeldung.um.test.live.UmDiscoverabilityRestLiveTest;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class PrivilegeDiscoverabilityRestLiveTest extends UmDiscoverabilityRestLiveTest<Privilege> {
 
     @Autowired
-    private PrivilegeTestRestTemplate restTemplate;
+    private PrivilegeRestClient restTemplate;
     @Autowired
     private PrivilegeDtoOpsImpl entityOps;
 
@@ -33,7 +33,7 @@ public class PrivilegeDiscoverabilityRestLiveTest extends UmDiscoverabilityRestL
     }
 
     @Override
-    protected final PrivilegeTestRestTemplate getApi() {
+    protected final PrivilegeRestClient getApi() {
         return restTemplate;
     }
 

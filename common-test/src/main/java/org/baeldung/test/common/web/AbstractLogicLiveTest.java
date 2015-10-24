@@ -167,9 +167,9 @@ public abstract class AbstractLogicLiveTest<T extends INameableDto> {
     }
 
     @Test
-    /* code */public void whenNullResourceIsCreated_then415IsReceived() {
+    /* code */public void whenResourceWithUnsupportedMediaTypeIsCreated_then415IsReceived() {
         // When
-        final Response response = givenReadAuthenticated().contentType(getApi().getMarshaller().getMime()).post(getUri());
+        final Response response = givenReadAuthenticated().contentType("unknown").post(getUri());
 
         // Then
         assertThat(response.getStatusCode(), is(415));

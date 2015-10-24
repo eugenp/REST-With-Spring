@@ -1,7 +1,7 @@
 package org.baeldung.um.web.role;
 
 import org.baeldung.client.IDtoOperations;
-import org.baeldung.um.client.template.RoleTestRestTemplate;
+import org.baeldung.um.client.template.RoleRestClient;
 import org.baeldung.um.model.RoleDtoOpsImpl;
 import org.baeldung.um.persistence.model.Role;
 import org.baeldung.um.test.live.UmSearchRestLiveTest;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class RoleSearchRestLiveTest extends UmSearchRestLiveTest<Role> {
 
     @Autowired
-    private RoleTestRestTemplate restTemplate;
+    private RoleRestClient restTemplate;
     @Autowired
     private RoleDtoOpsImpl entityOps;
 
@@ -23,7 +23,7 @@ public class RoleSearchRestLiveTest extends UmSearchRestLiveTest<Role> {
     // template
 
     @Override
-    protected final RoleTestRestTemplate getApi() {
+    protected final RoleRestClient getApi() {
         return restTemplate;
     }
 

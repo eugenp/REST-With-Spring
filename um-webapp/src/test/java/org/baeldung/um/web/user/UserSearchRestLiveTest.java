@@ -1,7 +1,7 @@
 package org.baeldung.um.web.user;
 
 import org.baeldung.client.IDtoOperations;
-import org.baeldung.um.client.template.UserTestRestTemplate;
+import org.baeldung.um.client.template.UserRestClient;
 import org.baeldung.um.model.UserDtoOpsImpl;
 import org.baeldung.um.test.live.UmSearchRestLiveTest;
 import org.baeldung.um.web.dto.UserDto;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UserSearchRestLiveTest extends UmSearchRestLiveTest<UserDto> {
 
     @Autowired
-    private UserTestRestTemplate restTemplate;
+    private UserRestClient restTemplate;
     @Autowired
     private UserDtoOpsImpl entityOps;
 
@@ -23,7 +23,7 @@ public class UserSearchRestLiveTest extends UmSearchRestLiveTest<UserDto> {
     // template
 
     @Override
-    protected final UserTestRestTemplate getApi() {
+    protected final UserRestClient getApi() {
         return restTemplate;
     }
 

@@ -33,8 +33,8 @@ public class TestMarshallerFactory implements FactoryBean<IMarshaller> {
             switch (testMime) {
             case "json":
                 return new JacksonMarshaller();
-            case "xml":
-                return new XStreamMarshaller();
+            // case "xml":
+            // return new XStreamMarshaller();
             default:
                 throw new IllegalStateException();
             }

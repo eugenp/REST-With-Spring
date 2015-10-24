@@ -1,7 +1,7 @@
 package org.baeldung.um.web.role;
 
-import org.baeldung.um.client.template.PrivilegeTestRestTemplate;
-import org.baeldung.um.client.template.RoleTestRestTemplate;
+import org.baeldung.um.client.template.PrivilegeRestClient;
+import org.baeldung.um.client.template.RoleRestClient;
 import org.baeldung.um.persistence.model.Role;
 import org.baeldung.um.test.live.UmReadOnlyLogicRestLiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class RoleReadOnlyLogicRestLiveTest extends UmReadOnlyLogicRestLiveTest<Role> {
 
     @Autowired
-    private RoleTestRestTemplate api;
+    private RoleRestClient api;
     @Autowired
-    private PrivilegeTestRestTemplate associationApi;
+    private PrivilegeRestClient associationApi;
 
     public RoleReadOnlyLogicRestLiveTest() {
         super(Role.class);
@@ -22,13 +22,13 @@ public class RoleReadOnlyLogicRestLiveTest extends UmReadOnlyLogicRestLiveTest<R
     // template
 
     @Override
-    protected final RoleTestRestTemplate getApi() {
+    protected final RoleRestClient getApi() {
         return api;
     }
 
     // util
 
-    final PrivilegeTestRestTemplate getAssociationAPI() {
+    final PrivilegeRestClient getAssociationAPI() {
         return associationApi;
     }
 

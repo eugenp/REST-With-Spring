@@ -8,8 +8,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import org.baeldung.client.IDtoOperations;
-import org.baeldung.um.client.template.RoleTestRestTemplate;
-import org.baeldung.um.client.template.UserTestRestTemplate;
+import org.baeldung.um.client.template.RoleRestClient;
+import org.baeldung.um.client.template.UserRestClient;
 import org.baeldung.um.model.RoleDtoOpsImpl;
 import org.baeldung.um.model.UserDtoOpsImpl;
 import org.baeldung.um.persistence.model.Role;
@@ -26,9 +26,9 @@ import com.jayway.restassured.response.Response;
 public class UserLogicRestLiveTest extends UmLogicRestLiveTest<UserDto> {
 
     @Autowired
-    private UserTestRestTemplate api;
+    private UserRestClient api;
     @Autowired
-    private RoleTestRestTemplate associationApi;
+    private RoleRestClient associationApi;
 
     @Autowired
     private UserDtoOpsImpl entityOps;
@@ -132,7 +132,7 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<UserDto> {
     // template method
 
     @Override
-    protected final UserTestRestTemplate getApi() {
+    protected final UserRestClient getApi() {
         return api;
     }
 
@@ -141,7 +141,7 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<UserDto> {
         return entityOps;
     }
 
-    final RoleTestRestTemplate getAssociationAPI() {
+    final RoleRestClient getAssociationAPI() {
         return associationApi;
     }
 

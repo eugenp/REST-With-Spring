@@ -17,19 +17,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.baeldung.common.interfaces.INameableDto;
 import org.baeldung.common.persistence.model.INameableEntity;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
-
 @Entity
 @XmlRootElement
-@XStreamAlias("role")
 public class Role implements INameableEntity, INameableDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ROLE_ID")
-    @XStreamAsAttribute
     private Long id;
 
     @Column(unique = true, nullable = false)
@@ -38,7 +32,6 @@ public class Role implements INameableEntity, INameableDto {
     // @formatter:off
     @ManyToMany( /* cascade = { CascadeType.REMOVE }, */fetch = FetchType.EAGER)
     @JoinTable(joinColumns = { @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID") }, inverseJoinColumns = { @JoinColumn(name = "PRIV_ID", referencedColumnName = "PRIV_ID") })
-    @XStreamImplicit
     private Set<Privilege> privileges;
     // @formatter:on
 

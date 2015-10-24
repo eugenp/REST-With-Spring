@@ -10,11 +10,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.baeldung.common.interfaces.INameableDto;
 import org.baeldung.common.persistence.model.INameableEntity;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 @Entity
 @XmlRootElement
-@XStreamAlias("privilege")
 public class Privilege implements INameableEntity, INameableDto {
 
     @Id

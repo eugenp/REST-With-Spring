@@ -1,6 +1,5 @@
 package org.baeldung.test.common.web;
 
-import static com.jayway.restassured.RestAssured.get;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.baeldung.common.spring.util.Profiles.CLIENT;
@@ -91,7 +90,7 @@ public abstract class AbstractReadOnlyLogicLiveTest<T extends INameableDto> {
     @Test
     /*code*/public final void whenResourcesAreRetrievedWithNonNumericPage_then400IsReceived() {
         // When
-        final Response response = get(getUri() + "?page=" + randomAlphabetic(5).toLowerCase() + "&size=1");
+        final Response response = givenReadAuthenticated().get(getUri() + "?page=" + randomAlphabetic(5).toLowerCase() + "&size=1");
 
         // Then
         assertThat(response.getStatusCode(), is(400));
@@ -100,7 +99,7 @@ public abstract class AbstractReadOnlyLogicLiveTest<T extends INameableDto> {
     @Test
     /*code*/public final void whenResourcesAreRetrievedWithNonNumericPageSize_then400IsReceived() {
         // When
-        final Response response = get(getUri() + "?page=0" + "&size=" + randomAlphabetic(5));
+        final Response response = givenReadAuthenticated().get(getUri() + "?page=0" + "&size=" + randomAlphabetic(5));
 
         // Then
         assertThat(response.getStatusCode(), is(400));

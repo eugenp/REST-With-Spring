@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
-	<artifactId>user-management-webapp</artifactId>
+
+	<artifactId>um-webapp</artifactId>
 	<packaging>war</packaging>
-	
-	<name>user-management-webapp</name>
+
+	<name>um-webapp</name>
 
 	<parent>
 		<groupId>org.baeldung</groupId>
@@ -39,16 +39,23 @@
 
 		<dependency>
 			<groupId>org.baeldung</groupId>
-			<artifactId>user-management-client</artifactId>
+			<artifactId>um-client</artifactId>
 			<version>0.1.2-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.baeldung</groupId>
-			<artifactId>user-management-client</artifactId>
+			<artifactId>um-client</artifactId>
 			<version>0.1.2-SNAPSHOT</version>
 			<scope>test</scope>
 			<classifier>tests</classifier>
+		</dependency>
+
+		<!-- security -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
 		<!-- util -->
@@ -66,6 +73,11 @@
 			<artifactId>tomcat-servlet-api</artifactId>
 			<version>${tomcat.version}</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
 		<!-- test scoped -->
@@ -102,7 +114,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>user-management-webapp</finalName>
+		<finalName>um-webapp</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

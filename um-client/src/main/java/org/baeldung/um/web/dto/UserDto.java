@@ -3,7 +3,6 @@ package org.baeldung.um.web.dto;
 import java.util.Set;
 
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.baeldung.common.interfaces.INameableDto;
@@ -12,15 +11,8 @@ import org.baeldung.um.persistence.model.Principal;
 import org.baeldung.um.persistence.model.Role;
 import org.hibernate.validator.constraints.Email;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
-
-@XmlRootElement
-@XStreamAlias("user")
 public class UserDto implements INameableEntity, INameableDto {
 
-    @XStreamAsAttribute
     private Long id;
 
     private String name;
@@ -31,11 +23,6 @@ public class UserDto implements INameableEntity, INameableDto {
 
     private String password;
 
-    /* Marshalling */
-    // - note: this gets rid of the collection entirely
-    @XStreamImplicit
-    // - note: this requires: xstream.addDefaultImplementation( java.util.HashSet.class, PersistentSet.class );
-    // @XStreamConverter( value = HibernateCollectionConverter.class )
     private Set<Role> roles;
 
     public UserDto() {

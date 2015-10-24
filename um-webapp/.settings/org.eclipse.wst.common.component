@@ -10,10 +10,10 @@
         <dependent-module archiveName="common-client-0.1.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/common-client/common-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="user-management-client-0.1.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/um-client/um-client">
+        <dependent-module archiveName="um-client-0.1.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/um-client/um-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/rest/target/classes"/>
-        <property name="context-root" value="rest-security"/>
+        <property name="context-root" value="um-webapp"/>
     </wb-module>
 </project-modules>

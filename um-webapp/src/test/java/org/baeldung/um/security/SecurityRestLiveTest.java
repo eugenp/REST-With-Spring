@@ -1,18 +1,22 @@
 package org.baeldung.um.security;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.baeldung.common.spring.util.Profiles.CLIENT;
+import static org.baeldung.common.spring.util.Profiles.TEST;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.baeldung.test.common.client.security.ITestAuthenticator;
-import org.baeldung.um.client.template.UserTestRestTemplate;
+import org.baeldung.um.client.template.UserRestClient;
 import org.baeldung.um.model.UserDtoOpsImpl;
+import org.baeldung.um.spring.CommonTestConfig;
+import org.baeldung.um.spring.UmClientConfig;
 import org.baeldung.um.spring.UmContextConfig;
 import org.baeldung.um.util.Um;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -20,13 +24,13 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
+@ActiveProfiles({ CLIENT, TEST })
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { UmContextConfig.class }, loader = AnnotationConfigContextLoader.class)
-@Ignore("temporary (fails in Maven only)")
+@ContextConfiguration(classes = { UmContextConfig.class, UmClientConfig.class, CommonTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class SecurityRestLiveTest {
 
     @Autowired
-    private UserTestRestTemplate userTemplate;
+    private UserRestClient userTemplate;
 
     @Autowired
     private UserDtoOpsImpl userOps;
@@ -53,7 +57,6 @@ public class SecurityRestLiveTest {
     // Authenticated
 
     @Test
-    @Ignore("rest-assured 1.6.2 depends on Jackson 1.x; the new 1.6.3 depends on httpcore and httpclient 4.2.x (which is problematic with Spring)")
     public final void givenAuthenticatedByBasicAuth_whenResourceIsCreated_then201IsReceived() {
         // Given
         // When
@@ -64,7 +67,7 @@ public class SecurityRestLiveTest {
     }
 
     @Test
-    @Ignore("rest-assured 1.6.2 depends on Jackson 1.x; the new 1.6.3 depends on httpcore and httpclient 4.2.x (which is problematic with Spring)")
+    // @Ignore("rest-assured 1.6.2 depends on Jackson 1.x; the new 1.6.3 depends on httpcore and httpclient 4.2.x (which is problematic with Spring)")
     public final void givenAuthenticatedByDigestAuth_whenResourceIsCreated_then201IsReceived() {
         // Given
         // When

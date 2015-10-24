@@ -1,14 +1,12 @@
 package org.baeldung.common.web.listeners;
 
-import static org.baeldung.common.web.WebConstants.PATH_SEP;
-
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.HttpHeaders;
 import org.baeldung.common.web.IUriMapper;
 import org.baeldung.common.web.events.AfterResourceCreatedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.common.base.Preconditions;
@@ -45,8 +43,10 @@ public abstract class ResourceCreatedDiscoverabilityListener implements Applicat
 
     protected String calculatePathToResource(final Class clazz) {
         final String resourceName = uriMapper.getUriBase(clazz);
-        final String path = PATH_SEP + resourceName + "/{id}";
+        final String path = getBase() + resourceName + "/{id}";
         return path;
     }
+
+    protected abstract String getBase();
 
 }

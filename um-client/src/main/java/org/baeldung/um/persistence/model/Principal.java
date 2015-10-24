@@ -18,8 +18,6 @@ import org.baeldung.common.interfaces.INameableDto;
 import org.baeldung.common.persistence.model.INameableEntity;
 import org.baeldung.um.web.dto.UserDto;
 
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
-
 @Entity
 @XmlRootElement
 public class Principal implements INameableEntity, INameableDto {
@@ -44,7 +42,6 @@ public class Principal implements INameableEntity, INameableDto {
     // @formatter:off
     @ManyToMany( /* cascade = { CascadeType.REMOVE }, */fetch = FetchType.EAGER)
     @JoinTable(joinColumns = { @JoinColumn(name = "PRINCIPAL_ID", referencedColumnName = "PRINCIPAL_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID") })
-    @XStreamImplicit
     private Set<Role> roles;
     // @formatter:on
 

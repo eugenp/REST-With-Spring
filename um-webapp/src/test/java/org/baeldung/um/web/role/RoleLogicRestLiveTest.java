@@ -11,8 +11,8 @@ import static org.junit.Assert.assertThat;
 
 import org.baeldung.client.IDtoOperations;
 import org.baeldung.test.common.test.contract.IResourceWithAssociationsIntegrationTest;
-import org.baeldung.um.client.template.PrivilegeTestRestTemplate;
-import org.baeldung.um.client.template.RoleTestRestTemplate;
+import org.baeldung.um.client.template.PrivilegeRestClient;
+import org.baeldung.um.client.template.RoleRestClient;
 import org.baeldung.um.model.PrivilegeDtoOpsImpl;
 import org.baeldung.um.model.RoleDtoOpsImpl;
 import org.baeldung.um.persistence.model.Privilege;
@@ -29,9 +29,9 @@ import com.jayway.restassured.response.Response;
 public class RoleLogicRestLiveTest extends UmLogicRestLiveTest<Role>implements IResourceWithAssociationsIntegrationTest {
 
     @Autowired
-    private RoleTestRestTemplate api;
+    private RoleRestClient api;
     @Autowired
-    private PrivilegeTestRestTemplate associationApi;
+    private PrivilegeRestClient associationApi;
 
     @Autowired
     private RoleDtoOpsImpl entityOps;
@@ -253,7 +253,7 @@ public class RoleLogicRestLiveTest extends UmLogicRestLiveTest<Role>implements I
     // template
 
     @Override
-    protected final RoleTestRestTemplate getApi() {
+    protected final RoleRestClient getApi() {
         return api;
     }
 
@@ -264,7 +264,7 @@ public class RoleLogicRestLiveTest extends UmLogicRestLiveTest<Role>implements I
 
     // util
 
-    final PrivilegeTestRestTemplate getAssociationAPI() {
+    final PrivilegeRestClient getAssociationAPI() {
         return associationApi;
     }
 

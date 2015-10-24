@@ -1,6 +1,6 @@
 package org.baeldung.um.web.user;
 
-import org.baeldung.um.client.template.UserTestRestTemplate;
+import org.baeldung.um.client.template.UserRestClient;
 import org.baeldung.um.test.live.UmReadOnlyLogicRestLiveTest;
 import org.baeldung.um.web.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UserReadOnlyLogicRestLiveTest extends UmReadOnlyLogicRestLiveTest<UserDto> {
 
     @Autowired
-    private UserTestRestTemplate api;
+    private UserRestClient api;
 
     public UserReadOnlyLogicRestLiveTest() {
         super(UserDto.class);
@@ -19,7 +19,7 @@ public class UserReadOnlyLogicRestLiveTest extends UmReadOnlyLogicRestLiveTest<U
     // template method
 
     @Override
-    protected final UserTestRestTemplate getApi() {
+    protected final UserRestClient getApi() {
         return api;
     }
 

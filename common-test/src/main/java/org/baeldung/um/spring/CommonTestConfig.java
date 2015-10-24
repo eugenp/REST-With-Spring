@@ -7,11 +7,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@ComponentScan({ "org.baeldung.um.client" })
+@ComponentScan({ "org.baeldung.test.common" })
 @Import({ CommonClientConfig.class, CommonWebConfig.class })
-public class UmClientConfig {
+public class CommonTestConfig {
 
-    public UmClientConfig() {
+    public CommonTestConfig() {
         super();
     }
 

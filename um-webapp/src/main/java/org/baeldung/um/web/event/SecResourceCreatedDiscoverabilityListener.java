@@ -10,6 +10,11 @@ class SecResourceCreatedDiscoverabilityListener extends ResourceCreatedDiscovera
         super();
     }
 
-    // API
+    //
+
+    @Override
+    protected final String getBase() {
+        return "/";
+    }
 
 }
