@@ -11,8 +11,8 @@ import org.baeldung.common.web.controller.AbstractController;
 import org.baeldung.common.web.controller.ISortingController;
 import org.baeldung.um.service.IUserService;
 import org.baeldung.um.util.Um.Privileges;
-import org.baeldung.um.web.dto.UserDto;
 import org.baeldung.um.util.UmMappings;
+import org.baeldung.um.web.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
@@ -28,7 +28,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping(value = UmMappings.USERS)
-public class UserController extends AbstractController<UserDto>implements ISortingController<UserDto> {
+public class UserController extends AbstractController<UserDto, UserDto> implements ISortingController<UserDto> {
 
     @Autowired
     private IUserService service;

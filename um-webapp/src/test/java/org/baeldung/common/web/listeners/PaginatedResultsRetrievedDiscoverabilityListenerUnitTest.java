@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.baeldung.common.util.LinkUtil;
 import org.baeldung.common.web.events.PaginatedResultsRetrievedEvent;
-import org.baeldung.common.web.listeners.PaginatedResultsRetrievedDiscoverabilityListener;
+import org.baeldung.um.web.dto.UserDto;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -24,7 +24,7 @@ import com.google.common.net.HttpHeaders;
 @Ignore("in progress")
 public class PaginatedResultsRetrievedDiscoverabilityListenerUnitTest {
 
-    private static final Class<Integer> RESOURCE_CLASS = Integer.class;
+    private static final Class<UserDto> RESOURCE_CLASS = UserDto.class;
 
     private static final int PAGE_SIZE_TO_SET = 10;
 
@@ -52,7 +52,7 @@ public class PaginatedResultsRetrievedDiscoverabilityListenerUnitTest {
         final int totalPagesToSet = 1;
 
         // when
-        listener.onApplicationEvent(new PaginatedResultsRetrievedEvent<Integer>(RESOURCE_CLASS, uriComponentsBuilder, httpServletResponse, pageToSet, totalPagesToSet, PAGE_SIZE_TO_SET));
+        listener.onApplicationEvent(new PaginatedResultsRetrievedEvent<UserDto>(RESOURCE_CLASS, uriComponentsBuilder, httpServletResponse, pageToSet, totalPagesToSet, PAGE_SIZE_TO_SET));
 
         // then
         verify(httpServletResponse, never()).addHeader(eq(HttpHeaders.LINK), anyString());
@@ -65,7 +65,7 @@ public class PaginatedResultsRetrievedDiscoverabilityListenerUnitTest {
         final int totalPagesToSet = 3;
 
         // when
-        listener.onApplicationEvent(new PaginatedResultsRetrievedEvent<Integer>(RESOURCE_CLASS, uriComponentsBuilder, httpServletResponse, pageToSet, totalPagesToSet, PAGE_SIZE_TO_SET));
+        listener.onApplicationEvent(new PaginatedResultsRetrievedEvent<UserDto>(RESOURCE_CLASS, uriComponentsBuilder, httpServletResponse, pageToSet, totalPagesToSet, PAGE_SIZE_TO_SET));
 
         // then
         verify(httpServletResponse).addHeader(eq(HttpHeaders.LINK), eq(LinkUtil.createLinkHeader(RESOURCE_HTTP_LOCATION + "/" + RESOURCE_CLASS.getSimpleName().toLowerCase() + "?page=" + (pageToSet + 1) + "&size=" + PAGE_SIZE_TO_SET, "next") + ", "
@@ -79,7 +79,7 @@ public class PaginatedResultsRetrievedDiscoverabilityListenerUnitTest {
         final int totalPagesToSet = 3;
 
         // when
-        listener.onApplicationEvent(new PaginatedResultsRetrievedEvent<Integer>(RESOURCE_CLASS, uriComponentsBuilder, httpServletResponse, pageToSet, totalPagesToSet, PAGE_SIZE_TO_SET));
+        listener.onApplicationEvent(new PaginatedResultsRetrievedEvent<UserDto>(RESOURCE_CLASS, uriComponentsBuilder, httpServletResponse, pageToSet, totalPagesToSet, PAGE_SIZE_TO_SET));
 
         // then
         verify(httpServletResponse).addHeader(eq(HttpHeaders.LINK), eq(LinkUtil.createLinkHeader(RESOURCE_HTTP_LOCATION + "/" + RESOURCE_CLASS.getSimpleName().toLowerCase() + "?page=" + (pageToSet - 1) + "&size=" + PAGE_SIZE_TO_SET, "prev") + ", "
@@ -93,7 +93,7 @@ public class PaginatedResultsRetrievedDiscoverabilityListenerUnitTest {
         final int totalPagesToSet = 3;
 
         // when
-        listener.onApplicationEvent(new PaginatedResultsRetrievedEvent<Integer>(RESOURCE_CLASS, uriComponentsBuilder, httpServletResponse, pageToSet, totalPagesToSet, PAGE_SIZE_TO_SET));
+        listener.onApplicationEvent(new PaginatedResultsRetrievedEvent<UserDto>(RESOURCE_CLASS, uriComponentsBuilder, httpServletResponse, pageToSet, totalPagesToSet, PAGE_SIZE_TO_SET));
 
         // then
         verify(httpServletResponse).addHeader(eq(HttpHeaders.LINK),

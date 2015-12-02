@@ -25,6 +25,10 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 
+/**
+ * This simple setup class will run during the bootstrap process of Spring and will create some setup data <br>
+ * The main focus here is creating some standard privileges, then roles and finally some default principals/users
+ */
 @Component
 @Profile(Profiles.DEPLOYED)
 public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent> {

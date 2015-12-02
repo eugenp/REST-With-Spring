@@ -28,7 +28,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping(value = UmMappings.ROLES)
-public class RoleController extends AbstractController<Role>implements ISortingController<Role> {
+public class RoleController extends AbstractController<Role, Role> implements ISortingController<Role> {
 
     @Autowired
     private IRoleService service;

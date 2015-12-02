@@ -1,10 +1,10 @@
 package org.baeldung.common.util.order;
 
-import org.baeldung.common.interfaces.IWithId;
+import org.baeldung.common.interfaces.IWithLongId;
 
 import com.google.common.collect.Ordering;
 
-public final class OrderById<T extends IWithId> extends Ordering<T> {
+public final class OrderById<T extends IWithLongId> extends Ordering<T> {
 
     public OrderById() {
         super();

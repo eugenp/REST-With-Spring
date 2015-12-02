@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-public class URIParsingUnitTest {
+public class UriParsingUnitTest {
 
     @Test
     public final void whenURIIsParsed_thenResultIsCorrect() {

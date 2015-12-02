@@ -1,6 +1,6 @@
 package org.baeldung.common.interfaces;
 
-public interface IWithId {
+public interface IWithLongId {
 
     Long getId();
 

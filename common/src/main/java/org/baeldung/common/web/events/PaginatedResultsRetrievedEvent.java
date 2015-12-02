@@ -1,9 +1,8 @@
 package org.baeldung.common.web.events;
 
-import java.io.Serializable;
-
 import javax.servlet.http.HttpServletResponse;
 
+import org.baeldung.common.interfaces.IDto;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -11,11 +10,11 @@ import org.springframework.web.util.UriComponentsBuilder;
  * Event that is fired when a paginated search is performed.
  * <p/>
  * This event object contains all the information needed to create the URL for the paginated results
- * 
+ *
  * @param <T>
  *            Type of the result that is being handled (commonly Entities).
  */
-public final class PaginatedResultsRetrievedEvent<T extends Serializable> extends ApplicationEvent {
+public final class PaginatedResultsRetrievedEvent<T extends IDto> extends ApplicationEvent {
     private final UriComponentsBuilder uriBuilder;
     private final HttpServletResponse response;
     private final int page;
@@ -56,7 +55,7 @@ public final class PaginatedResultsRetrievedEvent<T extends Serializable> extend
 
     /**
      * The object on which the Event initially occurred.
-     * 
+     *
      * @return The object on which the Event initially occurred.
      */
     @SuppressWarnings("unchecked")
