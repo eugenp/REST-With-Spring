@@ -28,7 +28,7 @@ public class UserDiscoverabilityRestLiveTest extends UmDiscoverabilityRestLiveTe
     }
 
     @Override
-    protected final UserDto createNewEntity() {
+    protected final UserDto createNewResource() {
         return getEntityOps().createNewResource();
     }
 

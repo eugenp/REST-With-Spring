@@ -1,6 +1,5 @@
 package org.baeldung.um.web.user;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
@@ -8,6 +7,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import org.baeldung.client.IDtoOperations;
+import org.baeldung.um.client.FixtureResourceFactory;
 import org.baeldung.um.client.template.RoleRestClient;
 import org.baeldung.um.client.template.UserRestClient;
 import org.baeldung.um.model.RoleDtoOpsImpl;
@@ -116,17 +116,18 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<UserDto> {
 
     @Test
     public final void whenScenarioOfWorkingWithAssociations_thenTheChangesAreCorrectlyPersisted() {
-        final Role existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewResource());
-        final UserDto resource1 = new UserDto(randomAlphabetic(6), randomAlphabetic(6), Sets.newHashSet(existingAssociation));
+        final Role child = getAssociationAPI().create(getAssociationEntityOps().createNewResource());
+        final UserDto parent = FixtureResourceFactory.createNewUser();
+        parent.setRoles(Sets.newHashSet(child));
+        final UserDto parentWithChild = getApi().create(parent);
+        assertThat(parentWithChild.getRoles(), hasItem(child));
 
-        final UserDto resource1ViewOfServerBefore = getApi().create(resource1);
-        assertThat(resource1ViewOfServerBefore.getRoles(), hasItem(existingAssociation));
+        final UserDto parent2 = FixtureResourceFactory.createNewUser();
+        parent2.setRoles(Sets.newHashSet(child));
+        getApi().createAsResponse(parent2);
 
-        final UserDto resource2 = new UserDto(randomAlphabetic(6), randomAlphabetic(6), Sets.newHashSet(existingAssociation));
-        getApi().createAsResponse(resource2);
-
-        final UserDto resource1ViewOfServerAfter = getApi().findOne(resource1ViewOfServerBefore.getId());
-        assertThat(resource1ViewOfServerAfter.getRoles(), hasItem(existingAssociation));
+        final UserDto resource1ViewOfServerAfter = getApi().findOne(parentWithChild.getId());
+        assertThat(resource1ViewOfServerAfter.getRoles(), hasItem(child));
     }
 
     // template method

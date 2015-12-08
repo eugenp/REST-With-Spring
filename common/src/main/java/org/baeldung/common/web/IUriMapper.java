@@ -1,9 +1,9 @@
 package org.baeldung.common.web;
 
-import org.baeldung.common.persistence.model.IEntity;
+import org.baeldung.common.interfaces.IDto;
 
 public interface IUriMapper {
 
-    <T extends IEntity> String getUriBase(final Class<T> clazz);
+    <T extends IDto> String getUriBase(final Class<T> clazz);
 
 }

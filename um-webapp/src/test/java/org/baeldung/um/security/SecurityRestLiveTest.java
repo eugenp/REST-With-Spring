@@ -7,8 +7,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.baeldung.test.common.client.security.ITestAuthenticator;
-import org.baeldung.um.client.template.UserRestClient;
-import org.baeldung.um.model.UserDtoOpsImpl;
+import org.baeldung.um.client.template.PrivilegeRestClient;
+import org.baeldung.um.model.PrivilegeDtoOpsImpl;
 import org.baeldung.um.spring.CommonTestConfig;
 import org.baeldung.um.spring.UmClientConfig;
 import org.baeldung.um.spring.UmContextConfig;
@@ -30,10 +30,10 @@ import com.jayway.restassured.specification.RequestSpecification;
 public class SecurityRestLiveTest {
 
     @Autowired
-    private UserRestClient userTemplate;
+    private PrivilegeRestClient resourceClient;
 
     @Autowired
-    private UserDtoOpsImpl userOps;
+    private PrivilegeDtoOpsImpl resourceOps;
 
     @Autowired
     private ITestAuthenticator auth;
@@ -45,7 +45,7 @@ public class SecurityRestLiveTest {
     @Test
     public final void givenUnauthenticated_whenAResourceIsDeleted_then401IsReceived() {
         // Given
-        final String uriOfExistingResource = userTemplate.createAsUri(userOps.createNewResource(), null);
+        final String uriOfExistingResource = resourceClient.createAsUri(resourceOps.createNewResource(), null);
 
         // When
         final Response response = given().delete(uriOfExistingResource);
@@ -60,18 +60,7 @@ public class SecurityRestLiveTest {
     public final void givenAuthenticatedByBasicAuth_whenResourceIsCreated_then201IsReceived() {
         // Given
         // When
-        final Response response = givenAuthenticated().contentType(userTemplate.getMarshaller().getMime()).body(userOps.createNewResource()).post(userTemplate.getUri());
-
-        // Then
-        assertThat(response.getStatusCode(), is(201));
-    }
-
-    @Test
-    // @Ignore("rest-assured 1.6.2 depends on Jackson 1.x; the new 1.6.3 depends on httpcore and httpclient 4.2.x (which is problematic with Spring)")
-    public final void givenAuthenticatedByDigestAuth_whenResourceIsCreated_then201IsReceived() {
-        // Given
-        // When
-        final Response response = givenAuthenticated().contentType(userTemplate.getMarshaller().getMime()).body(userOps.createNewResource()).post(userTemplate.getUri());
+        final Response response = givenAuthenticated().contentType(resourceClient.getMarshaller().getMime()).body(resourceOps.createNewResource()).post(resourceClient.getUri());
 
         // Then
         assertThat(response.getStatusCode(), is(201));
@@ -80,7 +69,7 @@ public class SecurityRestLiveTest {
     // util
 
     protected final RequestSpecification givenAuthenticated() {
-        return auth.givenBasicAuthenticated(Um.ADMIN_USERNAME, Um.ADMIN_PASS);
+        return auth.givenBasicAuthenticated(Um.ADMIN_EMAIL, Um.ADMIN_PASS);
     }
 
 }

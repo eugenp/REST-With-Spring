@@ -1,5 +1,7 @@
 package org.baeldung.um.common.web.root;
 
+import static org.baeldung.common.spring.util.Profiles.CLIENT;
+import static org.baeldung.common.spring.util.Profiles.TEST;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -12,9 +14,9 @@ import org.baeldung.um.client.UmPaths;
 import org.baeldung.um.test.live.UmGeneralRestLiveTest;
 import org.baeldung.um.util.Um;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
@@ -22,11 +24,12 @@ import com.google.common.net.HttpHeaders;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
-@Ignore("temp")
+@ActiveProfiles({ CLIENT, TEST })
 public class RootDiscoverabilityRestLiveTest extends UmGeneralRestLiveTest {
 
     @Autowired
     private UmPaths paths;
+
     @Autowired
     private ITestAuthenticator auth;
 

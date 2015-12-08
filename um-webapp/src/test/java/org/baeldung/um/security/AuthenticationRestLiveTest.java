@@ -10,8 +10,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import org.baeldung.test.common.client.security.ITestAuthenticator;
 import org.baeldung.um.client.UmPaths;
-import org.baeldung.um.spring.UmContextConfig;
+import org.baeldung.um.spring.CommonTestConfig;
 import org.baeldung.um.spring.UmClientConfig;
+import org.baeldung.um.spring.UmContextConfig;
 import org.baeldung.um.util.Um;
 import org.baeldung.um.web.dto.UserDto;
 import org.junit.Test;
@@ -26,7 +27,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { UmContextConfig.class, UmClientConfig.class }, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = { UmContextConfig.class, UmClientConfig.class, CommonTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 @ActiveProfiles({ CLIENT, TEST })
 public class AuthenticationRestLiveTest {
 

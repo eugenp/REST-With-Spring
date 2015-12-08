@@ -42,6 +42,7 @@ public class UserDto implements INameableEntity, INameableDto {
 
         name = principal.getName();
         roles = principal.getRoles();
+        email = principal.getEmail();
         id = principal.getId();
     }
 

@@ -23,7 +23,7 @@ public class PrivilegeDiscoverabilityRestLiveTest extends UmDiscoverabilityRestL
     // template method
 
     @Override
-    protected final Privilege createNewEntity() {
+    protected final Privilege createNewResource() {
         return getEntityOps().createNewResource();
     }
 

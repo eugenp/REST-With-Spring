@@ -92,7 +92,7 @@ public class Privilege implements INameableEntity, INameableDto {
 
     @Override
     public String toString() {
-        return getName();
+        return "Privilege [name=" + name + ", description=" + description + "]";
     }
 
 }

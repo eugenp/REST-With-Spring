@@ -21,8 +21,14 @@ public class FixtureResourceFactory {
         return createNewUser(randomAlphabetic(8), randomAlphabetic(8));
     }
 
+    public static UserDto createNewUser(final String name) {
+        return createNewUser(name, randomAlphabetic(8));
+    }
+
     public static UserDto createNewUser(final String name, final String pass) {
-        return new UserDto(name, pass, Sets.<Role> newHashSet());
+        final UserDto userDto = new UserDto(name, pass, Sets.<Role> newHashSet());
+        userDto.setEmail(randomAlphabetic(6) + "@gmail.com");
+        return userDto;
     }
 
     // principal

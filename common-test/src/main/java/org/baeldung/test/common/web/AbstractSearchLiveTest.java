@@ -43,7 +43,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void whenSearchByNameIsPerformed_thenNoExceptions() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         final Triple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
@@ -55,14 +55,14 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceWithIdExists_whenResourceIsSearchedById_thenNoExceptions() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
         getApi().searchAsResponse(ClientConstraintsUtil.createIdConstraint(EQ, existingResource.getId()), null);
     }
 
     @Override
     @Test
     public final void givenResourceWithIdExists_whenResourceIsSearchedById_thenSearchOperationIsSuccessful() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         final Response searchResponse = getApi().searchAsResponse(ClientConstraintsUtil.createIdConstraint(EQ, existingResource.getId()), null);
@@ -74,7 +74,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceWithIdExists_whenResourceIsSearchedById_thenResourceIsFound() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         final List<T> found = getApi().searchAll(ClientConstraintsUtil.createIdConstraint(EQ, existingResource.getId()));
@@ -88,14 +88,14 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceWithNameExists_whenResourceIsSearchedByName_thenNoExceptions() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
         getApi().searchAsResponse(null, ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName()));
     }
 
     @Override
     @Test
     public final void givenResourceWithNameExists_whenResourceIsSearchedByName_thenOperationIsSuccessful() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         final Response searchResponse = getApi().searchAsResponse(null, ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName()));
@@ -107,7 +107,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceWithNameExists_whenResourceIsSearchedByName_thenResourceIsFound() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         final List<T> found = getApi().searchAll(ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName()));
@@ -119,8 +119,8 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceWithNameExists_whenSearchByNegatedNameIsPerformed_thenResourcesAreCorrect() {
-        final T existingResource1 = getApi().create(createNewEntity());
-        final T existingResource2 = getApi().create(createNewEntity());
+        final T existingResource1 = getApi().create(createNewResource());
+        final T existingResource2 = getApi().create(createNewResource());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource1.getName());
@@ -134,7 +134,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceWithNameExists_whenResourceIsSearchedByNameLowerCase_thenResourceIsFound() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         final List<T> found = getApi().searchAll(ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName().toLowerCase()));
@@ -148,14 +148,14 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceWithNameExists_whenResourceIsSearchedByContainsExactName_thenNoExceptions() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
         getApi().searchAsResponse(null, ClientConstraintsUtil.createNameConstraint(CONTAINS, existingResource.getName()));
     }
 
     @Override
     @Test
     public final void givenResourceWithNameExists_whenSearchByContainsEntireNameIsPerformed_thenResourceIsFound() {
-        final T existingEntity = getApi().create(createNewEntity());
+        final T existingEntity = getApi().create(createNewResource());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), CONTAINS, existingEntity.getName());
@@ -168,7 +168,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceWithNameExists_whenSearchByContainsPartOfNameIsPerformed_thenResourceIsFound() {
-        final T existingEntity = getApi().create(createNewEntity());
+        final T existingEntity = getApi().create(createNewResource());
         final String name = existingEntity.getName();
         final String partOfName = name.substring(2);
 
@@ -185,34 +185,34 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceExists_whenSearchByStartsWithEntireNameIsPerformed_thenResourceIsFound() {
-        final T newEntity = createNewEntity();
+        final T newEntity = createNewResource();
         SearchIntegrationTestUtil.givenResourceExists_whenSearchByStartsWithEntireKeyIsPerformed_thenResourceIsFound(getApi(), newEntity, SearchField.name, ClientOperation.STARTS_WITH, newEntity.getName());
     }
 
     @Override
     @Test
     public final void givenResourceExists_whenSearchByStartsWithPartOfNameIsPerformed_thenResourceIsFound() {
-        final T newEntity = createNewEntity();
+        final T newEntity = createNewResource();
         SearchIntegrationTestUtil.givenResourceExists_whenSearchByStartsWithPartOfKeyIsPerformed_thenResourceIsFound(getApi(), newEntity, SearchField.name, ClientOperation.STARTS_WITH, newEntity.getName());
     }
 
     @Override
     @Test
     public final void givenResourceExists_whenSearchByEndsWithEntireNameIsPerformed_thenResourceIsFound() {
-        final T newEntity = createNewEntity();
+        final T newEntity = createNewResource();
         SearchIntegrationTestUtil.givenResourceExists_whenSearchByEndsWithEntireKeyIsPerformed_thenResourceIsFound(getApi(), newEntity, SearchField.name, ClientOperation.ENDS_WITH, newEntity.getName());
     }
 
     @Override
     @Test
     public final void givenResourceExists_whenSearchByEndsWithPartOfNameIsPerformed_thenResourceIsFound() {
-        final T newEntity = createNewEntity();
+        final T newEntity = createNewResource();
         SearchIntegrationTestUtil.givenResourceExists_whenSearchByEndsWithPartOfNameIsPerformed_thenResourceIsFound(getApi(), newEntity, SearchField.name, ClientOperation.ENDS_WITH, newEntity.getName());
     }
 
     @Test
     public final void givenResourceExists_whenSearchByStartsWithPartOfLowerCaseNameIsPerformed_thenResourceIsFound() {
-        final T newEntity = createNewEntity();
+        final T newEntity = createNewResource();
         SearchIntegrationTestUtil.givenResourceExists_whenSearchByStartsWithPartOfLowerCaseNameIsPerformed_thenResourceIsFound(getApi(), newEntity, SearchField.name, ClientOperation.ENDS_WITH, newEntity.getName());
     }
 
@@ -221,7 +221,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceWithNameAndIdExists_whenResourceIsSearchedByCorrectIdAndCorrectName_thenOperationIsSuccessful() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         final Response searchResponse = getApi().searchAsResponse(ClientConstraintsUtil.createIdConstraint(EQ, existingResource.getId()), ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName()));
@@ -233,7 +233,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceWithNameAndIdExists_whenResourceIsSearchedByCorrectIdAndCorrectName_thenResourceIsFound() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         final List<T> found = getApi().searchAll(ClientConstraintsUtil.createIdConstraint(EQ, existingResource.getId()), ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName()));
@@ -245,7 +245,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceWithNameAndIdExists_whenResourceIsSearchedByCorrectIdAndIncorrectName_thenResourceIsNotFound() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         final List<T> found = getApi().searchAll(ClientConstraintsUtil.createIdConstraint(EQ, existingResource.getId()), ClientConstraintsUtil.createNameConstraint(EQ, randomAlphabetic(8)));
@@ -257,7 +257,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceWithNameAndIdExists_whenResourceIsSearchedByIncorrectIdAndCorrectName_thenResourceIsNotFound() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         final List<T> found = getApi().searchAll(ClientConstraintsUtil.createIdConstraint(EQ, IDUtil.randomPositiveLong()), ClientConstraintsUtil.createNameConstraint(EQ, existingResource.getName()));
@@ -269,7 +269,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceWithNameAndIdExists_whenResourceIsSearchedByIncorrectIdAndIncorrectName_thenResourceIsNotFound() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         final List<T> found = getApi().searchAll(ClientConstraintsUtil.createIdConstraint(EQ, IDUtil.randomPositiveLong()), ClientConstraintsUtil.createNameConstraint(EQ, randomAlphabetic(8)));
@@ -283,7 +283,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceExists_whenResourceIsSearchedByNegatedName_thenOperationIsSuccessful() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         final Triple<String, ClientOperation, String> negatedNameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), NEG_EQ, existingResource.getName());
 
@@ -297,7 +297,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceExists_whenResourceIsSearchedByNegatedId_thenOperationIsSuccessful() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         final Triple<String, ClientOperation, String> negatedIdConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), NEG_EQ, existingResource.getId().toString());
 
@@ -311,7 +311,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceExists_whenResourceIsSearchedByNegatedId_thenResourceIsNotFound() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         final List<T> found = getApi().searchAll(ClientConstraintsUtil.createIdConstraint(NEG_EQ, existingResource.getId()));
@@ -323,8 +323,8 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourcesExists_whenResourceIsSearchedByNegatedId_thenTheOtherResourcesAreFound() {
-        final T existingResource1 = getApi().create(createNewEntity());
-        final T existingResource2 = getApi().create(createNewEntity());
+        final T existingResource1 = getApi().create(createNewResource());
+        final T existingResource2 = getApi().create(createNewResource());
 
         // When
         final List<T> found = getApi().searchAll(ClientConstraintsUtil.createIdConstraint(NEG_EQ, existingResource1.getId()));
@@ -336,8 +336,8 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceAndOtherResourcesExists_whenResourceIsSearchedByNegatedName_thenResourcesAreFound() {
-        final T existingResource1 = getApi().create(createNewEntity());
-        final T existingResource2 = getApi().create(createNewEntity());
+        final T existingResource1 = getApi().create(createNewResource());
+        final T existingResource2 = getApi().create(createNewResource());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), NEG_EQ, existingResource1.getName());
@@ -351,8 +351,8 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     @Override
     @Test
     public final void givenResourceAndOtherResourcesExists_whenResourceIsSearchedByNegatedId_thenResourcesAreFound() {
-        final T existingResource1 = getApi().create(createNewEntity());
-        final T existingResource2 = getApi().create(createNewEntity());
+        final T existingResource1 = getApi().create(createNewResource());
+        final T existingResource2 = getApi().create(createNewResource());
 
         // When
         final ImmutableTriple<String, ClientOperation, String> idConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.id.toString(), NEG_EQ, existingResource1.getId().toString());
@@ -367,7 +367,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
 
     @Test
     public final void givenResourceExists_whenResourceIsSearchedByNameWithPaging_then200IsReceived() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         final Triple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), EQ, existingResource.getName());
@@ -379,10 +379,10 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
 
     @Test
     public final void givenResourcesExists_whenResourceIsSearchedByNameWithPagingOfSize2_thenMax2ResourcesAreReceived() {
-        final T existingResource1 = getApi().create(createNewEntity());
-        getApi().create(createNewEntity());
-        getApi().create(createNewEntity());
-        getApi().create(createNewEntity());
+        final T existingResource1 = getApi().create(createNewResource());
+        getApi().create(createNewResource());
+        getApi().create(createNewResource());
+        getApi().create(createNewResource());
 
         // When
         final Triple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.toString(), NEG_EQ, existingResource1.getName());
@@ -394,7 +394,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
 
     // template
 
-    protected T createNewEntity() {
+    protected T createNewResource() {
         return getEntityOps().createNewResource();
     }
 

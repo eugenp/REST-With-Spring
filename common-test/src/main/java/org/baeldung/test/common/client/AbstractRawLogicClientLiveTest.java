@@ -63,7 +63,7 @@ public abstract class AbstractRawLogicClientLiveTest<T extends IDto> {
 
     @Test
     public void givenAnResourceExists_whenAllResourcesAreRetrieved_thenTheExistingResourceIsIndeedAmongThem() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         final List<T> resources = getApi().findAll();
 
@@ -87,7 +87,7 @@ public abstract class AbstractRawLogicClientLiveTest<T extends IDto> {
 
     @Test
     public final void whenFirstPageOfResourcesAreRetrieved_thenResourcesPageIsReturned() {
-        getApi().createAsUri(createNewEntity());
+        getApi().createAsUri(createNewResource());
 
         // When
         final List<T> allPaginated = getApi().findAllPaginated(0, 1);
@@ -106,19 +106,19 @@ public abstract class AbstractRawLogicClientLiveTest<T extends IDto> {
 
     @Test
     public void whenResourceIsCreated_thenNoExceptions() {
-        getApi().createAsUri(createNewEntity());
+        getApi().createAsUri(createNewResource());
     }
 
     @Test
     public void whenResourceIsCreated_thenResourceIsRetrievable() {
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         assertNotNull(getApi().findOne(existingResource.getId()));
     }
 
     @Test
     public void whenResourceIsCreated_thenSavedResourceIsEqualToOriginalResource() {
-        final T originalResource = createNewEntity();
+        final T originalResource = createNewResource();
         final T savedResource = getApi().create(originalResource);
 
         assertEquals(originalResource, savedResource);
@@ -134,7 +134,7 @@ public abstract class AbstractRawLogicClientLiveTest<T extends IDto> {
     @Test
     public void givenResourceExists_whenResourceIsUpdated_thenNoExceptions() {
         // Given
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         getApi().update(existingResource);
@@ -143,7 +143,7 @@ public abstract class AbstractRawLogicClientLiveTest<T extends IDto> {
     @Test
     public void givenResourceExists_whenResourceIsUpdated_thenUpdatesArePersisted() {
         // Given
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         getEntityOps().change(existingResource);
@@ -160,7 +160,7 @@ public abstract class AbstractRawLogicClientLiveTest<T extends IDto> {
     @Test
     public final void givenResourceExists_whenResourceIsDeleted_thenResourceNoLongerExists() {
         // Given
-        final T existingResource = getApi().create(createNewEntity());
+        final T existingResource = getApi().create(createNewResource());
 
         // When
         getApi().delete(existingResource.getId());
@@ -182,12 +182,12 @@ public abstract class AbstractRawLogicClientLiveTest<T extends IDto> {
 
     protected abstract IDtoOperations<T> getEntityOps();
 
-    protected T createNewEntity() {
+    protected T createNewResource() {
         return getEntityOps().createNewResource();
     }
 
     protected void ensureOneResourceExists() {
-        getApi().createAsUri(createNewEntity());
+        getApi().createAsUri(createNewResource());
     }
 
     protected abstract IRawClientTemplate<T> getApi();

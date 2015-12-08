@@ -66,7 +66,7 @@ public abstract class AbstractDiscoverabilityLiveTest<T extends IDto> {
     @Test
     public final void whenResourceIsRetrieved_thenURIToGetAllResourcesIsDiscoverable() {
         // Given
-        final String uriOfExistingResource = getApi().createAsUri(createNewEntity());
+        final String uriOfExistingResource = getApi().createAsUri(createNewResource());
 
         // When
         final Response getResponse = getApi().findOneByUriAsResponse(uriOfExistingResource, null);
@@ -92,8 +92,8 @@ public abstract class AbstractDiscoverabilityLiveTest<T extends IDto> {
 
     @Test
     public final void whenFirstPageOfResourcesIsRetrieved_thenNextPageIsDiscoverable() {
-        getApi().createAsUri(createNewEntity());
-        getApi().createAsUri(createNewEntity());
+        getApi().createAsUri(createNewResource());
+        getApi().createAsUri(createNewResource());
 
         // When
         final Response response = getApi().findAllPaginatedAsResponse(1, 1, null);
@@ -105,8 +105,8 @@ public abstract class AbstractDiscoverabilityLiveTest<T extends IDto> {
 
     @Test
     public final void whenFirstPageOfResourcesAreRetrieved_thenSecondPageIsDiscoverable() {
-        getApi().createAsUri(createNewEntity());
-        getApi().createAsUri(createNewEntity());
+        getApi().createAsUri(createNewResource());
+        getApi().createAsUri(createNewResource());
 
         // When
         final Response response = getApi().findAllPaginatedAsResponse(0, 1, null);
@@ -118,8 +118,8 @@ public abstract class AbstractDiscoverabilityLiveTest<T extends IDto> {
 
     @Test
     public final void whenPageOfResourcesIsRetrieved_thenLastPageIsDiscoverable() {
-        getApi().create(createNewEntity());
-        getApi().create(createNewEntity());
+        getApi().create(createNewResource());
+        getApi().create(createNewResource());
 
         // When
         final Response response = getApi().findAllPaginatedAsResponse(0, 1, null);
@@ -146,7 +146,7 @@ public abstract class AbstractDiscoverabilityLiveTest<T extends IDto> {
     @Test
     public final void whenInvalidPOSTIsSentToValidURIOfResource_thenAllowHeaderListsTheAllowedActions() {
         // Given
-        final String uriOfExistingResource = getApi().createAsUri(createNewEntity());
+        final String uriOfExistingResource = getApi().createAsUri(createNewResource());
 
         // When
         final Response res = getApi().givenReadAuthenticated().post(uriOfExistingResource);
@@ -159,7 +159,7 @@ public abstract class AbstractDiscoverabilityLiveTest<T extends IDto> {
     @Test
     public final void whenResourceIsCreated_thenURIOfTheNewlyCreatedResourceIsDiscoverable() {
         // When
-        final T unpersistedResource = createNewEntity();
+        final T unpersistedResource = createNewResource();
         final String uriOfNewlyCreatedResource = getApi().createAsUri(unpersistedResource);
 
         // Then
@@ -176,6 +176,6 @@ public abstract class AbstractDiscoverabilityLiveTest<T extends IDto> {
 
     protected abstract String getUri();
 
-    protected abstract T createNewEntity();
+    protected abstract T createNewResource();
 
 }

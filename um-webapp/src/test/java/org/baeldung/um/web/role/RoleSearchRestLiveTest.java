@@ -11,6 +11,7 @@ public class RoleSearchRestLiveTest extends UmSearchRestLiveTest<Role> {
 
     @Autowired
     private RoleRestClient restTemplate;
+
     @Autowired
     private RoleDtoOpsImpl entityOps;
 

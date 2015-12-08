@@ -11,6 +11,7 @@ public class RoleDiscoverabilityRestLiveTest extends UmDiscoverabilityRestLiveTe
 
     @Autowired
     private RoleRestClient restTemplate;
+
     @Autowired
     private RoleDtoOpsImpl entityOps;
 
@@ -23,7 +24,7 @@ public class RoleDiscoverabilityRestLiveTest extends UmDiscoverabilityRestLiveTe
     // template method
 
     @Override
-    protected final Role createNewEntity() {
+    protected final Role createNewResource() {
         return getEntityOps().createNewResource();
     }
 

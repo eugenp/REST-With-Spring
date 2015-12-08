@@ -1,4 +1,4 @@
-package org.baeldung.um.persistence.model.meta;
+package org.baeldung.um.persistence.model;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
