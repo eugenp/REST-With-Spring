@@ -11,7 +11,7 @@ import org.baeldung.um.client.template.PrivilegeRestClient;
 import org.baeldung.um.model.PrivilegeDtoOpsImpl;
 import org.baeldung.um.spring.CommonTestConfig;
 import org.baeldung.um.spring.UmClientConfig;
-import org.baeldung.um.spring.UmContextConfig;
+import org.baeldung.um.spring.UmLiveTestConfig;
 import org.baeldung.um.util.Um;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +26,7 @@ import com.jayway.restassured.specification.RequestSpecification;
 
 @ActiveProfiles({ CLIENT, TEST })
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { UmContextConfig.class, UmClientConfig.class, CommonTestConfig.class }, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = { UmLiveTestConfig.class, UmClientConfig.class, CommonTestConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class SecurityRestLiveTest {
 
     @Autowired
