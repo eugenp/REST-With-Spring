@@ -81,7 +81,7 @@
 		</dependency>
 
 		<!-- persistence -->
-		
+
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
@@ -163,6 +163,8 @@
 					<configuration>
 						<properties>
 							<cargo.servlet.port>8082</cargo.servlet.port>
+							<cargo.tomcat.ajp.port>8010</cargo.tomcat.ajp.port>
+							<cargo.rmi.port>8006</cargo.rmi.port>
 						</properties>
 					</configuration>
 				</configuration>
@@ -173,7 +175,7 @@
 	</build>
 
 	<profiles>
-	
+
 		<profile>
 			<id>integration</id>
 			<build>
@@ -207,7 +209,7 @@
 				</plugins>
 			</build>
 		</profile>
-		
+
 		<profile>
 			<id>live</id>
 			<build>
