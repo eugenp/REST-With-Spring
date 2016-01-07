@@ -36,7 +36,7 @@ public class AuthenticationController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public UserDto createAuthentication() {
-        final Authentication authenticationInSpring = SpringSecurityUtil.getCurrentAuthentication();
+        final Authentication auth = SpringSecurityUtil.getCurrentAuthentication();
 
         final Function<GrantedAuthority, Privilege> springAuthorityToPrivilegeFunction = new Function<GrantedAuthority, Privilege>() {
             @Override
@@ -44,10 +44,10 @@ public class AuthenticationController {
                 return new Privilege(springAuthority.getAuthority());
             }
         };
-        final Collection<Privilege> privileges = Collections2.transform(authenticationInSpring.getAuthorities(), springAuthorityToPrivilegeFunction);
+        final Collection<Privilege> privileges = Collections2.transform(auth.getAuthorities(), springAuthorityToPrivilegeFunction);
         final Role defaultRole = new Role("defaultRole", Sets.<Privilege> newHashSet(privileges));
 
-        final UserDto authenticationResource = new UserDto(authenticationInSpring.getName(), (String) authenticationInSpring.getCredentials(), Sets.<Role> newHashSet(defaultRole));
+        final UserDto authenticationResource = new UserDto(auth.getName(), auth.getName(), (String) auth.getCredentials(), Sets.<Role> newHashSet(defaultRole));
         return authenticationResource;
     }
 

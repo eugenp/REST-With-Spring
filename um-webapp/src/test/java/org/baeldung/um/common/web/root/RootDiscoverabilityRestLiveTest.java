@@ -14,6 +14,7 @@ import org.baeldung.um.client.UmPaths;
 import org.baeldung.um.test.live.UmGeneralRestLiveTest;
 import org.baeldung.um.util.Um;
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
@@ -25,6 +26,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
 @ActiveProfiles({ CLIENT, TEST })
+@Ignore("the corresponding controller is ignored for now")
 public class RootDiscoverabilityRestLiveTest extends UmGeneralRestLiveTest {
 
     @Autowired

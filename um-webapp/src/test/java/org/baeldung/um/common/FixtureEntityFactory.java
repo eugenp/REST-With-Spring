@@ -22,7 +22,7 @@ public class FixtureEntityFactory {
     }
 
     public static UserDto createNewUser(final String name, final String pass) {
-        return new UserDto(name, pass, Sets.<Role> newHashSet());
+        return new UserDto(name, randomAlphabetic(6) + "@gmail.com", pass, Sets.<Role> newHashSet());
     }
 
     // principal

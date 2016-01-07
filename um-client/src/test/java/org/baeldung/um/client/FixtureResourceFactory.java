@@ -26,8 +26,7 @@ public class FixtureResourceFactory {
     }
 
     public static UserDto createNewUser(final String name, final String pass) {
-        final UserDto userDto = new UserDto(name, pass, Sets.<Role> newHashSet());
-        userDto.setEmail(randomAlphabetic(6) + "@gmail.com");
+        final UserDto userDto = new UserDto(name, randomAlphabetic(6) + "@gmail.com", pass, Sets.<Role> newHashSet());
         return userDto;
     }
 
