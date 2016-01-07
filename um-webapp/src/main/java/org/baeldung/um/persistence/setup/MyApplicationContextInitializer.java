@@ -17,6 +17,10 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
     private static final String ENV_TARGET = "envTarget";
     private static final String PERSISTENCE_TARGET = "persistenceTarget";
 
+    public MyApplicationContextInitializer() {
+        super();
+    }
+
     //
 
     /**
@@ -44,7 +48,7 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
         if (persistenceTarget == null) {
             logger.info("Didn't find a value for variable: {}", PERSISTENCE_TARGET);
         } else {
-            logger.trace("value for variable: {} is: {}", PERSISTENCE_TARGET, persistenceTarget);
+            logger.info("value for variable: {} is: {}", PERSISTENCE_TARGET, persistenceTarget);
         }
     }
 
@@ -82,7 +86,7 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
             final ResourcePropertySource overrideProperties = new ResourcePropertySource("file:///opt/override/overrides.properties");
             return (String) overrideProperties.getProperty(ENV_TARGET);
         } catch (final IOException e) {
-            logger.trace("The file overrides.properties is not accessible. No property overridden by external properties");
+            logger.debug("The file overrides.properties is not accessible. No property overridden by external properties");
         }
 
         return null;
