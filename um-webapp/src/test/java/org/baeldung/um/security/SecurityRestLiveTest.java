@@ -45,7 +45,7 @@ public class SecurityRestLiveTest {
     @Test
     public final void givenUnauthenticated_whenAResourceIsDeleted_then401IsReceived() {
         // Given
-        final String uriOfExistingResource = resourceClient.createAsUri(resourceOps.createNewResource(), null);
+        final String uriOfExistingResource = resourceClient.createAsUri(resourceOps.createNewResource());
 
         // When
         final Response response = given().delete(uriOfExistingResource);

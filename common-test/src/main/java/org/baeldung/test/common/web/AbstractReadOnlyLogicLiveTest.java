@@ -38,7 +38,7 @@ public abstract class AbstractReadOnlyLogicLiveTest<T extends INameableDto> {
 
     @Test
     /*code*/public void givenResourceForIdDoesNotExist_whenResourceOfThatIdIsRetrieved_then404IsReceived() {
-        final Response response = getApi().findOneAsResponse(IDUtil.randomPositiveLong(), null);
+        final Response response = getApi().findOneAsResponse(IDUtil.randomPositiveLong());
 
         assertThat(response.getStatusCode(), is(404));
     }
@@ -49,7 +49,7 @@ public abstract class AbstractReadOnlyLogicLiveTest<T extends INameableDto> {
         final String id = randomAlphabetic(6);
 
         // When
-        final Response res = getApi().findOneByUriAsResponse(getUri() + WebConstants.PATH_SEP + id, null);
+        final Response res = getApi().read(getUri() + WebConstants.PATH_SEP + id);
 
         // Then
         assertThat(res.getStatusCode(), is(400));
@@ -71,7 +71,7 @@ public abstract class AbstractReadOnlyLogicLiveTest<T extends INameableDto> {
     @Test
     /*code*/public final void whenResourcesAreRetrievedPaginated_then200IsReceived() {
         // When
-        final Response response = getApi().findAllPaginatedAsResponse(0, 1, null);
+        final Response response = getApi().findAllPaginatedAsResponse(0, 1);
 
         // Then
         assertThat(response.getStatusCode(), is(200));
@@ -81,7 +81,7 @@ public abstract class AbstractReadOnlyLogicLiveTest<T extends INameableDto> {
     // - note: may fail intermittently - TODO: investigate
     /*code*/public final void whenPageOfResourcesIsRetrievedOutOfBounds_then404IsReceived() {
         // When
-        final Response response = getApi().findAllPaginatedAsResponse(Integer.parseInt(randomNumeric(5)), 1, null);
+        final Response response = getApi().findAllPaginatedAsResponse(Integer.parseInt(randomNumeric(5)), 1);
 
         // Then
         assertThat(response.getStatusCode(), is(404));
@@ -109,7 +109,7 @@ public abstract class AbstractReadOnlyLogicLiveTest<T extends INameableDto> {
 
     @Test
     /*code*/public final void whenResourcesAreRetrievedSorted_then200IsReceived() {
-        final Response response = getApi().findAllSortedAsResponse(SearchField.name.name(), Sort.Direction.ASC.name(), null);
+        final Response response = getApi().findAllSortedAsResponse(SearchField.name.name(), Sort.Direction.ASC.name());
 
         assertThat(response.getStatusCode(), is(200));
     }
@@ -118,7 +118,7 @@ public abstract class AbstractReadOnlyLogicLiveTest<T extends INameableDto> {
 
     @Test
     /*code*/public final void whenResourcesAreRetrievedPaginatedAndSorted_then200IsReceived() {
-        final Response response = getApi().findAllPaginatedAndSortedAsResponse(0, 1, SearchField.name.name(), Sort.Direction.ASC.name(), null);
+        final Response response = getApi().findAllPaginatedAndSortedAsResponse(0, 1, SearchField.name.name(), Sort.Direction.ASC.name());
 
         assertThat(response.getStatusCode(), is(200));
     }
@@ -126,7 +126,7 @@ public abstract class AbstractReadOnlyLogicLiveTest<T extends INameableDto> {
     @Test
     /*code*/public final void whenResourcesAreRetrievedByPaginatedAndWithInvalidSorting_then400IsReceived() {
         // When
-        final Response response = getApi().findAllPaginatedAndSortedAsResponse(0, 4, "invalid", null, null);
+        final Response response = getApi().findAllPaginatedAndSortedAsResponse(0, 4, "invalid", null);
 
         // Then
         assertThat(response.getStatusCode(), is(400));
