@@ -10,7 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import org.baeldung.common.interfaces.INameableDto;
 import org.baeldung.common.util.SearchField;
 import org.baeldung.common.web.WebConstants;
-import org.baeldung.test.common.client.template.IRestTemplate;
+import org.baeldung.test.common.client.template.IRestClient;
 import org.baeldung.test.common.util.IDUtil;
 import org.junit.Test;
 import org.springframework.data.domain.Sort;
@@ -145,7 +145,7 @@ public abstract class AbstractReadOnlyLogicLiveTest<T extends INameableDto> {
 
     // template method
 
-    protected abstract IRestTemplate<T> getApi();
+    protected abstract IRestClient<T> getApi();
 
     protected final String getUri() {
         return getApi().getUri() + WebConstants.PATH_SEP;

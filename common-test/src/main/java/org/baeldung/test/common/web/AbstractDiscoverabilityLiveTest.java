@@ -16,7 +16,7 @@ import org.baeldung.client.marshall.IMarshaller;
 import org.baeldung.common.interfaces.IDto;
 import org.baeldung.common.util.LinkUtil;
 import org.baeldung.test.common.client.security.ITestAuthenticator;
-import org.baeldung.test.common.client.template.IRestTemplate;
+import org.baeldung.test.common.client.template.IRestClient;
 import org.baeldung.test.common.web.util.HTTPLinkHeaderUtil;
 import org.hamcrest.core.AnyOf;
 import org.junit.Test;
@@ -170,7 +170,7 @@ public abstract class AbstractDiscoverabilityLiveTest<T extends IDto> {
 
     // template method
 
-    protected abstract IRestTemplate<T> getApi();
+    protected abstract IRestClient<T> getApi();
 
     protected abstract IDtoOperations<T> getEntityOps();
 

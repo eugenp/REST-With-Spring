@@ -14,7 +14,7 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.baeldung.common.interfaces.INameableDto;
 import org.baeldung.common.search.ClientOperation;
 import org.baeldung.common.util.SearchField;
-import org.baeldung.test.common.client.template.IRestTemplate;
+import org.baeldung.test.common.client.template.IRestClient;
 import org.baeldung.test.common.web.util.ClientConstraintsUtil;
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -69,6 +69,6 @@ public abstract class AbstractSearchReadOnlyLiveTest<T extends INameableDto> {
 
     // template
 
-    protected abstract IRestTemplate<T> getApi();
+    protected abstract IRestClient<T> getApi();
 
 }

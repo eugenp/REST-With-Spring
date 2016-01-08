@@ -19,7 +19,7 @@ import org.baeldung.client.IDtoOperations;
 import org.baeldung.common.interfaces.INameableDto;
 import org.baeldung.common.search.ClientOperation;
 import org.baeldung.common.util.SearchField;
-import org.baeldung.test.common.client.template.IRestTemplate;
+import org.baeldung.test.common.client.template.IRestClient;
 import org.baeldung.test.common.test.contract.ISearchTest;
 import org.baeldung.test.common.util.IDUtil;
 import org.baeldung.test.common.util.SearchIntegrationTestUtil;
@@ -399,7 +399,7 @@ public abstract class AbstractSearchLiveTest<T extends INameableDto> extends Abs
     }
 
     @Override
-    protected abstract IRestTemplate<T> getApi();
+    protected abstract IRestClient<T> getApi();
 
     protected abstract IDtoOperations<T> getEntityOps();
 

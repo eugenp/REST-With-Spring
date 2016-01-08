@@ -4,7 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.baeldung.common.interfaces.IDto;
 import org.baeldung.common.interfaces.IOperations;
 
-public interface IRawClientTemplate<T extends IDto> extends IOperations<T>, ITemplateWithUri<T> {
+public interface IRawClientTemplate<T extends IDto> extends IOperations<T>, IRestClientWithUri<T> {
 
     //
 
