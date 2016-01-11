@@ -5,15 +5,15 @@
 
 # Quick Start
 ```
-git clone git://github.com/eugenp/REST.git
-cd REST
-mvn install
-mvn cargo:run -f sec/pom.xml
+git clone https://github.com/eugenp/REST-With-Spring.git
+cd REST-With-Spring
+mvn clean install
+mvn cargo:run -f um-webapp/pom.xml
 ```
 - **next**: start consuming the service like so: [REST API: Consuming Examples with `curl`](https://github.com/eugenp/REST/wiki/REST-API%3A-Consuming-Examples-with-%60curl%60)
 
 # Goals
-**REST Security** is a Proof of Concept implementation of a RESTful Service. <br/>
+**REST With Spring** is a proof of concept implementation of a RESTful Service. <br/>
 The project also provides a reference implementation for: 
 - REST Discoverability and HATEOAS <br/> 
 - Basic and Digest Authentication <br/>
@@ -27,25 +27,17 @@ The project also provides a reference implementation for:
 
 # Technology Stack
 The project uses the following technologies: <br/>
-- **web/REST**: [Spring](http://www.springsource.org/) 3.1.x <br/>
+- **web/REST**: [Spring](http://www.springsource.org/) 4.2.x <br/>
 - **marshalling**: [Jackson](https://github.com/FasterXML/jackson-databind) 2.x (for JSON) and [XStream](http://xstream.codehaus.org/) (for XML) <br/>
 - **persistence**: [Spring Data JPA](http://www.springsource.org/spring-data/jpa) and [Hibernate](http://www.hibernate.org/) 4.1.x <br/>
-- **persistence providers**: h2, MySQL
+- **persistence providers**: H2, MySQL
 - **testing**: [junit](http://www.junit.org/), [hamcrest](http://code.google.com/p/hamcrest/), [mockito](http://code.google.com/p/mockito/), [rest-assured](http://code.google.com/p/rest-assured/) <br/>
 
 
-# REST API Documentation
-[Link to the **API Documentation**](https://github.com/eugenp/REST/wiki/API-documentation "REST Security - API docs")
-
-
 # Continuous Integration
-- Built on Cloudbees: <a href="https://rest-security.ci.cloudbees.com">REST Security Jenkins CI</a> 
+- Built on Cloudbees: <a href="https://rest-security.ci.cloudbees.com/view/REST-With-Spring/">REST Security Jenkins CI</a> 
 <br/><br/>
 <a href="https://rest-security.ci.cloudbees.com"><img src="http://web-static-cloudfront.s3.amazonaws.com/images/badges/BuiltOnDEV.png"/></a>
-
-
-# Community
-- [Discussion Group/Mailing List](https://groups.google.com/forum/#!forum/restsec)
 
 
 # Eclipse
