@@ -1,7 +1,7 @@
 # Resources
-- Technical forum: [rest-security google group](https://groups.google.com/forum/#!forum/restsec)
-- Docs: [Main wiki](https://github.com/eugenp/REST/wiki)
+- [REST With Spring] (http://bit.ly/restwithspring)
 - Continuous Integration: [CI on Cloudbees](https://rest-security.ci.cloudbees.com)
+
 
 # Quick Start
 ```
@@ -11,6 +11,7 @@ mvn clean install
 mvn cargo:run -f um-webapp/pom.xml
 ```
 - **next**: start consuming the service like so: [REST API: Consuming Examples with `curl`](https://github.com/eugenp/REST/wiki/REST-API%3A-Consuming-Examples-with-%60curl%60)
+
 
 # Goals
 **REST With Spring** is a proof of concept implementation of a RESTful Service. <br/>
