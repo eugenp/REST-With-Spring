@@ -27,7 +27,7 @@
 	<logger name="org.baeldung.um.persistence.setup" level="DEBUG" /> <!-- to follow if setup is being executed -->
 
 	<root level="INFO">
-		<appender-ref ref="FILE" />
+		<!-- <appender-ref ref="FILE" /> -->
 		<appender-ref ref="STDOUT" />
 	</root>
 
