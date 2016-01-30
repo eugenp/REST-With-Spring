@@ -7,14 +7,6 @@
 		</encoder>
 	</appender>
 
-	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
-		<file>/var/log/restsec/restsec.log</file>
-		<encoder>
-			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n
-			</pattern>
-		</encoder>
-	</appender>
-
 	<logger name="org.hibernate" level="WARN" />
 
 	<logger name="org.springframework" level="WARN" />
@@ -27,7 +19,6 @@
 	<logger name="org.baeldung.um.persistence.setup" level="DEBUG" /> <!-- to follow if setup is being executed -->
 
 	<root level="INFO">
-		<!-- <appender-ref ref="FILE" /> -->
 		<appender-ref ref="STDOUT" />
 	</root>
 
