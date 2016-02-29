@@ -11,6 +11,15 @@ mvn clean install
 mvn cargo:run -f um-webapp/pom.xml
 ```
 
+# Persistence
+By default, the project uses [the H2 in-memory DB](http://www.h2database.com/html/main.html) and - `persistence-h2.properties`.
+
+If you want to switch to - for example - MySQL - you'll need to specify a different property on startup:
+```
+persistenceTarget=h2
+```
+And of course, if you are going to use MySQL, you'llneed to run a MySQL instance locally and you'll need to either change the default credentials here, or create the following user/password in your local installation
+
 
 # Technology Stack
 The project uses the following technologies: <br/>
