@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({ "org.baeldung.um.persistence" })
-@PropertySource({ "classpath:persistence-${persistenceTarget:mysql}.properties" })
+@PropertySource({ "classpath:persistence-${persistenceTarget:h2}.properties" })
 @EnableJpaRepositories(basePackages = "org.baeldung.um.persistence.dao")
 public class UmPersistenceJpaConfig {
 
