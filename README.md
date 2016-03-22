@@ -11,6 +11,7 @@ mvn clean install
 mvn cargo:run -f um-webapp/pom.xml
 ```
 
+
 # Persistence
 By default, the project uses [the H2 in-memory DB](http://www.h2database.com/html/main.html) and - `persistence-h2.properties`.
 

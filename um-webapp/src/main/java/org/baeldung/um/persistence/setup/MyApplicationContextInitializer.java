@@ -40,7 +40,7 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
             environment.setActiveProfiles(activeProfiles.split(","));
         } catch (final IOException ioEx) {
             if (envTarget != null) {
-                logger.warn("Didn't find env-{}.properties in classpath so not loading it in the AppContextInitialized", envTarget);
+                logger.warn("Didn't find env-" + envTarget + ".properties in classpath so not loading it in the AppContextInitialized", ioEx);
             }
         }
 
