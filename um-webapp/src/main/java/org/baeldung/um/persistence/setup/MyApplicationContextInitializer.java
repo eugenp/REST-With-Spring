@@ -15,7 +15,6 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
     private final Logger logger = LoggerFactory.getLogger(MyApplicationContextInitializer.class);
 
     private static final String ENV_TARGET = "envTarget";
-    private static final String PERSISTENCE_TARGET = "persistenceTarget";
 
     public MyApplicationContextInitializer() {
         super();
@@ -35,20 +34,11 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
             environment.getPropertySources().addFirst(new ResourcePropertySource("classpath:env-" + envTarget + ".properties"));
 
             final String activeProfiles = environment.getProperty("spring.profiles.active");
-            logger.info("The active profiles are: {}", activeProfiles);
-
             environment.setActiveProfiles(activeProfiles.split(","));
         } catch (final IOException ioEx) {
             if (envTarget != null) {
                 logger.warn("Didn't find env-" + envTarget + ".properties in classpath so not loading it in the AppContextInitialized", ioEx);
             }
-        }
-
-        final String persistenceTarget = environment.getProperty(PERSISTENCE_TARGET);
-        if (persistenceTarget == null) {
-            logger.info("Didn't find a value for variable: {}", PERSISTENCE_TARGET);
-        } else {
-            logger.info("value for variable: {} is: {}", PERSISTENCE_TARGET, persistenceTarget);
         }
     }
 
@@ -57,39 +47,17 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
      * @return The env target variable.
      */
     private String getEnvTarget(final ConfigurableEnvironment environment) {
-        String envTarget;
-
-        final String targetOverride = getTargetFromOverride();
-        if (targetOverride == null) {
-            envTarget = environment.getProperty(ENV_TARGET);
-        } else {
-            envTarget = targetOverride;
-        }
-        if (envTarget == null) {
+        String target = environment.getProperty(ENV_TARGET);
+        if (target == null) {
             logger.warn("Didn't find a value for {} in the current Environment!", ENV_TARGET);
         }
 
-        if (envTarget == null) {
+        if (target == null) {
             logger.info("Didn't find a value for {} in the current Environment!, using the default `dev`", ENV_TARGET);
-            envTarget = "dev";
+            target = "dev";
         }
 
-        return Preconditions.checkNotNull(envTarget);
-    }
-
-    /**
-     * This enables overriding the env-${envTarget}.properties location, which is by default resolved internally from the classpath. The entire purpose of overriding this specific properties file is to be able to control
-     * the active Spring profile without defining system wide variables on the OS that runs staging
-     */
-    private final String getTargetFromOverride() {
-        try {
-            final ResourcePropertySource overrideProperties = new ResourcePropertySource("file:///opt/override/overrides.properties");
-            return (String) overrideProperties.getProperty(ENV_TARGET);
-        } catch (final IOException e) {
-            logger.debug("The file overrides.properties is not accessible. No property overridden by external properties");
-        }
-
-        return null;
+        return Preconditions.checkNotNull(target);
     }
 
 }
