@@ -3,19 +3,15 @@ package org.baeldung.um.web.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.baeldung.common.util.QueryConstants;
 import org.baeldung.common.web.controller.AbstractController;
 import org.baeldung.common.web.controller.ISortingController;
 import org.baeldung.um.persistence.model.Privilege;
 import org.baeldung.um.service.IPrivilegeService;
-import org.baeldung.um.util.Um.Privileges;
 import org.baeldung.um.util.UmMappings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,11 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping(value = UmMappings.PRIVILEGES)
-public class PrivilegeController extends AbstractController<Privilege, Privilege> implements ISortingController<Privilege> {
+public class PrivilegeController extends AbstractController<Privilege> implements ISortingController<Privilege> {
 
     @Autowired
     private IPrivilegeService service;
@@ -39,45 +34,26 @@ public class PrivilegeController extends AbstractController<Privilege, Privilege
 
     // API
 
-    // search
-
-    @RequestMapping(params = { QueryConstants.Q_PARAM }, method = RequestMethod.GET)
-    @ResponseBody
-    @Secured(Privileges.CAN_PRIVILEGE_READ)
-    public List<Privilege> searchAll(@RequestParam(QueryConstants.Q_PARAM) final String queryString) {
-        return searchAllInternal(queryString);
-    }
-
-    @RequestMapping(params = { QueryConstants.Q_PARAM, QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
-    @ResponseBody
-    @Secured(Privileges.CAN_PRIVILEGE_READ)
-    public List<Privilege> searchAllPaginated(@RequestParam(QueryConstants.Q_PARAM) final String queryString, @RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
-        return searchAllPaginatedInternal(queryString, page, size);
-    }
-
     // find - all/paginated
 
     @Override
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    @Secured(Privileges.CAN_PRIVILEGE_READ)
     public List<Privilege> findAllPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
-            @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder, uriBuilder, response);
+            @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+        return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder);
     }
 
     @Override
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
-    @Secured(Privileges.CAN_PRIVILEGE_READ)
-    public List<Privilege> findAllPaginated(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        return findPaginatedAndSortedInternal(page, size, null, null, uriBuilder, response);
+    public List<Privilege> findAllPaginated(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
+        return findPaginatedAndSortedInternal(page, size, null, null);
     }
 
     @Override
     @RequestMapping(params = { QueryConstants.SORT_BY }, method = RequestMethod.GET)
     @ResponseBody
-    @Secured(Privileges.CAN_PRIVILEGE_READ)
     public List<Privilege> findAllSorted(@RequestParam(value = QueryConstants.SORT_BY) final String sortBy, @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         return findAllSortedInternal(sortBy, sortOrder);
     }
@@ -85,35 +61,31 @@ public class PrivilegeController extends AbstractController<Privilege, Privilege
     @Override
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    @Secured(Privileges.CAN_PRIVILEGE_READ)
-    public List<Privilege> findAll(final HttpServletRequest request, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        return findAllInternal(request, uriBuilder, response);
+    public List<Privilege> findAll(final HttpServletRequest request) {
+        return findAllInternal(request);
     }
 
     // find - one
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    @Secured(Privileges.CAN_PRIVILEGE_READ)
-    public Privilege findOne(@PathVariable("id") final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        return findOneInternal(id, uriBuilder, response);
+    public Privilege findOne(@PathVariable("id") final Long id) {
+        return findOneInternal(id);
     }
 
     // create
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    @Secured(Privileges.CAN_PRIVILEGE_WRITE)
-    public void create(@RequestBody @Valid final Privilege resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        createInternal(resource, uriBuilder, response);
+    public void create(@RequestBody final Privilege resource) {
+        createInternal(resource);
     }
 
     // update
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    @Secured(Privileges.CAN_PRIVILEGE_WRITE)
-    public void update(@PathVariable("id") final Long id, @RequestBody @Valid final Privilege resource) {
+    public void update(@PathVariable("id") final Long id, @RequestBody final Privilege resource) {
         updateInternal(id, resource);
     }
 
@@ -121,7 +93,6 @@ public class PrivilegeController extends AbstractController<Privilege, Privilege
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Secured(Privileges.CAN_PRIVILEGE_WRITE)
     public void delete(@PathVariable("id") final Long id) {
         deleteByIdInternal(id);
     }

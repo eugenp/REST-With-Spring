@@ -3,9 +3,6 @@ package org.baeldung.common.interfaces;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.Triple;
-import org.baeldung.common.search.ClientOperation;
-
 public interface IOperations<T extends Serializable> {
 
     // find - one
@@ -49,11 +46,5 @@ public interface IOperations<T extends Serializable> {
     // count
 
     long count();
-
-    // search
-
-    List<T> searchAll(final Triple<String, ClientOperation, String>... constraints);
-
-    T searchOne(final Triple<String, ClientOperation, String>... constraints);
 
 }

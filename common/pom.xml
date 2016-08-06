@@ -6,11 +6,13 @@
 	<parent>
 		<groupId>org.baeldung</groupId>
 		<artifactId>user-management-parent</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>0.1.0-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
 	<dependencies>
+
+		<!-- internal -->
 
 		<!-- util -->
 
@@ -122,13 +124,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- security -->
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-		</dependency>
-
 		<!-- validation -->
 
 		<dependency>
@@ -152,7 +147,6 @@
 			<version>2.2.4</version>
 		</dependency>
 
-
 		<!-- marshalling -->
 
 		<dependency>
@@ -173,7 +167,6 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
-			<version>${spring-data-jpa.version}</version>
 		</dependency>
 
 		<dependency>
@@ -212,15 +205,8 @@
 			<artifactId>hsqldb</artifactId>
 		</dependency>
 
-		<!-- persistence - JPA 2 metamodel -->
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
-		</dependency>
-
 		<!-- logging -->
-
+		
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -228,12 +214,11 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<!-- <scope>runtime</scope> -->
 		</dependency>
 		<dependency>
+			<!-- some spring dependencies need to compile against jcl -->
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<!-- <scope>runtime</scope> --> <!-- some spring dependencies need to compile against jcl -->
 		</dependency>
 		<dependency> <!-- needed to bridge to slf4j for projects that use the log4j APIs directly -->
 			<groupId>org.slf4j</groupId>
@@ -295,19 +280,6 @@
 		</resources>
 
 		<plugins>
-
-			<!-- <plugin> -->
-			<!-- <groupId>org.apache.maven.plugins</groupId> -->
-			<!-- <artifactId>maven-surefire-plugin</artifactId> -->
-			<!-- <configuration> -->
-			<!-- <excludes> -->
-			<!-- <exclude>**/*RestIntegrationTest.java</exclude> -->
-			<!-- </excludes> -->
-			<!-- <systemPropertyVariables> -->
-			<!-- <persistenceTarget>h2</persistenceTarget> -->
-			<!-- </systemPropertyVariables> -->
-			<!-- </configuration> -->
-			<!-- </plugin> -->
 
 		</plugins>
 

@@ -1,7 +1,7 @@
 package org.baeldung.common.web.util;
 
 import org.baeldung.common.web.exception.MyConflictException;
-import org.baeldung.common.web.exception.ValidationException;
+import org.baeldung.common.web.exceptions.ValidationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpStatusCodeException;
 
