@@ -151,7 +151,7 @@
 		<httpcore.version>4.4.4</httpcore.version>
 		<httpclient.version>4.5.1</httpclient.version>
 
-		<rest-assured.version>2.7.0</rest-assured.version>
+		<rest-assured.version>2.9.0</rest-assured.version>
 
 		<!-- maven plugins -->
 		<maven-surefire-plugin.version>2.19</maven-surefire-plugin.version>

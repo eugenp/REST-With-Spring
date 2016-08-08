@@ -14,10 +14,14 @@ import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.DispatcherServlet;
 
 @SpringBootApplication
-@Import({ // @formatter:off
+@EnableAsync
+@EnableScheduling
+@Import({// @formatter:off
     UmContextConfig.class,
     UmPersistenceJpaConfig.class,
     UmServiceConfig.class,
