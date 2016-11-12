@@ -36,6 +36,7 @@ public class UmAsyncRestLiveTest {
 
         assertEquals(201, response.getStatusCode());
         assertNotNull(response.jsonPath().get("name"));
+        assertTrue(response.time() > AsyncService.DELAY);
     }
 
     @Test

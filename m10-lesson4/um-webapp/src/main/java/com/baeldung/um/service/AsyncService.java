@@ -18,7 +18,7 @@ import com.baeldung.um.web.dto.UserDto;
 
 @Service
 public class AsyncService {
-    
+
     @Autowired
     private IUserService userService;
 
@@ -29,9 +29,12 @@ public class AsyncService {
     @Async
     public Future<UserDto> createUserAsync(UserDto resource) throws InterruptedException {
         resource.setStatus("In Progress");
+
         final UserDto result = userService.create(resource);
-        Thread.sleep(DELAY);
+        Thread.sleep(AsyncService.DELAY);
+
         result.setStatus("Ready");
+
         userService.update(result);
         return new AsyncResult<UserDto>(result);
     }
@@ -48,8 +51,7 @@ public class AsyncService {
     }
 
     public void scheduleCreateUser(UserDto resource, DeferredResult<UserDto> deferredResult) {
-        CompletableFuture.supplyAsync(() -> userService.createSlow(resource))
-          .whenCompleteAsync((result, throwable) -> deferredResult.setResult(result));
+        CompletableFuture.supplyAsync(() -> userService.createSlow(resource)).whenCompleteAsync((result, throwable) -> deferredResult.setResult(result));
     }
 
     @Scheduled(fixedRate = DELAY)

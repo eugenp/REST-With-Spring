@@ -4,12 +4,16 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 
 import com.baeldung.client.IDtoOperations;
 import com.baeldung.um.client.FixtureResourceFactory;
@@ -18,10 +22,14 @@ import com.baeldung.um.client.template.UserRestClient;
 import com.baeldung.um.model.RoleDtoOpsImpl;
 import com.baeldung.um.model.UserDtoOpsImpl;
 import com.baeldung.um.persistence.model.Role;
+import com.baeldung.um.service.AsyncService;
 import com.baeldung.um.test.live.UmLogicRestLiveTest;
+import com.baeldung.um.util.Um;
 import com.baeldung.um.web.dto.UserDto;
 import com.google.common.collect.Sets;
+import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
+import com.jayway.restassured.specification.RequestSpecification;
 
 public class UserLogicRestLiveTest extends UmLogicRestLiveTest<UserDto> {
 
@@ -96,6 +104,43 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<UserDto> {
         assertThat(response.getStatusCode(), is(201));
     }
 
+    @Test
+    public void whenCreateUserAsyncUsingCallable_thenCreatedWithDelay() {
+        Response response = createRandomUser().post(getApi().getUri() + "/callable");
+
+        assertEquals(201, response.getStatusCode());
+        assertNotNull(response.jsonPath().get("name"));
+        assertTrue(response.time() > AsyncService.DELAY);
+    }
+
+    @Test
+    public void whenCreateUserAsyncUsingDeferredResult_thenCreatedWithDelay() {
+        Response response = createRandomUser().post(getApi().getUri() + "/deferred");
+
+        assertEquals(201, response.getStatusCode());
+        assertNotNull(response.jsonPath().get("name"));
+        assertTrue(response.time() > AsyncService.DELAY);
+    }
+
+    @Test
+    public void whenCreateUserAsync_thenAccepted() throws InterruptedException {
+        Response response = createRandomUser().post(getApi().getUri() + "/async");
+
+        assertEquals(202, response.getStatusCode());
+        assertTrue(response.time() < AsyncService.DELAY);
+        String loc = response.getHeader("Location");
+        assertNotNull(loc);
+
+        Response checkLocResponse = getApi().givenReadAuthenticated().get(loc);
+        assertTrue(checkLocResponse.getStatusCode() == 200);
+        assertTrue(checkLocResponse.asString().contains("In Progress"));
+
+        Thread.sleep(AsyncService.DELAY);
+        Response finalLocResponse = getApi().givenReadAuthenticated().get(loc);
+        assertEquals(200, finalLocResponse.getStatusCode());
+        assertTrue(finalLocResponse.asString().contains("Ready"));
+    }
+
     // TODO: sort
 
     @Test
@@ -128,6 +173,12 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<UserDto> {
 
         final UserDto resource1ViewOfServerAfter = getApi().findOne(parentWithChild.getId());
         assertThat(resource1ViewOfServerAfter.getRoles(), hasItem(child));
+    }
+
+    // 
+
+    private RequestSpecification createRandomUser() {
+        return RestAssured.given().auth().basic(Um.ADMIN_EMAIL, Um.ADMIN_PASS).contentType(MediaType.APPLICATION_JSON_VALUE).body(getEntityOps().createNewResource());
     }
 
     // template method

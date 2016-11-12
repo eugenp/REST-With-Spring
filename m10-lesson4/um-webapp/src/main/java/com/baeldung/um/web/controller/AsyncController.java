@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.async.DeferredResult;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.baeldung.um.service.AsyncService;
 import com.baeldung.um.service.IUserService;
@@ -54,7 +55,7 @@ public class AsyncController {
         return result;
     }
 
-    @RequestMapping(value = "/deferred", method = RequestMethod.POST)
+    @RequestMapping(value = "/deferredComplex", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public DeferredResult<UserDto> createUserWithDeferredResultWithAsyncResultSetting(@RequestBody final UserDto resource) {
@@ -67,9 +68,10 @@ public class AsyncController {
 
     @RequestMapping(value = "/async", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void createUserWithAsync(@RequestBody final UserDto resource, HttpServletResponse response) throws InterruptedException {
+    public void createUserWithAsync(@RequestBody final UserDto resource, HttpServletResponse response, UriComponentsBuilder uriBuilder) throws InterruptedException {
         asyncService.createUserAsync(resource);
-        response.setHeader("Location", "http://localhost:8082/um-webapp/api/long/users/" + resource.getName());
+        final String location = uriBuilder.path("/long").path("/users").build().encode().toString();
+        response.setHeader("Location", location + resource.getName());
     }
 
     // find by name
