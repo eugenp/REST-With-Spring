@@ -8,7 +8,7 @@ public final class UmMappings {
 
     // discoverability
 
-    public static final class Singural {
+    public static final class Singular {
 
         public static final String USER = "user";
         public static final String PRIVILEGE = "privilege";
