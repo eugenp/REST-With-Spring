@@ -3,6 +3,7 @@ package com.baeldung.um.spring;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -10,8 +11,6 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.DispatcherServlet;
-
-import com.baeldung.um.persistence.setup.MyApplicationContextInitializer;
 
 @SpringBootApplication
 @Import({ // @formatter:off
@@ -45,11 +44,11 @@ public class UmApp extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
-        return application.initializers(new MyApplicationContextInitializer()).sources(UmApp.class);
+        return application.sources(UmApp.class);
     }
 
     public static void main(final String... args) {
-        new SpringApplicationBuilder(UmApp.class).initializers(new MyApplicationContextInitializer()).listeners().run(args);
+        SpringApplication.run(UmApp.class, args);        
     }
 
 }

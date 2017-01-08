@@ -12,7 +12,7 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             com.baeldung.um.spring,
-            org.baeldung.client.spring
+            com.baeldung.common.spring
         </param-value>
     </context-param>
     

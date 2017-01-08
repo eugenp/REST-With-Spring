@@ -1,4 +1,4 @@
-package com.baeldung.um.persistence.setup;
+package com.baeldung.um.service;
 
 import java.util.Set;
 
@@ -6,17 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import com.baeldung.common.spring.util.Profiles;
 import com.baeldung.um.persistence.model.Privilege;
 import com.baeldung.um.persistence.model.Role;
 import com.baeldung.um.persistence.model.User;
-import com.baeldung.um.service.IPrivilegeService;
-import com.baeldung.um.service.IRoleService;
-import com.baeldung.um.service.IUserService;
 import com.baeldung.um.util.Um;
 import com.baeldung.um.util.Um.Privileges;
 import com.baeldung.um.util.Um.Roles;
@@ -28,7 +23,6 @@ import com.google.common.collect.Sets;
  * The main focus here is creating some standard privileges, then roles and finally some default principals/users
  */
 @Component
-@Profile(Profiles.PRODUCTION)
 public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent> {
     private final Logger logger = LoggerFactory.getLogger(SecuritySetup.class);
 
