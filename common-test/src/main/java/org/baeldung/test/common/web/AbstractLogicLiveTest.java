@@ -3,24 +3,18 @@ package org.baeldung.test.common.web;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
-import static org.baeldung.common.search.ClientOperation.EQ;
-import static org.baeldung.common.search.ClientOperation.NEG_EQ;
 import static org.baeldung.common.spring.util.Profiles.CLIENT;
 import static org.baeldung.common.spring.util.Profiles.TEST;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.apache.http.HttpHeaders;
 import org.baeldung.client.IDtoOperations;
 import org.baeldung.client.marshall.IMarshaller;
 import org.baeldung.common.interfaces.INameableDto;
-import org.baeldung.common.search.ClientOperation;
-import org.baeldung.common.util.SearchField;
 import org.baeldung.common.web.WebConstants;
 import org.baeldung.test.common.client.template.IRestClient;
 import org.baeldung.test.common.util.IDUtil;
@@ -101,58 +95,6 @@ public abstract class AbstractLogicLiveTest<T extends INameableDto> {
 
         // Then
         assertThat(res.getStatusCode(), is(409));
-    }
-
-    // find one - by attributes
-    // note: kept as the same tests from AbstractLogicClientRestLiveTest are
-    // still ignored (bug in RestTemplate)
-
-    @Test
-    /**/public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenNoExceptions() {
-        // Given
-        final T existingResource = getApi().create(createNewResource());
-
-        // When
-        final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), EQ, existingResource.getName());
-        getApi().searchOne(nameConstraint);
-    }
-
-    @Test
-    /**/public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenResourceIsFound() {
-        // Given
-        final T existingResource = getApi().create(createNewResource());
-
-        // When
-        final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), EQ, existingResource.getName());
-        final T resourceByName = getApi().searchOne(nameConstraint);
-
-        // Then
-        assertNotNull(resourceByName);
-    }
-
-    @Test
-    /**/public final void givenResourceExists_whenResourceIsSearchedByNameAttribute_thenFoundResourceIsCorrect() {
-        // Given
-        final T existingResource = getApi().create(createNewResource());
-
-        // When
-        final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), EQ, existingResource.getName());
-        final T resourceByName = getApi().searchOne(nameConstraint);
-
-        // Then
-        assertThat(existingResource, equalTo(resourceByName));
-    }
-
-    @Test
-    /**/public final void givenResourceExists_whenResourceIsSearchedByNagatedNameAttribute_thenNoExceptions() {
-        // Given
-        final T existingResource = getApi().create(createNewResource());
-
-        // When
-        final ImmutableTriple<String, ClientOperation, String> nameConstraint = new ImmutableTriple<String, ClientOperation, String>(SearchField.name.name(), NEG_EQ, existingResource.getName());
-        getApi().searchAll(nameConstraint);
-
-        // Then
     }
 
     // create
