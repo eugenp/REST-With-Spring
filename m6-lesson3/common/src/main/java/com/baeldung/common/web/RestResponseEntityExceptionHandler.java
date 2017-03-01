@@ -6,8 +6,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolationException;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
@@ -33,21 +31,14 @@ import com.baeldung.common.web.exception.MyResourceNotFoundException;
 import com.baeldung.common.web.exception.ValidationErrorDTO;
 
 @ControllerAdvice
-public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
-    private Logger log = LoggerFactory.getLogger(getClass());
-
-    public RestResponseEntityExceptionHandler() {
-        super();
-    }
-
-    // API
+public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {    
 
     // 400
 
     @Override
     protected final ResponseEntity<Object> handleHttpMessageNotReadable(final HttpMessageNotReadableException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
-        log.info("Bad Request: {}", ex.getMessage());
-        log.debug("Bad Request: ", ex);
+        logger.info("Bad Request: " + ex.getMessage());
+        logger.debug("Bad Request: ", ex);
 
         final ApiError apiError = message(HttpStatus.BAD_REQUEST, ex);
         return handleExceptionInternal(ex, apiError, headers, HttpStatus.BAD_REQUEST, request);
@@ -55,8 +46,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @Override
     protected final ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
-        log.info("Bad Request: {}", ex.getMessage());
-        log.debug("Bad Request: ", ex);
+        logger.info("Bad Request: " + ex.getMessage());
+        logger.debug("Bad Request: ", ex);
 
         final BindingResult result = ex.getBindingResult();
         final List<FieldError> fieldErrors = result.getFieldErrors();
@@ -66,9 +57,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @ExceptionHandler(value = { ConstraintViolationException.class, DataIntegrityViolationException.class })
-    public final ResponseEntity<Object> handleBadRequest(final RuntimeException ex, final WebRequest request) {
-        log.info("Bad Request: {}", ex.getLocalizedMessage());
-        log.debug("Bad Request: ", ex);
+    protected final ResponseEntity<Object> handleBadRequest(final RuntimeException ex, final WebRequest request) {
+        logger.info("Bad Request: " + ex.getLocalizedMessage());
+        logger.debug("Bad Request: ", ex);
 
         if (ExceptionUtils.getRootCauseMessage(ex).contains("uplicate")) {
             final ApiError apiError = message(HttpStatus.CONFLICT, ex);
@@ -82,7 +73,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     // 403
 
     @ExceptionHandler({ AccessDeniedException.class })
-    public ResponseEntity<Object> handleEverything(final AccessDeniedException ex, final WebRequest request) {
+    protected ResponseEntity<Object> handleEverything(final AccessDeniedException ex, final WebRequest request) {
         logger.error("403 Status Code", ex);
 
         final ApiError apiError = message(HttpStatus.FORBIDDEN, ex);
@@ -94,7 +85,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler({ EntityNotFoundException.class, MyEntityNotFoundException.class, MyResourceNotFoundException.class })
     protected ResponseEntity<Object> handleNotFound(final RuntimeException ex, final WebRequest request) {
-        log.warn("Not Found: {}", ex.getMessage());
+        logger.warn("Not Found: " + ex.getMessage());
 
         final ApiError apiError = message(HttpStatus.NOT_FOUND, ex);
         return handleExceptionInternal(ex, apiError, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
@@ -104,7 +95,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler({ InvalidDataAccessApiUsageException.class, DataAccessException.class, MyConflictException.class })
     protected ResponseEntity<Object> handleConflict(final RuntimeException ex, final WebRequest request) {
-        log.warn("Conflict: {}", ex.getMessage());
+        logger.warn("Conflict: " + ex.getMessage());
 
         final ApiError apiError = message(HttpStatus.CONFLICT, ex);
         return handleExceptionInternal(ex, apiError, new HttpHeaders(), HttpStatus.CONFLICT, request);
@@ -114,7 +105,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler({ InvalidMimeTypeException.class, InvalidMediaTypeException.class })
     protected ResponseEntity<Object> handleInvalidMimeTypeException(final IllegalArgumentException ex, final WebRequest request) {
-        log.warn("Unsupported Media Type: {}", ex.getMessage());
+        logger.warn("Unsupported Media Type: " + ex.getMessage());
 
         final ApiError apiError = message(HttpStatus.UNSUPPORTED_MEDIA_TYPE, ex);
         return handleExceptionInternal(ex, apiError, new HttpHeaders(), HttpStatus.UNSUPPORTED_MEDIA_TYPE, request);
@@ -123,7 +114,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     // 500
 
     @ExceptionHandler({ NullPointerException.class, IllegalArgumentException.class, IllegalStateException.class })
-    public ResponseEntity<Object> handle500s(final RuntimeException ex, final WebRequest request) {
+    protected ResponseEntity<Object> handle500s(final RuntimeException ex, final WebRequest request) {
         logger.error("500 Status Code", ex);
 
         final ApiError apiError = message(HttpStatus.INTERNAL_SERVER_ERROR, ex);
