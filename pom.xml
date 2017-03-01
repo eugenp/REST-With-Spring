@@ -34,8 +34,9 @@
 	<modules>
 		<module>m3-lesson1</module>
 		<module>m3-lesson2</module>
-        <module>m3-lesson1-start</module>
-        <module>m3-lesson2-start</module>
+                          <module>m3-lesson1-start</module>
+                          <module>m3-lesson2-start</module>
+                          <module>m3-lesson5</module>
 	</modules>
 
 </project>
