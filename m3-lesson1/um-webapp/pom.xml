@@ -18,7 +18,7 @@
 
 		<dependency>
 			<groupId>com.baeldung</groupId>
-			<artifactId>common-m3-l1-start</artifactId>
+			<artifactId>common-m3-l1</artifactId>
 			<version>0.3.0-SNAPSHOT</version>
 		</dependency>
 
