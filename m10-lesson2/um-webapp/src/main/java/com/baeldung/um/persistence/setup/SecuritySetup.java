@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 
 import com.baeldung.common.persistence.event.BeforeSetupEvent;
 import com.baeldung.common.spring.util.Profiles;
-import com.baeldung.um.persistence.model.Principal;
+import com.baeldung.um.persistence.model.User;
 import com.baeldung.um.persistence.model.Privilege;
 import com.baeldung.um.persistence.model.Role;
-import com.baeldung.um.service.IPrincipalService;
+import com.baeldung.um.service.IUserService;
 import com.baeldung.um.service.IPrivilegeService;
 import com.baeldung.um.service.IRoleService;
 import com.baeldung.um.util.Um;
@@ -27,7 +27,7 @@ import com.google.common.collect.Sets;
 
 /**
  * This simple setup class will run during the bootstrap process of Spring and will create some setup data <br>
- * The main focus here is creating some standard privileges, then roles and finally some default principals/users
+ * The main focus here is creating some standard privileges, then roles and finally some default users
  */
 @Component
 @Profile(Profiles.DEPLOYED)
@@ -37,7 +37,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
     private boolean setupDone;
 
     @Autowired
-    private IPrincipalService principalService;
+    private IUserService userService;
 
     @Autowired
     private IRoleService roleService;
@@ -67,7 +67,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
             createPrivileges();
             createRoles();
-            createPrincipals();
+            createUsers();
 
             setupDone = true;
             logger.info("Setup Done");
@@ -125,21 +125,21 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
         }
     }
 
-    // Principal/User
+    // User/User
 
-    final void createPrincipals() {
+    final void createUsers() {
         final Role roleAdmin = roleService.findByName(Roles.ROLE_ADMIN);
         final Role roleUser = roleService.findByName(Roles.ROLE_USER);
 
-        createPrincipalIfNotExisting(Um.ADMIN_EMAIL, Um.ADMIN_PASS, Sets.<Role> newHashSet(roleAdmin));
-        createPrincipalIfNotExisting(Um.USER_EMAIL, Um.USER_PASS, Sets.<Role> newHashSet(roleUser));
+        createUserIfNotExisting(Um.ADMIN_EMAIL, Um.ADMIN_PASS, Sets.<Role> newHashSet(roleAdmin));
+        createUserIfNotExisting(Um.USER_EMAIL, Um.USER_PASS, Sets.<Role> newHashSet(roleUser));
     }
 
-    final void createPrincipalIfNotExisting(final String loginName, final String pass, final Set<Role> roles) {
-        final Principal entityByName = principalService.findByName(loginName);
+    final void createUserIfNotExisting(final String loginName, final String pass, final Set<Role> roles) {
+        final User entityByName = userService.findByName(loginName);
         if (entityByName == null) {
-            final Principal entity = new Principal(loginName, pass, roles);
-            principalService.create(entity);
+            final User entity = new User(loginName, pass, roles);
+            userService.create(entity);
         }
     }
 

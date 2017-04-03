@@ -7,8 +7,6 @@ public class ApiError {
     private String developerMessage;
 
     public ApiError(final int status, final String message, final String developerMessage) {
-        super();
-
         this.status = status;
         this.message = message;
         this.developerMessage = developerMessage;
@@ -41,45 +39,6 @@ public class ApiError {
     }
 
     //
-
-    @Override
-    public final int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((developerMessage == null) ? 0 : developerMessage.hashCode());
-        result = prime * result + ((message == null) ? 0 : message.hashCode());
-        result = prime * result + status;
-        return result;
-    }
-
-    @Override
-    public final boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ApiError other = (ApiError) obj;
-        if (developerMessage == null) {
-            if (other.developerMessage != null) {
-                return false;
-            }
-        } else if (!developerMessage.equals(other.developerMessage)) {
-            return false;
-        }
-        if (message == null) {
-            if (other.message != null) {
-                return false;
-            }
-        } else if (!message.equals(other.message)) {
-            return false;
-        }
-        return status == other.status;
-    }
 
     @Override
     public final String toString() {

@@ -24,6 +24,6 @@ public class UmWebConfig extends WebMvcConfigurationSupport {
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> messageConverters) {
         messageConverters.add(new KryoHttpMessageConverter());
-        // super.addDefaultHttpMessageConverters(messageConverters);
+        super.addDefaultHttpMessageConverters(messageConverters);
     }
 }

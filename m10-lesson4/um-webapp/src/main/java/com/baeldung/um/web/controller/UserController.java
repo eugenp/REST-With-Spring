@@ -1,6 +1,7 @@
 package com.baeldung.um.web.controller;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.baeldung.common.util.QueryConstants;
 import com.baeldung.common.web.controller.AbstractController;
 import com.baeldung.common.web.controller.ISortingController;
+import com.baeldung.um.service.AsyncService;
 import com.baeldung.um.service.IUserService;
 import com.baeldung.um.util.Um.Privileges;
 import com.baeldung.um.util.UmMappings;
@@ -33,6 +36,9 @@ public class UserController extends AbstractController<UserDto, UserDto> impleme
 
     @Autowired
     private IUserService service;
+    
+    @Autowired
+    private AsyncService asyncService;
 
     public UserController() {
         super(UserDto.class);
@@ -88,7 +94,7 @@ public class UserController extends AbstractController<UserDto, UserDto> impleme
     @ResponseBody
     @Secured(Privileges.CAN_USER_READ)
     public UserDto findOneByName(@RequestParam(value = "name") final String name) {
-        return getService().findByName(name);
+        return getService().findByName(name);               
     }
 
     // create
@@ -98,6 +104,36 @@ public class UserController extends AbstractController<UserDto, UserDto> impleme
     public void create(@RequestBody @Valid final UserDto resource, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         createInternal(resource, uriBuilder, response);
     }
+        
+    @RequestMapping(value = "/callable", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public Callable<UserDto> createUserWithCallable(@RequestBody final UserDto resource) {
+        return new Callable<UserDto>() {
+            @Override
+            public UserDto call() throws Exception {
+                return service.createSlow(resource);
+            }
+        };
+    }
+    
+    @RequestMapping(value = "/deferred", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public DeferredResult<UserDto> createUserWithDeferredResult(@RequestBody final UserDto resource) {
+        final DeferredResult<UserDto> result = new DeferredResult<UserDto>();
+        asyncService.scheduleCreateUser(resource, result);
+        return result;
+    }
+    
+    @RequestMapping(value = "/async", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void createUserWithAsync(@RequestBody final UserDto resource, HttpServletResponse response, UriComponentsBuilder uriBuilder) throws InterruptedException {
+        asyncService.createUserAsync(resource);
+        final String location = uriBuilder.path("/users").queryParam("name", resource.getName()).build().encode().toString();        
+        response.setHeader("Location", location);        
+    }
+
 
     // update
 
@@ -122,6 +158,6 @@ public class UserController extends AbstractController<UserDto, UserDto> impleme
     @Override
     protected final IUserService getService() {
         return service;
-    }
+    }  
 
 }

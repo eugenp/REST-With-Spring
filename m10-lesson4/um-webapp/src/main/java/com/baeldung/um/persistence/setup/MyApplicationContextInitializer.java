@@ -34,7 +34,9 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
             environment.getPropertySources().addFirst(new ResourcePropertySource("classpath:env-" + envTarget + ".properties"));
 
             final String activeProfiles = environment.getProperty("spring.profiles.active");
-            environment.setActiveProfiles(activeProfiles.split(","));
+            if (activeProfiles != null) {
+                environment.setActiveProfiles(activeProfiles.split(","));
+            }
         } catch (final IOException ioEx) {
             if (envTarget != null) {
                 logger.warn("Didn't find env-" + envTarget + ".properties in classpath so not loading it in the AppContextInitialized", ioEx);

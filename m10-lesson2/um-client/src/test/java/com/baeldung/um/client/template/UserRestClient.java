@@ -8,18 +8,18 @@ import org.springframework.stereotype.Component;
 
 import com.baeldung.test.common.client.template.AbstractRestClient;
 import com.baeldung.um.client.UmPaths;
+import com.baeldung.um.persistence.model.User;
 import com.baeldung.um.util.Um;
-import com.baeldung.um.web.dto.UserDto;
 
 @Component
 @Profile("client")
-public final class UserRestClient extends AbstractRestClient<UserDto> {
+public final class UserRestClient extends AbstractRestClient<User> {
 
     @Autowired
     protected UmPaths paths;
 
     public UserRestClient() {
-        super(UserDto.class);
+        super(User.class);
     }
 
     // API

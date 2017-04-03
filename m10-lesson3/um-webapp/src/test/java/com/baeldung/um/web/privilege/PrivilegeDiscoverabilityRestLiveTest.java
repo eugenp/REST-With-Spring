@@ -1,9 +1,5 @@
 package com.baeldung.um.web.privilege;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.baeldung.client.IDtoOperations;
@@ -21,24 +17,7 @@ public class PrivilegeDiscoverabilityRestLiveTest extends UmDiscoverabilityRestL
 
     public PrivilegeDiscoverabilityRestLiveTest() {
         super(Privilege.class);
-    }
-
-    // tests
-
-    @Test
-    public final void whenSingleResourceIsRetrievedMultipleTimes_thenThrottled() {
-        // Given
-        final String uriOfExistingResource = getApi().createAsUri(createNewResource());
-
-        ExecutorService executor = Executors.newCachedThreadPool();
-
-        // When
-        for (int i = 0; i < 10; i++) {
-            executor.submit(() -> {
-                getApi().read(uriOfExistingResource);
-            });
-        }
-    }
+    }    
 
     // template method
 

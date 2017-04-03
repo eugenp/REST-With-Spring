@@ -12,7 +12,7 @@ import org.springframework.dao.DataAccessException;
 import com.baeldung.common.persistence.service.IService;
 import com.baeldung.um.persistence.model.Privilege;
 import com.baeldung.um.persistence.model.Role;
-import com.baeldung.um.service.IPrincipalService;
+import com.baeldung.um.service.IUserService;
 import com.baeldung.um.service.IPrivilegeService;
 import com.baeldung.um.service.IRoleService;
 import com.google.common.collect.Sets;
@@ -26,7 +26,7 @@ public class RoleServiceIntegrationTest extends SecServiceIntegrationTest<Role> 
     private IRoleService roleService;
 
     @Autowired
-    private IPrincipalService principalService;
+    private IUserService userService;
 
     // create
 
@@ -54,7 +54,7 @@ public class RoleServiceIntegrationTest extends SecServiceIntegrationTest<Role> 
         newResource.getPrivileges().add(existingAssociation);
         getApi().create(newResource);
 
-        principalService.deleteAll();
+        userService.deleteAll();
         roleService.deleteAll();
         // privilegeService.deleteAll();
     }

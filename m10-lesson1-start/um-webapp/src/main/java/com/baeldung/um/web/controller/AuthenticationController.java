@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.baeldung.common.security.SpringSecurityUtil;
 import com.baeldung.um.persistence.model.Privilege;
 import com.baeldung.um.persistence.model.Role;
+import com.baeldung.um.persistence.model.User;
 import com.baeldung.um.util.UmMappings;
-import com.baeldung.um.web.dto.UserDto;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
@@ -35,7 +35,7 @@ public class AuthenticationController {
     @RequestMapping(method = RequestMethod.GET, value = UmMappings.AUTHENTICATION)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserDto createAuthentication() {
+    public User createAuthentication() {
         final Authentication auth = SpringSecurityUtil.getCurrentAuthentication();
 
         final Function<GrantedAuthority, Privilege> springAuthorityToPrivilegeFunction = new Function<GrantedAuthority, Privilege>() {
@@ -47,7 +47,7 @@ public class AuthenticationController {
         final Collection<Privilege> privileges = Collections2.transform(auth.getAuthorities(), springAuthorityToPrivilegeFunction);
         final Role defaultRole = new Role("defaultRole", Sets.<Privilege> newHashSet(privileges));
 
-        final UserDto authenticationResource = new UserDto(auth.getName(), auth.getName(), (String) auth.getCredentials(), Sets.<Role> newHashSet(defaultRole));
+        final User authenticationResource = new User(auth.getName(), auth.getName(), (String) auth.getCredentials(), Sets.<Role> newHashSet(defaultRole));
         return authenticationResource;
     }
 

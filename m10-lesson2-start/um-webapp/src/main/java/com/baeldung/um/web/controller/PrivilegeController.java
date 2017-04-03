@@ -24,8 +24,8 @@ import com.baeldung.common.web.controller.AbstractController;
 import com.baeldung.common.web.controller.ISortingController;
 import com.baeldung.um.persistence.model.Privilege;
 import com.baeldung.um.service.IPrivilegeService;
-import com.baeldung.um.util.Um.Privileges;
 import com.baeldung.um.util.UmMappings;
+import com.baeldung.um.util.Um.Privileges;
 
 @Controller
 @RequestMapping(value = UmMappings.PRIVILEGES)

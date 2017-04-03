@@ -18,11 +18,11 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.baeldung.test.common.client.security.ITestAuthenticator;
 import com.baeldung.um.client.UmPaths;
+import com.baeldung.um.persistence.model.User;
 import com.baeldung.um.spring.CommonTestConfig;
 import com.baeldung.um.spring.UmClientConfig;
 import com.baeldung.um.spring.UmLiveTestConfig;
 import com.baeldung.um.util.Um;
-import com.baeldung.um.web.dto.UserDto;
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.specification.RequestSpecification;
 
@@ -58,21 +58,21 @@ public class AuthenticationRestLiveTest {
     }
 
     @Test
-    public final void whenAuthenticationIsPerformed_thenResponseIsPrincipal() {
+    public final void whenAuthenticationIsPerformed_thenResponseIsUser() {
         // When
         final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).get(paths.getAuthenticationUri());
 
         // Then
-        response.as(UserDto.class);
+        response.as(User.class);
     }
 
     @Test
-    public final void whenAuthenticationIsPerformed_thenPrincipalResponseIsCorrect() {
+    public final void whenAuthenticationIsPerformed_thenUserResponseIsCorrect() {
         // When
         final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).get(paths.getAuthenticationUri());
 
         // Then
-        assertEquals(new UserDto(Um.EMAIL, Um.EMAIL, Um.PASS, null), response.as(UserDto.class));
+        assertEquals(new User(Um.EMAIL, Um.EMAIL, Um.PASS, null), response.as(User.class));
     }
 
     // util

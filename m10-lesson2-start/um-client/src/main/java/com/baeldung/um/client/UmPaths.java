@@ -9,7 +9,7 @@ import com.baeldung.common.client.CommonPaths;
 import com.baeldung.common.web.IUriMapper;
 import com.baeldung.um.persistence.model.Privilege;
 import com.baeldung.um.persistence.model.Role;
-import com.baeldung.um.web.dto.UserDto;
+import com.baeldung.um.persistence.model.User;
 
 @Component
 @Profile("client")
@@ -35,7 +35,7 @@ public final class UmPaths {
     }
 
     public final String getUserUri() {
-        return getRootUri() + uriMapper.getUriBase(UserDto.class);
+        return getRootUri() + uriMapper.getUriBase(User.class);
     }
 
     public final String getRoleUri() {

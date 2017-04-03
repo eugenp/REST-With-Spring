@@ -1,9 +1,5 @@
 package com.baeldung.um.web.privilege;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.baeldung.client.IDtoOperations;
@@ -22,6 +18,8 @@ public class PrivilegeDiscoverabilityRestLiveTest extends UmDiscoverabilityRestL
     public PrivilegeDiscoverabilityRestLiveTest() {
         super(Privilege.class);
     }
+
+    // tests
 
     // template method
 

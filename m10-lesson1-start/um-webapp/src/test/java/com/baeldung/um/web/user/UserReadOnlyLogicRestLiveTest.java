@@ -3,16 +3,16 @@ package com.baeldung.um.web.user;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.baeldung.um.client.template.UserRestClient;
+import com.baeldung.um.persistence.model.User;
 import com.baeldung.um.test.live.UmReadOnlyLogicRestLiveTest;
-import com.baeldung.um.web.dto.UserDto;
 
-public class UserReadOnlyLogicRestLiveTest extends UmReadOnlyLogicRestLiveTest<UserDto> {
+public class UserReadOnlyLogicRestLiveTest extends UmReadOnlyLogicRestLiveTest<User> {
 
     @Autowired
     private UserRestClient api;
 
     public UserReadOnlyLogicRestLiveTest() {
-        super(UserDto.class);
+        super(User.class);
     }
 
     // tests

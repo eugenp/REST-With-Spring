@@ -17,7 +17,6 @@
 	<!-- our service -->
 	<logger name="com.baeldung.um" level="INFO" />
 	<logger name="com.baeldung.um.persistence.setup" level="DEBUG" /> <!-- to follow if setup is being executed -->
-	<logger name="com.baeldung.um.web.limit" level="DEBUG" /> <!-- to follow the rate limiting logic -->
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />

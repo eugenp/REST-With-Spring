@@ -8,10 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 
 import com.baeldung.client.marshall.IMarshaller;
-import com.baeldung.um.persistence.model.Principal;
 import com.baeldung.um.persistence.model.Privilege;
 import com.baeldung.um.persistence.model.Role;
-import com.baeldung.um.web.dto.UserDto;
+import com.baeldung.um.persistence.model.User;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -81,12 +80,12 @@ public final class ProdJacksonMarshaller implements IMarshaller {
                 entities = objectMapper.readValue(resourcesAsString, new TypeReference<List<Privilege>>() {
                     // ...
                 });
-            } else if (clazz.equals(UserDto.class)) {
-                entities = objectMapper.readValue(resourcesAsString, new TypeReference<List<UserDto>>() {
+            } else if (clazz.equals(User.class)) {
+                entities = objectMapper.readValue(resourcesAsString, new TypeReference<List<User>>() {
                     // ...
                 });
-            } else if (clazz.equals(Principal.class)) {
-                entities = objectMapper.readValue(resourcesAsString, new TypeReference<List<Principal>>() {
+            } else if (clazz.equals(User.class)) {
+                entities = objectMapper.readValue(resourcesAsString, new TypeReference<List<User>>() {
                     // ...
                 });
             } else {

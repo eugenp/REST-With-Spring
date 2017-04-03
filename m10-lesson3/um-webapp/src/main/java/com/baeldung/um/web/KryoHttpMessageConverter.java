@@ -25,13 +25,7 @@ public class KryoHttpMessageConverter extends AbstractHttpMessageConverter<Objec
     private static final ThreadLocal<Kryo> kryoThreadLocal = new ThreadLocal<Kryo>() {
         @Override
         protected Kryo initialValue() {
-            final Kryo kryo = new Kryo();
-            kryo.register(UserDto.class, 1);
-            kryo.register(Role.class, 2);
-            kryo.register(Privilege.class, 3);
-            kryo.register(Principal.class, 4);
-
-            return kryo;
+            return createKryo();
         }
     };
 
@@ -61,4 +55,17 @@ public class KryoHttpMessageConverter extends AbstractHttpMessageConverter<Objec
     protected MediaType getDefaultContentType(final Object object) {
         return KRYO;
     }
+    
+    //
+    
+    private static final Kryo createKryo(){
+        final Kryo kryo = new Kryo();
+        kryo.register(UserDto.class, 1);
+        kryo.register(Role.class, 2);
+        kryo.register(Privilege.class, 3);
+        kryo.register(Principal.class, 4);
+
+        return kryo;
+    }
+    
 }

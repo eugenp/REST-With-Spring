@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.baeldung.client.IDtoOperations;
 import com.baeldung.um.client.template.UserRestClient;
 import com.baeldung.um.model.UserDtoOpsImpl;
+import com.baeldung.um.persistence.model.User;
 import com.baeldung.um.test.live.UmDiscoverabilityRestLiveTest;
-import com.baeldung.um.web.dto.UserDto;
 
-public class UserDiscoverabilityRestLiveTest extends UmDiscoverabilityRestLiveTest<UserDto> {
+public class UserDiscoverabilityRestLiveTest extends UmDiscoverabilityRestLiveTest<User> {
 
     @Autowired
     private UserRestClient restTemplate;
@@ -16,7 +16,7 @@ public class UserDiscoverabilityRestLiveTest extends UmDiscoverabilityRestLiveTe
     private UserDtoOpsImpl entityOps;
 
     public UserDiscoverabilityRestLiveTest() {
-        super(UserDto.class);
+        super(User.class);
     }
 
     // tests
@@ -29,7 +29,7 @@ public class UserDiscoverabilityRestLiveTest extends UmDiscoverabilityRestLiveTe
     }
 
     @Override
-    protected final UserDto createNewResource() {
+    protected final User createNewResource() {
         return getEntityOps().createNewResource();
     }
 
@@ -39,7 +39,7 @@ public class UserDiscoverabilityRestLiveTest extends UmDiscoverabilityRestLiveTe
     }
 
     @Override
-    protected final IDtoOperations<UserDto> getEntityOps() {
+    protected final IDtoOperations<User> getEntityOps() {
         return entityOps;
     }
 

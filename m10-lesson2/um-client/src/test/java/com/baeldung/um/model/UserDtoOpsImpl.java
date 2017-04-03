@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 
 import com.baeldung.client.IDtoOperations;
 import com.baeldung.um.client.FixtureResourceFactory;
-import com.baeldung.um.web.dto.UserDto;
+import com.baeldung.um.persistence.model.User;
 
 @Component
-public final class UserDtoOpsImpl implements IDtoOperations<UserDto> {
+public final class UserDtoOpsImpl implements IDtoOperations<User> {
 
     public UserDtoOpsImpl() {
         super();
@@ -17,24 +17,20 @@ public final class UserDtoOpsImpl implements IDtoOperations<UserDto> {
 
     // API
 
-    public final UserDto createNewEntity(final String name) {
-        return FixtureResourceFactory.createNewUser(name);
-    }
-
     // template method
 
     @Override
-    public final UserDto createNewResource() {
+    public final User createNewResource() {
         return FixtureResourceFactory.createNewUser();
     }
 
     @Override
-    public final void invalidate(final UserDto entity) {
+    public final void invalidate(final User entity) {
         entity.setName(null);
     }
 
     @Override
-    public final void change(final UserDto resource) {
+    public final void change(final User resource) {
         resource.setName(randomAlphabetic(8));
     }
 
