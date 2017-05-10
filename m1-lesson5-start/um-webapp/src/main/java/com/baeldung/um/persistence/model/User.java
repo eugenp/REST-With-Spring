@@ -24,13 +24,13 @@ public class User implements INameableEntity, INameableDto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID")
     private Long id;
-    
+
     @Column(unique = true, nullable = false)
     private String name;
-    
+
     @Column(nullable = false)
     private String password;
-    
+
     @Column( /* nullable = false */)
     private Boolean locked;
 

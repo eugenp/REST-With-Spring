@@ -21,8 +21,8 @@ public class UmWebConfig extends WebMvcConfigurerAdapter {
     public UmWebConfig() {
         super();
     }
-    
- // configuration
+
+    // configuration
 
     @Override
     public void extendMessageConverters(final List<HttpMessageConverter<?>> converters) {

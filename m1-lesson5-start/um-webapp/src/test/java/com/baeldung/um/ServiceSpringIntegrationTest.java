@@ -11,7 +11,7 @@ import com.baeldung.um.spring.UmPersistenceJpaConfig;
 import com.baeldung.um.spring.UmServiceConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { UmPersistenceJpaConfig.class, UmServiceConfig.class , UmContextConfig.class }, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = { UmPersistenceJpaConfig.class, UmServiceConfig.class, UmContextConfig.class }, loader = AnnotationConfigContextLoader.class)
 public class ServiceSpringIntegrationTest {
 
     @Test

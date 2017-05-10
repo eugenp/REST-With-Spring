@@ -84,6 +84,7 @@ public abstract class AbstractReadOnlyController<T extends IEntity> {
 
     /**
      * Counts all {@link Privilege} resources in the system
+     * 
      * @return
      */
     @RequestMapping(method = RequestMethod.GET, value = "/count")

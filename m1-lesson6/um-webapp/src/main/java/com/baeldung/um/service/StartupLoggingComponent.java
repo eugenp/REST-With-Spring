@@ -35,7 +35,7 @@ public class StartupLoggingComponent implements InitializingBean {
         try {
             logEnvTarget(env);
             logPersistenceTarget(env);
-            
+
             logPersistenceData(env);
         } catch (final Exception ex) {
             logger.warn("There was a problem logging data on startup", ex);

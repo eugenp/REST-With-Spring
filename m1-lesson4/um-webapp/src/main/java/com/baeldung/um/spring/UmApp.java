@@ -48,7 +48,7 @@ public class UmApp extends SpringBootServletInitializer {
     }
 
     public static void main(final String... args) {
-        SpringApplication.run(UmApp.class, args);        
+        SpringApplication.run(UmApp.class, args);
     }
 
 }
