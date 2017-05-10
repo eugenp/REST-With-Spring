@@ -13,7 +13,7 @@ import com.baeldung.um.service.IUserService;
 
 @Service
 @Transactional
-public class UserServiceImpl extends AbstractService<User>implements IUserService {
+public class UserServiceImpl extends AbstractService<User> implements IUserService {
 
     @Autowired
     IUserJpaDao dao;

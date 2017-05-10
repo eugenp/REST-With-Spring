@@ -8,7 +8,7 @@ import com.baeldung.um.security.SecurityRestLiveTest;
 import com.baeldung.um.test.live.UmAsyncRestLiveTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({// @formatter:off
+@SuiteClasses({ // @formatter:off
     LiveDiscoverabilitySuite.class,
     LiveLogicSuite.class,
     SecurityRestLiveTest.class,

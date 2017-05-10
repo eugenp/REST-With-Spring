@@ -17,7 +17,7 @@ public class PrivilegeDiscoverabilityRestLiveTest extends UmDiscoverabilityRestL
 
     public PrivilegeDiscoverabilityRestLiveTest() {
         super(Privilege.class);
-    }    
+    }
 
     // template method
 

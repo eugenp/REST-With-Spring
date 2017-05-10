@@ -17,5 +17,5 @@ public class UmWebConfig extends WebMvcConfigurerAdapter {
     }
 
     // beans
-    
+
 }

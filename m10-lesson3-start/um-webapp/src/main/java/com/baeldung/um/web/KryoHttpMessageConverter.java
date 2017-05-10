@@ -13,7 +13,6 @@ import org.springframework.http.converter.AbstractHttpMessageConverter;
 public class KryoHttpMessageConverter extends AbstractHttpMessageConverter<Object> {
 
     public static final MediaType KRYO = new MediaType("application", "x-kryo");
-    
 
     public KryoHttpMessageConverter() {
         super(KRYO);

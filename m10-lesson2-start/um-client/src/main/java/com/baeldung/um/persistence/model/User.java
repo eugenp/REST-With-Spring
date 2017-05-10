@@ -50,7 +50,7 @@ public class User implements INameableEntity, INameableDto {
 
         locked = false;
     }
-    
+
     public User(final String name, final String email, final String password, final Set<Role> roles) {
         super();
 

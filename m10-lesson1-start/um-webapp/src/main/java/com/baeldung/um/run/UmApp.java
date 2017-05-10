@@ -15,13 +15,13 @@ import com.baeldung.um.spring.UmServiceConfig;
 import com.baeldung.um.spring.UmServletConfig;
 import com.baeldung.um.spring.UmWebConfig;
 
-@SpringBootApplication(exclude = {// @formatter:off
+@SpringBootApplication(exclude = { // @formatter:off
         SecurityAutoConfiguration.class
         , ErrorMvcAutoConfiguration.class
 })// @formatter:on
 public class UmApp extends SpringBootServletInitializer {
 
-    private final static Object[] CONFIGS = {// @formatter:off
+    private final static Object[] CONFIGS = { // @formatter:off
             UmApp.class,
             UmContextConfig.class,
 

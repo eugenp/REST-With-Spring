@@ -7,5 +7,5 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({ LiveSuite.class, ServiceSuite.class, UnitSuite.class })
 public final class AllSuite {
-    // 294 tests, 3 errors 
+    // 294 tests, 3 errors
 }

@@ -13,7 +13,7 @@ import com.baeldung.um.service.IPrincipalService;
 
 @Service
 @Transactional
-public class PrincipalServiceImpl extends AbstractService<Principal>implements IPrincipalService {
+public class PrincipalServiceImpl extends AbstractService<Principal> implements IPrincipalService {
 
     @Autowired
     IPrincipalJpaDao dao;
