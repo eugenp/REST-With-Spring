@@ -20,21 +20,13 @@ public class PatientRecordLiveTest {
 
     @Test
     public void whenGetAllPatients_thenOK() {
-        final Response response = RestAssured.given()
-            .auth()
-            .preemptive()
-            .basic("user@fake.com", "userpass")
-            .get(API_URI);
+        final Response response = RestAssured.given().auth().preemptive().basic("user@fake.com", "userpass").get(API_URI);
         assertEquals(HttpStatus.OK.value(), response.getStatusCode());
     }
 
     @Test
     public void whenGetPatientByName_thenOK() {
-        final Response response = RestAssured.given()
-            .auth()
-            .preemptive()
-            .basic("user@fake.com", "userpass")
-            .get(API_URI + "/search?name=john");
+        final Response response = RestAssured.given().auth().preemptive().basic("user@fake.com", "userpass").get(API_URI + "/search?name=john");
         assertEquals(HttpStatus.OK.value(), response.getStatusCode());
 
         final XmlPath xmlPath = new XmlPath(response.asString()).setRoot("patient");
@@ -47,25 +39,13 @@ public class PatientRecordLiveTest {
         patient.setId(16L);
         // update
         patient.setName("newName");
-        Response response = RestAssured.given()
-            .auth()
-            .preemptive()
-            .basic("admin@fake.com", "adminpass")
-            .and()
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .body(patient)
-            .put(API_URI + "/16");
+        Response response = RestAssured.given().auth().preemptive().basic("admin@fake.com", "adminpass").and().contentType(MediaType.APPLICATION_JSON_VALUE).body(patient).put(API_URI + "/16");
         assertEquals(HttpStatus.OK.value(), response.getStatusCode());
 
         // check if changes saved
-        response = RestAssured.given()
-            .auth()
-            .preemptive()
-            .basic("admin@fake.com", "adminpass")
-            .get(API_URI + "/16");
+        response = RestAssured.given().auth().preemptive().basic("admin@fake.com", "adminpass").get(API_URI + "/16");
         assertEquals(HttpStatus.OK.value(), response.getStatusCode());
-        assertTrue(response.asString()
-            .contains("newName"));
+        assertTrue(response.asString().contains("newName"));
 
     }
 
@@ -75,25 +55,13 @@ public class PatientRecordLiveTest {
         patient.setId(16L);
         // update
         patient.setName("newName");
-        Response response = RestAssured.given()
-            .auth()
-            .preemptive()
-            .basic("admin@fake.com", "adminpass")
-            .and()
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .body(patient)
-            .put(API_URI + "/16");
+        Response response = RestAssured.given().auth().preemptive().basic("admin@fake.com", "adminpass").and().contentType(MediaType.APPLICATION_JSON_VALUE).body(patient).put(API_URI + "/16");
         assertEquals(HttpStatus.OK.value(), response.getStatusCode());
 
         // check if changes saved
-        response = RestAssured.given()
-            .auth()
-            .preemptive()
-            .basic("admin@fake.com", "adminpass")
-            .get(API_URI + "/16");
+        response = RestAssured.given().auth().preemptive().basic("admin@fake.com", "adminpass").get(API_URI + "/16");
         assertEquals(HttpStatus.OK.value(), response.getStatusCode());
-        assertTrue(response.asString()
-            .contains("newName"));
+        assertTrue(response.asString().contains("newName"));
 
     }
 
@@ -103,14 +71,7 @@ public class PatientRecordLiveTest {
         patient.setId(16L);
         // update
         patient.setName("sampleName");
-        final Response response = RestAssured.given()
-            .auth()
-            .preemptive()
-            .basic("user@fake.com", "userpass")
-            .and()
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .body(patient)
-            .put(API_URI + "/16");
+        final Response response = RestAssured.given().auth().preemptive().basic("user@fake.com", "userpass").and().contentType(MediaType.APPLICATION_JSON_VALUE).body(patient).put(API_URI + "/16");
         assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatusCode());
     }
 

@@ -33,7 +33,7 @@ public class UmApp extends SpringBootServletInitializer {
     }
 
     //
-    
+
     @Override
     protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
         return application.initializers(new MyApplicationContextInitializer()).sources(UmApp.class);

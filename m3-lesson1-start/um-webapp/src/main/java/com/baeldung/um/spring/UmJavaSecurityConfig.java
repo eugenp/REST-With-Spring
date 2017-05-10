@@ -1,6 +1,6 @@
 package com.baeldung.um.spring;
 
-public class UmJavaSecurityConfig{
+public class UmJavaSecurityConfig {
 
     //
 }

@@ -61,7 +61,6 @@ public class User implements INameableEntity, INameableDto {
         roles = rolesToSet;
     }
 
-
     // API
 
     @Override

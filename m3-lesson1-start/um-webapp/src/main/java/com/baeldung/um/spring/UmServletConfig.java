@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.DispatcherServlet;
+
 //@Configuration
 public class UmServletConfig {
 
@@ -28,7 +29,7 @@ public class UmServletConfig {
         return registration;
     }
 
-   /* @Bean
+    /* @Bean
     @Order(1)
     public FilterRegistrationBean springSecurityFilterChain() {
         final FilterRegistrationBean filterRegBean = new FilterRegistrationBean();

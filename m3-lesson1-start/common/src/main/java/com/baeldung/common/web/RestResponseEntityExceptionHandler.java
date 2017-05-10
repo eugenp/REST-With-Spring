@@ -28,7 +28,7 @@ import com.baeldung.common.web.exception.MyResourceNotFoundException;
 import com.baeldung.common.web.exception.ValidationErrorDTO;
 
 @ControllerAdvice
-public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {    
+public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     // 400
 

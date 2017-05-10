@@ -8,8 +8,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.baeldung.um.run.UmApp;
 
-
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { // @formatter:off
         UmApp.class,

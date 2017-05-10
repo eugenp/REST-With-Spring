@@ -147,17 +147,7 @@ public class Patient implements INameableEntity, INameableDto {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Patient [id=")
-            .append(id)
-            .append(", name=")
-            .append(name)
-            .append(", diagnosis=")
-            .append(diagnosis)
-            .append(", entryDate=")
-            .append(entryDate)
-            .append(", exitDate=")
-            .append(exitDate)
-            .append("]");
+        builder.append("Patient [id=").append(id).append(", name=").append(name).append(", diagnosis=").append(diagnosis).append(", entryDate=").append(entryDate).append(", exitDate=").append(exitDate).append("]");
         return builder.toString();
     }
 
