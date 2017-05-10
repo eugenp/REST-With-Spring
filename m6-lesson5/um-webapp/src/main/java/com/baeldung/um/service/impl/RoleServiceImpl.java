@@ -12,7 +12,7 @@ import com.baeldung.um.service.IRoleService;
 
 @Service
 @Transactional
-public class RoleServiceImpl extends AbstractService<Role>implements IRoleService {
+public class RoleServiceImpl extends AbstractService<Role> implements IRoleService {
 
     @Autowired
     IRoleJpaDao dao;

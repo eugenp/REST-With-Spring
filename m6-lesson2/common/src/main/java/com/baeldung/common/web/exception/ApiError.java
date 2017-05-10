@@ -6,7 +6,7 @@ public class ApiError {
     private String message;
     private String developerMessage;
 
-    public ApiError(final int status, final String message, final String developerMessage) {        
+    public ApiError(final int status, final String message, final String developerMessage) {
 
         this.status = status;
         this.message = message;

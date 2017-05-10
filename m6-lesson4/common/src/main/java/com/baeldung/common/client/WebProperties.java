@@ -14,7 +14,7 @@ public final class WebProperties {
 
     @Value("${http.oauthPath}")
     private String oauthPath;
-    
+
     @Autowired
     private CommonPaths commonPaths;
 
@@ -31,7 +31,7 @@ public final class WebProperties {
     public final String getOauthPath() {
         return oauthPath;
     }
-    
+
     public final String getProtocol() {
         return commonPaths.getProtocol();
     }

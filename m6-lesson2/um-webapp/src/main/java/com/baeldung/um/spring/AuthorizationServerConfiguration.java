@@ -28,7 +28,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     }
 
     // config
-    
+
     @Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager);

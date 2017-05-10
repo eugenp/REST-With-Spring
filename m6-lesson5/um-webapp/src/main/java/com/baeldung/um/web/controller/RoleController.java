@@ -29,7 +29,7 @@ import com.baeldung.um.util.Um.Privileges;
 
 @Controller
 @RequestMapping(value = UmMappings.ROLES)
-public class RoleController extends AbstractController<Role>implements ISortingController<Role> {
+public class RoleController extends AbstractController<Role> implements ISortingController<Role> {
 
     @Autowired
     private IRoleService service;

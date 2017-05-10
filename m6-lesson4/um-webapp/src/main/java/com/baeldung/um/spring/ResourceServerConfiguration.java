@@ -19,7 +19,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @EnableResourceServer
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-@ComponentScan({ "com.baeldung.um.security"})
+@ComponentScan({ "com.baeldung.um.security" })
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     @Autowired
@@ -28,7 +28,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     public ResourceServerConfiguration() {
         super();
     }
-    
+
     // global security concerns
 
     @Bean

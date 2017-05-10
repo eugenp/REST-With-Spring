@@ -15,8 +15,6 @@ import com.baeldung.um.spring.UmServiceConfig;
 import com.baeldung.um.spring.UmServletConfig;
 import com.baeldung.um.spring.UmWebConfig;
 
-
-
 @SpringBootApplication(exclude = { // @formatter:off
         ErrorMvcAutoConfiguration.class
 })// @formatter:on

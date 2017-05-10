@@ -21,17 +21,17 @@ public class RedirectController {
 
     // API
 
-    @RequestMapping(value = UmMappings.Singural.PRIVILEGE)
+    @RequestMapping(value = UmMappings.Singular.PRIVILEGE)
     public ResponseEntity<Void> privilegeToPrivileges(final HttpServletRequest request) {
         return singularToPlural(request);
     }
 
-    @RequestMapping(value = UmMappings.Singural.ROLE)
+    @RequestMapping(value = UmMappings.Singular.ROLE)
     public ResponseEntity<Void> roleToRoles(final HttpServletRequest request) {
         return singularToPlural(request);
     }
 
-    @RequestMapping(value = UmMappings.Singural.USER)
+    @RequestMapping(value = UmMappings.Singular.USER)
     public ResponseEntity<Void> userToUsers(final HttpServletRequest request) {
         return singularToPlural(request);
     }

@@ -79,7 +79,7 @@ public final class JacksonMarshaller implements IMarshaller {
             } else if (clazz.equals(Privilege.class)) {
                 entities = objectMapper.readValue(resourcesAsString, new TypeReference<List<Privilege>>() {
                     // ...
-                });           
+                });
             } else if (clazz.equals(User.class)) {
                 entities = objectMapper.readValue(resourcesAsString, new TypeReference<List<User>>() {
                     // ...

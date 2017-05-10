@@ -35,7 +35,6 @@ public class OAuthAuthenticator implements ITestAuthenticator {
     @Autowired
     private WebProperties webProps;
 
-
     public OAuthAuthenticator() {
         super();
     }
