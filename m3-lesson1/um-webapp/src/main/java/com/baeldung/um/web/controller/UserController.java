@@ -54,7 +54,7 @@ public class UserController extends AbstractController<UserDto> implements ISort
     @ResponseBody
     @Secured(Privileges.CAN_USER_READ)
     public List<UserDto> findAllPaginated(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
-        return findPaginatedAndSortedInternal(page, size, null, null);
+        return findPaginatedInternal(page, size);
     }
 
     @Override

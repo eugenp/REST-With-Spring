@@ -54,7 +54,7 @@ public class RoleController extends AbstractController<Role> implements ISorting
     @ResponseBody
     @Secured(Privileges.CAN_ROLE_READ)
     public List<Role> findAllPaginated(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
-        return findPaginatedAndSortedInternal(page, size, null, null);
+        return findPaginatedInternal(page, size);
     }
 
     @Override

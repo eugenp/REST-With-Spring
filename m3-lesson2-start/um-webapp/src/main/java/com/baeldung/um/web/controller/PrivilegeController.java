@@ -54,7 +54,7 @@ public class PrivilegeController extends AbstractController<Privilege> implement
     @ResponseBody
     @Secured(Privileges.CAN_PRIVILEGE_READ)
     public List<Privilege> findAllPaginated(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
-        return findPaginatedAndSortedInternal(page, size, null, null);
+        return findPaginatedInternal(page, size);
     }
 
     @Override
