@@ -49,7 +49,7 @@ public class RoleController extends AbstractController<Role> implements ISorting
     @RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE }, method = RequestMethod.GET)
     @ResponseBody
     public List<Role> findAllPaginated(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size) {
-        return findPaginatedAndSortedInternal(page, size, null, null);
+        return findPaginatedInternal(page, size);
     }
 
     @Override
