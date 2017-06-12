@@ -62,7 +62,7 @@ public class UserController extends AbstractController<UserDto, UserDto> impleme
     @ResponseBody
     @Secured(Privileges.CAN_USER_READ)
     public List<UserDto> findAllPaginated(@RequestParam(value = QueryConstants.PAGE) final int page, @RequestParam(value = QueryConstants.SIZE) final int size, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        return findPaginatedAndSortedInternal(page, size, null, null, uriBuilder, response);
+        return findPaginatedInternal(page, size, uriBuilder, response);
     }
 
     @Override

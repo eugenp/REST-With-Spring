@@ -71,6 +71,14 @@ public class UserServiceImpl implements IUserService {
         final List<UserDto> userDtos = principals.stream().map(this::convert).collect(Collectors.toList());
         return Lists.newArrayList(userDtos);
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Page<UserDto> findAllPaginatedRaw(final int page, final int size) {
+        final Page<Principal> principals = principalService.findAllPaginatedRaw(page, size);
+        final List<UserDto> userDtos = principals.getContent().stream().map(this::convert).collect(Collectors.toList());
+        return new PageImpl<UserDto>(userDtos, new PageRequest(page, size), principals.getTotalElements());
+    }
 
     @Override
     @Transactional(readOnly = true)

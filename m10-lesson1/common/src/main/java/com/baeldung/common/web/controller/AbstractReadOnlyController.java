@@ -86,8 +86,8 @@ public abstract class AbstractReadOnlyController<D extends IDto, E extends IEnti
         return Lists.newArrayList(resultPage.getContent());
     }
 
-    protected final List<E> findPaginatedInternal(final int page, final int size, final String sortBy, final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        final Page<E> resultPage = getService().findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder);
+    protected final List<E> findPaginatedInternal(final int page, final int size, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+        final Page<E> resultPage = getService().findAllPaginatedRaw(page, size);
         if (page > resultPage.getTotalPages()) {
             throw new MyResourceNotFoundException();
         }
