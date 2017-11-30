@@ -1,6 +1,7 @@
 # Resources
-- [REST With Spring] (http://bit.ly/restwithspring)
-- Continuous Integration: [CI on Cloudbees](https://rest-security.ci.cloudbees.com/view/REST-With-Spring/)
+- REST With Spring: http://bit.ly/restwithspring
+- Learn Spring Security (the price is changing on Friday): http://bit.ly/github-lss
+- Continuous Integration: [CI on Cloudbees](https://rest-security.ci.cloudbees.com/view/REST-With-Spring/job/Courses/job/RwS%20Jobs/)
 
 
 # Quick Start
