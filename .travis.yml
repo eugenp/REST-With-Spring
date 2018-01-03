@@ -1,0 +1,24 @@
+language: java
+
+before_install: 
+  - echo "MAVEN_OPTS='-Xmx2048M -Xss128M -XX:+CMSClassUnloadingEnabled -XX:+UseG1GC -XX:-UseGCOverheadLimit'" > ~/.mavenrc
+
+install: true
+
+script: mvn -B clean install -Pintegration
+
+sudo: required
+
+jdk:
+  - oraclejdk8
+
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+      
+cache:
+  directories:
+  - .autoconf
+  - $HOME/.m2
+  
