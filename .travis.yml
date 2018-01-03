@@ -5,7 +5,7 @@ before_install:
 
 install: true
 
-script: mvn -B install -Pintegration
+script: mvn -B clean install -Pintegration
 
 sudo: required
 
