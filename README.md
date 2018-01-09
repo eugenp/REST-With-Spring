@@ -1,7 +1,5 @@
 # Resources
-- REST With Spring: http://bit.ly/restwithspring
-- Learn Spring Security (the price is changing on Friday): http://bit.ly/github-lss
-- Continuous Integration: [CI on Cloudbees](https://rest-security.ci.cloudbees.com/view/REST-With-Spring/job/Courses/job/RwS%20Jobs/)
+- [REST With Spring] (http://bit.ly/restwithspring)
 
 
 # Quick Start
@@ -31,11 +29,6 @@ The project uses the following technologies: <br/>
 - **persistence providers**: H2, MySQL
 - **testing**: [junit](http://www.junit.org/), [hamcrest](http://code.google.com/p/hamcrest/), [mockito](http://code.google.com/p/mockito/), [rest-assured](http://code.google.com/p/rest-assured/) <br/>
 
-
-# Continuous Integration
-- Built on Cloudbees: <a href="https://rest-security.ci.cloudbees.com/view/REST-With-Spring/">REST Security Jenkins CI</a> 
-<br/><br/>
-<a href="https://rest-security.ci.cloudbees.com"><img src="http://web-static-cloudfront.s3.amazonaws.com/images/badges/BuiltOnDEV.png"/></a>
 
 
 # Eclipse
