@@ -19,6 +19,10 @@
 	<!-- our service -->
 	<logger name="com.baeldung.um" level="INFO" />
 	<logger name="com.baeldung.um.persistence.setup" level="DEBUG" /> <!-- to follow if setup is being executed -->
+	
+	<logger name="org.springframework.security.oauth2" level="DEBUG"/>
+	
+	<logger name="org.springframework.security.oauth2" level="DEBUG"/>
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
