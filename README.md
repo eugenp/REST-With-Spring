@@ -1,5 +1,6 @@
 # Resources
 - [REST With Spring] (http://bit.ly/restwithspring)
+- [Authentication Against a REST Service with Spring Security](http://www.baeldung.com/authentication-against-a-third-party-service)
 
 
 # Quick Start
