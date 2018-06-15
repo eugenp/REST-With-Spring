@@ -1,0 +1,25 @@
+<configuration>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="org.hibernate" level="WARN" />
+
+	<logger name="org.springframework" level="WARN" />
+	<logger name="org.springframework.transaction" level="WARN" />
+	<logger name="org.springframework.security" level="WARN" /> <!-- to debug security related issues (DEBUG) -->
+	<logger name="org.springframework.web.servlet.mvc" level="INFO" /> <!-- some serialization issues are at trace level here: org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod -->
+
+	<!-- our service -->
+	<logger name="com.baeldung.um" level="INFO" />
+	<logger name="com.baeldung.um.persistence.setup" level="DEBUG" /> <!-- to follow if setup is being executed -->
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>
