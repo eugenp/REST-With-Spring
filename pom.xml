@@ -1,24 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.baeldung.m10</groupId>
-	<artifactId>user-management-parent-m10</artifactId>
-	<version>1.1.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
+    <groupId>com.baeldung.m11</groupId>
+    <artifactId>user-management-parent-m11</artifactId>
+    <version>1.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-	<name>user-management-parent</name>
-	<url>https://github.com/eugenp/restwithspring</url>
-	<description>REST with Spring Classes</description>
+    <name>user-management-parent</name>
+    <url>https://github.com/eugenp/restwithspring</url>
+    <description>REST with Spring Classes</description>
 
-	<modules>
-		<module>m10-lesson1</module>
-		<module>m10-lesson1-start</module>
-		<module>m10-lesson2</module>
-		<module>m10-lesson2-start</module>
-		<module>m10-lesson3</module>
-		<module>m10-lesson3-start</module>
-		<module>m10-lesson4</module>
-		<module>m10-lesson4-start</module>
-	</modules>
+    <modules>
+        <module>m11-lesson2-start</module>
+        <module>m11-lesson2</module>
+        <module>m11-lesson3-start</module>
+		<module>m11-lesson3</module>
+    </modules>
 
 </project>
