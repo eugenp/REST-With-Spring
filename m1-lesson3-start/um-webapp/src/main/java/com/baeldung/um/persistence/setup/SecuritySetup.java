@@ -28,7 +28,6 @@ import com.google.common.collect.Sets;
  * The main focus here is creating some standard privileges, then roles and finally some default principals/users
  */
 @Component
-@Profile(Profiles.PRODUCTION)
 public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent> {
     private final Logger logger = LoggerFactory.getLogger(SecuritySetup.class);
 
