@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<description>REST with Spring Classes Module3-Lesson1-start</description>
-	<name>user-management-parent</name>	
+	<name>user-management-parent-l1-start</name>	
 	
 	<groupId>com.baeldung</groupId>
 	<artifactId>user-management-parent-m3-l1-start</artifactId>
