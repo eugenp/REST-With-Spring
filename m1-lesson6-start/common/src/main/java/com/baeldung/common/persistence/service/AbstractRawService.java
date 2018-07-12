@@ -1,7 +1,6 @@
 package com.baeldung.common.persistence.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,8 +37,7 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
     @Override
     @Transactional(readOnly = true)
     public T findOne(final long id) {
-    	Optional<T> entity = getDao().findById(id);
-    	return entity.orElse(null);
+        return getDao().findOne(id);
     }
 
     // find - all
@@ -120,11 +118,10 @@ public abstract class AbstractRawService<T extends IEntity> implements IRawServi
 
     @Override
     public void delete(final long id) {
-    	final Optional<T> entity = getDao().findById(id);
-    	if(entity.isPresent()) {
-    		ServicePreconditions.checkEntityExists(entity);
-    		getDao().delete(entity.get());	
-    	}
+        final T entity = getDao().findOne(id);
+        ServicePreconditions.checkEntityExists(entity);
+
+        getDao().delete(entity);
     }
 
     // count
