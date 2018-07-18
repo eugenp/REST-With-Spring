@@ -6,7 +6,7 @@
 	<artifactId>um-ui-m6-l5</artifactId>
 	<packaging>jar</packaging>
 
-	<name>um-ui</name>
+	<name>um-ui-l5</name>
 	<description>User Management UI</description>
 
     <parent>

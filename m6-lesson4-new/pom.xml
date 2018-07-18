@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<name>user-management-parent</name>
+	<name>user-management-parent-l4-new</name>
 	<url>https://github.com/eugenp/restwithspring</url>
 	<description>REST with Spring Classes Module6-Lesson4-New</description>
 	
