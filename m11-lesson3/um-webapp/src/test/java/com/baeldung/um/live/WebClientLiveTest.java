@@ -32,17 +32,17 @@ public class WebClientLiveTest {
     WebTestClient webTestClient;
 
     @Test
-    public void retrieveFindAllMetric() throws InterruptedException {
+    public void retrieveAllPrivileges() throws InterruptedException {
         // @formatter:off                
-        Flux<String> result = webClient.get()
-                .uri("/privileges/metrics/findAll").accept(MediaType.TEXT_EVENT_STREAM)
+        Flux<Privilege> result = webClient.get()
+                .uri("/privileges").accept(MediaType.TEXT_EVENT_STREAM)
                 .retrieve()
-                .bodyToFlux(String.class);                   
+                .bodyToFlux(Privilege.class);                   
         // @formatter:on
 
-        result.subscribe(metric -> System.out.println(metric));
+        result.subscribe(privilege -> System.out.println(privilege.toString()));
 
-        Thread.sleep(20000);
+        Thread.sleep(35000);
     }
 
     @Test

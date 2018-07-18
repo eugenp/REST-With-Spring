@@ -63,10 +63,9 @@ public class PrivilegeController extends AbstractController<Privilege> implement
     @Override
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Privilege> findAll(final ServerHttpRequest request) {
-
-        Flux<Long> interval = Flux.interval(Duration.ofMillis(5000));
-        Flux<Privilege> privilege = findAllInternal(request);
-        return Flux.zip(interval, privilege).map(Tuple2::getT2);
+        Flux<Privilege> privileges = findAllInternal(request);
+        Flux<Long> every5Sec = Flux.interval(Duration.ofMillis(5000));
+        return Flux.zip(every5Sec, privileges).map(Tuple2::getT2);
     }
 
     // find - one

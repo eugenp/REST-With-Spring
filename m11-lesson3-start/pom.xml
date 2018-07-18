@@ -111,12 +111,9 @@
 
         <rest-assured.version>2.9.0</rest-assured.version>
 
-        <!-- Kotlin -->
-        <!-- <kotlin.version>1.1.4-3</kotlin.version> -->
 
         <!-- maven plugins -->
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
-        <cargo-maven2-plugin.version>1.6.4</cargo-maven2-plugin.version>
 
     </properties>
 

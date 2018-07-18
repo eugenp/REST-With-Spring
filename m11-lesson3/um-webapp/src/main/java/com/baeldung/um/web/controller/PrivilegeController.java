@@ -1,8 +1,6 @@
 package com.baeldung.um.web.controller;
 
 import java.time.Duration;
-import java.util.Date;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +24,6 @@ import com.baeldung.um.persistence.model.Privilege;
 import com.baeldung.um.service.IPrivilegeService;
 import com.baeldung.um.util.UmMappings;
 
-import io.micrometer.core.instrument.MeterRegistry;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
@@ -37,9 +34,6 @@ public class PrivilegeController extends AbstractController<Privilege> implement
 
     @Autowired
     private IPrivilegeService service;
-
-    @Autowired
-    private MeterRegistry meterRegistry;
 
     public PrivilegeController() {
         super(Privilege.class);
@@ -68,19 +62,12 @@ public class PrivilegeController extends AbstractController<Privilege> implement
         return findAllSortedInternal(sortBy, sortOrder);
     }
 
-    @GetMapping(value = "/metrics/findAll", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<String> getFindAllMetrics(final ServerHttpRequest request) {
-
-        Flux<Long> interval = Flux.interval(Duration.ofMillis(1000));
-        Flux<String> events = Flux.fromStream(Stream.generate(() -> "{\"datetime:\"" + new Date() + "\",\"controller.PreivilegeController.finalAll\":\"" + meterRegistry.counter("controller.PreivilegeController.finalAll").count() + "\"}"));
-        return Flux.zip(interval, events).map(Tuple2::getT2);
-    }
-
     @Override
-    @GetMapping
+    @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Privilege> findAll(final ServerHttpRequest request) {
-        meterRegistry.counter("controller.PreivilegeController.finalAll").increment();        
-        return findAllInternal(request);
+        Flux<Privilege> privileges = findAllInternal(request);
+        Flux<Long> every5Sec = Flux.interval(Duration.ofMillis(5000));
+        return Flux.zip(every5Sec, privileges).map(Tuple2::getT2);
     }
 
     // find - one
