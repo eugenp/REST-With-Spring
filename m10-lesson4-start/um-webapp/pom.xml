@@ -5,7 +5,7 @@
 	<artifactId>um-webapp-m10-l4-start</artifactId>
 
 	<packaging>war</packaging>
-	<name>um-webapp</name>
+	<name>um-webapp-l4-start</name>
 
 	<parent>
 		<groupId>com.baeldung.m10</groupId>

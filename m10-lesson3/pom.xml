@@ -6,7 +6,7 @@
 	<version>1.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>user-management-parent</name>
+	<name>user-management-parent-l3</name>
 	<url>https://github.com/eugenp/restwithspring</url>
 	<description>REST with Spring Classes</description>
 
