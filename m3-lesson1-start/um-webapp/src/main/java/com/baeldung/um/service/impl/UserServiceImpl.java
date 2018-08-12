@@ -3,7 +3,6 @@ package com.baeldung.um.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.baeldung.common.web.RestPreconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -13,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baeldung.common.persistence.ServicePreconditions;
 import com.baeldung.um.persistence.model.Principal;
 import com.baeldung.um.service.IPrincipalService;
 import com.baeldung.um.service.IUserService;
@@ -113,7 +113,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void update(final UserDto dto) {
-        final Principal principalToUpdate = RestPreconditions.checkNotNull(principalService.findOne(dto.getId()));
+        final Principal principalToUpdate = ServicePreconditions.checkEntityExists(principalService.findOne(dto.getId()));
 
         principalToUpdate.setName(dto.getName());
         principalToUpdate.setEmail(dto.getEmail());

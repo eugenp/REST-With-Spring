@@ -32,10 +32,6 @@ public class PatientRecordController extends AbstractController<Patient> impleme
     @Autowired
     private IPatientService service;
 
-    public PatientRecordController() {
-        super(Patient.class);
-    }
-
     // API
 
     // find - all/paginated

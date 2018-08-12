@@ -32,10 +32,6 @@ public class UserController extends AbstractController<UserDto> implements ISort
     @Autowired
     private IUserService service;
 
-    public UserController() {
-        super(UserDto.class);
-    }
-
     // API
 
     // find - all/paginated
