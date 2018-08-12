@@ -4,7 +4,7 @@
     <artifactId>um-webapp-m11-l3-start</artifactId>
     <packaging>war</packaging>
 
-    <name>um-webapp</name>
+    <name>um-webapp-l3-start</name>
 
     <parent>
         <groupId>com.baeldung</groupId>
@@ -78,6 +78,23 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>default-war</id>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
+                        </configuration>
+                        </execution>
+                </executions>
+            </plugin>
+        </plugins>
 
     </build>
 

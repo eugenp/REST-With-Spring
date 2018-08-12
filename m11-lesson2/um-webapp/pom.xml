@@ -3,7 +3,7 @@
 
     <artifactId>um-webapp-m11-l2</artifactId>    
 
-    <name>um-webapp</name>
+    <name>um-webapp-l2</name>
 
     <parent>
         <groupId>com.baeldung</groupId>
