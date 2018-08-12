@@ -1,9 +1,9 @@
 package com.baeldung.common.persistence.service;
 
 import com.baeldung.common.interfaces.IByNameApi;
-import com.baeldung.common.persistence.model.INameableEntity;
+import com.baeldung.common.interfaces.IWithName;
 
-public interface IService<T extends INameableEntity> extends IRawService<T>, IByNameApi<T> {
+public interface IService<T extends IWithName> extends IRawService<T>, IByNameApi<T> {
 
     //
 
