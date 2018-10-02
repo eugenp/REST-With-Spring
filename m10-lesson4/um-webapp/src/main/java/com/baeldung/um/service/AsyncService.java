@@ -24,7 +24,7 @@ public class AsyncService {
 
     public static final long DELAY = 10000L;
 
-    private final ConcurrentMap<String, Pair<UserDto, DeferredResult<UserDto>>> deferredResultMap = new ConcurrentHashMap<String, Pair<UserDto, DeferredResult<UserDto>>>();
+    private final ConcurrentMap<String, Pair<UserDto, DeferredResult<UserDto>>> deferredResultMap = new ConcurrentHashMap<>();
 
     @Async
     public Future<UserDto> createUserAsync(UserDto resource) throws InterruptedException {
@@ -36,7 +36,7 @@ public class AsyncService {
         result.setStatus("Ready");
 
         userService.update(result);
-        return new AsyncResult<UserDto>(result);
+        return new AsyncResult<>(result);
     }
 
     public void scheduleCreateUserWithAsyncResultSetting(UserDto resource, DeferredResult<UserDto> result) {

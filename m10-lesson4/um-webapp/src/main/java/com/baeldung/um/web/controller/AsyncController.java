@@ -50,7 +50,7 @@ public class AsyncController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public DeferredResult<UserDto> createUserWithDeferredResult(@RequestBody final UserDto resource) {
-        final DeferredResult<UserDto> result = new DeferredResult<UserDto>();
+        final DeferredResult<UserDto> result = new DeferredResult<>();
         asyncService.scheduleCreateUser(resource, result);
         return result;
     }
@@ -59,7 +59,7 @@ public class AsyncController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public DeferredResult<UserDto> createUserWithDeferredResultWithAsyncResultSetting(@RequestBody final UserDto resource) {
-        final DeferredResult<UserDto> result = new DeferredResult<UserDto>();
+        final DeferredResult<UserDto> result = new DeferredResult<>();
         asyncService.scheduleCreateUserWithAsyncResultSetting(resource, result);
         return result;
     }
