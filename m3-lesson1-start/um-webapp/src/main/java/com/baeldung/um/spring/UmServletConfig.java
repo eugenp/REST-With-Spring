@@ -19,7 +19,7 @@ public class UmServletConfig {
     public ServletRegistrationBean dispatcherServletRegistration() {
         final ServletRegistrationBean registration = new ServletRegistrationBean(dispatcherServlet(), "/api/*");
 
-        final Map<String, String> params = new HashMap<String, String>();
+        final Map<String, String> params = new HashMap<>();
         params.put("contextClass", "org.springframework.web.context.support.AnnotationConfigWebApplicationContext");
         params.put("contextConfigLocation", "org.spring.sec2.spring");
         params.put("dispatchOptionsRequest", "true");
@@ -35,7 +35,7 @@ public class UmServletConfig {
         final FilterRegistrationBean filterRegBean = new FilterRegistrationBean();
         final DelegatingFilterProxy delegatingFilterProxy = new DelegatingFilterProxy();
         filterRegBean.setFilter(delegatingFilterProxy);
-        final List<String> urlPatterns = new ArrayList<String>();
+        final List<String> urlPatterns = new ArrayList<>();
         urlPatterns.add("/*");
         filterRegBean.setUrlPatterns(urlPatterns);
         return filterRegBean;
