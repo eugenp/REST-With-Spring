@@ -28,7 +28,7 @@ public class PrivilegeController extends AbstractController<Privilege> implement
 
     @Autowired
     private IPrivilegeService service;
-    
+
     // API
 
     // find - all/paginated

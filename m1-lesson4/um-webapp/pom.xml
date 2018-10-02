@@ -29,13 +29,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-servlet-api</artifactId>
-            <version>${tomcat.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- test scoped -->
 
         <dependency>
@@ -64,18 +57,6 @@
         <plugins>
 
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
                 <version>${cargo-maven2-plugin.version}</version>
@@ -85,7 +66,7 @@
                         <type>embedded</type>
                         <systemProperties>
                             <envTarget>local</envTarget>
-                            <persistenceTarget>cargo</persistenceTarget>
+                            <persistenceTarget>prod</persistenceTarget>
                         </systemProperties>
                     </container>
                     <configuration>

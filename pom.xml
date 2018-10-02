@@ -32,13 +32,13 @@
 	</ciManagement>
 
 	<modules>
-		<module>m1-lesson4</module>
-        <module>m1-lesson5</module>
-        <module>m1-lesson6</module>
+        <module>m1-lesson2-start</module>
         <module>m1-lesson3-start</module>
+		<module>m1-lesson3</module>
         <module>m1-lesson4-start</module>
+        <module>m1-lesson4</module>
+        <module>m1-lesson5</module>
         <module>m1-lesson5-start</module>
-        <module>m1-lesson6-start</module>
 	</modules>
 
 </project>

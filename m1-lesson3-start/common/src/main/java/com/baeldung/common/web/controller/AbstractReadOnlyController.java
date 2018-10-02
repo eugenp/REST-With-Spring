@@ -52,7 +52,6 @@ public abstract class AbstractReadOnlyController<T extends IWithName> {
         if (page > resultPage.getTotalPages()) {
             throw new MyResourceNotFoundException();
         }
-
         return Lists.newArrayList(resultPage.getContent());
     }
 

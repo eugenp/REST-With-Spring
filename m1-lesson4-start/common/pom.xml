@@ -1,8 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<artifactId>common-m1-l4-start</artifactId>
 	<name>common-l4-start</name>
-	
-	<artifactId>common-m1-l4-start</artifactId>	
 
 	<parent>
 		<groupId>com.baeldung</groupId>
@@ -12,7 +11,7 @@
 	</parent>
 
 	<dependencies>
-
+	
 		<!-- util -->
 
 		<dependency>
@@ -61,18 +60,18 @@
 		</dependency>
 
 		<!-- validation -->
+		
+		<!-- marshalling -->
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
 
 		<dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
-
-		<!-- marshalling -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-		</dependency>
-		
 
 		<!-- persistence -->
 
@@ -107,7 +106,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-
 		<!-- logging -->
 		
 		<dependency>
@@ -137,10 +135,6 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
-
-		<plugins>
-
-		</plugins>
 
 	</build>
 

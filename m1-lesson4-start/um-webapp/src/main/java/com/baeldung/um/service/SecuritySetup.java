@@ -55,7 +55,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
             createPrivileges();
             createRoles();
-            createUserss();
+            createUsers();
 
             setupDone = true;
             logger.info("Setup Done");
@@ -114,7 +114,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
     // User/User
 
-    final void createUserss() {
+    final void createUsers() {
         final Role roleAdmin = roleService.findByName(Roles.ROLE_ADMIN);
 
         // createUserIfNotExisting(SecurityConstants.ADMIN_USERNAME, SecurityConstants.ADMIN_PASS, Sets.<Role> newHashSet(roleAdmin));

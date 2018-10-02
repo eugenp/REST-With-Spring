@@ -61,17 +61,18 @@
 		</dependency>
 
 		<!-- validation -->
-        <dependency>
+
+		<dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
-		
-		<!-- marshalling -->
 
+		<!-- marshalling -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
+		
 
 		<!-- persistence -->
 
@@ -106,6 +107,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
+
 		<!-- logging -->
 		
 		<dependency>
@@ -135,6 +137,11 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
+
+		<plugins>
+
+		</plugins>
+
 	</build>
 
 </project>
