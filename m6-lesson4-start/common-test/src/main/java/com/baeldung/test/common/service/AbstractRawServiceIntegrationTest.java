@@ -17,13 +17,13 @@ import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Sort;
 
-import com.baeldung.common.persistence.model.IEntity;
+import com.baeldung.common.persistence.model.INameableEntity;
 import com.baeldung.common.persistence.service.IRawService;
 import com.baeldung.common.util.SearchField;
 import com.baeldung.common.util.order.OrderById;
 import com.baeldung.test.common.util.IDUtil;
 
-public abstract class AbstractRawServiceIntegrationTest<T extends IEntity> {
+public abstract class AbstractRawServiceIntegrationTest<T extends INameableEntity> {
 
     // tests
 

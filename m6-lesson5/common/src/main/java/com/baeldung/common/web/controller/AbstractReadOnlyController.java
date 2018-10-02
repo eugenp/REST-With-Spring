@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.baeldung.common.persistence.model.IEntity;
+import com.baeldung.common.interfaces.IWithName;
 import com.baeldung.common.persistence.service.IRawService;
 import com.baeldung.common.util.QueryConstants;
 import com.baeldung.common.web.RestPreconditions;
@@ -30,7 +30,7 @@ import com.baeldung.common.web.exception.MyResourceNotFoundException;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
-public abstract class AbstractReadOnlyController<T extends IEntity> {
+public abstract class AbstractReadOnlyController<T extends IWithName> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected Class<T> clazz;

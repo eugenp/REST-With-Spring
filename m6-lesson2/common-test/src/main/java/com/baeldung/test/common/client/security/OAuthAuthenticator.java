@@ -62,7 +62,7 @@ public class OAuthAuthenticator implements ITestAuthenticator {
             final HttpHeaders headers = new HttpHeaders();
             headers.add("Authorization", "Basic " + encodedCredentials);
 
-            final HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(params, headers);
+            final HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
             final RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());

@@ -33,7 +33,7 @@ public final class RoleTestRestTemplate extends AbstractRestClient<Role> {
 
     @Override
     public final Pair<String, String> getDefaultCredentials() {
-        return new ImmutablePair<String, String>(Um.ADMIN_EMAIL, Um.ADMIN_PASS);
+        return new ImmutablePair<>(Um.ADMIN_EMAIL, Um.ADMIN_PASS);
     }
 
 }

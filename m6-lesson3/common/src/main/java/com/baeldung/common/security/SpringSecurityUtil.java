@@ -196,7 +196,7 @@ public final class SpringSecurityUtil {
         final int indexOfDelimiter = decoded.indexOf(':');
         final String username = decoded.substring(0, indexOfDelimiter);
         final String password = decoded.substring(indexOfDelimiter + 1);
-        return new ImmutablePair<String, String>(username, password);
+        return new ImmutablePair<>(username, password);
     }
 
 }
