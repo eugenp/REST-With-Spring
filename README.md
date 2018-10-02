@@ -30,5 +30,5 @@ The project uses the following technologies: <br/>
 
 
 
-# Eclipse
-- see the [Eclipse wiki page](https://github.com/eugenp/REST-With-Spring/wiki/Eclipse:-Setup-and-Configuration) of this project
+# IDE
+- this is a Maven project, so you can use any major IDE that has Maven support (Eclipse, IntelliJ, etc)
