@@ -28,7 +28,7 @@ public class RoleController extends AbstractController<Role> implements ISorting
 
     @Autowired
     private IRoleService service;
-    
+
     // API
 
     // find - all/paginated

@@ -21,7 +21,7 @@ import com.google.common.collect.Lists;
 
 public abstract class AbstractReadOnlyController<T extends IWithName> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-    
+
     // find - one
 
     protected final T findOneInternal(final Long id) {

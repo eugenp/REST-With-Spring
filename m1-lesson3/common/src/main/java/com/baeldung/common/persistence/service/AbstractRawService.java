@@ -65,10 +65,10 @@ public abstract class AbstractRawService<T extends IWithName> implements IRawSer
         }
         return content;
     }
-    
+
     @Override
     @Transactional(readOnly = true)
-    public Page<T> findAllPaginatedRaw(final int page, final int size) {       
+    public Page<T> findAllPaginatedRaw(final int page, final int size) {
         return getDao().findAll(new PageRequest(page, size));
     }
 

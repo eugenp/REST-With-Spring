@@ -34,7 +34,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
     private boolean setupDone;
 
-    @Autowired 
+    @Autowired
     private IUserService userService;
 
     @Autowired
