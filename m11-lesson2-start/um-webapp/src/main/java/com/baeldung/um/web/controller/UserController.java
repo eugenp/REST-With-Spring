@@ -35,10 +35,6 @@ public class UserController extends AbstractController<User> implements ISorting
     @Autowired
     private IUserService service;
 
-    public UserController() {
-        super(User.class);
-    }
-
     // API
 
     // find - all/paginated

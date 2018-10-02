@@ -1,7 +1,6 @@
 package com.baeldung.common.web.controller;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.baeldung.common.persistence.model.IEntity;
+import com.baeldung.common.interfaces.IWithName;
 import com.baeldung.common.persistence.service.IRawService;
 import com.baeldung.common.web.RestPreconditions;
 import com.baeldung.common.web.exception.MyResourceNotFoundException;
@@ -21,18 +20,9 @@ import com.baeldung.common.web.exception.MyResourceNotFoundException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public abstract class AbstractReadOnlyController<T extends IEntity> {
+public abstract class AbstractReadOnlyController<T extends IWithName> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
-
-    protected Class<T> clazz;
-
-    public AbstractReadOnlyController(final Class<T> clazzToSet) {
-        super();
-
-        Objects.requireNonNull(clazzToSet);
-        clazz = clazzToSet;
-    }
-
+    
     // find - one
 
     protected final Mono<T> findOneInternal(final Long id) {
