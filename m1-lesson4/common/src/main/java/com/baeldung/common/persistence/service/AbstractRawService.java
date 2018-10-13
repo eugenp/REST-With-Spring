@@ -39,7 +39,7 @@ public abstract class AbstractRawService<T extends IWithName> implements IRawSer
     @Transactional(readOnly = true)
     public T findOne(final long id) {
     	Optional<T> entity = getDao().findById(id);
-        return entity.orElse(null);
+    	return entity.orElse(null);
     }
 
     // find - all

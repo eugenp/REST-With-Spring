@@ -18,7 +18,7 @@
     
     <context-param>
         <param-name>spring.profiles.active</param-name>
-        <param-value>production</param-value>
+        <param-value>deployed</param-value>
     </context-param>
 
     <listener>

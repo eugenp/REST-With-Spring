@@ -22,7 +22,6 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
     public void initialize(final ConfigurableApplicationContext applicationContext) {
         final ConfigurableEnvironment environment = applicationContext.getEnvironment();
         final String activeProfiles = environment.getProperty("spring.profiles.active");
-
         logger.info("The active profiles are: {}", activeProfiles);
 
         if (activeProfiles != null) {

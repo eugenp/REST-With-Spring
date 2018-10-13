@@ -121,10 +121,10 @@ public abstract class AbstractRawService<T extends IWithName> implements IRawSer
     @Override
     public void delete(final long id) {
     	final Optional<T> entity = getDao().findById(id);
-        if(entity.isPresent()) {
-        	ServicePreconditions.checkEntityExists(entity);
-        	getDao().delete(entity.get());	
-        }
+    	if(entity.isPresent()) {
+    		ServicePreconditions.checkEntityExists(entity);
+    		getDao().delete(entity.get());	
+    	}
     }
 
     // count

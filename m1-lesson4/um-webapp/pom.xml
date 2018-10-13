@@ -4,7 +4,7 @@
     <artifactId>um-webapp-m1-l4</artifactId>
     <packaging>war</packaging>
 
-    <name>um-webapp-l4</name>
+    <name>um-webapp-l5</name>
 
     <parent>
         <groupId>com.baeldung</groupId>
@@ -27,13 +27,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-servlet-api</artifactId>
-            <version>${tomcat.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- test scoped -->
@@ -64,18 +57,6 @@
         <plugins>
 
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
                 <version>${cargo-maven2-plugin.version}</version>
@@ -85,7 +66,7 @@
                         <type>embedded</type>
                         <systemProperties>
                             <envTarget>local</envTarget>
-                            <persistenceTarget>cargo</persistenceTarget>
+                            <persistenceTarget>prod</persistenceTarget>
                         </systemProperties>
                     </container>
                     <configuration>
