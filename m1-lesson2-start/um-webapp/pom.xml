@@ -28,7 +28,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		
 		<!-- test scoped -->
 
 		<dependency>
@@ -53,31 +58,6 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
-
-		<plugins>
-
-			<plugin>
-				<groupId>org.codehaus.cargo</groupId>
-				<artifactId>cargo-maven2-plugin</artifactId>
-				<version>${cargo-maven2-plugin.version}</version>
-				<configuration>
-					<container>
-						<containerId>tomcat8x</containerId>
-						<type>embedded</type>
-						<systemProperties>
-							<envTarget>local</envTarget>
-							<persistenceTarget>cargo</persistenceTarget>
-						</systemProperties>
-					</container>
-					<configuration>
-						<properties>
-							<cargo.servlet.port>8082</cargo.servlet.port>
-						</properties>
-					</configuration>
-				</configuration>
-			</plugin>
-
-		</plugins>
 
 	</build>
 
