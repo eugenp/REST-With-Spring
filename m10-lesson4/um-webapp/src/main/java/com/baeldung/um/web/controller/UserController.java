@@ -121,7 +121,7 @@ public class UserController extends AbstractController<UserDto, UserDto> impleme
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public DeferredResult<UserDto> createUserWithDeferredResult(@RequestBody final UserDto resource) {
-        final DeferredResult<UserDto> result = new DeferredResult<UserDto>();
+        final DeferredResult<UserDto> result = new DeferredResult<>();
         asyncService.scheduleCreateUser(resource, result);
         return result;
     }

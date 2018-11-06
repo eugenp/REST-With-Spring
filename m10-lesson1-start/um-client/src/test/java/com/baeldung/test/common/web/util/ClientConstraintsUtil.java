@@ -23,7 +23,7 @@ public class ClientConstraintsUtil {
     }
 
     public static Triple<String, ClientOperation, String> createConstraint(final ClientOperation operation, final String key, final String value) {
-        return new ImmutableTriple<String, ClientOperation, String>(key, operation, value);
+        return new ImmutableTriple<>(key, operation, value);
     }
 
 }
