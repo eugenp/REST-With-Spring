@@ -56,8 +56,4 @@
 
 	</build>
 
-	<properties>
-		<aws.version>1.10.10</aws.version>
-	</properties>
-
 </project>

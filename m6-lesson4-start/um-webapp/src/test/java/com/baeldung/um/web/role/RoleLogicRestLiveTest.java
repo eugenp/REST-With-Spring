@@ -21,7 +21,7 @@ import com.baeldung.um.persistence.model.Privilege;
 import com.baeldung.um.persistence.model.Role;
 import com.baeldung.um.test.live.UmLogicRestLiveTest;
 import com.google.common.collect.Sets;
-import com.jayway.restassured.response.Response;
+import io.restassured.response.Response;
 
 public class RoleLogicRestLiveTest extends UmLogicRestLiveTest<Role> implements IResourceWithAssociationsIntegrationTest {
 

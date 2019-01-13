@@ -25,8 +25,8 @@ import com.baeldung.common.web.WebConstants;
 import com.baeldung.test.common.client.template.IRestClient;
 import com.baeldung.test.common.util.IDUtil;
 import com.google.common.base.Preconditions;
-import com.jayway.restassured.response.Response;
-import com.jayway.restassured.specification.RequestSpecification;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 @ActiveProfiles({ CLIENT, TEST })
 public abstract class AbstractLogicLiveTest<T extends INameableDto> {
