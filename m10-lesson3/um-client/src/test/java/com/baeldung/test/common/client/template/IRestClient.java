@@ -4,7 +4,7 @@ import com.baeldung.client.marshall.IMarshaller;
 import com.baeldung.client.template.IRestClientWithUri;
 import com.baeldung.common.interfaces.IDto;
 import com.baeldung.common.interfaces.IOperations;
-import com.jayway.restassured.specification.RequestSpecification;
+import io.restassured.specification.RequestSpecification;
 
 public interface IRestClient<T extends IDto> extends IOperations<T>, IRestClientAsResponse<T>, IRestClientWithUri<T> {
 

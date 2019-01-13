@@ -27,9 +27,9 @@ import com.baeldung.um.test.live.UmLogicRestLiveTest;
 import com.baeldung.um.util.Um;
 import com.baeldung.um.web.dto.UserDto;
 import com.google.common.collect.Sets;
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.response.Response;
-import com.jayway.restassured.specification.RequestSpecification;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 public class UserLogicRestLiveTest extends UmLogicRestLiveTest<UserDto> {
 
