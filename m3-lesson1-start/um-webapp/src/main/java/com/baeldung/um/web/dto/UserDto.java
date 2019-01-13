@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import com.baeldung.common.interfaces.INameableDto;
 import com.baeldung.common.persistence.model.INameableEntity;
-import org.hibernate.validator.constraints.Email;
+import javax.validation.constraints.Email;
 
 import com.baeldung.um.persistence.model.Principal;
 import com.baeldung.um.persistence.model.Role;

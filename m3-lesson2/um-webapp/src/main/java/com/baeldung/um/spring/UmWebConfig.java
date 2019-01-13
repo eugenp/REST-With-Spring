@@ -9,8 +9,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.util.ClassUtils;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.baeldung.um.persistence.model.Privilege;
 import com.baeldung.um.persistence.model.Role;
@@ -18,8 +17,7 @@ import com.baeldung.um.persistence.model.User;
 
 @Configuration
 @ComponentScan({ "com.baeldung.common.web", "com.baeldung.um.web" })
-@EnableWebMvc
-public class UmWebConfig extends WebMvcConfigurerAdapter {
+public class UmWebConfig implements WebMvcConfigurer {
 
     public UmWebConfig() {
         super();
@@ -56,7 +54,7 @@ public class UmWebConfig extends WebMvcConfigurerAdapter {
             messageConverters.add(new MappingJackson2HttpMessageConverter());
         }
 
-        super.configureMessageConverters(messageConverters);
+        WebMvcConfigurer.super.configureMessageConverters(messageConverters);
     }
 
 }

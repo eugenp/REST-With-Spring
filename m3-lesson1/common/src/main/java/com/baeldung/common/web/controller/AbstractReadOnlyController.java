@@ -17,7 +17,6 @@ import com.baeldung.common.interfaces.IWithName;
 import com.baeldung.common.persistence.service.IRawService;
 import com.baeldung.common.web.RestPreconditions;
 import com.baeldung.common.web.exception.MyResourceNotFoundException;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
 public abstract class AbstractReadOnlyController<T extends IWithName> {

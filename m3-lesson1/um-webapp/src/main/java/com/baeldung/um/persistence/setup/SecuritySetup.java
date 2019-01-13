@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.baeldung.um.persistence.model.Principal;
@@ -42,6 +43,9 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
     @Autowired
     private IPrivilegeService privilegeService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public SecuritySetup() {
         super();
@@ -132,7 +136,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
     final void createPrincipalIfNotExisting(final String loginName, final String pass, final Set<Role> roles) {
         final Principal entityByName = principalService.findByName(loginName);
         if (entityByName == null) {
-            final Principal entity = new Principal(loginName, pass, roles);
+            final Principal entity = new Principal(loginName, passwordEncoder.encode(pass), roles);
             principalService.create(entity);
         }
     }

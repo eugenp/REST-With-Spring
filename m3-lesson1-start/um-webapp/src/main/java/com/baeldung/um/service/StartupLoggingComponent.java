@@ -52,7 +52,7 @@ public class StartupLoggingComponent implements InitializingBean {
     }
 
     private void logPersistenceTarget(final Environment environment) {
-        final String envTarget = getValueOfProperty(environment, PERSISTENCE_TARGET_KEY, "h2", Lists.newArrayList("h2", "mysql", "cargo"));
+        final String envTarget = getValueOfProperty(environment, PERSISTENCE_TARGET_KEY, "h2", Lists.newArrayList("h2", "mysql"));
         logger.info("{} = {}", PERSISTENCE_TARGET_KEY, envTarget);
     }
 

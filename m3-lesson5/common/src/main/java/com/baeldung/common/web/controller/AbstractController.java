@@ -1,7 +1,5 @@
 package com.baeldung.common.web.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.baeldung.common.persistence.model.INameableEntity;
 import com.baeldung.common.web.RestPreconditions;
 
