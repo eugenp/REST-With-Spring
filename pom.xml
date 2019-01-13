@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<description>REST with Spring Classes Module 8</description>
+	<name>user-management-parent</name>	
+	
+	<groupId>com.baeldung</groupId>
+	<artifactId>user-management-parent-m8</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<email>eugen@baeldung.com</email>
+			<name>Eugen Paraschiv</name>
+			<url>https://github.com/eugenp</url>
+			<id>eugenp</id>
+		</developer>
+	</developers>
+
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>https://rest-security.ci.cloudbees.com/</url>
+	</ciManagement>
+
+	<modules>
+		<module>m8-lesson1</module>
+		<module>m8-lesson2</module>
+        <module>m8-lesson4</module>
+        <module>m8-lesson1-start</module>
+        <module>m8-lesson2-start</module>
+	</modules>
+
+</project>
