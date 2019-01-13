@@ -148,7 +148,7 @@ public abstract class AbstractServiceUnitTest<T extends INameableEntity> {
     @Test
     public void whenPageOfEntitiesIsRetrieved_thenResultIsCorrect() {
         // Given
-        final PageRequest pageRequest = new PageRequest(1, 10);
+        final PageRequest pageRequest = PageRequest.of(1, 10);
         final Page<T> page = new PageImpl<T>(Lists.<T> newArrayList(), pageRequest, 10L);
         when(getDAO().findAll(eq(pageRequest))).thenReturn(page);
 

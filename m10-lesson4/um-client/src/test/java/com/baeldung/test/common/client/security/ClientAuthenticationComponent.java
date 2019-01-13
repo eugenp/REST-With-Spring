@@ -3,8 +3,8 @@ package com.baeldung.test.common.client.security;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Preconditions;
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.specification.RequestSpecification;
+import io.restassured.RestAssured;
+import io.restassured.specification.RequestSpecification;
 
 @Component
 public class ClientAuthenticationComponent implements ITestAuthenticator {

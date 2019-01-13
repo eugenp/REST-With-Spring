@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.1.RELEASE</version>
+		<version>2.1.0.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -126,14 +126,14 @@
 
 		<!-- web -->
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-        <kryo.version>4.0.0</kryo.version>
+        <kryo.version>4.0.2</kryo.version>
 
 		<!-- marshalling -->
 		<jaxb-api.version>2.2.12</jaxb-api.version>
 
 		<!-- commons and utils -->
-		<commons-lang3.version>3.4</commons-lang3.version>
-		<guava.version>19.0</guava.version>
+		<commons-lang3.version>3.8.1</commons-lang3.version>
+		<guava.version>27.0-jre</guava.version>
 
 		<!-- UNSORTED -->
 		<commons-codec.version>1.10</commons-codec.version>
@@ -155,13 +155,12 @@
 		<mockito.version>1.10.19</mockito.version>
 
 		<httpcore.version>4.4.5</httpcore.version>
-		<rest-assured.version>2.9.0</rest-assured.version>
+		<rest-assured.version>3.2.0</rest-assured.version>
 
 		<!-- maven plugins -->
 		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
 		<maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
 		<maven-resources-plugin.version>3.0.1</maven-resources-plugin.version>
-		<cargo-maven2-plugin.version>1.5.0</cargo-maven2-plugin.version>
 		<maven-war-plugin.version>3.0.0</maven-war-plugin.version>
 
 	</properties>

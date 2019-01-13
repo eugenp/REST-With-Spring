@@ -39,4 +39,6 @@ public class UmJavaSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:on
     }
 
+
+
 }

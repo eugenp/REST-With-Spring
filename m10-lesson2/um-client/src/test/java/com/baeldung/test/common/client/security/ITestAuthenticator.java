@@ -1,6 +1,6 @@
 package com.baeldung.test.common.client.security;
 
-import com.jayway.restassured.specification.RequestSpecification;
+import io.restassured.specification.RequestSpecification;
 
 public interface ITestAuthenticator {
 

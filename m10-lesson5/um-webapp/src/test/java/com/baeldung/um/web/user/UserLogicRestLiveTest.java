@@ -21,7 +21,7 @@ import com.baeldung.um.persistence.model.Role;
 import com.baeldung.um.test.live.UmLogicRestLiveTest;
 import com.baeldung.um.web.dto.UserDto;
 import com.google.common.collect.Sets;
-import com.jayway.restassured.response.Response;
+import io.restassured.response.Response;
 
 public class UserLogicRestLiveTest extends UmLogicRestLiveTest<UserDto> {
 

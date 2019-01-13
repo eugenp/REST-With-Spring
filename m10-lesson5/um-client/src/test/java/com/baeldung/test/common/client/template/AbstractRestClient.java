@@ -15,8 +15,8 @@ import com.baeldung.common.web.WebConstants;
 import com.baeldung.test.common.client.security.ITestAuthenticator;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.jayway.restassured.response.Response;
-import com.jayway.restassured.specification.RequestSpecification;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 public abstract class AbstractRestClient<T extends IDto> implements IRestClient<T> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());

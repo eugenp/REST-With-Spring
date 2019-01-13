@@ -39,4 +39,9 @@ public class UmJavaSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:on
     }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 }

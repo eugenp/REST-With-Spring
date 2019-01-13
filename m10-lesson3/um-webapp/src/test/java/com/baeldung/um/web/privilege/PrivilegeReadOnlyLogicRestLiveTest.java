@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.baeldung.um.client.template.PrivilegeRestClient;
 import com.baeldung.um.persistence.model.Privilege;
 import com.baeldung.um.test.live.UmReadOnlyLogicRestLiveTest;
-import com.jayway.restassured.response.Response;
+import io.restassured.response.Response;
 
 public class PrivilegeReadOnlyLogicRestLiveTest extends UmReadOnlyLogicRestLiveTest<Privilege> {
 

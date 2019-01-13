@@ -77,7 +77,7 @@ public class UserServiceImpl implements IUserService {
     public Page<UserDto> findAllPaginatedRaw(final int page, final int size) {
         final Page<Principal> principals = principalService.findAllPaginatedRaw(page, size);
         final List<UserDto> userDtos = principals.getContent().stream().map(this::convert).collect(Collectors.toList());
-        return new PageImpl<UserDto>(userDtos, new PageRequest(page, size), principals.getTotalElements());
+        return new PageImpl<UserDto>(userDtos, PageRequest.of(page, size), principals.getTotalElements());
     }
 
     @Override
@@ -93,7 +93,7 @@ public class UserServiceImpl implements IUserService {
     public Page<UserDto> findAllPaginatedAndSortedRaw(final int page, final int size, final String sortBy, final String sortOrder) {
         final Page<Principal> principals = principalService.findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder);
         final List<UserDto> userDtos = principals.getContent().stream().map(this::convert).collect(Collectors.toList());
-        return new PageImpl<UserDto>(userDtos, new PageRequest(page, size, constructSort(sortBy, sortOrder)), principals.getTotalElements());
+        return new PageImpl<UserDto>(userDtos, PageRequest.of(page, size, constructSort(sortBy, sortOrder)), principals.getTotalElements());
     }
 
     @Override

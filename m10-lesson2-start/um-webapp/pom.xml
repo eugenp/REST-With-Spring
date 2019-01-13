@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>um-webapp-m10-l2-start</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>um-webapp-l2-start</name>
 
@@ -73,7 +73,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.jayway.restassured</groupId>
+			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<version>${rest-assured.version}</version>
 			<scope>test</scope>
@@ -96,32 +96,6 @@
 			</resource>
 		</resources>
 
-		<plugins>
-
-			<plugin>
-				<groupId>org.codehaus.cargo</groupId>
-				<artifactId>cargo-maven2-plugin</artifactId>
-				<version>${cargo-maven2-plugin.version}</version>
-				<configuration>					
-					<container>
-						<containerId>tomcat8x</containerId>
-						<type>embedded</type>
-						<systemProperties>
-							<envTarget>dev</envTarget>
-							<persistenceTarget>cargo</persistenceTarget>
-						</systemProperties>
-					</container>
-					<configuration>
-						<properties>
-							<cargo.servlet.port>8082</cargo.servlet.port>
-							<cargo.tomcat.ajp.port>8010</cargo.tomcat.ajp.port>
-							<cargo.rmi.port>8006</cargo.rmi.port>
-						</properties>
-					</configuration>
-				</configuration>
-			</plugin>
-
-		</plugins>
 
 	</build>
 
@@ -131,8 +105,6 @@
 			<id>integration</id>
 			<build>
 				<plugins>
-
-
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
@@ -167,27 +139,6 @@
 				<plugins>
 
 					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>start-server</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>start</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>stop-server</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
 						<executions>
@@ -203,9 +154,6 @@
 									<includes>
 										<include>**/*LiveTest.java</include>
 									</includes>
-									<systemPropertyVariables>
-										<webTarget>cargo</webTarget>
-									</systemPropertyVariables>
 								</configuration>
 							</execution>
 						</executions>
@@ -217,53 +165,6 @@
 
 		<profile>
 			<id>deploy</id>
-			<build>
-				<plugins>
-
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<configuration>
-							<!-- Container configuration -->
-							<container>
-								<containerId>tomcat8x</containerId>
-								<type>remote</type>
-								<timeout>1200000</timeout>
-							</container>
-
-							<!-- Configuration to use with the container -->
-							<configuration>
-								<type>runtime</type>
-								<properties>
-									<cargo.hostname>${target.deploy}</cargo.hostname>
-									<cargo.servlet.port>8080</cargo.servlet.port>
-									<cargo.remote.username>manager</cargo.remote.username>
-									<cargo.remote.password>manager</cargo.remote.password>
-									<cargo.jvmargs>-Xmx1024m -server</cargo.jvmargs>
-								</properties>
-							</configuration>
-
-							<!-- Deployer configuration -->
-							<deployer>
-								<type>remote</type>
-							</deployer>
-
-							<!-- Deployables configuration -->
-							<deployables>
-								<deployable>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>${project.artifactId}</artifactId>
-									<type>war</type>
-									<properties>
-										<context>/${project.artifactId}</context>
-									</properties>
-								</deployable>
-							</deployables>
-						</configuration>
-					</plugin>
-				</plugins>
-
-			</build>
 		</profile>
 
 	</profiles>
