@@ -93,8 +93,8 @@
 
 
 		<!-- commons and utils -->
-		<guava.version>19.0</guava.version>
-		<commons-lang3.version>3.4</commons-lang3.version>
+		<guava.version>27.0-jre</guava.version>
+		<commons-lang3.version>3.8.1</commons-lang3.version>
 
 		<!-- maven plugins -->
 		<cargo-maven2-plugin.version>1.5.0</cargo-maven2-plugin.version>
