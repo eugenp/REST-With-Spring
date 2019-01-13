@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>um-webapp-m1-l3</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>um-webapp-l4</name>
 
@@ -73,27 +73,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven2-plugin</artifactId>
-                <version>${cargo-maven2-plugin.version}</version>
-                <configuration>                    
-                    <container>
-                        <containerId>tomcat8x</containerId>
-                        <type>embedded</type>
-                        <systemProperties>
-                            <envTarget>local</envTarget>
-                            <persistenceTarget>cargo</persistenceTarget>
-                        </systemProperties>
-                    </container>
-                    <configuration>
-                        <properties>
-                            <cargo.servlet.port>8082</cargo.servlet.port>
-                        </properties>
-                    </configuration>
-                </configuration>
             </plugin>
 
         </plugins>
