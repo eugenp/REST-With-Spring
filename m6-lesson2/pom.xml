@@ -41,11 +41,6 @@
 		</developer>
 	</developers>
 
-	<ciManagement>
-		<system>Jenkins</system>
-		<url>https://rest-security.ci.cloudbees.com/</url>
-	</ciManagement>
-
 	<scm>
 		<connection>scm:git:git://github.com/eugenp/restwithspring.git</connection>
 		<url>scm:git:git://github.com/eugenp/restwithspring.git</url>
