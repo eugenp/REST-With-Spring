@@ -25,7 +25,7 @@ public class UmWebConfig extends WebMvcConfigurerAdapter {
     public FilterRegistrationBean someFilterRegistration() {
         final FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(etagFilter());
-        registration.addUrlPatterns("/api/*");
+        registration.addUrlPatterns("/*");
         registration.setName("etagFilter");
         registration.setOrder(1);
         return registration;
