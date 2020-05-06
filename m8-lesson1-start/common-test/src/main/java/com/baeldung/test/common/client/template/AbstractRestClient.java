@@ -15,8 +15,8 @@ import com.baeldung.common.web.WebConstants;
 import com.baeldung.test.common.client.security.ITestAuthenticator;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.jayway.restassured.response.Response;
-import com.jayway.restassured.specification.RequestSpecification;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 public abstract class AbstractRestClient<T extends IDto> implements IRestClient<T> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -105,7 +105,8 @@ public abstract class AbstractRestClient<T extends IDto> implements IRestClient<
     @Override
     public final List<T> findAllByUri(final String uri) {
         final Response allAsResponse = readExtendedRequest().get(uri);
-        final List<T> listOfResources = marshaller.<T> decodeList(allAsResponse.getBody().asString(), clazz);
+        final List<T> listOfResources = marshaller.<T> decodeList(allAsResponse.getBody()
+            .asString(), clazz);
         if (listOfResources == null) {
             return Lists.newArrayList();
         }
@@ -126,7 +127,8 @@ public abstract class AbstractRestClient<T extends IDto> implements IRestClient<
     @Override
     public final List<T> findAllSorted(final String sortBy, final String sortOrder) {
         final Response findAllResponse = findAllByUriAsResponse(getUri() + QueryConstants.Q_SORT_BY + sortBy + QueryConstants.S_ORDER + sortOrder);
-        return marshaller.<T> decodeList(findAllResponse.getBody().asString(), clazz);
+        return marshaller.<T> decodeList(findAllResponse.getBody()
+            .asString(), clazz);
     }
 
     @Override
@@ -248,7 +250,9 @@ public abstract class AbstractRestClient<T extends IDto> implements IRestClient<
 
         final String resourceAsString = marshaller.encode(resource);
         logger.debug("Creating Resource against URI: " + getUri());
-        return givenAuthenticated.contentType(marshaller.getMime()).body(resourceAsString).post(getUri());
+        return givenAuthenticated.contentType(marshaller.getMime())
+            .body(resourceAsString)
+            .post(getUri());
     }
 
     // update
@@ -264,7 +268,9 @@ public abstract class AbstractRestClient<T extends IDto> implements IRestClient<
         Preconditions.checkNotNull(resource);
 
         final String resourceAsString = marshaller.encode(resource);
-        return givenWriteAuthenticated().contentType(marshaller.getMime()).body(resourceAsString).put(getUri() + "/" + resource.getId());
+        return givenWriteAuthenticated().contentType(marshaller.getMime())
+            .body(resourceAsString)
+            .put(getUri() + "/" + resource.getId());
     }
 
     // delete

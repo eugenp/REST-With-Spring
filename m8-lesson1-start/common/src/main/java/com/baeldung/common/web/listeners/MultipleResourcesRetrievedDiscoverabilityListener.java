@@ -37,7 +37,10 @@ final class MultipleResourcesRetrievedDiscoverabilityListener implements Applica
 
     @SuppressWarnings("unchecked")
     final void discoverOtherRetrievalOperations(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz) {
-        final String uriForResourceCreation = uriBuilder.path(PATH_SEP + uriMapper.getUriBase(clazz) + "/q=name=something").build().encode().toUriString();
+        final String uriForResourceCreation = uriBuilder.path(PATH_SEP + uriMapper.getUriBase(clazz) + "/q=name=something")
+            .build()
+            .encode()
+            .toUriString();
 
         final String linkHeaderValue = LinkUtil.createLinkHeader(uriForResourceCreation, LinkUtil.REL_COLLECTION);
         response.addHeader(HttpHeaders.LINK, linkHeaderValue);

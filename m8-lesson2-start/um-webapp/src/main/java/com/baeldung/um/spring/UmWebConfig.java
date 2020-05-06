@@ -14,5 +14,4 @@ public class UmWebConfig implements WebMvcConfigurer {
         super();
     }
 
-
 }

@@ -13,12 +13,12 @@ import io.micrometer.core.instrument.MeterRegistry;
 @ComponentScan({ "com.baeldung.common.metric" })
 public class UmMetricConfig {
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
-	
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     public UmMetricConfig() {
         super();
     }
-    
+
     // beans
     @Bean(name = "privilegeCounter")
     public Counter privilegeCounter(MeterRegistry registry) {

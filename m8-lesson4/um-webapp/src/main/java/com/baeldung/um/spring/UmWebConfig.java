@@ -10,10 +10,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-@ComponentScan({"com.baeldung.common.web", "com.baeldung.um.web"})
+@ComponentScan({ "com.baeldung.common.web", "com.baeldung.um.web" })
 @EnableWebMvc
 public class UmWebConfig implements WebMvcConfigurer {
-
 
     public UmWebConfig() {
         super();
@@ -34,7 +33,5 @@ public class UmWebConfig implements WebMvcConfigurer {
     public void addViewControllers(final ViewControllerRegistry registry) {
         registry.addViewController("/graph.html");
     }
-
-
 
 }

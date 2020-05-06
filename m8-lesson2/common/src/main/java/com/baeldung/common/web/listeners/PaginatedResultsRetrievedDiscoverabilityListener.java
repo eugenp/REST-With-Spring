@@ -74,19 +74,35 @@ class PaginatedResultsRetrievedDiscoverabilityListener implements ApplicationLis
     }
 
     final String constructNextPageUri(final UriComponentsBuilder uriBuilder, final int page, final int size) {
-        return uriBuilder.replaceQueryParam(PAGE, page + 1).replaceQueryParam("size", size).build().encode().toUriString();
+        return uriBuilder.replaceQueryParam(PAGE, page + 1)
+            .replaceQueryParam("size", size)
+            .build()
+            .encode()
+            .toUriString();
     }
 
     final String constructPrevPageUri(final UriComponentsBuilder uriBuilder, final int page, final int size) {
-        return uriBuilder.replaceQueryParam(PAGE, page - 1).replaceQueryParam("size", size).build().encode().toUriString();
+        return uriBuilder.replaceQueryParam(PAGE, page - 1)
+            .replaceQueryParam("size", size)
+            .build()
+            .encode()
+            .toUriString();
     }
 
     final String constructFirstPageUri(final UriComponentsBuilder uriBuilder, final int size) {
-        return uriBuilder.replaceQueryParam(PAGE, 0).replaceQueryParam("size", size).build().encode().toUriString();
+        return uriBuilder.replaceQueryParam(PAGE, 0)
+            .replaceQueryParam("size", size)
+            .build()
+            .encode()
+            .toUriString();
     }
 
     final String constructLastPageUri(final UriComponentsBuilder uriBuilder, final int totalPages, final int size) {
-        return uriBuilder.replaceQueryParam(PAGE, totalPages).replaceQueryParam("size", size).build().encode().toUriString();
+        return uriBuilder.replaceQueryParam(PAGE, totalPages)
+            .replaceQueryParam("size", size)
+            .build()
+            .encode()
+            .toUriString();
     }
 
     final boolean hasNextPage(final int page, final int totalPages) {

@@ -26,7 +26,7 @@ public class PrivilegeServiceImpl extends AbstractService<Privilege> implements 
     // find
 
     @Override
-    public Privilege findByName(final String name) {     
+    public Privilege findByName(final String name) {
         return getDao().findByName(name);
     }
 

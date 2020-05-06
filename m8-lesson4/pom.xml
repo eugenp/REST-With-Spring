@@ -3,7 +3,7 @@
 
 	<description>REST with Spring Classes Module8-Lesson4</description>
 	<name>user-management-parent</name>
-	<url>https://github.com/eugenp/restwithspring</url>
+	<url>https://github.com/eugenp/REST-With-Spring</url>
 	
 	<groupId>com.baeldung</groupId>
 	<artifactId>user-management-parent-m8-l4</artifactId>
@@ -13,12 +13,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.0.RELEASE</version>
+		<version>2.2.3.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<issueManagement>
-		<url>https://github.com/eugenp/restwithspring/issues</url>
+		<url>https://github.com/eugenp/REST-With-Spring/issues</url>
 		<system>GitHub Issues</system>
 	</issueManagement>
 
@@ -39,15 +39,10 @@
 		</developer>
 	</developers>
 
-	<ciManagement>
-		<system>Jenkins</system>
-		<url>https://rest-security.ci.cloudbees.com/</url>
-	</ciManagement>
-
 	<scm>
-		<connection>scm:git:git://github.com/eugenp/restwithspring.git</connection>
-		<url>scm:git:git://github.com/eugenp/restwithspring.git</url>
-		<developerConnection>scm:git:git://github.com/eugenp/restwithspring.git</developerConnection>
+		<connection>scm:git:git://github.com/eugenp/REST-With-Spring.git</connection>
+		<url>scm:git:git://github.com/eugenp/REST-With-Spring.git</url>
+		<developerConnection>scm:git:git://github.com/eugenp/REST-With-Spring.git</developerConnection>
 	</scm>
 
 	<build>
@@ -120,8 +115,6 @@
 		<!-- commons and utils -->
 		<guava.version>19.0</guava.version>
 		<commons-lang3.version>3.4</commons-lang3.version>		
-		 
-		<rest-assured.version>2.9.0</rest-assured.version>
 		 
 		<!-- marshalling -->
 		<jaxb-api.version>2.2.12</jaxb-api.version>		 		  

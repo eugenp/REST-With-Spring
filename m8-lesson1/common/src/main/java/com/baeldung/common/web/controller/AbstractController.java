@@ -25,7 +25,8 @@ public abstract class AbstractController<D extends IDto, E extends IEntity> exte
         final E existingResource = getService().create(resource);
 
         // - note: mind the autoboxing and potential NPE when the resource has null id at this point (likely when working with DTOs)
-        eventPublisher.publishEvent(new AfterResourceCreatedEvent<D>(clazz, uriBuilder, response, existingResource.getId().toString()));
+        eventPublisher.publishEvent(new AfterResourceCreatedEvent<D>(clazz, uriBuilder, response, existingResource.getId()
+            .toString()));
     }
 
     // update

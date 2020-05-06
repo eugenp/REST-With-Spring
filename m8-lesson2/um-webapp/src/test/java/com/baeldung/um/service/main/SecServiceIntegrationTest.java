@@ -9,6 +9,7 @@ import com.baeldung.common.persistence.model.INameableEntity;
 import com.baeldung.test.common.service.AbstractServiceIntegrationTest;
 import com.baeldung.um.run.UmApp;
 import com.baeldung.um.spring.UmContextConfig;
+import com.baeldung.um.spring.UmMetricConfig;
 import com.baeldung.um.spring.UmPersistenceJpaConfig;
 import com.baeldung.um.spring.UmServiceConfig;
 
@@ -19,6 +20,7 @@ import com.baeldung.um.spring.UmServiceConfig;
 
         UmPersistenceJpaConfig.class,
 
+        UmMetricConfig.class,
         UmServiceConfig.class
 }, loader = AnnotationConfigContextLoader.class)  // @formatter:on
 public abstract class SecServiceIntegrationTest<T extends INameableEntity> extends AbstractServiceIntegrationTest<T> {

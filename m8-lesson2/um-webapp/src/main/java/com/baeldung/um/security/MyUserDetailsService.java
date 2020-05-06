@@ -44,11 +44,16 @@ public final class MyUserDetailsService implements UserDetailsService {
         }
 
         final List<GrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role -> {
-            if (role != null) {
-                authorities.addAll(role.getPrivileges().stream().map(priv -> new SimpleGrantedAuthority(priv.getName())).distinct().collect(Collectors.toList()));
-            }
-        });
+        user.getRoles()
+            .forEach(role -> {
+                if (role != null) {
+                    authorities.addAll(role.getPrivileges()
+                        .stream()
+                        .map(priv -> new SimpleGrantedAuthority(priv.getName()))
+                        .distinct()
+                        .collect(Collectors.toList()));
+                }
+            });
 
         return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), authorities);
     }

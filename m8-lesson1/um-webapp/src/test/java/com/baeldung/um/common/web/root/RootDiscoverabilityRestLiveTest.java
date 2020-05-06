@@ -19,8 +19,8 @@ import com.baeldung.um.util.Um;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.net.HttpHeaders;
-import com.jayway.restassured.response.Response;
-import com.jayway.restassured.specification.RequestSpecification;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 @Ignore("temp")
 public class RootDiscoverabilityRestLiveTest extends UmGeneralRestLiveTest {

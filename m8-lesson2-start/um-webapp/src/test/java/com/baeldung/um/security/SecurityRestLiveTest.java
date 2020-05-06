@@ -62,7 +62,10 @@ public class SecurityRestLiveTest {
     public final void givenAuthenticatedByBasicAuth_whenResourceIsCreated_then201IsReceived() {
         // Given
         // When
-        final Response response = givenAuthenticated().contentType(resourceClient.getMarshaller().getMime()).body(resourceOps.createNewResource()).post(resourceClient.getUri());
+        final Response response = givenAuthenticated().contentType(resourceClient.getMarshaller()
+            .getMime())
+            .body(resourceOps.createNewResource())
+            .post(resourceClient.getUri());
 
         // Then
         assertThat(response.getStatusCode(), is(201));

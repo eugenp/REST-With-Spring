@@ -28,7 +28,6 @@ public class PrivilegeServiceImpl extends AbstractService<Privilege> implements 
     @Qualifier("privilegeCounter")
     private Counter privilegeCounter;
 
-
     public PrivilegeServiceImpl() {
         super(Privilege.class);
     }

@@ -76,14 +76,16 @@ class ActuatorMetricService implements IActuatorMetricService {
         String meterId;
         int indexOfMeter;
         for (final Meter meter : registry.getMeters()) {
-            meterId = meter.getId().toString();
+            meterId = meter.getId()
+                .toString();
             if (!meters.contains(meterId)) {
                 meters.add(meterId);
                 lastMinuteMetrics.add("");
             }
             StringBuilder meterMeasurements = new StringBuilder();
             for (final Measurement measurement : meter.measure()) {
-                meterMeasurements.append(measurement.getStatistic().name() + " " + measurement.getValue());
+                meterMeasurements.append(measurement.getStatistic()
+                    .name() + " " + measurement.getValue());
             }
             indexOfMeter = meters.indexOf(meterId);
             lastMinuteMetrics.set(indexOfMeter, meterMeasurements.toString());

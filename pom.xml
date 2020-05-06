@@ -26,11 +26,6 @@
 		</developer>
 	</developers>
 
-	<ciManagement>
-		<system>Jenkins</system>
-		<url>https://rest-security.ci.cloudbees.com/</url>
-	</ciManagement>
-
 	<modules>
 		<module>m8-lesson1</module>
 		<module>m8-lesson2</module>

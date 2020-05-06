@@ -18,7 +18,9 @@ public class UriMapper implements IUriMapper {
      */
     @Override
     public <T extends IDto> String getUriBase(final Class<T> clazz) {
-        String simpleName = clazz.getSimpleName().toString().toLowerCase();
+        String simpleName = clazz.getSimpleName()
+            .toString()
+            .toLowerCase();
         if (simpleName.endsWith("dto")) {
             simpleName = simpleName.substring(0, simpleName.length() - 3);
         }

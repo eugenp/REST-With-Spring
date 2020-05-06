@@ -19,7 +19,10 @@ public class ClientAuthenticationComponent implements ITestAuthenticator {
     public final RequestSpecification givenBasicAuthenticated(final String username, final String password) {
         Preconditions.checkNotNull(username);
         Preconditions.checkNotNull(password);
-        return RestAssured.given().auth().preemptive().basic(username, password);
+        return RestAssured.given()
+            .auth()
+            .preemptive()
+            .basic(username, password);
     }
 
 }

@@ -40,7 +40,10 @@ class SingleResourceRetrievedDiscoverabilityListener implements ApplicationListe
      */
     @SuppressWarnings("unchecked")
     final void discoverGetAllURI(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final Class clazz) {
-        final String uriForResourceCreation = uriBuilder.path(PATH_SEP + uriMapper.getUriBase(clazz)).build().encode().toUriString();
+        final String uriForResourceCreation = uriBuilder.path(PATH_SEP + uriMapper.getUriBase(clazz))
+            .build()
+            .encode()
+            .toUriString();
 
         final String linkHeaderValue = LinkUtil.createLinkHeader(uriForResourceCreation, LinkUtil.REL_COLLECTION);
         response.addHeader(HttpHeaders.LINK, linkHeaderValue);

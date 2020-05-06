@@ -32,7 +32,7 @@ public class PrivilegeServiceImpl extends AbstractService<Privilege> implements 
 
     @Override
     public Privilege findByName(final String name) {
-    	privilegeCounter.increment();
+        privilegeCounter.increment();
 
         return getDao().findByName(name);
     }

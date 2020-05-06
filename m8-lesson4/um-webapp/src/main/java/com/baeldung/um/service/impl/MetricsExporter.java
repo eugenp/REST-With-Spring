@@ -19,19 +19,22 @@ final class MetricsExporter {
 
     @Scheduled(fixedRate = 1000 * 30) // every 30 seconds
     public void exportMetrics() {
-        registry.getMeters().forEach(this::log);
+        registry.getMeters()
+            .forEach(this::log);
     }
 
     private void log(Meter meter) {
         StringBuilder result = new StringBuilder();
         for (final Measurement measurement : meter.measure()) {
             result.append("[");
-            result.append(measurement.getStatistic().name());
+            result.append(measurement.getStatistic()
+                .name());
             result.append(" ");
             result.append(measurement.getValue());
             result.append("]");
         }
-        logger.info("Reporting metric {}={}", meter.getId().toString(), result.toString());
+        logger.info("Reporting metric {}={}", meter.getId()
+            .toString(), result.toString());
 
     }
 

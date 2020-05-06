@@ -1,5 +1,6 @@
 package com.baeldung.um.run;
 
+import com.baeldung.um.spring.UmJavaSecurityConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
@@ -8,7 +9,6 @@ import com.baeldung.um.persistence.setup.MyApplicationContextInitializer;
 import com.baeldung.um.spring.UmContextConfig;
 import com.baeldung.um.spring.UmMetricConfig;
 import com.baeldung.um.spring.UmPersistenceJpaConfig;
-import com.baeldung.um.spring.UmSecurityConfig;
 import com.baeldung.um.spring.UmServiceConfig;
 import com.baeldung.um.spring.UmWebConfig;
 
@@ -27,7 +27,7 @@ public class UmApp {
 
             UmWebConfig.class,
             
-            UmSecurityConfig.class,          
+            UmJavaSecurityConfig.class,
 
             UmApp.class
     };// @formatter:on

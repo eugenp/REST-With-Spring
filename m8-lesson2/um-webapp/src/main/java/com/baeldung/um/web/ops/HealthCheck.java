@@ -10,9 +10,11 @@ public class HealthCheck implements HealthIndicator {
     @Override
     public Health health() {
         if (check()) {
-            return Health.up().build();
+            return Health.up()
+                .build();
         }
-        return Health.outOfService().build();
+        return Health.outOfService()
+            .build();
     }
 
     //

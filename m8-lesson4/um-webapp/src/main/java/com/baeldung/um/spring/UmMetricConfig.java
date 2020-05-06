@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan({"com.baeldung.common.metric"})
+@ComponentScan({ "com.baeldung.common.metric" })
 public class UmMetricConfig {
 
     private Logger logger = LoggerFactory.getLogger(getClass());

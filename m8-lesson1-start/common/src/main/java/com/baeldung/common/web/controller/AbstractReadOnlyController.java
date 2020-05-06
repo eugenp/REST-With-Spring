@@ -5,12 +5,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.HttpHeaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,7 +61,8 @@ public abstract class AbstractReadOnlyController<D extends IDto, E extends IEnti
     // find - all
 
     protected final List<E> findAllInternal(final HttpServletRequest request, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        if (request.getParameterNames().hasMoreElements()) {
+        if (request.getParameterNames()
+            .hasMoreElements()) {
             throw new MyResourceNotFoundException();
         }
 
@@ -70,8 +71,13 @@ public abstract class AbstractReadOnlyController<D extends IDto, E extends IEnti
     }
 
     protected final void findAllRedirectToPagination(final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        final String resourceName = clazz.getSimpleName().toString().toLowerCase();
-        final String locationValue = uriBuilder.path(WebConstants.PATH_SEP + resourceName).build().encode().toUriString() + QueryConstants.QUESTIONMARK + "page=0&size=10";
+        final String resourceName = clazz.getSimpleName()
+            .toString()
+            .toLowerCase();
+        final String locationValue = uriBuilder.path(WebConstants.PATH_SEP + resourceName)
+            .build()
+            .encode()
+            .toUriString() + QueryConstants.QUESTIONMARK + "page=0&size=10";
 
         response.setHeader(HttpHeaders.LOCATION, locationValue);
     }

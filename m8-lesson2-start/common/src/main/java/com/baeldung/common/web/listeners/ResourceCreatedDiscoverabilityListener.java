@@ -36,7 +36,11 @@ public abstract class ResourceCreatedDiscoverabilityListener implements Applicat
      */
     protected void addLinkHeaderOnEntityCreation(final UriComponentsBuilder uriBuilder, final HttpServletResponse response, final String idOfNewEntity, final Class clazz) {
         final String path = calculatePathToResource(clazz);
-        final String locationValue = uriBuilder.path(path).build().expand(idOfNewEntity).encode().toUriString();
+        final String locationValue = uriBuilder.path(path)
+            .build()
+            .expand(idOfNewEntity)
+            .encode()
+            .toUriString();
 
         response.setHeader(HttpHeaders.LOCATION, locationValue);
     }

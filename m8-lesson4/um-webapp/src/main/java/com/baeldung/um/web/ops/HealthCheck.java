@@ -13,9 +13,12 @@ public class HealthCheck implements HealthIndicator {
     public Health health() {
         final int errorCode = check(); // perform some specific health check
         if (errorCode != 0) {
-            return Health.down().outOfService().build(); // simulating "out of service"
+            return Health.down()
+                .outOfService()
+                .build(); // simulating "out of service"
         }
-        return Health.up().build();
+        return Health.up()
+            .build();
     }
 
     public int check() {

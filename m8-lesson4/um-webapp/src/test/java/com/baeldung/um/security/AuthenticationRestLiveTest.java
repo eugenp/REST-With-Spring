@@ -24,8 +24,8 @@ import com.baeldung.um.spring.CommonTestConfig;
 import com.baeldung.um.spring.UmClientConfig;
 import com.baeldung.um.spring.UmLiveTestConfig;
 import com.baeldung.um.util.Um;
-import com.jayway.restassured.response.Response;
-import com.jayway.restassured.specification.RequestSpecification;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { UmLiveTestConfig.class, UmClientConfig.class, CommonTestConfig.class }, loader = AnnotationConfigContextLoader.class)
@@ -44,7 +44,8 @@ public class AuthenticationRestLiveTest {
     @Test
     public final void whenAuthenticationIsPerformed_then200IsReceived() {
         // When
-        final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).get(paths.getAuthenticationUri());
+        final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString())
+            .get(paths.getAuthenticationUri());
 
         // Then
         assertThat(response.getStatusCode(), is(200));
@@ -53,7 +54,8 @@ public class AuthenticationRestLiveTest {
     @Test
     public final void whenAuthenticationIsPerformed_thenResponseHasContent() {
         // When
-        final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).post(paths.getAuthenticationUri());
+        final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString())
+            .post(paths.getAuthenticationUri());
 
         // Then
         assertThat(response.asString(), is(notNullValue()));
@@ -62,7 +64,8 @@ public class AuthenticationRestLiveTest {
     @Test
     public final void whenAuthenticationIsPerformed_thenResponseIsUser() {
         // When
-        final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).get(paths.getAuthenticationUri());
+        final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString())
+            .get(paths.getAuthenticationUri());
 
         // Then
         response.as(User.class);
@@ -71,7 +74,8 @@ public class AuthenticationRestLiveTest {
     @Test
     public final void whenAuthenticationIsPerformed_thenUserResponseIsCorrect() {
         // When
-        final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString()).get(paths.getAuthenticationUri());
+        final Response response = givenAuthenticated().contentType(APPLICATION_JSON.toString())
+            .get(paths.getAuthenticationUri());
 
         // Then
         assertEquals(new User(Um.EMAIL, Um.PASS, null), response.as(User.class));
