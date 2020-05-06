@@ -148,7 +148,8 @@ public abstract class AbstractRawServiceIntegrationTest<T extends INameableEntit
     public final void whenResourcesAreRetrievedSortedDescById_thenResultsAreOrderedCorrectly() {
         final List<T> resourcesOrderedById = getApi().findAllSorted(SearchField.id.toString(), Sort.Direction.DESC.name());
 
-        assertTrue(new OrderById<T>().reverse().isOrdered(resourcesOrderedById));
+        assertTrue(new OrderById<T>().reverse()
+            .isOrdered(resourcesOrderedById));
     }
 
     // create

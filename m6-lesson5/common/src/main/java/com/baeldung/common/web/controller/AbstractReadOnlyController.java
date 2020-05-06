@@ -60,7 +60,8 @@ public abstract class AbstractReadOnlyController<T extends IWithName> {
     // find - all
 
     protected final List<T> findAllInternal(final HttpServletRequest request, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        if (request.getParameterNames().hasMoreElements()) {
+        if (request.getParameterNames()
+            .hasMoreElements()) {
             throw new MyResourceNotFoundException();
         }
 
@@ -69,8 +70,13 @@ public abstract class AbstractReadOnlyController<T extends IWithName> {
     }
 
     protected final void findAllRedirectToPagination(final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        final String resourceName = clazz.getSimpleName().toString().toLowerCase();
-        final String locationValue = uriBuilder.path(WebConstants.PATH_SEP + resourceName).build().encode().toUriString() + QueryConstants.QUESTIONMARK + "page=0&size=10";
+        final String resourceName = clazz.getSimpleName()
+            .toString()
+            .toLowerCase();
+        final String locationValue = uriBuilder.path(WebConstants.PATH_SEP + resourceName)
+            .build()
+            .encode()
+            .toUriString() + QueryConstants.QUESTIONMARK + "page=0&size=10";
 
         response.setHeader(HttpHeaders.LOCATION, locationValue);
     }

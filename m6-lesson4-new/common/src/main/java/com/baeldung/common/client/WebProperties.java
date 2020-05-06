@@ -11,7 +11,7 @@ public final class WebProperties {
 
     @Value("${http.sec.auth.server.path}")
     private String authServerPath;
-    
+
     @Value("${http.sec.resource.server.path}")
     private String resourceServerPath;
 
@@ -26,7 +26,6 @@ public final class WebProperties {
     }
 
     // API
-   
 
     public final String getOauthPath() {
         return oauthPath;
@@ -51,7 +50,7 @@ public final class WebProperties {
     public final int getAuthServerPort() {
         return commonPaths.getAuthServerPort();
     }
-    
+
     public final int getresourceServerPort() {
         return commonPaths.getResourceServerPort();
     }

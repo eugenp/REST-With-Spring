@@ -65,7 +65,8 @@ public final class RoleSimpleApiClient {
 
     public final List<Role> findAll() {
         final Response allAsResponse = read(getUri());
-        final List<Role> listOfResources = marshaller.<Role> decodeList(allAsResponse.getBody().asString(), clazz);
+        final List<Role> listOfResources = marshaller.<Role> decodeList(allAsResponse.getBody()
+            .asString(), clazz);
         if (listOfResources == null) {
             return Lists.newArrayList();
         }
@@ -140,7 +141,9 @@ public final class RoleSimpleApiClient {
         Preconditions.checkNotNull(resource);
         final RequestSpecification givenAuthenticated = givenAuthenticated();
 
-        return givenAuthenticated.contentType(JSON).body(resource).post(getUri());
+        return givenAuthenticated.contentType(JSON)
+            .body(resource)
+            .post(getUri());
     }
 
     // update
@@ -153,7 +156,9 @@ public final class RoleSimpleApiClient {
     public final Response updateAsResponse(final Role resource) {
         Preconditions.checkNotNull(resource);
 
-        return givenAuthenticated().contentType(JSON).body(resource).put(getUri() + "/" + resource.getId());
+        return givenAuthenticated().contentType(JSON)
+            .body(resource)
+            .put(getUri() + "/" + resource.getId());
     }
 
     // delete

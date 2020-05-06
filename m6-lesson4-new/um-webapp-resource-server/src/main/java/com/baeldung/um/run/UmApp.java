@@ -27,7 +27,7 @@ public class UmApp {
             ResourceServerConfiguration.class
     }; // // @formatter:on
 
-    //    
+    //
 
     public static void main(final String... args) {
         final SpringApplication springApplication = new SpringApplication(CONFIGS);

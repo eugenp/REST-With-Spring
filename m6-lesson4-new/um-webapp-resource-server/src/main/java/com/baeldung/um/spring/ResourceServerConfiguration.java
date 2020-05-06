@@ -17,11 +17,11 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @ComponentScan({ "com.baeldung.um.security" })
-public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {    
+public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     public ResourceServerConfiguration() {
         super();
-    }        
+    }
 
     // http security concerns
 
@@ -35,14 +35,14 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         csrf().disable();
         // @formatter:on
     }
-    
+
     @Bean
     public ResourceServerTokenServices remoteTokenService() {
-       RemoteTokenServices tokenServices = new RemoteTokenServices();
-       tokenServices.setClientId("live-test");
-       tokenServices.setClientSecret("bGl2ZS10ZXN0");       
-       tokenServices.setCheckTokenEndpointUrl("http://localhost:8082/um-webapp-auth-server/oauth/check_token");
-       return tokenServices;
+        RemoteTokenServices tokenServices = new RemoteTokenServices();
+        tokenServices.setClientId("live-test");
+        tokenServices.setClientSecret("bGl2ZS10ZXN0");
+        tokenServices.setCheckTokenEndpointUrl("http://localhost:8082/um-webapp-auth-server/oauth/check_token");
+        return tokenServices;
     }
 
 }

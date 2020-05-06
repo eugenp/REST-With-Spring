@@ -44,7 +44,9 @@ public class OAuthAuthenticator implements ITestAuthenticator {
     @Override
     public final RequestSpecification givenAuthenticated(final String username, final String password) {
         final String accessToken = getAccessToken(username, password);
-        return RestAssured.given().auth().oauth2(accessToken, OAuthSignature.HEADER);
+        return RestAssured.given()
+            .auth()
+            .oauth2(accessToken, OAuthSignature.HEADER);
     }
 
     final String getAccessToken(final String username, final String password) {
@@ -65,7 +67,8 @@ public class OAuthAuthenticator implements ITestAuthenticator {
             final HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
             final RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+            restTemplate.getMessageConverters()
+                .add(new StringHttpMessageConverter());
 
             final TokenResponse tokenResponse = restTemplate.postForObject(url, request, TokenResponse.class);
             final String accessToken = tokenResponse.getAccessToken();

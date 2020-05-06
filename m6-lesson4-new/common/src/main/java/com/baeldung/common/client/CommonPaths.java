@@ -24,7 +24,7 @@ public final class CommonPaths implements InitializingBean {
 
     @Value("${http.auth.server.port}")
     private int authServerPort;
-    
+
     @Value("${http.resource.server.port}")
     private int resourceServerPort;
 
@@ -40,7 +40,7 @@ public final class CommonPaths implements InitializingBean {
         }
         return protocol + "://" + host + ":" + authServerPort;
     }
-    
+
     public final String getResourceServerRoot() {
         if (resourceServerPort == 80) {
             return protocol + "://" + host;
@@ -55,7 +55,6 @@ public final class CommonPaths implements InitializingBean {
     public final String getHost() {
         return host;
     }
-
 
     public int getAuthServerPort() {
         return authServerPort;

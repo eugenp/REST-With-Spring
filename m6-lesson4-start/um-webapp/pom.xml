@@ -76,7 +76,7 @@
 
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>            
+            <artifactId>spring-security-oauth2</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -156,7 +156,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-						    <reuseForks>false</reuseForks>                        	
+                            <reuseForks>false</reuseForks>
                         </configuration>
                         <executions>
                             <execution>
@@ -187,6 +187,12 @@
             <id>live</id>
             <build>
                 <plugins>
+
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                    </plugin>
+
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>

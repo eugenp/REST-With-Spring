@@ -24,7 +24,8 @@ public abstract class AbstractController<T extends INameableEntity> extends Abst
         final T existingResource = getService().create(resource);
 
         // - note: mind the autoboxing and potential NPE when the resource has null id at this point (likely when working with DTOs)
-        eventPublisher.publishEvent(new AfterResourceCreatedEvent<T>(clazz, uriBuilder, response, existingResource.getId().toString()));
+        eventPublisher.publishEvent(new AfterResourceCreatedEvent<T>(clazz, uriBuilder, response, existingResource.getId()
+            .toString()));
     }
 
     // update

@@ -17,7 +17,7 @@ public final class UmPaths {
 
     @Value("${http.sec.auth.server.path}")
     private String secAuthServerPath;
-    
+
     @Value("${http.sec.resource.server.path}")
     private String secResourceServerPath;
 
@@ -35,7 +35,7 @@ public final class UmPaths {
     public final String getResourceServerContext() {
         return commonPaths.getResourceServerRoot() + secResourceServerPath;
     }
-    
+
     public final String getAuthServerContext() {
         return commonPaths.getResourceServerRoot() + secAuthServerPath;
     }
@@ -62,7 +62,7 @@ public final class UmPaths {
 
     public final String getLoginUri() {
         return getAuthServerContext() + "/j_spring_security_check";
-    }   
+    }
 
     public String getSecAuthServerPath() {
         return secAuthServerPath;

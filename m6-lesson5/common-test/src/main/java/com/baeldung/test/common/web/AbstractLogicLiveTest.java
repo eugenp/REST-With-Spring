@@ -111,14 +111,15 @@ public abstract class AbstractLogicLiveTest<T extends INameableDto> {
     @Test
     /* code */public void whenResourceWithUnsupportedMediaTypeIsCreated_then415IsReceived() {
         // When
-        final Response response = givenReadAuthenticated().contentType("unknown").post(getUri());
+        final Response response = givenReadAuthenticated().contentType("unknown")
+            .post(getUri());
 
         // Then
         assertThat(response.getStatusCode(), is(415));
     }
 
     @Test
-    /* code */public void whenResourceIsCreatedWithNonNullId_then409IsReceived() {
+    /* code */public void whenResourceIsCreatedWithNonNullId_then400IsReceived() {
         final T resourceWithId = createNewResource();
         resourceWithId.setId(5l);
 
@@ -126,7 +127,7 @@ public abstract class AbstractLogicLiveTest<T extends INameableDto> {
         final Response response = getApi().createAsResponse(resourceWithId);
 
         // Then
-        assertThat(response.getStatusCode(), is(409));
+        assertThat(response.getStatusCode(), is(400));
     }
 
     @Test
@@ -192,7 +193,9 @@ public abstract class AbstractLogicLiveTest<T extends INameableDto> {
     /* code */public void whenNullResourceIsUpdated_then400IsReceived() {
         // Given
         // When
-        final Response response = givenReadAuthenticated().contentType(getApi().getMarshaller().getMime()).put(getUri() + "/" + randomAlphanumeric(4));
+        final Response response = givenReadAuthenticated().contentType(getApi().getMarshaller()
+            .getMime())
+            .put(getUri() + "/" + randomAlphanumeric(4));
 
         // Then
         assertThat(response.getStatusCode(), is(400));
@@ -216,7 +219,8 @@ public abstract class AbstractLogicLiveTest<T extends INameableDto> {
     @Test
     /* code */public void whenResourceIsDeletedByIncorrectNonNumericId_then400IsReceived() {
         // When
-        final Response response = getApi().givenDeleteAuthenticated().delete(getUri() + randomAlphabetic(6));
+        final Response response = getApi().givenDeleteAuthenticated()
+            .delete(getUri() + randomAlphabetic(6));
 
         // Then
         assertThat(response.getStatusCode(), is(400));
@@ -234,7 +238,8 @@ public abstract class AbstractLogicLiveTest<T extends INameableDto> {
     @Test
     /* code */public void givenResourceExists_whenResourceIsDeleted_then204IsReceived() {
         // Given
-        final long id = getApi().create(createNewResource()).getId();
+        final long id = getApi().create(createNewResource())
+            .getId();
 
         // When
         final Response response = getApi().deleteAsResponse(id);
@@ -246,7 +251,8 @@ public abstract class AbstractLogicLiveTest<T extends INameableDto> {
     @Test
     /* code */public void givenResourceExistedAndWasDeleted_whenRetrievingResource_then404IsReceived() {
         // Given
-        final long idOfResource = getApi().create(createNewResource()).getId();
+        final long idOfResource = getApi().create(createNewResource())
+            .getId();
         getApi().deleteAsResponse(idOfResource);
 
         // When
