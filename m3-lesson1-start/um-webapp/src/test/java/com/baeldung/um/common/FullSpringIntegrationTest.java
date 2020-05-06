@@ -13,8 +13,8 @@ import com.baeldung.um.run.UmApp;
 })// @formatter:on
 @WebAppConfiguration
 public class FullSpringIntegrationTest {
-	
-	@Test
+
+    @Test
     public final void whenContextIsBootstrapped_thenOk() {
         //
     }

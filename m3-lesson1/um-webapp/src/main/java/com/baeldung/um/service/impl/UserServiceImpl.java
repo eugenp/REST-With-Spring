@@ -57,7 +57,9 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public List<UserDto> findAll() {
         final List<Principal> principals = principalService.findAll();
-        final List<UserDto> userDtos = principals.stream().map(this::convert).collect(Collectors.toList());
+        final List<UserDto> userDtos = principals.stream()
+            .map(this::convert)
+            .collect(Collectors.toList());
         return Lists.newArrayList(userDtos);
     }
 
@@ -65,7 +67,9 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public List<UserDto> findAllSorted(final String sortBy, final String sortOrder) {
         final List<Principal> principals = principalService.findAllSorted(sortBy, sortOrder);
-        final List<UserDto> userDtos = principals.stream().map(this::convert).collect(Collectors.toList());
+        final List<UserDto> userDtos = principals.stream()
+            .map(this::convert)
+            .collect(Collectors.toList());
         return Lists.newArrayList(userDtos);
     }
 
@@ -73,7 +77,9 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public List<UserDto> findAllPaginated(final int page, final int size) {
         final List<Principal> principals = principalService.findAllPaginated(page, size);
-        final List<UserDto> userDtos = principals.stream().map(this::convert).collect(Collectors.toList());
+        final List<UserDto> userDtos = principals.stream()
+            .map(this::convert)
+            .collect(Collectors.toList());
         return Lists.newArrayList(userDtos);
     }
 
@@ -81,15 +87,21 @@ public class UserServiceImpl implements IUserService {
     @Transactional(readOnly = true)
     public Page<UserDto> findAllPaginatedAndSortedRaw(final int page, final int size, final String sortBy, final String sortOrder) {
         final Page<Principal> principals = principalService.findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder);
-        final List<UserDto> userDtos = principals.getContent().stream().map(this::convert).collect(Collectors.toList());
+        final List<UserDto> userDtos = principals.getContent()
+            .stream()
+            .map(this::convert)
+            .collect(Collectors.toList());
         return new PageImpl<UserDto>(userDtos, PageRequest.of(page, size, constructSort(sortBy, sortOrder)), principals.getTotalElements());
     }
-    
+
     @Override
     @Transactional(readOnly = true)
     public Page<UserDto> findAllPaginatedRaw(final int page, final int size) {
         final Page<Principal> principals = principalService.findAllPaginatedRaw(page, size);
-        final List<UserDto> userDtos = principals.getContent().stream().map(this::convert).collect(Collectors.toList());
+        final List<UserDto> userDtos = principals.getContent()
+            .stream()
+            .map(this::convert)
+            .collect(Collectors.toList());
         return new PageImpl<UserDto>(userDtos, PageRequest.of(page, size), principals.getTotalElements());
     }
 
@@ -156,9 +168,9 @@ public class UserServiceImpl implements IUserService {
     }
 
     private final Sort constructSort(final String sortBy, final String sortOrder) {
-        Sort sortInfo = null;
+        Sort sortInfo = Sort.unsorted();
         if (sortBy != null) {
-            sortInfo = new Sort(Direction.fromString(sortOrder), sortBy);
+            sortInfo = Sort.by(Direction.fromString(sortOrder), sortBy);
         }
         return sortInfo;
     }

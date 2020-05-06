@@ -23,10 +23,12 @@ public final class RestUtil {
      *            the message to show if failed to create.
      */
     public static void propagateStatusCodeOnCreate(final ResponseEntity<?> createResponse, final String message) {
-        if (createResponse.getStatusCode().value() == 409) {
+        if (createResponse.getStatusCode()
+            .value() == 409) {
             throw new MyConflictException(message);
         }
-        if (createResponse.getStatusCode().value() != 201) {
+        if (createResponse.getStatusCode()
+            .value() != 201) {
             throw new IllegalStateException(message);
         }
     }
@@ -40,7 +42,8 @@ public final class RestUtil {
      *            the message to show if failed to created
      */
     public static void propagateStatusCodeOnException(final HttpStatusCodeException ex, final String message) {
-        if (ex.getStatusCode().value() == 409) {
+        if (ex.getStatusCode()
+            .value() == 409) {
             throw new ValidationException(ex.getStatusText());
         }
 

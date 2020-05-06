@@ -26,7 +26,7 @@ import com.baeldung.um.run.UmApp;
 @WebAppConfiguration
 public class FullSpringIntegrationTest {
 
-	private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Autowired
     private WebApplicationContext context;
@@ -36,15 +36,18 @@ public class FullSpringIntegrationTest {
 
     @Before
     public void setup() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).addFilters(springSecurityFilterChain).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(context)
+            .addFilters(springSecurityFilterChain)
+            .build();
     }
 
     @Test
     public void whenAPISuccessfullyAccessed_thenOk() throws Exception {
-    	mockMvc.perform(get("/users").with(httpBasic("user@fake.com", "userpass"))).andExpect(status().isOk());
+        mockMvc.perform(get("/users").with(httpBasic("user@fake.com", "userpass")))
+            .andExpect(status().isOk());
     }
-    
-	@Test
+
+    @Test
     public final void whenContextIsBootstrapped_thenOk() {
         //
     }

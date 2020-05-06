@@ -33,7 +33,8 @@ public final class SpringSecurityUtil {
 
     public static User authenticate(final String key, final String uuid) {
         final SpringSecurityUser user = new SpringSecurityUser(randomAlphabetic(6), randomAlphabetic(6), true, Lists.<GrantedAuthority> newArrayList(), uuid);
-        SecurityContextHolder.getContext().setAuthentication(new RunAsUserToken(key, user, null, Lists.<GrantedAuthority> newArrayList(), null));
+        SecurityContextHolder.getContext()
+            .setAuthentication(new RunAsUserToken(key, user, null, Lists.<GrantedAuthority> newArrayList(), null));
 
         return user;
     }
@@ -134,7 +135,8 @@ public final class SpringSecurityUtil {
         final UserDetails userDetails = SpringSecurityUtil.getCurrentUserDetails();
         if (userDetails != null) {
             for (final GrantedAuthority each : userDetails.getAuthorities()) {
-                if (each.getAuthority().equals(privilege)) {
+                if (each.getAuthority()
+                    .equals(privilege)) {
                     return true;
                 }
             }

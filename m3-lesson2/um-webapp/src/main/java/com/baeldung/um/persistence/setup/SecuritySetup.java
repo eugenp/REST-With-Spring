@@ -43,7 +43,7 @@ public class SecuritySetup implements ApplicationListener<ContextRefreshedEvent>
 
     @Autowired
     private IPrivilegeService privilegeService;
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 

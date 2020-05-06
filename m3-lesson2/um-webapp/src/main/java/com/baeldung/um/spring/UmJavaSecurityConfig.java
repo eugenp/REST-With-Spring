@@ -27,7 +27,8 @@ public class UmJavaSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService)
+            .passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -45,7 +46,7 @@ public class UmJavaSecurityConfig extends WebSecurityConfigurerAdapter {
         csrf().disable();
         // @formatter:on
     }
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

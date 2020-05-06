@@ -11,7 +11,7 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 
 @Configuration
 public class UmServletConfig {
-    
+
     @Bean
     @Order(1)
     public FilterRegistrationBean springSecurityFilterChain() {

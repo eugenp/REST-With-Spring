@@ -30,7 +30,8 @@ public class UmWebConfig implements WebMvcConfigurer {
         final XStreamMarshaller xStreamMarshaller = new XStreamMarshaller();
         xStreamMarshaller.setAutodetectAnnotations(true);
         xStreamMarshaller.setAnnotatedClasses(new Class[] { Principal.class, UserDto.class, Role.class, Privilege.class });
-        xStreamMarshaller.getXStream().addDefaultImplementation(java.sql.Timestamp.class, java.util.Date.class);
+        xStreamMarshaller.getXStream()
+            .addDefaultImplementation(java.sql.Timestamp.class, java.util.Date.class);
 
         return xStreamMarshaller;
     }

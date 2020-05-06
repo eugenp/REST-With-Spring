@@ -10,7 +10,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 @Configuration
-public class UmServletConfig {    
+public class UmServletConfig {
 
     @Bean
     @Order(1)
