@@ -8,6 +8,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.baeldung.um.run.UmApp;
 import com.baeldung.um.spring.UmContextConfig;
+import com.baeldung.um.spring.UmJavaSecurityConfig;
 import com.baeldung.um.spring.UmMetricConfig;
 import com.baeldung.um.spring.UmPersistenceJpaConfig;
 import com.baeldung.um.spring.UmServiceConfig;
@@ -20,7 +21,8 @@ import com.baeldung.um.spring.UmWebConfig;
         UmPersistenceJpaConfig.class,
         UmServiceConfig.class,
         UmMetricConfig.class,
-        UmWebConfig.class
+        UmWebConfig.class,
+        UmJavaSecurityConfig.class
 }) // @formatter:on
 @WebAppConfiguration
 public class WebSpringIntegrationTest {

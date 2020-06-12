@@ -7,6 +7,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.baeldung.um.spring.UmContextConfig;
+import com.baeldung.um.spring.UmJavaSecurityConfig;
 import com.baeldung.um.spring.UmMetricConfig;
 import com.baeldung.um.spring.UmPersistenceJpaConfig;
 import com.baeldung.um.spring.UmServiceConfig;
@@ -16,7 +17,8 @@ import com.baeldung.um.spring.UmServiceConfig;
         UmContextConfig.class, 
         UmPersistenceJpaConfig.class, 
         UmServiceConfig.class, 
-        UmMetricConfig.class
+        UmMetricConfig.class,
+        UmJavaSecurityConfig.class
     }, loader = AnnotationConfigContextLoader.class)// @formatter:off
 public class ServiceSpringIntegrationTest {
 
