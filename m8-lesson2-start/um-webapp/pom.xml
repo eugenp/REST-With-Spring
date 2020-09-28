@@ -167,7 +167,6 @@
 	</profiles>
 	
 	<properties>
-		<tomcat.version>9.0.14</tomcat.version>
 	</properties>
 
 </project>
