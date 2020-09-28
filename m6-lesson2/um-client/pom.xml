@@ -27,6 +27,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- added for compatibility with higher JDKs -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.4.0-b180830.0359</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

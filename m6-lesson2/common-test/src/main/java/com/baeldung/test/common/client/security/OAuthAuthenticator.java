@@ -18,8 +18,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.baeldung.common.client.WebProperties;
-import com.baeldung.test.common.client.security.ITestAuthenticator;
-import com.baeldung.test.common.client.security.TokenResponse;
 import io.restassured.RestAssured;
 import io.restassured.authentication.OAuthSignature;
 import io.restassured.specification.RequestSpecification;
