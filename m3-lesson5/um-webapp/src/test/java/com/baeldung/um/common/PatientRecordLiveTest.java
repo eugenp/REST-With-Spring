@@ -3,7 +3,7 @@ package com.baeldung.um.common;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import io.restassured.RestAssured;
-import io.restassured.path.xml.XmlPath;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 import org.junit.Test;
@@ -36,9 +36,8 @@ public class PatientRecordLiveTest {
             .basic("user@fake.com", "userpass")
             .get(API_URI + "/search?name=john");
         assertEquals(HttpStatus.OK.value(), response.getStatusCode());
-
-        final XmlPath xmlPath = new XmlPath(response.asString()).setRoot("patient");
-        assertEquals("john", xmlPath.get("name"));
+        JsonPath jsonPath = JsonPath.from(response.asString());
+        assertEquals("john", jsonPath.getString("name"));
     }
 
     @Test

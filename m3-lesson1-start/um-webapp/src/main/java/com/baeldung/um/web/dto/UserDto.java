@@ -3,6 +3,7 @@ package com.baeldung.um.web.dto;
 import java.util.Set;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -23,6 +24,8 @@ public class UserDto implements INameableEntity, INameableDto {
     @XStreamAsAttribute
     private Long id;
 
+    @Size(min = 2, max = 30)
+    @NotNull
     private String name;
 
     @NotNull
