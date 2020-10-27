@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @ComponentScan({ "com.baeldung.um.persistence" })
 @EnableJpaRepositories(basePackages = "com.baeldung.um.persistence.dao")
-@PropertySource({ "classpath:persistance-${persistanceTarget:local}.properties" })
+@PropertySource({ "classpath:persistence-${persistenceTarget:local}.properties" })
 public class UmPersistenceJpaConfig {
 
 	@Autowired

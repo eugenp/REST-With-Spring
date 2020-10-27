@@ -8,9 +8,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@ComponentScan({"com.baeldung.um.persistance.model"})
+@ComponentScan({"com.baeldung.um.persistence.model"})
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@PropertySource({ "classpath:persistance-${persistanceTargert:local}.properties" })
+@PropertySource({ "classpath:persistence-${persistenceTargert:local}.properties" })
 public class UmContextConfig {
 
 	public UmContextConfig() {
