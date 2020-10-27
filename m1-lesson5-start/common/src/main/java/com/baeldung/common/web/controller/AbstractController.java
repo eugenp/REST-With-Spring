@@ -4,7 +4,7 @@ import com.baeldung.common.persistence.model.INameableEntity;
 import com.baeldung.common.web.RestPreconditions;
 
 public abstract class AbstractController<T extends INameableEntity> extends AbstractReadOnlyController<T> {
-    
+
     // save/create/persist
 
     protected final void createInternal(final T resource) {
