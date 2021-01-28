@@ -16,7 +16,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.0.RELEASE</version>
+		<version>2.4.1</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -117,9 +117,7 @@
 		 
 		<!-- commons and utils -->
 		<guava.version>19.0</guava.version>
-		<commons-lang3.version>3.4</commons-lang3.version>		
-
-		<rest-assured.version>4.3.1</rest-assured.version>
+		<commons-lang3.version>3.4</commons-lang3.version>
 		 
 		<!-- marshalling -->
 		<jaxb-api.version>2.2.12</jaxb-api.version>		 		  

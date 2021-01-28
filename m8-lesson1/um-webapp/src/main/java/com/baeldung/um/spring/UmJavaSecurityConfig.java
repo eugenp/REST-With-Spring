@@ -1,6 +1,7 @@
 package com.baeldung.um.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +37,7 @@ public class UmJavaSecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:off
         http.
                 authorizeRequests().
+                requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll().
                 // antMatchers("/api/**").      // if you want a more explicit mapping here
                 // regexMatchers("^/login.*").  // use regular expression to match request path
                         anyRequest().
