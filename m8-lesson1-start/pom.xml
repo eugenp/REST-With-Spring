@@ -119,6 +119,9 @@
 		<guava.version>19.0</guava.version>
 		<commons-lang3.version>3.4</commons-lang3.version>
 		 
+		<rest-assured.version>4.3.3</rest-assured.version>
+		<groovy.version>3.0.6</groovy.version>		 
+
 		<!-- marshalling -->
 		<jaxb-api.version>2.2.12</jaxb-api.version>		 		  
 		

@@ -111,6 +111,9 @@
 		<guava.version>27.0-jre</guava.version>
 		<commons-lang3.version>3.8.1</commons-lang3.version>
 		 
+		<rest-assured.version>4.3.3</rest-assured.version>
+		<groovy.version>3.0.6</groovy.version>		 
+		 
 	</properties>
 
 	<modules>
