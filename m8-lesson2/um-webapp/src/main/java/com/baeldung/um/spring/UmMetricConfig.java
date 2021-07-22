@@ -10,7 +10,6 @@ import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 
 @Configuration
-@ComponentScan({ "com.baeldung.common.metric" })
 public class UmMetricConfig {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
