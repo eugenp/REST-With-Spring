@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 public final class WebProperties {
 
     @Value("${http.sec.path}")
-    private String path;
+    private String context;
 
     @Value("${http.oauthPath}")
     private String oauthPath;
-
+    
     @Autowired
     private CommonPaths commonPaths;
 
@@ -24,14 +24,14 @@ public final class WebProperties {
 
     // API
 
-    public final String getPath() {
-        return path;
+    public final String getContext() {
+        return context;
     }
 
     public final String getOauthPath() {
         return oauthPath;
     }
-
+    
     public final String getProtocol() {
         return commonPaths.getProtocol();
     }

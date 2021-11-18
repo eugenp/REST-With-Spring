@@ -109,9 +109,7 @@ public class Role implements INameableEntity, INameableDto {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("id", id)
-            .append("name", name)
-            .toString();
+        return new ToStringBuilder(this).append("id", id).append("name", name).toString();
     }
 
 }

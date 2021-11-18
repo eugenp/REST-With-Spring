@@ -35,7 +35,7 @@ public class StartupLoggingComponent implements InitializingBean {
         try {
             logEnvTarget(env);
             logPersistenceTarget(env);
-
+            
             logPersistenceData(env);
         } catch (final Exception ex) {
             logger.warn("There was a problem logging data on startup", ex);
@@ -52,10 +52,10 @@ public class StartupLoggingComponent implements InitializingBean {
     }
 
     private void logPersistenceTarget(final Environment environment) {
-        final String envTarget = getValueOfProperty(environment, PERSISTENCE_TARGET_KEY, "h2", Lists.newArrayList("h2", "mysql"));
+        final String envTarget = getValueOfProperty(environment, PERSISTENCE_TARGET_KEY, "h2", Lists.newArrayList("h2", "mysql", "cargo"));
         logger.info("{} = {}", PERSISTENCE_TARGET_KEY, envTarget);
     }
-
+    
     private void logPersistenceData(final Environment environment) {
         final String persistenceHost = getValueOfProperty(environment, PERSISTENCE_HOST_KEY, "not-found", null);
         logger.info("{} = {}", PERSISTENCE_HOST_KEY, persistenceHost);

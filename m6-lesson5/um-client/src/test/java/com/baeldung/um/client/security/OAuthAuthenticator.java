@@ -21,12 +21,11 @@ import com.baeldung.common.client.CommonPaths;
 import com.baeldung.test.common.client.security.ITestAuthenticator;
 import com.baeldung.test.common.client.security.TokenResponse;
 import com.baeldung.um.client.UmPaths;
-import io.restassured.RestAssured;
-import io.restassured.authentication.OAuthSignature;
-import io.restassured.specification.RequestSpecification;
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.authentication.OAuthSignature;
+import com.jayway.restassured.specification.RequestSpecification;
 
 @Component
-@Profile("client")
 public class OAuthAuthenticator implements ITestAuthenticator {
     private Logger log = LoggerFactory.getLogger(getClass());
 
@@ -48,9 +47,7 @@ public class OAuthAuthenticator implements ITestAuthenticator {
     @Override
     public final RequestSpecification givenAuthenticated(final String username, final String password) {
         final String accessToken = getAccessToken(username, password);
-        return RestAssured.given()
-            .auth()
-            .oauth2(accessToken, OAuthSignature.HEADER);
+        return RestAssured.given().auth().oauth2(accessToken, OAuthSignature.HEADER);
     }
 
     final String getAccessToken(final String username, final String password) {
@@ -68,11 +65,10 @@ public class OAuthAuthenticator implements ITestAuthenticator {
             final HttpHeaders headers = new HttpHeaders();
             headers.add("Authorization", "Basic " + encodedCredentials);
 
-            final HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
+            final HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 
             final RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters()
-                .add(new StringHttpMessageConverter());
+            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
             final TokenResponse tokenResponse = restTemplate.postForObject(url, request, TokenResponse.class);
             final String accessToken = tokenResponse.getAccessToken();

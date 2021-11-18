@@ -2,9 +2,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>um-webapp-m6-l2</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
-    <name>um-webapp-l2</name>
+    <name>um-webapp</name>
 
     <parent>
         <groupId>com.baeldung</groupId>
@@ -72,26 +72,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-
-        <!-- added for compatibility with higher JDKs -->
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.4.0-b180830.0359</version>
-        </dependency>
-
-        <!-- added for compatibility with higher JDKs -->
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>2.4.0-b180830.0438</version>
-        </dependency>
-
         <!-- security -->
 
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>
+            <artifactId>spring-security-oauth2</artifactId>            
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -155,6 +140,29 @@
             <!-- </systemPropertyVariables> -->
             <!-- </configuration> -->
             <!-- </plugin> -->
+
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>${cargo-maven2-plugin.version}</version>
+                <configuration>
+                    <wait>false</wait>
+                    <container>
+                        <containerId>tomcat8x</containerId>
+                        <type>embedded</type>
+                        <systemProperties>
+                            <envTarget>dev</envTarget>
+                            <persistenceTarget>cargo</persistenceTarget>
+                        </systemProperties>
+                    </container>
+                    <configuration>
+                        <properties>
+                            <cargo.servlet.port>8082</cargo.servlet.port>
+                        </properties>
+                    </configuration>
+                </configuration>
+            </plugin>
+
         </plugins>
 
     </build>
@@ -169,9 +177,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <reuseForks>false</reuseForks>
-                        </configuration>
                         <executions>
                             <execution>
                                 <phase>integration-test</phase>
@@ -203,8 +208,24 @@
                 <plugins>
 
                     <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>start-server</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>stop-server</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
 
                     <plugin>
@@ -223,6 +244,9 @@
                                     <includes>
                                         <include>**/*LiveTest.java</include>
                                     </includes>
+                                    <systemPropertyVariables>
+                                        <webTarget>cargo</webTarget>
+                                    </systemPropertyVariables>
                                 </configuration>
                             </execution>
                         </executions>

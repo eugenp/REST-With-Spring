@@ -18,8 +18,7 @@ public final class UriUtil {
     public static URI createSearchUri(final String uriBase, final String paramToExpand) {
         URL url = null;
         try {
-            url = new UriTemplate(uriBase).expand(paramToExpand)
-                .toURL();
+            url = new UriTemplate(uriBase).expand(paramToExpand).toURL();
         } catch (final MalformedURLException ex) {
             throw new IllegalArgumentException(ex);
         }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ValidationErrorDTO {
 
-    private final List<FieldErrorDTO> fieldErrors = new ArrayList<>();
+    private final List<FieldErrorDTO> fieldErrors = new ArrayList<FieldErrorDTO>();
 
     public ValidationErrorDTO() {
         super();
@@ -27,9 +27,7 @@ public class ValidationErrorDTO {
     @Override
     public final String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ValidationErrorDTO [fieldErrors=")
-            .append(fieldErrors)
-            .append("]");
+        builder.append("ValidationErrorDTO [fieldErrors=").append(fieldErrors).append("]");
         return builder.toString();
     }
 

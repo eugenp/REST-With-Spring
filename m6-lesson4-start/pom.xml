@@ -1,146 +1,150 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <name>user-management-parent-l4-start</name>
-    <url>https://github.com/eugenp/REST-With-Spring</url>
-    <description>REST with Spring Classes Module6-Lesson4-start</description>
+	<name>user-management-parent</name>
+	<url>https://github.com/eugenp/restwithspring</url>
+	<description>REST with Spring Classes Module6-Lesson4-start</description>
+	
+	<groupId>com.baeldung</groupId>
+	<artifactId>user-management-parent-m6-l4-start</artifactId>
+	<version>0.6.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-    <groupId>com.baeldung</groupId>
-    <artifactId>user-management-parent-m6-l4-start</artifactId>
-    <version>0.6.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
+	
 
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.2.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
 
+	<issueManagement>
+		<url>https://github.com/eugenp/restwithspring/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.22.RELEASE</version>
-        <relativePath /> <!-- lookup parent from repository -->
-    </parent>
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
-    <issueManagement>
-        <url>https://github.com/eugenp/REST-With-Spring/issues</url>
-        <system>GitHub Issues</system>
-    </issueManagement>
+	<developers>
+		<developer>
+			<email>eugen@baeldung.com</email>
+			<name>Eugen Paraschiv</name>
+			<url>https://github.com/eugenp</url>
+			<id>eugenp</id>
+		</developer>
+	</developers>
 
-    <licenses>
-        <license>
-            <name>MIT License</name>
-            <url>http://www.opensource.org/licenses/mit-license.php</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>https://rest-security.ci.cloudbees.com/</url>
+	</ciManagement>
 
-    <developers>
-        <developer>
-            <email>eugen@baeldung.com</email>
-            <name>Eugen Paraschiv</name>
-            <url>https://github.com/eugenp</url>
-            <id>eugenp</id>
-        </developer>
-    </developers>
+	<scm>
+		<connection>scm:git:git://github.com/eugenp/restwithspring.git</connection>
+		<url>scm:git:git://github.com/eugenp/restwithspring.git</url>
+		<developerConnection>scm:git:git://github.com/eugenp/restwithspring.git</developerConnection>
+	</scm>
 
-    <scm>
-        <connection>scm:git:git://github.com/eugenp/REST-With-Spring.git</connection>
-        <url>scm:git:git://github.com/eugenp/REST-With-Spring.git</url>
-        <developerConnection>scm:git:git://github.com/eugenp/REST-With-Spring.git</developerConnection>
-    </scm>
+	<build>
 
-    <build>
+		<plugins>
 
-        <plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
+		</plugins>
 
-        </plugins>
+		<pluginManagement>
+			<plugins>
 
-        <pluginManagement>
-            <plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven-surefire-plugin.version}</version>
+					<configuration>
+						<testFailureIgnore>true</testFailureIgnore>
+						<excludes>
+							<exclude>**/*IntegrationTest.java</exclude>
+							<exclude>**/*LiveTest.java</exclude>
+						</excludes>
+						<systemPropertyVariables>
+							<!-- <provPersistenceTarget>h2</provPersistenceTarget> -->
+						</systemPropertyVariables>
+					</configuration>
+				</plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <excludes>
-                            <exclude>**/*IntegrationTest.java</exclude>
-                            <exclude>**/*LiveTest.java</exclude>
-                        </excludes>
-                        <systemPropertyVariables>
-                            <!-- <provPersistenceTarget>h2</provPersistenceTarget> -->
-                        </systemPropertyVariables>
-                    </configuration>
-                </plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin.version}</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+						<compilerArgument>-proc:none</compilerArgument>
+					</configuration>
+				</plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
-                        <compilerArgument>-proc:none</compilerArgument>
-                    </configuration>
-                </plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${maven-resources-plugin.version}</version>
+				</plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                </plugin>
+			</plugins>
+		</pluginManagement>
 
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>pre-integration-test</id>
-                            <goals>
-                                <goal>start</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>post-integration-test</id>
-                            <goals>
-                                <goal>stop</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+	</build>
 
-            </plugins>
-        </pluginManagement>
+	<properties>
+	
+		<!-- non-dependencies -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>							
 
-    </build>
+		<!-- persistence -->
+		<validation-api.version>1.1.0.Final</validation-api.version>
+		<hsqldb.version>2.3.4</hsqldb.version> 
+		 		
+		 
+		<!-- commons and utils -->
+		<guava.version>19.0</guava.version>
+		<commons-lang3.version>3.4</commons-lang3.version>
+		 
+		<rest-assured.version>2.9.0</rest-assured.version>
+		 
+		<!-- marshalling -->
+		<jaxb-api.version>2.2.12</jaxb-api.version>		 		  
+		
+		<!-- maven plugins -->
+		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+		<maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+		<maven-resources-plugin.version>3.0.1</maven-resources-plugin.version>
+		<cargo-maven2-plugin.version>1.5.0</cargo-maven2-plugin.version>
+						
+	</properties>
 
-    <properties>
+	<modules>
+		<module>common-client</module>
+		<module>common</module>
+		<module>common-test</module>
 
-        <!-- non-dependencies -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
+		<module>um-client</module>
+		<module>um-webapp</module>
 
-        <!-- commons and utils -->
-        <guava.version>27.0-jre</guava.version>
-        <commons-lang3.version>3.8.1</commons-lang3.version>
-
-        <rest-assured.version>3.2.0</rest-assured.version>
-
-    </properties>
-
-    <modules>
-        <module>common-client</module>
-        <module>common</module>
-        <module>common-test</module>
-
-        <module>um-client</module>
-        <module>um-webapp</module>
-
-    </modules>
+	</modules>
 
 </project>

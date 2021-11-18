@@ -21,7 +21,7 @@ import com.baeldung.um.persistence.model.Role;
 import com.baeldung.um.persistence.model.User;
 import com.baeldung.um.test.live.UmLogicRestLiveTest;
 import com.google.common.collect.Sets;
-import io.restassured.response.Response;
+import com.jayway.restassured.response.Response;
 
 public class UserLogicRestLiveTest extends UmLogicRestLiveTest<User> {
 
@@ -59,8 +59,7 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<User> {
     @Test
     public final void whenResourceIsCreatedWithNewAssociation_then409IsReceived() {
         final User newResource = getEntityOps().createNewResource();
-        newResource.getRoles()
-            .add(getAssociationEntityOps().createNewResource());
+        newResource.getRoles().add(getAssociationEntityOps().createNewResource());
 
         // When
         final Response response = getApi().createAsResponse(newResource);
@@ -75,8 +74,7 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<User> {
         final Role invalidAssociation = getAssociationEntityOps().createNewResource();
         invalidAssociation.setId(1001l);
         final User newResource = getEntityOps().createNewResource();
-        newResource.getRoles()
-            .add(invalidAssociation);
+        newResource.getRoles().add(invalidAssociation);
 
         // When
         final Response response = getApi().createAsResponse(newResource);
@@ -89,8 +87,7 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<User> {
     public final void whenUserIsCreatedWithExistingRole_then201IsReceived() {
         final Role existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewResource());
         final User newResource = getEntityOps().createNewResource();
-        newResource.getRoles()
-            .add(existingAssociation);
+        newResource.getRoles().add(existingAssociation);
 
         // When
         final Response response = getApi().createAsResponse(newResource);
@@ -105,8 +102,7 @@ public class UserLogicRestLiveTest extends UmLogicRestLiveTest<User> {
     public final void whenScenario_getResource_getAssociationsById() {
         final Role existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewResource());
         final User resourceToCreate = getEntityOps().createNewResource();
-        resourceToCreate.getRoles()
-            .add(existingAssociation);
+        resourceToCreate.getRoles().add(existingAssociation);
 
         // When
         final User existingResource = getApi().create(resourceToCreate);

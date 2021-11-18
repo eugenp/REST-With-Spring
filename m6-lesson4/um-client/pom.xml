@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<name>um-client-l4</name>
+	<name>um-client</name>
 	<artifactId>um-client-m6-l4</artifactId>
 
 	<parent>
@@ -27,13 +27,6 @@
 			<scope>test</scope>
 		</dependency>
 
-        <!-- added for compatibility with higher JDKs -->
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.4.0-b180830.0359</version>
-        </dependency>
-
 	</dependencies>
 
 	<build>
@@ -46,7 +39,7 @@
 		</resources>
 
 		<plugins>
-
+			
 			<!-- this create jar file of code from src/test/java so modules with tests can share code -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -59,7 +52,7 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			
 		</plugins>
 
 	</build>

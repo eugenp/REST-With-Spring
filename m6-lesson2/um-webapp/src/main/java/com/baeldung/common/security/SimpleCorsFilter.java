@@ -37,8 +37,7 @@ public class SimpleCorsFilter implements Filter {
         response.setHeader("Access-Control-Expose-Headers", "X-Requested-With, WWW-Authenticate, Authorization, Origin, Content-Type");
         response.setHeader("Access-Control-Allow-Credentials", "true");
 
-        if (!request.getMethod()
-            .equals("OPTIONS")) {
+        if (!request.getMethod().equals("OPTIONS")) {
             chain.doFilter(req, res);
         } else {
             response.setStatus(HttpServletResponse.SC_OK);

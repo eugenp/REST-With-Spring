@@ -5,12 +5,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpHeaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.baeldung.common.interfaces.IWithName;
+import com.baeldung.common.persistence.model.IEntity;
 import com.baeldung.common.persistence.service.IRawService;
 import com.baeldung.common.util.QueryConstants;
 import com.baeldung.common.web.RestPreconditions;
@@ -30,7 +30,7 @@ import com.baeldung.common.web.exception.MyResourceNotFoundException;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
-public abstract class AbstractReadOnlyController<T extends IWithName> {
+public abstract class AbstractReadOnlyController<T extends IEntity> {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected Class<T> clazz;
@@ -60,8 +60,7 @@ public abstract class AbstractReadOnlyController<T extends IWithName> {
     // find - all
 
     protected final List<T> findAllInternal(final HttpServletRequest request, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        if (request.getParameterNames()
-            .hasMoreElements()) {
+        if (request.getParameterNames().hasMoreElements()) {
             throw new MyResourceNotFoundException();
         }
 
@@ -70,13 +69,8 @@ public abstract class AbstractReadOnlyController<T extends IWithName> {
     }
 
     protected final void findAllRedirectToPagination(final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        final String resourceName = clazz.getSimpleName()
-            .toString()
-            .toLowerCase();
-        final String locationValue = uriBuilder.path(WebConstants.PATH_SEP + resourceName)
-            .build()
-            .encode()
-            .toUriString() + QueryConstants.QUESTIONMARK + "page=0&size=10";
+        final String resourceName = clazz.getSimpleName().toString().toLowerCase();
+        final String locationValue = uriBuilder.path(WebConstants.PATH_SEP + resourceName).build().encode().toUriString() + QueryConstants.QUESTIONMARK + "page=0&size=10";
 
         response.setHeader(HttpHeaders.LOCATION, locationValue);
     }
@@ -91,8 +85,8 @@ public abstract class AbstractReadOnlyController<T extends IWithName> {
         return Lists.newArrayList(resultPage.getContent());
     }
 
-    protected final List<T> findPaginatedInternal(final int page, final int size, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        final Page<T> resultPage = getService().findAllPaginatedRaw(page, size);
+    protected final List<T> findPaginatedInternal(final int page, final int size, final String sortBy, final String sortOrder, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+        final Page<T> resultPage = getService().findAllPaginatedAndSortedRaw(page, size, sortBy, sortOrder);
         if (page > resultPage.getTotalPages()) {
             throw new MyResourceNotFoundException();
         }

@@ -17,13 +17,13 @@ import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Sort;
 
-import com.baeldung.common.persistence.model.INameableEntity;
+import com.baeldung.common.persistence.model.IEntity;
 import com.baeldung.common.persistence.service.IRawService;
 import com.baeldung.common.util.SearchField;
 import com.baeldung.common.util.order.OrderById;
 import com.baeldung.test.common.util.IDUtil;
 
-public abstract class AbstractRawServiceIntegrationTest<T extends INameableEntity> {
+public abstract class AbstractRawServiceIntegrationTest<T extends IEntity> {
 
     // tests
 
@@ -148,8 +148,7 @@ public abstract class AbstractRawServiceIntegrationTest<T extends INameableEntit
     public final void whenResourcesAreRetrievedSortedDescById_thenResultsAreOrderedCorrectly() {
         final List<T> resourcesOrderedById = getApi().findAllSorted(SearchField.id.toString(), Sort.Direction.DESC.name());
 
-        assertTrue(new OrderById<T>().reverse()
-            .isOrdered(resourcesOrderedById));
+        assertTrue(new OrderById<T>().reverse().isOrdered(resourcesOrderedById));
     }
 
     // create

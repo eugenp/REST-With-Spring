@@ -33,8 +33,7 @@ public final class SpringSecurityUtil {
 
     public static User authenticate(final String key, final String uuid) {
         final SpringSecurityPrincipal principal = new SpringSecurityPrincipal(randomAlphabetic(6), randomAlphabetic(6), true, Lists.<GrantedAuthority> newArrayList(), uuid);
-        SecurityContextHolder.getContext()
-            .setAuthentication(new RunAsUserToken(key, principal, null, Lists.<GrantedAuthority> newArrayList(), null));
+        SecurityContextHolder.getContext().setAuthentication(new RunAsUserToken(key, principal, null, Lists.<GrantedAuthority> newArrayList(), null));
 
         return principal;
     }
@@ -135,8 +134,7 @@ public final class SpringSecurityUtil {
         final UserDetails userDetails = SpringSecurityUtil.getCurrentUserDetails();
         if (userDetails != null) {
             for (final GrantedAuthority each : userDetails.getAuthorities()) {
-                if (each.getAuthority()
-                    .equals(privilege)) {
+                if (each.getAuthority().equals(privilege)) {
                     return true;
                 }
             }
@@ -198,7 +196,7 @@ public final class SpringSecurityUtil {
         final int indexOfDelimiter = decoded.indexOf(':');
         final String username = decoded.substring(0, indexOfDelimiter);
         final String password = decoded.substring(indexOfDelimiter + 1);
-        return new ImmutablePair<>(username, password);
+        return new ImmutablePair<String, String>(username, password);
     }
 
 }

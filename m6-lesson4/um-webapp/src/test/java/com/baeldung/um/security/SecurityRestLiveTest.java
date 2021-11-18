@@ -2,7 +2,7 @@ package com.baeldung.um.security;
 
 import static com.baeldung.common.spring.util.Profiles.CLIENT;
 import static com.baeldung.common.spring.util.Profiles.TEST;
-import static io.restassured.RestAssured.given;
+import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -21,8 +21,8 @@ import com.baeldung.um.spring.CommonTestConfig;
 import com.baeldung.um.spring.UmClientConfig;
 import com.baeldung.um.spring.UmLiveTestConfig;
 import com.baeldung.um.util.Um;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.specification.RequestSpecification;
 
 @ActiveProfiles({ CLIENT, TEST })
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -60,10 +60,7 @@ public class SecurityRestLiveTest {
     public final void givenAuthenticatedByBasicAuth_whenResourceIsCreated_then201IsReceived() {
         // Given
         // When
-        final Response response = givenAuthenticated().contentType(userTemplate.getMarshaller()
-            .getMime())
-            .body(userOps.createNewResource())
-            .post(userTemplate.getUri());
+        final Response response = givenAuthenticated().contentType(userTemplate.getMarshaller().getMime()).body(userOps.createNewResource()).post(userTemplate.getUri());
 
         // Then
         assertThat(response.getStatusCode(), is(201));
@@ -74,10 +71,7 @@ public class SecurityRestLiveTest {
     public final void givenAuthenticatedByDigestAuth_whenResourceIsCreated_then201IsReceived() {
         // Given
         // When
-        final Response response = givenAuthenticated().contentType(userTemplate.getMarshaller()
-            .getMime())
-            .body(userOps.createNewResource())
-            .post(userTemplate.getUri());
+        final Response response = givenAuthenticated().contentType(userTemplate.getMarshaller().getMime()).body(userOps.createNewResource()).post(userTemplate.getUri());
 
         // Then
         assertThat(response.getStatusCode(), is(201));

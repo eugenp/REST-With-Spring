@@ -13,8 +13,7 @@ public final class OrderById<T extends IWithId> extends Ordering<T> {
 
     @Override
     public final int compare(final T left, final T right) {
-        return left.getId()
-            .compareTo(right.getId());
+        return left.getId().compareTo(right.getId());
     }
 
 }

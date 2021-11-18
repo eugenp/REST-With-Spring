@@ -31,8 +31,7 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
         String envTarget = null;
         try {
             envTarget = getEnvTarget(environment);
-            environment.getPropertySources()
-                .addFirst(new ResourcePropertySource("classpath:env-" + envTarget + ".properties"));
+            environment.getPropertySources().addFirst(new ResourcePropertySource("classpath:env-" + envTarget + ".properties"));
 
             final String activeProfiles = environment.getProperty("spring.profiles.active");
             if (activeProfiles != null) {

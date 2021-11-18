@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>common-test-m6-l5</artifactId>
-	<name>common-test-l5</name>
+	<name>common-test</name>
 
 	<parent>
 		<groupId>com.baeldung</groupId>
@@ -47,9 +47,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>io.rest-assured</groupId>
+			<groupId>com.jayway.restassured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<version>${rest-assured.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 	</dependencies>
@@ -91,9 +97,6 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
-						<configuration>
-						    <reuseForks>false</reuseForks>                        	
-                        </configuration>
 						<executions>
 							<execution>
 								<phase>integration-test</phase>

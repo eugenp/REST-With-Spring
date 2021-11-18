@@ -13,8 +13,7 @@ public final class OrderByName<T extends IWithName> extends Ordering<T> {
 
     @Override
     public final int compare(final T left, final T right) {
-        return left.getName()
-            .compareTo(right.getName());
+        return left.getName().compareTo(right.getName());
     }
 
 }

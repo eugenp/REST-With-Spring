@@ -13,8 +13,7 @@ public final class OrderByNameIgnoreCase<T extends INameableEntity> extends Orde
 
     @Override
     public final int compare(final T left, final T right) {
-        return left.getName()
-            .compareToIgnoreCase(right.getName());
+        return left.getName().compareToIgnoreCase(right.getName());
     }
 
 }

@@ -5,11 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.baeldung.common.persistence.model.INameableEntity;
+import com.baeldung.common.persistence.model.IEntity;
 import com.baeldung.common.web.RestPreconditions;
 import com.baeldung.common.web.events.AfterResourceCreatedEvent;
 
-public abstract class AbstractController<T extends INameableEntity> extends AbstractReadOnlyController<T> {
+public abstract class AbstractController<T extends IEntity> extends AbstractReadOnlyController<T> {
 
     @Autowired
     public AbstractController(final Class<T> clazzToSet) {
@@ -24,8 +24,7 @@ public abstract class AbstractController<T extends INameableEntity> extends Abst
         final T existingResource = getService().create(resource);
 
         // - note: mind the autoboxing and potential NPE when the resource has null id at this point (likely when working with DTOs)
-        eventPublisher.publishEvent(new AfterResourceCreatedEvent<T>(clazz, uriBuilder, response, existingResource.getId()
-            .toString()));
+        eventPublisher.publishEvent(new AfterResourceCreatedEvent<T>(clazz, uriBuilder, response, existingResource.getId().toString()));
     }
 
     // update

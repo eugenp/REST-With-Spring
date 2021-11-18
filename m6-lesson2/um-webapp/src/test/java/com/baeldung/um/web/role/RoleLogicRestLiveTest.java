@@ -21,9 +21,9 @@ import com.baeldung.um.persistence.model.Privilege;
 import com.baeldung.um.persistence.model.Role;
 import com.baeldung.um.test.live.UmLogicRestLiveTest;
 import com.google.common.collect.Sets;
-import io.restassured.response.Response;
+import com.jayway.restassured.response.Response;
 
-public class RoleLogicRestLiveTest extends UmLogicRestLiveTest<Role> implements IResourceWithAssociationsIntegrationTest {
+public class RoleLogicRestLiveTest extends UmLogicRestLiveTest<Role>implements IResourceWithAssociationsIntegrationTest {
 
     @Autowired
     private RoleTestRestTemplate api;
@@ -47,8 +47,7 @@ public class RoleLogicRestLiveTest extends UmLogicRestLiveTest<Role> implements 
         // Given
         final Privilege existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewResource());
         final Role newResource = getEntityOps().createNewResource();
-        newResource.getPrivileges()
-            .add(existingAssociation);
+        newResource.getPrivileges().add(existingAssociation);
 
         // When
         final Role existingResource = getApi().create(newResource);
@@ -76,13 +75,11 @@ public class RoleLogicRestLiveTest extends UmLogicRestLiveTest<Role> implements 
     public final void whenCreatingNewResourceWithExistingAssociations_thenNewResourceIsCorrectlyCreated() {
         final Privilege existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewResource());
         final Role newResource = getEntityOps().createNewResource();
-        newResource.getPrivileges()
-            .add(existingAssociation);
+        newResource.getPrivileges().add(existingAssociation);
         getApi().create(newResource);
 
         final Role newResource2 = getEntityOps().createNewResource();
-        newResource2.getPrivileges()
-            .add(existingAssociation);
+        newResource2.getPrivileges().add(existingAssociation);
         getApi().create(newResource2);
     }
 
@@ -93,8 +90,7 @@ public class RoleLogicRestLiveTest extends UmLogicRestLiveTest<Role> implements 
     @Test
     public final void whenResourceIsCreatedWithNewAssociation_then409IsReceived() {
         final Role newResource = getEntityOps().createNewResource();
-        newResource.getPrivileges()
-            .add(getAssociationEntityOps().createNewResource());
+        newResource.getPrivileges().add(getAssociationEntityOps().createNewResource());
 
         // When
         final Response response = getApi().createAsResponse(newResource);
@@ -108,8 +104,7 @@ public class RoleLogicRestLiveTest extends UmLogicRestLiveTest<Role> implements 
         final Privilege invalidAssociation = getAssociationEntityOps().createNewResource();
         getAssociationEntityOps().invalidate(invalidAssociation);
         final Role newResource = getEntityOps().createNewResource();
-        newResource.getPrivileges()
-            .add(invalidAssociation);
+        newResource.getPrivileges().add(invalidAssociation);
 
         // When
         final Response response = getApi().createAsResponse(newResource);
@@ -122,8 +117,7 @@ public class RoleLogicRestLiveTest extends UmLogicRestLiveTest<Role> implements 
     public final void whenResourceIsCreatedWithExistingAssociation_then201IsReceived() {
         final Privilege existingAssociation = getAssociationAPI().create(getAssociationEntityOps().createNewResource());
         final Role newResource = getEntityOps().createNewResource();
-        newResource.getPrivileges()
-            .add(existingAssociation);
+        newResource.getPrivileges().add(existingAssociation);
 
         // When
         final Response response = getApi().createAsResponse(newResource);
@@ -138,8 +132,7 @@ public class RoleLogicRestLiveTest extends UmLogicRestLiveTest<Role> implements 
         final Role resourceToCreate = getEntityOps().createNewResource();
 
         // When
-        resourceToCreate.getPrivileges()
-            .add(existingAssociation);
+        resourceToCreate.getPrivileges().add(existingAssociation);
         final Role existingResource = getApi().create(resourceToCreate);
 
         // Then

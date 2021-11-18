@@ -20,16 +20,16 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
+    
     @Value("${signing-key:oui214hmui23o4hm1pui3o2hp4m1o3h2m1o43}")
     private String signingKey;
 
     public AuthorizationServerConfiguration() {
         super();
     }
-
-    // beans
-
+    
+    //beans
+    
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         final JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
@@ -43,6 +43,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     }
 
     // config
+    
 
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
@@ -66,7 +67,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         ;
         // @formatter:on
     }
-
+    
     @Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
      // @formatter:off
