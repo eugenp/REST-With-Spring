@@ -26,9 +26,9 @@ public class UmJavaSecurityConfig extends WebSecurityConfigurerAdapter {
     //
 
     @Autowired
-    public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
+    public void configureGlobal(final AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {
         auth.userDetailsService(userDetailsService)
-            .passwordEncoder(passwordEncoder());
+            .passwordEncoder(passwordEncoder);
     }
 
     @Override
@@ -45,11 +45,6 @@ public class UmJavaSecurityConfig extends WebSecurityConfigurerAdapter {
         sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().
         csrf().disable();
         // @formatter:on
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
 }

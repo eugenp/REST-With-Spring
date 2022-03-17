@@ -23,6 +23,7 @@ import com.baeldung.um.spring.UmWebConfig;
         UmWebConfig.class,
         
         UmJavaSecurityConfig.class
+
 })// @formatter:on
 @WebAppConfiguration
 public class WebSpringIntegrationTest {
