@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -20,6 +21,7 @@ import com.baeldung.common.persistence.model.INameableEntity;
 
 @Entity
 @XmlRootElement
+@Table(name="\"user\"")
 public class User implements INameableEntity, INameableDto {
 
     @Id
