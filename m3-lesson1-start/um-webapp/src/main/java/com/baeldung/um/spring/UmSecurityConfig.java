@@ -11,5 +11,4 @@ public class UmSecurityConfig {
     public UmSecurityConfig() {
         super();
     }
-
 }
