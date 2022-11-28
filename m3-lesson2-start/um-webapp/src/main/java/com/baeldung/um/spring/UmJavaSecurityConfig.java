@@ -33,7 +33,7 @@ public class UmJavaSecurityConfig {
         // @formatter:off
         http.
         authorizeRequests().        
-        anyRequest().
+        antMatchers("/**").
         authenticated().
         and().
         httpBasic().and().
