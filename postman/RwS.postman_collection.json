@@ -1,0 +1,495 @@
+{
+	"info": {
+		"_postman_id": "888d1461-4bc8-45c9-8277-03513bef85e8",
+		"name": "RwS",
+		"description": "Postman requests for REST with Spring Course",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "418131"
+	},
+	"item": [
+		{
+			"name": "The Basics of REST with Spring",
+			"item": [
+				{
+					"name": "The Web Configuration",
+					"item": [
+						{
+							"name": "List of Projects",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/projects",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects"
+									]
+								},
+								"description": "Request to get list of projects"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Project",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/projects/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects",
+										"1"
+									]
+								},
+								"description": "Request to get a project by ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Project",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\": \"PNew\",\n    \"name\": \"Project New\",\n    \"description\": \"Description of Project New\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/projects",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects"
+									]
+								},
+								"description": "Request to create a project"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Project",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Project 1 Updated\",\n    \"description\": \"Description of Project 1 Updated\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/projects/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects",
+										"1"
+									]
+								},
+								"description": "Request to update a project"
+							},
+							"response": []
+						}
+					],
+					"description": "Requests to test URL web configuration based on HTTP Method."
+				}
+			],
+			"description": "Demonstrates the basics of REST with Spring"
+		},
+		{
+			"name": "REST and HTTP Semantics",
+			"item": [
+				{
+					"name": "Leverage HTTP Verbs and Semantics in REST API Operations",
+					"item": [
+						{
+							"name": "List of Projects",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/projects",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects"
+									]
+								},
+								"description": "Request to get list of projects"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Project",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/projects/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects",
+										"1"
+									]
+								},
+								"description": "Request to get a project by ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Project",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\": \"PNew\",\n    \"name\": \"Project New\",\n    \"description\": \"Description of Project New\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/projects",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects"
+									]
+								},
+								"description": "Request to create a project"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Project",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Project 1 Updated\",\n    \"description\": \"Description of Project 1 Updated\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/projects/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects",
+										"1"
+									]
+								},
+								"description": "Request to update a project"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Project",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/projects/3",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects",
+										"3"
+									]
+								},
+								"description": "Request to delete a project by ID"
+							},
+							"response": []
+						}
+					],
+					"description": "Requests to test URL Leverage HTTP Verbs and Semantics based on HTTP Method."
+				},
+				{
+					"name": "The Basics of Input Validation",
+					"item": [
+						{
+							"name": "Post Invalid Task",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"projectId\" : null,\r\n  \"name\" : \"New Task\",\r\n  \"description\" : \"New Task Description\",\r\n  \"dueDate\" : \"2050-12-30\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Valid Task",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"projectId\" : 1,\r\n  \"name\" : \"New Task\",\r\n  \"description\" : \"New Task Description\",\r\n  \"dueDate\" : \"2050-12-30\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Invalid Project",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"\",\r\n    \"description\": \"short\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/projects",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Invalid Worker",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"not-an-email\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\"\r\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}/workers",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"workers"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Requests to test URL Basic Input Validation based on HTTP Method."
+				},
+				{
+					"name": "Validation Groups for Different API Operations",
+					"item": [
+						{
+							"name": "Get Past-Due Task",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/tasks/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Past-Due Task",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Task 1 Updated Name\",\r\n    \"description\": \"Task 1 Updated Description\",\r\n    \"dueDate\": \"2000-01-12\",\r\n    \"status\": \"To Do\",\r\n    \"projectId\": 1,\r\n    \"assignee\": null,\r\n    \"estimatedHours\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Task Assignee - Invalid",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"assignee\": {\r\n        \"firstName\": \"not updatable\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks/1/assignee",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"1",
+										"assignee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Task Assignee - Valid",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"assignee\": {\r\n        \"id\": 2,\r\n        \"firstName\": \"not updatable\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks/1/assignee",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"1",
+										"assignee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Task Assignee - Unassign Task (valid)",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks/1/assignee",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"1",
+										"assignee"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Requests to test URL Basic Input Validation based on HTTP Method."
+				}
+			],
+			"description": "Demonstrates the REST and HTTP Semantics."
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:8080"
+		}
+	]
+}
