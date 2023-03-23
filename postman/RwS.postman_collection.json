@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "888d1461-4bc8-45c9-8277-03513bef85e8",
+		"_postman_id": "1dce0048-cb43-4c77-b228-030a9a563c52",
 		"name": "RwS",
 		"description": "Postman requests for REST with Spring Course",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -232,6 +232,283 @@
 					"description": "Requests to test URL Leverage HTTP Verbs and Semantics based on HTTP Method."
 				},
 				{
+					"name": "Exception Handling and Sane HTTP Status Codes",
+					"item": [
+						{
+							"name": "Get Non Existing Task",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/tasks/99",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"99"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Non Existing Endpoint",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/other",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"other"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid Method - Put on tasks list",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid Content-Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Invalid Content-Type\",\n    \"projectId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put Invalid Task 1",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"projectId\": 99,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put Invalid Task 2",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"projectId\": 1,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\",\r\n    \"assignee\": {\r\n        \"id\": 99\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Requests to test URL Exception Handling and Sane HTTP Status Codes."
+				},
+				{
+					"name": "Global API Exception Handling",
+					"item": [
+						{
+							"name": "Put Invalid Task 1",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"projectId\": 99,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Invalid Project - duplicated code",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"code\": \"P1\",\r\n        \"name\": \"Project 1 - duplicated 'code' field\",\r\n        \"description\": \"Description of Project 1, which already exists!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/projects",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Invalid Worker - duplicated email",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"john@test.com\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Other\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/workers",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"workers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put Invalid Task 2 - null projectId",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"projectId\": null,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put Invalid Task 3 - id not matching path param",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"projectId\": 1,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Requests to test URL Global API Exception Handling."
+				},
+				{
 					"name": "The Basics of Input Validation",
 					"item": [
 						{
@@ -452,13 +729,13 @@
 							"response": []
 						},
 						{
-							"name": "Update Task Assignee - Unassign Task (valid)",
+							"name": "Create Task - passing 'invalid' Assignee",
 							"request": {
-								"method": "PUT",
+								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n}",
+									"raw": "{\r\n    \"name\": \"Task New\",\r\n    \"description\": \"Task New Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"projectId\": 1,\r\n    \"assignee\": {\r\n        \"id\": null,\r\n        \"email\": null,\r\n        \"firstName\": \"assignee data should\",\r\n        \"lastNamez\": \"be ignored\" \r\n    },\r\n    \"estimatedHours\": 10\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -466,14 +743,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/tasks/1/assignee",
+									"raw": "{{baseURL}}/tasks",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"tasks",
-										"1",
-										"assignee"
+										"tasks"
 									]
 								}
 							},
