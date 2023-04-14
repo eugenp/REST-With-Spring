@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "1dce0048-cb43-4c77-b228-030a9a563c52",
+		"_postman_id": "28650908-67d9-41ec-90c6-1d3f18d06aa2",
 		"name": "RwS",
 		"description": "Postman requests for REST with Spring Course",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "418131"
+		"_exporter_id": "386585"
 	},
 	"item": [
 		{
@@ -756,9 +756,130 @@
 						}
 					],
 					"description": "Requests to test URL Basic Input Validation based on HTTP Method."
+				},
+				{
+					"name": "Spring and the Problem Details Spec",
+					"item": [
+						{
+							"name": "Post Invalid Project",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n    \"code\": null,\r\n    \"description\": \"Project Description\",\r\n    \"name\": \"New Project\"\r\n }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/projects",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Post Invalid Worker - duplicated email",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"john@test.com\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/workers",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"workers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Put Invalid Task 1 - id not matching path param",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":99,\r\n    \"projectId\": 99,\r\n    \"name\": \"Task 1 Updated\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			],
 			"description": "Demonstrates the REST and HTTP Semantics."
+		},
+		{
+			"name": "Testing the API",
+			"item": [
+				{
+					"name": "Contract Testing - A Special Kind Of Test",
+					"item": [
+						{
+							"name": "Create Task",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\": \"PNew\",\n    \"name\": \"Project New\",\n    \"description\": \"Description of Project New\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								},
+								"description": "Request to create a project"
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	],
 	"variable": [
