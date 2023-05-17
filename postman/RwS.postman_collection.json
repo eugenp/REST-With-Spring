@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "28650908-67d9-41ec-90c6-1d3f18d06aa2",
+		"_postman_id": "7cc2a400-a44f-4d73-b5f7-503420ddc859",
 		"name": "RwS",
 		"description": "Postman requests for REST with Spring Course",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "386585"
+		"_exporter_id": "418131"
 	},
 	"item": [
 		{
@@ -834,6 +834,46 @@
 									"path": [
 										"tasks",
 										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "The Lifecycle of a Request",
+					"item": [
+						{
+							"name": "Create Project",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"code\": \"PNew\",\r\n    \"name\": \"Project New\",\r\n    \"description\": \"Description of Project New\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/projects",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects"
 									]
 								}
 							},
