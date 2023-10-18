@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7cc2a400-a44f-4d73-b5f7-503420ddc859",
+		"_postman_id": "1eebbbd5-2744-47e2-9d75-cf3ce315549e",
 		"name": "RwS",
 		"description": "Postman requests for REST with Spring Course",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -920,6 +920,117 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Evolve the REST API",
+			"item": [
+				{
+					"name": "Dealing with Changes in the API - URL Changes",
+					"item": [
+						{
+							"name": "Get Worker",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/workers/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"workers",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Employee",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/employees/1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"employees",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List of Tasks",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List of Tasks via Project",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/projects/1/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects",
+										"1",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List of Tasks - HATEOAS",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/tasks?name=Task&assigneeId=1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Task"
+										},
+										{
+											"key": "assigneeId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Demonstrates changes in the API - URL Changes"
+				}
+			],
+			"description": "Demonstrates evolution of Rest API"
 		}
 	],
 	"variable": [
