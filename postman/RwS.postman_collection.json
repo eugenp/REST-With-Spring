@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "1eebbbd5-2744-47e2-9d75-cf3ce315549e",
+		"_postman_id": "7eda6a69-2f44-46a9-9ebd-f52aa4628d9a",
 		"name": "RwS",
 		"description": "Postman requests for REST with Spring Course",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "418131"
+		"_exporter_id": "2346166"
 	},
 	"item": [
 		{
@@ -1028,6 +1028,127 @@
 						}
 					],
 					"description": "Demonstrates changes in the API - URL Changes"
+				},
+				{
+					"name": "Dealing with Changes in the API - Resource Changes",
+					"item": [
+						{
+							"name": "Create Project",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\": \"PNew\",\n    \"name\": \"Project New\",\n    \"description\": \"Description of Project New\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/projects",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Task without estimatedHours",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"New Test Task\",\n    \"description\": \"Description of new test task\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"projectId\": \"ebcbeadc-c7de-45ec-8c45-7d23a2554cc6\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Worker with Old structure",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"john@old-worker.com\",\n    \"firstName\": \"John\",\n    \"lastName\": \"OldWorkerStructureDoe\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/workers",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"workers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Worker with New structure",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.baeldung.new-worker+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"user\": {\n      \"email\": \"john@new-worker.com\"  \n    },\n    \"firstName\": \"John\",\n    \"lastName\": \"NewWorkerStructureDoe\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/workers",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"workers"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Demonstrates changes in the API - Resource Changes"
 				}
 			],
 			"description": "Demonstrates evolution of Rest API"
