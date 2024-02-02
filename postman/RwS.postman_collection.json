@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "7eda6a69-2f44-46a9-9ebd-f52aa4628d9a",
+		"_postman_id": "19be2f5a-2817-4af6-aa50-03ae2a897d3b",
 		"name": "RwS",
 		"description": "Postman requests for REST with Spring Course",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "2346166"
+		"_exporter_id": "418131"
 	},
 	"item": [
 		{
@@ -231,6 +231,52 @@
 					],
 					"description": "Requests to test URL Leverage HTTP Verbs and Semantics based on HTTP Method."
 				},
+				{
+					"name": "The Lifecycle of a Request",
+					"item": [
+						{
+							"name": "Create Project",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"code\": \"PNew\",\r\n    \"name\": \"Project New\",\r\n    \"description\": \"Description of Project New\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/projects",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"projects"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"description": "Demonstrates the REST and HTTP Semantics."
+		},
+		{
+			"name": "Input Validation and Exception Handling",
+			"item": [
 				{
 					"name": "Exception Handling and Sane HTTP Status Codes",
 					"item": [
@@ -840,49 +886,9 @@
 							"response": []
 						}
 					]
-				},
-				{
-					"name": "The Lifecycle of a Request",
-					"item": [
-						{
-							"name": "Create Project",
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"code\": \"PNew\",\r\n    \"name\": \"Project New\",\r\n    \"description\": \"Description of Project New\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{baseURL}}/projects",
-									"host": [
-										"{{baseURL}}"
-									],
-									"path": [
-										"projects"
-									]
-								}
-							},
-							"response": []
-						}
-					]
 				}
 			],
-			"description": "Demonstrates the REST and HTTP Semantics."
+			"description": "Demonstrates Input Validation and Exception Handling."
 		},
 		{
 			"name": "Testing the API",
@@ -1149,6 +1155,303 @@
 						}
 					],
 					"description": "Demonstrates changes in the API - Resource Changes"
+				},
+				{
+					"name": "Dealing with Changes in the API - Versioning",
+					"item": [
+						{
+							"name": "List of Tasks - v1 - URL",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/v1/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"v1",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List of Tasks - v2 - URL",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/v2/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"v2",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List of Tasks - v1 - Content Negotiation",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.rws.api.v1+json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List of Tasks - v2 - Content Negotiation",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.rws.api.v2+json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Task - v2 - Content Negotiation w/o Content-Type",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.rws.api.v2+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"New Task v2 Content Negotiation\",\n    \"description\": \"New Task v2 Content Negotiation description\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"projectId\": 1,\n    \"estimatedHours\": 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Task - v2 - Content Negotiation with Content-Type",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.rws.api.v2+json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.rws.api.v2+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"New Task v2 Content Negotiation\",\n    \"description\": \"New Task v2 Content Negotiation description\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"projectId\": 1,\n    \"estimatedHours\": 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Demonstrates changes in the API - Versioning"
+				},
+				{
+					"name": "Decouple the API from the Domain Model",
+					"item": [
+						{
+							"name": "Create Task with estimatedHours",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"New Test Task\",\n    \"description\": \"Description of new test task\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"projectId\": 1,\n    \"estimatedHours\": 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Task without estimatedHours",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"New Test Task\",\n    \"description\": \"Description of new test task\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"projectId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Worker with Old structure",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"john@old-worker.com\",\n    \"firstName\": \"John\",\n    \"lastName\": \"OldWorkerStructureDoe\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/workers",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"workers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Worker with New structure",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.baeldung.new-worker+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"user\": {\n      \"email\": \"john@new-worker.com\"  \n    },\n    \"firstName\": \"John\",\n    \"lastName\": \"NewWorkerStructureDoe\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/workers",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"workers"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			],
 			"description": "Demonstrates evolution of Rest API"
