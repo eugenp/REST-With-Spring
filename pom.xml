@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <description>The 'REST with Spring' Course - Module 4: Testing the API</description>
+    <name>testing-the-api</name>
+
+    <groupId>com.baeldung</groupId>
+    <artifactId>testing-the-api</artifactId>
+    <version>2.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>end-to-end-api-tests-webtestclient-start</module>
+        <module>end-to-end-api-tests-webtestclient-end</module>
+        <module>webtestclient-api-assertions-start</module>
+        <module>webtestclient-api-assertions-end</module>
+        <module>contract-testing-start</module>
+        <module>contract-testing-end</module>
+        <module>testing-http-semantics-start</module>
+        <module>testing-http-semantics-end</module>
+        <module>mechanisms-to-simplify-end-to-end-test-cases-start</module>
+        <module>mechanisms-to-simplify-end-to-end-test-cases-end</module>
+        <module>mechanisms-to-simplify-contract-test-cases-start</module>
+        <module>mechanisms-to-simplify-contract-test-cases-end</module>
+    </modules>
+    
+</project>

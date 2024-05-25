@@ -1,0 +1,7 @@
+{
+    "name": "Test - New Task 1",
+    "description": "Description of New Task 1",
+    "dueDate": "2050-12-30",
+    "status": "To Do",
+    "campaignId": 1
+}
