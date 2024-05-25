@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <description>The 'REST with Spring' Course - Module 5: Document and Discover the REST API</description>
+    <name>document-and-discover-the-rest-api</name>
+
+    <groupId>com.baeldung</groupId>
+    <artifactId>document-discover-and-evolve-the-rest-api</artifactId>
+    <version>2.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>document-the-api-with-swagger-start</module>
+        <module>document-the-api-with-swagger-end</module>
+        <module>discover-rest-api-hateoas-start</module>
+        <module>discover-rest-api-hateoas-end</module>
+    </modules>
+</project>
