@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "19be2f5a-2817-4af6-aa50-03ae2a897d3b",
+		"_postman_id": "02341d85-87fe-4f33-b66d-e4401c33c0e5",
 		"name": "RwS",
 		"description": "Postman requests for REST with Spring Course",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -14,50 +14,50 @@
 					"name": "The Web Configuration",
 					"item": [
 						{
-							"name": "List of Projects",
+							"name": "List of Campaigns",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseURL}}/projects",
+									"raw": "{{baseURL}}/campaigns",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects"
+										"campaigns"
 									]
 								},
-								"description": "Request to get list of projects"
+								"description": "Request to get list of campaigns"
 							},
 							"response": []
 						},
 						{
-							"name": "Get Project",
+							"name": "Get Campaign",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseURL}}/projects/1",
+									"raw": "{{baseURL}}/campaigns/1",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects",
+										"campaigns",
 										"1"
 									]
 								},
-								"description": "Request to get a project by ID"
+								"description": "Request to get a campaign by ID"
 							},
 							"response": []
 						},
 						{
-							"name": "Create Project",
+							"name": "Create Campaign",
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"code\": \"PNew\",\n    \"name\": \"Project New\",\n    \"description\": \"Description of Project New\"\n}",
+									"raw": "{\n    \"code\": \"CNew\",\n    \"name\": \"Campaign New\",\n    \"description\": \"Description of Campaign New\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -65,26 +65,26 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/projects",
+									"raw": "{{baseURL}}/campaigns",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects"
+										"campaigns"
 									]
 								},
-								"description": "Request to create a project"
+								"description": "Request to create a campaign"
 							},
 							"response": []
 						},
 						{
-							"name": "Update Project",
+							"name": "Update Campaign",
 							"request": {
 								"method": "PUT",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Project 1 Updated\",\n    \"description\": \"Description of Project 1 Updated\"\n}",
+									"raw": "{\n    \"name\": \"Campaign 1 Updated\",\n    \"description\": \"Description of Campaign 1 Updated\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -92,16 +92,16 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/projects/1",
+									"raw": "{{baseURL}}/campaigns/1",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects",
+										"campaigns",
 										"1"
 									]
 								},
-								"description": "Request to update a project"
+								"description": "Request to update a campaign"
 							},
 							"response": []
 						}
@@ -118,50 +118,50 @@
 					"name": "Leverage HTTP Verbs and Semantics in REST API Operations",
 					"item": [
 						{
-							"name": "List of Projects",
+							"name": "List of Campaigns",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseURL}}/projects",
+									"raw": "{{baseURL}}/campaigns",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects"
+										"campaigns"
 									]
 								},
-								"description": "Request to get list of projects"
+								"description": "Request to get list of campaigns"
 							},
 							"response": []
 						},
 						{
-							"name": "Get Project",
+							"name": "Get Campaign",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseURL}}/projects/1",
+									"raw": "{{baseURL}}/campaigns/1",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects",
+										"campaigns",
 										"1"
 									]
 								},
-								"description": "Request to get a project by ID"
+								"description": "Request to get a campaign by ID"
 							},
 							"response": []
 						},
 						{
-							"name": "Create Project",
+							"name": "Create Campaign",
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"code\": \"PNew\",\n    \"name\": \"Project New\",\n    \"description\": \"Description of Project New\"\n}",
+									"raw": "{\n    \"code\": \"CNew\",\n    \"name\": \"Campaign New\",\n    \"description\": \"Description of Campaign New\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -169,26 +169,26 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/projects",
+									"raw": "{{baseURL}}/campaigns",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects"
+										"campaigns"
 									]
 								},
-								"description": "Request to create a project"
+								"description": "Request to create a campaign"
 							},
 							"response": []
 						},
 						{
-							"name": "Update Project",
+							"name": "Update Campaign",
 							"request": {
 								"method": "PUT",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Project 1 Updated\",\n    \"description\": \"Description of Project 1 Updated\"\n}",
+									"raw": "{\n    \"name\": \"Campaign 1 Updated\",\n    \"description\": \"Description of Campaign 1 Updated\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -196,35 +196,35 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/projects/1",
+									"raw": "{{baseURL}}/campaigns/1",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects",
+										"campaigns",
 										"1"
 									]
 								},
-								"description": "Request to update a project"
+								"description": "Request to update a campaign"
 							},
 							"response": []
 						},
 						{
-							"name": "Delete Project",
+							"name": "Delete Campaign",
 							"request": {
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseURL}}/projects/3",
+									"raw": "{{baseURL}}/campaigns/3",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects",
+										"campaigns",
 										"3"
 									]
 								},
-								"description": "Request to delete a project by ID"
+								"description": "Request to delete a campaign by ID"
 							},
 							"response": []
 						}
@@ -235,7 +235,7 @@
 					"name": "The Lifecycle of a Request",
 					"item": [
 						{
-							"name": "Create Project",
+							"name": "Create Campaign",
 							"request": {
 								"auth": {
 									"type": "noauth"
@@ -250,7 +250,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"code\": \"PNew\",\r\n    \"name\": \"Project New\",\r\n    \"description\": \"Description of Project New\"\r\n}",
+									"raw": "{\r\n    \"code\": \"CNew\",\r\n    \"name\": \"Campaign New\",\r\n    \"description\": \"Description of Campaign New\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -258,12 +258,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/projects",
+									"raw": "{{baseURL}}/campaigns",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects"
+										"campaigns"
 									]
 								}
 							},
@@ -339,7 +339,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Invalid Content-Type\",\n    \"projectId\": 1\n}",
+									"raw": "{\n    \"name\": \"Invalid Content-Type\",\n    \"campaignId\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "xml"
@@ -365,7 +365,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"projectId\": 99,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
+									"raw": "{\r\n    \"campaignId\": 99,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -392,7 +392,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"projectId\": 1,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\",\r\n    \"assignee\": {\r\n        \"id\": 99\r\n    }\r\n}",
+									"raw": "{\r\n    \"campaignId\": 1,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\",\r\n    \"assignee\": {\r\n        \"id\": 99\r\n    }\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -425,7 +425,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"projectId\": 99,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
+									"raw": "{\r\n    \"campaignId\": 99,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -446,13 +446,13 @@
 							"response": []
 						},
 						{
-							"name": "Create Invalid Project - duplicated code",
+							"name": "Create Invalid Campaign - duplicated code",
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n        \"code\": \"P1\",\r\n        \"name\": \"Project 1 - duplicated 'code' field\",\r\n        \"description\": \"Description of Project 1, which already exists!\"\r\n}",
+									"raw": "{\r\n        \"code\": \"C1\",\r\n        \"name\": \"Campaign 1 - duplicated 'code' field\",\r\n        \"description\": \"Description of Campaign 1, which already exists!\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -460,12 +460,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/projects",
+									"raw": "{{baseURL}}/campaigns",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects"
+										"campaigns"
 									]
 								}
 							},
@@ -498,13 +498,13 @@
 							"response": []
 						},
 						{
-							"name": "Put Invalid Task 2 - null projectId",
+							"name": "Put Invalid Task 2 - null campaignId",
 							"request": {
 								"method": "PUT",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"projectId\": null,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
+									"raw": "{\r\n    \"campaignId\": null,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -531,7 +531,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\": 2,\r\n    \"projectId\": 1,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"campaignId\": 1,\r\n    \"name\": \"Task 1\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -564,7 +564,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"projectId\" : null,\r\n  \"name\" : \"New Task\",\r\n  \"description\" : \"New Task Description\",\r\n  \"dueDate\" : \"2050-12-30\"\r\n}",
+									"raw": "{\r\n  \"campaignId\" : null,\r\n  \"name\" : \"New Task\",\r\n  \"description\" : \"New Task Description\",\r\n  \"dueDate\" : \"2050-12-30\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -590,7 +590,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"projectId\" : 1,\r\n  \"name\" : \"New Task\",\r\n  \"description\" : \"New Task Description\",\r\n  \"dueDate\" : \"2050-12-30\"\r\n}",
+									"raw": "{\r\n  \"campaignId\" : 1,\r\n  \"name\" : \"New Task\",\r\n  \"description\" : \"New Task Description\",\r\n  \"dueDate\" : \"2050-12-30\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -610,7 +610,7 @@
 							"response": []
 						},
 						{
-							"name": "Post Invalid Project",
+							"name": "Post Invalid Campaign",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -624,12 +624,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/projects",
+									"raw": "{{baseURL}}/campaigns",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects"
+										"campaigns"
 									]
 								}
 							},
@@ -698,7 +698,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Task 1 Updated Name\",\r\n    \"description\": \"Task 1 Updated Description\",\r\n    \"dueDate\": \"2000-01-12\",\r\n    \"status\": \"To Do\",\r\n    \"projectId\": 1,\r\n    \"assignee\": null,\r\n    \"estimatedHours\": 10\r\n}",
+									"raw": "{\r\n    \"name\": \"Task 1 Updated Name\",\r\n    \"description\": \"Task 1 Updated Description\",\r\n    \"dueDate\": \"2000-01-12\",\r\n    \"status\": \"To Do\",\r\n    \"campaignId\": 1,\r\n    \"assignee\": null,\r\n    \"estimatedHours\": 10\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -781,7 +781,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Task New\",\r\n    \"description\": \"Task New Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"projectId\": 1,\r\n    \"assignee\": {\r\n        \"id\": null,\r\n        \"email\": null,\r\n        \"firstName\": \"assignee data should\",\r\n        \"lastNamez\": \"be ignored\" \r\n    },\r\n    \"estimatedHours\": 10\r\n}",
+									"raw": "{\r\n    \"name\": \"Task New\",\r\n    \"description\": \"Task New Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"campaignId\": 1,\r\n    \"assignee\": {\r\n        \"id\": null,\r\n        \"email\": null,\r\n        \"firstName\": \"assignee data should\",\r\n        \"lastNamez\": \"be ignored\" \r\n    },\r\n    \"estimatedHours\": 10\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -807,13 +807,13 @@
 					"name": "Spring and the Problem Details Spec",
 					"item": [
 						{
-							"name": "Post Invalid Project",
+							"name": "Post Invalid Campaign",
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": " {\r\n    \"code\": null,\r\n    \"description\": \"Project Description\",\r\n    \"name\": \"New Project\"\r\n }",
+									"raw": " {\r\n    \"code\": null,\r\n    \"description\": \"Campaign Description\",\r\n    \"name\": \"New Campaign\"\r\n }",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -821,12 +821,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/projects",
+									"raw": "{{baseURL}}/campaigns",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects"
+										"campaigns"
 									]
 								}
 							},
@@ -865,7 +865,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\":99,\r\n    \"projectId\": 99,\r\n    \"name\": \"Task 1 Updated\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
+									"raw": "{\r\n    \"id\":99,\r\n    \"campaignId\": 99,\r\n    \"name\": \"Task 1 Updated\",\r\n    \"description\": \"Task 1 Description\",\r\n    \"dueDate\": \"2030-01-12\",\r\n    \"status\": \"To Do\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -903,7 +903,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"code\": \"PNew\",\n    \"name\": \"Project New\",\n    \"description\": \"Description of Project New\"\n}",
+									"raw": "{\n    \"name\": \"Test - New Task 1\",    \n    \"description\": \"Description of New Task 1\",\n    \"dueDate\": \"2050-12-30\",\n    \"campaignId\": 1\n    \n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -919,13 +919,86 @@
 										"tasks"
 									]
 								},
-								"description": "Request to create a project"
+								"description": "Request to create a task"
 							},
 							"response": []
 						}
 					]
 				}
 			]
+		},
+		{
+			"name": "Document and Discover the REST API",
+			"item": [
+				{
+					"name": "Discover a REST API - HATEOAS",
+					"item": [
+						{
+							"name": "Create Task",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Task New\",\n    \"description\" : \"Task New description\",\n    \"dueDate\" : \"2050-12-31\",\n    \"status\" : \"1\",\n    \"campaignId\" : 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/tasks",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Campaign With Tasks and Assignees",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/campaigns/2",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"campaigns",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Collection of Campaigns",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/campaigns",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"campaigns"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Demonstrates Discover a REST API - HATEOAS"
+				}
+			],
+			"description": "Demonstrates Document and Discover the REST API"
 		},
 		{
 			"name": "Evolve the REST API",
@@ -987,17 +1060,17 @@
 							"response": []
 						},
 						{
-							"name": "List of Tasks via Project",
+							"name": "List of Tasks via Campaign",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseURL}}/projects/1/tasks",
+									"raw": "{{baseURL}}/campaigns/1/tasks",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects",
+										"campaigns",
 										"1",
 										"tasks"
 									]
@@ -1039,13 +1112,13 @@
 					"name": "Dealing with Changes in the API - Resource Changes",
 					"item": [
 						{
-							"name": "Create Project",
+							"name": "Create Campaign",
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"code\": \"PNew\",\n    \"name\": \"Project New\",\n    \"description\": \"Description of Project New\"\n}",
+									"raw": "{\n    \"code\": \"CNew\",\n    \"name\": \"Campaign New\",\n    \"description\": \"Description of Campaign New\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1053,12 +1126,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseURL}}/projects",
+									"raw": "{{baseURL}}/campaigns",
 									"host": [
 										"{{baseURL}}"
 									],
 									"path": [
-										"projects"
+										"campaigns"
 									]
 								}
 							},
@@ -1071,7 +1144,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"New Test Task\",\n    \"description\": \"Description of new test task\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"projectId\": \"ebcbeadc-c7de-45ec-8c45-7d23a2554cc6\"\n}",
+									"raw": "{\n    \"name\": \"New Test Task\",\n    \"description\": \"Description of new test task\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"campaignId\": \"ebcbeadc-c7de-45ec-8c45-7d23a2554cc6\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1269,7 +1342,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"New Task v2 Content Negotiation\",\n    \"description\": \"New Task v2 Content Negotiation description\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"projectId\": 1,\n    \"estimatedHours\": 3\n}",
+									"raw": "{\n    \"name\": \"New Task v2 Content Negotiation\",\n    \"description\": \"New Task v2 Content Negotiation description\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"campaignId\": 1,\n    \"estimatedHours\": 3\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1311,7 +1384,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"New Task v2 Content Negotiation\",\n    \"description\": \"New Task v2 Content Negotiation description\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"projectId\": 1,\n    \"estimatedHours\": 3\n}",
+									"raw": "{\n    \"name\": \"New Task v2 Content Negotiation\",\n    \"description\": \"New Task v2 Content Negotiation description\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"campaignId\": 1,\n    \"estimatedHours\": 3\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1343,7 +1416,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"New Test Task\",\n    \"description\": \"Description of new test task\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"projectId\": 1,\n    \"estimatedHours\": 3\n}",
+									"raw": "{\n    \"name\": \"New Test Task\",\n    \"description\": \"Description of new test task\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"campaignId\": 1,\n    \"estimatedHours\": 3\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1369,7 +1442,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"New Test Task\",\n    \"description\": \"Description of new test task\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"projectId\": 1\n}",
+									"raw": "{\n    \"name\": \"New Test Task\",\n    \"description\": \"Description of new test task\",\n    \"status\": \"Done\",\n    \"dueDate\": \"2050-12-31\",\n    \"campaignId\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
