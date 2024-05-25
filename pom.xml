@@ -1,0 +1,21 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <description>The 'REST with Spring' Course - Module 2: REST and HTTP Semantics</description>
+    <name>rest-and-http-semantics</name>
+
+    <groupId>com.baeldung</groupId>
+    <artifactId>rest-and-http-semantics</artifactId>
+    <version>2.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>http-verbs-and-semantics-with-spring-start</module>
+        <module>http-verbs-and-semantics-with-spring-end</module>
+        <module>leverage-http-in-rest-operations-start</module>
+        <module>leverage-http-in-rest-operations-end</module>
+        <module>the-lifecycle-of-a-request</module>
+    </modules>
+    
+</project>
