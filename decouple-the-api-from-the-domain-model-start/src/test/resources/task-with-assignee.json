@@ -1,0 +1,11 @@
+{
+    "name": "Test - Template Task Name",
+    "description": "Description of new test task",
+    "status": "Done",
+    "dueDate": "2050-12-31",
+    "campaignId": "ebcbeadc-c7de-45ec-8c45-7d23a2554cc6",
+    "assignee": {
+        "email": "john@test.com"
+    },
+    "estimatedHours": 1
+}

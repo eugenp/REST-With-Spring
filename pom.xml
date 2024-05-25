@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <description>The 'REST with Spring' Course - Module 6: Evolve Rest API</description>
+    <name>rws-evolve-rest-api</name>
+
+    <groupId>com.baeldung</groupId>
+    <artifactId>rws-evolve-rest-api</artifactId>
+    <version>2.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>dealing-with-changes-in-the-api-resource-changes</module>
+        <module>dealing-with-changes-in-the-api-url-changes-start</module>
+        <module>dealing-with-changes-in-the-api-url-changes-end</module>
+        <module>dealing-with-changes-in-the-api-versioning-start</module>
+        <module>dealing-with-changes-in-the-api-versioning-end</module>
+        <module>decouple-the-api-from-the-domain-model-start</module>
+        <module>decouple-the-api-from-the-domain-model-end</module>
+    </modules>
+</project>

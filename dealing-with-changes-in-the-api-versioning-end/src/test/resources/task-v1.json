@@ -1,0 +1,7 @@
+{
+    "name": "Test - Template Task Name",
+    "description": "Description of new test task",
+    "status": "Done",
+    "dueDate": "2050-12-31",
+    "campaignId": 1
+}
