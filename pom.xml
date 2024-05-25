@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <description>The 'REST with Spring' Course - Module 3: Input Validation and Exception Handling</description>
+    <name>input-validation-and-exception-handling</name>
+
+    <groupId>com.baeldung</groupId>
+    <artifactId>input-validation-and-exception-handling</artifactId>
+    <version>2.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>exception-handling-and-sane-http-status-codes-start</module>
+        <module>exception-handling-and-sane-http-status-codes-end</module>
+        <module>global-api-exception-handling-start</module>
+        <module>global-api-exception-handling-end</module>
+        <module>the-basics-of-input-validation-start</module>
+        <module>the-basics-of-input-validation-end</module>
+        <module>validation-groups-for-different-api-operations-start</module>
+        <module>validation-groups-for-different-api-operations-end</module>
+        <module>spring-and-problem-details-spec-start</module>
+        <module>spring-and-problem-details-spec-end</module>
+    </modules>
+    
+</project>
