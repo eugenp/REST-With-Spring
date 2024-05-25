@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <description>The 'REST with Spring' Course - Module 1: The Basics of REST with Spring</description>
+    <name>basics-of-rest-with-spring</name>
+
+    <groupId>com.baeldung</groupId>
+    <artifactId>basics-of-rest-with-spring</artifactId>
+    <version>2.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>web-configuration</module>
+        <module>the-project-we-are-building</module>
+    </modules>
+</project>
