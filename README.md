@@ -1,6 +1,6 @@
-# REST with Spring - Testing the API
+# REST With Spring Boot - Testing the API
 
-This is the codebase for Module 'Testing the API' of [REST with Spring](http://bit.ly/restwithspring)
+This is the codebase for Module 'Testing the API' of [REST With Spring Boot](http://bit.ly/restwithspring)
 
 
 ======

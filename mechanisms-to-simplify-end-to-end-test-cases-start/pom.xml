@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <description>REST with Spring - Mechanisms to Simplify End-to-End Test Cases - Start -- Parent</description>
+    <description>REST With Spring Boot - Mechanisms to Simplify End-to-End Test Cases - Start -- Parent</description>
     <name>mechanisms-to-simplify-end-to-end-test-cases-start--parent</name>
 
     <groupId>com.baeldung</groupId>
