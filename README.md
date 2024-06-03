@@ -1,6 +1,6 @@
-# REST with Spring - The Basics of REST with Spring
+# REST With Spring Boot - The Basics of REST With Spring Boot
 
-This is the codebase for Module 'The Basics of REST with Spring' of [REST with Spring](http://bit.ly/restwithspring)
+This is the codebase for Module 'The Basics of REST With Spring Boot' of [REST With Spring Boot](http://bit.ly/restwithspring)
 
 
 ======
