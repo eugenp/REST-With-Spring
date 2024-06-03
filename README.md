@@ -1,6 +1,6 @@
 # About this repo
 
-This is the codebase of the **REST with Spring** course.
+This is the codebase of the **REST With Spring Boot** course.
 
 If you're already a student of the course you can start exploring this through the lesson notes in the course.
 

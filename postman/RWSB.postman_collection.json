@@ -1,14 +1,14 @@
 {
 	"info": {
 		"_postman_id": "02341d85-87fe-4f33-b66d-e4401c33c0e5",
-		"name": "RwS",
-		"description": "Postman requests for REST with Spring Course",
+		"name": "RWSB",
+		"description": "Postman requests for REST With Spring Boot Course",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "418131"
 	},
 	"item": [
 		{
-			"name": "The Basics of REST with Spring",
+			"name": "The Basics of REST With Spring Boot",
 			"item": [
 				{
 					"name": "The Web Configuration",
@@ -109,7 +109,7 @@
 					"description": "Requests to test URL web configuration based on HTTP Method."
 				}
 			],
-			"description": "Demonstrates the basics of REST with Spring"
+			"description": "Demonstrates the basics of REST with Spring Boot"
 		},
 		{
 			"name": "REST and HTTP Semantics",
@@ -1280,7 +1280,7 @@
 								"header": [
 									{
 										"key": "Accept",
-										"value": "application/vnd.rws.api.v1+json",
+										"value": "application/vnd.rwsb.api.v1+json",
 										"type": "text"
 									}
 								],
@@ -1308,7 +1308,7 @@
 								"header": [
 									{
 										"key": "Accept",
-										"value": "application/vnd.rws.api.v2+json",
+										"value": "application/vnd.rwsb.api.v2+json",
 										"type": "text"
 									}
 								],
@@ -1336,7 +1336,7 @@
 								"header": [
 									{
 										"key": "Accept",
-										"value": "application/vnd.rws.api.v2+json",
+										"value": "application/vnd.rwsb.api.v2+json",
 										"type": "text"
 									}
 								],
@@ -1373,12 +1373,12 @@
 								"header": [
 									{
 										"key": "Accept",
-										"value": "application/vnd.rws.api.v2+json",
+										"value": "application/vnd.rwsb.api.v2+json",
 										"type": "text"
 									},
 									{
 										"key": "Content-Type",
-										"value": "application/vnd.rws.api.v2+json",
+										"value": "application/vnd.rwsb.api.v2+json",
 										"type": "text"
 									}
 								],
