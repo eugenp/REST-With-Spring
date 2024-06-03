@@ -1,6 +1,6 @@
-# REST with Spring - Input Validation and Exception Handling
+# REST With Spring Boot - Input Validation and Exception Handling
 
-This is the codebase for Module 'Input Validation and Exception Handling' of [REST with Spring](http://bit.ly/restwithspring)
+This is the codebase for Module 'Input Validation and Exception Handling' of [REST With Spring Boot](http://bit.ly/restwithspring)
 
 
 ======
