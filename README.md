@@ -1,6 +1,6 @@
-# REST with Spring - REST and HTTP Semantics
+# REST With Spring Boot - REST and HTTP Semantics
 
-This is the codebase for Module 'REST and HTTP Semantics' of [REST with Spring](http://bit.ly/restwithspring)
+This is the codebase for Module 'REST and HTTP Semantics' of [REST With Spring Boot](http://bit.ly/restwithspring)
 
 
 ======
