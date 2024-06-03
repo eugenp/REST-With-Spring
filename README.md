@@ -1,6 +1,6 @@
-# REST with Spring - Evolve Rest API
+# REST With Spring Boot - Evolve Rest API
 
-This is the codebase for Module Templates of [REST with Spring](http://bit.ly/restwithspring)
+This is the codebase for Module Templates of [REST With Spring Boot](http://bit.ly/restwithspring)
 
 
 
