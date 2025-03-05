@@ -39,7 +39,7 @@ public class ContractTaskApiIntegrationTest {
             .isOk()
             .expectBody()
             .jsonPath("$.id")
-            .value(equalTo("1"), String.class)
+            .value(String.class, equalTo("1"))
             .jsonPath("$.name")
             .exists()
             .jsonPath("$.status")
