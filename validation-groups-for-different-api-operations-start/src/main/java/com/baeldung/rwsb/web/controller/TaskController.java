@@ -1,7 +1,6 @@
 package com.baeldung.rwsb.web.controller;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import jakarta.validation.Valid;
