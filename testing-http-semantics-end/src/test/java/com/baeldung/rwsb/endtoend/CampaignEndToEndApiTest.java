@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -263,7 +264,7 @@ public class CampaignEndToEndApiTest {
             .expectBody(CampaignDto.class)
             .consumeWith(exchangeResult -> {
                 assertThat(exchangeResult.getRequestHeaders()).extractingByKey(HttpHeaders.CONTENT_TYPE)
-                    .asList()
+                    .asInstanceOf(InstanceOfAssertFactories.LIST)
                     .contains(MediaType.APPLICATION_JSON_VALUE);
                 assertThat(exchangeResult.getResponseCookies()).isEmpty();
                 assertThat(exchangeResult.getResponseBody()

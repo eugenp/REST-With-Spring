@@ -2,7 +2,7 @@ package com.baeldung.rwsb.web.error;
 
 import java.net.URI;
 
-import org.hibernate.TransientPropertyValueException;
+import org.hibernate.TransientObjectException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @ControllerAdvice
 public class CustomExceptionsHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({ EntityNotFoundException.class, TransientPropertyValueException.class })
+    @ExceptionHandler({ EntityNotFoundException.class, TransientObjectException.class })
     public ProblemDetail resolveEntityNotFoundException2(Exception ex, ServletRequest request, HttpServletResponse response) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Invalid associated entity: " + ex.getMessage());
         problemDetail.setType(URI.create("https://example.com/errors/invalid-associated-entity"));

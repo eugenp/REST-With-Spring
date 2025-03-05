@@ -17,7 +17,7 @@ public class SimpleContractBodyContentSpec {
 
     public SimpleContractBodyContentSpec containsFields(String... fields) {
         Stream.of(fields)
-            .forEach(field -> contentBodySpec.jsonPath("$.%s", field)
+            .forEach(field -> contentBodySpec.jsonPath("$.%s".formatted(field))
                 .isNotEmpty());
         return this;
     }
@@ -25,14 +25,14 @@ public class SimpleContractBodyContentSpec {
     @SafeVarargs
     public final SimpleContractBodyContentSpec fieldsMatch(Map.Entry<String, Matcher<?>>... fields) {
         Stream.of(fields)
-            .forEach(field -> contentBodySpec.jsonPath("$.%s", field.getKey())
+            .forEach(field -> contentBodySpec.jsonPath("$.%s".formatted(field.getKey()))
                 .value(field.getValue()));
         return this;
     }
     
     public SimpleContractBodyContentSpec listContainsFields(String... fields) {
         Stream.of(fields)
-            .forEach(field -> contentBodySpec.jsonPath("$..%s", field)
+            .forEach(field -> contentBodySpec.jsonPath("$..%s".formatted(field))
                 .isNotEmpty());
         return this;
     }
@@ -40,7 +40,7 @@ public class SimpleContractBodyContentSpec {
     @SafeVarargs
     public final SimpleContractBodyContentSpec listFieldsMatch(Map.Entry<String, Matcher<?>>... fields) {
         Stream.of(fields)
-            .forEach(field -> contentBodySpec.jsonPath("$..%s", field.getKey())
+            .forEach(field -> contentBodySpec.jsonPath("$..%s".formatted(field.getKey()))
                 .value(field.getValue()));
         return this;
     }
